@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#26564b">
+  <meta name="description" content="新概念英语学习笔记文字版，按课整理知识与语法、习惯用法、默写拼写复述和闯关练习。">
+  <title>知新 · 新概念英语学习室</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%2326564b'/%3E%3Cpath d='M12 17q10-4 20 2 10-6 20-2v31q-10-4-20 2-10-6-20-2zM32 19v31' fill='none' stroke='white' stroke-width='3'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="game.css">
+  <link rel="stylesheet" href="text-learning.css">
+  <script defer src="curriculum.js"></script><script defer src="generated-audio.js"></script><script defer src="provided-audio.js"></script><script defer src="glossary.js"></script><script defer src="library.js"></script><script defer src="text-library.js"></script><script defer src="core.js"></script><script defer src="audio.js"></script><script defer src="game.js"></script><script defer src="grammar-check.js"></script><script defer src="output-practice.js"></script><script defer src="text-reader.js"></script><script defer src="app.js"></script>
+</head>
+<body>
+<aside class="app-sidebar" aria-label="主导航">
+  <a class="brand" href="#study"><span class="brand-mark" data-icon="book"></span><span><strong class="brand-name">知新</strong><span class="brand-subtitle">新概念英语学习室</span></span></a>
+  <nav class="main-nav">
+    <button class="nav-item active" data-view="study"><span data-icon="home"></span>学习空间</button>
+    <button class="nav-item" data-view="game"><span data-icon="star"></span>闯关挑战</button>
+    <button class="nav-item" data-view="words"><span data-icon="notebook"></span>我的生词本<span class="count-badge" id="word-count">0</span></button>
+    <button class="nav-item" data-view="records"><span data-icon="clock"></span>学习记录</button>
+    <button class="nav-item" data-view="library"><span data-icon="file"></span>我的教材资料</button>
+  </nav>
+  <div class="sidebar-section-label">我的课程</div><div class="sidebar-books" id="sidebar-books"></div>
+  <div class="sidebar-note"><span data-icon="sprout"></span><p>好的语言学习，<br>从每天坚持开始。</p><small>独立学习工具 · 非官方出品</small></div>
+</aside>
+<main class="app-main">
+  <header class="topbar"><div class="breadcrumb" id="breadcrumb">学习空间 <span>/</span> 第二册</div><div class="topbar-actions"><label class="search-box"><span data-icon="search"></span><input id="search" type="search" placeholder="搜索课程与单词" aria-label="搜索课程与单词"><kbd>/</kbd></label><button class="button subtle share-button" id="share-site"><span data-icon="external"></span>分享</button></div></header>
+  <section class="hero"><h1>每天一点，让英语成为习惯</h1><p>从一段课文开始，把听、说、读、练连接起来。</p></section>
+  <div class="book-grid" id="book-grid" aria-label="选择分册"></div>
+  <section id="study-view" aria-label="学习空间">
+    <div class="workspace">
+      <aside class="course-panel"><div class="panel-heading"><h2>课程目录</h2><button class="icon-button mobile-course-toggle" id="toggle-courses" title="展开或收起课程目录" aria-expanded="true"><span data-icon="list"></span></button></div><p class="course-summary" id="course-summary"></p><div class="lesson-list" id="lesson-list"></div><div class="footer-credit">按真实资料分课 · 支持补充课文</div></aside>
+      <article class="reader-panel"><div class="reader-meta"><span class="source-label" id="source-label"></span><div class="reader-tools"><label class="check-label"><input id="show-translation" type="checkbox" checked>显示译文</label><span id="voice-note" class="hidden"></span><select class="voice-select" id="voice" aria-label="选择朗读口音"><option value="en-GB">英式发音</option><option value="en-US">美式发音</option></select></div></div><div class="lesson-heading"><h2 id="lesson-title"></h2><p id="lesson-subtitle"></p></div><div class="reader-tabs" role="tablist" aria-label="学习模式"><button role="tab" aria-selected="true" class="tab active" data-tab="reading">笔记精读</button><button role="tab" aria-selected="false" class="tab" data-tab="usage">知识与用法</button><button role="tab" aria-selected="false" class="tab" data-tab="practice">巩固练习</button><button role="tab" aria-selected="false" class="tab" data-tab="output">输出训练</button></div><div class="reader-content" id="reader-content" role="tabpanel"></div><div class="reader-footer"><button class="button subtle" id="previous-lesson"><span data-icon="left"></span>上一课</button><button class="button" id="complete-lesson"><span data-icon="check"></span>标记学完</button><button class="button subtle" id="next-lesson">下一课<span data-icon="right"></span></button></div></article>
+      <aside class="tips-panel"><h2 class="tips-heading"><span data-icon="chart"></span>一起练得更扎实</h2><button class="tip-card" id="tip-word"><span class="tip-icon" data-icon="headphones"></span><span><strong>单词随点随听</strong><small>点击课文中的单词，<br>听发音、查释义、记生词。</small></span><span data-icon="right"></span></button><button class="tip-card" data-open-tab="practice"><span class="tip-icon" data-icon="notebook"></span><span><strong>语法学以致用</strong><small>选择、听写与即时解析，<br>把学过的知识用起来。</small></span><span data-icon="right"></span></button><div class="resource-block"><h3>学习资源</h3><button class="button" id="open-import"><span data-icon="upload"></span>导入课文与音频</button><p class="small-note">支持 TXT、LRC、JSON 与音频</p><button class="resource-link" id="open-resources">官方教材与音频资源<span data-icon="external"></span></button></div><div class="import-source-note">当前已接入课堂笔记文字版。<br>缺失的教材原文与原声可导入。</div></aside>
+    </div><div class="mobile-resource-actions"><button class="button" data-action="import"><span data-icon="upload"></span>导入资料</button><button class="button subtle" data-action="resources">官方资源<span data-icon="external"></span></button></div>
+  </section>
+  <section id="words-view" class="hidden" aria-label="我的生词本"></section>
+  <section id="records-view" class="hidden" aria-label="学习记录"></section>
+  <section id="library-view" class="hidden" aria-label="我的教材资料"></section>
+  <section id="game-view" class="hidden" aria-label="闯关挑战"></section>
+  <footer class="site-footer">一起学习，把进步分享出去。<button id="sharing-note" class="resource-text-button">分享与转载说明</button><span>学习进度保存在当前浏览器</span></footer>
+</main>
+<footer class="player" aria-label="课文音频播放器"><div class="player-main"><button class="play-button" id="play" aria-label="播放课文"><span data-icon="play"></span></button><div><strong class="player-title">本课朗读</strong><span class="player-subtitle" id="player-subtitle"></span><small id="audio-mode">系统语音 · 非原版录音</small></div></div><div class="player-timeline"><span class="time" id="current-time">00:00</span><input type="range" min="0" max="1000" value="0" class="seek-bar" id="seek" aria-label="课文播放进度"><span class="time" id="duration">约 00:00</span></div><div class="player-options"><select class="speed-select" id="speed" aria-label="朗读速度"><option value="0.75">0.75×</option><option value="1" selected>1×</option><option value="1.25">1.25×</option><option value="1.5">1.5×</option></select><button class="icon-button loop-button" id="loop" aria-label="循环朗读" aria-pressed="false"><span data-icon="repeat"></span></button><span class="volume-icon" data-icon="volume"></span></div></footer>
+<div id="word-popover" class="word-popover hidden" role="dialog" aria-label="单词释义"></div>
+<div id="dialog-root"></div><div id="toast" class="toast hidden" role="status" aria-live="polite"></div>
+</body></html>
