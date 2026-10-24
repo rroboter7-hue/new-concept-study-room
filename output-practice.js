@@ -115,9 +115,9 @@
     }
 
 
-    checkGrammar(){if(!this.answer.trim()){this.notify('先写一段英文，再检查。');return;}if(!global.StudyGrammar){this.notify('语法规则正在加载，请刷新后再试。');return;}this.grammarText=this.answer;this.grammarIssues=global.StudyGrammar.check(this.answer);this.redraw();}
+    checkGrammar(redraw=true){if(!this.answer.trim()){this.notify('先写一段英文，再检查。');return;}if(!global.StudyGrammar){this.grammarText='';this.grammarIssues=null;this.notify('语法规则正在加载，请刷新后再试。');return;}this.grammarText=this.answer;this.grammarIssues=global.StudyGrammar.check(this.answer);if(redraw)this.redraw();}
     applyGrammar(index){if(this.grammarText!==this.answer){this.notify('输入已改变，请重新检查。');return;}this.answer=index<0?global.StudyGrammar.applyAll(this.answer,this.grammarIssues||[]):global.StudyGrammar.apply(this.answer,(this.grammarIssues||[])[index]);this.result=null;this.grammarText=this.answer;this.grammarIssues=global.StudyGrammar.check(this.answer);this.redraw();this.notify('建议已填回输入框，请结合句意确认。');}
-    grammarHTML(){const e=this.escape,issues=this.grammarIssues;return `<section class="grammar-helper"><h3>常见语法自检</h3><p>检查主谓一致、助动词、冠词和常见搭配。全部在本地处理，最多检查前10000个字符；规则不能覆盖所有语法，也不判断复述内容是否准确。</p><button class="button" data-output-action="grammar-check">检查这段英文</button><div class="grammar-feedback">${issues?issues.length?`<h4>发现 ${issues.length} 处可检查的问题</h4>${issues.map((issue,i)=>`<article class="grammar-issue"><div><del>${e(issue.original)}</del><span> → </span><ins>${e(issue.replacement)}</ins></div><p>${e(issue.message)}</p><button class="button subtle" data-output-action="grammar-apply" data-grammar-index="${i}">采用此建议</button></article>`).join('')}<button class="button subtle" data-output-action="grammar-all">应用当前全部建议</button>`:'<p class="grammar-ok">本地规则未发现已覆盖类型的问题。仍建议对照原文检查时态、句意和遗漏。</p>':''}</div></section>`;}
+    grammarHTML(){const e=this.escape,issues=this.grammarIssues;return `<section class="grammar-helper"><h3>基础语法检查与修改建议</h3><p>提交默写或复述后，会自动检查主谓一致、助动词、冠词和常见搭配，并在这里显示修改建议。全部在本地处理，最多检查前10000个字符；这是常见规则检查，复杂语法和句意仍需结合原文确认。</p><button class="button" data-output-action="grammar-check">${issues?'重新检查语法':'单独检查语法'}</button><div class="grammar-feedback">${issues?issues.length?`<h4>发现 ${issues.length} 处可检查的问题</h4>${issues.map((issue,i)=>`<article class="grammar-issue"><div><del>${e(issue.original)}</del><span> → </span><ins>${e(issue.replacement)}</ins></div><p>${e(issue.message)}</p><button class="button subtle" data-output-action="grammar-apply" data-grammar-index="${i}">采用此建议</button></article>`).join('')}<button class="button subtle" data-output-action="grammar-all">应用当前全部建议</button>`:'<p class="grammar-ok">已完成本地常见规则检查，未发现已覆盖类型的问题。可对照原文继续检查时态、句意和遗漏。</p>':''}</div></section>`;}
 
     originalHTML(paragraphs) {return this.showOriginal?`<div class="output-target">${paragraphs.map(paragraph=>`<p class="english">${this.escape(paragraph.en)}</p>`).join('')}</div>`:'';}
     originalButton() {return `<button type="button" class="button subtle" data-output-action="original">${this.showOriginal?'隐藏原文':'查看原文'}</button>`;}
@@ -129,12 +129,12 @@
       if(!paragraphs.length)return '<p class="output-intro">当前资料没有可用于默写的英文内容。</p>';
       this.paragraphIndex=Math.min(this.paragraphIndex,paragraphs.length-1);
       const target=paragraphs[this.paragraphIndex];
-      return `<div class="output-intro"><h3>记住一段，再亲手写下来</h3><p>先看原文，再隐藏默写。校对忽略大小写与标点，按词对齐，显示漏词、多词和拼写／替换差异。</p></div><label>选择段落 <select class="output-select" data-output-paragraph="true">${paragraphs.map((paragraph,index)=>`<option value="${index}" ${index===this.paragraphIndex?'selected':''}>第 ${index+1} 段 · ${words(paragraph.en).length} 词</option>`).join('')}</select></label><p class="output-prompt">${e(target.zh || '本段暂无中文提示。先查看原文，记住内容后隐藏，再尝试默写。')}</p><div class="output-actions">${this.originalButton()}</div>${this.originalHTML([target])}${words(target.en).length>1000?'<p class="output-intro">本段较长，本次仅比较原文前1000词。建议选择较短段落。</p>':''}${this.textarea('在这里默写本段英文……')}${this.result?this.writeResultHTML():''}${this.actions()}`;
+      return `<div class="output-intro"><h3>记住一段，再亲手写下来</h3><p>先看原文，再隐藏默写。提交后同时给出原文对照和常见语法修改建议；对照忽略大小写与标点，按词显示漏词、多词和拼写／替换差异。</p></div><label>选择段落 <select class="output-select" data-output-paragraph="true">${paragraphs.map((paragraph,index)=>`<option value="${index}" ${index===this.paragraphIndex?'selected':''}>第 ${index+1} 段 · ${words(paragraph.en).length} 词</option>`).join('')}</select></label><p class="output-prompt">${e(target.zh || '本段暂无中文提示。先查看原文，记住内容后隐藏，再尝试默写。')}</p><div class="output-actions">${this.originalButton()}</div>${this.originalHTML([target])}${words(target.en).length>1000?'<p class="output-intro">本段较长，本次仅比较原文前1000词。建议选择较短段落。</p>':''}${this.textarea('在这里默写本段英文……')}${this.result?this.writeResultHTML():''}${this.actions()}`;
     }
 
     writeResultHTML() {
       const result=this.result, e=this.escape;
-      return `<section class="output-result"><h3>按词校对：${result.score}%</h3><p>正确 ${result.correct} 词 · 漏写 ${result.missing} 词 · 多写 ${result.extra} 词 · 拼写／替换差异 ${result.substitutions} 处</p><p class="small-note">按词编辑距离计算：准确率 = max(0, 1 − 编辑次数 ÷ 原文词数)。这是原文对照，不是 AI 语法批改。</p><div class="output-diff">${result.operations.map(operation=>operation.type==='correct'?`<span class="diff-correct">${e(operation.actual)}</span>`:operation.type==='missing'?`<span class="diff-missing" title="漏写">[漏] ${e(operation.expected)}</span>`:operation.type==='extra'?`<span class="diff-extra" title="多写">[多] ${e(operation.actual)}</span>`:`<span class="diff-extra" title="你的输入">${e(operation.actual)}</span><span class="diff-missing" title="原文对应词">→ ${e(operation.expected)}</span>`).join(' ')}</div></section>`;
+      return `<section class="output-result"><h3>原文对照准确率：${result.score}%</h3><p>正确 ${result.correct} 词 · 漏写 ${result.missing} 词 · 多写 ${result.extra} 词 · 拼写／替换差异 ${result.substitutions} 处</p><p class="small-note">按词编辑距离计算：准确率 = max(0, 1 − 编辑次数 ÷ 原文词数)。原文对照准确率与基础语法建议分别显示，语法建议见下方。</p><div class="output-diff">${result.operations.map(operation=>operation.type==='correct'?`<span class="diff-correct">${e(operation.actual)}</span>`:operation.type==='missing'?`<span class="diff-missing" title="漏写">[漏] ${e(operation.expected)}</span>`:operation.type==='extra'?`<span class="diff-extra" title="多写">[多] ${e(operation.actual)}</span>`:`<span class="diff-extra" title="你的输入">${e(operation.actual)}</span><span class="diff-missing" title="原文对应词">→ ${e(operation.expected)}</span>`).join(' ')}</div></section>`;
     }
 
     renderSpell() {
@@ -146,7 +146,7 @@
     renderRetell() {
       const lesson=this.lesson(), keywords=this.keywords(), e=this.escape;
       const outlines=(Array.isArray(lesson.keyPoints)?lesson.keyPoints:typeof lesson.keyPoints==='string'?[lesson.keyPoints]:[]).filter(Boolean).slice(0,5);
-      return `<div class="output-intro"><h3>用自己的英文，把内容讲一遍</h3><p>${e(lesson.title)} · 参考关键词，用自己的话写至少5个英文单词。反馈只统计所列关键词／短语的精确覆盖，不评判语法、事实或表达质量。</p></div><div class="retell-keywords">${keywords.map(keyword=>`<span class="keyword ${this.result?(this.result.covered.includes(keyword)?'covered':'missing'):''}">${e(keyword)}</span>`).join('')}</div>${outlines.length?`<div class="output-intro"><strong>已有内容要点</strong>${outlines.map(point=>`<p>${e(typeof point==='string'?point:point.en || point.text || point.title || '')}</p>`).join('')}</div>`:''}<div class="output-actions">${this.originalButton()}</div>${this.originalHTML(this.paragraphs())}${this.textarea('试着用自己的英文复述主要内容……')}${this.result?`<section class="output-result"><h3>关键词覆盖率 ${this.result.score}%</h3><p>已覆盖：${e(this.result.covered.join('、') || '暂无')}</p><p>未覆盖：${e(this.result.missing.join('、') || '全部覆盖')}</p><p class="small-note">共写 ${this.result.wordCount} 词。这项结果只表示关键词出现情况，不代表复述质量评分。可展开原文自行对照。</p></section>`:''}${this.actions()}`;
+      return `<div class="output-intro"><h3>用自己的英文，把内容讲一遍</h3><p>${e(lesson.title)} · 参考关键词，用自己的话写至少5个英文单词。提交后会检查常见语法并给出修改建议；内容覆盖率单独按所列关键词和短语计算。</p></div><div class="retell-keywords">${keywords.map(keyword=>`<span class="keyword ${this.result?(this.result.covered.includes(keyword)?'covered':'missing'):''}">${e(keyword)}</span>`).join('')}</div>${outlines.length?`<div class="output-intro"><strong>已有内容要点</strong>${outlines.map(point=>`<p>${e(typeof point==='string'?point:point.en || point.text || point.title || '')}</p>`).join('')}</div>`:''}<div class="output-actions">${this.originalButton()}</div>${this.originalHTML(this.paragraphs())}${this.textarea('试着用自己的英文复述主要内容……')}${this.result?`<section class="output-result"><h3>内容覆盖率（关键词）${this.result.score}%</h3><p>已覆盖：${e(this.result.covered.join('、') || '暂无')}</p><p>未覆盖：${e(this.result.missing.join('、') || '全部覆盖')}</p><p class="small-note">共写 ${this.result.wordCount} 词。此分数只衡量关键词覆盖，语法问题与修改建议在下方单独显示。可展开原文自行对照。</p></section>`:''}${this.actions()}`;
     }
 
     record(score,details) {
@@ -163,7 +163,8 @@
         const paragraph=this.paragraphs()[this.paragraphIndex];
         if(!paragraph)return;
         this.result=compareWords(paragraph.en,this.answer);
-        this.record(this.result.score,{paragraph:this.paragraphIndex+1,answer:this.answer,...this.result});
+        this.checkGrammar(false);
+        this.record(this.result.score,{paragraph:this.paragraphIndex+1,answer:this.answer,...this.result,grammarIssues:this.grammarIssues,grammarChecked:!!global.StudyGrammar});
       }else if(this.mode==='spell'){
         const items=this.spellWords();
         if(!items.length || !items.some((_,index)=>String(this.spellAnswers[index] || '').trim())){this.notify('至少填写一个单词，再提交答案。');return;}
@@ -176,7 +177,8 @@
         if(wordCount<5){this.notify('再多写一点，至少用5个英文单词复述。');return;}
         const keywords=this.keywords(), text=' '+canonical(this.answer)+' ', covered=keywords.filter(keyword=>text.includes(' '+canonical(keyword)+' ')), missing=keywords.filter(keyword=>!covered.includes(keyword));
         this.result={covered,missing,wordCount,score:keywords.length?Math.round(covered.length/keywords.length*100):0};
-        this.record(this.result.score,{...this.result,feedbackType:'keyword-coverage',answer:this.answer});
+        this.checkGrammar(false);
+        this.record(this.result.score,{...this.result,feedbackType:'keyword-coverage',answer:this.answer,grammarIssues:this.grammarIssues,grammarChecked:!!global.StudyGrammar});
       }
       this.redraw();
     }

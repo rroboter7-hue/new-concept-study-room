@@ -4,7 +4,7 @@
   // A limited local rule checker: suggestions are not a complete grammar assessment.
   // Only the first 10,000 UTF-16 characters are checked; no text is sent online.
   const MAX_LENGTH=10000;
-  const past={went:'go',saw:'see',ate:'eat',took:'take',had:'have',made:'make',wrote:'write',bought:'buy',brought:'bring',gave:'give',spoke:'speak',slept:'sleep',ran:'run',did:'do',drank:'drink',drove:'drive',came:'come',knew:'know',found:'find',thought:'think'};
+  const past={went:'go',saw:'see',ate:'eat',took:'take',had:'have',made:'make',wrote:'write',bought:'buy',brought:'bring',gave:'give',spoke:'speak',slept:'sleep',ran:'run',did:'do',drank:'drink',drove:'drive',came:'come',knew:'know',found:'find',thought:'think',heard:'hear'};
   const gerunds={go:'going',see:'seeing',meet:'meeting',hear:'hearing',visit:'visiting',work:'working',learn:'learning',receive:'receiving',get:'getting',read:'reading',watch:'watching',travel:'travelling',speak:'speaking',play:'playing',swim:'swimming',dance:'dancing',sing:'singing',cook:'cooking',do:'doing',run:'running',write:'writing',live:'living',study:'studying'};
   const ingToBase=Object.fromEntries(Object.entries(gerunds).map(([base,ing])=>[ing,base]));
   ingToBase.traveling='travel';
@@ -13,13 +13,33 @@
   const ingPattern=Object.keys(ingToBase).join('|');
   const modalPattern='can|could|must|should|would|may|might|will|shall';
   const gap='[ \\t]+';
+  const modalWithNegative='(?:'+modalPattern+'|can[\'’]t|cannot|(?:could|must|should|would|might)n[\'’]t|won[\'’]t|shan[\'’]t)(?:'+gap+'not)?';
   const rules=[];
   const add=(id,regex,replacement,message,confidence='high',guard)=>rules.push({id,regex,replacement,message,confidence,guard});
   const caseLike=(original,replacement)=>original===original.toUpperCase() && /[A-Z]/.test(original)?replacement.toUpperCase():/^[A-Z]/.test(original)?replacement[0].toUpperCase()+replacement.slice(1):replacement;
   const firstCase=(original,replacement)=>/^[A-Z]/.test(original)?replacement[0].toUpperCase()+replacement.slice(1):replacement;
   const apostrophe=text=>text.includes('’')?'’':"'";
   const following=(text,match)=>text.slice(match.index+match[0].length).replace(/^[ \t]+/,'');
-  const modalGuard=(match,text)=>{
+  function quotationRanges(text){
+    const ranges=[];
+    let open=null;
+    for(let index=0;index<text.length;index++){
+      const char=text[index],previous=text[index-1]||'',next=text[index+1]||'';
+      // Contraction apostrophes are part of words, not quotation boundaries.
+      if((char==="'" || char==='’') && /[A-Za-z]/.test(previous) && /[A-Za-z]/.test(next))continue;
+      if(open){
+        if(char===open.close){ranges.push({start:open.start,end:index+1});open=null;}
+      }else if(char==='"' || char==='“' || char==='‘' || (char==="'" && !/[A-Za-z0-9]/.test(previous) && /\S/.test(next))){
+        open={start:index,close:char==='“'?'”':char==='‘'?'’':char};
+      }
+    }
+    return ranges;
+  }
+  const isQuotation=(match,ranges)=>ranges.some(range=>match.index>range.start && match.index+match[0].length<range.end);
+  const modalGuard=(match,text,quotations)=>{
+    if(isQuotation(match,quotations))return false;
+    // A capitalized surname can be a question subject: "Can Heard play?"
+    if(/^[A-Z][a-z]+$/.test(match[2]||''))return false;
     const before=text.slice(Math.max(0,match.index-50),match.index);
     const previous=before.match(/([A-Za-z]+)[ \t]+$/)?.[1]?.toLowerCase();
     // "the will to live" and "a can opening tool" contain nouns, not modals.
@@ -30,11 +50,12 @@
   add('i-be',/\bI[ \t]+(?:is|are)\b/gi,()=> 'I am','主语 I 通常与 am 搭配。');
   add('singular-be',/\b(he|she|it)[ \t]+(?:am|are)\b/gi,m=>m[1]+' is','he / she / it 通常与 is 搭配。');
   add('plural-be',/\b(they|we|you)[ \t]+(?:is|am)\b/gi,m=>m[1]+' are','they / we / you 通常与 are 搭配。');
+  add('plural-past-be',/\b(they|we|you)[ \t]+was(n['’]t)?\b/gi,m=>m[1]+' were'+(m[2]||''),'一般过去时中，they / we / you 通常与 were 搭配；否定式用 weren’t。','high',(m,text,quotations)=>!isQuotation(m,quotations));
   add('singular-dont',/\b(he|she|it)[ \t]+don['’]t\b/gi,m=>m[1]+' doesn'+apostrophe(m[0])+'t','一般现在时中，he / she / it 的否定式通常用 doesn’t。');
   add('plural-doesnt',/\b(they|we|you)[ \t]+doesn['’]t\b/gi,m=>m[1]+' don'+apostrophe(m[0])+'t','一般现在时中，they / we / you 的否定式通常用 don’t。');
   add('did-base',new RegExp('\\b(did(?:n[\'’]t|'+gap+'not)?)'+gap+'('+pastPattern+')\\b','gi'),m=>m[1]+' '+past[m[2].toLowerCase()],'did / didn’t 后通常使用动词原形；若 saw 表示“锯”，请结合语境判断。','medium');
   add('modal-no-to',new RegExp('\\b('+modalPattern+')'+gap+'to'+gap+'('+basePattern+')\\b','gi'),m=>m[1]+' '+m[2],'情态动词后通常直接接动词原形，不加 to。','high',modalGuard);
-  add('modal-past',new RegExp('\\b('+modalPattern+')'+gap+'('+Object.keys(past).filter(word=>word!=='saw').join('|')+')\\b','gi'),m=>m[1]+' '+past[m[2].toLowerCase()],'情态动词后通常使用动词原形，而非过去式。','high',modalGuard);
+  add('modal-past',new RegExp('\\b('+modalWithNegative+')'+gap+'('+Object.keys(past).filter(word=>word!=='saw').join('|')+')\\b','gi'),m=>m[1]+' '+past[m[2].toLowerCase()],'情态动词（包括 not / n’t 否定式）后通常使用动词原形，而非过去式。','high',modalGuard);
   add('modal-ing',new RegExp('\\b('+modalPattern+')'+gap+'('+ingPattern+')\\b','gi'),m=>m[1]+' '+ingToBase[m[2].toLowerCase()],'情态动词后通常使用动词原形；进行时需要 be + -ing。','medium',modalGuard);
 
   const anWords='hour|honest|honesty|honor|honour|honorable|honourable|heir|heirloom|apple|orange|egg|elephant|umbrella|idea|animal|office|engine|answer|error|uncle|aunt|island|airplane|airport|interview|invitation|interesting|important|easy|old|empty|excellent|American|English';
@@ -64,12 +85,12 @@
   });
 
   function check(text) {
-    const source=String(text ?? '').slice(0,MAX_LENGTH), candidates=[];
+    const source=String(text ?? '').slice(0,MAX_LENGTH), candidates=[], quotations=quotationRanges(source);
     for(const rule of rules){
       rule.regex.lastIndex=0;
       let match;
       while((match=rule.regex.exec(source))!==null){
-        if(rule.guard && !rule.guard(match,source))continue;
+        if(rule.guard && !rule.guard(match,source,quotations))continue;
         const replacement=caseLike(match[0],rule.replacement(match));
         if(replacement===match[0])continue;
         candidates.push({id:rule.id+'-'+match.index+'-'+(match.index+match[0].length),start:match.index,end:match.index+match[0].length,original:match[0],replacement,message:rule.message,rule:rule.id,confidence:rule.confidence});

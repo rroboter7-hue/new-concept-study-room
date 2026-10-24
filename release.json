@@ -1,0 +1,16 @@
+{
+  "build": "2026-10-24-book2-review",
+  "preparedAt": "2026-10-24T09:03:32.254Z",
+  "book2": {
+    "book": 2,
+    "total": 96,
+    "proofread": 96,
+    "draft": 0,
+    "corrections": 203,
+    "sourceSha256": "30f1219bd738cfbfea00e8bc8e1b51f752a3eb1d47c87090f0120ded0a203633",
+    "sourceUrl": "resources/30f1219bd738cfbf.pdf",
+    "candidateSha256": "6dab6504246da5dd35451b93f34ca4e102ac936468b2d4d8400018bb647e3ae3"
+  },
+  "staticFiles": 1551,
+  "staticBytes": 225226350
+}
