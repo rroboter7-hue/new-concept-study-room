@@ -1,6 +1,6 @@
 {
-  "build": "2026-10-26-reliable-learning-pilot-v3",
-  "preparedAt": "2026-10-26T05:48:48.056Z",
+  "build": "2026-10-26-reliable-learning-pilot-v4",
+  "preparedAt": "2026-10-26T05:58:10.366Z",
   "book2": {
     "book": 2,
     "total": 96,
@@ -31,5 +31,5 @@
     "physicalPhoneKeyboardVerified": false
   },
   "staticFiles": 1663,
-  "staticBytes": 395753490
+  "staticBytes": 395753551
 }
