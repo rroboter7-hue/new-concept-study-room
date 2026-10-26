@@ -1,6 +1,6 @@
 {
   "build": "2026-10-26-book34-translations",
-  "preparedAt": "2026-10-26T09:22:13.039292+00:00",
+  "preparedAt": "2026-10-26T09:25:34.914493+00:00",
   "book2": {
     "book": 2,
     "total": 96,
@@ -103,10 +103,11 @@
       8,
       9,
       10
-    ]
+    ],
+    "notesOriginsExplicit": true
   },
   "staticFiles": 1984,
-  "staticBytes": 810416687,
+  "staticBytes": 810418117,
   "nativeearsAdvancedAudio": {
     "books": {
       "3": 60,

@@ -28,4 +28,4 @@ Corrections include the paper-money team's name in Book 3 lesson 7; source-neutr
 
 Run `node dev/build-advanced-language.cjs` to reproduce the browser payload and `node --test` for the complete regression suite. Browser evidence is saved outside the repository under the task's `outputs/book34-language` directory.
 
-Final local regression after preserving the concurrent public mobile-navigation and daily-output release: 488 tests passed, zero failed. Browser checks covered 320/390-pixel widths, Book 3/4 first and last lessons, dialogue labels, source links, matched-form highlighting and a corrected answer changing the result from 5/6 to 6/6.
+Final local regression after preserving the concurrent public mobile-navigation and daily-output release: 490 tests passed, zero failed. Browser checks covered 320/390-pixel widths, Book 3/4 first and last lessons, dialogue labels, source links, matched-form highlighting and a corrected answer changing the result from 5/6 to 6/6.
