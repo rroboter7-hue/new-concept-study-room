@@ -1,5 +1,5 @@
 {
-  "build": "2026-10-26-reliable-learning-pilot",
+  "build": "2026-10-26-book34-audio",
   "preparedAt": "2026-10-26T05:33:46.465Z",
   "book2": {
     "passages": 96,
@@ -26,5 +26,17 @@
     "physicalPhoneKeyboardVerified": false
   },
   "staticFiles": 1663,
-  "staticBytes": 395751508
+  "staticBytes": 395751508,
+  "nativeearsAdvancedAudio": {
+    "books": {
+      "3": 60,
+      "4": 48
+    },
+    "files": 108,
+    "bytes": 360299925,
+    "seriesUrls": [
+      "https://nativeears.mojoru.org/series/48",
+      "https://nativeears.mojoru.org/series/47"
+    ]
+  }
 }
