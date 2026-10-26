@@ -1,0 +1,9 @@
+{
+  "name": "new-concept-study-room",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "test": "node --test",
+    "start": "node dev/serve.cjs"
+  }
+}
