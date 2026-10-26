@@ -1,6 +1,6 @@
 {
-  "build": "2026-10-26-reviewed-mobile-provenance",
-  "preparedAt": "2026-10-26T09:22:48.292Z",
+  "build": "2026-10-26-practice-progress-refresh",
+  "preparedAt": "2026-10-26T09:28:54.318Z",
   "book2": {
     "book": 2,
     "total": 96,
@@ -107,7 +107,7 @@
     "notesOriginsExplicit": true
   },
   "staticFiles": 1984,
-  "staticBytes": 810418117,
+  "staticBytes": 810418176,
   "nativeearsAdvancedAudio": {
     "books": {
       "3": 60,
