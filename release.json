@@ -1,6 +1,6 @@
 {
-  "build": "2026-10-26-free-batch2",
-  "preparedAt": "2026-10-26T07:02:29.505237+00:00",
+  "build": "2026-10-26-daily-output",
+  "preparedAt": "2026-10-26T08:25:31.082Z",
   "book2": {
     "book": 2,
     "total": 96,
@@ -139,10 +139,23 @@
       "l011-turn",
       "l096-spectacle"
     ],
-    "simulatedRetestBoundariesVerified": true
+    "simulatedRetestBoundariesVerified": true,
+    "dailyOutputCoach": {
+      "dailySmallBatches": true,
+      "reviewCardsMaximum": 3,
+      "productiveTargetPerDay": 1,
+      "wordAndPhraseFiveSentences": true,
+      "selfExplanation": true,
+      "textRetelling": true,
+      "assistanceEvidence": true,
+      "independentObjectiveReviewOnly": true,
+      "browserLocal": true,
+      "automaticSemanticOrSpeakingScore": false,
+      "intervalsAreProductSchedule": true
+    }
   },
-  "staticFiles": 1811,
-  "staticBytes": 785331575,
+  "staticFiles": 1842,
+  "staticBytes": 785626316,
   "nativeearsAdvancedAudio": {
     "books": {
       "3": 60,

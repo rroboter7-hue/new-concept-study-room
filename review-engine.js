@@ -7,6 +7,10 @@
  const integer=(v,min,max)=>Number.isInteger(v)&&v>=min&&v<=max;
  const nowOf=options=>timestamp(options?.now)?options.now:Date.now();
  const validId=id=>typeof id==='string'&&id.startsWith('review:')&&id.length<=8000;
+ function cleanEvidence(value){
+  if(!value||typeof value!=='object'||typeof value.correct!=='boolean'||typeof value.assisted!=='boolean'||typeof value.objective!=='boolean'||!['word','phrase','grammar'].includes(value.kind)||!timestamp(value.at))return null;
+  return {correct:value.correct,assisted:value.assisted,objective:value.objective,kind:value.kind,answer:text(value.answer,10000),at:value.at};
+ }
  const own=(value,key)=>value&&typeof value==='object'&&!Array.isArray(value)?Object.getOwnPropertyDescriptor(value,key)?.value:undefined;
  function dayKey(at=Date.now()){return new Date(at+OFFSET).toISOString().slice(0,10);}
 
@@ -100,6 +104,8 @@
    state.cards[id]={stage:r.stage,dueAt:r.dueAt,createdAt:r.createdAt,revision:r.revision,
     repetitions:integer(r.repetitions,0,1000000)?r.repetitions:0,lapses:integer(r.lapses,0,1000000)?r.lapses:0,
     lastReviewedAt:timestamp(r.lastReviewedAt)?r.lastReviewedAt:null,lastRating:['again','hard','good'].includes(r.lastRating)?r.lastRating:null};
+   if(r.assistance&&r.assistance.revision===r.revision&&timestamp(r.assistance.at))state.cards[id].assistance={revision:r.revision,at:r.assistance.at,reason:text(r.assistance.reason,100)};
+   const evidence=cleanEvidence(r.lastEvidence);if(evidence)state.cards[id].lastEvidence=evidence;
   }
   for(const [day,entry] of Object.entries(raw.daily||{}).filter(([d])=>/^\d{4}-\d{2}-\d{2}$/.test(d)).sort(([a],[b])=>b.localeCompare(a)).slice(0,90)){
    const answered=Array.isArray(entry?.answered)?entry.answered.filter(validId).slice(0,20000):[];
@@ -149,6 +155,13 @@
   return state;
  }
 
+ function assist(raw,id,options={}){
+  const state=sanitize(raw),record=state.cards[id],now=nowOf(options);
+  if(!record||record.revision!==options.revision||record.dueAt>now)return {accepted:false,changed:false,state};
+  if(record.assistance?.revision===record.revision)return {accepted:true,changed:false,state};
+  record.assistance={revision:record.revision,at:now,reason:text(options.reason,100)||'reference'};
+  return {accepted:true,changed:true,state};
+ }
  // Expansion questions have their own IDs. Resolve their verified provenance
  // through the installed bank instead of guessing a vocabulary card by its word.
  function revisitQuestionMistakes(raw,cards,lessonId,questionIds,options={}){
@@ -172,12 +185,16 @@
  function rate(raw,id,rating,options={}){
   const state=sanitize(raw),record=state.cards[id],now=nowOf(options);
   if(!record||!['again','hard','good'].includes(rating)||!integer(options.revision,0,1000000)||record.revision!==options.revision||record.dueAt>now)return {accepted:false,state};
+  const supplied=Object.prototype.hasOwnProperty.call(options,'evidence'),evidence=supplied?cleanEvidence({...options.evidence,at:now}):null;
+  if(rating==='good'&&(record.assistance?.revision===record.revision||supplied&&(!evidence||!evidence.correct||evidence.assisted||!evidence.objective||!evidence.answer)))return {accepted:false,state,reason:'independent-correct-required'};
+  if(evidence){evidence.assisted=evidence.assisted||record.assistance?.revision===record.revision;record.lastEvidence=evidence;}
   if(rating==='good'){
    record.stage=Math.min(INTERVALS.length,record.stage+1);
    record.dueAt=now+INTERVALS[record.stage-1]*DAY;
   }else if(rating==='hard')record.dueAt=now+DAY;
   else {record.stage=Math.max(0,record.stage-1);record.dueAt=now+600000;record.lapses++;}
   record.revision++;record.repetitions++;record.lastReviewedAt=now;record.lastRating=rating;
+  delete record.assistance;
   const day=dayKey(now),entry=state.daily[day]||(state.daily[day]={answered:[]});
   if(!entry.answered.includes(id))entry.answered.push(id);
   return {accepted:true,state,nextDueAt:record.dueAt};
@@ -215,5 +232,5 @@
   const answer=normalize(input);
   return {correct:Boolean(answer&&answerForms(card).includes(answer)),expected:card?.target||'',answer:String(input??'')};
  }
- global.StudyReview={hasStudied,matchRecurrences,cardsForLessons,sanitize,enroll,queue,revisitMistakes,revisitQuestionMistakes,rate,stats,dayKey,checkAnswer,hasPhrase,intervalDays:INTERVALS.slice()};
+ global.StudyReview={hasStudied,matchRecurrences,cardsForLessons,sanitize,enroll,queue,revisitMistakes,revisitQuestionMistakes,assist,rate,stats,dayKey,checkAnswer,hasPhrase,intervalDays:INTERVALS.slice()};
 })(window);
