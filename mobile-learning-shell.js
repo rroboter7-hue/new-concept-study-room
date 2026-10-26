@@ -1,7 +1,8 @@
-/* Optional mobile presentation shell. App state and audio remain owned by app.js. */
+/* Responsive mobile presentation shell. App state and audio remain owned by app.js. */
 (function (global) {
   'use strict';
   const MOBILE_QUERY = '(max-width: 760px)';
+  const BOOK_NAMES = ['', '第一册', '第二册', '第三册', '第四册'];
   const FOCUSABLE = 'button:not([disabled]),a[href],input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])';
   const EDITABLE_EXCLUSIONS = new Set(['button', 'submit', 'reset', 'checkbox', 'radio', 'range', 'hidden', 'color', 'file']);
   const NAV = [
@@ -32,7 +33,7 @@
     constructor(options = {}) {
       this.options = options;
       this.pilotMode = new URLSearchParams(global.location.search).get('pilot');
-      this.enabled = this.pilotMode === '1' || this.pilotMode === 'all';
+      this.enabled = options.enabled !== false;
       this.destroyed = false;
       this.mobile = false;
       this.drawerOpen = false;
@@ -59,6 +60,7 @@
       this.mount();
       this.listen(document, 'click', event => this.captureLesson(event), true);
       this.listen(document, 'click', event => this.click(event));
+      this.listen(document, 'change', event => this.changeBook(event));
       this.listen(document, 'keydown', event => this.keydown(event), true);
       this.listen(document, 'focusin', event => {
         if (this.drawerOpen && !this.dialog.contains(event.target)) this.closeButton.focus();
@@ -98,8 +100,9 @@
     }
 
     mount() {
-      this.header = element('header', 'mls-header', '<div class="mls-brand"><strong>知新</strong><span>'+(this.pilotMode==='all'?'第二册 · 全96课':'第二册 · 1–10课试学')+'</span></div><button type="button" class="mls-course-button" data-mobile-action="open-courses" aria-haspopup="dialog" aria-expanded="false" aria-controls="mls-course-drawer">选课 ' + icon('M9 6h12M9 12h12M9 18h12M3 6h1m-1 6h1m-1 6h1') + '</button>');
-      this.header.querySelector('.mls-brand').innerHTML = '<details class="mls-learning-menu"><summary aria-label="打开学习菜单"><span class="mls-menu-mark">知新</span><strong class="mls-header-lesson">第1课</strong></summary><div class="mls-menu-items"><button type="button" data-mobile-tab="reading">阅读课程</button><button type="button" data-mobile-tab="usage">知识讲解</button><button type="button" data-mobile-tab="phrases">习惯用法</button><button type="button" data-mobile-action="today-tasks">今日任务</button><button type="button" data-mobile-view="daily-review">每日复习</button><button type="button" data-mobile-view="words">我的生词本</button><button type="button" data-mobile-view="records">学习记录</button><button type="button" data-mobile-view="game">闯关挑战</button><button type="button" data-mobile-view="library">教材资料</button><button type="button" data-mobile-action="reading-tools">译文、音频与来源</button></div></details>';
+      this.header = element('header', 'mls-header', '<div class="mls-brand"></div><select class="mls-book-select" data-mobile-book aria-label="选择分册">'+BOOK_NAMES.slice(1).map((name,i)=>'<option value="'+(i+1)+'">'+name+'</option>').join('')+'</select><button type="button" class="mls-course-button" data-mobile-action="open-courses" aria-haspopup="dialog" aria-expanded="false" aria-controls="mls-course-drawer">选课 ' + icon('M9 6h12M9 12h12M9 18h12M3 6h1m-1 6h1m-1 6h1') + '</button>');
+      this.bookSelect = this.header.querySelector('[data-mobile-book]');
+      this.header.querySelector('.mls-brand').innerHTML = '<details class="mls-learning-menu"><summary aria-label="打开学习菜单"><span class="mls-menu-mark">知新</span><strong class="mls-header-lesson">第1课</strong></summary><div class="mls-menu-items"><span class="mls-book-summary"></span><button type="button" data-mobile-tab="reading">阅读课程</button><button type="button" data-mobile-tab="usage">知识讲解</button><button type="button" data-mobile-tab="phrases">习惯用法</button><button type="button" data-mobile-action="today-tasks">今日任务</button><button type="button" data-mobile-view="daily-review">每日复习</button><button type="button" data-mobile-view="words">我的生词本</button><button type="button" data-mobile-view="records">学习记录</button><button type="button" data-mobile-view="game">闯关挑战</button><button type="button" data-mobile-view="library">教材资料</button><button type="button" data-mobile-action="reading-tools">译文、音频与来源</button></div></details>';
       this.menu = this.header.querySelector('.mls-learning-menu');
       this.modeNav = element('nav','mls-mode-nav',[['reading','阅读'],['practice','练习'],['output','练写']].map(([tab,label])=>'<button type="button" role="tab" id="mls-tab-'+tab+'" data-mobile-tab="'+tab+'" aria-controls="reader-content" aria-selected="false">'+label+'</button>').join(''));
       this.modeNav.setAttribute('role','tablist');this.modeNav.setAttribute('aria-label','课程主要模式');
@@ -120,7 +123,7 @@
       this.overlay.hidden = true;
       this.backdrop = element('div', 'mls-course-backdrop');
       this.backdrop.setAttribute('aria-hidden', 'true');
-      this.dialog = element('section', 'mls-course-dialog', '<div class="mls-drawer-heading"><div><h2 id="mls-drawer-title">选择课程</h2><p>'+(this.pilotMode==='all'?'第二册 · 全96课':'第二册 · 前10课试学')+'</p></div><button type="button" class="mls-close-button" data-mobile-action="close-courses" aria-label="关闭课程目录">' + icon('m6 6 12 12M6 18 18 6') + '</button></div>');
+      this.dialog = element('section', 'mls-course-dialog', '<div class="mls-drawer-heading"><div><h2 id="mls-drawer-title">选择课程</h2><p class="mls-drawer-book-summary"></p></div><button type="button" class="mls-close-button" data-mobile-action="close-courses" aria-label="关闭课程目录">' + icon('m6 6 12 12M6 18 18 6') + '</button></div>');
       this.dialog.id = 'mls-course-drawer';
       this.dialog.setAttribute('role', 'dialog');
       this.dialog.setAttribute('aria-modal', 'true');
@@ -182,20 +185,25 @@
 
     update(next = {}) {
       if (!this.enabled || this.destroyed) return;
-      if (!['1','all'].includes(new URLSearchParams(global.location.search).get('pilot'))) {
-        this.destroy();
-        return;
-      }
       const previous = this.state;
       this.state = {...this.state, ...next};
       const lesson = Object.prototype.hasOwnProperty.call(next, 'lesson') ? next.lesson : (this.options.getLesson?.() || this.state.lesson);
       this.state.lesson = lesson;
-      const number = lesson?.book === 2 && lesson.number >= 1 && lesson.number <= (this.pilotMode==='all'?96:10) ? lesson.number : 1;
-      this.home.querySelector('.mls-continue-label').textContent = '继续学习第二册第' + number + '课';
-      this.home.querySelector('.mls-current-title').textContent = lesson?.book === 2 && lesson.number <= (this.pilotMode==='all'?96:10) ? String(lesson.title || '').replace(/^第\d+课\s*[·・]\s*/, '') : '从第一课开始，读懂一个故事';
-      const label=this.header?.querySelector('.mls-header-lesson');if(label)label.textContent=(lesson?.book&&lesson.book!==2?'第'+lesson.book+'册 · ':'')+'第'+(lesson?.number||number)+'课';
+      const selected = Number(this.options.getSelectedBook?.()),book = BOOK_NAMES[Number(lesson?.book)] ? Number(lesson.book) : (BOOK_NAMES[selected] ? selected : 2);
+      const selectedBook = BOOK_NAMES[selected] ? selected : book;
+      const number = Number.isInteger(lesson?.number) && lesson.number >= 1 ? lesson.number : 1;
+      const count = Number(this.options.getLessonCount?.(selectedBook));
+      const summary = BOOK_NAMES[selectedBook] + (Number.isInteger(count) && count >= 0 ? ' · ' + count + '课' : ' · 课程目录');
+      if(this.bookSelect)this.bookSelect.value=String(selectedBook);
+      const brandSummary=this.header?.querySelector('.mls-book-summary'),drawerSummary=this.dialog?.querySelector('.mls-drawer-book-summary');
+      if(brandSummary)brandSummary.textContent=summary;
+      if(drawerSummary)drawerSummary.textContent=summary;
+      this.home.querySelector('.mls-continue-label').textContent = lesson ? '继续学习'+BOOK_NAMES[book]+'第' + number + '课' : '开始学习'+BOOK_NAMES[selectedBook];
+      this.home.querySelector('.mls-current-title').textContent = lesson ? String(lesson.title || '').replace(/^第\d+(?:[–—-]\d+)?课\s*[·・]\s*/, '') : '选择一课，开始阅读';
+      const label=this.header?.querySelector('.mls-header-lesson');if(label)label.textContent=lesson?'第'+number+'课':BOOK_NAMES[selectedBook];
+      this.menu?.querySelector('summary')?.setAttribute('aria-label',lesson?BOOK_NAMES[book]+'第'+number+'课，打开学习菜单':'打开学习菜单，'+BOOK_NAMES[selectedBook]);
       const title=document.querySelector('#lesson-title');
-      if(title){if(!this.pageTitle){this.pageTitle=element('h2','mls-page-title');title.parentNode.insertBefore(this.pageTitle,title.nextSibling);}this.pageTitle.textContent=String(lesson?.textbook?.title||lesson?.title||'').replace(/^第\d+课\s*[·・]\s*/,'');}
+      if(title){if(!this.pageTitle){this.pageTitle=element('h2','mls-page-title');title.parentNode.insertBefore(this.pageTitle,title.nextSibling);}this.pageTitle.textContent=String(lesson?.textbook?.title||lesson?.title||'').replace(/^第\d+(?:[–—-]\d+)?课\s*[·・]\s*/,'');}
       const status = this.options.getStatus?.(lesson?.id);
       this.home.querySelector('.mls-lesson-status').textContent = typeof status === 'string' ? status : status?.completed ? '已学完 · 可以再读一遍' : '按自己的节奏，接着读';
       this.body.setAttribute('data-mls-view', this.state.view || 'study');
@@ -222,6 +230,17 @@
         this.playerButton.textContent = this.playerCollapsed ? '展开音频' : '收起音频';
         this.playerButton.setAttribute('aria-expanded', String(!this.playerCollapsed));
       }
+    }
+
+    changeBook(event) {
+      if (!this.mobile || this.destroyed || event.target !== this.bookSelect) return;
+      const book=Number(event.target.value);
+      if (!Number.isInteger(book) || !BOOK_NAMES[book]) return;
+      if(this.menu)this.menu.open=false;
+      this.body.classList.remove('mls-coach-open');
+      this.closeCourses({restoreFocus:false});
+      this.options.selectBook?.(book);
+      this.update();
     }
 
     click(event) {

@@ -38,4 +38,6 @@
 
 Real phone keyboard and actual next-day retention remain separate pending acceptance; responsive browser checks do not substitute for them.
 
-Integration note: retained subsequent sentence-aligned reading, twelve-task practice packs, first Book1 passages and daily-output coach from origin/main. Daily tasks stay reachable through the mobile menu. Final merged automated suite: 484 passing tests; real phone acceptance remains pending.
+Integration note: retained subsequent sentence-aligned reading, twelve-task practice packs, first Book1 passages and daily-output coach from origin/main. Daily tasks stay reachable through the mobile menu. Final merged automated suite: 517 passing tests; real phone acceptance remains pending.
+
+Preserved the subsequent public four-book selector, advanced translations and notes provenance. Mobile shell is enabled publicly by default; explicit enabled:false remains available to integrations.

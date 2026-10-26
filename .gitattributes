@@ -1,2 +1,2 @@
-*.pdf binary
-*.mp3 binary
+# Keep this generated artifact byte-identical to its Node builder on Windows.
+book34-language-support.js text eol=lf

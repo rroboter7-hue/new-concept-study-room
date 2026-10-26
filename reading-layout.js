@@ -46,7 +46,7 @@
   if(!Array.isArray(source))source=[source];
   return source.map(p=>typeof p==='string'?{en:p,zh:''}:p||{});
  }
- function model(lesson,alignments=root.BOOK2_READING_ALIGNMENT?.lessons||[]){
+ function model(lesson,alignments=[...(root.BOOK2_READING_ALIGNMENT?.lessons||[]),...(root.BOOK34_READING_ALIGNMENT?.lessons||[])]){
   const rows=[],groups=[],fallbacks=[];
   const entry=(Array.isArray(alignments)?alignments:[]).find(e=>e.lessonId===lesson?.id&&e.book===lesson?.book&&e.number===lesson?.number);
   let hasAligned=false;
