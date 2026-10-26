@@ -41,7 +41,7 @@
 
   function parse(rawText, selectedMode) {
     var result = { mode: mode(selectedMode), rawText: text(rawText), rows: [], groups: [], warnings: [] };
-    var current = null;
+    var current = null, seenKinds = null;
     function addWarning(code, message, row, group) {
       var warning = { code: code, message: message };
       if (row) warning.rowId = row.id;
@@ -52,6 +52,7 @@
     function startGroup() {
       var index = result.groups.length;
       current = { id: 'group-' + (index + 1), index: index, rowIds: [], originalRowId: null, warnings: [] };
+      seenKinds = new Set();
       result.groups.push(current);
     }
     result.rawText.split(/\r\n|\n|\r/).forEach(function (rawLine, lineIndex) {
@@ -72,6 +73,8 @@
       result.rows.push(row);
       if (current) {
         current.rowIds.push(row.id);
+        if(label&&seenKinds.has(row.kind))addWarning('duplicate-kind', '本组同一种句型出现多次，已全部保留；请确认是否应分成不同的转换组。', row, current);
+        if(label)seenKinds.add(row.kind);
         if (row.kind === 'original' && row.text) current.originalRowId = row.id;
         if (row.kind === 'unlabeled') addWarning('unlabeled-row', '此行没有识别到句型标签，已完整保留；请补上标签后核对它所属的转换组。', row, current);
         if (!row.text) addWarning('empty-sentence', '标签后没有句子，请补充内容。', row, current);
