@@ -1,6 +1,6 @@
 {
-  "build": "2026-10-26-reading-polish",
-  "preparedAt": "2026-10-26T08:32:38.325853+00:00",
+  "build": "2026-10-26-book34-translations",
+  "preparedAt": "2026-10-26T09:12:48.569Z",
   "book2": {
     "book": 2,
     "total": 96,
@@ -13,8 +13,8 @@
   },
   "learning": {
     "canonicalAnswers": true,
-    "translatedLessons": 96,
-    "translatedParagraphs": 170,
+    "translatedLessons": 204,
+    "translatedParagraphs": 485,
     "pilotQuery": "pilot=1",
     "pilotLessons": [
       1,
@@ -111,7 +111,7 @@
     "book3": 60,
     "book4": 48,
     "originalWorkbookExercises": false,
-    "newFullTranslations": false
+    "newFullTranslations": true
   },
   "sentenceBatch": {
     "localBasicChecks": true,
@@ -136,7 +136,9 @@
     "actualStudiedSource": true,
     "modernProgressRecognized": true,
     "earlyPracticeNoScheduleWrites": true,
-    "dictionaryFallbackLabelled": true
+    "dictionaryFallbackLabelled": true,
+    "recordedPhraseForms": true,
+    "formsScopedToIntroducedSource": true
   },
   "staticSnapshotExcludesReleaseManifest": true,
   "readingLayout": {
@@ -146,10 +148,7 @@
     "speakerThoughtNoteLabels": true,
     "sharedSpeechSentenceIndexes": true,
     "translationGuard": "exact-lesson-and-paragraph-source",
-    "untranslatedBooksPreserved": [
-      3,
-      4
-    ],
+    "untranslatedBooksPreserved": [],
     "phoneSizeVerified": [
       390,
       844
@@ -166,7 +165,11 @@
         320,
         390
       ]
-    }
+    },
+    "book3SentenceAlignedLessons": 60,
+    "book3SentencePairs": 1301,
+    "book4SentenceAlignedLessons": 48,
+    "book4SentencePairs": 754
   },
   "book1": {
     "readingUnits": 10,
@@ -176,5 +179,27 @@
     "syntheticLessonAudio": 10,
     "syntheticWordAudioAdded": 93,
     "translationStatus": "not-reviewed"
+  },
+  "advancedLanguage": {
+    "books": {
+      "3": {
+        "lessons": 60,
+        "sentences": 1301,
+        "expressions": 326
+      },
+      "4": {
+        "lessons": 48,
+        "sentences": 754,
+        "expressions": 243
+      }
+    },
+    "label": "自编中文译文（非教材官方译文）",
+    "reviewStatus": "self-reviewed-with-independent-sentence-and-usage-spot-checks",
+    "exactSourceGuard": true,
+    "sourceBoundExamples": true,
+    "sourceFormsHighlighted": true,
+    "exampleTranslations": true,
+    "legacySourceNotesPreserved": true,
+    "fullLiveScriptBootstrapVerified": true
   }
 }

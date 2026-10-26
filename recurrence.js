@@ -1,7 +1,7 @@
 /* Pure, source-backed recurrence index. No storage, DOM, network, or inferred grammar. */
 (function (root) {
   'use strict';
-  var VERSION='1.2.0';
+  var VERSION='1.3.0';
   // An auditable allow-list, never a stemmer. Only the first token of verb phrases changes.
   var FORMS={
     be:['am','is','are','was','were','been','being'],have:['has','had','having'],do:['does','did','done','doing'],
@@ -74,6 +74,10 @@
     if(!base.length||base.length>12)return [];
     var patterns=[base],isVerb=kind==='usage'||!item.pos||/\b(?:v|vt|vi|verb)\b/i.test(String(item.pos));
     if(isVerb&&FORMS[base[0]])FORMS[base[0]].forEach(function(form){patterns.push([form].concat(base.slice(1)));});
+    if(kind==='usage')[item.matchedForm].concat(strings(item.variants).slice(0,20)).forEach(function(form){
+      if(typeof form!=='string')return;var recorded=tokens(form).map(function(t){return t.value;});
+      if(recorded.length&&recorded.length<=12&&!patterns.some(function(p){return p.join(' ')===recorded.join(' ');}))patterns.push(recorded);
+    });
     return patterns;
   }
   function phraseForms(phrase){var value=normalize(phrase),patterns=patternsFor({phrase:phrase},'usage');if(!patterns.length||patterns[0].join(' ')!==value)return value?[value]:[];return patterns.map(function(pattern){return pattern.join(' ');});}
@@ -105,12 +109,17 @@
           var label=String(kind==='vocabulary'?item.word||'':kind==='usage'?item.phrase||'':item.title||''),key=kind+':'+(kind==='grammar'?grammarKey(item):normalize(label));
           if(!label.trim()||key===kind+':'||inLesson.has(key))return;inLesson.add(key);
           var concept=concepts.get(key);
-          if(!concept){concept={key:key,kind:kind,label:label,meaning:String(item.meaning||''),patterns:kind==='grammar'?[]:patternsFor(item,kind),introductions:[]};concepts.set(key,concept);}
+          if(!concept){concept={key:key,kind:kind,label:label,meaning:String(item.meaning||''),patterns:[],introductions:[]};concepts.set(key,concept);}
+          if(kind!=='grammar')patternsFor(item,kind).forEach(function(values){
+            var pattern=concept.patterns.find(function(p){return p.values.join(' ')===values.join(' ');});
+            if(!pattern){pattern={values:values,sources:new Set()};concept.patterns.push(pattern);}
+            pattern.sources.add(lesson.id);
+          });
           concept.introductions.push({lesson:lesson,origin:introduction(lesson,item,kind,glossary)});
         });
       });
     });
-    concepts.forEach(function(c){c.patterns.forEach(function(pattern){var list=firstToken.get(pattern[0])||[];list.push({concept:c,pattern:pattern});firstToken.set(pattern[0],list);});});
+    concepts.forEach(function(c){c.patterns.forEach(function(entry){var pattern=entry.values,list=firstToken.get(pattern[0])||[];list.push({concept:c,pattern:pattern,sources:entry.sources});firstToken.set(pattern[0],list);});});
     function baseFor(lesson){
       if(cache.has(lesson.id))return cache.get(lesson.id);
       var hits=new Map();
@@ -121,16 +130,16 @@
           var ts=tokens(part.text);
           ts.forEach(function(token,i){
             (firstToken.get(token.value)||[]).forEach(function(candidate){
-              var c=candidate.concept,pattern=candidate.pattern;if(hits.has(c.key)||i+pattern.length>ts.length)return;
+              var c=candidate.concept,pattern=candidate.pattern,hitKey=c.key+'\0'+pattern.join(' ');if(hits.has(hitKey)||i+pattern.length>ts.length)return;
               for(var n=0;n<pattern.length;n++){
                 if(ts[i+n].value!==pattern[n])return;
                 if(n&&!/^[\s‘’“”"']*$/.test(part.text.slice(ts[i+n-1].end,ts[i+n].start)))return;
               }
               // The fixed noun phrase "living room" does not reuse the verb live.
               if(c.kind==='vocabulary'&&normalize(c.label)==='live'&&token.value==='living'&&ts[i+1]&&ts[i+1].value==='room')return;
-              var origins=prior(c);if(!origins.length)return;
+              var origins=prior(c).filter(function(origin){return candidate.sources.has(origin.lessonId);});if(!origins.length)return;
               var start=ts[i].start,end=ts[i+pattern.length-1].end,matched=part.text.slice(start,end),type=passageType(lesson,paragraph);
-              hits.set(c.key,{id:'recurrence:'+lesson.id+':'+c.key,key:c.key,kind:c.kind,label:c.label,meaning:origins[0].meaning,semanticMatch:false,matchedForm:matched,matchType:normalize(matched)===normalize(c.label)?'exact':'finite-inflection',
+              hits.set(hitKey,{id:'recurrence:'+lesson.id+':'+c.key,key:c.key,kind:c.kind,label:c.label,meaning:origins[0].meaning,semanticMatch:false,matchedForm:matched,matchType:normalize(matched)===normalize(c.label)?'exact':c.kind==='usage'&&!phraseForms(c.label).includes(normalize(matched))?'recorded-form':'finite-inflection',
                 origins:origins,evidence:{type:'passage-token-match',sentence:part.text,paragraphIndex:paragraphIndex,fromParagraph:true,sourceType:type.sourceType,sourceLabel:type.sourceLabel,
                   sourcePage:paragraph&&paragraph.sourcePage||lesson.textbook&&lesson.textbook.sourcePdfPage||lesson.sourcePage||null,matchStart:part.start+start,matchEnd:part.start+end}});
             });
@@ -153,7 +162,9 @@
         var chosen=origins.find(function(origin){return origin.studied;})||origins[0];
         return Object.assign({},hit,hit.kind==='grammar'?{}:{meaning:chosen.meaning,meaningStatus:chosen.meaningStatus,definitionSource:chosen.definitionSource},{origin:chosen,origins:origins,studied:chosen.studied,hasStudiedOrigin:chosen.studied,evidence:Object.assign({},hit.evidence)});
       });
-      return balancedPreview(rows).slice(0,limit);
+      var selected=new Map();
+      rows.forEach(function(row){var previous=selected.get(row.key);if(!previous||!previous.hasStudiedOrigin&&row.hasStudiedOrigin)selected.set(row.key,row);});
+      return balancedPreview(Array.from(selected.values())).slice(0,limit);
     }});
   }
   // Compatibility with the earlier call order; both entry points use one matcher.
