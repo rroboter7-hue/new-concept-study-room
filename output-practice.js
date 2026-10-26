@@ -42,7 +42,7 @@
         if (!button || !button.closest('#output-content')) return;
         try {
           switch(button.dataset.outputAction) {
-            case 'mode':this.options.sentencePractice?.flush();this.mode=button.dataset.outputMode;this.result=null;this.showOriginal=false;this.redraw();break;
+            case 'mode':this.options.sentencePractice?.flush();this.options.batchPractice?.flush();this.options.batchPractice?.cancel(false);this.mode=button.dataset.outputMode;this.result=null;this.showOriginal=false;this.redraw();break;
             case 'original':this.showOriginal=!this.showOriginal;this.redraw();break;
             case 'submit':this.submit();break;case 'grammar-check':this.checkGrammar();break;case 'grammar-apply':this.applyGrammar(Number(button.dataset.grammarIndex));break;case 'grammar-all':this.applyGrammar(-1);break;
             case 'retry':this.result=null;this.answer='';this.spellAnswers={};this.showOriginal=false;this.grammarIssues=null;this.grammarText='';this.redraw();break;
@@ -77,7 +77,7 @@
     static compareWords(expected,actual) {return compareWords(expected,actual);}
     static countWords(text) {return words(text).length;}
     reset() {this.grammarIssues=null;this.grammarText='';this.mode='write';this.paragraphIndex=0;this.answer='';this.spellAnswers={};this.result=null;this.showOriginal=false;this.scrambles={};}
-    setLesson(lesson) {if (lesson?.id!==this.current?.id) {this.options.sentencePractice?.flush();this.reset();}this.current=lesson || null;}
+    setLesson(lesson) {if (lesson?.id!==this.current?.id) {this.options.sentencePractice?.flush();this.options.batchPractice?.flush();this.options.batchPractice?.cancel(false);this.reset();}this.current=lesson || null;}
     lesson() {const lesson=this.options.getLesson?.() || this.current;if (lesson?.id!==this.current?.id)this.setLesson(lesson);else this.current=lesson;return lesson;}
     paragraphs() {return (this.lesson()?.paragraphs || []).filter(paragraph=>paragraph && typeof paragraph.en==='string' && paragraph.en.trim());}
     notify(message) {this.options.toast?.(message);}
@@ -116,8 +116,10 @@
       }
       const modes=[['write','分段默写'],['spell','单词拼写'],['retell','英文复述']];
       if(sentenceAvailable)modes.push(['sentences','五句造句']);
+      if(this.options.batchPractice)modes.push(['batch','批量检查']);
       const tabs=modes.map(([mode,label])=>'<button type="button" class="output-tab '+(this.mode===mode?'active':'')+'" data-output-action="mode" data-output-mode="'+mode+'" aria-pressed="'+(this.mode===mode)+'">'+label+'</button>').join('');
       if(this.mode==='sentences'&&sentenceAvailable)return '<div class="output-tabs" aria-label="输出练习模式">'+tabs+'</div>'+this.options.sentencePractice.render();
+      if(this.mode==='batch'&&this.options.batchPractice)return '<div class="output-tabs" aria-label="输出练习模式">'+tabs+'</div>'+this.options.batchPractice.render();
       return '<div class="output-tabs" aria-label="输出练习模式">'+tabs+'</div>'+(this.mode==='spell'?this.renderSpell():this.mode==='retell'?this.renderRetell():this.renderWrite())+(this.mode!=='spell'?this.grammarHTML():'');
     }
 

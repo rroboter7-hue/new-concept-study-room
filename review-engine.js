@@ -7,7 +7,56 @@
  const integer=(v,min,max)=>Number.isInteger(v)&&v>=min&&v<=max;
  const nowOf=options=>timestamp(options?.now)?options.now:Date.now();
  const validId=id=>typeof id==='string'&&id.startsWith('review:')&&id.length<=8000;
+ const own=(value,key)=>value&&typeof value==='object'&&!Array.isArray(value)?Object.getOwnPropertyDescriptor(value,key)?.value:undefined;
  function dayKey(at=Date.now()){return new Date(at+OFFSET).toISOString().slice(0,10);}
+
+ function hasStudied(record){
+  const attempts=own(record,'attempts'),progress=own(record,'learningProgress');
+  return own(record,'completed')===true||typeof attempts==='number'&&Number.isFinite(attempts)&&Math.floor(attempts)>0||timestamp(own(progress,'readAt'))||timestamp(own(progress,'firstPracticedAt'));
+ }
+
+ function grammarIds(item,sourceId){
+  const values=[],ids=[];
+  for(const value of [item,own(item,'evidence'),own(item,'metadata')])for(const field of ['knowledgeId','conceptId','grammarConceptId']){const id=own(value,field);if(typeof id==='string'&&id.trim())values.push(id);}
+  const key=own(item,'key');if(typeof key==='string'&&key.startsWith('grammar:id:'))values.push(key.slice('grammar:id:'.length));
+  for(let value of values){
+   const scoped=value.match(/^knowledge:([^:]+):grammar:(.+)$/);
+   if(scoped){try{if(sourceId!==undefined&&decodeURIComponent(scoped[1])!==sourceId)return [];value=decodeURIComponent(scoped[2]);}catch{return [];}}
+   else if(value.startsWith('knowledge:'))return [];
+   value=normalize(value);if(value&&!ids.includes(value))ids.push(value);
+  }
+  return ids;
+ }
+
+ function matchRecurrences(cards,hits,options={}){
+  const seen=new Set(),studiedOnly=options.studiedOnly!==false;
+  return (Array.isArray(cards)?cards:[]).filter(card=>{
+   const id=own(card,'id'),sourceId=own(own(card,'sourceLesson'),'id'),kind=own(card,'kind');
+   if(typeof id!=='string'||typeof sourceId!=='string'||seen.has(id))return false;
+   const matches=(Array.isArray(hits)?hits:[]).some(hit=>{
+    if(!(Array.isArray(hit?.origins)?hit.origins:[]).some(origin=>own(origin,'lessonId')===sourceId&&(!studiedOnly||own(origin,'studied')===true)))return false;
+    if(hit.kind==='grammar')return kind==='grammar'&&grammarIds(hit).some(key=>grammarIds(card,sourceId).includes(key));
+    return kind===(hit.kind==='vocabulary'?'word':hit.kind==='usage'?'phrase':null)&&normalize(card.target)===normalize(hit.label)&&Boolean(normalize(hit.label));
+   });
+   if(matches)seen.add(id);return matches;
+  });
+ }
+
+ function lexicalCue(item,kind){
+  const rawMeaning=text(item.meaning),knownBad={make:'多模仿少创造',catch:'特殊疑问词',live:'国家城市'};
+  const unusable=item.needsContextReview===true||/未附(?:独立)?中文释义|未提供中文释义|暂无释义|待(?:补充|复核)|原笔记习惯表达/.test(rawMeaning)||knownBad[normalize(item.word)]===rawMeaning;
+  const definition=global.StudyRecurrence?.definitionFor(item,kind,global.STUDY_GLOSSARY),meaning=definition?definition.meaning:unusable?'':rawMeaning;
+  if(meaning)return {prompt:meaning,promptType:'meaning-recall'};
+  const example=text(item.example,1000),target=text(kind==='vocabulary'?item.word:item.phrase),forms=[text(item.matchedForm),target];
+  for(const form of forms.filter(Boolean)){
+   const escaped=form.replace(/[.*+?^${}()|[\]\\]/g,'\\$&').replace(/\s+/g,'\\s+'),pattern='(^|[^A-Za-z0-9’\'\\-])('+escaped+')(?=$|[^A-Za-z0-9’\'\\-])',match=new RegExp(pattern,'i').exec(example);
+   if(!match)continue;
+   const cloze=example.replace(new RegExp(pattern,'gi'),(_,prefix)=>prefix+'____');
+   if((cloze.match(/[A-Za-z]+/g)||[]).length<2)continue;
+   return {prompt:'根据来源例句补全表达：'+cloze,promptType:'source-cloze',matchedForm:match[2]};
+  }
+  return null;
+ }
 
  function cardsForLessons(lessons){
   const cards=[],seen=new Set();
@@ -23,17 +72,17 @@
    }
    for(const original of (lesson.vocabulary||[]).slice(0,100)){
     const v=registered?bank.wordForLesson(lesson.id,original?.word):original;
-    if(!v?.word||!v.meaning)continue;
-    add('word',v.word,v.meaning,{phonetic:text(v.phonetic,100),pos:text(v.pos,30),example:text(v.example,1000),...(v.conceptId?{conceptId:v.conceptId}:{})});
+    if(!v?.word)continue;const cue=lexicalCue(v,'vocabulary');if(!cue)continue;
+    add('word',v.word,cue.prompt,{...cue,phonetic:text(v.phonetic,100),pos:text(v.pos,30),example:text(v.example,1000),...(v.conceptId?{conceptId:v.conceptId}:{})});
    }
    for(const p of (lesson.usage||[]).slice(0,100)){
-    if(!p?.phrase||!p.meaning)continue;
-    add('phrase',p.phrase,p.meaning,{example:text(p.example,1000),explanation:text(p.note,1500),matchedForm:text(p.matchedForm,200),variants:Array.isArray(p.variants)?p.variants.slice(0,20).map(v=>text(v,200)).filter(Boolean):[]});
+    if(!p?.phrase)continue;const cue=lexicalCue(p,'usage');if(!cue)continue;
+    add('phrase',p.phrase,cue.prompt,{...cue,example:text(p.example,1000),explanation:text(p.note,1500),matchedForm:cue.matchedForm||text(p.matchedForm,200),variants:Array.isArray(p.variants)?p.variants.slice(0,20).map(v=>text(v,200)).filter(Boolean):[]});
    }
    for(const q of (registered?bank.quizForLesson(lesson.id):lesson.quiz||[]).slice(0,100)){
     if(q?.type==='vocabulary'||!Array.isArray(q?.options)||!integer(q.answer,0,q.options.length-1))continue;
     if(registered&&(!q.graded||!q.conceptId||seenConcepts.has(q.conceptId)))continue;if(q.conceptId)seenConcepts.add(q.conceptId);
-    add('grammar',q.options[q.answer],q.question,{options:q.options.map(x=>text(x,500)),answer:q.answer,explanation:text(q.explanation,2000),...(q.conceptId?{conceptId:q.conceptId}:{})});
+    add('grammar',q.options[q.answer],q.question,{options:q.options.map(x=>text(x,500)),answer:q.answer,explanation:text(q.explanation,2000),...(q.conceptId?{conceptId:q.conceptId}:{}),...(q.knowledgeId?{knowledgeId:q.knowledgeId}:{}),...(q.grammarConceptId?{grammarConceptId:q.grammarConceptId}:{})});
    }
   }
   return cards;
@@ -97,7 +146,7 @@
  }
 
  function answerForms(card){
-  const values=card?.kind==='phrase'?[card.target,card.matchedForm,...(Array.isArray(card.variants)?card.variants:[])]:[card?.target];
+  const values=card?.kind==='phrase'?[card.target,card.matchedForm,...(Array.isArray(card.variants)?card.variants:[])]:card?.promptType==='source-cloze'?[card.target,card.matchedForm]:[card?.target];
   return [...new Set(values.map(v=>text(v)).filter(Boolean).map(normalize).filter(Boolean))];
  }
 
@@ -117,5 +166,5 @@
   const answer=normalize(input);
   return {correct:Boolean(answer&&answerForms(card).includes(answer)),expected:card?.target||'',answer:String(input??'')};
  }
- global.StudyReview={cardsForLessons,sanitize,enroll,queue,rate,stats,dayKey,checkAnswer,hasPhrase,intervalDays:INTERVALS.slice()};
+ global.StudyReview={hasStudied,matchRecurrences,cardsForLessons,sanitize,enroll,queue,rate,stats,dayKey,checkAnswer,hasPhrase,intervalDays:INTERVALS.slice()};
 })(window);

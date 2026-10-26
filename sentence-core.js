@@ -237,7 +237,7 @@
       if (!sentence) return { kind: kind, label: LABELS[index], status: 'empty', issues: [], notes: notes };
       writtenCount++;
       if (typeof answers[kind] === 'string' && answers[kind].length > 400) issues.push('每句最多 400 个字符，请缩短后再检查。');
-      if (!target) issues.push('请先选择本轮目标词。');
+      if (!target) { if (options.requireTarget !== false) issues.push('请先选择本轮目标词。'); }
       else if (!matchesExpression(sentence, target)) issues.push('还未识别到目标词“' + target + '”或已支持的常见词形。');
       if (kind === 'combined') {
         if (!oldWord) issues.push('请先选择一个来自已学早期课程的旧词。');
