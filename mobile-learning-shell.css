@@ -1,4 +1,4 @@
-/* Scoped to the optional pilot. Existing desktop and non-pilot layout stay owned by styles.css. */
+/* Mobile chrome is scoped to the width breakpoint; desktop stays owned by styles.css. */
 .mls-header, .mls-learning-home, .mls-bottom-nav, .mls-player-toggle { display: none; }
 .mls-course-overlay[hidden] { display: none !important; }
 
@@ -20,6 +20,8 @@
   .mls-pilot.mls-mobile .mls-brand { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
   .mls-pilot.mls-mobile .mls-brand strong { color: var(--teal, #235b52); font-family: var(--serif); font-size: 25px; letter-spacing: 1px; line-height: 1.3; }
   .mls-pilot.mls-mobile .mls-brand span { color: #68796e; font-size: 11px; }
+  .mls-pilot.mls-mobile .mls-brand { flex: 1; }
+  .mls-pilot.mls-mobile .mls-book-select { flex: 0 1 108px; min-width: 0; max-width: 112px; min-height: 44px; padding: 8px 24px 8px 8px; border: 1px solid #cad9d0; border-radius: 8px; background: #fffefa; color: var(--teal, #235b52); font: inherit; font-size: 16px; }
   .mls-pilot.mls-mobile .mls-course-button { display: inline-flex; align-items: center; justify-content: center; flex-shrink: 0; gap: 8px; min-height: 44px; padding: 8px 13px; color: var(--teal, #235b52); border: 1px solid #cad9d0; border-radius: 8px; background: #fff; font-size: 14px; font-weight: 600; }
   .mls-course-button svg { width: 20px; height: 20px; }
   .mls-pilot.mls-mobile .mls-learning-home { display: block; padding: 17px; margin-bottom: 16px; border: 1px solid #d8e3da; border-radius: 11px; background: #edf4ee; }
