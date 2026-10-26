@@ -1,5 +1,5 @@
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),vm=require('node:vm');
-const file=path.join(__dirname,'new-concept/dist/practice-pack-core.js');
+const file=path.join(__dirname,'../practice-pack-core.js');
 function api(){const c={};c.window=c;vm.runInNewContext(fs.readFileSync(file,'utf8'),c);return c.StudyPracticePacks;}
 const fixture=require("./practice-pack-fixture.cjs");
 function ready(){const A=api(),f=fixture(),registry=A.create(f.manifest,f.lessons,f.bank);assert.equal(registry.issues.length,0);return {A,f,registry,pack:registry.get('l1')};}

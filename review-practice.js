@@ -10,10 +10,11 @@
   }
   cards(){const lessons=this.options.getLessons();if(this.lastLessons!==lessons){this.lastLessons=lessons;this.catalog=global.StudyReview.cardsForLessons(lessons);}return this.catalog;}
   reset(){this.active=null;this.revealed=false;this.input='';this.feedback=null;this.writing=false;}
-  clearFilters(){this.kind='';this.lessonId='';this.cardIds=null;this.reset();}
+  clearFilters(){this.kind='';this.lessonId='';this.cardIds=null;this.drillDone=new Set();this.reset();}
+  startDrill(ids){this.clearFilters();this.cardIds=new Set(ids);}
   state(){return this.options.getState();}
   scopedCards(){return this.cardIds?this.cards().filter(c=>this.cardIds.has(c.id)):this.cards();}
-  due(){return global.StudyReview.queue(this.state(),this.scopedCards(),{kind:this.kind,lessonId:this.lessonId});}
+  due(){if(this.cardIds){const state=global.StudyReview.sanitize(this.state());return this.scopedCards().filter(c=>state.cards[c.id]&&!this.drillDone?.has(c.id)&&(!this.kind||c.kind===this.kind)&&(!this.lessonId||c.sourceLesson.id===this.lessonId)).map(c=>({...c,progress:{...state.cards[c.id]}}));}return global.StudyReview.queue(this.state(),this.scopedCards(),{kind:this.kind,lessonId:this.lessonId});}
   render(){
    const E=this.options.escapeHTML,stats=global.StudyReview.stats(this.state(),this.scopedCards()),due=this.due();
    if(!this.active||!due.some(c=>c.id===this.active.id&&c.progress.revision===this.active.progress.revision)){this.reset();this.active=due[0]||null;}
@@ -21,13 +22,13 @@
    let body='';
    if(!card){
     const next=stats.nextDueAt?new Intl.DateTimeFormat('zh-CN',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'}).format(new Date(stats.nextDueAt)):'';
-    body='<div class="review-empty"><h3>'+(stats.enrolled?'当前没有到期项目':'从学过的一课开始')+'</h3><p>'+(stats.enrolled?(stats.todayRemaining?'今天还有稍后到期的项目，可届时再练。':'下一次复习'+(next?'：'+E(next):'会按学习情况安排')+'。'):'把已学课文加入复习后，系统会按到期时间安排单词、习惯用法和语法。')+'</p>'+(current?'<button class="button primary" data-review-action="enroll">把当前课加入每日复习</button>':'')+'</div>';
+    body='<div class="review-empty"><h3>'+(this.cardIds?'本轮旧知练习已完成':stats.enrolled?'当前没有到期项目':'从学过的一课开始')+'</h3><p>'+(stats.enrolled?(stats.todayRemaining?'今天还有稍后到期的项目，可届时再练。':'下一次复习'+(next?'：'+E(next):'会按学习情况安排')+'。'):'把已学课文加入复习后，系统会按到期时间安排单词、习惯用法和语法。')+'</p>'+(current?'<button class="button primary" data-review-action="enroll">把当前课加入每日复习</button>':'')+'</div>';
    }else{
     const source=card.sourceLesson;
     const input=card.kind==='grammar'?'<div class="review-choices">'+card.options.map((o,i)=>'<button class="quiz-option '+(this.input===o?'selected':'')+'" data-review-action="choice" data-review-option="'+i+'">'+E(o)+'</button>').join('')+'</div>':'<label class="review-input-label" for="daily-review-answer">'+(card.kind==='phrase'&&this.writing?'请用这个表达写一句英文':'请输入'+(card.kind==='word'?'英文单词':'英文表达'))+'</label><textarea id="daily-review-answer" class="review-answer" rows="'+(this.writing?4:2)+'" data-review-input spellcheck="false" autocomplete="off">'+E(this.input)+'</textarea>';
-    body='<div class="review-workspace"><section class="review-question"><div class="review-card-meta"><strong>'+KINDS[card.kind]+'</strong><button class="resource-text-button" data-review-action="source" data-review-source="'+E(source.id)+'">学自第'+source.book+'册第'+source.number+'课</button></div>'+(card.kind==='phrase'?'<div class="quiz-toolbar"><button class="quiz-mode '+(!this.writing?'active':'')+'" data-review-action="recall">短语回忆</button><button class="quiz-mode '+(this.writing?'active':'')+'" data-review-action="writing">用法造句</button></div>':'')+'<h3 class="review-prompt">'+E(card.kind==='phrase'&&this.writing?card.target:card.prompt)+'</h3>'+(card.kind==='word'?'<button class="button subtle" data-review-action="speak">听发音</button>':'')+input+'<div class="review-submit"><button class="button primary" data-review-action="check">提交并检查</button><button class="button subtle" data-review-action="reveal">查看答案</button></div><div data-review-feedback aria-live="polite">'+this.feedbackHTML()+'</div><div class="review-ratings"><button class="button review-again" data-review-action="rate" data-review-rating="again" '+(!this.revealed?'disabled':'')+'>忘记了</button><button class="button review-hard" data-review-action="rate" data-review-rating="hard" '+(!this.revealed?'disabled':'')+'>有点模糊</button><button class="button primary" data-review-action="rate" data-review-rating="good" '+(!this.revealed?'disabled':'')+'>记住了</button></div><p class="small-note">按实际回忆情况反馈，调整下次复习时间。</p></section><aside class="review-support"><h3>本题来自</h3><p>第'+source.book+'册 · 第'+source.number+'课</p><p class="english">'+E(source.title)+'</p><h3>间隔复习节奏</h3><ol class="review-schedule">'+global.StudyReview.intervalDays.map(d=>'<li>'+d+' 天后</li>').join('')+'</ol><p class="small-note">这是可调整的建议间隔；答错会提前再练。</p></aside></div>';
+    body='<div class="review-workspace"><section class="review-question"><div class="review-card-meta"><strong>'+KINDS[card.kind]+'</strong><button class="resource-text-button" data-review-action="source" data-review-source="'+E(source.id)+'">学自第'+source.book+'册第'+source.number+'课</button></div>'+(card.kind==='phrase'?'<div class="quiz-toolbar"><button class="quiz-mode '+(!this.writing?'active':'')+'" data-review-action="recall">短语回忆</button><button class="quiz-mode '+(this.writing?'active':'')+'" data-review-action="writing">用法造句</button></div>':'')+'<h3 class="review-prompt">'+E(card.kind==='phrase'&&this.writing?card.target:card.prompt)+'</h3>'+(card.kind==='word'?'<button class="button subtle" data-review-action="speak">听发音</button>':'')+input+'<div class="review-submit"><button class="button primary" data-review-action="check">提交并检查</button><button class="button subtle" data-review-action="reveal">查看答案</button></div><div data-review-feedback aria-live="polite">'+this.feedbackHTML()+'</div><div class="review-ratings"><button class="button review-again" data-review-action="rate" data-review-rating="again" '+(!this.revealed?'disabled':'')+'>忘记了</button><button class="button review-hard" data-review-action="rate" data-review-rating="hard" '+(!this.revealed?'disabled':'')+'>有点模糊</button><button class="button primary" data-review-action="rate" data-review-rating="good" '+(!this.revealed||this.feedback?.correct!==true?'disabled':'')+'>记住了</button></div><p class="small-note">先独立答对才能标记记住了；仅查看答案请选忘记了或有点模糊。</p></section><aside class="review-support"><h3>本题来自</h3><p>第'+source.book+'册 · 第'+source.number+'课</p><p class="english">'+E(source.title)+'</p><h3>间隔复习节奏</h3><ol class="review-schedule">'+global.StudyReview.intervalDays.map(d=>'<li>'+d+' 天后</li>').join('')+'</ol><p class="small-note">这是可调整的建议间隔；答错会提前再练。</p></aside></div>';
    }
-   this.container.innerHTML='<div class="view-heading"><div><h2>每日复习</h2><p>'+(this.cardIds?'正在练习本课复现的前课知识点。':'把学过的单词、习惯用法和语法，按到期时间再练一遍。')+'</p></div><button class="button subtle" data-review-action="backup">备份复习进度</button></div><div class="review-stats"><span>当前到期 <strong>'+stats.due+'</strong> 项</span><span>今天已练 <strong>'+stats.reviewedToday+'</strong> 项</span><label>内容 <select data-review-filter aria-label="筛选复习类型"><option value="">全部</option>'+Object.entries(KINDS).map(([k,v])=>'<option value="'+k+'" '+(this.kind===k?'selected':'')+'>'+v+'</option>').join('')+'</select></label>'+(this.kind||this.lessonId||this.cardIds?'<button class="button subtle" data-review-action="all">查看全部到期内容</button>':'')+'</div>'+body+'<p class="small-note">第一册和第二册的已学内容会一起进入队列。进度保存在当前浏览器，可用学习备份在其他设备恢复。</p>';
+   this.container.innerHTML='<div class="view-heading"><div><h2>每日复习</h2><p>'+(this.cardIds?'正在练习本课复现的已学知识；提前练习不改动原定到期时间。':'把学过的单词、习惯用法和语法，按到期时间再练一遍。')+'</p></div><button class="button subtle" data-review-action="backup">备份复习进度</button></div><div class="review-stats"><span>当前到期 <strong>'+stats.due+'</strong> 项</span><span>今天已练 <strong>'+stats.reviewedToday+'</strong> 项</span><label>内容 <select data-review-filter aria-label="筛选复习类型"><option value="">全部</option>'+Object.entries(KINDS).map(([k,v])=>'<option value="'+k+'" '+(this.kind===k?'selected':'')+'>'+v+'</option>').join('')+'</select></label>'+(this.kind||this.lessonId||this.cardIds?'<button class="button subtle" data-review-action="all">查看全部到期内容</button>':'')+'</div>'+body+'<p class="small-note">第一册和第二册的已学内容会一起进入队列。进度保存在当前浏览器，可用学习备份在其他设备恢复。</p>';
   }
   feedbackHTML(){
    if(!this.revealed||!this.active)return '';
@@ -58,11 +59,16 @@
    }
    if(action==='apply'&&this.feedback?.writing){this.input=global.StudyGrammar?.applyAll(this.input,this.feedback.issues)||this.input;this.feedback=null;this.revealed=false;this.render();return;}
    if(action==='rate'&&this.revealed){
-    const result=R.rate(this.state(),c.id,b.dataset.reviewRating,{revision:c.progress.revision});
+    let rating=b.dataset.reviewRating;
+    if(rating==='good'&&this.feedback?.correct!==true){this.options.toast('请先独立答对；仅查看答案或造句反馈不能标记为记住了。');return;}
+    if(this.feedback?.correct===false)rating='again';
+    if(this.cardIds&&c.progress.dueAt>Date.now()){this.drillDone.add(c.id);this.reset();this.render();return;}
+    const result=R.rate(this.state(),c.id,rating,{revision:c.progress.revision});
     if(!result.accepted){this.options.toast('这项复习状态已变化，已刷新队列。');this.reset();this.render();return;}
     let saved;
     try{saved=this.options.saveState(result.state);}catch{this.options.toast('复习进度未能保存，请重试；当前项目仍保留。');return;}
     if(!saved)return;
+    if(this.cardIds)this.drillDone.add(c.id);
     this.options.onChange?.();this.reset();this.render();return;
    }
   }

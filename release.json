@@ -1,6 +1,6 @@
 {
-  "build": "2026-10-26-reliable-learning-final",
-  "preparedAt": "2026-10-26T06:01:18.396Z",
+  "build": "2026-10-26-reviewed-packs-book1-first10",
+  "preparedAt": "2026-10-26T07:38:57.126Z",
   "book2": {
     "book": 2,
     "total": 96,
@@ -30,10 +30,41 @@
     ],
     "physicalPhoneKeyboardVerified": false,
     "focusedMistakeFeedback": true,
-    "phoneKeyboardVerified": false
+    "phoneKeyboardVerified": false,
+    "expandedQuizLessons": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "expandedQuizQuestions": 120,
+    "fullMobileQuery": "pilot=all",
+    "actualNextDayRetestVerified": false,
+    "balancedPracticePacks": {
+      "book": 2,
+      "lessons": 10,
+      "tasks": 120,
+      "followups": 120,
+      "defaultForReviewedLessons": true,
+      "distribution": {
+        "vocabulary": 3,
+        "grammar": 3,
+        "listening": 2,
+        "comprehension": 2,
+        "production": 2
+      }
+    },
+    "wrongConceptsRejoinSpacedReview": true,
+    "syntheticListeningWordAudioAdded": 6
   },
-  "staticFiles": 1791,
-  "staticBytes": 756202041,
+  "staticFiles": 1933,
+  "staticBytes": 809437593,
   "nativeearsAdvancedAudio": {
     "books": {
       "3": 60,
@@ -45,5 +76,57 @@
       "https://nativeears.mojoru.org/series/48",
       "https://nativeears.mojoru.org/series/47"
     ]
+  },
+  "book3": {
+    "book": 3,
+    "total": 60,
+    "proofread": 60,
+    "draft": 0,
+    "corrections": 103,
+    "sourceSha256": "35e7817ab4caa50d301fd27b72e10311ff885d804d127fefeeff7eb94e47420f",
+    "sourceUrl": "resources/35e7817ab4caa50d.pdf",
+    "paragraphs": 162
+  },
+  "book4": {
+    "book": 4,
+    "total": 48,
+    "proofread": 48,
+    "draft": 0,
+    "corrections": 70,
+    "sourceSha256": "aed8a2a10c90ae46c51190798938f834bb9b7a673ed0ca9b4d1470bfa90735d7",
+    "ocrSourceSha256": "98eea53f18b76ef4e0f9ff02d656730b5fc7bd4cee1e060ec591e368d48b010f",
+    "sourceUrl": "resources/aed8a2a10c90ae46.pdf",
+    "bytes": 28624738,
+    "pages": 288
+  },
+  "textbookScope": {
+    "book3": 60,
+    "book4": 48,
+    "originalWorkbookExercises": false,
+    "newFullTranslations": false
+  },
+  "sentenceBatch": {
+    "localBasicChecks": true,
+    "manualDoubaoCopy": true,
+    "automaticAI": false,
+    "noFixedSentenceCount": true,
+    "completePromptParts": true,
+    "draftBackup": true
+  },
+  "recurrence": {
+    "learnedPriority": true,
+    "balancedKinds": true,
+    "exactReviewCardMatching": true,
+    "mistakesRevisitEarlier": true,
+    "preserveFutureDrillDates": true
+  },
+  "book1": {
+    "readingUnits": 10,
+    "totalReadingUnits": 72,
+    "scope": "odd-numbered reading lessons1–19",
+    "sourcePdfSha256": "df385269f6502f201fc5689683f9163205202e8b0b735fd9a388b2c7982ba2b3",
+    "syntheticLessonAudio": 10,
+    "syntheticWordAudioAdded": 93,
+    "translationStatus": "not-reviewed"
   }
 }

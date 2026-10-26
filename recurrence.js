@@ -1,7 +1,7 @@
 /* Pure, source-backed recurrence index. No storage, DOM, network, or inferred grammar. */
 (function (root) {
   'use strict';
-  var VERSION='1.1.0';
+  var VERSION='1.2.0';
   // An auditable allow-list, never a stemmer. Only the first token of verb phrases changes.
   var FORMS={
     be:['am','is','are','was','were','been','being'],have:['has','had','having'],do:['does','did','done','doing'],
@@ -67,7 +67,61 @@
     return patterns;
   }
   function phraseForms(phrase){var value=normalize(phrase),patterns=patternsFor({phrase:phrase},'usage');if(!patterns.length||patterns[0].join(' ')!==value)return value?[value]:[];return patterns.map(function(pattern){return pattern.join(' ');});}
-  function grammarKey(item){return item.knowledgeId?'id:'+normalize(item.knowledgeId):item.title?'title:'+normalize(item.title):'';}
+  // Only explicit concept identities can connect a grammar note to a review card.
+  // Scoped knowledge IDs share a final canonical key, but a card's scope must
+  // still agree with its source lesson. Titles and question text are not IDs.
+  function grammarIdentities(item,sourceLessonId){
+    var values=[],ids=[],invalidScope=false;
+    [item,item&&item.evidence,item&&item.metadata].forEach(function(value){
+      if(!value||typeof value!=='object')return;
+      ['knowledgeId','conceptId','grammarConceptId'].forEach(function(key){if(typeof value[key]==='string'&&value[key].trim())values.push(value[key]);});
+    });
+    if(item&&typeof item.key==='string'&&item.key.indexOf('grammar:id:')===0)values.push(item.key.slice(11));
+    values.forEach(function(value){
+      var scoped=value.match(/^knowledge:([^:]+):grammar:(.+)$/);
+      if(scoped){
+        try{
+          if(sourceLessonId!=null&&decodeURIComponent(scoped[1])!==String(sourceLessonId)){invalidScope=true;return;}
+          value=decodeURIComponent(scoped[2]);
+        }catch(_){invalidScope=true;return;}
+      }else if(/^knowledge:/.test(value)){invalidScope=true;return;}
+      var id=normalize(value);if(id&&ids.indexOf(id)===-1)ids.push(id);
+    });
+    return invalidScope?[]:ids;
+  }
+  function grammarKey(item){var ids=grammarIdentities(item);return ids.length?'id:'+ids[0]:item.title?'title:'+normalize(item.title):'';}
+  function balanced(rows){
+    var selected=[];
+    [true,false].forEach(function(studied){
+      var buckets=['vocabulary','usage','grammar'].map(function(kind){return rows.filter(function(row){return row.hasStudiedOrigin===studied&&row.kind===kind;});});
+      for(var offset=0;buckets.some(function(bucket){return offset<bucket.length;});offset++)buckets.forEach(function(bucket){if(bucket[offset])selected.push(bucket[offset]);});
+    });
+    return selected;
+  }
+  // Pure selection: prefer the displayed learned origin, one card per concept, and never
+  // turn a broad grammar tag into every question from the source lesson.
+  function selectReviewCards(items,cards,options){
+    options=options||{};var studiedOnly=options.studiedOnly!==false,seen=new Set(),concepts=new Set(),selected=[];
+    function forms(value,primary){return [value&&value[primary],value&&value.matchedForm].concat(strings(value&&value.variants)).filter(function(form){return typeof form==='string'&&form.trim();}).map(normalize);}
+    strings(items).forEach(function(item){
+      if(!item)return;var concept=item.key||item.kind+':'+normalize(item.label);if(concepts.has(concept))return;
+      var candidates=strings(cards).filter(function(card){
+        if(!card||!card.id||!card.sourceLesson||seen.has(card.id)||/未附独立中文释义|未提供中文释义/.test(String(card.prompt||'')))return false;
+        if(!strings(item.origins).some(function(origin){return origin&&origin.lessonId===card.sourceLesson.id&&(!studiedOnly||origin.studied===true);}))return false;
+        if(item.kind==='grammar'){
+          if(card.kind!=='grammar')return false;
+          var wanted=grammarIdentities(item),available=grammarIdentities(card,card.sourceLesson.id);
+          return wanted.some(function(id){return available.indexOf(id)!==-1;});
+        }
+        if(card.kind!==(item.kind==='vocabulary'?'word':item.kind==='usage'?'phrase':null))return false;
+        var wanted=forms(item,'label'),available=forms(card,'target');
+        return wanted.some(function(form){return available.indexOf(form)!==-1;});
+      });
+      candidates.sort(function(a,b){return Number(b.sourceLesson.id===item.origin?.lessonId)-Number(a.sourceLesson.id===item.origin?.lessonId);});
+      if(candidates.length){var card=candidates[0];seen.add(card.id);concepts.add(concept);selected.push(card);}
+    });
+    return selected;
+  }
   function build(input){
     var seenIds=new Set(),lessons=strings(input).filter(function(l){if(!l||!l.id||seenIds.has(String(l.id))||!Number.isFinite(Number(l.book))||!Number.isFinite(Number(l.number)))return false;seenIds.add(String(l.id));return true;}).map(function(l){
       return {id:String(l.id),book:Number(l.book),number:Number(l.number),title:l.title,source:l.source,sourceDocId:l.sourceDocId,sourcePage:l.sourcePage,textbook:l.textbook,
@@ -114,7 +168,7 @@
       lesson.grammar.forEach(function(item){
         if(!item||!item.title)return;var key='grammar:'+grammarKey(item),c=concepts.get(key);if(!c||hits.has(key))return;var origins=prior(c);if(!origins.length)return;
         hits.set(key,{id:'recurrence:'+lesson.id+':'+key,key:key,kind:'grammar',label:String(item.title),meaning:String(item.note||''),matchedForm:String(item.title),matchType:'explicit-grammar-tag',origins:origins,
-          evidence:{type:'explicit-grammar-tag',sentence:String(item.example||''),paragraphIndex:null,fromParagraph:false,sourceType:'grammar-note',sourceLabel:'本课明确语法标签/语法笔记例句（非正文语法推断）',sourcePage:item.sourcePage||lesson.sourcePage||null,knowledgeId:item.knowledgeId||null}});
+          evidence:{type:'explicit-grammar-tag',sentence:String(item.example||''),paragraphIndex:null,fromParagraph:false,sourceType:'grammar-note',sourceLabel:'本课明确语法标签/语法笔记例句（非正文语法推断）',sourcePage:item.sourcePage||lesson.sourcePage||null,knowledgeId:item.knowledgeId||null,conceptId:item.conceptId||null,grammarConceptId:item.grammarConceptId||null}});
       });
       var result=Array.from(hits.values()).sort(function(a,b){return a.origins[0].book-b.origins[0].book||a.origins[0].number-b.origins[0].number||a.kind.localeCompare(b.kind)||a.label.localeCompare(b.label);});cache.set(lesson.id,result);return result;
     }
@@ -122,11 +176,13 @@
       var lesson=byId.get(String(id));if(!lesson)return [];
       options=options||{};var value=options.studiedIds,studied=new Set(Array.isArray(value)?value.map(String):value&&typeof value.forEach==='function'?Array.from(value,String):[]);
       var limit=options.limit==null?30:Number(options.limit);if(!Number.isFinite(limit))limit=30;limit=Math.max(0,Math.min(100,Math.floor(limit)));
-      return baseFor(lesson).slice(0,limit).map(function(hit){
+      var annotated=baseFor(lesson).map(function(hit){
         var origins=hit.origins.map(function(origin){return Object.assign({},origin,{studied:studied.has(origin.lessonId)});});
-        return Object.assign({},hit,{origin:origins[0],origins:origins,studied:origins[0].studied,hasStudiedOrigin:origins.some(function(o){return o.studied;}),evidence:Object.assign({},hit.evidence)});
+        var origin=origins.find(function(value){return value.studied;})||origins[0];
+        return Object.assign({},hit,{origin:origin,origins:origins,studied:origin.studied,hasStudiedOrigin:origin.studied,evidence:Object.assign({},hit.evidence)});
       });
+      return balanced(annotated).slice(0,limit);
     }});
   }
-  root.StudyRecurrence=Object.freeze({version:VERSION,build:build,phraseForms:phraseForms,finiteForms:Object.freeze(Object.fromEntries(Object.entries(FORMS).map(function(entry){return [entry[0],Object.freeze(entry[1].slice())];})))});
+  root.StudyRecurrence=Object.freeze({version:VERSION,build:build,selectReviewCards:selectReviewCards,phraseForms:phraseForms,finiteForms:Object.freeze(Object.fromEntries(Object.entries(FORMS).map(function(entry){return [entry[0],Object.freeze(entry[1].slice())];})))});
 })(typeof window!=='undefined'?window:globalThis);
