@@ -8,7 +8,9 @@ function live(){
 }
 test('all 108 advanced passages have complete sentence translations and reproducible build output',()=>{
  const w=live(),payload=builder.buildPayload();assert.equal(w.BOOK34_LANGUAGE_STATUS.applied,108);assert.equal(w.BOOK34_LANGUAGE_STATUS.rejected.length,0);
- assert.equal(payload.status[3].lessons,60);assert.equal(payload.status[4].lessons,48);assert.equal(fs.readFileSync(compiled,'utf8'),builder.browserSource(payload));
+ // Git may check out generated code with CRLF on Windows. Compare exact
+ // generated content after line-ending normalization; no other text is relaxed.
+ assert.equal(payload.status[3].lessons,60);assert.equal(payload.status[4].lessons,48);assert.equal(fs.readFileSync(compiled,'utf8').replace(/\r\n/g,'\n'),builder.browserSource(payload).replace(/\r\n/g,'\n'));
  for(const source of sources){
   const lesson=w.LESSONS.find(l=>l.id===source.id),m=w.StudyReading.model(lesson),audio=w.StudyAudio.splitSentences(lesson);
   assert.equal(m.hasAligned,true,source.id);assert.equal(m.fallbacks.length,0);assert.ok(m.rows.every(r=>r.zh.trim()&&r.aligned),source.id);

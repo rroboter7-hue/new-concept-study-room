@@ -1,6 +1,6 @@
 {
   "build": "2026-10-26-mobile245",
-  "preparedAt": "2026-10-26T09:36:33.193274+00:00",
+  "preparedAt": "2026-10-26T09:55:53.287226+00:00",
   "book2": {
     "book": 2,
     "total": 96,
@@ -106,8 +106,8 @@
     ],
     "notesOriginsExplicit": true
   },
-  "staticFiles": 1984,
-  "staticBytes": 810418117,
+  "staticFiles": 1995,
+  "staticBytes": 812488374,
   "nativeearsAdvancedAudio": {
     "books": {
       "3": 60,
