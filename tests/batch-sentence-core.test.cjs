@@ -70,6 +70,62 @@ test('explicit original labels create groups with complete per-group learning co
   assert.deepEqual(parsed.notices, []);
 });
 
+test('metadata directly before a later original belongs to that new group without requiring a blank line', () => {
+  const parsed = call('parse', '目标词：book\n原句：She reads a book.\n否定句：She does not read a book.\n目标词：apple\n旧词：sister\n旧用法：look at\n原句：She eats an apple.\n否定句：She does not eat an apple.', 'conversion');
+  assert.equal(parsed.groups.length, 2);
+  assert.deepEqual(parsed.groups[0].context, { target: 'book' });
+  assert.deepEqual(parsed.groups[1].context, { target: 'apple', oldWord: 'sister', oldPhrase: 'look at' });
+  assert.equal(parsed.rows.length, 4);
+  for (const item of parsed.groups[0].rows) {
+    assert.deepEqual(item.context, { target: 'book' });
+    assert.deepEqual(call('checkRow', item, checks).issues, []);
+  }
+  for (const item of parsed.groups[1].rows) assert.deepEqual(item.context, { target: 'apple', oldWord: 'sister', oldPhrase: 'look at' });
+  assert.deepEqual(parsed.notices, []);
+  const copied = call('promptParts', parsed, { maxChars: 1200 }).flatMap(part => data(part).rows);
+  assert.deepEqual(copied.map(item => item.context.target), ['book', 'book', 'apple', 'apple']);
+});
+
+test('metadata between an original and another conversion updates the whole current group', () => {
+  const parsed = call('parse', '原句：She reads a book.\n目标词：book\n旧词：sister\n否定句：She does not read a book.\n旧用法：look at\n一般疑问句：Does she read a book?', 'conversion');
+  assert.equal(parsed.groups.length, 1);
+  assert.deepEqual(parsed.groups[0].context, { target: 'book', oldWord: 'sister', oldPhrase: 'look at' });
+  assert.equal(parsed.rows.length, 3);
+  for (const item of parsed.rows) {
+    assert.equal(item.context, parsed.groups[0].context);
+    assert.equal(item.sourceOriginal, 'She reads a book.');
+  }
+  assert.deepEqual(parsed.notices, []);
+});
+
+test('trailing metadata and duplicate values survive the end of input and terminal blank lines', () => {
+  for (const ending of ['', '\n', '\n\n']) {
+    const parsed = call('parse', '目标词：book\n原句：She reads a book.\n否定句：She does not read a book.\n目标词：pen\n旧词：sister\n旧词：brother' + ending, 'conversion');
+    const expected = { target: 'book\npen', oldWord: 'sister\nbrother' };
+    assert.equal(parsed.groups.length, 1);
+    assert.deepEqual(parsed.groups[0].context, expected);
+    assert.deepEqual(parsed.rows[0].context, expected);
+    assert.deepEqual(parsed.rows[1].context, expected);
+    assert.match(parsed.notices.join(' '), /重复/);
+    const copied = call('promptParts', parsed).flatMap(part => data(part).rows);
+    assert.deepEqual(copied[1].context, expected);
+  }
+});
+
+test('blank and unlabelled boundaries keep orphan conversions independent while preserving adjacent metadata', () => {
+  const parsed = call('parse', '目标词：book\n\nTeacher: Keep this line.\n原句：She reads a book.\n否定句：She does not read a book.\n旧词：sister\n\n否定句：They are not here.\n旧用法：look at\nUnlabelled sentence.\n目标词：apple\n原句：She eats an apple.', 'conversion');
+  assert.equal(parsed.groups.length, 3);
+  assert.deepEqual(parsed.groups[0].context, { target: 'book', oldWord: 'sister' });
+  assert.deepEqual(parsed.groups[1].context, { oldPhrase: 'look at' });
+  assert.deepEqual(parsed.groups[2].context, { target: 'apple' });
+  assert.equal(parsed.groups[1].sourceOriginal, '');
+  assert.deepEqual(parsed.rows.filter(item => item.kind === 'free').map(item => [item.text, item.groupId, item.context]), [
+    ['Teacher: Keep this line.', null, {}], ['Unlabelled sentence.', null, {}]
+  ]);
+  assert.match(parsed.notices.join(' '), /缺少原句|未提供原句/);
+  assert.match(parsed.notices.join(' '), /未标|标签/);
+});
+
 test('unlabelled conversion input remains independent sentences instead of inferred four-line groups', () => {
   const parsed = call('parse', 'I am ready.\nI am not ready.\nAm I ready?\nWhy am I ready?\nI am ready.', 'conversion');
   assert.equal(parsed.rows.length, 5);

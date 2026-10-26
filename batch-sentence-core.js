@@ -34,11 +34,24 @@
     'target': 'target', 'target word': 'target', 'old word': 'oldWord', 'old phrase': 'oldPhrase'
   };
   function parse(rawText, mode) {
-    var rows = [], groups = [], notices = [], current = null, pendingContext = {};
+    var rows = [], groups = [], notices = [], current = null, pendingContext = {}, pendingLines = {};
     var conversion = mode === 'conversion';
+    function duplicateContext(lineNumber) {
+      notices.push('第 ' + lineNumber + ' 行重复上下文标签，已保留各项文字，请人工确认本组要求。');
+    }
+    function applyPending(linked) {
+      if (!linked) return;
+      Object.keys(pendingContext).forEach(function (key) {
+        if (own(linked.context, key)) {
+          duplicateContext(pendingLines[key]);
+          linked.context[key] += '\n' + pendingContext[key];
+        } else linked.context[key] = pendingContext[key];
+      });
+      pendingContext = {}; pendingLines = {};
+    }
     function group(lineNumber, sourceOriginal) {
-      var next = { id: 'group-' + lineNumber, sourceOriginal: sourceOriginal, rows: [], context: pendingContext };
-      pendingContext = {};
+      var next = { id: 'group-' + lineNumber, sourceOriginal: sourceOriginal, rows: [], context: {} };
+      applyPending(next);
       groups.push(next); current = next;
       return next;
     }
@@ -51,30 +64,36 @@
     }
     string(rawText).split(/\r\n|\r|\n/).forEach(function (rawLine, index) {
       var value = trimLine(rawLine), lineNumber = index + 1;
-      if (!value.trim()) { current = null; return; }
+      if (!value.trim()) { applyPending(current); current = null; return; }
       if (!conversion) { add(value, 'free', lineNumber, null); return; }
       var match = value.match(/^([^:：]+)\s*[:：]\s*([\s\S]*)$/);
       var label = match ? match[1].trim().toLowerCase() : '', kind = own(LABELS, label) ? LABELS[label] : '';
       if (!kind) {
+        // Unknown text stays independent and ends metadata adjacency. It never
+        // turns a following original's preamble into another group's context.
+        applyPending(current);
         add(value, 'free', lineNumber, null);
         notices.push('第 ' + lineNumber + ' 行未标识已知句型标签，已保留为独立单句检查；不会按位置猜测转换组。');
         return;
       }
       var content = trimLine(match[2]);
       if (['target', 'oldWord', 'oldPhrase'].includes(kind)) {
-        var context = current ? current.context : pendingContext;
-        if (own(context, kind)) {
-          notices.push('第 ' + lineNumber + ' 行重复上下文标签，已保留各项文字，请人工确认本组要求。');
-          context[kind] += '\n' + content;
-        } else context[kind] = content;
+        // The next labelled sentence decides ownership: an original opens a new
+        // group; another conversion applies these requirements to the current one.
+        if (own(pendingContext, kind)) {
+          duplicateContext(lineNumber);
+          pendingContext[kind] += '\n' + content;
+        } else { pendingContext[kind] = content; pendingLines[kind] = lineNumber; }
         return;
       }
       if (kind === 'affirmative') group(lineNumber, content);
       else if (!current) group(lineNumber, '');
+      else applyPending(current);
       if (current.rows.some(function (row) { return row.kind === kind; })) notices.push('第 ' + lineNumber + ' 行重复句型标签，已保留该句；请确认它属于当前原句还是另一个转换组。');
       add(content, kind, lineNumber, current);
       if (!content) notices.push('第 ' + lineNumber + ' 行标签后的句子为空，已保留该行，请补充句子。');
     });
+    applyPending(current);
     groups.forEach(function (item) {
       if (!item.sourceOriginal) notices.push('第 ' + item.rows[0].lineNumber + ' 行所在转换组缺少原句；不能核对转换是否保持原句情境。');
     });

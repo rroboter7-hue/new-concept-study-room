@@ -1,6 +1,6 @@
 {
-  "build": "2026-10-26-book34-full-text",
-  "preparedAt": "2026-10-26T06:18:41.897Z",
+  "build": "2026-10-26-free-batch2",
+  "preparedAt": "2026-10-26T07:03:21.973205+00:00",
   "book2": {
     "book": 2,
     "total": 96,
@@ -30,7 +30,22 @@
     ],
     "physicalPhoneKeyboardVerified": false,
     "focusedMistakeFeedback": true,
-    "phoneKeyboardVerified": false
+    "phoneKeyboardVerified": false,
+    "expandedQuizLessons": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "expandedQuizQuestions": 120,
+    "fullMobileQuery": "pilot=all",
+    "actualNextDayRetestVerified": false
   },
   "staticFiles": 1794,
   "staticBytes": 785132593,
@@ -73,5 +88,30 @@
     "book4": 48,
     "originalWorkbookExercises": false,
     "newFullTranslations": false
+  },
+  "sentenceBatch": {
+    "localBasicChecks": true,
+    "manualDoubaoCopy": true,
+    "automaticAI": false,
+    "noFixedSentenceCount": true,
+    "completePromptParts": true,
+    "draftBackup": true,
+    "implementation": "context-preserving-batch-v2",
+    "notesInBackup": true,
+    "manualPromptExport": true,
+    "noAutomaticSemanticGrade": true
+  },
+  "recurrence": {
+    "learnedPriority": true,
+    "balancedKinds": true,
+    "exactReviewCardMatching": true,
+    "mistakesRevisitEarlier": true,
+    "preserveFutureDrillDates": true,
+    "allMatchesExpandable": true,
+    "recallBeforeDefinition": true,
+    "actualStudiedSource": true,
+    "modernProgressRecognized": true,
+    "earlyPracticeNoScheduleWrites": true,
+    "dictionaryFallbackLabelled": true
   }
 }

@@ -156,5 +156,7 @@
       return balancedPreview(rows).slice(0,limit);
     }});
   }
-  root.StudyRecurrence=Object.freeze({version:VERSION,build:build,definitionFor:definitionFor,phraseForms:phraseForms,finiteForms:Object.freeze(Object.fromEntries(Object.entries(FORMS).map(function(entry){return [entry[0],Object.freeze(entry[1].slice())];})))});
+  // Compatibility with the earlier call order; both entry points use one matcher.
+  function selectReviewCards(items,cards,options){return root.StudyReview&&typeof root.StudyReview.matchRecurrences==='function'?root.StudyReview.matchRecurrences(cards,items,options):[];}
+  root.StudyRecurrence=Object.freeze({version:VERSION,build:build,definitionFor:definitionFor,selectReviewCards:selectReviewCards,phraseForms:phraseForms,finiteForms:Object.freeze(Object.fromEntries(Object.entries(FORMS).map(function(entry){return [entry[0],Object.freeze(entry[1].slice())];})))});
 })(typeof window!=='undefined'?window:globalThis);
