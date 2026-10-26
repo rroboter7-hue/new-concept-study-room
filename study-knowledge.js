@@ -31,7 +31,7 @@
 
  function create(input,options={}){
   const lessons=list(input).filter(l=>l?.id&&Number(l.book)===2),byLesson=new Map(lessons.map(l=>[l.id,l])),records=new Map(),words=new Map(),pools=new Map(),quizzes=new Map(),legacyByLesson=new Map(),vocabularySources=new Map(),originalVocabulary=new Map(),vocabularyAudits=new Map();
-  const audit={legacyQuestions:[],vocabularyEntries:[],issues:[]},grammarRows=auditRows(options.grammarAudit);
+  const audit={legacyQuestions:[],vocabularyEntries:[],issues:[],expansionQuestions:[],expansionIssues:[]},grammarRows=auditRows(options.grammarAudit);
   for(const lesson of lessons){
    const grouped=new Map(),local=new Map(),source=vocabularySource(lesson);
    vocabularySources.set(lesson.id,source);originalVocabulary.set(lesson.id,clone(list(lesson.vocabularyAudit?.originalVocabulary||lesson.vocabulary)));
@@ -77,6 +77,34 @@
     quizzes.get(lesson.id).push(q);pools.get(lesson.id).push(q);entry.status='approved';entry.reviewStatus=row.review?.status||row.status;entry.review=clone(row.review||row);entry.conceptId=id;entry.reason=text(row.reason)||'采用审核后的题干、唯一答案和解析';
    });
   }
+  // Separate authored batches preserve the legacy quiz and its historical indices.
+  // Every addition must bind to a real passage and to confirmed source concepts.
+  const extraManifests=Array.isArray(options.extraQuestions)?options.extraQuestions:[options.extraQuestions],extraIds=new Set();
+  for(const manifest of extraManifests){
+   if(!manifest)continue;
+   if(manifest.schemaVersion!==1||manifest.book!==2){audit.expansionIssues.push({code:'invalid-manifest',reason:'自编扩展题批次版本或册数不受支持'});continue;}
+   for(const raw of list(manifest.entries)){
+    const fail=(code,reason)=>audit.expansionIssues.push({id:text(raw?.id),lessonId:text(raw?.lessonId),code,reason});
+    const destination=byLesson.get(raw?.lessonId),source=byLesson.get(raw?.sourceLessonId),sourceIds=list(raw?.sourceConceptIds),evidence=raw?.sourceEvidence;
+    if(extraIds.has(raw?.id)){fail('duplicate-question-id','相同稳定题目编号已注册，忽略重复项');continue;}
+    if(!destination||!source||Number(source.number)>Number(destination.number)){fail('invalid-source-lesson','题目或知识来源课不存在，或引用了尚未学习的后续课');continue;}
+    const expectedPrefix='knowledge:'+encodeURIComponent(destination.id)+':'+(raw.type==='vocabulary'?'word':'grammar')+':';
+    if(!text(raw.id)||!text(raw.conceptId).startsWith(expectedPrefix)||!['grammar','vocabulary'].includes(raw.type)||!validQuestion(raw)||raw.reviewStatus!=='self-reviewed'||raw.sourceType!=='self-authored-reviewed-expansion'||raw.sourceLabel!=='自编练习 · 非教材原配习题'||raw.containsOriginalWorkbookExercise!==false){fail('incomplete-reviewed-question','缺少有效题干、稳定知识编号、唯一答案结构或明确的自编审核标签');continue;}
+    if(!text(raw.rule)||list(raw.contrastExamples).length<2||!raw.contrastExamples.every(x=>text(x))||raw.options.some((option,i)=>i!==raw.answer&&!text(raw.wrongReasons?.[option]))){fail('incomplete-explanation','题目必须提供规则、每个错项原因及至少两个自编对比例句');continue;}
+    if(!Number.isInteger(evidence?.sourceParagraphIndex)||!text(evidence?.sourceText)||!text(source.paragraphs?.[evidence.sourceParagraphIndex]?.en).includes(evidence.sourceText)||sourceIds.some(id=>!records.has(id)||records.get(id).lessonId!==source.id)||source.id!==destination.id&&!sourceIds.length){fail('unsupported-source','未能将来源片段和知识编号绑定到真实的已确认来源课');continue;}
+    let sourceWord=null;
+    if(raw.type==='vocabulary'){
+     sourceWord=sourceIds.map(id=>records.get(id)).find(r=>r.kind==='word'&&norm(r.word)===norm(raw.word));
+     const optionRecords=list(raw.optionConceptIds).map(id=>records.get(id));
+     if(raw.direction!=='meaning-to-word'||!sourceWord||sourceWord.meaning!==raw.meaning||norm(raw.options[raw.answer])!==norm(sourceWord.word)||optionRecords.length!==raw.options.length||optionRecords.some((record,i)=>!record||record.kind!=='word'||norm(record.word)!==norm(raw.options[i])||(record.meaning===sourceWord.meaning)!==(i===raw.answer))){fail('unsupported-vocabulary-answer','反向词汇题的词义、正确词及所有备选词必须与已确认词库完全一致');continue;}
+    }
+    const record={id:raw.conceptId,conceptId:raw.conceptId,kind:raw.type==='vocabulary'?'word':'grammar',lessonId:destination.id,sourceLessonId:source.id,sourceConceptIds:sourceIds.slice(),label:text(raw.category)||raw.type,status:'approved',...(sourceWord?{word:sourceWord.word,meaning:sourceWord.meaning}:{}),source:{evidence:clone(evidence),authoredQuestionId:raw.id,...(sourceWord?{vocabulary:clone(sourceWord.source.vocabulary)}:{})}};
+    if(records.has(record.id)){fail('duplicate-concept-id','扩展知识编号已使用，不能覆盖原有知识记录');continue;}
+    const q={...clone(raw),knowledgeId:record.id,graded:true,explanation:text(raw.explanation)||raw.rule+'\n'+Object.entries(raw.wrongReasons).map(([option,reason])=>'“'+option+'”：'+reason).join('\n')+'\n自编对比例句：'+raw.contrastExamples.join(' / ')};
+    records.set(record.id,record);extraIds.add(q.id);quizzes.get(destination.id).push(q);pools.get(destination.id).push(q);
+    audit.expansionQuestions.push({id:q.id,lessonId:destination.id,conceptId:record.id,sourceLessonId:source.id,sourceConceptIds:sourceIds.slice(),status:'approved'});
+   }
+  }
   const bank={
    revision:++revision,audit,
    hasLesson:id=>byLesson.has(id),
@@ -89,6 +117,6 @@
   };
   return bank;
  }
- const API={version:'1.1.0',create,conceptId,bank:null,install(lessons,options){const bank=create(lessons,options);bank.apply(lessons);API.bank=bank;return bank;},wordForLesson(lessonId,word){return API.bank?.wordForLesson(lessonId,word)||null;},vocabularyForLesson(lessonId){return API.bank?.vocabularyForLesson(lessonId)||[];},questionsForLesson(lessonId){return API.bank?.questionsForLesson(lessonId)||[];}};
+ const API={version:'1.2.0',create,conceptId,bank:null,install(lessons,options){const bank=create(lessons,options);bank.apply(lessons);API.bank=bank;return bank;},wordForLesson(lessonId,word){return API.bank?.wordForLesson(lessonId,word)||null;},vocabularyForLesson(lessonId){return API.bank?.vocabularyForLesson(lessonId)||[];},questionsForLesson(lessonId){return API.bank?.questionsForLesson(lessonId)||[];}};
  global.StudyKnowledge=API;
 })(window);

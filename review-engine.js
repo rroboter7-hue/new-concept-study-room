@@ -27,13 +27,13 @@
     add('word',v.word,v.meaning,{phonetic:text(v.phonetic,100),pos:text(v.pos,30),example:text(v.example,1000),...(v.conceptId?{conceptId:v.conceptId}:{})});
    }
    for(const p of (lesson.usage||[]).slice(0,100)){
-    if(!p?.phrase||!p.meaning)continue;
+    if(!p?.phrase||!p.meaning||/未附(?:独立)?中文释义|未提供中文释义/.test(p.meaning))continue;
     add('phrase',p.phrase,p.meaning,{example:text(p.example,1000),explanation:text(p.note,1500),matchedForm:text(p.matchedForm,200),variants:Array.isArray(p.variants)?p.variants.slice(0,20).map(v=>text(v,200)).filter(Boolean):[]});
    }
    for(const q of (registered?bank.quizForLesson(lesson.id):lesson.quiz||[]).slice(0,100)){
     if(q?.type==='vocabulary'||!Array.isArray(q?.options)||!integer(q.answer,0,q.options.length-1))continue;
     if(registered&&(!q.graded||!q.conceptId||seenConcepts.has(q.conceptId)))continue;if(q.conceptId)seenConcepts.add(q.conceptId);
-    add('grammar',q.options[q.answer],q.question,{options:q.options.map(x=>text(x,500)),answer:q.answer,explanation:text(q.explanation,2000),...(q.conceptId?{conceptId:q.conceptId}:{})});
+    add('grammar',q.options[q.answer],q.question,{options:q.options.map(x=>text(x,500)),answer:q.answer,explanation:text(q.explanation,2000),...(q.conceptId?{conceptId:q.conceptId}:{}),...(q.knowledgeId?{knowledgeId:text(q.knowledgeId,8000)}:{}),...(q.grammarConceptId?{grammarConceptId:text(q.grammarConceptId,2000)}:{})});
    }
   }
   return cards;
@@ -69,6 +69,25 @@
   return (Array.isArray(cards)?cards:[]).filter(c=>{
    const r=state.cards[c.id];return r&&r.dueAt<=now&&(!options.lessonId||c.sourceLesson.id===options.lessonId)&&(!options.kind||c.kind===options.kind);
   }).sort((a,b)=>state.cards[a.id].dueAt-state.cards[b.id].dueAt||a.id.localeCompare(b.id)).slice(0,limit).map(c=>({...c,progress:{...state.cards[c.id]}}));
+ }
+
+ // A wrong lesson answer may revisit an existing card, but cannot enroll one
+ // or move a similarly named concept from another lesson. No review rating is
+ // inferred: stage and repetition/lapse counts change only after actual review.
+ function revisitMistakes(raw,cards,conceptIds,options={}){
+  const state=sanitize(raw),now=nowOf(options),wrong=new Set((Array.isArray(conceptIds)?conceptIds:[]).filter(id=>typeof id==='string'));
+  for(const card of Array.isArray(cards)?cards:[]){
+   const sourceId=card?.sourceLesson?.id,kind=card?.kind==='word'?'word':card?.kind==='grammar'?'grammar':null;
+   if(typeof sourceId!=='string'||!kind||!validId(card.id)||!wrong.has(card.conceptId))continue;
+   const source=encodeURIComponent(sourceId);
+   const destination='review:'+source+':'+kind+':'+encodeURIComponent(normalize(kind==='grammar'?card.prompt:card.target));
+   if(card.id!==destination||typeof card.conceptId!=='string'||!card.conceptId.startsWith('knowledge:'+source+':'+kind+':'))continue;
+   if(kind==='word'&&card.conceptId!=='knowledge:'+source+':word:'+encodeURIComponent(normalize(card.target)))continue;
+   const record=state.cards[card.id];
+   if(!record||record.dueAt<=now||record.revision>=1000000)continue;
+   record.dueAt=now;record.revision++;
+  }
+  return state;
  }
 
  function rate(raw,id,rating,options={}){
@@ -117,5 +136,5 @@
   const answer=normalize(input);
   return {correct:Boolean(answer&&answerForms(card).includes(answer)),expected:card?.target||'',answer:String(input??'')};
  }
- global.StudyReview={cardsForLessons,sanitize,enroll,queue,rate,stats,dayKey,checkAnswer,hasPhrase,intervalDays:INTERVALS.slice()};
+ global.StudyReview={cardsForLessons,sanitize,enroll,queue,revisitMistakes,rate,stats,dayKey,checkAnswer,hasPhrase,intervalDays:INTERVALS.slice()};
 })(window);

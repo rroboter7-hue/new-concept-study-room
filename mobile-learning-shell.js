@@ -28,7 +28,8 @@
   class MobileLearningShell {
     constructor(options = {}) {
       this.options = options;
-      this.enabled = new URLSearchParams(global.location.search).get('pilot') === '1';
+      this.pilotMode = new URLSearchParams(global.location.search).get('pilot');
+      this.enabled = this.pilotMode === '1' || this.pilotMode === 'all';
       this.destroyed = false;
       this.mobile = false;
       this.drawerOpen = false;
@@ -92,7 +93,7 @@
     }
 
     mount() {
-      this.header = element('header', 'mls-header', '<div class="mls-brand"><strong>知新</strong><span>第二册 · 1–10课试学</span></div><button type="button" class="mls-course-button" data-mobile-action="open-courses" aria-haspopup="dialog" aria-expanded="false" aria-controls="mls-course-drawer">选课 ' + icon('M9 6h12M9 12h12M9 18h12M3 6h1m-1 6h1m-1 6h1') + '</button>');
+      this.header = element('header', 'mls-header', '<div class="mls-brand"><strong>知新</strong><span>'+(this.pilotMode==='all'?'第二册 · 全96课':'第二册 · 1–10课试学')+'</span></div><button type="button" class="mls-course-button" data-mobile-action="open-courses" aria-haspopup="dialog" aria-expanded="false" aria-controls="mls-course-drawer">选课 ' + icon('M9 6h12M9 12h12M9 18h12M3 6h1m-1 6h1m-1 6h1') + '</button>');
       this.home = element('section', 'mls-learning-home', '<p class="mls-home-kicker">从一段课文开始</p><button type="button" class="mls-continue-button" data-mobile-action="continue"><span class="mls-continue-label"></span>' + icon('m9 5 7 7-7 7') + '</button><p class="mls-current-title"></p><div class="mls-home-footer"><span class="mls-lesson-status"></span><button type="button" class="mls-game-link" data-mobile-action="game">闯关挑战 <span aria-hidden="true">→</span></button></div>');
       this.home.setAttribute('aria-label', '继续学习');
       if (this.main) {
@@ -107,7 +108,7 @@
       this.overlay.hidden = true;
       this.backdrop = element('div', 'mls-course-backdrop');
       this.backdrop.setAttribute('aria-hidden', 'true');
-      this.dialog = element('section', 'mls-course-dialog', '<div class="mls-drawer-heading"><div><h2 id="mls-drawer-title">选择课程</h2><p>第二册 · 前10课试学</p></div><button type="button" class="mls-close-button" data-mobile-action="close-courses" aria-label="关闭课程目录">' + icon('m6 6 12 12M6 18 18 6') + '</button></div>');
+      this.dialog = element('section', 'mls-course-dialog', '<div class="mls-drawer-heading"><div><h2 id="mls-drawer-title">选择课程</h2><p>'+(this.pilotMode==='all'?'第二册 · 全96课':'第二册 · 前10课试学')+'</p></div><button type="button" class="mls-close-button" data-mobile-action="close-courses" aria-label="关闭课程目录">' + icon('m6 6 12 12M6 18 18 6') + '</button></div>');
       this.dialog.id = 'mls-course-drawer';
       this.dialog.setAttribute('role', 'dialog');
       this.dialog.setAttribute('aria-modal', 'true');
@@ -149,7 +150,7 @@
 
     update(next = {}) {
       if (!this.enabled || this.destroyed) return;
-      if (new URLSearchParams(global.location.search).get('pilot') !== '1') {
+      if (!['1','all'].includes(new URLSearchParams(global.location.search).get('pilot'))) {
         this.destroy();
         return;
       }
@@ -157,9 +158,9 @@
       this.state = {...this.state, ...next};
       const lesson = Object.prototype.hasOwnProperty.call(next, 'lesson') ? next.lesson : (this.options.getLesson?.() || this.state.lesson);
       this.state.lesson = lesson;
-      const number = lesson?.book === 2 && lesson.number >= 1 && lesson.number <= 10 ? lesson.number : 1;
+      const number = lesson?.book === 2 && lesson.number >= 1 && lesson.number <= (this.pilotMode==='all'?96:10) ? lesson.number : 1;
       this.home.querySelector('.mls-continue-label').textContent = '继续学习第二册第' + number + '课';
-      this.home.querySelector('.mls-current-title').textContent = lesson?.book === 2 && lesson.number <= 10 ? String(lesson.title || '').replace(/^第\d+课\s*[·・]\s*/, '') : '从第一课开始，读懂一个故事';
+      this.home.querySelector('.mls-current-title').textContent = lesson?.book === 2 && lesson.number <= (this.pilotMode==='all'?96:10) ? String(lesson.title || '').replace(/^第\d+课\s*[·・]\s*/, '') : '从第一课开始，读懂一个故事';
       const status = this.options.getStatus?.(lesson?.id);
       this.home.querySelector('.mls-lesson-status').textContent = typeof status === 'string' ? status : status?.completed ? '已学完 · 可以再读一遍' : '按自己的节奏，接着读';
       this.body.setAttribute('data-mls-view', this.state.view || 'study');
