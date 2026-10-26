@@ -55,10 +55,18 @@ test('reviewed additions have complete explanations, stable identities, traceabl
     const source = window.LESSONS.find(l => l.id === q.sourceLessonId);
     assert.ok(source.paragraphs[q.sourceEvidence.sourceParagraphIndex].en.includes(q.sourceEvidence.sourceText), q.id);
     for (const id of q.sourceConceptIds) assert.ok(bank.get(id), id);
-    const record = bank.get(q.conceptId);
-    assert.equal(record.lessonId, q.lessonId);
-    assert.equal(record.sourceLessonId, q.sourceLessonId);
-    assert.deepEqual(plain(record.sourceConceptIds), plain(q.sourceConceptIds));
+    const registered = bank.quizForLesson(q.lessonId).find(row => row.id === q.id), record = bank.get(registered.conceptId);
+    assert.equal(registered.lessonId, q.lessonId);
+    assert.equal(registered.sourceLessonId, q.sourceLessonId);
+    assert.deepEqual(plain(registered.sourceConceptIds), plain(q.sourceConceptIds));
+    assert.equal(record.lessonId, q.type === 'vocabulary' ? q.sourceLessonId : q.lessonId);
+    if (q.type === 'vocabulary') {
+      assert.equal(registered.conceptId, bank.wordForLesson(q.sourceLessonId, q.word).conceptId);
+      assert.equal(registered.originalConceptId, q.conceptId);
+    } else {
+      assert.equal(record.sourceLessonId, q.sourceLessonId);
+      assert.deepEqual(plain(record.sourceConceptIds), plain(q.sourceConceptIds));
+    }
   }
   for (const lesson of pilot(window.LESSONS)) {
     const additions = entries.filter(q => q.lessonId === lesson.id);
@@ -80,7 +88,7 @@ test('reviewed additions have complete explanations, stable identities, traceabl
 test('vocabulary reversals preserve the actual source meaning and unique word answer', () => {
   const { window } = load(), bank = window.StudyKnowledge.bank;
   for (const q of window.BOOK2_QUESTION_EXPANSION.entries.filter(q => q.type === 'vocabulary')) {
-    const registered = bank.quizForLesson(q.lessonId).find(row => row.id === q.id), record = bank.get(q.conceptId);
+    const registered = bank.quizForLesson(q.lessonId).find(row => row.id === q.id), record = bank.get(registered.conceptId);
     assert.equal(registered.direction, 'meaning-to-word');
     assert.equal(registered.options[registered.answer], record.word);
     assert.equal(record.meaning, q.meaning);

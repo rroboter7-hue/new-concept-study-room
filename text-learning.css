@@ -176,3 +176,5 @@
 .practice-remediation{margin-top:14px;padding:15px;border:1px solid #d6dfd1;border-radius:8px;background:#f5f8f1}.practice-remediation h4{margin:0 0 10px}.practice-remediation blockquote{margin:12px 0;padding:8px 12px;border-left:3px solid #8ba891;background:#fff}.practice-followup{margin-top:18px;padding-top:14px;border-top:1px solid #d6dfd1}.practice-remediation .english{font-size:16px}.answer-option{overflow-wrap:anywhere}
 
 .lesson-progress-note{padding:12px 14px;margin:0 0 18px;border:1px solid #dce5d7;border-radius:8px;background:#f5f8f1}.lesson-progress-note .small-note{margin:6px 0}.lesson-progress-note small{display:block;color:#687668}.vocab-card:focus,.grammar-card:focus{outline:2px solid #6b9682;outline-offset:3px}
+
+.paragraph-speaker{font-size:12px;line-height:1.5;letter-spacing:.04em;font-weight:600;color:#6b7b67;margin:0 0 4px}.paragraph+.paragraph{margin-top:18px}

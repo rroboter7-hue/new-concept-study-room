@@ -78,26 +78,35 @@
   return {id:'remediation:'+record.id+':reverse',parentId,parentIds:[parentId],conceptId:record.id,knowledgeId:record.id,sourceLessonId:record.lessonId,type:'vocabulary',direction:'meaning-to-word',question:'【自编订正练习】在本课已确认词义中，哪个英文词对应“'+record.meaning+'”？',options:options.map(x=>x.word),optionConceptIds:options.map(x=>x.id),answer,rule:'本课词表确认：'+record.word+'＝'+record.meaning+'。',wrongReasons,contrastExamples:examplesForWord(record,lesson),sourceType:'self-authored-remediation-practice',sourceLabel:'自编订正练习 · 按当前课内词义（非教材原配练习）',graded:false,countsTowardProgress:false};
  }
  function missing(q,reason){return {conceptId:text(q?.conceptId),rule:'',reason,contrastExamples:[],followUp:null,followUpMessage:'暂无已确认的同知识点新题。',isCorrect:false,correctAnswer:''};}
+ function wordSourceContext(q,record,bank,lesson){
+  if(text(q.sourceLessonId)&&q.sourceLessonId!==record.lessonId)return null;
+  // A retrieved word still belongs to its source dictionary. Accept a different
+  // destination only when this exact question was registered in that lesson.
+  if(lesson&&lesson.id!==record.lessonId&&!list(bank.questionsForLesson?.(lesson.id)).some(row=>row.id===q.id&&row.conceptId===record.id&&row.sourceLessonId===record.lessonId&&row.question===q.question&&row.direction===q.direction&&row.answer===q.answer&&JSON.stringify(row.options)===JSON.stringify(q.options)))return null;
+  return lesson?.id===record.lessonId?lesson:list(global.LESSONS).find(row=>row.id===record.lessonId)||record.source?.lesson||null;
+ }
  function describe(q,chosenIndex,{bank=global.StudyKnowledge?.bank,lesson}={}){
   if(!q||!bank||typeof bank.get!=='function')return missing(q,'未找到这道题所需的已确认知识库。');
   const id=text(q.conceptId)||text(q.knowledgeId),record=bank.get(id);
   if(!record)return missing(q,'未找到这个知识点的已确认记录，暂不生成补救题。');
-  if(lesson&&lesson.id!==record.lessonId)return missing(q,'未找到与本课一致的已确认知识点。');
+  if(record.kind!=='word'&&lesson&&lesson.id!==record.lessonId)return missing(q,'未找到与本课一致的已确认知识点。');
   const options=list(q.options),selected=Number.isInteger(chosenIndex)?text(options[chosenIndex]):'',validChoice=!!selected;
   if(record.kind==='word'){
-   const words=allWords(bank,lesson),reverse=q.direction==='meaning-to-word',correctAnswer=reverse?record.word:record.meaning,isCorrect=validChoice&&norm(selected)===norm(correctAnswer);
+   const sourceContext=wordSourceContext(q,record,bank,lesson);if(!sourceContext)return missing(q,'未找到与本题来源课一致的已确认词义记录。');
+   const sourceLesson={id:sourceContext.id,book:sourceContext.book,number:sourceContext.number,title:sourceContext.title},destinationLessonId=text(q.lessonId)||text(lesson?.id)||record.lessonId,foreign=destinationLessonId!==record.lessonId,contextLabel=foreign?'第'+sourceContext.number+'课':'本课';
+   const words=allWords(bank,sourceContext),reverse=q.direction==='meaning-to-word',correctAnswer=reverse?record.word:record.meaning,isCorrect=validChoice&&norm(selected)===norm(correctAnswer);
    let reason='';
-   if(!validChoice)reason='尚未选择有效选项。'+record.word+' 的本课词义是“'+record.meaning+'”。';
-   else if(isCorrect)reason='这次选择正确。'+record.word+' 的本课词义是“'+record.meaning+'”。';
+   if(!validChoice)reason='尚未选择有效选项。'+record.word+' 的'+contextLabel+'词义是“'+record.meaning+'”。';
+   else if(isCorrect)reason='这次选择正确。'+record.word+' 的'+contextLabel+'词义是“'+record.meaning+'”。';
    else if(reverse){
     const selectedRecord=bank.get(list(q.optionConceptIds)[chosenIndex])||words.find(x=>norm(x.word)===norm(selected));
     reason='你选择了“'+selected+'”。'+(selectedRecord?selectedRecord.word+' 在当前词表中表示“'+selectedRecord.meaning+'”，':'当前词表未确认它对应这个目标词义，')+'本题要找的是“'+record.meaning+'”，对应 '+record.word+'。';
    }else{
     const matches=words.filter(x=>norm(x.meaning)===norm(selected)&&norm(x.word)!==norm(record.word));
-    reason='你选择的“'+selected+'”'+(matches.length?'是当前词表中 '+Array.from(new Set(matches.map(x=>x.word))).slice(0,3).join(' / ')+' 的词义，':'不是这个词当前已确认的课内释义，')+'不能套用于 '+record.word+'；'+record.word+' 在本课表示“'+record.meaning+'”。';
+    reason='你选择的“'+selected+'”'+(matches.length?'是当前词表中 '+Array.from(new Set(matches.map(x=>x.word))).slice(0,3).join(' / ')+' 的词义，':'不是这个词当前已确认的课内释义，')+'不能套用于 '+record.word+'；'+record.word+' 在'+contextLabel+'表示“'+record.meaning+'”。';
    }
-   const contrastExamples=examplesForWord(record,lesson),followUp=reverse?null:reverseQuestion(record,q,words,lesson);
-   return {conceptId:record.id,rule:'本课词表确认：'+record.word+'＝'+record.meaning+'。',reason,contrastExamples,contrastMessage:contrastExamples.length?'':'本课暂无可验证的课文原句例证。',followUp,followUpMessage:followUp?'':reverse?'这道反向补救题已展示，暂无另一道已确认的同知识点新题。':'暂无能保证四个选项含义有别的同知识点新题。',isCorrect,correctAnswer,selectedOption:selected};
+   const contrastExamples=examplesForWord(record,sourceContext).map(example=>foreign&&example.sourceType==='lesson-passage'?{...example,sourceLabel:contextLabel+'课文原句'}:example),followUp=reverse?null:reverseQuestion(record,q,words,sourceContext);
+   return {conceptId:record.id,sourceLesson,sourceLessonId:record.lessonId,destinationLessonId,rule:contextLabel+'词表确认：'+record.word+'＝'+record.meaning+'。',reason,contrastExamples,contrastMessage:contrastExamples.length?'':contextLabel+'暂无可验证的课文原句例证。',followUp,followUpMessage:followUp?'':reverse?(q.graded===false?'这道反向补救题已展示，暂无另一道已确认的同知识点新题。':'这道词汇题暂无另一道已确认的同知识点新题。'):'暂无能保证四个选项含义有别的同知识点新题。',isCorrect,correctAnswer,selectedOption:selected};
   }
   if(record.kind!=='grammar')return missing(q,'未找到可使用的已确认词义或语法记录。');
   const pilot=list(global.PILOT_GRAMMAR_FOLLOWUPS?.entries),approvedFollowUp=pilot.find(x=>x.id===q.id&&x.conceptId===record.id&&x.question===q.question),current=list(bank.questionsForLesson(record.lessonId)).find(x=>x.type==='grammar'&&x.conceptId===record.id&&x.question===q.question&&JSON.stringify(x.options)===JSON.stringify(q.options)),reviewed=approvedFollowUp||current;
@@ -105,5 +114,5 @@
   const correctAnswer=reviewed.options[reviewed.answer],isCorrect=validChoice&&norm(selected)===norm(correctAnswer),rule=text(reviewed.rule),reason=!validChoice?'尚未选择有效选项。':isCorrect?'这次选择符合该规则。':text(reviewed.wrongReasons?.[selected])||'该选项不符合本题已限定的结构。'+rule,followUp=pilot.find(x=>x.conceptId===record.id&&x.id!==q.id);
   return {conceptId:record.id,rule,reason,contrastExamples:labelledExamples(reviewed.contrastExamples,lesson),followUp:followUp?clone(followUp):null,followUpMessage:followUp?'':approvedFollowUp?'这道补救题已展示，暂无另一道已审核的同知识点新题。':'这个语法知识点暂无已审核的新题（新语境补救练习）。',isCorrect,correctAnswer,selectedOption:selected};
  }
- global.StudyRemediation={version:'1.0.0',describe,meaningsOverlap};
+ global.StudyRemediation={version:'1.0.1',describe,meaningsOverlap};
 })(window);

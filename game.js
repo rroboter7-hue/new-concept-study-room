@@ -95,7 +95,7 @@
 
     questionPool(lesson) {
       const bank=global.StudyKnowledge?.bank;
-      if(bank?.hasLesson(lesson.id)){const seen=new Set();return bank.questionsForLesson(lesson.id).filter(q=>{if(!q.graded||!q.conceptId||seen.has(q.conceptId))return false;seen.add(q.conceptId);return true;});}
+      if(bank?.hasLesson(lesson.id)){const seen=new Set();return bank.questionsForLesson(lesson.id).filter(q=>{const skill=q.gameConceptId||q.conceptId;if(!q.graded||!skill||seen.has(skill))return false;seen.add(skill);return true;});}
       const base = (lesson.quiz || []).filter(question => text(question?.question) && Array.isArray(question.options) && question.options.length >= 2 && question.options.every(option=>text(option)) && new Set(question.options.map(normalized)).size===question.options.length && Number.isInteger(question.answer) && question.answer>=0 && question.answer<question.options.length).map(question => ({...question, options:question.options.slice(), type:question.type === 'vocabulary'?'vocabulary':'grammar'}));
       const seenWords = new Set();
       const vocabulary = (lesson.vocabulary || []).filter(word=>{if(!hasChineseMeaning(word)||seenWords.has(normalized(word.word)))return false;seenWords.add(normalized(word.word));return true;});
@@ -206,7 +206,7 @@
     studyKnowledge(mistakeIndex) {
       const mistake=this.mistakes().find(x=>x.index===mistakeIndex);if(!mistake)return;
       if(typeof this.options.onStudyKnowledge!=='function'){this.options.toast?.('请打开本课知识讲解，复习这个知识点。');return;}
-      const lessonId=this.session.lesson.id,conceptId=mistake.question.conceptId;
+      const lessonId=mistake.remediation.sourceLesson?.id||this.session.lesson.id,conceptId=mistake.question.conceptId;
       this.session=null;this.options.closeDialog?.();this.options.onStudyKnowledge(lessonId,conceptId);
     }
 

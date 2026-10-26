@@ -93,6 +93,8 @@
     add('grammar',q.options[q.answer],q.question,{options:q.options.map(x=>text(x,500)),answer:q.answer,explanation:text(q.explanation,2000),...(q.conceptId?{conceptId:q.conceptId}:{}),...(q.knowledgeId?{knowledgeId:text(q.knowledgeId,8000)}:{}),...(q.grammarConceptId?{grammarConceptId:text(q.grammarConceptId,2000)}:{})});
    }
   }
+  const registry=global.StudyPracticePacks?.registry;
+  if(registry)for(const lesson of Array.isArray(lessons)?lessons:[]){const pack=registry.get(lesson.id);if(!pack)continue;for(const q of pack.tasks.filter(q=>q.category==='grammar'&&q.type==='choice')){const id='review:'+encodeURIComponent(lesson.id)+':grammar:'+encodeURIComponent(normalize(q.prompt));if(seen.has(id))continue;seen.add(id);cards.push({id,kind:'grammar',target:q.options[q.answer],prompt:q.prompt,options:q.options.slice(),answer:q.answer,explanation:q.rule,conceptId:q.conceptId,sourceType:'authored-practice-pack',sourceLesson:{id:String(lesson.id),book:lesson.book,number:lesson.number,title:lesson.title}});}}
   return cards;
  }
 
@@ -138,6 +140,8 @@
   const bank=options.knowledgeBank||global.StudyKnowledge?.bank;
   if(typeof bank?.get==='function')for(const id of [...wrong]){
    const record=bank.get(id);
+   if(record?.kind==='word'&&record.status==='current-vocabulary'&&record.id===record.conceptId&&record.id==='knowledge:'+encodeURIComponent(record.lessonId)+':word:'+encodeURIComponent(normalize(record.word))&&
+    (record.id===id||(Array.isArray(bank.audit?.expansionQuestions)&&bank.audit.expansionQuestions.some(row=>row.status==='approved'&&row.originalConceptId===id&&row.conceptId===record.id))))wrong.add(record.id);
    if(record?.id!==id||!id.startsWith('knowledge:'+encodeURIComponent(record.lessonId)+':'))continue;
    for(const sourceId of Array.isArray(record.sourceConceptIds)?record.sourceConceptIds:[]){const source=bank.get(sourceId);if(source?.id===sourceId&&sourceId.startsWith('knowledge:'+encodeURIComponent(source.lessonId)+':'))wrong.add(sourceId);}
   }
@@ -146,8 +150,25 @@
    if(typeof sourceId!=='string'||!kind||!validId(card.id)||!wrong.has(card.conceptId))continue;
    const source=encodeURIComponent(sourceId);
    const destination='review:'+source+':'+kind+':'+encodeURIComponent(normalize(kind==='grammar'?card.prompt:card.target));
-   if(card.id!==destination||typeof card.conceptId!=='string'||!card.conceptId.startsWith('knowledge:'+source+':'+kind+':'))continue;
+   if(card.id!==destination||typeof card.conceptId!=='string')continue;
+   const packCard=card.sourceType==='authored-practice-pack'||card.conceptId.startsWith('pack:');
+   if(packCard){
+    // Only an exact formal grammar task in the currently validated registry can
+    // authorize a pack card. Prefixes and a plausible answer are insufficient.
+    if(kind!=='grammar'||card.sourceType!=='authored-practice-pack'||!card.conceptId.startsWith('pack:'+source+':'))continue;
+    const pack=global.StudyPracticePacks?.registry?.get?.(sourceId);
+    const verified=pack?.lessonId===sourceId&&Array.isArray(pack.tasks)&&pack.tasks.some(q=>
+     typeof q.id==='string'&&q.id.trim()&&q.category==='grammar'&&q.type==='choice'&&q.graded===true&&q.sourceLessonId===sourceId&&
+     q.conceptId===card.conceptId&&q.prompt===card.prompt&&Array.isArray(q.options)&&q.options.length===4&&
+     Array.isArray(card.options)&&card.options.length===q.options.length&&q.options.every((option,i)=>typeof option==='string'&&option.trim()&&option===card.options[i])&&
+     integer(q.answer,0,q.options.length-1)&&card.answer===q.answer&&card.target===q.options[q.answer]);
+    if(!verified)continue;
+   }else if(!card.conceptId.startsWith('knowledge:'+source+':'+kind+':'))continue;
    if(kind==='word'&&card.conceptId!=='knowledge:'+source+':word:'+encodeURIComponent(normalize(card.target)))continue;
+   if(kind==='word'&&typeof bank?.get==='function'){
+    const word=bank.get(card.conceptId);
+    if(word&&(word.kind!=='word'||word.status!=='current-vocabulary'||word.id!==card.conceptId||word.conceptId!==card.conceptId||word.lessonId!==sourceId||text(word.word,2000)!==card.target||text(word.meaning,2000)!==card.prompt))continue;
+   }
    const record=state.cards[card.id];
    if(!record||record.dueAt<=now||record.revision>=1000000)continue;
    record.dueAt=now;record.revision++;
@@ -171,15 +192,19 @@
   for(const question of bank.questionsForLesson(lessonId)){
    if(!question?.graded||!requested.has(question.id)||typeof question.conceptId!=='string')continue;
    const record=bank.get(question.conceptId),kind=question.type==='vocabulary'?'word':question.type==='grammar'?'grammar':null;
-   if(!kind||record?.id!==question.conceptId||record.conceptId!==question.conceptId||record.lessonId!==lessonId||record.kind!==kind)continue;
-   if(kind==='grammar'){targets.add(record.id);continue;}
-   const sourceIds=record.sourceConceptIds;
-   if(record.status!=='approved'||record.source?.authoredQuestionId!==question.id||record.sourceLessonId!==question.sourceLessonId||!bank.hasLesson(record.sourceLessonId)||!Array.isArray(sourceIds)||!sourceIds.length||!Array.isArray(question.sourceConceptIds)||sourceIds.length!==question.sourceConceptIds.length||!sourceIds.every((id,i)=>id===question.sourceConceptIds[i]))continue;
-   const sources=sourceIds.map(id=>bank.get(id));
-   if(sources.some((source,i)=>source?.id!==sourceIds[i]||source.conceptId!==sourceIds[i]||source.kind!=='word'||source.status!=='current-vocabulary'||source.lessonId!==record.sourceLessonId||source.id!=='knowledge:'+encodeURIComponent(source.lessonId)+':word:'+encodeURIComponent(normalize(source.word))))continue;
-   for(const source of sources)targets.add(source.id);
+   if(!kind||record?.kind!==kind)continue;
+   if(kind==='grammar'){if(record.id===question.conceptId&&record.conceptId===question.conceptId&&record.lessonId===lessonId)targets.add(record.id);continue;}
+   const canonical='knowledge:'+encodeURIComponent(record.lessonId)+':word:'+encodeURIComponent(normalize(record.word));
+   if(record.status!=='current-vocabulary'||record.id!==canonical||record.conceptId!==canonical||record.lessonId!==question.sourceLessonId||!bank.hasLesson(record.lessonId)||question.lessonId!==lessonId)continue;
+   const authored=Array.isArray(bank.audit?.expansionQuestions)&&bank.audit.expansionQuestions.find(row=>row.id===question.id&&row.status==='approved'&&row.lessonId===lessonId&&row.conceptId===canonical&&row.sourceLessonId===record.lessonId);
+   if(!authored||question.conceptId!==canonical&&question.conceptId!==authored.originalConceptId||question.originalConceptId&&question.originalConceptId!==authored.originalConceptId)continue;
+   const sourceIds=question.sourceConceptIds;
+   if(!Array.isArray(sourceIds)||sourceIds.length!==1||sourceIds[0]!==canonical||!Array.isArray(authored.sourceConceptIds)||authored.sourceConceptIds.length!==1||authored.sourceConceptIds[0]!==canonical)continue;
+   const word=typeof bank.wordForLesson==='function'?bank.wordForLesson(record.lessonId,record.word):null;
+   if(!word||word.conceptId!==canonical||word.word!==record.word||word.meaning!==record.meaning||question.word!==record.word||question.meaning!==record.meaning)continue;
+   targets.add(canonical);
   }
-  return revisitMistakes(state,cards,[...targets],options);
+  return revisitMistakes(state,cards,[...targets],{...options,knowledgeBank:bank});
  }
 
  function rate(raw,id,rating,options={}){

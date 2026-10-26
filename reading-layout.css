@@ -1,0 +1,25 @@
+@charset "UTF-8";
+.reading-layout { margin: 24px 0; }
+.reading-block { margin: 22px 0; padding: 0 0 4px; }
+.reading-turn { display: flex; align-items: center; gap: 10px; margin: 0 0 10px; color: #466257; font-size: 13px; }
+.reading-turn strong { font-weight: 600; }
+.reading-turn small { padding: 2px 8px; border: 1px solid #c7d7cd; border-radius: 4px; color: #446052; background: #f1f6f1; font-size: 12px; }
+.reading-pair { padding: 10px 0 14px; }
+.reading-pair + .reading-pair { border-top: 1px solid #edf0ed; }
+.reading-pair .english { margin: 0; line-height: 1.85; overflow-wrap: anywhere; }
+.reading-pair .translation { margin: 8px 0 0; padding: 0; color: #566761; font-size: 15px; line-height: 1.9; overflow-wrap: anywhere; }
+.reading-speech, .reading-thought, .reading-note, .reading-mixed { padding: 16px 18px 2px; border-left: 3px solid #7ba18d; background: #f5f8f4; border-radius: 0 7px 7px 0; }
+.reading-thought { border-left-color: #b4a276; background: #faf8f1; }
+.reading-note { border-left-color: #90a2b2; background: #f4f7fa; }
+.reading-mixed { border-left-color: #95aaa0; }
+.reading-paragraph-translation { margin: 8px 0 26px; padding: 14px; border: 1px solid #e3d8b9; color: #665b3f; line-height: 1.9; background: #fbf8f0; }
+.reading-paragraph-translation p { margin: 8px 0 0; }
+.reading-notice { margin-bottom: 20px; }
+@media (max-width: 600px) {
+ .reading-layout { margin-top: 20px; }
+ .reading-block { margin: 20px 0; }
+ .reading-speech, .reading-thought, .reading-note, .reading-mixed { padding: 13px 12px 1px; }
+ .reading-pair { padding: 8px 0 12px; }
+ .reading-pair .english { font-size: 20px; line-height: 1.8; }
+ .reading-pair .translation { font-size: 15px; line-height: 1.85; }
+}

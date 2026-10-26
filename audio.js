@@ -14,6 +14,7 @@
 
   function sentenceTexts(lesson) {
     if (!lesson) return [];
+    if (global.StudyReading && typeof global.StudyReading.units === 'function') return global.StudyReading.units(lesson).map(function (row) { return row.en; });
     var source = lesson.paragraphs || [];
     if (!Array.isArray(source)) source = source.en || [];
     if (!Array.isArray(source)) source = [source];
