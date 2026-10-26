@@ -54,7 +54,7 @@ test('paired rendering hides only translations, escapes content, and preserves e
 test('untranslated paragraphs are still separated, with one honest missing-translation note',()=>{
  const bare={id:'third',book:3,number:1,paragraphs:[{en:'First sentence. Second sentence. Third sentence. Fourth sentence.'},{en:'A new paragraph.'}]};
  const m=core.model(bare,[]);assert.equal(m.rows.length,5);assert.equal(m.groups.length,3);
- const html=core.render(bare,{alignments:[]});assert.equal((html.match(/暂无逐句译文/g)||[]).length,1);
+ const html=core.render(bare,{alignments:[]});assert.equal((html.match(/暂无译文/g)||[]).length,1);
  assert.equal((html.match(/data-sentence="/g)||[]).length,5);
 });
 test('a stale alignment on a single-sentence paragraph retains its original Chinese as a labelled reference',()=>{
@@ -64,3 +64,5 @@ test('a stale alignment on a single-sentence paragraph retains its original Chin
  const html=core.render(current,{alignments:previous});assert.match(html,/本段参考译文/);assert.match(html,/原段落保留的中文/);assert.doesNotMatch(html,/不能误配/);
  assert.doesNotMatch(core.render(current,{alignments:previous,showTranslation:false}),/原段落保留的中文/);
 });
+
+test("printed source speaker labels survive unaligned Book1 reading",()=>{const lesson={id:"b1",book:1,number:5,paragraphs:[{speaker:"MR. BLAKE",en:"Good morning.",zh:""}]};const result=core.model(lesson,[]);assert.equal(result.groups[0].speaker,"MR. BLAKE");assert.equal(result.groups[0].kind,"speech");});

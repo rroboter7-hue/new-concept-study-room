@@ -27,3 +27,14 @@ test('a source link that disagrees with the registered question record cannot ad
  h.scope.StudyKnowledge.bank={...real,get:id=>{const record=real.get(id);return id==='knowledge:'+first+':word:private'?{...record,lessonId:second}:record;}};
  assert.deepEqual(plain(h.R.revisitQuestionMistakes(h.state,h.cards,second,[q.id],{now:at})),before);
 });
+
+test('registered old word aliases resolve to the same source through both question and concept mistake APIs',()=>{
+ const h=load(),q=h.questions.find(q=>q.id===second+'-expansion-retrieve-private'),raw=h.scope.BOOK2_QUESTION_EXPANSION.entries.find(row=>row.id===q.id),source=h.cards.find(card=>card.conceptId===q.conceptId),canonical=h.bank.get(q.conceptId),alias=h.bank.get(raw.conceptId);assert.deepEqual(plain(alias),plain(canonical));assert.notEqual(raw.conceptId,canonical.id);const next=h.R.revisitMistakes(h.state,h.cards,[raw.conceptId],{now:at});assert.equal(next.cards[source.id].dueAt,at);assert.equal(next.cards[source.id].revision,2);
+ const real=h.bank;h.scope.StudyKnowledge.bank={...real,questionsForLesson:id=>real.questionsForLesson(id).map(row=>row.id===q.id?{...row,conceptId:raw.conceptId,knowledgeId:raw.conceptId}:row)};const viaQuestion=h.R.revisitQuestionMistakes(h.state,h.cards,second,[q.id],{now:at});assert.equal(viaQuestion.cards[source.id].dueAt,at);assert.equal(viaQuestion.cards[source.id].revision,2);assert.equal(viaQuestion.cards[source.id].stage,1);
+});
+
+test('forged source cards and unregistered aliases never advance the real word schedule',()=>{
+ const h=load(),q=h.questions.find(q=>q.id===second+'-expansion-retrieve-private'),source=h.cards.find(card=>card.conceptId===q.conceptId),before=plain(h.state);
+ for(const forged of [{...source,prompt:'forged definition'},{...source,target:'repeat'},{...source,id:'review:'+second+':word:private',sourceLesson:{...source.sourceLesson,id:second}},{...source,conceptId:'knowledge:'+second+':word:repeat'}]){const next=h.R.revisitQuestionMistakes(h.state,[forged],second,[q.id],{now:at});assert.deepEqual(plain(next),before);}
+ assert.deepEqual(plain(h.R.revisitMistakes(h.state,h.cards,['knowledge:'+second+':word:expansion-unregistered'],{now:at})),before);
+});

@@ -163,7 +163,8 @@ test('an erroneous later-lesson retrieval also reactivates its already-enrolled 
  const {review}=setup(),now=Date.UTC(2026,9,26,1),source=concept('source','word','book'),alias=concept('later','word','expansion-retrieval-book');
  const cards=review.cardsForLessons([lesson('source',2,1,{vocabulary:[{word:'book',meaning:'书',conceptId:source}]})]);
  let state=review.enroll(null,cards,{now});state=review.rate(state,cards[0].id,'good',{now,revision:0}).state;
- const bank={get:id=>id===alias?{id:alias,lessonId:'later',sourceConceptIds:[source]}:id===source?{id:source,lessonId:'source'}:null};
+ const canonical={id:source,conceptId:source,lessonId:'source',kind:'word',status:'current-vocabulary',word:'book',meaning:'书'};
+ const bank={get:id=>id===alias||id===source?{...canonical}:null,audit:{expansionQuestions:[{status:'approved',originalConceptId:alias,conceptId:source}]}};
  const result=review.revisitMistakes(state,cards,[alias],{now:now+1000,knowledgeBank:bank});assert.equal(result.cards[cards[0].id].dueAt,now+1000);
  assert.equal(review.revisitMistakes(state,cards,[alias],{now:now+1000}).cards[cards[0].id].dueAt,now+86400000,'unknown aliases cannot infer another lesson');
 });
