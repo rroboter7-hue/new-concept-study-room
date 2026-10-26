@@ -1,6 +1,6 @@
 {
-  "build": "2026-10-26-free-batch2",
-  "preparedAt": "2026-10-26T07:02:29.505237+00:00",
+  "build": "2026-10-26-sentence-pairs",
+  "preparedAt": "2026-10-26T07:52:43.130738+00:00",
   "book2": {
     "book": 2,
     "total": 96,
@@ -208,5 +208,22 @@
     "earlyPracticeNoScheduleWrites": true,
     "dictionaryFallbackLabelled": true
   },
-  "staticSnapshotExcludesReleaseManifest": true
+  "staticSnapshotExcludesReleaseManifest": true,
+  "readingLayout": {
+    "book2SentenceAlignedLessons": 96,
+    "book2SentencePairs": 1055,
+    "englishSourceUnchanged": true,
+    "speakerThoughtNoteLabels": true,
+    "sharedSpeechSentenceIndexes": true,
+    "translationGuard": "exact-lesson-and-paragraph-source",
+    "untranslatedBooksPreserved": [
+      3,
+      4
+    ],
+    "phoneSizeVerified": [
+      390,
+      844
+    ],
+    "physicalPhoneKeyboardVerified": false
+  }
 }
