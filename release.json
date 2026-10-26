@@ -1,6 +1,6 @@
 {
   "build": "2026-10-26-daily-output",
-  "preparedAt": "2026-10-26T08:35:33.430Z",
+  "preparedAt": "2026-10-26T08:45:25.392Z",
   "book2": {
     "book": 2,
     "total": 96,
@@ -84,8 +84,8 @@
       "intervalsAreProductSchedule": true
     }
   },
-  "staticFiles": 1978,
-  "staticBytes": 810377365,
+  "staticFiles": 1982,
+  "staticBytes": 810398983,
   "nativeearsAdvancedAudio": {
     "books": {
       "3": 60,
@@ -167,7 +167,19 @@
       390,
       844
     ],
-    "physicalPhoneKeyboardVerified": false
+    "physicalPhoneKeyboardVerified": false,
+    "polish": {
+      "stickyTranslationControl": true,
+      "minimumTouchTargetPx": 44,
+      "sameSentenceOnTranslationToggle": true,
+      "ttsHighlightRestoredAfterRedraw": true,
+      "lessonScopedSpeechState": true,
+      "staleSingleParagraphTranslationRetained": true,
+      "mobileWidthChecks": [
+        320,
+        390
+      ]
+    }
   },
   "book1": {
     "readingUnits": 10,
