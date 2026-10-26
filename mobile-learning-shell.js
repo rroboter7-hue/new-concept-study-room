@@ -1,7 +1,8 @@
-/* Optional mobile presentation shell. App state and audio remain owned by app.js. */
+/* Responsive mobile presentation shell. App state and audio remain owned by app.js. */
 (function (global) {
   'use strict';
   const MOBILE_QUERY = '(max-width: 760px)';
+  const BOOK_NAMES = ['', '第一册', '第二册', '第三册', '第四册'];
   const FOCUSABLE = 'button:not([disabled]),a[href],input:not([disabled]),select:not([disabled]),textarea:not([disabled]),[tabindex]:not([tabindex="-1"])';
   const EDITABLE_EXCLUSIONS = new Set(['button', 'submit', 'reset', 'checkbox', 'radio', 'range', 'hidden', 'color', 'file']);
   const NAV = [
@@ -29,7 +30,7 @@
     constructor(options = {}) {
       this.options = options;
       this.pilotMode = new URLSearchParams(global.location.search).get('pilot');
-      this.enabled = this.pilotMode === '1' || this.pilotMode === 'all';
+      this.enabled = options.enabled !== false;
       this.destroyed = false;
       this.mobile = false;
       this.drawerOpen = false;
@@ -54,6 +55,7 @@
       this.mount();
       this.listen(document, 'click', event => this.captureLesson(event), true);
       this.listen(document, 'click', event => this.click(event));
+      this.listen(document, 'change', event => this.changeBook(event));
       this.listen(document, 'keydown', event => this.keydown(event), true);
       this.listen(document, 'focusin', event => {
         if (this.drawerOpen && !this.dialog.contains(event.target)) this.closeButton.focus();
@@ -93,7 +95,8 @@
     }
 
     mount() {
-      this.header = element('header', 'mls-header', '<div class="mls-brand"><strong>知新</strong><span>'+(this.pilotMode==='all'?'第二册 · 全96课':'第二册 · 1–10课试学')+'</span></div><button type="button" class="mls-course-button" data-mobile-action="open-courses" aria-haspopup="dialog" aria-expanded="false" aria-controls="mls-course-drawer">选课 ' + icon('M9 6h12M9 12h12M9 18h12M3 6h1m-1 6h1m-1 6h1') + '</button>');
+      this.header = element('header', 'mls-header', '<div class="mls-brand"><strong>知新</strong><span class="mls-book-summary"></span></div><select class="mls-book-select" data-mobile-book aria-label="选择分册">'+BOOK_NAMES.slice(1).map((name,i)=>'<option value="'+(i+1)+'">'+name+'</option>').join('')+'</select><button type="button" class="mls-course-button" data-mobile-action="open-courses" aria-haspopup="dialog" aria-expanded="false" aria-controls="mls-course-drawer">选课 ' + icon('M9 6h12M9 12h12M9 18h12M3 6h1m-1 6h1m-1 6h1') + '</button>');
+      this.bookSelect = this.header.querySelector('[data-mobile-book]');
       this.home = element('section', 'mls-learning-home', '<p class="mls-home-kicker">从一段课文开始</p><button type="button" class="mls-continue-button" data-mobile-action="continue"><span class="mls-continue-label"></span>' + icon('m9 5 7 7-7 7') + '</button><p class="mls-current-title"></p><div class="mls-home-footer"><span class="mls-lesson-status"></span><button type="button" class="mls-game-link" data-mobile-action="game">闯关挑战 <span aria-hidden="true">→</span></button></div>');
       this.home.setAttribute('aria-label', '继续学习');
       if (this.main) {
@@ -108,7 +111,7 @@
       this.overlay.hidden = true;
       this.backdrop = element('div', 'mls-course-backdrop');
       this.backdrop.setAttribute('aria-hidden', 'true');
-      this.dialog = element('section', 'mls-course-dialog', '<div class="mls-drawer-heading"><div><h2 id="mls-drawer-title">选择课程</h2><p>'+(this.pilotMode==='all'?'第二册 · 全96课':'第二册 · 前10课试学')+'</p></div><button type="button" class="mls-close-button" data-mobile-action="close-courses" aria-label="关闭课程目录">' + icon('m6 6 12 12M6 18 18 6') + '</button></div>');
+      this.dialog = element('section', 'mls-course-dialog', '<div class="mls-drawer-heading"><div><h2 id="mls-drawer-title">选择课程</h2><p class="mls-drawer-book-summary"></p></div><button type="button" class="mls-close-button" data-mobile-action="close-courses" aria-label="关闭课程目录">' + icon('m6 6 12 12M6 18 18 6') + '</button></div>');
       this.dialog.id = 'mls-course-drawer';
       this.dialog.setAttribute('role', 'dialog');
       this.dialog.setAttribute('aria-modal', 'true');
@@ -150,17 +153,21 @@
 
     update(next = {}) {
       if (!this.enabled || this.destroyed) return;
-      if (!['1','all'].includes(new URLSearchParams(global.location.search).get('pilot'))) {
-        this.destroy();
-        return;
-      }
       const previous = this.state;
       this.state = {...this.state, ...next};
       const lesson = Object.prototype.hasOwnProperty.call(next, 'lesson') ? next.lesson : (this.options.getLesson?.() || this.state.lesson);
       this.state.lesson = lesson;
-      const number = lesson?.book === 2 && lesson.number >= 1 && lesson.number <= (this.pilotMode==='all'?96:10) ? lesson.number : 1;
-      this.home.querySelector('.mls-continue-label').textContent = '继续学习第二册第' + number + '课';
-      this.home.querySelector('.mls-current-title').textContent = lesson?.book === 2 && lesson.number <= (this.pilotMode==='all'?96:10) ? String(lesson.title || '').replace(/^第\d+课\s*[·・]\s*/, '') : '从第一课开始，读懂一个故事';
+      const selected = Number(this.options.getSelectedBook?.()),book = BOOK_NAMES[Number(lesson?.book)] ? Number(lesson.book) : (BOOK_NAMES[selected] ? selected : 2);
+      const selectedBook = BOOK_NAMES[selected] ? selected : book;
+      const number = Number.isInteger(lesson?.number) && lesson.number >= 1 ? lesson.number : 1;
+      const count = Number(this.options.getLessonCount?.(selectedBook));
+      const summary = BOOK_NAMES[selectedBook] + (Number.isInteger(count) && count >= 0 ? ' · ' + count + '课' : ' · 课程目录');
+      if(this.bookSelect)this.bookSelect.value=String(selectedBook);
+      const brandSummary=this.header?.querySelector('.mls-book-summary'),drawerSummary=this.dialog?.querySelector('.mls-drawer-book-summary');
+      if(brandSummary)brandSummary.textContent=summary;
+      if(drawerSummary)drawerSummary.textContent=summary;
+      this.home.querySelector('.mls-continue-label').textContent = lesson ? '继续学习'+BOOK_NAMES[book]+'第' + number + '课' : '开始学习'+BOOK_NAMES[selectedBook];
+      this.home.querySelector('.mls-current-title').textContent = lesson ? String(lesson.title || '').replace(/^第\d+(?:[–—-]\d+)?课\s*[·・]\s*/, '') : '选择一课，开始阅读';
       const status = this.options.getStatus?.(lesson?.id);
       this.home.querySelector('.mls-lesson-status').textContent = typeof status === 'string' ? status : status?.completed ? '已学完 · 可以再读一遍' : '按自己的节奏，接着读';
       this.body.setAttribute('data-mls-view', this.state.view || 'study');
@@ -182,6 +189,15 @@
         this.playerButton.textContent = this.playerCollapsed ? '展开音频' : '收起音频';
         this.playerButton.setAttribute('aria-expanded', String(!this.playerCollapsed));
       }
+    }
+
+    changeBook(event) {
+      if (!this.mobile || this.destroyed || event.target !== this.bookSelect) return;
+      const book=Number(event.target.value);
+      if (!Number.isInteger(book) || !BOOK_NAMES[book]) return;
+      this.closeCourses({restoreFocus:false});
+      this.options.selectBook?.(book);
+      this.update();
     }
 
     click(event) {

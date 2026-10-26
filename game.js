@@ -133,7 +133,7 @@
     }
 
     isPilot(lesson=this.session?.lesson) {
-      return !!lesson && Number(lesson.book)===2 && Number(lesson.number)>=1 && Number(lesson.number)<=10 && /(?:^|[?&])pilot=1(?:&|$)/.test(global.location?.search||'') && !!global.StudyKnowledge?.bank?.hasLesson(lesson.id) && typeof global.StudyRemediation?.describe==='function';
+      return !!lesson && Number(lesson.book)===2 && Number(lesson.number)>=1 && Number(lesson.number)<=10 && !!global.StudyKnowledge?.bank?.hasLesson(lesson.id) && typeof global.StudyRemediation?.describe==='function';
     }
 
     pilotFailure() { return !!this.session?.finished && this.session.correct<this.passMark() && this.isPilot(); }
