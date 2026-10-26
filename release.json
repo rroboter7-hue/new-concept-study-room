@@ -1,6 +1,6 @@
 {
-  "build": "2026-10-26-reliable-learning-final",
-  "preparedAt": "2026-10-26T06:01:18.396Z",
+  "build": "2026-10-26-book34-full-text",
+  "preparedAt": "2026-10-26T06:18:41.897Z",
   "book2": {
     "book": 2,
     "total": 96,
@@ -32,8 +32,8 @@
     "focusedMistakeFeedback": true,
     "phoneKeyboardVerified": false
   },
-  "staticFiles": 1791,
-  "staticBytes": 756202041,
+  "staticFiles": 1794,
+  "staticBytes": 785132593,
   "nativeearsAdvancedAudio": {
     "books": {
       "3": 60,
@@ -45,5 +45,33 @@
       "https://nativeears.mojoru.org/series/48",
       "https://nativeears.mojoru.org/series/47"
     ]
+  },
+  "book3": {
+    "book": 3,
+    "total": 60,
+    "proofread": 60,
+    "draft": 0,
+    "corrections": 103,
+    "sourceSha256": "35e7817ab4caa50d301fd27b72e10311ff885d804d127fefeeff7eb94e47420f",
+    "sourceUrl": "resources/35e7817ab4caa50d.pdf",
+    "paragraphs": 162
+  },
+  "book4": {
+    "book": 4,
+    "total": 48,
+    "proofread": 48,
+    "draft": 0,
+    "corrections": 70,
+    "sourceSha256": "aed8a2a10c90ae46c51190798938f834bb9b7a673ed0ca9b4d1470bfa90735d7",
+    "ocrSourceSha256": "98eea53f18b76ef4e0f9ff02d656730b5fc7bd4cee1e060ec591e368d48b010f",
+    "sourceUrl": "resources/aed8a2a10c90ae46.pdf",
+    "bytes": 28624738,
+    "pages": 288
+  },
+  "textbookScope": {
+    "book3": 60,
+    "book4": 48,
+    "originalWorkbookExercises": false,
+    "newFullTranslations": false
   }
 }
