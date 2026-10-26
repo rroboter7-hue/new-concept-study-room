@@ -1,4 +1,6 @@
 .sentence-practice { min-width: 0; color: var(--ink); }
+.sentence-mode-field { max-width: 340px; margin-bottom: 14px; }
+.sentence-assisted { border-left: 3px solid #9c8a50; background: #faf8ed; padding: 10px 12px; }
 .sentence-header { margin: 24px 0 18px; }
 .sentence-header h3 { margin: 0 0 8px; font-size: 21px; }
 .sentence-header p, .sentence-note { color: #596b68; font-size: 13px; line-height: 1.8; }

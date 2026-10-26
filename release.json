@@ -1,6 +1,6 @@
 {
   "build": "2026-10-26-book34-translations",
-  "preparedAt": "2026-10-26T09:12:48.569Z",
+  "preparedAt": "2026-10-26T09:22:13.039292+00:00",
   "book2": {
     "book": 2,
     "total": 96,
@@ -69,10 +69,44 @@
       }
     },
     "wrongConceptsRejoinSpacedReview": true,
-    "syntheticListeningWordAudioAdded": 6
+    "syntheticListeningWordAudioAdded": 6,
+    "dailyOutputCoach": {
+      "dailySmallBatches": true,
+      "reviewCardsMaximum": 3,
+      "productiveTargetPerDay": 1,
+      "wordAndPhraseFiveSentences": true,
+      "selfExplanation": true,
+      "textRetelling": true,
+      "assistanceEvidence": true,
+      "independentObjectiveReviewOnly": true,
+      "browserLocal": true,
+      "automaticSemanticOrSpeakingScore": false,
+      "intervalsAreProductSchedule": true,
+      "sourceTargetQualityGate": true
+    },
+    "defaultMobileNavigation": true,
+    "defaultMobileBookSelection": [
+      1,
+      2,
+      3,
+      4
+    ],
+    "continueCurrentLesson": true,
+    "publicReviewedRemediationLessons": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ]
   },
-  "staticFiles": 1961,
-  "staticBytes": 810196887,
+  "staticFiles": 1984,
+  "staticBytes": 810416687,
   "nativeearsAdvancedAudio": {
     "books": {
       "3": 60,
