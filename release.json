@@ -1,6 +1,6 @@
 {
   "build": "2026-10-26-reviewed-packs-book1-first10",
-  "preparedAt": "2026-10-26T08:12:32.489Z",
+  "preparedAt": "2026-10-26T08:23:38.299Z",
   "book2": {
     "book": 2,
     "total": 96,
@@ -71,8 +71,8 @@
     "wrongConceptsRejoinSpacedReview": true,
     "syntheticListeningWordAudioAdded": 6
   },
-  "staticFiles": 1950,
-  "staticBytes": 809616270,
+  "staticFiles": 1961,
+  "staticBytes": 810196887,
   "nativeearsAdvancedAudio": {
     "books": {
       "3": 60,
@@ -139,6 +139,23 @@
     "dictionaryFallbackLabelled": true
   },
   "staticSnapshotExcludesReleaseManifest": true,
+  "readingLayout": {
+    "book2SentenceAlignedLessons": 96,
+    "book2SentencePairs": 1055,
+    "englishSourceUnchanged": true,
+    "speakerThoughtNoteLabels": true,
+    "sharedSpeechSentenceIndexes": true,
+    "translationGuard": "exact-lesson-and-paragraph-source",
+    "untranslatedBooksPreserved": [
+      3,
+      4
+    ],
+    "phoneSizeVerified": [
+      390,
+      844
+    ],
+    "physicalPhoneKeyboardVerified": false
+  },
   "book1": {
     "readingUnits": 10,
     "totalReadingUnits": 72,
