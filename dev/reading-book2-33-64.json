@@ -1,0 +1,2621 @@
+{
+  "version": 1,
+  "lessons": [
+    {
+      "lessonId": "nce-b2-eef57c-l033",
+      "number": 33,
+      "book": 2,
+      "title": "Out of the darkness",
+      "paragraphs": [
+        {
+          "index": 0,
+          "rows": [
+            {
+              "en": "Nearly a week passed before the girl was able to explain what had happened to her.",
+              "zh": "将近一个星期过去后，这个姑娘才说得清自己遭遇了什么。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "One afternoon she set out from the coast in a small boat and was caught in a storm.",
+              "zh": "一天下午，她驾着一艘小船从海岸出发，遇上了风暴。",
+              "kind": "narration",
+              "speaker": "旁白",
+              "breakBefore": true
+            },
+            {
+              "en": "Towards evening, the boat struck a rock and the girl jumped into the sea.",
+              "zh": "傍晚时，小船撞上一块礁石，姑娘跳进了海里。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "Then she swam to the shore after spending the whole night in the water.",
+              "zh": "她在水里度过了整整一夜，随后才游到岸边。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "During that time she covered a distance of eight miles.",
+              "zh": "在那段时间里，她游了八英里。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "Early next morning, she saw a light ahead.",
+              "zh": "第二天清晨，她看见前方有灯光。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "She knew she was near the shore because the light was high up on the cliffs.",
+              "zh": "她知道自己已靠近海岸，因为灯光高高地亮在悬崖上。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "On arriving at the shore, the girl struggled up the cliff towards the light she had seen.",
+              "zh": "一到岸边，姑娘就挣扎着爬上悬崖，朝她先前看到的灯光爬去。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "That was all she remembered.",
+              "zh": "她能记起的只有这些。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "When she woke up a day later, she found herself in hospital.",
+              "zh": "一天后醒来时，她发现自己在医院里。",
+              "kind": "narration",
+              "speaker": "旁白",
+              "breakBefore": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l034",
+      "number": 34,
+      "book": 2,
+      "title": "Quick work",
+      "paragraphs": [
+        {
+          "index": 0,
+          "rows": [
+            {
+              "en": "Dan Robinson has been worried all week.",
+              "zh": "丹·鲁宾逊整个星期都很担心。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "Last Tuesday he received a letter from the local police.",
+              "zh": "上星期二，他收到了当地警察的一封信。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "In the letter he was asked to call at the station.",
+              "zh": "信里请他到警察局去一趟。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "Dan wondered why he was wanted by the police, but he went to the station yesterday and now he is not worried anymore.",
+              "zh": "丹不明白警察为什么找他，但他昨天还是去了警察局，现在已经不再担心了。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "At the station, he was told by a smiling policeman that his bicycle had been found.",
+              "zh": "在警察局，一位面带微笑的警察告诉他，他的自行车找到了。",
+              "kind": "narration",
+              "speaker": "旁白",
+              "breakBefore": true
+            },
+            {
+              "en": "Five days ago, the policeman told him, the bicycle was picked up in a small village four hundred miles away.",
+              "zh": "警察告诉他，五天前，有人在四百英里以外的一个小村庄里发现了那辆自行车。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "It is now being sent to his home by train.",
+              "zh": "现在，这辆自行车正由火车运往他家。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "Dan was most surprised when he heard the news.",
+              "zh": "丹听到这个消息时，非常吃惊。",
+              "kind": "narration",
+              "speaker": "旁白",
+              "breakBefore": true
+            },
+            {
+              "en": "He was amused too, because he never expected the bicycle to be found.",
+              "zh": "他同时又觉得好笑，因为他从没指望还能找到这辆自行车。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "It was stolen twenty years ago when Dan was a boy of fifteen!",
+              "zh": "那辆车是二十年前被偷的，当时丹还是个十五岁的男孩子！",
+              "kind": "narration",
+              "speaker": "旁白"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l035",
+      "number": 35,
+      "book": 2,
+      "title": "Stop thief!",
+      "paragraphs": [
+        {
+          "index": 0,
+          "rows": [
+            {
+              "en": "Roy Trenton used to drive a taxi.",
+              "zh": "罗伊·特伦顿过去开出租车。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "A short while ago, however, he became a bus driver and he has not regretted it.",
+              "zh": "不过，不久前他当上了公共汽车司机，而且一直没有后悔。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "He is finding his new work far more exciting.",
+              "zh": "他觉得自己的新工作刺激得多。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "When he was driving along Catford Street recently, he saw two thieves rush out of a shop and run towards a waiting car.",
+              "zh": "最近，他沿着卡特福德街开车时，看见两个窃贼从一家商店冲出来，朝一辆等在那里的汽车跑去。",
+              "kind": "narration",
+              "speaker": "旁白",
+              "breakBefore": true
+            },
+            {
+              "en": "One of them was carrying a bag full of money.",
+              "zh": "其中一个人提着一只装满钱的袋子。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "Roy acted quickly and drove the bus straight at the thieves.",
+              "zh": "罗伊迅速采取行动，开着公共汽车直冲窃贼而去。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "The one with the money got such a fright that he dropped the bag.",
+              "zh": "那个提钱的人吓得把袋子都掉了。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "As the thieves were trying to get away in their car, Roy drove his bus into the back of it.",
+              "zh": "窃贼正想开车逃走时，罗伊开着公共汽车撞上了他们汽车的尾部。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "While the battered car was moving away, Roy stopped his bus and telephoned the police.",
+              "zh": "那辆被撞坏的汽车开走时，罗伊停下公共汽车，打电话报了警。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "The thieves’ car was badly damaged and easy to recognize.",
+              "zh": "窃贼的汽车损坏严重，很容易辨认。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "Shortly afterwards, the police stopped the car and both men were arrested.",
+              "zh": "不久，警察拦住了那辆汽车，两个人都被捕了。",
+              "kind": "narration",
+              "speaker": "旁白",
+              "breakBefore": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l036",
+      "number": 36,
+      "book": 2,
+      "title": "Across the Channel",
+      "paragraphs": [
+        {
+          "index": 0,
+          "rows": [
+            {
+              "en": "Debbie Hart is going to swim across the English Channel tomorrow.",
+              "zh": "黛比·哈特明天打算游过英吉利海峡。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "She is going to set out from the French coast at five o'clock in the morning.",
+              "zh": "她计划早晨五点从法国海岸出发。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "Debbie is only eleven years old and she hopes to set up a new world record.",
+              "zh": "黛比只有十一岁，她希望创造一项新的世界纪录。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "She is a strong swimmer and many people feel that she is sure to succeed.",
+              "zh": "她是一位游泳健将，许多人认为她一定会成功。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "Debbie's father will set out with her in a small boat.",
+              "zh": "黛比的父亲将驾着一艘小船陪她一同出发。",
+              "kind": "narration",
+              "speaker": "旁白",
+              "breakBefore": true
+            },
+            {
+              "en": "Mr. Hart has trained his daughter for years.",
+              "zh": "哈特先生多年来一直在训练自己的女儿。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "Tomorrow he will be watching her anxiously as she swims the long distance to England.",
+              "zh": "明天，当她长距离游向英国时，他会焦急地注视着她。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "Debbie intends to take short rests every two hours.",
+              "zh": "黛比打算每隔两小时短暂休息一次。",
+              "kind": "narration",
+              "speaker": "旁白",
+              "breakBefore": true
+            },
+            {
+              "en": "She will have something to drink but she will not eat any solid food.",
+              "zh": "她会喝些东西，但不会吃任何固体食物。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "Most of Debbie’s school friends will be waiting for her on the English coast.",
+              "zh": "黛比的大多数同学将会在英国海岸等她。",
+              "kind": "narration",
+              "speaker": "旁白",
+              "breakBefore": true
+            },
+            {
+              "en": "Among them will be Debbie’s mother, who swam the Channel herself when she was a girl.",
+              "zh": "等候的人中还有黛比的母亲，她在少女时代也曾亲自游过英吉利海峡。",
+              "kind": "narration",
+              "speaker": "旁白"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l037",
+      "number": 37,
+      "book": 2,
+      "title": "The Olympic Games",
+      "paragraphs": [
+        {
+          "index": 0,
+          "rows": [
+            {
+              "en": "The Olympic Games will be held in our country in four years’ time.",
+              "zh": "四年以后，奥林匹克运动会将在我国举行。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "As a great many people will be visiting the country, the government will be building new hotels, an immense stadium, and a new Olympic-standard swimming pool.",
+              "zh": "由于将有大批游客来到我国，政府将兴建新的旅馆、一座巨大的体育场，以及一座符合奥运标准的新游泳池。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "They will also be building new roads and a special railway line.",
+              "zh": "政府还将修建新的道路和一条专用铁路线。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "The Games will be held just outside the capital and the whole area will be called ‘Olympic City’.",
+              "zh": "运动会将在首都近郊举行，整个地区将被称为“奥运城”。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "Workers will have completed the new roads by the end of this year.",
+              "zh": "到今年年底，工人们将修好这些新道路。",
+              "kind": "narration",
+              "speaker": "旁白",
+              "breakBefore": true
+            },
+            {
+              "en": "By the end of next year, they will have finished work on the new stadium.",
+              "zh": "到明年年底，他们将完成新体育场的建设。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "The fantastic modern buildings have been designed by Kurt Gunter.",
+              "zh": "这些出色的现代建筑已经由库尔特·冈特设计完成。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "Everybody will be watching anxiously as the new buildings go up.",
+              "zh": "随着新建筑一座座拔地而起，人人都会满怀期待地关注着。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "We are all very excited and are looking forward to the Olympic Games because they have never been held before in this country.",
+              "zh": "我们都十分兴奋，盼望着奥运会，因为我国以前从未举办过奥运会。",
+              "kind": "narration",
+              "speaker": "旁白"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l038",
+      "number": 38,
+      "book": 2,
+      "title": "Everything except the weather",
+      "paragraphs": [
+        {
+          "index": 0,
+          "rows": [
+            {
+              "en": "My old friend, Harrison, had lived in the Mediterranean for many years before he returned to England.",
+              "zh": "我的老朋友哈里森回到英国以前，已经在地中海地区住了许多年。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "He had often dreamed of retiring in England and had planned to settle down in the country.",
+              "zh": "他常常梦想在英国退休，并计划在乡下定居。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "He had no sooner returned than he bought a house and went to live there.",
+              "zh": "他一回到英国，就买了一栋房子，住了进去。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "Almost immediately he began to complain about the weather, for even though it was still summer, it rained continually and it was often bitterly cold.",
+              "zh": "他几乎立刻就开始抱怨天气，因为虽然还是夏天，却不停地下雨，而且常常冷得刺骨。",
+              "kind": "narration",
+              "speaker": "旁白",
+              "breakBefore": true
+            },
+            {
+              "en": "After so many years of sunshine, Harrison got a shock.",
+              "zh": "享受了那么多年的阳光以后，哈里森对这样的天气大感意外。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "He acted as if he had never lived in England before.",
+              "zh": "他的举止仿佛自己从前从未在英国住过一样。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "In the end, it was more than he could bear.",
+              "zh": "到最后，这种天气实在让他无法忍受了。",
+              "kind": "narration",
+              "speaker": "旁白",
+              "breakBefore": true
+            },
+            {
+              "en": "He had hardly had time to settle down when he sold the house and left the country.",
+              "zh": "他几乎还没来得及安顿下来，就卖掉房子，离开了英国。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "The dream he had had for so many years ended there.",
+              "zh": "他多年来的梦想就此结束了。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "Harrison had thought of everything except the weather.",
+              "zh": "哈里森什么都考虑到了，唯独漏了天气。",
+              "kind": "narration",
+              "speaker": "旁白"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l039",
+      "number": 39,
+      "book": 2,
+      "title": "Am I all right?",
+      "paragraphs": [
+        {
+          "index": 0,
+          "rows": [
+            {
+              "en": "While John Gilbert was in hospital, he asked his doctor to tell him whether his operation had been successful, but the doctor refused to do so.",
+              "zh": "约翰·吉尔伯特住院时，请医生告诉他手术是否成功，医生却拒绝回答。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "The following day, the patient asked for a bedside telephone.",
+              "zh": "第二天，这位病人要了一部床头电话。",
+              "kind": "narration",
+              "speaker": "旁白",
+              "breakBefore": true
+            },
+            {
+              "en": "When he was alone, he telephoned the hospital exchange and asked for Doctor Millington.",
+              "zh": "独自一人时，他拨通了医院总机，要求转接米林顿医生。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "When the doctor answered the phone, Mr. Gilbert said he was inquiring about a certain patient, a Mr. John Gilbert.",
+              "zh": "医生接电话后，吉尔伯特先生说，他想打听一位名叫约翰·吉尔伯特的病人的情况。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "He asked if Mr. Gilbert's operation had been successful and the doctor told him that it had been.",
+              "zh": "他问吉尔伯特先生的手术是否成功，医生告诉他手术成功了。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "He then asked when Mr. Gilbert would be allowed to go home and the doctor told him that he would have to stay in hosptial for another two weeks.",
+              "zh": "接着，他问吉尔伯特先生什么时候可以回家，医生告诉他，还必须在医院住两个星期。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "Then Dr. Millington asked the caller if he was a relative of the patient.",
+              "zh": "随后，米林顿医生问来电者是不是病人的亲属。",
+              "kind": "narration",
+              "speaker": "旁白",
+              "breakBefore": true
+            },
+            {
+              "en": "‘No,’ the patient answered, ‘I am Mr. John Gilbert.’",
+              "zh": "“不是，”病人回答，“我就是约翰·吉尔伯特先生。”",
+              "kind": "speech",
+              "speaker": "约翰·吉尔伯特",
+              "breakBefore": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l040",
+      "number": 40,
+      "book": 2,
+      "title": "Food and talk",
+      "paragraphs": [
+        {
+          "index": 0,
+          "rows": [
+            {
+              "en": "Last week at a dinner party, the hostess asked me to sit next to Mrs. Rumbold.",
+              "zh": "上周参加一次晚宴时，女主人请我坐在兰博尔德太太身旁。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "Mrs. Rumbold was a large, unsmiling lady in a tight black dress.",
+              "zh": "兰博尔德太太体态丰腴，脸上毫无笑容，穿着一条紧身黑色连衣裙。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "She did not even look up when I took my seat beside her.",
+              "zh": "我在她身旁坐下时，她连头也没抬。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "Her eyes were fixed on her plate and in a short time, she was busy eating.",
+              "zh": "她的眼睛一直盯着自己的盘子，不一会儿就忙着吃了起来。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "I tried to make conversation.",
+              "zh": "我试着找话聊。",
+              "kind": "narration",
+              "speaker": "旁白"
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "rows": [
+            {
+              "en": "‘A new play is coming to “The Globe” soon,’ I said.",
+              "zh": "“环球剧院很快就要上演一出新戏了，”我说。",
+              "kind": "speech",
+              "speaker": "我"
+            },
+            {
+              "en": "‘Will you be seeing it?’",
+              "zh": "“您会去看吗？”",
+              "kind": "speech",
+              "speaker": "我"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "rows": [
+            {
+              "en": "‘No,’ she answered.",
+              "zh": "“不会，”她回答。",
+              "kind": "speech",
+              "speaker": "兰博尔德太太"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "rows": [
+            {
+              "en": "‘Will you be spending your holidays abroad this year?’ I asked.",
+              "zh": "“您今年打算出国度假吗？”我问。",
+              "kind": "speech",
+              "speaker": "我"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "rows": [
+            {
+              "en": "‘No,’ she answered.",
+              "zh": "“不打算，”她回答。",
+              "kind": "speech",
+              "speaker": "兰博尔德太太"
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "rows": [
+            {
+              "en": "‘Will you be staying in England?’ I asked.",
+              "zh": "“您会留在英国吗？”我问。",
+              "kind": "speech",
+              "speaker": "我"
+            }
+          ]
+        },
+        {
+          "index": 6,
+          "rows": [
+            {
+              "en": "‘No,’ she answered.",
+              "zh": "“不会，”她回答。",
+              "kind": "speech",
+              "speaker": "兰博尔德太太"
+            }
+          ]
+        },
+        {
+          "index": 7,
+          "rows": [
+            {
+              "en": "In despair, I asked her whether she was enjoying her dinner.",
+              "zh": "我实在没办法了，便问她这顿饭吃得是否愉快。",
+              "kind": "narration",
+              "speaker": "旁白"
+            }
+          ]
+        },
+        {
+          "index": 8,
+          "rows": [
+            {
+              "en": "‘Young man,’ she answered, ‘if you ate more and talked less, we would both enjoy our dinner!’",
+              "zh": "“年轻人，”她回答，“如果你多吃一点、少说一点，我们两个都会吃得愉快！”",
+              "kind": "speech",
+              "speaker": "兰博尔德太太"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l041",
+      "number": 41,
+      "book": 2,
+      "title": "Do you call that a hat?",
+      "paragraphs": [
+        {
+          "index": 0,
+          "rows": [
+            {
+              "en": "‘Do you call that a hat?’ I said to my wife.",
+              "zh": "“你管那叫帽子？”我对妻子说。",
+              "kind": "speech",
+              "speaker": "我"
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "rows": [
+            {
+              "en": "‘You needn’t be so rude about it,’ my wife answered as she looked at herself in the mirror.",
+              "zh": "“你用不着说得这么难听，”妻子一边照镜子一边回答。",
+              "kind": "speech",
+              "speaker": "妻子"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "rows": [
+            {
+              "en": "I sat down on one of those modern chairs with holes in it and waited.",
+              "zh": "我在一把带孔的现代式椅子上坐下来等着。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "We had been in the hat shop for half an hour and my wife was still in front of the mirror.",
+              "zh": "我们已经在帽子店里待了半个小时，妻子还站在镜子前。",
+              "kind": "narration",
+              "speaker": "旁白"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "rows": [
+            {
+              "en": "‘We musn’t buy things we don’t need,’ I remarked suddenly.",
+              "zh": "“我们可不能买不需要的东西，”我突然说。",
+              "kind": "speech",
+              "speaker": "我"
+            },
+            {
+              "en": "I regretted saying it almost at once.",
+              "zh": "我几乎立刻就后悔说了这话。",
+              "kind": "narration",
+              "speaker": "旁白"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "rows": [
+            {
+              "en": "‘You needn't have said that,’ my wife answered.",
+              "zh": "“你这话完全多余，”妻子回答。",
+              "kind": "speech",
+              "speaker": "妻子"
+            },
+            {
+              "en": "‘I needn’t remind you of that terrible tie you bought yesterday.’",
+              "zh": "“不用我提醒你昨天买的那条难看的领带吧。”",
+              "kind": "speech",
+              "speaker": "妻子"
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "rows": [
+            {
+              "en": "‘I find it beautiful,’ I said.",
+              "zh": "“我觉得它很好看，”我说。",
+              "kind": "speech",
+              "speaker": "我"
+            },
+            {
+              "en": "‘A man can never have too many ties.’",
+              "zh": "“男人的领带再多也不嫌多。”",
+              "kind": "speech",
+              "speaker": "我"
+            }
+          ]
+        },
+        {
+          "index": 6,
+          "rows": [
+            {
+              "en": "‘And a woman can’t have too many hats,’ she answered.",
+              "zh": "“女人的帽子也是再多都不嫌多，”她回答。",
+              "kind": "speech",
+              "speaker": "妻子"
+            }
+          ]
+        },
+        {
+          "index": 7,
+          "rows": [
+            {
+              "en": "Ten minutes later we walked out of the shop together.",
+              "zh": "十分钟后，我们一起走出了商店。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "My wife was wearing a hat that looked like a lighthouse!",
+              "zh": "妻子头上戴着一顶看起来像灯塔的帽子！",
+              "kind": "narration",
+              "speaker": "旁白"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l042",
+      "number": 42,
+      "book": 2,
+      "title": "Not very musical",
+      "paragraphs": [
+        {
+          "index": 0,
+          "rows": [
+            {
+              "en": "As we had had a long walk through one of the markets of Old Delhi, we stopped at a square to have a rest.",
+              "zh": "我们在老德里的一个集市里走了很长一段路，于是停在一处广场上休息。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "After a time, we noticed a snake charmer with two large baskets at the other side of the square, so we went to have a look at him.",
+              "zh": "过了一会儿，我们注意到广场另一边有位带着两个大篮子的弄蛇人，便走过去看看。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "As soon as he saw us, he picked up a long pipe which was covered with coins and opened one of the baskets.",
+              "zh": "他一看到我们，就拿起一支镶满硬币的长笛，打开了其中一个篮子。",
+              "kind": "narration",
+              "speaker": "旁白",
+              "breakBefore": true
+            },
+            {
+              "en": "When he began to play a tune, we had our first glimpse of the snake.",
+              "zh": "当他开始吹奏一支曲子时，我们才第一次看到了那条蛇。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "It rose out of the basket and began to follow the movements of the pipe.",
+              "zh": "蛇从篮子里昂起身，开始随着笛子的摆动而移动。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "We were very much surprised when the snake charmer suddenly began to play jazz and modern pop songs.",
+              "zh": "弄蛇人突然开始吹爵士乐和现代流行歌曲，让我们十分惊讶。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "The snake, however, continued to ‘dance’ slowly.",
+              "zh": "然而，那条蛇仍旧慢悠悠地“跳舞”。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "It obviously could not tell the difference between Indian music and jazz!",
+              "zh": "显然，它分不出印度音乐和爵士乐之间的差别！",
+              "kind": "narration",
+              "speaker": "旁白"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l043",
+      "number": 43,
+      "book": 2,
+      "title": "Over the South Pole",
+      "paragraphs": [
+        {
+          "index": 0,
+          "rows": [
+            {
+              "en": "In 1929, three years after his flight over the North Pole, the American explorer, R.E. Byrd, successfully flew over the South Pole for the first time.",
+              "zh": "1929年，也就是飞越北极三年之后，美国探险家R.E.伯德首次成功飞越了南极。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "Though, at first, Byrd and his men were able to take a great many photographs of the mountains that lay below, they soon ran into serious trouble.",
+              "zh": "虽然起初伯德和同伴们拍下了许多下方群山的照片，但他们很快就遇上了严重的困难。",
+              "kind": "narration",
+              "speaker": "旁白",
+              "breakBefore": true
+            },
+            {
+              "en": "At one point, it seemed certain that their plane would crash.",
+              "zh": "有一阵子，他们的飞机似乎肯定要坠毁了。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "It could only get over the mountains if it rose to 10,000 feet.",
+              "zh": "飞机只有升到一万英尺的高度，才能飞越群山。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "Byrd at once ordered his men to throw out two heavy food sacks.",
+              "zh": "伯德立刻命令同伴们把两袋沉重的食物扔出去。",
+              "kind": "narration",
+              "speaker": "旁白",
+              "breakBefore": true
+            },
+            {
+              "en": "The plane was then able to rise and it cleared the mountains by 400 feet.",
+              "zh": "飞机这才得以上升，从比山峰高四百英尺的地方飞越了群山。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "Byrd now knew that he would be able to reach the South Pole which was 300 miles away, for there were no more mountains in sight.",
+              "zh": "这时伯德知道，他能够到达三百英里以外的南极了，因为视野中再也看不到山了。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "The aircraft was able to fly over the endless white plains without difficulty.",
+              "zh": "飞机顺利地飞过了那无边无际的白色平原。",
+              "kind": "narration",
+              "speaker": "旁白"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l044",
+      "number": 44,
+      "book": 2,
+      "title": "Through the forest",
+      "paragraphs": [
+        {
+          "index": 0,
+          "rows": [
+            {
+              "en": "Mrs. Anne Sterling did not think of the risk she was taking when she ran through a forest after two men.",
+              "zh": "安妮·斯特林太太在树林里追赶两名男子时，没有想到自己正冒着多大的风险。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "They had rushed up to her while she was having a picnic at the edge of a forest with her children and tried to steal her handbag.",
+              "zh": "当时，她正和孩子们在树林边野餐，那两个人突然冲到她跟前，想抢她的手提包。",
+              "kind": "narration",
+              "speaker": "旁白",
+              "breakBefore": true
+            },
+            {
+              "en": "In the struggle, the strap broke and, with the bag in their possession, both men started running through the trees.",
+              "zh": "在争夺中，包带断了，两名男子拿着包开始在树林里奔跑。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "Mrs. Sterling got so angry that she ran after them.",
+              "zh": "斯特林太太气极了，便追赶他们。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "She was soon out of breath, but she continued to run.",
+              "zh": "她很快就跑得气喘吁吁，但仍继续跑。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "When she caught up with them, she saw that they had sat down and were going through the contents of the bag, so she ran straight at them.",
+              "zh": "她追上他们时，看见两个人已经坐下来，正在翻看包里的东西，于是径直向他们冲去。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "The men got such a fright that they dropped the bag and ran away.",
+              "zh": "那两个人吓得扔下包就逃跑了。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "‘The strap needs mending,’ said Mrs. Sterling later, ‘but they did not steal anything.’",
+              "zh": "“包带需要修一修，”斯特林太太后来说，“不过，他们什么也没偷走。”",
+              "kind": "speech",
+              "speaker": "斯特林太太",
+              "breakBefore": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l045",
+      "number": 45,
+      "book": 2,
+      "title": "A clear conscience",
+      "paragraphs": [
+        {
+          "index": 0,
+          "rows": [
+            {
+              "en": "The whole village soon learnt that a large sum of money had been lost.",
+              "zh": "整个村子很快就知道，有一大笔钱丢了。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "Sam Benton, the local butcher, had lost his wallet while taking his savings to the post office.",
+              "zh": "当地的肉贩萨姆·本顿把积蓄送往邮局时，丢了钱包。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "Sam was sure that the wallet must have been found by one of the villagers, but it was not returned to him.",
+              "zh": "萨姆确信钱包一定被某个村民捡到了，可是并没有人把钱包还给他。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "Three months passed, and then one morning, Sam found his wallet outside his front door.",
+              "zh": "三个月过去了，一天早晨，萨姆在自己家门外找到了钱包。",
+              "kind": "narration",
+              "speaker": "旁白",
+              "breakBefore": true
+            },
+            {
+              "en": "It had been wrapped up in newspaper and it contained half the money he had lost, together with a note which said: ‘A thief, yes, but only 50 per cent a thief!’",
+              "zh": "钱包用报纸包着，里面有他所丢钱款的一半，还附着一张便条，上面写着：“没错，是个小偷，不过只算百分之五十的小偷！”",
+              "kind": "mixed",
+              "speaker": "旁白与便条作者",
+              "breakBefore": true
+            },
+            {
+              "en": "Two months later, some more money was sent to Sam with another note: ‘Only 25 per cent a thief now!’",
+              "zh": "两个月后，又有人给萨姆送来一些钱，附着另一张便条：“现在只算百分之二十五的小偷了！”",
+              "kind": "mixed",
+              "speaker": "旁白与便条作者",
+              "breakBefore": true
+            },
+            {
+              "en": "In time, all Sam’s money was paid back in this way.",
+              "zh": "过了一段时间，萨姆的钱就这样全部还清了。",
+              "kind": "narration",
+              "speaker": "旁白",
+              "breakBefore": true
+            },
+            {
+              "en": "The last note said: ‘I am 100 per cent honest now!’",
+              "zh": "最后一张便条写着：“我现在是百分之百的老实人了！”",
+              "kind": "mixed",
+              "speaker": "旁白与便条作者",
+              "breakBefore": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l046",
+      "number": 46,
+      "book": 2,
+      "title": "Expensive and uncomfortable",
+      "paragraphs": [
+        {
+          "index": 0,
+          "rows": [
+            {
+              "en": "When a plane from London arrived at Sydney airport, workers began to unload a number of wooden boxes which contained clothing.",
+              "zh": "一架从伦敦飞来的飞机抵达悉尼机场后，工人们开始卸下一批装着衣服的木箱。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "No one could account for the fact that one of the boxes was extremely heavy.",
+              "zh": "其中一个箱子格外沉重，谁也解释不了原因。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "It suddenly occurred to one of the workers to open up the box.",
+              "zh": "一名工人突然想到把箱子打开看看。",
+              "kind": "narration",
+              "speaker": "旁白",
+              "breakBefore": true
+            },
+            {
+              "en": "He was astonished at what he found.",
+              "zh": "他看到箱子里的情形，大吃一惊。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "A man was lying in the box on top of a pile of woollen goods.",
+              "zh": "一个男子躺在箱子里的一堆毛织品上。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "He was so surprised at being discovered that he did not even try to run away.",
+              "zh": "他被人发现后，惊讶得连逃跑都没有尝试。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "After he was arrested, the man admitted hiding in the box before the plane left London.",
+              "zh": "被捕后，这名男子承认自己是在飞机离开伦敦之前躲进箱子的。",
+              "kind": "narration",
+              "speaker": "旁白",
+              "breakBefore": true
+            },
+            {
+              "en": "He had had a long and uncomfortable trip, for he had been confined to the wooden box for over eighteen hours.",
+              "zh": "他经历了一趟漫长而难受的旅行，因为他被关在木箱里十八个多小时。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "The man was ordered to pay £3,500 for the cost of the trip.",
+              "zh": "这名男子被勒令支付三千五百英镑的旅费。",
+              "kind": "narration",
+              "speaker": "旁白",
+              "breakBefore": true
+            },
+            {
+              "en": "The normal price of a ticket is £2,000!",
+              "zh": "正常票价是两千英镑！",
+              "kind": "narration",
+              "speaker": "旁白"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l047",
+      "number": 47,
+      "book": 2,
+      "title": "A thirsty ghost",
+      "paragraphs": [
+        {
+          "index": 0,
+          "rows": [
+            {
+              "en": "A public house which was recently bought by Mr. Ian Thompson is up for sale.",
+              "zh": "伊恩·汤普森先生最近买下的一家酒馆，现在正挂牌出售。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "Mr. Thompson is going to sell it because it is haunted.",
+              "zh": "汤普森先生打算卖掉酒馆，因为那里闹鬼。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "He told me that he could not go to sleep one night because he heard a strange noise coming from the bar.",
+              "zh": "他告诉我，一天夜里，他听见酒吧间里传来一种奇怪的声音，因而无法入睡。",
+              "kind": "narration",
+              "speaker": "旁白",
+              "breakBefore": true
+            },
+            {
+              "en": "The next morning, he found that the doors had been blocked by chairs and the furniture had been moved.",
+              "zh": "第二天早晨，他发现门被椅子堵住了，家具也被挪动了。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "Though Mr. Thompson had turned the lights off before he went to bed, they were on in the morning.",
+              "zh": "虽然汤普森先生睡前关了灯，可早晨灯却亮着。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "He also said that he had found five empty whisky bottles which the ghost must have drunk the night before.",
+              "zh": "他还说，他发现了五个空威士忌酒瓶，一定是鬼在前一晚把里面的酒喝光了。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "When I suggested that some villagers must have come in for a free drink, Mr. Thompson shook his head.",
+              "zh": "当我提出一定是一些村民进来喝了免费酒时，汤普森先生摇了摇头。",
+              "kind": "narration",
+              "speaker": "旁白",
+              "breakBefore": true
+            },
+            {
+              "en": "The villagers have told him that they will not accept the pub even if he gives it away.",
+              "zh": "村民们已经告诉他，即使他把酒馆白送给他们，他们也不要。",
+              "kind": "narration",
+              "speaker": "旁白"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l048",
+      "number": 48,
+      "book": 2,
+      "title": "Did you want to tell me something?",
+      "paragraphs": [
+        {
+          "index": 0,
+          "rows": [
+            {
+              "en": "Dentists always ask questions when it is impossible for you to answer.",
+              "zh": "牙医总是在你不可能回答的时候提问。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "My dentist had just pulled out one of my teeth and had told me to rest for a while.",
+              "zh": "我的牙医刚拔掉了我一颗牙，并叫我休息一会儿。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "I tried to say something, but my mouth was full of cotton wool.",
+              "zh": "我想说点什么，可嘴里塞满了药棉。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "He knew I collected match boxes and asked me whether my collection was growing.",
+              "zh": "他知道我收集火柴盒，便问我的收藏是不是又增加了。",
+              "kind": "narration",
+              "speaker": "旁白",
+              "breakBefore": true
+            },
+            {
+              "en": "He then asked me how my brother was and whether I liked my new job in London.",
+              "zh": "接着，他又问我兄弟的近况，以及我是否喜欢在伦敦的新工作。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "In answer to these questions I either nodded or made strange noises.",
+              "zh": "回答这些问题时，我不是点头，就是发出奇怪的声音。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "Meanwhile, my tongue was busy searching out the hole where the tooth had been.",
+              "zh": "与此同时，我的舌头一直忙着寻找那颗牙原来所在的空洞。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "I suddenly felt very worried, but could not say anything.",
+              "zh": "我突然很担心，却什么也说不出来。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "When the dentist at last removed the cotton wool from my mouth, I was able to tell him that he had pulled out the wrong tooth.",
+              "zh": "牙医终于从我嘴里取出药棉时，我才得以告诉他，他把牙拔错了。",
+              "kind": "narration",
+              "speaker": "旁白",
+              "breakBefore": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l049",
+      "number": 49,
+      "book": 2,
+      "title": "The end of a dream",
+      "paragraphs": [
+        {
+          "index": 0,
+          "rows": [
+            {
+              "en": "Tired of sleeping on the floor, a young man in Teheran saved up for years to buy a real bed.",
+              "zh": "德黑兰有个年轻人厌倦了睡地板，为了买一张真正的床，他攒了好几年的钱。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "For the first time in his life, he became the proud owner of a bed which had springs and a mattress.",
+              "zh": "他有生以来第一次拥有了一张带弹簧和床垫的床，心里十分得意。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "Because the weather was very hot, he carried the bed on to the roof of his house.",
+              "zh": "由于天气很热，他把床搬到了自己家的屋顶上。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "He slept very well for the first two nights, but on the third night, a storm blew up.",
+              "zh": "头两个晚上他睡得很好，可到了第三个晚上，突然刮起了风暴。",
+              "kind": "narration",
+              "speaker": "旁白",
+              "breakBefore": true
+            },
+            {
+              "en": "A gust of wind swept the bed off the roof and sent it crashing into the courtyard below.",
+              "zh": "一阵狂风把床从屋顶卷了下去，使它重重地砸进下面的院子。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "The young man did not wake up until the bed had struck the ground.",
+              "zh": "直到床撞到地面，年轻人才醒过来。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "Although the bed was smashed to pieces, the man was miraculously unhurt.",
+              "zh": "虽然床摔得粉碎，他却奇迹般地毫发无伤。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "When he woke up, he was still on the mattress.",
+              "zh": "醒来时，他仍然躺在床垫上。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "Glancing at the bits of wood and metal that lay around him, the man sadly picked up the mattress and carried it into his house.",
+              "zh": "他瞥了一眼散落在周围的木头和金属碎片，伤心地捡起床垫，把它搬进屋里。",
+              "kind": "narration",
+              "speaker": "旁白",
+              "breakBefore": true
+            },
+            {
+              "en": "After he had put it on the floor, he promptly went to sleep again.",
+              "zh": "他把床垫放在地板上，随即又睡着了。",
+              "kind": "narration",
+              "speaker": "旁白"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l050",
+      "number": 50,
+      "book": 2,
+      "title": "Taken for a ride",
+      "paragraphs": [
+        {
+          "index": 0,
+          "rows": [
+            {
+              "en": "I love travelling in the country, but I don’t like losing my way.",
+              "zh": "我喜欢到乡间旅行，但不喜欢迷路。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "I went on an excursion recently, but my trip took me longer than I expected.",
+              "zh": "最近我出去游玩了一趟，但这次旅行花的时间比我预计的长。",
+              "kind": "narration",
+              "speaker": "旁白"
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "rows": [
+            {
+              "en": "‘I'm going to Woodford Green,’ I said to the conductor as I got on the bus, ‘but I don’t know where it is.’",
+              "zh": "“我要去伍德福德格林，”上公共汽车时，我对售票员说，“可是我不知道那地方在哪里。”",
+              "kind": "speech",
+              "speaker": "我"
+            }
+          ]
+        },
+        {
+          "index": 2,
+          "rows": [
+            {
+              "en": "‘I'll tell you where to get off,’ answered the conductor.",
+              "zh": "“我会告诉你在哪里下车，”售票员回答。",
+              "kind": "speech",
+              "speaker": "售票员"
+            }
+          ]
+        },
+        {
+          "index": 3,
+          "rows": [
+            {
+              "en": "I sat in the front of the bus to get a good view of the countryside.",
+              "zh": "为了好好欣赏乡村风光，我坐在车厢前部。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "After some time, the bus stopped.",
+              "zh": "过了一段时间，公共汽车停了下来。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "Looking round, I realized with a shock that I was the only passenger left on the bus.",
+              "zh": "我环顾四周，惊讶地发现车上只剩我一个乘客了。",
+              "kind": "narration",
+              "speaker": "旁白"
+            }
+          ]
+        },
+        {
+          "index": 4,
+          "rows": [
+            {
+              "en": "‘You'll have to get off here,’ the conductor said.",
+              "zh": "“你得在这里下车了，”售票员说。",
+              "kind": "speech",
+              "speaker": "售票员"
+            },
+            {
+              "en": "‘This is as far as we go.’",
+              "zh": "“我们就开到这里。”",
+              "kind": "speech",
+              "speaker": "售票员"
+            }
+          ]
+        },
+        {
+          "index": 5,
+          "rows": [
+            {
+              "en": "‘Is this Woodford Green?’ I asked.",
+              "zh": "“这里是伍德福德格林吗？”我问。",
+              "kind": "speech",
+              "speaker": "我"
+            }
+          ]
+        },
+        {
+          "index": 6,
+          "rows": [
+            {
+              "en": "‘Oh dear,’ said the conductor suddenly.",
+              "zh": "“哎呀，”售票员突然说。",
+              "kind": "speech",
+              "speaker": "售票员"
+            },
+            {
+              "en": "‘I forgot to put you off.’ .",
+              "zh": "“我忘了叫你下车。”",
+              "kind": "speech",
+              "speaker": "售票员"
+            }
+          ]
+        },
+        {
+          "index": 7,
+          "rows": [
+            {
+              "en": "‘It doesn’t matter,’ I said.",
+              "zh": "“没关系，”我说。",
+              "kind": "speech",
+              "speaker": "我"
+            },
+            {
+              "en": "‘I'll get off here.’",
+              "zh": "“我就在这里下车吧。”",
+              "kind": "speech",
+              "speaker": "我"
+            }
+          ]
+        },
+        {
+          "index": 8,
+          "rows": [
+            {
+              "en": "‘We're going back now,’ said the conductor.",
+              "zh": "“我们现在要往回开了，”售票员说。",
+              "kind": "speech",
+              "speaker": "售票员"
+            }
+          ]
+        },
+        {
+          "index": 9,
+          "rows": [
+            {
+              "en": "‘Well, in that case, I prefer to stay on the bus,’ I answered.",
+              "zh": "“哦，既然这样，我还是留在车上吧，”我回答。",
+              "kind": "speech",
+              "speaker": "我"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l051",
+      "number": 51,
+      "book": 2,
+      "title": "Reward for virtue",
+      "paragraphs": [
+        {
+          "index": 0,
+          "rows": [
+            {
+              "en": "My friend, Hugh, has always been fat, but things got so bad recently that he decided to go on a diet.",
+              "zh": "我的朋友休一直很胖，但最近胖得实在厉害，于是他决定节食。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "He began his diet a week ago.",
+              "zh": "他是一周前开始节食的。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "First of all, he wrote out a long list of all the foods which were forbidden.",
+              "zh": "首先，他写了一张长长的清单，列出所有禁止食用的食物。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "The list included most of the things Hugh loves: butter, potatoes, rice, beer, milk, chocolate, and sweets.",
+              "zh": "这张清单包括休爱吃的大多数东西：黄油、土豆、米饭、啤酒、牛奶、巧克力和糖果。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "Yesterday I paid him a visit.",
+              "zh": "昨天，我去看望他。",
+              "kind": "narration",
+              "speaker": "旁白",
+              "breakBefore": true
+            },
+            {
+              "en": "I rang the bell and was not surprised to see that Hugh was still as fat as ever.",
+              "zh": "我按了门铃，看到休仍然像以前一样胖，一点也不意外。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "He led me into his room and hurriedly hid a large parcel under his desk.",
+              "zh": "他把我领进自己的房间，慌忙把一个大包裹藏到书桌下面。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "It was obvious that he was very embarrassed.",
+              "zh": "很明显，他十分尴尬。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "When I asked him what he was doing, he smiled guiltily and then put the parcel on the desk.",
+              "zh": "我问他在做什么时，他心虚地笑了笑，随后把包裹放到了书桌上。",
+              "kind": "narration",
+              "speaker": "旁白",
+              "breakBefore": true
+            },
+            {
+              "en": "He explained that his diet was so strict that he had to reward himself occasionally.",
+              "zh": "他解释说，自己节食太严格了，偶尔必须奖励一下自己。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "Then he showed me the contents of the parcel.",
+              "zh": "接着，他给我看了包裹里的东西。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "It contained five large bars of chocolate and three bags of sweets!",
+              "zh": "里面装着五大块巧克力和三袋糖果！",
+              "kind": "narration",
+              "speaker": "旁白"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l052",
+      "number": 52,
+      "book": 2,
+      "title": "A pretty carpet",
+      "paragraphs": [
+        {
+          "index": 0,
+          "rows": [
+            {
+              "en": "We have just moved into a new house and I have been working hard all morning.",
+              "zh": "我们刚搬进一所新房子，我整个上午一直都在忙碌。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "I have been trying to get my new room in order.",
+              "zh": "我一直在设法把自己的新房间整理好。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "This has not been easy because I own over a thousand books.",
+              "zh": "这并不容易，因为我有一千多本书。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "To make matters worse, the room is rather small, so I have temporarily put my books on the floor.",
+              "zh": "更糟的是，房间相当小，所以我暂时把书放在了地板上。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "At the moment, they cover every inch of floor space and I actually have to walk on them to get in or out of the room.",
+              "zh": "现在，书铺满了地板的每一寸地方，我进出房间竟然得踩着书走。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "A short while ago, my sister helped me to carry one of my old bookcases up the stairs.",
+              "zh": "不久前，我的一位姐妹帮我把一个旧书柜搬上了楼。",
+              "kind": "narration",
+              "speaker": "旁白",
+              "breakBefore": true
+            },
+            {
+              "en": "She went into my room and got a big surprise when she saw all those books on the floor.",
+              "zh": "她走进我的房间，看见地板上的那些书，大吃一惊。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "‘This is the prettiest carpet I have ever seen,’ she said.",
+              "zh": "“这是我见过的最漂亮的地毯，”她说。",
+              "kind": "speech",
+              "speaker": "我的姐妹",
+              "breakBefore": true
+            },
+            {
+              "en": "She gazed at it for some time then added, ‘You don’t need bookcases at all.",
+              "zh": "她盯着看了一会儿，又补充道：“你根本不需要书柜。”",
+              "kind": "mixed",
+              "speaker": "旁白与我的姐妹"
+            },
+            {
+              "en": "You can sit here in your spare time and read the carpet!’",
+              "zh": "“空闲的时候，你可以坐在这里，读这块地毯！”",
+              "kind": "speech",
+              "speaker": "我的姐妹"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l053",
+      "number": 53,
+      "book": 2,
+      "title": "Hot snake",
+      "paragraphs": [
+        {
+          "index": 0,
+          "rows": [
+            {
+              "en": "At last firemen have put out a big forest fire in California.",
+              "zh": "消防队员终于扑灭了加利福尼亚州的一场森林大火。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "Since then, they have been trying to find out how the fire began.",
+              "zh": "此后，他们一直在设法查明火灾是怎么发生的。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "Forest fires are often caused by broken glass or by cigarette ends which people carelessly throw away.",
+              "zh": "森林火灾常常是由碎玻璃，或人们随手乱扔的烟头引起的。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "Yesterday the firemen examined the ground carefully, but were not able to find any broken glass.",
+              "zh": "昨天，消防队员仔细检查了地面，却没有找到任何碎玻璃。",
+              "kind": "narration",
+              "speaker": "旁白",
+              "breakBefore": true
+            },
+            {
+              "en": "They were also quite sure that a cigarette end did not start the fire.",
+              "zh": "他们也十分肯定，这场火不是烟头引起的。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "This morning, however, a firemen accidentally discovered the cause.",
+              "zh": "然而，今天早晨，一名消防队员意外发现了起火原因。",
+              "kind": "narration",
+              "speaker": "旁白",
+              "breakBefore": true
+            },
+            {
+              "en": "He noticed the remains of a snake which was wound round the electric wires of a 16,000-volt power line.",
+              "zh": "他发现了一条蛇的残骸，缠在一条一万六千伏高压输电线路的电线上。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "In this way, he was able to solve the mystery.",
+              "zh": "就这样，他解开了这个谜。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "The explanation was simple but very unusual.",
+              "zh": "原因很简单，却十分罕见。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "A bird had snatched up the snake from the ground and then dropped it on to the wires.",
+              "zh": "一只鸟先从地上叼起了那条蛇，后来又把它丢到了电线上。",
+              "kind": "narration",
+              "speaker": "旁白",
+              "breakBefore": true
+            },
+            {
+              "en": "The snake then wound itself round the wires.",
+              "zh": "蛇随后把身体缠在了电线上。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "When it did so, it sent sparks down to the ground and these immediately started a fire.",
+              "zh": "蛇这么一缠，便使火花落到地面，立刻引起了火灾。",
+              "kind": "narration",
+              "speaker": "旁白"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l054",
+      "number": 54,
+      "book": 2,
+      "title": "Sticky fingers",
+      "paragraphs": [
+        {
+          "index": 0,
+          "rows": [
+            {
+              "en": "After breakfast, I sent the children to school and then I went to the shops.",
+              "zh": "早饭后，我把孩子们送到学校，然后去商店买东西。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "It was still early when I returned home.",
+              "zh": "我回到家时还很早。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "The children were at school, my husband was at work and the house was quiet.",
+              "zh": "孩子们在上学，丈夫在上班，屋里静悄悄的。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "So I decided to make some meat pies.",
+              "zh": "于是，我决定做些肉馅饼。",
+              "kind": "narration",
+              "speaker": "旁白",
+              "breakBefore": true
+            },
+            {
+              "en": "In a short time I was busy mixing butter and flour and my hands were soon covered with sticky pastry.",
+              "zh": "不一会儿，我就忙着把黄油和面粉混在一起，双手很快便沾满了黏糊糊的面团。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "At exactly that moment, the telephone rang.",
+              "zh": "偏偏就在那一刻，电话铃响了。",
+              "kind": "narration",
+              "speaker": "旁白",
+              "breakBefore": true
+            },
+            {
+              "en": "Nothing could have been more annoying.",
+              "zh": "真没有比这更烦人的事了。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "I picked up the receiver between two sticky fingers and was dismayed when I recognized the voice of Helen Bates.",
+              "zh": "我用两个黏糊糊的手指夹起听筒，一听出是海伦·贝茨的声音，心里顿时发愁。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "It took me ten minutes to persuade her to ring back later.",
+              "zh": "我花了十分钟，才说服她过一会儿再打来。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "At last I hung up the receiver.",
+              "zh": "最后，我挂上了听筒。",
+              "kind": "narration",
+              "speaker": "旁白",
+              "breakBefore": true
+            },
+            {
+              "en": "What a mess!",
+              "zh": "真是一团糟！",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "There was pastry on my fingers, on the telephone, and on the doorknobs.",
+              "zh": "我的手指上、电话上，连门把手上都沾着面团。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "I had no sooner got back to the kitchen than the doorbell rang loud enough to wake the dead.",
+              "zh": "我刚回到厨房，门铃就响了，那声音大得简直能把死人吵醒。",
+              "kind": "narration",
+              "speaker": "旁白",
+              "breakBefore": true
+            },
+            {
+              "en": "This time it was the postman and he wanted me to sign for a registered letter!",
+              "zh": "这回是邮递员来了，他要我签收一封挂号信！",
+              "kind": "narration",
+              "speaker": "旁白"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l055",
+      "number": 55,
+      "book": 2,
+      "title": "Not a gold mine",
+      "paragraphs": [
+        {
+          "index": 0,
+          "rows": [
+            {
+              "en": "Dreams of finding lost treasure almost came true recently.",
+              "zh": "最近，找到失落宝藏的梦想差一点就实现了。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "A new machine called ‘The Revealer’ has been invented and it has been used to detect gold which has been buried in the ground.",
+              "zh": "一种名叫“探宝者”的新机器已经被发明出来，并被用来探测埋在地下的黄金。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "The machine was used in a cave near the seashore where — it is said — pirates used to hide gold.",
+              "zh": "人们在海边的一个山洞里使用了这台机器，据说海盗从前常在那里藏金子。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "The pirates would often bury gold in the cave and then fail to collect it.",
+              "zh": "海盗常常把黄金埋进山洞里，后来却没能取走。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "Armed with the new machine, a search party went into the cave hoping to find buried treasure.",
+              "zh": "一支搜寻队带着这台新机器进入山洞，希望找到埋藏的财宝。",
+              "kind": "narration",
+              "speaker": "旁白",
+              "breakBefore": true
+            },
+            {
+              "en": "The leader of the party was examining the soil near the entrance to the cave when the machine showed that there was gold under the ground.",
+              "zh": "队长正在检查洞口附近的泥土时，机器显示地下有黄金。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "Very excited, the party dug a hole two feet deep.",
+              "zh": "队员们激动极了，挖了一个两英尺深的坑。",
+              "kind": "narration",
+              "speaker": "旁白",
+              "breakBefore": true
+            },
+            {
+              "en": "They finally found a small gold coin which was almost worthless.",
+              "zh": "他们最后找到了一枚几乎不值钱的小金币。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "The party then searched the whole cave thoroughly but did not find anything except an empty tin trunk.",
+              "zh": "随后，搜寻队彻底搜查了整个山洞，但除了一只空铁皮箱，什么也没找到。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "In spite of this, many people are confident that ‘The Revealer’ may reveal something of value fairly soon.",
+              "zh": "尽管如此，许多人仍然相信，“探宝者”很快就有可能找到有价值的东西。",
+              "kind": "narration",
+              "speaker": "旁白",
+              "breakBefore": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l056",
+      "number": 56,
+      "book": 2,
+      "title": "Faster than sound!",
+      "paragraphs": [
+        {
+          "index": 0,
+          "rows": [
+            {
+              "en": "Once a year, a race is held for old cars.",
+              "zh": "老爷车比赛每年举行一次。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "A lot of cars entered for this race last year and there was a great deal of excitement just before it began.",
+              "zh": "去年，许多汽车报名参加这场比赛，比赛开始前，现场十分热闹。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "One of the most handsome cars was a Rolls-Royce Silver Ghost.",
+              "zh": "最漂亮的汽车之一是一辆劳斯莱斯“银魅”。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "The most unusual car was a Benz which had only three wheels.",
+              "zh": "最特别的汽车是一辆只有三个轮子的奔驰车。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "Built in 1885, it was the oldest car taking part.",
+              "zh": "这辆车造于1885年，是参赛车辆中年代最久的。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "After a great many loud explosions, the race began.",
+              "zh": "一阵阵响亮的爆鸣声过后，比赛开始了。",
+              "kind": "narration",
+              "speaker": "旁白",
+              "breakBefore": true
+            },
+            {
+              "en": "Many of the cars broke down on the course and some drivers spent more time under their cars than in them!",
+              "zh": "许多汽车在赛道上抛了锚，有些司机待在车底下的时间，比坐在车里的时间还多！",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "A few cars, however, completed the race.",
+              "zh": "不过，还是有几辆汽车跑完了全程。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "The winning car reached a speed of forty miles an hour — much faster than any of its rivals.",
+              "zh": "获胜的那辆车达到了每小时四十英里的速度，比任何对手都快得多。",
+              "kind": "narration",
+              "speaker": "旁白",
+              "breakBefore": true
+            },
+            {
+              "en": "It sped downhill at the end of the race and its driver had a lot of trouble trying to stop it.",
+              "zh": "比赛快结束时，它飞快地冲下斜坡，司机费了很大劲才把它停住。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "The race gave everyone a great deal of pleasure.",
+              "zh": "这场比赛给大家带来了许多欢乐。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "It was very different from modern car races but no less exciting.",
+              "zh": "它与现代赛车比赛大不相同，却同样令人兴奋。",
+              "kind": "narration",
+              "speaker": "旁白"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l057",
+      "number": 57,
+      "book": 2,
+      "title": "Can I help you, madam?",
+      "paragraphs": [
+        {
+          "index": 0,
+          "rows": [
+            {
+              "en": "A woman in jeans stood at the window of an expensive shop.",
+              "zh": "一位穿着牛仔裤的女士站在一家高档商店的橱窗前。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "Though she hesitated for a moment, she finally went in and asked to see a dress that was in the window.",
+              "zh": "虽然犹豫了一会儿，她最终还是走进店里，要求看看橱窗中的一件连衣裙。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "The assistant who served her did not like the way she was dressed.",
+              "zh": "接待她的店员不喜欢她的穿着。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "Glancing at her scornfully, he told her that the dress was sold.",
+              "zh": "他轻蔑地瞥了她一眼，告诉她那件连衣裙已经卖掉了。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "The woman walked out of the shop angrily and decided to punish the assistant next day.",
+              "zh": "女士生气地走出商店，决定第二天教训一下这个店员。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "She returned to the shop the following morning dressed in a fur coat, with a handbag in one hand and a long umbrella in the other.",
+              "zh": "第二天早晨，她穿着一件裘皮大衣回到商店，一手提着手袋，另一手拿着一把长柄雨伞。",
+              "kind": "narration",
+              "speaker": "旁白",
+              "breakBefore": true
+            },
+            {
+              "en": "After seeking out the rude assistant, she asked for the same dress.",
+              "zh": "找到那个无礼的店员后，她要求看同一件连衣裙。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "Not realizing who she was, the assistant was eager to serve her this time.",
+              "zh": "店员没有认出她，这一次十分殷勤地为她服务。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "With great difficulty, he climbed into the shop window to get the dress.",
+              "zh": "他费了很大劲爬进橱窗，去取那件连衣裙。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "As soon as she saw it, the woman said she did not like it.",
+              "zh": "女士一看到裙子，就说自己不喜欢。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "She enjoyed herself making the assistant bring almost everything in the window before finally buying the dress she had first asked for.",
+              "zh": "她兴致勃勃地让店员把橱窗里的东西几乎全拿了出来，最后才买下她一开始指名要的那件连衣裙。",
+              "kind": "narration",
+              "speaker": "旁白"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l058",
+      "number": 58,
+      "book": 2,
+      "title": "A blessing in disguise?",
+      "paragraphs": [
+        {
+          "index": 0,
+          "rows": [
+            {
+              "en": "The tiny village of Frinley is said to possess a ‘cursed tree’.",
+              "zh": "据说，弗林利这个小村庄里有一棵“受了诅咒的树”。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "Because the tree was mentioned in a newspaper, the number of visitors to Frinley has now increased.",
+              "zh": "由于一家报纸提到了这棵树，现在到弗林利来的游客人数增加了。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "The tree was planted near the church fifty years ago, but it is only in recent years that it has gained an evil reputation.",
+              "zh": "这棵树是五十年前种在教堂附近的，但直到近几年才有了不祥的名声。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "It is said that if anyone touches the tree, he will have bad luck; if he picks a leaf, he will die.",
+              "zh": "据说，谁要是碰了这棵树，就会倒霉；谁要是摘下一片叶子，就会死去。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "Many villagers believe that the tree has already claimed a number of victims.",
+              "zh": "许多村民相信，这棵树已经夺走了好几个人的性命。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "The vicar has been asked to have the tree cut down, but so far he has refused.",
+              "zh": "有人请牧师让人把树砍掉，但到目前为止，他一直拒绝这样做。",
+              "kind": "narration",
+              "speaker": "旁白",
+              "breakBefore": true
+            },
+            {
+              "en": "He has pointed out that the tree is a useful source of income, as tourists have been coming from all parts of the country to see it.",
+              "zh": "他指出，这棵树是一个很有用的收入来源，因为全国各地的游客都一直赶来看它。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "In spite of all that has been said, the tourists have been picking leaves and cutting their names on the tree-trunk.",
+              "zh": "尽管有这些说法，游客们还是一直在摘树叶，并把自己的名字刻在树干上。",
+              "kind": "narration",
+              "speaker": "旁白",
+              "breakBefore": true
+            },
+            {
+              "en": "So far, not one of them has been struck down by sudden death!",
+              "zh": "到现在为止，他们中还没有一个人突然死去！",
+              "kind": "narration",
+              "speaker": "旁白"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l059",
+      "number": 59,
+      "book": 2,
+      "title": "In or out?",
+      "paragraphs": [
+        {
+          "index": 0,
+          "rows": [
+            {
+              "en": "Our dog, Rex, used to sit outside our front gate and bark.",
+              "zh": "我们家的狗雷克斯以前常坐在大门外面叫。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "Every time he wanted to come into the garden he would bark until someone opened the gate.",
+              "zh": "每次它想进花园时，就一直叫，直到有人把门打开。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "As the neighbours complained of the noise, my husband spent weeks training him to press his paw on the latch to let himself in.",
+              "zh": "由于邻居们抱怨太吵，我丈夫花了好几个星期，训练它用爪子按门闩，让自己进来。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "Rex soon became an expert at opening the gate.",
+              "zh": "雷克斯很快就成了开门能手。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "However, when I was going out shopping last week, I noticed him in the garden near the gate.",
+              "zh": "可是上周我出门买东西时，看见它在花园里靠近大门的地方。",
+              "kind": "narration",
+              "speaker": "旁白",
+              "breakBefore": true
+            },
+            {
+              "en": "This time he was barking so that someone would let him out!",
+              "zh": "这一回，它叫个不停，是想让人把它放出去！",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "Since then, he has developed another bad habit.",
+              "zh": "从那以后，它又养成了另一个坏习惯。",
+              "kind": "narration",
+              "speaker": "旁白",
+              "breakBefore": true
+            },
+            {
+              "en": "As soon as he opens the gate from the outside, he comes into the garden and waits until the gate shuts.",
+              "zh": "它一从外面把门打开，就走进花园，等着门关上。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "Then he sits and barks until someone lets him out.",
+              "zh": "然后，它就坐在那里叫，直到有人把它放出去。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "After this he immediately lets himself in and begins barking again.",
+              "zh": "这之后，它立刻又自己开门进来，接着再叫。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "Yesterday my husband removed the gate and Rex got so annoyed we have not seen him since.",
+              "zh": "昨天，我丈夫把大门拆掉了，雷克斯气坏了，从那以后我们就再也没有见到它。",
+              "kind": "narration",
+              "speaker": "旁白",
+              "breakBefore": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l060",
+      "number": 60,
+      "book": 2,
+      "title": "The future",
+      "paragraphs": [
+        {
+          "index": 0,
+          "rows": [
+            {
+              "en": "At a village fair, I decided to visit a fortune-teller called Madam Bellinsky.",
+              "zh": "在一次乡村集市上，我决定去找一位叫贝林斯基夫人的算命者。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "I went into her tent and she told me to sit down.",
+              "zh": "我走进她的帐篷，她让我坐下。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "After I had given her some money, she looked into a crystal ball and said: ‘A relation of yours is coming to see you.",
+              "zh": "我给了她一些钱后，她望着一个水晶球说：“你的一位亲戚要来看你。”",
+              "kind": "mixed",
+              "speaker": "旁白与贝林斯基夫人",
+              "breakBefore": true
+            },
+            {
+              "en": "She will be arriving this evening and intends to stay for a few days.",
+              "zh": "“她今天傍晚就会到，打算住几天。”",
+              "kind": "speech",
+              "speaker": "贝林斯基夫人"
+            },
+            {
+              "en": "The moment you leave this tent, you will get a big surprise.",
+              "zh": "“你一离开这顶帐篷，就会大吃一惊。”",
+              "kind": "speech",
+              "speaker": "贝林斯基夫人"
+            },
+            {
+              "en": "A woman you know well will rush towards you.",
+              "zh": "“一位你很熟悉的女人会向你跑来。”",
+              "kind": "speech",
+              "speaker": "贝林斯基夫人"
+            },
+            {
+              "en": "She will speak to you and then she will lead you away from this place.",
+              "zh": "“她会跟你说话，然后领你离开这里。”",
+              "kind": "speech",
+              "speaker": "贝林斯基夫人"
+            },
+            {
+              "en": "That is all.’",
+              "zh": "“就这些。”",
+              "kind": "speech",
+              "speaker": "贝林斯基夫人"
+            }
+          ]
+        },
+        {
+          "index": 1,
+          "rows": [
+            {
+              "en": "As soon as I went outside, I forgot all about Madam Bellinsky because my wife hurried towards me.",
+              "zh": "我一走出去，就把贝林斯基夫人的事忘得一干二净了，因为我的妻子正急匆匆地朝我走来。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "‘Where have you been hiding?’ she asked impatiently.",
+              "zh": "“你躲到哪里去了？”她不耐烦地问。",
+              "kind": "speech",
+              "speaker": "妻子"
+            },
+            {
+              "en": "‘Your sister will be here in less than an hour and we must be at the station to meet her.",
+              "zh": "“你的姐妹不到一个小时就会到，我们必须到车站去接她。”",
+              "kind": "speech",
+              "speaker": "妻子"
+            },
+            {
+              "en": "We are late already.’",
+              "zh": "“我们已经晚了。”",
+              "kind": "speech",
+              "speaker": "妻子"
+            },
+            {
+              "en": "As she walked away, I followed her out of the fair.",
+              "zh": "她转身走开，我便跟着她离开了集市。",
+              "kind": "narration",
+              "speaker": "旁白"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l061",
+      "number": 61,
+      "book": 2,
+      "title": "Trouble with the Hubble",
+      "paragraphs": [
+        {
+          "index": 0,
+          "rows": [
+            {
+              "en": "The Hubble telescope was launched into space by NASA on April 20, 1990 at a cost of over a billion dollars.",
+              "zh": "哈勃望远镜于1990年4月20日由美国国家航空航天局发射升空，耗资超过十亿美元。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "Right from the start there was trouble with the Hubble.",
+              "zh": "从一开始，哈勃望远镜就出了问题。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "The pictures it sent us were very disappointing because its main mirror was faulty!",
+              "zh": "它传回的图像令人十分失望，因为它的主反射镜有缺陷！",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "NASA is now going to put the telescope right, so it will soon be sending up four astronauts to repair it.",
+              "zh": "现在，美国国家航空航天局打算把望远镜修好，因此很快就会把四名宇航员送上太空进行维修。",
+              "kind": "narration",
+              "speaker": "旁白",
+              "breakBefore": true
+            },
+            {
+              "en": "The shuttle Endeavour will be taking the astronauts to the Hubble.",
+              "zh": "“奋进”号航天飞机将把宇航员送到哈勃望远镜那里。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "A robot-arm from the Endeavour will grab the telescope and hold it while the astronauts make the necessary repairs.",
+              "zh": "“奋进”号上的机械臂将抓住望远镜并将它固定住，让宇航员进行必要的维修。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "Of course, the Hubble is above the earth’s atmosphere, so it will soon be sending us the clearest pictures of the stars and distant galaxies that we have ever seen.",
+              "zh": "当然，哈勃位于地球大气层之外，因此很快就会向我们传回前所未有的清晰图像，展现恒星和遥远的星系。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "The Hubble will tell us a great deal about the age and size of the universe.",
+              "zh": "哈勃将告诉我们许多有关宇宙年龄和大小的事情。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "By the time you read this, the Hubble's eagle eye will have sent us thousands and thousands of wonderful pictures.",
+              "zh": "等你读到这篇文章时，哈勃那只锐利的“鹰眼”就已经向我们传回了成千上万张精彩的照片。",
+              "kind": "narration",
+              "speaker": "旁白"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l062",
+      "number": 62,
+      "book": 2,
+      "title": "After the fire",
+      "paragraphs": [
+        {
+          "index": 0,
+          "rows": [
+            {
+              "en": "Firemen had been fighting the forest fire for nearly three weeks before they could get it under control.",
+              "zh": "消防队员与这场森林大火搏斗了将近三个星期，才把火势控制住。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "A short time before, great trees had covered the countryside for miles around.",
+              "zh": "不久以前，周围绵延数英里的乡野还长满了参天大树。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "Now, smoke still rose up from the warm ground over the desolate hills.",
+              "zh": "如今，荒凉的山坡上，仍有烟从温热的地面升起。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "Winter was coming on and the hills threatened the surrounding villages with destruction, for heavy rain would not only wash away the soil but would cause serious floods as well.",
+              "zh": "冬天快到了，这些山坡给周围的村庄带来了毁灭的威胁，因为大雨不仅会冲走泥土，还会造成严重的洪水。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "When the fire had at last been put out, the forest authorities ordered several tons of a special type of grass-seed which would grow quickly.",
+              "zh": "大火终于扑灭后，林业部门订购了数吨生长迅速的特殊草籽。",
+              "kind": "narration",
+              "speaker": "旁白",
+              "breakBefore": true
+            },
+            {
+              "en": "The seed was sprayed over the ground in huge quantities by aeroplanes.",
+              "zh": "飞机把大量草籽撒到了地面上。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "The planes had been planting seed for nearly a month when it began to rain.",
+              "zh": "飞机播撒草籽将近一个月时，天开始下雨了。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "By then, however, in many places the grass had already taken root.",
+              "zh": "不过，到那时，许多地方的草已经扎下了根。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "In place of the great trees which had been growing there for centuries, patches of green had begun to appear in the blackened soil.",
+              "zh": "原先几个世纪以来一直长着参天大树的地方，如今在焦黑的泥土上已经开始出现一片片新绿。",
+              "kind": "narration",
+              "speaker": "旁白"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l063",
+      "number": 63,
+      "book": 2,
+      "title": "She was not amused",
+      "paragraphs": [
+        {
+          "index": 0,
+          "rows": [
+            {
+              "en": "Jeremy Hampden has a large circle of friends and is very popular at parties.",
+              "zh": "杰里米·汉普登交友广泛，在聚会上很受欢迎。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "Everybody admires him for his great sense of humour — everybody. that is, except his six-year-old daughter, Jenny.",
+              "zh": "人人都佩服他出众的幽默感——确切地说，除了他六岁的女儿珍妮以外，人人都是如此。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "Recently, one of Jeremy's closest friends asked him to make a speech at a wedding reception.",
+              "zh": "最近，杰里米一位最要好的朋友请他在婚宴上讲几句话。",
+              "kind": "narration",
+              "speaker": "旁白",
+              "breakBefore": true
+            },
+            {
+              "en": "This is the sort of thing that Jeremy loves.",
+              "zh": "这正是杰里米喜欢做的事。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "He prepared the speech carefully and went to the wedding with Jenny.",
+              "zh": "他认真准备了讲话，并带着珍妮去参加婚礼。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "He had included a large number of funny stories in the speech and, of course, it was a great success.",
+              "zh": "他在讲话中穿插了许多有趣的故事，当然，讲话大获成功。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "As soon as he had finished, Jenny told him she wanted to go home.",
+              "zh": "他刚讲完，珍妮就告诉他，她想回家。",
+              "kind": "narration",
+              "speaker": "旁白",
+              "breakBefore": true
+            },
+            {
+              "en": "Jeremy was a little disappointed by this but he did as his daughter asked.",
+              "zh": "杰里米对此有些失望，不过还是照女儿的意思做了。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "On the way home, he asked Jenny if she had enjoyed the speech.",
+              "zh": "回家的路上，他问珍妮是否喜欢他的讲话。",
+              "kind": "narration",
+              "speaker": "旁白",
+              "breakBefore": true
+            },
+            {
+              "en": "To his surprise, she said she hadn’t.",
+              "zh": "让他吃惊的是，她说不喜欢。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "Jeremy asked her why this was so and she told him that she did not like to see so many people laughing at him!",
+              "zh": "杰里米问她为什么，她告诉他，自己不喜欢看到那么多人嘲笑他！",
+              "kind": "narration",
+              "speaker": "旁白"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l064",
+      "number": 64,
+      "book": 2,
+      "title": "The Channel Tunnel",
+      "paragraphs": [
+        {
+          "index": 0,
+          "rows": [
+            {
+              "en": "In 1858, a French engineer, Aimé Thomé de Gamond, arrived in England with a plan for a twenty-one-mile tunnel under the English Channel.",
+              "zh": "1858年，法国工程师艾梅·托梅·德·加蒙带着一项计划来到英国，打算在英吉利海峡下面修建一条二十一英里长的隧道。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "He said that it would be possible to build a platform in the centre of the Channel.",
+              "zh": "他说，可以在海峡中央建造一个平台。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "This platform would serve as a port and a railway station.",
+              "zh": "这个平台将兼作港口和火车站。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "The tunnel would be well-ventilated if tall chimneys were built above sea level.",
+              "zh": "如果在海面上方建造高高的通风烟囱，隧道内就能保持良好的通风。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "In 1860, a better plan was put forward by an Englishman, William Low.",
+              "zh": "1860年，一位名叫威廉·洛的英国人提出了一个更好的方案。",
+              "kind": "narration",
+              "speaker": "旁白",
+              "breakBefore": true
+            },
+            {
+              "en": "He suggested that a double railway-tunnel should be built.",
+              "zh": "他建议修建两条并行的铁路隧道。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "This would solve the problem of ventilation, for if a train entered this tunnel, it would draw in fresh air behind it.",
+              "zh": "这将解决通风问题，因为火车驶入这条隧道时，会从后方带入新鲜空气。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "Forty-two years later a tunnel was actually begun.",
+              "zh": "四十二年后，隧道工程真的开工了。",
+              "kind": "narration",
+              "speaker": "旁白",
+              "breakBefore": true
+            },
+            {
+              "en": "If, at the time, the British had not feared invasion, it would have been completed.",
+              "zh": "如果当时英国人没有害怕遭到入侵，隧道本来就能修建完成。",
+              "kind": "narration",
+              "speaker": "旁白"
+            },
+            {
+              "en": "The world had to wait almost another 100 years for the Channel Tunnel.",
+              "zh": "世界又等了将近一百年，才等来海峡隧道。",
+              "kind": "narration",
+              "speaker": "旁白",
+              "breakBefore": true
+            },
+            {
+              "en": "It was officially opened on March 7, 1994, finally connecting Britain to the European continent.",
+              "zh": "它于1994年3月7日正式开通，终于把英国与欧洲大陆连接起来。",
+              "kind": "narration",
+              "speaker": "旁白"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

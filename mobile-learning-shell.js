@@ -189,7 +189,7 @@
       const number = lesson?.book === 2 && lesson.number >= 1 && lesson.number <= (this.pilotMode==='all'?96:10) ? lesson.number : 1;
       this.home.querySelector('.mls-continue-label').textContent = '继续学习第二册第' + number + '课';
       this.home.querySelector('.mls-current-title').textContent = lesson?.book === 2 && lesson.number <= (this.pilotMode==='all'?96:10) ? String(lesson.title || '').replace(/^第\d+课\s*[·・]\s*/, '') : '从第一课开始，读懂一个故事';
-      const label=this.header?.querySelector('.mls-header-lesson');if(label)label.textContent='第'+number+'课';
+      const label=this.header?.querySelector('.mls-header-lesson');if(label)label.textContent=(lesson?.book&&lesson.book!==2?'第'+lesson.book+'册 · ':'')+'第'+(lesson?.number||number)+'课';
       const title=document.querySelector('#lesson-title');
       if(title){if(!this.pageTitle){this.pageTitle=element('h2','mls-page-title');title.parentNode.insertBefore(this.pageTitle,title.nextSibling);}this.pageTitle.textContent=String(lesson?.textbook?.title||lesson?.title||'').replace(/^第\d+课\s*[·・]\s*/,'');}
       const status = this.options.getStatus?.(lesson?.id);

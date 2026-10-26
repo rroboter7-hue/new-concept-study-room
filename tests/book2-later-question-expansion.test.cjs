@@ -49,9 +49,20 @@ test('every addition has a real source excerpt, complete explanations and regist
     assert.equal(new Set(q.options.map(o => o.trim().toLowerCase())).size, q.options.length, q.id);
     q.options.forEach((option, i) => { if (i !== q.answer) assert.ok(q.wrongReasons[option]?.length > 8, q.id + ':' + option); });
     for (const id of q.sourceConceptIds) assert.ok(expanded.get(id), id);
-    const registered = expanded.get(q.conceptId);
-    assert.equal(registered.lessonId, q.lessonId);
-    assert.equal(registered.sourceLessonId, q.sourceLessonId);
+    const variant = expanded.quizForLesson(q.lessonId).find(row => row.id === q.id), registered = expanded.get(q.conceptId);
+    assert.ok(variant && registered, q.id);
+    assert.equal(variant.lessonId, q.lessonId);
+    assert.equal(variant.sourceLessonId, q.sourceLessonId);
+    if (q.type === 'vocabulary') {
+      const canonical = expanded.wordForLesson(q.sourceLessonId, q.word);
+      assert.equal(variant.conceptId, canonical.conceptId);
+      assert.equal(registered.id, canonical.conceptId, 'an old alias resolves the one canonical word record');
+      assert.equal(registered.lessonId, q.sourceLessonId);
+      assert.deepEqual(plain(registered), plain(expanded.get(canonical.conceptId)));
+    } else {
+      assert.equal(registered.lessonId, q.lessonId);
+      assert.equal(registered.sourceLessonId, q.sourceLessonId);
+    }
   }
 });
 
@@ -142,4 +153,24 @@ test('all authored answer choices grade through the existing remediation flow us
       assert.ok(feedback.rule && feedback.reason, q.id);
     });
   }
+});
+
+test('all 96 expanded lessons and ten balanced packs register together without creating alias word records', () => {
+  const {window,scope} = load();
+  for (const file of ['book2-practice-packs.js','pilot-question-expansion.js','practice-pack-core.js']) vm.runInContext(fs.readFileSync(path.join(root,file),'utf8'),scope,{filename:file});
+  const manifests = [window.BOOK2_QUESTION_EXPANSION,window.BOOK2_LATER_QUESTION_EXPANSION];
+  const bank = window.StudyKnowledge.install(window.LESSONS,{grammarAudit:window.BOOK2_QUESTION_REVIEWS,extraQuestions:manifests});
+  assert.equal(bank.audit.expansionQuestions.length,877);
+  assert.deepEqual(plain(bank.audit.expansionIssues),[]);
+  for (const lesson of window.LESSONS.filter(l=>l.book===2)) assert.equal(bank.quizForLesson(lesson.id).length,12,lesson.id);
+  const registry = window.StudyPracticePacks.create(window.BOOK2_PRACTICE_PACKS,window.LESSONS,bank);
+  assert.deepEqual(plain(registry.issues),[]);assert.equal(registry.lessonIds().length,10);
+  for (const raw of manifests.flatMap(m=>m.entries).filter(q=>q.type==='vocabulary')) {
+    const canonical=bank.wordForLesson(raw.sourceLessonId,raw.word),alias=bank.get(raw.conceptId);
+    assert.equal(alias.id,canonical.conceptId,raw.id);
+    assert.equal(alias.meaning,canonical.meaning);
+    assert(!bank.vocabularyForLesson(raw.lessonId).some(word=>word.conceptId===raw.conceptId),'no alias dictionary entry is created');
+    alias.meaning='external mutation';assert.equal(bank.get(raw.conceptId).meaning,canonical.meaning,'alias reads are cloned');
+  }
+  assert.equal(bank.get('knowledge:nce-b2-eef57c-l096:word:unregistered-alias'),null);
 });

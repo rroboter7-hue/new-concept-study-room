@@ -27,11 +27,19 @@
  .mls-book-workspace.mls-mobile[data-mls-tab=output] .lesson-heading{display:none}
  .mls-book-workspace.mls-mobile .reader-content{padding:0;min-height:0;margin:0}
  .mls-book-workspace.mls-mobile .pilot-progress,.mls-book-workspace.mls-mobile .learning-progress-panel,.mls-book-workspace.mls-mobile .lesson-progress-note{display:none}
+ .mls-book-workspace.mls-mobile .lesson-progress-note:has(#return-to-source-exercise){display:block;margin:0 0 16px;background:var(--teal-soft)}
+ .mls-book-workspace.mls-mobile #reading-controls{display:none;position:static;background:var(--paper);margin-bottom:18px}
+ .mls-book-workspace.mls-mobile.mls-reading-tools-open[data-mls-tab=reading] #reading-controls:not(.hidden){display:flex}
  .mls-book-workspace.mls-mobile .text-source-note,.mls-book-workspace.mls-mobile .translation-attribution{display:none}
  .mls-book-workspace.mls-mobile.mls-reading-tools-open[data-mls-tab=reading] .reader-meta{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:16px}
  .mls-book-workspace.mls-mobile.mls-reading-tools-open[data-mls-tab=reading] .text-source-note,.mls-book-workspace.mls-mobile.mls-reading-tools-open[data-mls-tab=reading] .translation-attribution{display:block;font-size:12px;line-height:1.7}
  .mls-book-workspace.mls-mobile .paragraph{margin:0 0 26px;padding:0;background:transparent;border:0}
  .mls-book-workspace.mls-mobile .paragraph .english{font-family:Georgia,"Times New Roman",serif;font-size:24px;line-height:1.75;letter-spacing:-.1px;color:#18291f}
+ .mls-book-workspace.mls-mobile .reading-layout{margin-top:0}
+ .mls-book-workspace.mls-mobile .reading-pair .english{font-family:Georgia,"Times New Roman",serif;font-size:24px;line-height:1.75;letter-spacing:-.1px;color:#18291f}
+ .mls-book-workspace.mls-mobile .reading-pair .word{font:inherit;line-height:inherit;padding:0 1px;color:inherit}
+ .mls-book-workspace.mls-mobile .reading-pair .translation{font-size:17px;line-height:1.85;color:#666c65}
+ .mls-book-workspace.mls-mobile .reading-speech,.mls-book-workspace.mls-mobile .reading-thought,.mls-book-workspace.mls-mobile .reading-note,.mls-book-workspace.mls-mobile .reading-mixed{background:var(--teal-soft);border-left-color:#7ba18d}
  .mls-book-workspace.mls-mobile .paragraph .word{font:inherit;line-height:inherit;border-radius:3px;padding:0 1px;color:inherit}
  .mls-book-workspace.mls-mobile .paragraph .word:hover,.mls-book-workspace.mls-mobile .paragraph .word:focus-visible{background:#e4eadb}
  .mls-book-workspace.mls-mobile .translation{margin:16px 0 0;font-size:17px;line-height:1.85;color:#666c65}

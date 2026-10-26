@@ -8,6 +8,12 @@
  const validQuestion=q=>text(q?.question)&&list(q.options).length>=2&&q.options.every(o=>text(o))&&new Set(q.options.map(norm)).size===q.options.length&&Number.isInteger(q.answer)&&q.answer>=0&&q.answer<q.options.length;
  const wordFromQuestion=q=>text(q.sourceWord)||text(q.word)||text(q.question?.match(/[“"]([^”"]+)[”"]/)?.[1]);
  const slotFor=(id,total)=>Array.from(id).reduce((value,c)=>(Math.imul(value,31)+c.charCodeAt(0))>>>0,7)%total;
+ // These two exact reviewed variants test a skill already represented in Game.
+ // Keep their exercise/knowledge identities for legacy quiz history and feedback.
+ const gameSkillVariants={
+  'nce-b2-eef57c-l005-expansion-current-perfect-agreement':{key:'auxiliary-perfect',question:'【自编练习 · 语法运用】指定用现在完成时：Mr. Scott ___ just bought twelve pigeons.',options:['have','did','is','has'],answer:3},
+  'nce-b2-eef57c-l007-expansion-current-past-continuous':{key:'be-past',question:'【自编练习 · 语法运用】描述昨日上午十点正在发生的动作：The detectives ___ waiting at the airport at ten yesterday morning.',options:['was','are','were','is'],answer:2}
+ };
  let revision=0;
  function vocabularySource(lesson){
   const previous=lesson.vocabularyAudit,current=list(lesson.vocabulary);
@@ -30,7 +36,7 @@
  }
 
  function create(input,options={}){
-  const lessons=list(input).filter(l=>l?.id&&Number(l.book)===2),byLesson=new Map(lessons.map(l=>[l.id,l])),records=new Map(),words=new Map(),pools=new Map(),quizzes=new Map(),legacyByLesson=new Map(),vocabularySources=new Map(),originalVocabulary=new Map(),vocabularyAudits=new Map();
+  const lessons=list(input).filter(l=>l?.id&&Number(l.book)===2),byLesson=new Map(lessons.map(l=>[l.id,l])),records=new Map(),sourceAliases=new Map(),words=new Map(),pools=new Map(),quizzes=new Map(),legacyByLesson=new Map(),vocabularySources=new Map(),originalVocabulary=new Map(),vocabularyAudits=new Map();
   const audit={legacyQuestions:[],vocabularyEntries:[],issues:[],expansionQuestions:[],expansionIssues:[]},grammarRows=auditRows(options.grammarAudit);
   for(const lesson of lessons){
    const grouped=new Map(),local=new Map(),source=vocabularySource(lesson);
@@ -98,17 +104,25 @@
      const optionRecords=list(raw.optionConceptIds).map(id=>records.get(id));
      if(raw.direction!=='meaning-to-word'||!sourceWord||sourceWord.meaning!==raw.meaning||norm(raw.options[raw.answer])!==norm(sourceWord.word)||optionRecords.length!==raw.options.length||optionRecords.some((record,i)=>!record||record.kind!=='word'||norm(record.word)!==norm(raw.options[i])||(record.meaning===sourceWord.meaning)!==(i===raw.answer))){fail('unsupported-vocabulary-answer','反向词汇题的词义、正确词及所有备选词必须与已确认词库完全一致');continue;}
     }
-    const record={id:raw.conceptId,conceptId:raw.conceptId,kind:raw.type==='vocabulary'?'word':'grammar',lessonId:destination.id,sourceLessonId:source.id,sourceConceptIds:sourceIds.slice(),label:text(raw.category)||raw.type,status:'approved',...(sourceWord?{word:sourceWord.word,meaning:sourceWord.meaning}:{}),source:{evidence:clone(evidence),authoredQuestionId:raw.id,...(sourceWord?{vocabulary:clone(sourceWord.source.vocabulary)}:{})}};
-    if(records.has(record.id)){fail('duplicate-concept-id','扩展知识编号已使用，不能覆盖原有知识记录');continue;}
-    const q={...clone(raw),knowledgeId:record.id,graded:true,explanation:text(raw.explanation)||raw.rule+'\n'+Object.entries(raw.wrongReasons).map(([option,reason])=>'“'+option+'”：'+reason).join('\n')+'\n自编对比例句：'+raw.contrastExamples.join(' / ')};
-    records.set(record.id,record);extraIds.add(q.id);quizzes.get(destination.id).push(q);pools.get(destination.id).push(q);
-    audit.expansionQuestions.push({id:q.id,lessonId:destination.id,conceptId:record.id,sourceLessonId:source.id,sourceConceptIds:sourceIds.slice(),status:'approved'});
+    // Question variants have their own IDs, but a reverse/retrieval word question
+    // tests the existing source word. Do not fork its meaning or knowledge ID.
+    // Grammar/comprehension sourceConceptIds are provenance, not automatic aliases.
+    const record=sourceWord||{id:raw.conceptId,conceptId:raw.conceptId,kind:'grammar',lessonId:destination.id,sourceLessonId:source.id,sourceConceptIds:sourceIds.slice(),label:text(raw.category)||raw.type,status:'approved',source:{evidence:clone(evidence),authoredQuestionId:raw.id}};
+    if(!sourceWord&&(records.has(record.id)||sourceAliases.has(record.id))||sourceWord&&((records.has(raw.conceptId)&&raw.conceptId!==sourceWord.id)||(sourceAliases.has(raw.conceptId)&&sourceAliases.get(raw.conceptId)!==sourceWord.id))){fail('duplicate-concept-id','扩展知识编号已使用，不能覆盖原有知识记录');continue;}
+    const q={...clone(raw),conceptId:record.id,knowledgeId:record.id,originalConceptId:raw.conceptId,...(sourceWord?{word:sourceWord.word,sourceWord:sourceWord.word,meaning:sourceWord.meaning}:{}),graded:true,explanation:text(raw.explanation)||raw.rule+'\n'+Object.entries(raw.wrongReasons).map(([option,reason])=>'“'+option+'”：'+reason).join('\n')+'\n自编对比例句：'+raw.contrastExamples.join(' / ')};
+    delete q.gameConceptId; // A manifest cannot claim an unreviewed skill alias.
+    const gameVariant=gameSkillVariants[q.id],gameRecord=gameVariant&&records.get(conceptId(destination.id,'grammar',gameVariant.key));
+    if(q.type==='grammar'&&gameRecord?.kind==='grammar'&&gameRecord.lessonId===destination.id&&q.question===gameVariant.question&&q.answer===gameVariant.answer&&JSON.stringify(q.options)===JSON.stringify(gameVariant.options))q.gameConceptId=gameRecord.id;
+    if(!sourceWord)records.set(record.id,record);else if(raw.conceptId!==record.id)sourceAliases.set(raw.conceptId,record.id);
+    extraIds.add(q.id);quizzes.get(destination.id).push(q);pools.get(destination.id).push(q);
+    audit.expansionQuestions.push({id:q.id,lessonId:destination.id,conceptId:record.id,originalConceptId:raw.conceptId,sourceLessonId:source.id,sourceConceptIds:sourceIds.slice(),status:'approved'});
    }
   }
   const bank={
    revision:++revision,audit,
    hasLesson:id=>byLesson.has(id),
-   get:id=>records.has(id)?clone(records.get(id)):null,
+   // Compatibility aliases resolve the one canonical record, never a new sense.
+   get:id=>{const sourceId=sourceAliases.get(id)||id;return records.has(sourceId)?clone(records.get(sourceId)):null;},
    wordForLesson(lessonId,word){const record=words.get(lessonId)?.get(norm(word));return record?{...clone(record.source.vocabulary),word:record.word,meaning:record.meaning,conceptId:record.id,sourceLessonId:lessonId}:null;},
    vocabularyForLesson(lessonId){return Array.from(words.get(lessonId)?.values()||[],record=>({...clone(record.source.vocabulary),word:record.word,meaning:record.meaning,conceptId:record.id,sourceLessonId:lessonId}));},
    questionsForLesson:id=>clone(pools.get(id)||[]),
@@ -117,6 +131,6 @@
   };
   return bank;
  }
- const API={version:'1.2.0',create,conceptId,bank:null,install(lessons,options){const bank=create(lessons,options);bank.apply(lessons);API.bank=bank;return bank;},wordForLesson(lessonId,word){return API.bank?.wordForLesson(lessonId,word)||null;},vocabularyForLesson(lessonId){return API.bank?.vocabularyForLesson(lessonId)||[];},questionsForLesson(lessonId){return API.bank?.questionsForLesson(lessonId)||[];}};
+ const API={version:'1.2.2',create,conceptId,bank:null,install(lessons,options){const bank=create(lessons,options);bank.apply(lessons);API.bank=bank;return bank;},wordForLesson(lessonId,word){return API.bank?.wordForLesson(lessonId,word)||null;},vocabularyForLesson(lessonId){return API.bank?.vocabularyForLesson(lessonId)||[];},questionsForLesson(lessonId){return API.bank?.questionsForLesson(lessonId)||[];}};
  global.StudyKnowledge=API;
 })(window);

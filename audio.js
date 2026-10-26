@@ -14,6 +14,7 @@
 
   function sentenceTexts(lesson) {
     if (!lesson) return [];
+    if (global.StudyReading && typeof global.StudyReading.units === 'function') return global.StudyReading.units(lesson).map(function (row) { return row.en; });
     var source = lesson.paragraphs || [];
     if (!Array.isArray(source)) source = source.en || [];
     if (!Array.isArray(source)) source = [source];
@@ -103,6 +104,7 @@
       var currentTime = audio ? Math.max(0, Number(audio.currentTime) || 0) : this._readBaseTime() / this._rate;
       return {
         playing: this._playing,
+        lessonId: this._lesson?.id || null,
         mode: this._mode,
         mediaSource: this._mediaSource,
         currentTime: currentTime,
