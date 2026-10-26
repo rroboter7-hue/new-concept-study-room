@@ -1,6 +1,6 @@
 {
-  "build": "2026-10-26-public-mobile-source-labels",
-  "preparedAt": "2026-10-26T09:20:59.627Z",
+  "build": "2026-10-26-reviewed-mobile-provenance",
+  "preparedAt": "2026-10-26T09:22:48.292Z",
   "book2": {
     "book": 2,
     "total": 96,
@@ -81,7 +81,8 @@
       "independentObjectiveReviewOnly": true,
       "browserLocal": true,
       "automaticSemanticOrSpeakingScore": false,
-      "intervalsAreProductSchedule": true
+      "intervalsAreProductSchedule": true,
+      "sourceTargetQualityGate": true
     },
     "defaultMobileNavigation": true,
     "defaultMobileBookSelection": [
@@ -105,8 +106,8 @@
     ],
     "notesOriginsExplicit": true
   },
-  "staticFiles": 1983,
-  "staticBytes": 810415339,
+  "staticFiles": 1984,
+  "staticBytes": 810418117,
   "nativeearsAdvancedAudio": {
     "books": {
       "3": 60,
