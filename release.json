@@ -1,6 +1,6 @@
 {
-  "build": "2026-10-26-daily-output",
-  "preparedAt": "2026-10-26T08:45:25.392Z",
+  "build": "2026-10-26-daily-output-2",
+  "preparedAt": "2026-10-26T09:15:14.632Z",
   "book2": {
     "book": 2,
     "total": 96,
@@ -81,11 +81,12 @@
       "independentObjectiveReviewOnly": true,
       "browserLocal": true,
       "automaticSemanticOrSpeakingScore": false,
-      "intervalsAreProductSchedule": true
+      "intervalsAreProductSchedule": true,
+      "sourceTargetQualityGate": true
     }
   },
-  "staticFiles": 1982,
-  "staticBytes": 810398983,
+  "staticFiles": 1983,
+  "staticBytes": 810401345,
   "nativeearsAdvancedAudio": {
     "books": {
       "3": 60,
