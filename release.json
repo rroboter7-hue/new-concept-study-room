@@ -1,6 +1,6 @@
 {
   "build": "2026-10-26-book34-audio",
-  "preparedAt": "2026-10-26T05:48:26.543808+00:00",
+  "preparedAt": "2026-10-26T05:52:49.249619+00:00",
   "book2": {
     "book": 2,
     "total": 96,
@@ -31,7 +31,7 @@
     "physicalPhoneKeyboardVerified": false
   },
   "staticFiles": 1791,
-  "staticBytes": 756201965,
+  "staticBytes": 756202041,
   "nativeearsAdvancedAudio": {
     "books": {
       "3": 60,
