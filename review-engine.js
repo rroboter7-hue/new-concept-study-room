@@ -129,6 +129,12 @@
  // inferred: stage and repetition/lapse counts change only after actual review.
  function revisitMistakes(raw,cards,conceptIds,options={}){
   const state=sanitize(raw),now=nowOf(options),wrong=new Set((Array.isArray(conceptIds)?conceptIds:[]).filter(id=>typeof id==='string'));
+  const bank=options.knowledgeBank||global.StudyKnowledge?.bank;
+  if(typeof bank?.get==='function')for(const id of [...wrong]){
+   const record=bank.get(id);
+   if(record?.id!==id||!id.startsWith('knowledge:'+encodeURIComponent(record.lessonId)+':'))continue;
+   for(const sourceId of Array.isArray(record.sourceConceptIds)?record.sourceConceptIds:[]){const source=bank.get(sourceId);if(source?.id===sourceId&&sourceId.startsWith('knowledge:'+encodeURIComponent(source.lessonId)+':'))wrong.add(sourceId);}
+  }
   for(const card of Array.isArray(cards)?cards:[]){
    const sourceId=card?.sourceLesson?.id,kind=card?.kind==='word'?'word':card?.kind==='grammar'?'grammar':null;
    if(typeof sourceId!=='string'||!kind||!validId(card.id)||!wrong.has(card.conceptId))continue;

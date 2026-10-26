@@ -13,7 +13,7 @@
 - [x] UI agent: RED/GREEN bulk entry, progress/cancel, copy fallback, note/draft persistence, pagination and lifecycle.
 - [x] Learning agent: RED/GREEN truthful studied origins, complete/diverse recurrence, exact recall-card mapping and meaningful practice prompts; manual early practice must not reset due dates.
 - [x] Root: integrate UI/data/backup and recurrence changes, fix narrow basic grammar misses with regression evidence, style using current tokens.
-- [ ] Fresh complete tests and independent reviews; browser verify bulk100+, manual copy, restore, later-lesson recurrence and early practice.
+- [x] Fresh complete tests and independent reviews; browser verify bulk100+, manual copy, restore, later-lesson recurrence and early practice.
 - [ ] Merge current remote changes, publish to the existing site and verify public mobile workflows.
 
 ## Guardrails
