@@ -1,7 +1,7 @@
 /* Pure, source-backed recurrence index. No storage, DOM, network, or inferred grammar. */
 (function (root) {
   'use strict';
-  var VERSION='1.0.0';
+  var VERSION='1.1.0';
   // An auditable allow-list, never a stemmer. Only the first token of verb phrases changes.
   var FORMS={
     be:['am','is','are','was','were','been','being'],have:['has','had','having'],do:['does','did','done','doing'],
@@ -66,6 +66,7 @@
     if(isVerb&&FORMS[base[0]])FORMS[base[0]].forEach(function(form){patterns.push([form].concat(base.slice(1)));});
     return patterns;
   }
+  function phraseForms(phrase){var value=normalize(phrase),patterns=patternsFor({phrase:phrase},'usage');if(!patterns.length||patterns[0].join(' ')!==value)return value?[value]:[];return patterns.map(function(pattern){return pattern.join(' ');});}
   function grammarKey(item){return item.knowledgeId?'id:'+normalize(item.knowledgeId):item.title?'title:'+normalize(item.title):'';}
   function build(input){
     var seenIds=new Set(),lessons=strings(input).filter(function(l){if(!l||!l.id||seenIds.has(String(l.id))||!Number.isFinite(Number(l.book))||!Number.isFinite(Number(l.number)))return false;seenIds.add(String(l.id));return true;}).map(function(l){
@@ -127,5 +128,5 @@
       });
     }});
   }
-  root.StudyRecurrence=Object.freeze({version:VERSION,build:build,finiteForms:Object.freeze(Object.fromEntries(Object.entries(FORMS).map(function(entry){return [entry[0],Object.freeze(entry[1].slice())];})))});
+  root.StudyRecurrence=Object.freeze({version:VERSION,build:build,phraseForms:phraseForms,finiteForms:Object.freeze(Object.fromEntries(Object.entries(FORMS).map(function(entry){return [entry[0],Object.freeze(entry[1].slice())];})))});
 })(typeof window!=='undefined'?window:globalThis);

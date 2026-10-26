@@ -102,7 +102,9 @@
   if(card?.kind!=='phrase')return false;
   const tokens=value=>normalize(value).match(/[a-z0-9]+(?:['-][a-z0-9]+)*/g)||[];
   const answer=' '+tokens(input).join(' ')+' ';
-  return answerForms(card).some(form=>{
+  const phraseForms=global.StudyRecurrence?.phraseForms;
+  const forms=answerForms(card).flatMap(form=>typeof phraseForms==='function'?[form,...phraseForms(form)]:[form]);
+  return forms.some(form=>{
    const phrase=tokens(form).join(' ');
    return Boolean(phrase)&&answer.includes(' '+phrase+' ');
   });
