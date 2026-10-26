@@ -1,6 +1,6 @@
 {
-  "build": "2026-10-26-reliable-learning-pilot-v4",
-  "preparedAt": "2026-10-26T05:58:10.366Z",
+  "build": "2026-10-26-reliable-learning-final",
+  "preparedAt": "2026-10-26T06:01:18.396Z",
   "book2": {
     "book": 2,
     "total": 96,
@@ -28,8 +28,22 @@
       9,
       10
     ],
-    "physicalPhoneKeyboardVerified": false
+    "physicalPhoneKeyboardVerified": false,
+    "focusedMistakeFeedback": true,
+    "phoneKeyboardVerified": false
   },
-  "staticFiles": 1663,
-  "staticBytes": 395753551
+  "staticFiles": 1791,
+  "staticBytes": 756202041,
+  "nativeearsAdvancedAudio": {
+    "books": {
+      "3": 60,
+      "4": 48
+    },
+    "files": 108,
+    "bytes": 360299925,
+    "seriesUrls": [
+      "https://nativeears.mojoru.org/series/48",
+      "https://nativeears.mojoru.org/series/47"
+    ]
+  }
 }
