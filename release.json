@@ -1,6 +1,6 @@
 {
   "build": "2026-10-26-mobile245",
-  "preparedAt": "2026-10-26T08:49:37.688307+00:00",
+  "preparedAt": "2026-10-26T09:14:05.645573+00:00",
   "book2": {
     "book": 2,
     "total": 96,
@@ -69,10 +69,23 @@
       }
     },
     "wrongConceptsRejoinSpacedReview": true,
-    "syntheticListeningWordAudioAdded": 6
+    "syntheticListeningWordAudioAdded": 6,
+    "dailyOutputCoach": {
+      "dailySmallBatches": true,
+      "reviewCardsMaximum": 3,
+      "productiveTargetPerDay": 1,
+      "wordAndPhraseFiveSentences": true,
+      "selfExplanation": true,
+      "textRetelling": true,
+      "assistanceEvidence": true,
+      "independentObjectiveReviewOnly": true,
+      "browserLocal": true,
+      "automaticSemanticOrSpeakingScore": false,
+      "intervalsAreProductSchedule": true
+    }
   },
-  "staticFiles": 1961,
-  "staticBytes": 810196887,
+  "staticFiles": 1982,
+  "staticBytes": 810398983,
   "nativeearsAdvancedAudio": {
     "books": {
       "3": 60,
@@ -199,6 +212,7 @@
     ],
     "physicalPhoneKeyboardVerified": false,
     "actualNextDayRetestVerified": false,
-    "preserveLibraryContextOnBreakpoint": true
+    "preserveLibraryContextOnBreakpoint": true,
+    "dailyTasksMenu": true
   }
 }

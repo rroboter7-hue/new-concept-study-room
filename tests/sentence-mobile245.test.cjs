@@ -7,23 +7,23 @@ const vm = require('node:vm');
 const lessons = [
   {id:'old-word',book:1,number:1,title:'Family <script>bad()</script>',vocabulary:[{word:'sister',meaning:'姐妹 & 家人'}],usage:[]},
   {id:'old-phrase',book:1,number:2,title:'Look "here"',vocabulary:[{word:'picture',meaning:'图画'}],usage:[{phrase:'look at',meaning:'看 <仔细>'}]},
-  {id:'current',book:1,number:3,title:'Books',vocabulary:[{word:'book',meaning:'书'},{word:'pen',meaning:'钢笔'}],usage:[]}
+  {id:'current',book:1,number:3,title:'Books',vocabulary:[{word:'book',meaning:'书'},{word:'pen',meaning:'钢笔'}],usage:[{phrase:'talk about',meaning:'谈论'}]}
 ];
 
 function setup({records={},drafts={},mobile=true}={}) {
-  const handlers={},timers=new Map(),fields={};let timer=0,current=lessons[2],markup='';
+  const handlers={},timers=new Map(),fields={},evidence=[];let timer=0,current=lessons[2],markup='',failure=false;
   const content={get innerHTML(){return markup;},set innerHTML(value){markup=value;const panel=value.match(/<details class="sentence-adjustments"([^>]*)>/);fields['.sentence-adjustments']=panel?{open:/\bopen\b/.test(panel[1])}:null;},querySelector:selector=>selector==='.sentence-adjustments'?fields[selector]||null:fields[selector] ||= {textContent:'',innerHTML:'',focus(){}}};
   const document={body:{classList:{contains:name=>mobile && ['mls-mobile','mls-book-workspace'].includes(name)}},addEventListener:(kind,fn)=>handlers[kind]=fn,querySelector:selector=>selector==='#sentence-practice-content'?content:null};
   const context={document,console,setTimeout:fn=>{timers.set(++timer,fn);return timer;},clearTimeout:id=>timers.delete(id)};
   context.window=context;vm.createContext(context);
   for(const file of ['sentence-core.js','sentence-practice.js'])vm.runInContext(fs.readFileSync(path.join(__dirname,'..',file),'utf8'),context);
-  const ui=new context.SentencePractice({getLesson:()=>current,getLessons:()=>lessons,getRecords:()=>records,getDrafts:()=>drafts,saveDraft:(key,value)=>{drafts[key]=JSON.parse(JSON.stringify(value));return true;}});
+  const ui=new context.SentencePractice({getLesson:()=>current,getLessons:()=>lessons,getRecords:()=>records,getDrafts:()=>drafts,saveDraft:(key,value)=>{if(failure)return false;drafts[key]=JSON.parse(JSON.stringify(value));return true;},onEvidence:value=>{evidence.push(JSON.parse(JSON.stringify(value)));return true;}});
   const render=()=>content.innerHTML=ui.render();
   function event(kind,dataset,value='',extra={}){
     const target={dataset,value,...extra,closest:selector=>selector==='#sentence-practice-content'?content:selector==='[data-sentence-action]'&&dataset.sentenceAction?target:null};
     handlers[kind]?.({target,preventDefault(){}});
   }
-  return {ui,render,drafts,records,change:(name,value)=>event('change',{sentenceSelect:name},value),source:(id,checked)=>event('change',{sentenceSource:id},id,{checked}),step:index=>event('click',{sentenceAction:'step',sentenceStep:String(index)}),input:value=>event('input',{sentenceInput:'answer'},value),nativeOpen:open=>{content.querySelector('.sentence-adjustments').open=open;},setLesson:lesson=>{current=lesson;},toggle:open=>{content.querySelector('.sentence-adjustments').open=open;event('toggle',{sentenceAdjustments:''},'',{open});}};
+  return {ui,render,drafts,records,evidence,change:(name,value)=>event('change',{sentenceSelect:name},value),source:(id,checked)=>event('change',{sentenceSource:id},id,{checked}),step:index=>event('click',{sentenceAction:'step',sentenceStep:String(index)}),input:value=>event('input',{sentenceInput:'answer'},value),check:()=>event('click',{sentenceAction:'check'}),reference:open=>event('toggle',{sentenceReference:''},'',{open}),setFailure:value=>{failure=value;},nativeOpen:open=>{content.querySelector('.sentence-adjustments').open=open;},setLesson:lesson=>{current=lesson;},toggle:open=>{content.querySelector('.sentence-adjustments').open=open;event('toggle',{sentenceAdjustments:''},'',{open});}};
 }
 
 function timeline(html){const found=html.match(/<ol class="sentence-knowledge[^\"]*"[\s\S]*?<\/ol>/);assert.ok(found,'selected knowledge should appear together before the editor');return found[0];}
@@ -119,7 +119,43 @@ test('switching lessons closes the old lesson adjustment disclosure',()=>{
   assert.doesNotMatch(h.render(),/<details class="sentence-adjustments" open(?:\s|>)/);
 });
 
-test('desktop keeps its existing sentence layout outside the new mobile workspace mode',()=>{
+test('desktop keeps the upstream flexible sentence layout outside the new mobile workspace mode',()=>{
   const h=setup({mobile:false});const html=h.render();
-  assert.match(html,/一个单词，写好五句话/);assert.doesNotMatch(html,/sentence-knowledge|sentence-adjustments|sentence-step-count/);
+  assert.match(html,/一个目标，灵活写五句/);assert.doesNotMatch(html,/sentence-knowledge|sentence-adjustments|sentence-step-count/);
+});
+
+test('mobile uses flexible prompts by default and keeps optional transform mode and its answers separate',()=>{
+  const h=setup();let html=h.render();
+  assert.match(html,/aria-label="第 1 步 换一个语境/);
+  assert.match(html,/data-sentence-select="mode"/);assert.match(html,/灵活五句/);
+  h.input('I keep a book in my bag.');h.step(1);html=h.render();
+  assert.match(html,/补充时间地点/);assert.doesNotMatch(html,/class="sentence-original"/);
+  h.change('mode','transform');html=h.render();
+  assert.match(html,/肯定句/);assert.equal(h.ui.active.draft.answers.affirmative,'');
+  h.change('mode','flexible');assert.equal(h.ui.active.draft.answers.affirmative,'I keep a book in my bag.');
+  h.step(4);assert.match(h.render(),/sentence-step-hint[^>]*>可[^<]*旧知[^<]*换个语境/);
+});
+
+test('mobile daily phrase target keeps native reference assistance and emits evidence only after a saved complete check',()=>{
+  const h=setup();h.render();
+  assert.equal(h.ui.openTarget({lessonId:'current',targetKey:'daily:phrase:talk',expression:'talk about',kind:'phrase',roundKey:'day-1'}),true);
+  const html=h.render(),knowledge=timeline(html);
+  assert.match(knowledge,/本课目标用法/);assert.match(knowledge,/>talk about<\/strong>/);assert.doesNotMatch(knowledge,/undefined|data-lesson="current"/);
+  assert.match(html,/<details class="sentence-reference" data-sentence-reference>/);
+  assert.match(html,/<summary data-sentence-action="reference">/);
+  h.reference(true);h.reference(false);assert.equal(h.ui.active.draft.assisted,true);
+  const answers=['We talk about books at home.','Yesterday we talked about books in class.','My sister talks about the book after dinner.','Do they talk about pens at school?','I am talking about the story with friends.'];
+  answers.forEach((answer,index)=>{h.step(index);h.input(answer);});
+  assert.equal(h.evidence.length,0);h.setFailure(true);h.check();assert.equal(h.evidence.length,0);
+  h.setFailure(false);h.check();assert.equal(h.evidence.length,1);
+  assert.deepEqual({target:h.evidence[0].target,targetKey:h.evidence[0].targetKey,kind:h.evidence[0].kind,roundKey:h.evidence[0].roundKey,mode:h.evidence[0].mode,complete:h.evidence[0].complete,assisted:h.evidence[0].assisted,rulesOnly:h.evidence[0].rulesOnly},{target:'talk about',targetKey:'daily:phrase:talk',kind:'phrase',roundKey:'day-1',mode:'flexible',complete:true,assisted:true,rulesOnly:true});
+  assert.match(h.render(),/本轮已查看参考示例/);
+  h.ui.reloadFromStorage();h.ui.openTarget({lessonId:'current',expression:'talk about',kind:'phrase',roundKey:'day-1'});assert.equal(h.ui.active.draft.assisted,true);
+});
+
+test('an earlier phrase used as a mobile target retains the exact escaped source return route',()=>{
+  const h=setup({records:{'old-phrase':{completed:true}}});h.render();h.change('target','phrase:old-phrase:look%20at');
+  const knowledge=timeline(h.render());
+  assert.match(knowledge,/复习目标用法/);assert.match(knowledge,/>look at<\/strong>/);
+  assert.match(knowledge,/data-lesson="old-phrase"[^>]*aria-label="回看第 1 册 · 第 2 课 · Look &quot;here&quot;"/);
 });

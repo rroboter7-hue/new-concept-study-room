@@ -18,7 +18,7 @@ function setup(canPracticeSentences) {
   scope.window = scope;
   vm.createContext(scope);
   for (const filename of ['sentence-core.js','sentence-practice.js','output-practice.js']) vm.runInContext(fs.readFileSync(path.join(__dirname,'..',filename),'utf8'),scope);
-  const practice = new scope.SentencePractice({getLesson:()=>current,getLessons:()=>lessons,getRecords:()=>({old:{completed:true}}),getDrafts:()=>drafts,saveDraft(key,draft){drafts[key]=JSON.parse(JSON.stringify(draft));return true;}});
+  const practice = new scope.SentencePractice({defaultMode:'transform',getLesson:()=>current,getLessons:()=>lessons,getRecords:()=>({old:{completed:true}}),getDrafts:()=>drafts,saveDraft(key,draft){drafts[key]=JSON.parse(JSON.stringify(draft));return true;}});
   const output = new scope.OutputPractice({getLesson:()=>current,sentencePractice:practice,canPracticeSentences,saveRecord(result){records.push(result);return true;}});
   function sentenceEvent(dataset, value) {
     const target = {dataset,value,closest(selector){return selector === '#sentence-practice-content' ? sentenceRoot : selector === '[data-sentence-action]' ? target : null;}};

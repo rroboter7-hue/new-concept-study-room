@@ -29,11 +29,13 @@
 
 ## Tasks
 
-- [ ] Add failing tests for presentation states, proxy routes and original-player identity; implement shell and app integration.
-- [ ] Add mobile guided knowledge timeline and compact disclosure controls, with regression tests.
-- [ ] Add focused editor and progressive advanced controls, preserving lifecycle tests.
-- [ ] Inspect reading, guided and bulk states against selected references at 390x844; verify 320px and desktop restoration.
-- [ ] Verify audio, lesson96, sources, draft reload/copy/backup, drawer and console; run the full suite.
+- [x] Add failing tests for presentation states, proxy routes and original-player identity; implement shell and app integration.
+- [x] Add mobile guided knowledge timeline and compact disclosure controls, with regression tests.
+- [x] Add focused editor and progressive advanced controls, preserving lifecycle tests.
+- [x] Inspect reading, guided and bulk states against selected references at 390x844; verify 320px and desktop restoration.
+- [x] Verify audio, lesson96, sources, draft reload/copy/backup, drawer and console; run the full suite.
 - [ ] Save design-qa.md, merge any concurrent remote changes, publish and verify the live build.
 
 Real phone keyboard and actual next-day retention remain separate pending acceptance; responsive browser checks do not substitute for them.
+
+Integration note: retained subsequent sentence-aligned reading, twelve-task practice packs, first Book1 passages and daily-output coach from origin/main. Daily tasks stay reachable through the mobile menu. Final merged automated suite: 484 passing tests; real phone acceptance remains pending.

@@ -14,6 +14,9 @@
  .mls-book-workspace .mls-menu-items{position:absolute;z-index:1200;top:50px;left:0;width:min(285px,calc(100vw - 46px));padding:8px;border:1px solid var(--line);border-radius:10px;background:var(--paper);box-shadow:0 10px 32px #15352d21}
  .mls-book-workspace .mls-menu-items button{display:block;width:100%;min-height:44px;padding:10px 14px;text-align:left;font-size:15px;color:var(--ink);border-radius:5px}
  .mls-book-workspace .mls-menu-items button:hover,.mls-book-workspace .mls-menu-items button:focus-visible{background:var(--teal-soft)}
+ .mls-book-workspace .mls-menu-items{max-height:calc(100dvh - 84px);overflow-y:auto}
+ .mls-book-workspace.mls-mobile #learning-coach{display:none}
+ .mls-book-workspace.mls-mobile.mls-coach-open #learning-coach{display:block;margin-bottom:24px}
  .mls-book-workspace.mls-mobile .mls-course-button{border:0;background:transparent;padding:8px 0 8px 10px;font-size:17px;color:var(--ink)}
  .mls-book-workspace.mls-mobile .mls-learning-home,.mls-book-workspace.mls-mobile .reader-tabs{display:none!important}
  .mls-book-workspace.mls-mobile .mls-mode-nav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:0 0 28px;border-bottom:1px solid var(--line)}

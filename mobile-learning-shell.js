@@ -99,7 +99,7 @@
 
     mount() {
       this.header = element('header', 'mls-header', '<div class="mls-brand"><strong>知新</strong><span>'+(this.pilotMode==='all'?'第二册 · 全96课':'第二册 · 1–10课试学')+'</span></div><button type="button" class="mls-course-button" data-mobile-action="open-courses" aria-haspopup="dialog" aria-expanded="false" aria-controls="mls-course-drawer">选课 ' + icon('M9 6h12M9 12h12M9 18h12M3 6h1m-1 6h1m-1 6h1') + '</button>');
-      this.header.querySelector('.mls-brand').innerHTML = '<details class="mls-learning-menu"><summary aria-label="打开学习菜单"><span class="mls-menu-mark">知新</span><strong class="mls-header-lesson">第1课</strong></summary><div class="mls-menu-items"><button type="button" data-mobile-tab="reading">阅读课程</button><button type="button" data-mobile-tab="usage">知识讲解</button><button type="button" data-mobile-tab="phrases">习惯用法</button><button type="button" data-mobile-view="daily-review">每日复习</button><button type="button" data-mobile-view="words">我的生词本</button><button type="button" data-mobile-view="records">学习记录</button><button type="button" data-mobile-view="game">闯关挑战</button><button type="button" data-mobile-view="library">教材资料</button><button type="button" data-mobile-action="reading-tools">译文、音频与来源</button></div></details>';
+      this.header.querySelector('.mls-brand').innerHTML = '<details class="mls-learning-menu"><summary aria-label="打开学习菜单"><span class="mls-menu-mark">知新</span><strong class="mls-header-lesson">第1课</strong></summary><div class="mls-menu-items"><button type="button" data-mobile-tab="reading">阅读课程</button><button type="button" data-mobile-tab="usage">知识讲解</button><button type="button" data-mobile-tab="phrases">习惯用法</button><button type="button" data-mobile-action="today-tasks">今日任务</button><button type="button" data-mobile-view="daily-review">每日复习</button><button type="button" data-mobile-view="words">我的生词本</button><button type="button" data-mobile-view="records">学习记录</button><button type="button" data-mobile-view="game">闯关挑战</button><button type="button" data-mobile-view="library">教材资料</button><button type="button" data-mobile-action="reading-tools">译文、音频与来源</button></div></details>';
       this.menu = this.header.querySelector('.mls-learning-menu');
       this.modeNav = element('nav','mls-mode-nav',[['reading','阅读'],['practice','练习'],['output','练写']].map(([tab,label])=>'<button type="button" role="tab" id="mls-tab-'+tab+'" data-mobile-tab="'+tab+'" aria-controls="reader-content" aria-selected="false">'+label+'</button>').join(''));
       this.modeNav.setAttribute('role','tablist');this.modeNav.setAttribute('aria-label','课程主要模式');
@@ -158,7 +158,9 @@
         if (mobile && this.coursePanel) this.dialog.appendChild(this.coursePanel);
         else this.restoreCoursePanel();
         this.syncPlayerLocation();
+        const coachOpen=this.body.classList.contains('mls-coach-open');
         this.options.onBreakpoint?.(mobile);
+        if(coachOpen)this.body.classList.add('mls-coach-open');
       }
       this.syncPresentation();
       this.syncViewport();
@@ -174,7 +176,9 @@
       else if(this.playerPlaceholder?.parentNode)this.playerPlaceholder.parentNode.insertBefore(this.player,this.playerPlaceholder.nextSibling);
     }
 
-    setOutputMode(mode,next={}) {if(!this.enabled||this.destroyed)return;this.outputMode=mode;this.state={...this.state,...next};this.syncPresentation();}
+    setOutputMode(mode,next={}) {if(!this.enabled||this.destroyed)return;this.outputMode=mode;this.state={...this.state,...next};this.body.classList.remove('mls-coach-open');this.syncPresentation();}
+
+    showCoach() {if(!this.enabled||this.destroyed||!this.mobile)return;this.body.classList.add('mls-coach-open');document.getElementById('learning-coach')?.scrollIntoView({block:'start',behavior:'instant'});}
 
     update(next = {}) {
       if (!this.enabled || this.destroyed) return;
@@ -228,7 +232,7 @@
         return;
       }
       if (!target) return;
-      if(target.dataset.mobileTab){if(this.menu)this.menu.open=false;this.closeCourses({restoreFocus:false});this.options.openTab?.(target.dataset.mobileTab);return;}
+      if(target.dataset.mobileTab){if(this.menu)this.menu.open=false;this.body.classList.remove('mls-coach-open');this.closeCourses({restoreFocus:false});this.options.openTab?.(target.dataset.mobileTab);return;}
       if (target.dataset.mobileView) {
         if(this.menu)this.menu.open=false;
         this.closeCourses({restoreFocus: false});
@@ -239,6 +243,7 @@
         case 'open-courses': this.openCourses(target); break;
         case 'close-courses': this.closeCourses(); break;
         case 'read-next':this.options.onReadNext?.();break;
+        case 'today-tasks':if(this.menu)this.menu.open=false;this.options.showTasks?.();break;
         case 'reading-tools':if(this.menu)this.menu.open=false;this.options.openTab?.('reading');this.body.classList.toggle('mls-reading-tools-open');break;
         case 'continue':
           this.closeCourses({restoreFocus: false});
@@ -363,7 +368,7 @@
       this.inlinePlayerSlot?.remove();this.playerPlaceholder?.remove();this.pageTitle?.remove();
       this.coursePlaceholder?.remove();
       for (const node of [this.header, this.modeNav, this.readNext, this.home, this.nav, this.overlay, this.playerButton]) node?.remove();
-      this.body.classList.remove('mls-pilot', 'mls-mobile', 'mls-drawer-open', 'mls-player-collapsed', 'mls-keyboard-open','mls-book-workspace','mls-focused-study','mls-writing-dark','mls-reading-tools-open');
+      this.body.classList.remove('mls-pilot', 'mls-mobile', 'mls-drawer-open', 'mls-player-collapsed', 'mls-keyboard-open','mls-book-workspace','mls-focused-study','mls-writing-dark','mls-coach-open','mls-reading-tools-open');
       document.documentElement?.classList?.remove('mls-book-scroll');
       if (this.originalBodyView === null) this.body.removeAttribute('data-mls-view');
       else this.body.setAttribute('data-mls-view', this.originalBodyView);

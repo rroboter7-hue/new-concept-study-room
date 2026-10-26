@@ -8,10 +8,10 @@ Scope: the user's selected concepts 2, 4 and 5, followed by the explicit request
 
 - Source visual truth: `C:/Users/Admin/Documents/Codex/2026-10-13/w-s-m/outputs/mobile245-release/selected-unified-design.png` (1459 x 1078 PNG, three adjacent unframed content panels).
 - Local implementation: `http://127.0.0.1:4182/?pilot=all&build=mobile245-local`, actual meta build `2026-10-26-mobile245`.
-- Reading: `C:/Users/Admin/Documents/Codex/2026-10-13/w-s-m/outputs/mobile245-release/09-reading-merged.png`.
-- Guided writing: `C:/Users/Admin/Documents/Codex/2026-10-13/w-s-m/outputs/mobile245-release/10-guided-final.png`.
-- Bulk writing: `C:/Users/Admin/Documents/Codex/2026-10-13/w-s-m/outputs/mobile245-release/11-bulk-final.png`.
-- CSS viewport: 390 x 844. CUA returns 375 x 812 JPEG captures (despite the saved `.png` filenames), a uniform approximately 0.9615 capture scale. DOM layout checks use CSS coordinates. Browser scrollbar reduces document client width to 375px; document scroll width also measures 375px.
+- Reading: `C:/Users/Admin/Documents/Codex/2026-10-13/w-s-m/outputs/mobile245-release/12-reading-final.jpg`.
+- Guided writing: `C:/Users/Admin/Documents/Codex/2026-10-13/w-s-m/outputs/mobile245-release/13-guided-final.jpg`.
+- Bulk writing: `C:/Users/Admin/Documents/Codex/2026-10-13/w-s-m/outputs/mobile245-release/14-bulk-final.jpg`.
+- CSS viewport: 390 x 844. CUA returns 375 x 812 JPEG captures, a uniform approximately 0.9615 capture scale. DOM layout checks use CSS coordinates. Browser scrollbar reduces document client width to 375px; document scroll width also measures 375px.
 - Density normalization: compare each cream content panel of the reference independently, excluding the blue board, against the unframed implementation viewport, using relative content width. The generated board supplies no authoritative CSS viewport/device-scale metadata, so pixel-exact typography claims are deliberately avoided. Both source and all three implementation captures were opened together in the same comparison input. Readable full captures also provide the focused comparison of the title/audio row, source timeline/return controls, editor and primary actions; extra raster crops were unnecessary.
 - State: Book 2, lesson 3. Guided step 5 has explicitly selected `postcard`, `private` and `in the end`, with real lesson 1 source links. Bulk uses the user's retained literal five-line draft and conversion mode. These selections differ from the mock's illustrative phrase and are intentionally not fabricated or automatically selected.
 
@@ -23,6 +23,8 @@ Scope: the user's selected concepts 2, 4 and 5, followed by the explicit request
 4. **P1: disabled-shell callback exception and library-context loss on resize.** Added the disabled/destroyed guard and limited study rerendering to the study route. Verified ordinary no-query output works, and a library writing draft remains identical with exactly one output root across 390 -> 761 -> 390px.
 5. **P2: hidden audio provenance and misleading fixed question-count CTA.** The reading tools menu exposes the unique translation checkbox, audio type and audio-source link. The CTA now says “读完，去练习” and preserves existing practice progress. Actual course 96 selection and its twelve-question data were checked before the remote merge; the merged release retains the new twelve-task runner and its complete regression suite.
 6. **P1/P2 integration risks from concurrent reading updates.** Preserved the remote sentence-aligned translations, practice-pack engine, source-return state, Book 1 sources, backups and audio state. Extended mobile type to `.reading-pair`, retained the actual source-return banner, excluded static inline audio from bottom occlusion, and labelled non-Book-2 source lessons correctly. Final reading, translation toggle, audio provenance, old-course return and restored guided draft were verified in the merged tree.
+
+7. **Concurrent daily-output integration:** retained task/evidence/assistance state and flexible/transform modes. The new daily coach is reachable through “今日任务” in the learning menu without occupying the default reading/writing viewport. Explanation drafts remain visible and unchanged across 390 -> 761 -> 390px; returning to writing closes the task panel. Final merged screenshots are `12-reading-final.jpg`, `13-guided-final.jpg` and `14-bulk-final.jpg`, compared together against the selected unified reference.
 
 ## Required fidelity surfaces
 
@@ -42,7 +44,7 @@ Scope: the user's selected concepts 2, 4 and 5, followed by the explicit request
 - Bulk five-line checking, collapsed scope notes, literal input preservation, saved correction notes after reload, and complete manual-copy content verified. No third-party submission occurred.
 - 320px: no horizontal overflow (client and scroll width305px), 17px editor font. Desktop widths761/1024 restore desktop presentation without cloning audio or losing library draft. Course controls retain practical 44px targets; long input/source text can wrap and scroll.
 - Console: both local mobile workspace and ordinary no-query output tab returned no console errors.
-- Automated regression: **332/332 passed**, no skipped/cancelled tests, in `outputs/mobile245-release/merged-tests.log` in the parent workspace. The suite includes active bulk/guided lifecycle, storage compatibility, asynchronous cancellation, canonical curriculum, reading alignment/audio state, practice packs and mobile integration.
+- Automated regression: **484/484 passed**, no skipped/cancelled tests, in `outputs/mobile245-release/final-tests-fixed.log` in the parent workspace. The suite includes active bulk/guided lifecycle, storage compatibility, asynchronous cancellation, canonical curriculum, reading alignment/audio state, practice packs and mobile integration.
 
 ## Residual test gaps and accepted differences
 

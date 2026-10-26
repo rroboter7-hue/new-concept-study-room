@@ -43,9 +43,10 @@
         try {
           switch(button.dataset.outputAction) {
             case 'mode':this.options.sentencePractice?.flush();this.options.batchPractice?.flush();this.options.batchPractice?.cancel(false);this.mode=button.dataset.outputMode;this.result=null;this.showOriginal=false;this.redraw();break;
-            case 'original':this.showOriginal=!this.showOriginal;this.redraw();break;
+            case 'original':if(!this.showOriginal)this.assisted=true;this.showOriginal=!this.showOriginal;this.redraw();break;
             case 'submit':this.submit();break;case 'grammar-check':this.checkGrammar();break;case 'grammar-apply':this.applyGrammar(Number(button.dataset.grammarIndex));break;case 'grammar-all':this.applyGrammar(-1);break;
-            case 'retry':this.result=null;this.answer='';this.spellAnswers={};this.showOriginal=false;this.grammarIssues=null;this.grammarText='';this.redraw();break;
+            case 'retry':if(this.result)this.assisted=true;this.result=null;this.pendingEvidence=null;this.answer='';this.spellAnswers={};this.showOriginal=false;this.grammarIssues=null;this.grammarText='';this.redraw();break;
+            case 'evidence-retry':this.retryEvidence();break;
             case 'speak':{
               const word=this.spellWords()[Number(button.dataset.outputIndex)]?.word;
               if (word && this.options.speak) Promise.resolve(this.options.speak(word)).catch(()=>this.notify('暂时无法播放发音，请稍后重试。'));
@@ -76,9 +77,19 @@
 
     static compareWords(expected,actual) {return compareWords(expected,actual);}
     static countWords(text) {return words(text).length;}
-    reset() {this.grammarIssues=null;this.grammarText='';this.mode=this.options.defaultMode?.()||'write';this.paragraphIndex=0;this.answer='';this.spellAnswers={};this.result=null;this.showOriginal=false;this.scrambles={};}
+    reset() {this.grammarIssues=null;this.grammarText='';this.mode=this.options.defaultMode?.()||'write';this.paragraphIndex=0;this.answer='';this.spellAnswers={};this.result=null;this.showOriginal=false;this.scrambles={};this.assisted=false;this.roundKey='';this.roundLessonId='';this.pendingEvidence=null;}
     setLesson(lesson) {if (lesson?.id!==this.current?.id) {this.options.sentencePractice?.flush();this.options.batchPractice?.flush();this.options.batchPractice?.cancel(false);this.reset();}this.current=lesson || null;}
     lesson() {const lesson=this.options.getLesson?.() || this.current;if (lesson?.id!==this.current?.id)this.setLesson(lesson);else this.current=lesson;return lesson;}
+    startTask({lessonId,mode='write',roundKey}={}) {
+      const lesson=this.lesson(),normalized={dictation:'write',spelling:'spell',write:'write',spell:'spell',retell:'retell'}[mode];
+      if(!lesson||lesson.id!==lessonId||!normalized||typeof roundKey!=='string'||!roundKey.trim())return false;
+      const key=roundKey.trim().slice(0,1000);
+      // Entering the same task keeps its draft and exposure history. Only an
+      // explicit new round hides references and clears answers together.
+      if(this.roundKey===key&&this.roundLessonId===lessonId)return true;
+      this.options.sentencePractice?.flush();this.options.batchPractice?.flush();this.options.batchPractice?.cancel(false);
+      this.reset();this.mode=normalized;this.roundKey=key;this.roundLessonId=lessonId;this.redraw();return true;
+    }
     paragraphs() {return (this.lesson()?.paragraphs || []).filter(paragraph=>paragraph && typeof paragraph.en==='string' && paragraph.en.trim());}
     notify(message) {this.options.toast?.(message);}
     redraw() {const content=document.querySelector('#output-content');if(content){content.innerHTML=this.render();if(this.options.isMobileWorkspace?.())content.querySelector?.('[data-output-mode="'+this.mode+'"]')?.focus?.({preventScroll:true});}}
@@ -127,14 +138,14 @@
       return tabs+(!primary?more:'')+content+(primary?more:'');
     }
 
-    checkGrammar(redraw=true){if(!this.answer.trim()){this.notify('先写一段英文，再检查。');return;}if(!global.StudyGrammar){this.grammarText='';this.grammarIssues=null;this.notify('语法规则正在加载，请刷新后再试。');return;}this.grammarText=this.answer;this.grammarIssues=global.StudyGrammar.check(this.answer);if(redraw)this.redraw();}
-    applyGrammar(index){if(this.grammarText!==this.answer){this.notify('输入已改变，请重新检查。');return;}this.answer=index<0?global.StudyGrammar.applyAll(this.answer,this.grammarIssues||[]):global.StudyGrammar.apply(this.answer,(this.grammarIssues||[])[index]);this.result=null;this.grammarText=this.answer;this.grammarIssues=global.StudyGrammar.check(this.answer);this.redraw();this.notify('建议已填回输入框，请结合句意确认。');}
+    checkGrammar(redraw=true){if(!this.answer.trim()){this.notify('先写一段英文，再检查。');return;}if(!global.StudyGrammar){this.grammarText='';this.grammarIssues=null;this.notify('语法规则正在加载，请刷新后再试。');return;}if(redraw)this.assisted=true;this.grammarText=this.answer;this.grammarIssues=global.StudyGrammar.check(this.answer);if(redraw)this.redraw();}
+    applyGrammar(index){if(this.grammarText!==this.answer){this.notify('输入已改变，请重新检查。');return;}this.assisted=true;this.answer=index<0?global.StudyGrammar.applyAll(this.answer,this.grammarIssues||[]):global.StudyGrammar.apply(this.answer,(this.grammarIssues||[])[index]);this.result=null;this.grammarText=this.answer;this.grammarIssues=global.StudyGrammar.check(this.answer);this.redraw();this.notify('建议已填回输入框，请结合句意确认。');}
     grammarHTML(){const e=this.escape,issues=this.grammarIssues;return `<section class="grammar-helper"><h3>基础语法检查与修改建议</h3><p>提交默写或复述后，会自动检查主谓一致、助动词、冠词和常见搭配，并在这里显示修改建议。全部在本地处理，最多检查前10000个字符；这是常见规则检查，复杂语法和句意仍需结合原文确认。</p><button class="button" data-output-action="grammar-check">${issues?'重新检查语法':'单独检查语法'}</button><div class="grammar-feedback">${issues?issues.length?`<h4>发现 ${issues.length} 处可检查的问题</h4>${issues.map((issue,i)=>`<article class="grammar-issue"><div><del>${e(issue.original)}</del><span> → </span><ins>${e(issue.replacement)}</ins></div><p>${e(issue.message)}</p><button class="button subtle" data-output-action="grammar-apply" data-grammar-index="${i}">采用此建议</button></article>`).join('')}<button class="button subtle" data-output-action="grammar-all">应用当前全部建议</button>`:'<p class="grammar-ok">已完成本地常见规则检查，未发现已覆盖类型的问题。可对照原文继续检查时态、句意和遗漏。</p>':''}</div></section>`;}
 
     originalHTML(paragraphs) {return this.showOriginal?`<div class="output-target">${paragraphs.map(paragraph=>`<p class="english">${this.escape(paragraph.en)}</p>`).join('')}</div>`:'';}
     originalButton() {return `<button type="button" class="button subtle" data-output-action="original">${this.showOriginal?'隐藏原文':'查看原文'}</button>`;}
     textarea(placeholder) {return `<label><span class="sr-only">${this.escape(placeholder)}</span><textarea class="output-textarea" data-output-input="answer" rows="7" maxlength="30000" spellcheck="false" autocapitalize="off" autocomplete="off" placeholder="${this.escape(placeholder)}" ${this.result?'readonly':''}>${this.escape(this.answer)}</textarea></label><p class="output-counter">${words(this.answer).length} 个英文单词</p>`;}
-    actions() {return `<div class="output-actions">${this.result?'<button type="button" class="button primary" data-output-action="retry">重新练习</button>':'<button type="button" class="button primary" data-output-action="submit">提交并查看反馈</button>'}</div>`;}
+    actions() {const pending=this.pendingEvidence,failed=pending?.result===this.result&&pending.failed;return `<div class="output-actions">${this.result?'<button type="button" class="button primary" data-output-action="retry">重新练习</button>':'<button type="button" class="button primary" data-output-action="submit">提交并查看反馈</button>'}${failed?`<button type="button" class="button" data-output-action="evidence-retry">${pending.saved?'重试保存任务状态':'重试保存练习记录'}</button>`:''}</div>${failed?`<p role="status" class="small-note">${pending.saved?'输出已保存，任务状态未保存，可直接重试保存，无需重新输入。':'反馈已生成，练习记录未保存，可直接重试保存。'}</p>`:''}`;}
 
     renderWrite() {
       const paragraphs=this.paragraphs(), e=this.escape;
@@ -162,11 +173,26 @@
     }
 
     record(score,details) {
-      try {
-        const saved=this.options.saveRecord?.({mode:this.mode,score,details});
-        if(saved && typeof saved.catch==='function')saved.catch(()=>this.notify('反馈已生成，但练习记录暂时未能保存。'));
-      }catch(_){this.notify('反馈已生成，但练习记录暂时未能保存。');}
+      const mode=this.mode,lesson=this.lesson(),answer=mode==='spell'?this.spellWords().map((_,index)=>String(this.spellAnswers[index]||'')).join('\n'):this.answer;
+      const complete=mode==='spell'?this.spellWords().every((_,index)=>String(this.spellAnswers[index]||'').trim()):mode==='retell'?words(answer).length>=5:words(answer).length>=Math.min(5,words(this.paragraphs()[this.paragraphIndex]?.en).length);
+      const evidence={type:{write:'dictation',spell:'spelling',retell:'retell'}[mode],lessonId:lesson?.id,assisted:this.assisted,answer,complete,score,at:Date.now(),roundKey:this.roundKey};
+      const payload={mode,score,details:{...details,assisted:this.assisted,roundKey:this.roundKey,evidenceVersion:1,complete}};
+      const pending={evidence,payload,result:this.result,saved:false,failed:false,busy:false};this.pendingEvidence=pending;
+      // Subsequent attempts have access to this submission's comparison and
+      // grammar feedback. The captured first-attempt evidence stays unchanged.
+      this.assisted=true;
+      this.persistOutput(pending);
     }
+    evidenceSaved(pending) {
+      const finish=accepted=>{pending.busy=false;pending.failed=accepted===false;if(pending.failed)this.notify('输出已保存，任务状态未保存，可直接重试保存。');if(this.pendingEvidence===pending)this.redraw();};
+      try{const accepted=this.options.onEvidence?.({...pending.evidence});if(accepted&&typeof accepted.then==='function')Promise.resolve(accepted).then(finish,()=>finish(false));else finish(accepted);}catch{finish(false);}
+    }
+    persistOutput(pending) {
+      if(pending.busy)return;pending.busy=true;pending.failed=false;
+      const finish=saved=>{if(saved!==true){pending.busy=false;pending.failed=true;this.notify('反馈已生成，但练习记录暂时未能保存。');if(this.pendingEvidence===pending)this.redraw();return;}pending.saved=true;this.evidenceSaved(pending);};
+      try{const saved=this.options.saveRecord?.(pending.payload);if(saved&&typeof saved.then==='function')Promise.resolve(saved).then(finish,()=>finish(false));else finish(saved);}catch{finish(false);}
+    }
+    retryEvidence() {const pending=this.pendingEvidence;if(!pending||pending.busy||!pending.failed)return;if(pending.saved){pending.busy=true;this.evidenceSaved(pending);}else this.persistOutput(pending);}
 
     submit() {
       if(this.result)return;
