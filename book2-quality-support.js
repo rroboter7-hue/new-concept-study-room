@@ -66,7 +66,27 @@
     ['attention','pos','','n.'],
     ['business','pos','','n.']
   ];
-  var api={version:'1.1.0',label:LABEL,report:null};
+  var REVIEW_QUIZZES=[
+    {
+      id:'nce-b2-eef57c-l001-quality-review-past-simple',grammarRuleId:'nce-b2-eef57c-l001-quality-past-simple',
+      sentence:'Last week I ____ to the theatre.',sourceSentence:'Last week I went to the theatre.',
+      options:['go','went','gone','going'],answer:1,
+      explanation:'【自编学习整理 · 教材PDF第15页】Last week 表示过去的时间，这里用 go 的过去式 went。原句：Last week I went to the theatre.'
+    },
+    {
+      id:'nce-b2-eef57c-l001-quality-review-past-continuous',grammarRuleId:'nce-b2-eef57c-l001-quality-past-continuous',
+      sentence:'They ____ loudly.',sourceSentence:'They were talking loudly.',
+      options:['was talking','were talked','were talking','talks'],answer:2,
+      explanation:'【自编学习整理 · 教材PDF第15页】过去进行时用 was/were + 动词 -ing；主语 They 用 were。原句：They were talking loudly.'
+    },
+    {
+      id:'nce-b2-eef57c-l001-quality-review-could-not',grammarRuleId:'nce-b2-eef57c-l001-quality-could-not',
+      sentence:'I could not ____ the actors.',sourceSentence:'I could not hear the actors.',
+      options:['hear','heard','hearing','to hear'],answer:0,
+      explanation:'【自编学习整理 · 教材PDF第15页】could not 后接动词原形 hear，不加 to，也不用过去式 heard。原句：I could not hear the actors.'
+    }
+  ];
+  var api={version:'1.2.0',label:LABEL,report:null};
   function locate(lesson,sentence){return (lesson.paragraphs||[]).findIndex(function(p){return String(p.en||'').includes(sentence);});}
   function correctField(lesson,word,field,oldValue,newValue,evidence,report){
     var item=(lesson.vocabulary||[]).find(function(v){return v.word===word;});
@@ -88,7 +108,7 @@
     report[field==='meaning'?'definitionCorrections':'fieldCorrections'].push(correction);
   }
   function apply(lessons){
-    var list=Array.isArray(lessons)?lessons:[],report={label:LABEL,addedGrammar:0,addedUsage:0,skippedExamples:[],skippedDefinitions:[],vocabularyCorrections:[],definitionCorrections:[],fieldCorrections:[],vocabularyDefinitionsCorrected:0,vocabularyFieldsCorrected:0};
+    var list=Array.isArray(lessons)?lessons:[],report={label:LABEL,addedGrammar:0,addedUsage:0,addedQuiz:0,skippedExamples:[],skippedDefinitions:[],vocabularyCorrections:[],definitionCorrections:[],fieldCorrections:[],vocabularyDefinitionsCorrected:0,vocabularyFieldsCorrected:0};
     DEFINITION_FIXES.forEach(function(row){
       var lesson=list.find(function(l){return l.id==='nce-b2-eef57c-l'+String(row[0]).padStart(3,'0')&&l.book===2&&l.number===row[0];});
       if(!lesson)return;
@@ -115,6 +135,22 @@
           sourceParagraphIndex:paragraphIndex,reviewedExample:true,containsOriginalWorkbookExercise:false
         }));
         report.addedGrammar++;
+      });
+      first.quiz=first.quiz||[];
+      REVIEW_QUIZZES.forEach(function(quiz){
+        if(first.quiz.some(function(q){return q.id===quiz.id;}))return;
+        var paragraphIndex=locate(first,quiz.sourceSentence);
+        if(paragraphIndex<0||quiz.sentence.replace('____',quiz.options[quiz.answer])!==quiz.sourceSentence){
+          report.skippedExamples.push({lesson:1,id:quiz.id,reason:'原句填空与当前正文不精确匹配，未添加'});return;
+        }
+        first.quiz.push(Object.assign({},quiz,{
+          type:'grammar',exerciseType:'source-cloze',options:quiz.options.slice(),
+          question:'【自编课文填空】根据课文补全原句：'+quiz.sentence,
+          label:'自编课文填空 · 非教材原配练习',sourceLabel:'自编课文填空 · 非教材原配练习',sourceType:'self-authored-passage-cloze',
+          sourceDocId:TEXTBOOK,sourceUrl:'resources/'+TEXTBOOK+'.pdf',sourcePage:15,sourcePdfPage:15,sourcePrintedPage:12,
+          sourceParagraphIndex:paragraphIndex,reviewedExample:true,containsOriginalWorkbookExercise:false
+        }));
+        report.addedQuiz++;
       });
     }
     var seventyFive=list.find(function(l){return l.book===2&&l.number===75;});

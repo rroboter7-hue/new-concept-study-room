@@ -1,6 +1,6 @@
 {
-  "build": "2026-10-26-book2-complete",
-  "preparedAt": "2026-10-26T01:34:41.133Z",
+  "build": "2026-10-26-book2-complete-r2",
+  "preparedAt": "2026-10-26T02:06:05.451Z",
   "book2": {
     "book": 2,
     "total": 96,
@@ -12,5 +12,5 @@
     "candidateSha256": "6dab6504246da5dd35451b93f34ca4e102ac936468b2d4d8400018bb647e3ae3"
   },
   "staticFiles": 1552,
-  "staticBytes": 225278283
+  "staticBytes": 225282804
 }
