@@ -26,6 +26,9 @@
   }
 
   class MobileLearningShell {
+    static presentationFor({mobile=false,view='study',tab='reading',outputMode='write',keyboard=false}={}) {
+      return {focused:mobile&&view==='study',writerDark:mobile&&view==='study'&&tab==='output'&&outputMode==='batch',inlinePlayer:mobile&&view==='study'&&tab==='reading',navVisible:mobile&&view!=='study'&&!keyboard};
+    }
     constructor(options = {}) {
       this.options = options;
       this.pilotMode = new URLSearchParams(global.location.search).get('pilot');
@@ -34,6 +37,7 @@
       this.mobile = false;
       this.drawerOpen = false;
       this.playerCollapsed = true;
+      this.outputMode = 'write';
       this.cleanups = [];
       this.inertBefore = new Map();
       this.frames = new Set();
@@ -51,6 +55,7 @@
       this.originalReaderTabindex = this.reader?.getAttribute('tabindex');
       this.originalVariables = new Map(['--mls-nav-space', '--mls-player-space', '--mls-viewport-height', '--mls-viewport-top'].map(key => [key, this.body.style.getPropertyValue(key)]));
       this.body.classList.add('mls-pilot');
+      this.body.classList.add('mls-book-workspace');
       this.mount();
       this.listen(document, 'click', event => this.captureLesson(event), true);
       this.listen(document, 'click', event => this.click(event));
@@ -94,10 +99,17 @@
 
     mount() {
       this.header = element('header', 'mls-header', '<div class="mls-brand"><strong>知新</strong><span>'+(this.pilotMode==='all'?'第二册 · 全96课':'第二册 · 1–10课试学')+'</span></div><button type="button" class="mls-course-button" data-mobile-action="open-courses" aria-haspopup="dialog" aria-expanded="false" aria-controls="mls-course-drawer">选课 ' + icon('M9 6h12M9 12h12M9 18h12M3 6h1m-1 6h1m-1 6h1') + '</button>');
+      this.header.querySelector('.mls-brand').innerHTML = '<details class="mls-learning-menu"><summary aria-label="打开学习菜单"><span class="mls-menu-mark">知新</span><strong class="mls-header-lesson">第1课</strong></summary><div class="mls-menu-items"><button type="button" data-mobile-tab="reading">阅读课程</button><button type="button" data-mobile-tab="usage">知识讲解</button><button type="button" data-mobile-tab="phrases">习惯用法</button><button type="button" data-mobile-view="daily-review">每日复习</button><button type="button" data-mobile-view="words">我的生词本</button><button type="button" data-mobile-view="records">学习记录</button><button type="button" data-mobile-view="game">闯关挑战</button><button type="button" data-mobile-view="library">教材资料</button><button type="button" data-mobile-action="reading-tools">译文、音频与来源</button></div></details>';
+      this.menu = this.header.querySelector('.mls-learning-menu');
+      this.modeNav = element('nav','mls-mode-nav',[['reading','阅读'],['practice','练习'],['output','练写']].map(([tab,label])=>'<button type="button" role="tab" id="mls-tab-'+tab+'" data-mobile-tab="'+tab+'" aria-controls="reader-content" aria-selected="false">'+label+'</button>').join(''));
+      this.modeNav.setAttribute('role','tablist');this.modeNav.setAttribute('aria-label','课程主要模式');
+      this.readNext=element('button','button primary mls-read-next','读完，去练习');this.readNext.type='button';this.readNext.dataset.mobileAction='read-next';
+      const readerFooter=this.reader?.querySelector('.reader-footer');if(readerFooter)readerFooter.parentNode.insertBefore(this.readNext,readerFooter);
       this.home = element('section', 'mls-learning-home', '<p class="mls-home-kicker">从一段课文开始</p><button type="button" class="mls-continue-button" data-mobile-action="continue"><span class="mls-continue-label"></span>' + icon('m9 5 7 7-7 7') + '</button><p class="mls-current-title"></p><div class="mls-home-footer"><span class="mls-lesson-status"></span><button type="button" class="mls-game-link" data-mobile-action="game">闯关挑战 <span aria-hidden="true">→</span></button></div>');
       this.home.setAttribute('aria-label', '继续学习');
       if (this.main) {
         this.main.insertBefore(this.header, this.main.firstChild);
+        this.main.insertBefore(this.modeNav, this.header.nextSibling);
         const study = document.getElementById('study-view');
         this.main.insertBefore(this.home, study || this.header.nextSibling);
       }
@@ -122,6 +134,11 @@
         this.coursePanel.parentNode.insertBefore(this.coursePlaceholder, this.coursePanel);
       }
       if (this.player) {
+        this.playerPlaceholder = document.createComment('book workspace original player position');
+        this.player.parentNode.insertBefore(this.playerPlaceholder,this.player);
+        this.inlinePlayerSlot = element('div','mls-inline-player');
+        const content = document.getElementById('reader-content');
+        if(content)content.parentNode.insertBefore(this.inlinePlayerSlot,content);
         this.playerButton = element('button', 'mls-player-toggle');
         this.playerButton.type = 'button';
         this.playerButton.dataset.mobileAction = 'toggle-player';
@@ -137,8 +154,11 @@
         this.closeCourses({restoreFocus: false});
         this.mobile = mobile;
         this.body.classList.toggle('mls-mobile', mobile);
+        document.documentElement?.classList?.toggle('mls-book-scroll',mobile);
         if (mobile && this.coursePanel) this.dialog.appendChild(this.coursePanel);
         else this.restoreCoursePanel();
+        this.syncPlayerLocation();
+        this.options.onBreakpoint?.(mobile);
       }
       this.syncPresentation();
       this.syncViewport();
@@ -147,6 +167,14 @@
     restoreCoursePanel() {
       if (this.coursePanel && this.coursePlaceholder?.parentNode) this.coursePlaceholder.parentNode.insertBefore(this.coursePanel, this.coursePlaceholder.nextSibling);
     }
+
+    syncPlayerLocation() {
+      if(!this.player)return;
+      if(this.mobile&&this.inlinePlayerSlot){if(this.player.parentNode!==this.inlinePlayerSlot)this.inlinePlayerSlot.appendChild(this.player);}
+      else if(this.playerPlaceholder?.parentNode)this.playerPlaceholder.parentNode.insertBefore(this.player,this.playerPlaceholder.nextSibling);
+    }
+
+    setOutputMode(mode,next={}) {if(!this.enabled||this.destroyed)return;this.outputMode=mode;this.state={...this.state,...next};this.syncPresentation();}
 
     update(next = {}) {
       if (!this.enabled || this.destroyed) return;
@@ -161,6 +189,9 @@
       const number = lesson?.book === 2 && lesson.number >= 1 && lesson.number <= (this.pilotMode==='all'?96:10) ? lesson.number : 1;
       this.home.querySelector('.mls-continue-label').textContent = '继续学习第二册第' + number + '课';
       this.home.querySelector('.mls-current-title').textContent = lesson?.book === 2 && lesson.number <= (this.pilotMode==='all'?96:10) ? String(lesson.title || '').replace(/^第\d+课\s*[·・]\s*/, '') : '从第一课开始，读懂一个故事';
+      const label=this.header?.querySelector('.mls-header-lesson');if(label)label.textContent='第'+number+'课';
+      const title=document.querySelector('#lesson-title');
+      if(title){if(!this.pageTitle){this.pageTitle=element('h2','mls-page-title');title.parentNode.insertBefore(this.pageTitle,title.nextSibling);}this.pageTitle.textContent=String(lesson?.textbook?.title||lesson?.title||'').replace(/^第\d+课\s*[·・]\s*/,'');}
       const status = this.options.getStatus?.(lesson?.id);
       this.home.querySelector('.mls-lesson-status').textContent = typeof status === 'string' ? status : status?.completed ? '已学完 · 可以再读一遍' : '按自己的节奏，接着读';
       this.body.setAttribute('data-mls-view', this.state.view || 'study');
@@ -177,6 +208,11 @@
     }
 
     syncPresentation() {
+      const p=MobileLearningShell.presentationFor({mobile:this.mobile,view:this.state?.view,tab:this.state?.tab,outputMode:this.outputMode,keyboard:this.body.classList.contains('mls-keyboard-open')});
+      this.body.classList.toggle('mls-focused-study',p.focused);this.body.classList.toggle('mls-writing-dark',p.writerDark);
+      this.body.setAttribute('data-mls-tab',this.state?.tab||'reading');
+      if(this.inlinePlayerSlot)this.inlinePlayerSlot.hidden=!p.inlinePlayer;
+      if(this.modeNav)for(const button of this.modeNav.querySelectorAll('[data-mobile-tab]')){const active=button.dataset.mobileTab===this.state?.tab;button.setAttribute('aria-selected',String(active));}
       this.body.classList.toggle('mls-player-collapsed', this.mobile && this.playerCollapsed);
       if (this.playerButton) {
         this.playerButton.textContent = this.playerCollapsed ? '展开音频' : '收起音频';
@@ -186,13 +222,15 @@
 
     click(event) {
       if (!this.mobile || this.destroyed) return;
-      const target = event.target.closest?.('[data-mobile-action],[data-mobile-view]');
+      const target = event.target.closest?.('[data-mobile-action],[data-mobile-view],[data-mobile-tab]');
       if (event.target === this.overlay || event.target === this.backdrop) {
         this.closeCourses();
         return;
       }
       if (!target) return;
+      if(target.dataset.mobileTab){if(this.menu)this.menu.open=false;this.closeCourses({restoreFocus:false});this.options.openTab?.(target.dataset.mobileTab);return;}
       if (target.dataset.mobileView) {
+        if(this.menu)this.menu.open=false;
         this.closeCourses({restoreFocus: false});
         this.options.navigate?.(target.dataset.mobileView);
         return;
@@ -200,6 +238,8 @@
       switch (target.dataset.mobileAction) {
         case 'open-courses': this.openCourses(target); break;
         case 'close-courses': this.closeCourses(); break;
+        case 'read-next':this.options.onReadNext?.();break;
+        case 'reading-tools':if(this.menu)this.menu.open=false;this.options.openTab?.('reading');this.body.classList.toggle('mls-reading-tools-open');break;
         case 'continue':
           this.closeCourses({restoreFocus: false});
           this.options.continueLesson?.();
@@ -279,7 +319,7 @@
       if (!this.enabled || !this.mobile || this.destroyed || !visible(this.reader)) return;
       this.reader.tabIndex = -1;
       this.reader.focus({preventScroll: true});
-      this.reader.scrollIntoView({block: 'start', behavior: global.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'});
+      (this.header||this.reader).scrollIntoView({block:'start',behavior:'instant'});
     }
 
     syncViewport() {
@@ -305,7 +345,7 @@
       if (!this.enabled || this.destroyed) return;
       const chromeVisible = this.mobile && !this.body.classList.contains('mls-keyboard-open');
       const nav = chromeVisible && visible(this.nav) ? this.nav.getBoundingClientRect().height : 0;
-      const player = chromeVisible && this.state.view === 'study' && visible(this.player) ? this.player.getBoundingClientRect().height : 0;
+      const player = 0;
       this.body.style.setProperty('--mls-nav-space', nav + 'px');
       this.body.style.setProperty('--mls-player-space', player + 'px');
     }
@@ -319,9 +359,12 @@
       this.frames.clear();
       this.playerObserver?.disconnect();
       this.restoreCoursePanel();
+      if(this.playerPlaceholder?.parentNode&&this.player)this.playerPlaceholder.parentNode.insertBefore(this.player,this.playerPlaceholder.nextSibling);
+      this.inlinePlayerSlot?.remove();this.playerPlaceholder?.remove();this.pageTitle?.remove();
       this.coursePlaceholder?.remove();
-      for (const node of [this.header, this.home, this.nav, this.overlay, this.playerButton]) node?.remove();
-      this.body.classList.remove('mls-pilot', 'mls-mobile', 'mls-drawer-open', 'mls-player-collapsed', 'mls-keyboard-open');
+      for (const node of [this.header, this.modeNav, this.readNext, this.home, this.nav, this.overlay, this.playerButton]) node?.remove();
+      this.body.classList.remove('mls-pilot', 'mls-mobile', 'mls-drawer-open', 'mls-player-collapsed', 'mls-keyboard-open','mls-book-workspace','mls-focused-study','mls-writing-dark','mls-reading-tools-open');
+      document.documentElement?.classList?.remove('mls-book-scroll');
       if (this.originalBodyView === null) this.body.removeAttribute('data-mls-view');
       else this.body.setAttribute('data-mls-view', this.originalBodyView);
       if (this.reader) {

@@ -66,3 +66,80 @@
 @media (max-width: 360px) {
   html, body { min-width: 0; }
 }
+
+@media (max-width: 760px) {
+  .mls-book-workspace.mls-mobile .sentence-practice { color: #143d38; }
+  .mls-book-workspace.mls-mobile .sentence-progress { display: flex; align-items: center; justify-content: space-between; gap: 16px; margin: 8px 0 25px; }
+  .mls-book-workspace.mls-mobile .sentence-steps { position: relative; flex: 1; min-width: 0; max-width: 290px; display: flex; justify-content: space-between; gap: 0; margin: 0; }
+  .mls-book-workspace.mls-mobile .sentence-steps::before { content: ''; position: absolute; top: 21px; left: 22px; right: 22px; height: 2px; background: #d0dfd4; }
+  .mls-book-workspace.mls-mobile .sentence-steps li { position: relative; flex: 1 1 0; }
+  .mls-book-workspace.mls-mobile .sentence-step { display: grid; place-items: center; min-height: 44px; width: 100%; padding: 0; border: 0; border-radius: 50%; background: transparent; font-size: 12px; line-height: 1; color: #2e5c50; }
+  .mls-book-workspace.mls-mobile .sentence-step > span { display: grid; place-items: center; width: 25px; height: 25px; border-radius: 50%; background: #d8e5da; }
+  .mls-book-workspace.mls-mobile .sentence-step.written > span { background: #b7d3c1; }
+  .mls-book-workspace.mls-mobile .sentence-step.active > span { background: #185c51; color: #fff; }
+  .mls-book-workspace.mls-mobile .sentence-step-count { flex-shrink: 0; margin: 0; color: #48615a; font-size: 12px; white-space: nowrap; }
+  .mls-book-workspace.mls-mobile .sentence-header { margin: 0 0 24px; }
+  .mls-book-workspace.mls-mobile .sentence-header h3 { margin: 0 0 9px; font-size: clamp(23px, 6.4vw, 30px); line-height: 1.4; letter-spacing: -.6px; color: #153d37; }
+  .mls-book-workspace.mls-mobile .sentence-header p { margin: 0; color: #66716c; font-size: 14px; line-height: 1.8; }
+  .mls-book-workspace.mls-mobile .sentence-knowledge { list-style: none; padding: 0; margin: 0 0 18px; }
+  .mls-book-workspace.mls-mobile .sentence-knowledge li { position: relative; display: grid; grid-template-columns: 32px minmax(0, 1fr) auto; align-items: start; gap: 13px; padding: 0 0 22px; min-width: 0; }
+  .mls-book-workspace.mls-mobile .sentence-knowledge li:last-child { padding-bottom: 4px; }
+  .mls-book-workspace.mls-mobile .sentence-knowledge-linked li:not(:last-child)::after { content: ''; position: absolute; left: 15px; width: 2px; top: 40px; bottom: 8px; background: #d5e3d8; }
+  .mls-book-workspace.mls-mobile .sentence-knowledge-number { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: #e0eadf; color: #20584c; font-size: 15px; font-weight: 600; }
+  .mls-book-workspace.mls-mobile .sentence-knowledge-content { min-width: 0; overflow-wrap: anywhere; }
+  .mls-book-workspace.mls-mobile .sentence-knowledge-label { display: block; margin: 1px 0 3px; color: #566d62; font-size: 12px; }
+  .mls-book-workspace.mls-mobile .sentence-knowledge-content > strong { display: block; color: #153d37; font-size: 25px; line-height: 1.3; letter-spacing: -.3px; font-weight: 650; }
+  .mls-book-workspace.mls-mobile .sentence-knowledge-content > .sentence-knowledge-empty { margin-top: 7px; color: #7b847d; font-size: 17px; font-weight: 400; }
+  .mls-book-workspace.mls-mobile .sentence-knowledge-meaning { margin: 5px 0 0; color: #405e52; font-size: 14px; line-height: 1.65; }
+  .mls-book-workspace.mls-mobile .sentence-knowledge-source { display: block; margin: 4px 0 0; color: #7b847b; font-size: 11px; line-height: 1.7; }
+  .mls-book-workspace.mls-mobile .sentence-source-backlink { align-self: center; min-width: 44px; min-height: 44px; padding: 4px 0 4px 8px; border: 0; background: transparent; color: #2d6a58; font: inherit; font-size: 12px; cursor: pointer; }
+  .mls-book-workspace.mls-mobile .sentence-source-backlink:focus-visible, .mls-book-workspace.mls-mobile .sentence-adjustments > summary:focus-visible { outline: 3px solid #8db7ad; outline-offset: 2px; border-radius: 4px; }
+  .mls-book-workspace.mls-mobile .sentence-combination { display: flex; flex-wrap: wrap; align-items: baseline; gap: 5px; padding: 12px 13px; margin: 19px 0 7px; border-radius: 7px; background: #f7f0dc; color: #5e685a; font-size: 13px; line-height: 1.7; overflow-wrap: anywhere; }
+  .mls-book-workspace.mls-mobile .sentence-combination strong { color: #305b4b; font-size: 15px; }
+  .mls-book-workspace.mls-mobile .sentence-adjustments { margin: 0 0 18px; border: 0; background: transparent; }
+  .mls-book-workspace.mls-mobile .sentence-adjustments > summary { width: fit-content; min-height: 44px; padding: 12px 0 10px; color: #527464; font-size: 12px; cursor: pointer; }
+  .mls-book-workspace.mls-mobile .sentence-adjustments[open] > summary { margin-bottom: 10px; }
+  .mls-book-workspace.mls-mobile .sentence-controls, .mls-book-workspace.mls-mobile .sentence-source-list { grid-template-columns: 1fr; }
+  .mls-book-workspace.mls-mobile .sentence-controls { gap: 14px; }
+  .mls-book-workspace.mls-mobile .sentence-select { background: #fffefa; font-size: 16px; border-color: #d4dcd0; }
+  .mls-book-workspace.mls-mobile .sentence-source-panel { margin: 15px 0 0; padding: 0; border: 0; background: transparent; }
+  .mls-book-workspace.mls-mobile .sentence-source-panel > summary { font-size: 12px; line-height: 1.8; }
+  .mls-book-workspace.mls-mobile .sentence-save-button { margin-top: 8px; min-height: 44px; border: 0; background: transparent; padding: 6px 0; color: #4e7262; font-size: 12px; box-shadow: none; }
+  .mls-book-workspace.mls-mobile .sentence-original { margin: 0 0 18px; padding: 10px 13px; border-left-width: 2px; background: #f0f3e9; }
+  .mls-book-workspace.mls-mobile .sentence-original p[lang=en] { margin: 6px 0 0; }
+  .mls-book-workspace.mls-mobile .sentence-editor { padding: 0; border: 0; border-radius: 0; background: transparent; }
+  .mls-book-workspace.mls-mobile .sentence-editor > .sentence-field { gap: 12px; font-size: 17px; font-weight: 600; }
+  .mls-book-workspace.mls-mobile .sentence-textarea { min-height: 160px; padding: 16px; border: 1px solid #d3dbd1; border-radius: 10px; background: #fffefa; font-size: 17px; line-height: 1.8; box-shadow: none; }
+  .mls-book-workspace.mls-mobile .sentence-draft-meta { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; margin: 8px 0 20px; }
+  .mls-book-workspace.mls-mobile .sentence-draft-meta .sentence-save-status { margin: 0; color: #7d897f; font-size: 10px; line-height: 1.6; }
+  .mls-book-workspace.mls-mobile .sentence-draft-meta .sentence-save-status[data-save-state=failed] { color: #9e3535; padding: 8px; }
+  .mls-book-workspace.mls-mobile .sentence-draft-meta .sentence-counter { flex-shrink: 0; margin: 0; color: #8b948a; font-size: 10px; }
+  .mls-book-workspace.mls-mobile .sentence-actions { display: flex; flex-direction: column; gap: 8px; }
+  .mls-book-workspace.mls-mobile .sentence-actions > .primary { flex: none; order: 0; width: 100%; min-height: 52px; padding: 14px 10px; border: 1px solid #205d4e; border-radius: 10px; background: #205d4e; color: #fff; font-size: 16px; font-weight: 600; box-shadow: none; }
+  .mls-book-workspace.mls-mobile .sentence-page-actions { display: flex; align-items: center; justify-content: center; gap: 25px; }
+  .mls-book-workspace.mls-mobile .sentence-page-actions .button { flex: none; min-height: 44px; padding: 8px 10px; border: 0; border-radius: 4px; background: transparent; color: #376b57; font-size: 13px; box-shadow: none; }
+  .mls-book-workspace.mls-mobile .sentence-page-actions .button:disabled { color: #adb4aa; opacity: .65; }
+  .mls-book-workspace.mls-mobile .sentence-feedback { margin-top: 14px; }
+  .mls-book-workspace.mls-mobile .sentence-feedback > .sentence-note { font-size: 11px; line-height: 1.8; color: #899084; }
+  .mls-book-workspace.mls-mobile .sentence-feedback-row { padding: 12px 0 12px 12px; border-width: 0 0 1px 2px; border-radius: 0; background: transparent; }
+  .mls-book-workspace.mls-mobile .sentence-feedback-row h5 { font-size: 13px; }
+  .mls-book-workspace.mls-mobile .sentence-workspace-combined .sentence-progress { margin: 0 0 10px; }
+  .mls-book-workspace.mls-mobile .sentence-workspace-combined .sentence-header { margin-bottom: 14px; }
+  .mls-book-workspace.mls-mobile .sentence-workspace-combined .sentence-header h3 { margin-bottom: 5px; font-size: 24px; line-height: 1.25; }
+  .mls-book-workspace.mls-mobile .sentence-workspace-combined .sentence-header p { font-size: 16px; line-height: 1.45; }
+  .mls-book-workspace.mls-mobile .sentence-workspace-combined .sentence-knowledge { margin-bottom: 0; }
+  .mls-book-workspace.mls-mobile .sentence-workspace-combined .sentence-knowledge li { min-height: 76px; padding-bottom: 9px; gap: 11px; }
+  .mls-book-workspace.mls-mobile .sentence-workspace-combined .sentence-knowledge li:last-child { padding-bottom: 0; }
+  .mls-book-workspace.mls-mobile .sentence-workspace-combined .sentence-knowledge-label { margin: 0 0 1px; line-height: 1.3; }
+  .mls-book-workspace.mls-mobile .sentence-workspace-combined .sentence-knowledge-content > strong { font-size: 24px; line-height: 1.2; }
+  .mls-book-workspace.mls-mobile .sentence-workspace-combined .sentence-knowledge-content > .sentence-knowledge-empty { margin-top: 4px; font-size: 17px; }
+  .mls-book-workspace.mls-mobile .sentence-workspace-combined .sentence-knowledge-meta { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 8px; margin-top: 3px; }
+  .mls-book-workspace.mls-mobile .sentence-workspace-combined .sentence-knowledge-meaning { margin: 0; font-size: 16px; line-height: 1.4; }
+  .mls-book-workspace.mls-mobile .sentence-workspace-combined .sentence-knowledge-source { margin: 0; line-height: 1.5; }
+  .mls-book-workspace.mls-mobile .sentence-workspace-combined .sentence-knowledge-meaning + .sentence-knowledge-source::before { content: '·'; margin-right: 6px; }
+  .mls-book-workspace.mls-mobile .sentence-workspace-combined .sentence-combination { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; border: 0; overflow: hidden; white-space: nowrap; clip: rect(0, 0, 0, 0); clip-path: inset(50%); }
+  .mls-book-workspace.mls-mobile .sentence-workspace-combined .sentence-adjustments { margin-bottom: 8px; }
+  .mls-book-workspace.mls-mobile .sentence-workspace-combined .sentence-editor > .sentence-field { gap: 8px; }
+  .mls-book-workspace.mls-mobile .sentence-workspace-combined .sentence-textarea { min-height: 116px; padding: 12px 14px; line-height: 1.7; }
+  .mls-book-workspace.mls-mobile .sentence-workspace-combined .sentence-draft-meta { margin-bottom: 12px; }
+}

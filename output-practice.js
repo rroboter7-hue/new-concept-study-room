@@ -76,12 +76,12 @@
 
     static compareWords(expected,actual) {return compareWords(expected,actual);}
     static countWords(text) {return words(text).length;}
-    reset() {this.grammarIssues=null;this.grammarText='';this.mode='write';this.paragraphIndex=0;this.answer='';this.spellAnswers={};this.result=null;this.showOriginal=false;this.scrambles={};}
+    reset() {this.grammarIssues=null;this.grammarText='';this.mode=this.options.defaultMode?.()||'write';this.paragraphIndex=0;this.answer='';this.spellAnswers={};this.result=null;this.showOriginal=false;this.scrambles={};}
     setLesson(lesson) {if (lesson?.id!==this.current?.id) {this.options.sentencePractice?.flush();this.options.batchPractice?.flush();this.options.batchPractice?.cancel(false);this.reset();}this.current=lesson || null;}
     lesson() {const lesson=this.options.getLesson?.() || this.current;if (lesson?.id!==this.current?.id)this.setLesson(lesson);else this.current=lesson;return lesson;}
     paragraphs() {return (this.lesson()?.paragraphs || []).filter(paragraph=>paragraph && typeof paragraph.en==='string' && paragraph.en.trim());}
     notify(message) {this.options.toast?.(message);}
-    redraw() {const content=document.querySelector('#output-content');if(content)content.innerHTML=this.render();}
+    redraw() {const content=document.querySelector('#output-content');if(content){content.innerHTML=this.render();if(this.options.isMobileWorkspace?.())content.querySelector?.('[data-output-mode="'+this.mode+'"]')?.focus?.({preventScroll:true});}}
 
     spellWords() {
       const lesson=this.lesson(),bank=global.StudyKnowledge?.bank,registered=bank?.hasLesson(lesson?.id);
@@ -117,10 +117,14 @@
       const modes=[['write','分段默写'],['spell','单词拼写'],['retell','英文复述']];
       if(sentenceAvailable)modes.push(['sentences','五句造句']);
       if(this.options.batchPractice)modes.push(['batch','批量检查']);
-      const tabs=modes.map(([mode,label])=>'<button type="button" class="output-tab '+(this.mode===mode?'active':'')+'" data-output-action="mode" data-output-mode="'+mode+'" aria-pressed="'+(this.mode===mode)+'">'+label+'</button>').join('');
-      if(this.mode==='sentences'&&sentenceAvailable)return '<div class="output-tabs" aria-label="输出练习模式">'+tabs+'</div>'+this.options.sentencePractice.render();
-      if(this.mode==='batch'&&this.options.batchPractice)return '<div class="output-tabs" aria-label="输出练习模式">'+tabs+'</div>'+this.options.batchPractice.render();
-      return '<div class="output-tabs" aria-label="输出练习模式">'+tabs+'</div>'+(this.mode==='spell'?this.renderSpell():this.mode==='retell'?this.renderRetell():this.renderWrite())+(this.mode!=='spell'?this.grammarHTML():'');
+      this.options.onModeChange?.(this.mode);
+      const mobile=this.options.isMobileWorkspace?.()===true;
+      const modeHTML=([mode,label])=>'<button type="button" class="output-tab '+(this.mode===mode?'active':'')+'" data-output-action="mode" data-output-mode="'+mode+'" aria-pressed="'+(this.mode===mode)+'">'+label+'</button>';
+      const primary=['sentences','batch'].includes(this.mode);
+      const tabs='<div class="output-tabs" aria-label="输出练习模式">'+(mobile?modes.filter(([mode])=>['sentences','batch'].includes(mode)):modes).map(modeHTML).join('')+'</div>';
+      const more=mobile?'<details class="mls-output-more"'+(!primary?' open':'')+'><summary>其他练习</summary><div class="output-tabs">'+modes.filter(([mode])=>!['sentences','batch'].includes(mode)).map(modeHTML).join('')+'</div></details>':'';
+      const content=this.mode==='sentences'&&sentenceAvailable?this.options.sentencePractice.render():this.mode==='batch'&&this.options.batchPractice?this.options.batchPractice.render():(this.mode==='spell'?this.renderSpell():this.mode==='retell'?this.renderRetell():this.renderWrite())+(this.mode!=='spell'?this.grammarHTML():'');
+      return tabs+(!primary?more:'')+content+(primary?more:'');
     }
 
     checkGrammar(redraw=true){if(!this.answer.trim()){this.notify('先写一段英文，再检查。');return;}if(!global.StudyGrammar){this.grammarText='';this.grammarIssues=null;this.notify('语法规则正在加载，请刷新后再试。');return;}this.grammarText=this.answer;this.grammarIssues=global.StudyGrammar.check(this.answer);if(redraw)this.redraw();}

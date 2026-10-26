@@ -1,0 +1,79 @@
+@charset "UTF-8";
+.mls-mode-nav,.mls-page-title,.mls-inline-player,.mls-read-next{display:none}
+.mls-book-scroll{scroll-behavior:auto!important}
+@media(max-width:760px){
+ body.mls-book-workspace.mls-mobile{--paper:#fbf9f3;--ink:#17342e;--teal:#265b50;--teal-dark:#173f35;--teal-soft:#e9efe5;--line:#dce1d7;background:#fbf9f3;color:#17342e;font-family:Arial,"Microsoft YaHei",sans-serif}
+ .mls-book-workspace.mls-mobile .app-main{padding:18px 23px max(30px,env(safe-area-inset-bottom));background:inherit}
+ .mls-book-workspace.mls-mobile .mls-header{margin:0 0 24px;min-height:44px;gap:12px}
+ .mls-book-workspace.mls-mobile .mls-brand{display:block}
+ .mls-book-workspace .mls-learning-menu{position:relative;font-size:16px}
+ .mls-book-workspace .mls-learning-menu summary{display:flex;align-items:center;gap:12px;min-height:44px;cursor:pointer;list-style:none}
+ .mls-book-workspace .mls-learning-menu summary::-webkit-details-marker{display:none}
+ .mls-book-workspace .mls-menu-mark{font-family:Georgia,"SimSun",serif;font-size:20px;font-weight:700;color:var(--teal)}
+ .mls-book-workspace .mls-header-lesson{font-family:Arial,"Microsoft YaHei",sans-serif!important;font-size:17px!important;line-height:1.3;white-space:nowrap;color:inherit!important}
+ .mls-book-workspace .mls-menu-items{position:absolute;z-index:1200;top:50px;left:0;width:min(285px,calc(100vw - 46px));padding:8px;border:1px solid var(--line);border-radius:10px;background:var(--paper);box-shadow:0 10px 32px #15352d21}
+ .mls-book-workspace .mls-menu-items button{display:block;width:100%;min-height:44px;padding:10px 14px;text-align:left;font-size:15px;color:var(--ink);border-radius:5px}
+ .mls-book-workspace .mls-menu-items button:hover,.mls-book-workspace .mls-menu-items button:focus-visible{background:var(--teal-soft)}
+ .mls-book-workspace.mls-mobile .mls-course-button{border:0;background:transparent;padding:8px 0 8px 10px;font-size:17px;color:var(--ink)}
+ .mls-book-workspace.mls-mobile .mls-learning-home,.mls-book-workspace.mls-mobile .reader-tabs{display:none!important}
+ .mls-book-workspace.mls-mobile .mls-mode-nav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:0 0 28px;border-bottom:1px solid var(--line)}
+ .mls-book-workspace.mls-mobile:not([data-mls-view=study]) .mls-mode-nav{display:none}
+ .mls-book-workspace .mls-mode-nav button{position:relative;min-height:48px;padding:12px 5px;font-size:17px;color:#72796f;border:0;border-bottom:3px solid transparent;background:transparent}
+ .mls-book-workspace .mls-mode-nav button[aria-selected=true]{border-bottom-color:#49623b;color:#304c2b;font-weight:700}
+ .mls-book-workspace.mls-mobile .reader-panel{padding:0;background:transparent;border:0;border-radius:0;min-height:0;scroll-margin-top:12px}
+ .mls-book-workspace.mls-mobile .reader-meta,.mls-book-workspace.mls-mobile #lesson-title,.mls-book-workspace.mls-mobile #lesson-subtitle{display:none}
+ .mls-book-workspace.mls-mobile .mls-page-title{display:block;margin:0 0 10px;font-family:Georgia,"Times New Roman",serif;font-size:32px;line-height:1.2;font-weight:600;color:#172b22;overflow-wrap:anywhere}
+ .mls-book-workspace.mls-mobile .lesson-heading{margin:0 0 24px}
+ .mls-book-workspace.mls-mobile[data-mls-tab=output] .lesson-heading{display:none}
+ .mls-book-workspace.mls-mobile .reader-content{padding:0;min-height:0;margin:0}
+ .mls-book-workspace.mls-mobile .pilot-progress,.mls-book-workspace.mls-mobile .learning-progress-panel,.mls-book-workspace.mls-mobile .lesson-progress-note{display:none}
+ .mls-book-workspace.mls-mobile .text-source-note,.mls-book-workspace.mls-mobile .translation-attribution{display:none}
+ .mls-book-workspace.mls-mobile.mls-reading-tools-open[data-mls-tab=reading] .reader-meta{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:16px}
+ .mls-book-workspace.mls-mobile.mls-reading-tools-open[data-mls-tab=reading] .text-source-note,.mls-book-workspace.mls-mobile.mls-reading-tools-open[data-mls-tab=reading] .translation-attribution{display:block;font-size:12px;line-height:1.7}
+ .mls-book-workspace.mls-mobile .paragraph{margin:0 0 26px;padding:0;background:transparent;border:0}
+ .mls-book-workspace.mls-mobile .paragraph .english{font-family:Georgia,"Times New Roman",serif;font-size:24px;line-height:1.75;letter-spacing:-.1px;color:#18291f}
+ .mls-book-workspace.mls-mobile .paragraph .word{font:inherit;line-height:inherit;border-radius:3px;padding:0 1px;color:inherit}
+ .mls-book-workspace.mls-mobile .paragraph .word:hover,.mls-book-workspace.mls-mobile .paragraph .word:focus-visible{background:#e4eadb}
+ .mls-book-workspace.mls-mobile .translation{margin:16px 0 0;font-size:17px;line-height:1.85;color:#666c65}
+ .mls-book-workspace.mls-mobile .mls-inline-player:not([hidden]){display:block;margin:0 0 27px}
+ .mls-book-workspace.mls-mobile .mls-inline-player .player{position:static!important;inset:auto!important;display:grid;grid-template-columns:52px minmax(0,1fr);gap:8px 12px;width:100%;padding:0 0 14px;border:0;background:transparent;box-shadow:none;color:var(--ink);border-radius:0}
+ .mls-book-workspace.mls-mobile .mls-inline-player .player-main{display:contents}
+ .mls-book-workspace.mls-mobile .mls-inline-player .player-main>div,.mls-book-workspace.mls-mobile .mls-inline-player .mls-player-toggle,.mls-book-workspace.mls-mobile .mls-inline-player .volume-icon{display:none!important}
+ .mls-book-workspace.mls-mobile.mls-reading-tools-open[data-mls-tab=reading] .mls-inline-player .player-main>div{display:block!important;grid-column:1/-1;grid-row:3;font-size:13px;line-height:1.7}
+ .mls-book-workspace.mls-mobile.mls-reading-tools-open[data-mls-tab=reading] .mls-inline-player #audio-mode{display:block;font-size:13px;white-space:normal}
+ .mls-book-workspace.mls-mobile.mls-reading-tools-open[data-mls-tab=reading] .mls-inline-player .audio-source-link:not(.hidden){display:inline-block;min-height:32px;padding:7px 0;font-size:13px}
+ .mls-book-workspace.mls-mobile .mls-inline-player .play-button{grid-row:1/3;grid-column:1;width:50px;height:50px;background:#4a643b}
+ .mls-book-workspace.mls-mobile .mls-inline-player .player-timeline{display:grid!important;grid-template-columns:auto minmax(0,1fr) auto;grid-column:2;grid-row:1;gap:8px;align-items:center;align-self:end;margin:0;min-height:24px}
+ .mls-book-workspace.mls-mobile .mls-inline-player .time{font-size:12px;color:#5e6b61}
+ .mls-book-workspace.mls-mobile .mls-inline-player .player-options{display:flex!important;grid-column:2;grid-row:2;min-height:30px;justify-content:flex-end;gap:10px}
+ .mls-book-workspace.mls-mobile .mls-inline-player .speed-select{font-size:14px;background:transparent;padding:2px 4px;min-height:44px}
+ .mls-book-workspace.mls-mobile .mls-inline-player .loop-button{width:44px;height:44px;padding:10px}
+ .mls-book-workspace.mls-mobile .mls-read-next{display:none;margin:28px 0 14px;min-height:56px;width:100%;font-size:18px;border-radius:10px;background:#49613b;color:#fff}
+ .mls-book-workspace.mls-mobile[data-mls-tab=reading][data-mls-view=study] .mls-read-next{display:block}
+ .mls-book-workspace.mls-mobile .reader-footer{display:none}
+ .mls-book-workspace.mls-mobile[data-mls-tab=practice] .reader-footer{display:flex;gap:12px;padding:24px 0;flex-wrap:wrap}
+ .mls-book-workspace.mls-mobile .reader-footer #enroll-review,.mls-book-workspace.mls-mobile .reader-footer #complete-lesson{display:none}
+ .mls-book-workspace.mls-mobile .reader-footer #previous-lesson,.mls-book-workspace.mls-mobile .reader-footer #next-lesson{min-height:48px;flex:1;font-size:15px}
+ .mls-book-workspace.mls-mobile.mls-focused-study .mls-bottom-nav{display:none!important}
+ .mls-book-workspace.mls-mobile:not(.mls-focused-study) .app-main{padding-bottom:calc(var(--mls-nav-space,64px) + 26px)}
+ .mls-book-workspace.mls-mobile .output-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:0 0 10px;border:0;padding:0}
+ .mls-book-workspace.mls-mobile .output-tab{min-height:44px;font-size:15px;border-radius:7px;padding:9px 6px;border:1px solid var(--line);background:transparent;white-space:normal;color:var(--ink)}
+ .mls-book-workspace.mls-mobile .output-tab.active{background:#e6eddc;border-color:#c0d0b2;color:#2c4c27}
+ .mls-book-workspace.mls-mobile[data-mls-tab=output] .mls-header{margin-bottom:12px}
+ .mls-book-workspace.mls-mobile[data-mls-tab=output] .mls-mode-nav{margin-bottom:12px}
+ .mls-book-workspace.mls-mobile[data-mls-tab=output] .output-tabs{margin-bottom:6px}
+ .mls-book-workspace.mls-mobile .mls-output-more{margin:0 0 20px;color:#68756c}
+ .mls-book-workspace.mls-mobile .mls-output-more summary{cursor:pointer;font-size:13px;min-height:32px;line-height:32px}
+ .mls-book-workspace.mls-mobile .mls-output-more .output-tabs{grid-template-columns:repeat(3,minmax(0,1fr));margin-top:8px}
+ .mls-book-workspace.mls-mobile .recurrence-section{margin-top:32px;padding-top:24px;border-top:1px solid var(--line)}
+ .mls-book-workspace.mls-mobile .recurrence-heading{display:block}
+ .mls-book-workspace.mls-mobile .recurrence-heading h3{font-size:20px}
+ .mls-book-workspace.mls-mobile .recurrence-row{border:0;border-bottom:1px solid var(--line);padding:8px 0}
+ .mls-book-workspace.mls-mobile .recurrence-row summary{font-size:16px}
+ .mls-book-workspace.mls-mobile.mls-writing-dark{background:#fbf9f3;color:#17342e}
+ .mls-book-workspace.mls-mobile .question-card{padding:22px 0;border:0;border-bottom:1px solid var(--line);border-radius:0;background:transparent}
+ .mls-book-workspace.mls-mobile .question-card h3{font-size:18px;line-height:1.65}
+ .mls-book-workspace.mls-mobile .answer-option{min-height:48px;font-size:16px;line-height:1.6;padding:12px}
+ .mls-book-workspace.mls-mobile .word-popover{max-width:calc(100vw - 24px)}
+}
+@media(max-width:360px){.mls-book-workspace.mls-mobile .app-main{padding-left:17px;padding-right:17px}.mls-book-workspace.mls-mobile .mls-page-title{font-size:28px}.mls-book-workspace.mls-mobile .paragraph .english{font-size:22px}.mls-book-workspace .mls-header-lesson{font-size:15px!important}}
