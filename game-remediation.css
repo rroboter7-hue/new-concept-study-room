@@ -1,0 +1,28 @@
+.game-remediation-list { display:grid; gap:20px; margin-top:26px; text-align:left; }
+.game-remediation-card { min-width:0; padding:20px; border:1px solid #d8d3c9; border-radius:10px; background:#fffdf8; overflow-wrap:anywhere; }
+.game-remediation-card h4 { margin:0 0 12px; font-size:18px; line-height:1.6; color:#744f3b; }
+.game-remediation-card p, .game-remediation-examples li { font-size:15px; line-height:1.85; }
+.game-remediation-question { font-weight:600; }
+.game-remediation-wrong { color:#845137; }
+.game-remediation-correct { color:#355d36; }
+.game-remediation-card > .button { margin-top:10px; }
+.game-remediation-examples { margin:14px 0; }
+.game-remediation-examples ul { display:grid; gap:10px; padding:0; margin:8px 0; list-style:none; }
+.game-remediation-examples li { min-width:0; padding:10px 13px; border-left:3px solid #b7c8a2; background:#f2f6eb; }
+.game-remediation-examples li p { margin:0; }
+.game-remediation-examples small, .game-remediation-label { color:#607052; font-size:13px; line-height:1.8; }
+.game-remediation-followup { margin-top:22px; padding-top:18px; border-top:1px solid #d9e1cf; }
+.game-remediation-followup h5 { margin:0 0 8px; font-size:17px; }
+.game-remediation-followup .game-option, .game-remediation-practice .game-option { white-space:normal; overflow-wrap:anywhere; }
+.game-remediation-result .game-result-actions, .game-remediation-practice .game-result-actions { gap:10px; }
+.game-remediation-result .game-result-actions .button, .game-remediation-practice .game-result-actions .button { min-height:44px; font-size:14px; }
+.game-remediation-result .game-feedback p, .game-remediation-practice .game-feedback p { font-size:15px; }
+.game-remediation-result .game-feedback strong, .game-remediation-practice .game-feedback strong { font-size:15px; }
+.game-remediation-empty { padding:12px; background:#f5f4eb; border-radius:6px; }
+@media(max-width:600px) {
+ .game-remediation-card { padding:16px 13px; }
+ .game-remediation-card h4 { font-size:17px; }
+ .game-remediation-list { gap:16px; }
+ .game-remediation-result .game-result-actions, .game-remediation-practice .game-result-actions { align-items:stretch; flex-direction:column; }
+ .game-remediation-result .game-result-actions .button, .game-remediation-practice .game-result-actions .button { width:100%; }
+}

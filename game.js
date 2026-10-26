@@ -34,6 +34,12 @@
             case 'answer': this.answer(Number(button.dataset.gameAnswer)); break;
             case 'next': this.next(); break;
             case 'retry': if (this.session) this.start(this.session.lesson.id); break;
+            case 'retry-wrong': this.startWrongPractice(); break;
+            case 'remedial-answer': this.answerRemediation(Number(button.dataset.gameMistake),Number(button.dataset.gameAnswer)); break;
+            case 'practice-answer': this.answerWrongPractice(Number(button.dataset.gameAnswer)); break;
+            case 'practice-next': this.nextWrongPractice(); break;
+            case 'back-result': this.backToResult(); break;
+            case 'knowledge': this.studyKnowledge(Number(button.dataset.gameMistake)); break;
             case 'study': this.session = null; this.options.closeDialog?.(); break;
             case 'close': this.session = null; this.options.closeDialog?.(); break;
           }
@@ -119,12 +125,104 @@
       this.options.openDialog(`第${lesson.book}册 · 第${index+1}关`,this.challengeHTML(),'');
     }
 
+    isPilot(lesson=this.session?.lesson) {
+      return !!lesson && Number(lesson.book)===2 && Number(lesson.number)>=1 && Number(lesson.number)<=10 && /(?:^|[?&])pilot=1(?:&|$)/.test(global.location?.search||'') && !!global.StudyKnowledge?.bank?.hasLesson(lesson.id) && typeof global.StudyRemediation?.describe==='function';
+    }
+
+    pilotFailure() { return !!this.session?.finished && this.session.correct<4 && this.isPilot(); }
+
+    mistakes() {
+      if(!this.pilotFailure())return [];
+      const session=this.session,bank=global.StudyKnowledge.bank,seen=new Set(),result=[];
+      session.questions.forEach((question,index)=>{
+        if(!Object.hasOwn(session.answers,index)||session.answers[index]===question.answer||!question.conceptId||seen.has(question.conceptId)||!bank.get(question.conceptId))return;
+        seen.add(question.conceptId);
+        result.push({index,question,chosenIndex:session.answers[index],remediation:global.StudyRemediation.describe(question,session.answers[index],{bank,lesson:session.lesson})});
+      });
+      return result;
+    }
+
+    remediationDetailsHTML(remediation) {
+      const e=this.escape;
+      const examples=(remediation.contrastExamples||[]).map(example=>`<li><p lang="en">${e(example.en)}</p>${example.zh?`<p>${e(example.zh)}</p>`:''}<small>${e(example.sourceLabel)}</small></li>`).join('');
+      return `${remediation.rule?`<p><strong>规则：</strong>${e(remediation.rule)}</p>`:''}<p><strong>为什么：</strong>${e(remediation.reason)}</p>${examples?`<div class="game-remediation-examples"><strong>对比例句</strong><ul>${examples}</ul></div>`:remediation.contrastMessage?`<p>${e(remediation.contrastMessage)}</p>`:''}`;
+    }
+
+    pilotQuestionFeedback(question,answer) {
+      const e=this.escape,remediation=global.StudyRemediation.describe(question,answer,{bank:global.StudyKnowledge.bank,lesson:this.session.lesson}),correct=answer===question.answer;
+      return `<div class="game-feedback ${correct?'correct':'incorrect'}" role="status"><strong>${correct?'✓ 答对了！':'✕ 答错了'}</strong><p>${correct?'✓ 你的答案':'✕ 你的答案'}：${e(question.options[answer])}</p><p>✓ 正确答案：${e(remediation.correctAnswer||'已确认答案暂不可用，请查看对应讲解。')}</p>${this.remediationDetailsHTML(remediation)}</div>`;
+    }
+
+    remedialQuestionHTML(mistake) {
+      const question=mistake.remediation.followUp,e=this.escape;
+      if(!question||question.graded!==false||question.countsTowardProgress!==false||question.conceptId!==mistake.question.conceptId)return `<p class="game-remediation-empty">${e(mistake.remediation.followUpMessage||'暂无已审核的同知识点新题。')}</p>`;
+      const answers=this.session.remedialAnswers||{},answered=Object.hasOwn(answers,mistake.index),answer=answers[mistake.index],feedback=answered?global.StudyRemediation.describe(question,answer,{bank:global.StudyKnowledge.bank,lesson:this.session.lesson}):null;
+      return `<section class="game-remediation-followup"><h5>再做一道同知识点新题</h5><p class="game-remediation-label">${e(question.sourceLabel)} · 补救练习，不计入本关成绩或 XP。</p><p class="game-remediation-question">${e(question.question)}</p><div class="game-options">${question.options.map((option,index)=>`<button type="button" class="game-option ${answered?(index===question.answer?'correct':index===answer?'incorrect':''):''}" data-game-action="remedial-answer" data-game-mistake="${mistake.index}" data-game-answer="${index}" ${answered?'disabled':''}><span>${String.fromCharCode(65+index)}</span>${e(option)}${answered&&index===question.answer?' · ✓ 正确答案':answered&&index===answer?' · ✕ 你的答案':''}</button>`).join('')}</div>${answered?`<div class="game-feedback ${feedback.isCorrect?'correct':'incorrect'}" role="status"><strong>${feedback.isCorrect?'✓ 答对了！':'✕ 答错了'}</strong><p>✓ 正确答案：${e(feedback.correctAnswer)}</p>${this.remediationDetailsHTML(feedback)}</div>`:''}</section>`;
+    }
+
+    answerRemediation(mistakeIndex,answer) {
+      if(!this.pilotFailure()||this.session.practice)return;
+      const mistake=this.mistakes().find(x=>x.index===mistakeIndex),question=mistake?.remediation.followUp;
+      if(!question||question.graded!==false||question.countsTowardProgress!==false||question.conceptId!==mistake.question.conceptId||!Number.isInteger(answer)||answer<0||answer>=question.options.length||Object.hasOwn(this.session.remedialAnswers||{},mistakeIndex))return;
+      if(!this.session.remedialAnswers)this.session.remedialAnswers={};
+      this.session.remedialAnswers[mistakeIndex]=answer;
+      this.paint();
+    }
+
+    startWrongPractice() {
+      if(!this.pilotFailure())return;
+      const mistakes=this.mistakes();if(!mistakes.length)return;
+      this.session.practice={index:0,answers:[],complete:false,questions:mistakes.map(m=>{
+        const followUp=m.remediation.followUp,usable=followUp?.graded===false&&followUp.countsTowardProgress===false&&followUp.conceptId===m.question.conceptId;
+        return {index:m.index,question:usable?followUp:{...m.question,graded:false,countsTowardProgress:false,sourceLabel:'重做已确认的原错题 · 暂无可靠新题'},reusedOriginal:!usable};
+      })};
+      this.paint();
+    }
+
+    answerWrongPractice(answer) {
+      const practice=this.session?.practice;
+      if(!this.pilotFailure()||!practice||practice.complete||Object.hasOwn(practice.answers,practice.index))return;
+      const question=practice.questions[practice.index].question;
+      if(!Number.isInteger(answer)||answer<0||answer>=question.options.length)return;
+      practice.answers[practice.index]=answer;this.paint();
+    }
+
+    nextWrongPractice() {
+      const practice=this.session?.practice;
+      if(!this.pilotFailure()||!practice||practice.complete||!Object.hasOwn(practice.answers,practice.index))return;
+      if(practice.index<practice.questions.length-1)practice.index++;else practice.complete=true;
+      this.paint();
+    }
+
+    backToResult() { if(!this.pilotFailure()||!this.session.practice)return;delete this.session.practice;this.paint(); }
+
+    studyKnowledge(mistakeIndex) {
+      const mistake=this.mistakes().find(x=>x.index===mistakeIndex);if(!mistake)return;
+      if(typeof this.options.onStudyKnowledge!=='function'){this.options.toast?.('请打开本课知识讲解，复习这个知识点。');return;}
+      const lessonId=this.session.lesson.id,conceptId=mistake.question.conceptId;
+      this.session=null;this.options.closeDialog?.();this.options.onStudyKnowledge(lessonId,conceptId);
+    }
+
+    wrongPracticeHTML() {
+      const session=this.session,practice=session.practice,e=this.escape;
+      if(practice.complete){const correct=practice.questions.filter((item,index)=>item.question.answer===practice.answers[index]).length;return `<div class="game-result game-remediation-practice"><h3>✓ 错题练习完成</h3><p>本轮答对 ${correct} / ${practice.questions.length} 题。正式挑战成绩仍为 ${session.correct} / 5；本练习不计 XP，不改变星级或关卡成绩。</p><div class="game-result-actions"><button type="button" class="button primary" data-game-action="back-result">返回错题订正</button><button type="button" class="button" data-game-action="retry-wrong">再练错题</button></div></div>`;}
+      const item=practice.questions[practice.index],question=item.question,answered=Object.hasOwn(practice.answers,practice.index),answer=practice.answers[practice.index],feedback=answered?global.StudyRemediation.describe(question,answer,{bank:global.StudyKnowledge.bank,lesson:session.lesson}):null;
+      return `<div class="game-challenge game-remediation-practice"><div class="game-progress"><span>错题补救练习 · 第 ${practice.index+1} / ${practice.questions.length} 题</span></div><p class="game-remediation-label">仅练本次答错的知识点，不计关卡分数或 XP。${item.reusedOriginal?'本题重做原错题，暂无可靠新题。':e(question.sourceLabel)}</p><h3 class="game-question">${e(question.question)}</h3><div class="game-options">${question.options.map((option,index)=>`<button type="button" class="game-option ${answered?(index===question.answer?'correct':index===answer?'incorrect':''):''}" data-game-action="practice-answer" data-game-answer="${index}" ${answered?'disabled':''}><span>${String.fromCharCode(65+index)}</span>${e(option)}${answered&&index===question.answer?' · ✓ 正确答案':answered&&index===answer?' · ✕ 你的答案':''}</button>`).join('')}</div>${answered?`<div class="game-feedback ${feedback.isCorrect?'correct':'incorrect'}" role="status"><strong>${feedback.isCorrect?'✓ 答对了！':'✕ 答错了'}</strong><p>你的答案：${e(question.options[answer])}</p><p>✓ 正确答案：${e(feedback.correctAnswer)}</p>${this.remediationDetailsHTML(feedback)}</div><button type="button" class="button primary game-next" data-game-action="practice-next">${practice.index===practice.questions.length-1?'完成错题练习':'下一道错题 →'}</button>`:''}<div class="game-result-actions"><button type="button" class="button" data-game-action="knowledge" data-game-mistake="${item.index}">查看对应讲解</button><button type="button" class="button subtle" data-game-action="back-result">返回错题订正</button></div></div>`;
+    }
+
+    pilotResultHTML() {
+      const session=this.session,e=this.escape,mistakes=this.mistakes();
+      const cards=mistakes.map(m=>`<article class="game-remediation-card"><h4>✕ 第 ${m.index+1} 题 · ${m.question.type==='grammar'?'语法运用':'词义巩固'}</h4><p class="game-remediation-question">${e(m.question.question)}</p><p class="game-remediation-wrong">✕ 你的答案：${e(m.question.options[m.chosenIndex])}</p><p class="game-remediation-correct">✓ 正确答案：${e(m.remediation.correctAnswer||'已确认答案暂不可用，请查看对应讲解。')}</p>${this.remediationDetailsHTML(m.remediation)}<button type="button" class="button" data-game-action="knowledge" data-game-mistake="${m.index}">查看对应讲解</button>${this.remedialQuestionHTML(m)}</article>`).join('');
+      return `<div class="game-result game-remediation-result"><h3>✕ 本次未通关，先订正再挑战</h3><p>${e(session.lesson.title)}</p><strong class="game-score">${session.correct} / 5</strong><p>答对 4 题即可通关。本次答错 ${session.wrong} 题，下面按 ${mistakes.length} 个独立知识点订正。</p><p class="game-reward">本次未增加 XP</p><div class="game-result-actions"><button type="button" class="button primary" data-game-action="retry-wrong">只练错题</button><button type="button" class="button" data-game-action="retry">重新挑战整关</button><button type="button" class="button" data-game-action="study" data-lesson="${e(session.lesson.id)}">学习本课</button><button type="button" class="button subtle" data-game-action="close">返回关卡地图</button></div><div class="game-remediation-list">${cards}</div></div>`;
+    }
+
     challengeHTML() {
       const session = this.session;
       if (!session) return '';
-      if (session.finished) return this.resultHTML();
+      if (session.finished) return session.practice&&this.pilotFailure()?this.wrongPracticeHTML():this.resultHTML();
       const question = session.questions[session.index], answered = Object.hasOwn(session.answers,session.index), answer = session.answers[session.index], e = this.escape;
-      return `<div class="game-challenge"><div class="game-progress"><span>第 ${session.index+1} / 5 题 · ${question.type==='grammar'?'语法运用':'词汇巩固'}</span><span class="game-hearts" aria-label="剩余 ${5-session.wrong} 颗心">${Array.from({length:5},(_,i)=>`<span class="${i<5-session.wrong?'active':'lost'}">${i<5-session.wrong?'♥':'♡'}</span>`).join('')}</span></div><p class="game-node-subtitle">${e(session.lesson.title)}${question.sourceLabel?'<br>'+e(question.sourceLabel):''}</p><h3 class="game-question">${e(question.question)}</h3><div class="game-options">${question.options.map((option,index)=>`<button type="button" class="game-option ${answered?(index===question.answer?'correct':index===answer?'incorrect':''):''} ${answer===index?'selected':''}" data-game-action="answer" data-game-answer="${index}" ${answered?'disabled':''}><span>${String.fromCharCode(65+index)}</span>${e(option)}</button>`).join('')}</div>${answered?`<div class="game-feedback ${answer===question.answer?'correct':'incorrect'}" role="status"><strong>${answer===question.answer?'✓ 答对了！':'再记住这个知识点'}</strong><p>${answer===question.answer?'':`正确答案：${e(question.options[question.answer])}。`}${e(question.explanation || '')}</p></div><button type="button" class="button primary game-next" data-game-action="next">${session.index===4?'查看挑战结果':'下一题 →'}</button>`:'<p class="game-rule">选择后立即显示解析；每题只能作答一次。</p>'}</div>`;
+      const feedback=answered?(this.isPilot()?this.pilotQuestionFeedback(question,answer):`<div class="game-feedback ${answer===question.answer?'correct':'incorrect'}" role="status"><strong>${answer===question.answer?'✓ 答对了！':'再记住这个知识点'}</strong><p>${answer===question.answer?'':`正确答案：${e(question.options[question.answer])}。`}${e(question.explanation || '')}</p></div>`)+`<button type="button" class="button primary game-next" data-game-action="next">${session.index===4?'查看挑战结果':'下一题 →'}</button>`:'<p class="game-rule">选择后立即显示解析；每题只能作答一次。</p>';
+      return `<div class="game-challenge"><div class="game-progress"><span>第 ${session.index+1} / 5 题 · ${question.type==='grammar'?'语法运用':'词汇巩固'}</span><span class="game-hearts" aria-label="剩余 ${5-session.wrong} 颗心">${Array.from({length:5},(_,i)=>`<span class="${i<5-session.wrong?'active':'lost'}">${i<5-session.wrong?'♥':'♡'}</span>`).join('')}</span></div><p class="game-node-subtitle">${e(session.lesson.title)}${question.sourceLabel?'<br>'+e(question.sourceLabel):''}</p><h3 class="game-question">${e(question.question)}</h3><div class="game-options">${question.options.map((option,index)=>`<button type="button" class="game-option ${answered?(index===question.answer?'correct':index===answer?'incorrect':''):''} ${answer===index?'selected':''}" data-game-action="answer" data-game-answer="${index}" ${answered?'disabled':''}><span>${String.fromCharCode(65+index)}</span>${e(option)}</button>`).join('')}</div>${feedback}</div>`;
     }
 
     paint() {
@@ -176,6 +274,7 @@
 
     resultHTML() {
       const session = this.session, passed = session.correct>=4, stars = session.correct===5?3:passed?2:0, e = this.escape;
+      if(this.pilotFailure())return this.pilotResultHTML();
       return `<div class="game-result"><div class="game-result-icon">${this.icon(passed?'star':'notebook')}</div><h3>${passed?'挑战成功！':'差一点，再来一次'}</h3><p>${e(session.lesson.title)}</p><div class="game-stars">${[1,2,3].map(star=>`<span class="${star<=stars?'earned':''}">${star<=stars?'★':'☆'}</span>`).join('')}</div><strong class="game-score">${session.correct} / 5</strong><p>${passed?'新知识又牢固了一点。':'答对4题即可通关，回顾课文后再挑战。'}</p><p class="game-reward">${session.reward?`+${session.reward} XP`:'本次未增加 XP'}${passed&&!session.reward?' · 今日重玩奖励已领取':''}</p><div class="game-result-actions"><button type="button" class="button primary" data-game-action="retry">再挑战一次</button><button type="button" class="button" data-game-action="study" data-lesson="${e(session.lesson.id)}">学习本课</button><button type="button" class="button subtle" data-game-action="close">返回关卡地图</button></div></div>`;
     }
 

@@ -42,7 +42,7 @@
         if (!button || !button.closest('#output-content')) return;
         try {
           switch(button.dataset.outputAction) {
-            case 'mode':this.mode=button.dataset.outputMode;this.result=null;this.showOriginal=false;this.redraw();break;
+            case 'mode':this.options.sentencePractice?.flush();this.mode=button.dataset.outputMode;this.result=null;this.showOriginal=false;this.redraw();break;
             case 'original':this.showOriginal=!this.showOriginal;this.redraw();break;
             case 'submit':this.submit();break;case 'grammar-check':this.checkGrammar();break;case 'grammar-apply':this.applyGrammar(Number(button.dataset.grammarIndex));break;case 'grammar-all':this.applyGrammar(-1);break;
             case 'retry':this.result=null;this.answer='';this.spellAnswers={};this.showOriginal=false;this.grammarIssues=null;this.grammarText='';this.redraw();break;
@@ -77,7 +77,7 @@
     static compareWords(expected,actual) {return compareWords(expected,actual);}
     static countWords(text) {return words(text).length;}
     reset() {this.grammarIssues=null;this.grammarText='';this.mode='write';this.paragraphIndex=0;this.answer='';this.spellAnswers={};this.result=null;this.showOriginal=false;this.scrambles={};}
-    setLesson(lesson) {if (lesson?.id!==this.current?.id) this.reset();this.current=lesson || null;}
+    setLesson(lesson) {if (lesson?.id!==this.current?.id) {this.options.sentencePractice?.flush();this.reset();}this.current=lesson || null;}
     lesson() {const lesson=this.options.getLesson?.() || this.current;if (lesson?.id!==this.current?.id)this.setLesson(lesson);else this.current=lesson;return lesson;}
     paragraphs() {return (this.lesson()?.paragraphs || []).filter(paragraph=>paragraph && typeof paragraph.en==='string' && paragraph.en.trim());}
     notify(message) {this.options.toast?.(message);}
@@ -108,12 +108,18 @@
     }
 
     render() {
-      const lesson=this.lesson(), e=this.escape;
+      const lesson=this.lesson();
       if(!lesson)return '<div class="empty-state">请选择一篇课文后开始输出练习。</div>';
-      const tabs=[['write','分段默写'],['spell','单词拼写'],['retell','英文复述']].map(([mode,label])=>`<button type="button" class="output-tab ${this.mode===mode?'active':''}" data-output-action="mode" data-output-mode="${mode}" aria-pressed="${this.mode===mode}">${label}</button>`).join('');
-      return `<div class="output-tabs" aria-label="输出练习模式">${tabs}</div>${this.mode==='spell'?this.renderSpell():this.mode==='retell'?this.renderRetell():this.renderWrite()}${this.mode!=='spell'?this.grammarHTML():''}`;
+      const sentenceAvailable=Boolean(this.options.sentencePractice)&&(typeof this.options.canPracticeSentences!=='function'||this.options.canPracticeSentences(lesson)!==false);
+      if(!sentenceAvailable&&this.mode==='sentences'){
+        this.options.sentencePractice?.flush();this.mode='write';this.result=null;this.showOriginal=false;
+      }
+      const modes=[['write','分段默写'],['spell','单词拼写'],['retell','英文复述']];
+      if(sentenceAvailable)modes.push(['sentences','五句造句']);
+      const tabs=modes.map(([mode,label])=>'<button type="button" class="output-tab '+(this.mode===mode?'active':'')+'" data-output-action="mode" data-output-mode="'+mode+'" aria-pressed="'+(this.mode===mode)+'">'+label+'</button>').join('');
+      if(this.mode==='sentences'&&sentenceAvailable)return '<div class="output-tabs" aria-label="输出练习模式">'+tabs+'</div>'+this.options.sentencePractice.render();
+      return '<div class="output-tabs" aria-label="输出练习模式">'+tabs+'</div>'+(this.mode==='spell'?this.renderSpell():this.mode==='retell'?this.renderRetell():this.renderWrite())+(this.mode!=='spell'?this.grammarHTML():'');
     }
-
 
     checkGrammar(redraw=true){if(!this.answer.trim()){this.notify('先写一段英文，再检查。');return;}if(!global.StudyGrammar){this.grammarText='';this.grammarIssues=null;this.notify('语法规则正在加载，请刷新后再试。');return;}this.grammarText=this.answer;this.grammarIssues=global.StudyGrammar.check(this.answer);if(redraw)this.redraw();}
     applyGrammar(index){if(this.grammarText!==this.answer){this.notify('输入已改变，请重新检查。');return;}this.answer=index<0?global.StudyGrammar.applyAll(this.answer,this.grammarIssues||[]):global.StudyGrammar.apply(this.answer,(this.grammarIssues||[])[index]);this.result=null;this.grammarText=this.answer;this.grammarIssues=global.StudyGrammar.check(this.answer);this.redraw();this.notify('建议已填回输入框，请结合句意确认。');}

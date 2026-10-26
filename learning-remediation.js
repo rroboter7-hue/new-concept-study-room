@@ -6,9 +6,9 @@
  const clone=x=>JSON.parse(JSON.stringify(x));
  const wordCache=new WeakMap();
  const pilotPassageForms={
-  '2|ring':{meaning:'铃响；打电话',forms:['rang']},'2|repeat':{meaning:'重复',forms:['repeated']},
+  '2|ring':{meaning:'（铃、电话等）响',forms:['rang']},'2|repeat':{meaning:'重复',forms:['repeated']},
   '3|postcard':{meaning:'明信片',forms:['postcards']},'3|museum':{meaning:'博物馆',forms:['museums']},
-  '4|receive':{meaning:'收到',forms:['received']},'5|cover':{meaning:'行过（一段距离）',forms:['covered']},'5|request':{meaning:'请求；需求',forms:['requests']},
+  '4|receive':{meaning:'收到',forms:['received']},'4|find':{meaning:'觉得；认为',forms:['finding']},'5|cover':{meaning:'行过（一段距离）',forms:['covered']},'5|request':{meaning:'请求；需求',forms:['requests']},
   '6|call':{meaning:'短暂拜访；登门',forms:['calls']},'7|detective':{meaning:'侦探',forms:['detectives']},'7|expect':{meaning:'等待；期待',forms:['expecting']},
   '8|path':{meaning:'小路',forms:['paths']},'9|shout':{meaning:'大声叫喊',forms:['shouted']},'9|refuse':{meaning:'拒绝',forms:['refused']},
   '10|damage':{meaning:'损坏',forms:['damaged']},'10|key':{meaning:'（乐器的）琴键',forms:['keys']},'10|string':{meaning:'（乐器的）弦',forms:['strings']},'10|shock':{meaning:'使震惊',forms:['shocked']},'10|allow':{meaning:'允许',forms:['allowed']}

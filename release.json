@@ -1,16 +1,30 @@
 {
-  "build": "2026-10-26-reliable-content-v1",
-  "preparedAt": "2026-10-26T05:18:02.904Z",
+  "build": "2026-10-26-reliable-learning-pilot",
+  "preparedAt": "2026-10-26T05:33:46.465Z",
   "book2": {
-    "book": 2,
-    "total": 96,
-    "proofread": 96,
-    "draft": 0,
-    "corrections": 203,
-    "sourceSha256": "30f1219bd738cfbfea00e8bc8e1b51f752a3eb1d47c87090f0120ded0a203633",
-    "sourceUrl": "resources/30f1219bd738cfbf.pdf",
-    "candidateSha256": "6dab6504246da5dd35451b93f34ca4e102ac936468b2d4d8400018bb647e3ae3"
+    "passages": 96,
+    "translatedLessons": 96,
+    "translatedParagraphs": 170,
+    "translationLabel": "自编中文译文（非教材官方译文）",
+    "canonicalAnswers": true
   },
-  "staticFiles": 1657,
-  "staticBytes": 395659341
+  "pilot": {
+    "query": "pilot=1",
+    "book": 2,
+    "lessons": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10
+    ],
+    "physicalPhoneKeyboardVerified": false
+  },
+  "staticFiles": 1663,
+  "staticBytes": 395751508
 }
