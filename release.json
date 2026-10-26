@@ -1,6 +1,6 @@
 {
-  "build": "2026-10-26-book2-nativeears-audio",
-  "preparedAt": "2026-10-26T03:38:09.504Z",
+  "build": "2026-10-26-reliable-content-v1",
+  "preparedAt": "2026-10-26T05:18:02.904Z",
   "book2": {
     "book": 2,
     "total": 96,
@@ -11,6 +11,6 @@
     "sourceUrl": "resources/30f1219bd738cfbf.pdf",
     "candidateSha256": "6dab6504246da5dd35451b93f34ca4e102ac936468b2d4d8400018bb647e3ae3"
   },
-  "staticFiles": 1649,
-  "staticBytes": 395051936
+  "staticFiles": 1657,
+  "staticBytes": 395659341
 }

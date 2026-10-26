@@ -84,9 +84,9 @@
     redraw() {const content=document.querySelector('#output-content');if(content)content.innerHTML=this.render();}
 
     spellWords() {
-      const lesson=this.lesson();
-      const vocabulary=(lesson?.vocabulary || []).filter(item=>item?.word);
-      if (vocabulary.length) return vocabulary.slice(0,8).map(item=>({word:String(item.word),meaning:String(item.meaning || '')}));
+      const lesson=this.lesson(),bank=global.StudyKnowledge?.bank,registered=bank?.hasLesson(lesson?.id);
+      const vocabulary=(registered?bank.vocabularyForLesson(lesson.id):lesson?.vocabulary || []).filter(item=>item?.word);
+      if (registered || vocabulary.length) return vocabulary.slice(0,8).map(item=>({word:String(item.word),meaning:String(item.meaning || '')}));
       const all=words(this.paragraphs().map(paragraph=>paragraph.en).join(' '));
       return [...new Set(all.map(word=>word.toLowerCase()))].filter(word=>word.length>=4 && !stopWords.has(word)).slice(0,8).map(word=>({word,meaning:''}));
     }
@@ -139,7 +139,7 @@
 
     renderSpell() {
       const items=this.spellWords(), e=this.escape;
-      if(!items.length)return '<p class="output-intro">当前资料尚未提取到可拼写的英文单词。</p>';
+      if(!items.length)return '<p class="output-intro">'+(global.StudyKnowledge?.bank?.hasLesson(this.lesson()?.id)?'本课暂无已核对词表，词表复核后再开放单词拼写。':'当前资料尚未提取到可拼写的英文单词。')+'</p>';
       return `<div class="output-intro"><h3>听一听，再把单词拼出来</h3><p>根据释义填写英文；没有释义时，用打乱的字母做提示。忽略大小写，提交后显示真实答案。</p></div>${items.map((item,index)=>{const checked=this.result?.items?.[index];return `<div class="output-spell-row"><label><strong>${index+1}. ${e(item.meaning || '字母提示：'+this.scramble(item.word))}</strong><input type="text" class="output-spell-input ${checked?(checked.correct?'correct':'incorrect'):''}" data-output-spell="${index}" value="${e(this.spellAnswers[index] || '')}" placeholder="填写英文单词" autocomplete="off" autocapitalize="off" spellcheck="false" ${this.result?'readonly':''}></label><button type="button" class="icon-button" data-output-action="speak" data-output-index="${index}" aria-label="播放第${index+1}个单词发音">${this.icon('volume')}</button>${checked?`<p>${checked.correct?'✓ 正确':'正确答案：'+e(item.word)}${item.meaning?' · '+e(item.meaning):''}</p>`:''}</div>`;}).join('')}${this.result?`<section class="output-result"><h3>拼写正确 ${this.result.correct} / ${items.length}</h3><p>本次得分 ${this.result.score}% · 空白项按未答计。</p></section>`:''}${this.actions()}`;
     }
 

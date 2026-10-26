@@ -53,7 +53,8 @@
     }
 
     bookLessons(book) {
-      const available = this.lessons.filter(lesson => Number(lesson.book) === Number(book) && (lesson.source === 'provided' || !lesson.source)).sort((a,b) => a.number - b.number).filter(lesson => this.questions(lesson).length === 5);
+      const bank=global.StudyKnowledge?.bank;
+      const available = this.lessons.filter(lesson => Number(lesson.book) === Number(book) && (lesson.source === 'provided' || !lesson.source)).sort((a,b) => a.number - b.number).filter(lesson => bank?.hasLesson(lesson.id)||this.questions(lesson).length === 5);
       return Number(book) === 2 ? available : available.slice(0,8);
     }
 
@@ -69,17 +70,20 @@
       const passed = lessons.filter(lesson => data.levels[lesson.id]?.passed).length;
       const level = Math.floor(data.xp / 200) + 1;
       const vocabBadge = numeric(day.vocabularyCorrect) >= 5;
-      const bookBadge = lessons.length > 0 && passed === lessons.length;
+      const bookBadge = lessons.length > 0 && passed === lessons.length && lessons.every(lesson=>this.questions(lesson).length===5);
       const nodes = lessons.map((lesson,index) => {
         const record = data.levels[lesson.id] || {};
-        const locked = !record.passed && index > 0 && !data.levels[lessons[index-1].id]?.passed;
+        const ready=this.questions(lesson).length===5,confirmed=this.questionPools.get(lesson)?.length||0;
+        const locked = !ready || !record.passed && index > 0 && !data.levels[lessons[index-1].id]?.passed;
         const current = !locked && !record.passed;
-        return `<button type="button" class="game-node ${locked?'locked':record.passed?'passed':current?'current':''}" data-game-action="start" data-game-lesson="${e(lesson.id)}" aria-label="第${index+1}关 ${e(lesson.title)}，${locked?'尚未解锁':record.passed?'已通关':'可挑战'}" ${locked?'aria-disabled="true"':''}><span class="game-node-orb">${record.passed?this.icon('check'):locked?'🔒':String(index+1).padStart(2,'0')}</span><span class="game-node-title">${e(lesson.title)}</span><span class="game-node-subtitle">${locked?'通过上一关解锁':record.passed?`最佳 ${numeric(record.best)} / 5`:'本课知识 · 5 题'}</span><span class="game-stars" aria-label="${numeric(record.stars)}星">${[1,2,3].map(star=>`<span class="${numeric(record.stars)>=star?'earned':''}">${numeric(record.stars)>=star?'★':'☆'}</span>`).join('')}</span></button>`;
+        return `<button type="button" class="game-node ${!ready?'pending locked':locked?'locked':record.passed?'passed':current?'current':''}" data-game-action="start" data-game-lesson="${e(lesson.id)}" aria-label="第${index+1}关 ${e(lesson.title)}，${!ready?'题库复核中':locked?'尚未解锁':record.passed?'已通关':'可挑战'}" ${locked?'aria-disabled="true"':''}><span class="game-node-orb">${record.passed?this.icon('check'):locked?'🔒':String(index+1).padStart(2,'0')}</span><span class="game-node-title">${e(lesson.title)}</span><span class="game-node-subtitle">${!ready?`题库复核中 · 已确认 ${confirmed} / 5 题`:locked?'通过上一关解锁':record.passed?`最佳 ${numeric(record.best)} / 5`:'本课知识 · 5 题'}</span><span class="game-stars" aria-label="${numeric(record.stars)}星">${[1,2,3].map(star=>`<span class="${numeric(record.stars)>=star?'earned':''}">${numeric(record.stars)>=star?'★':'☆'}</span>`).join('')}</span></button>`;
       }).join('');
       return `<section class="game-header"><div><p class="eyebrow">LEARNING QUEST · 第 ${this.book} 册</p><h2>把学会的，变成闯过的关</h2><p>每关 5 题，答对 4 题通关。一步一步，点亮你的英语地图。</p></div><div class="game-stat"><strong>Lv.${level}</strong><span>${data.xp} XP · 距下一级 ${200-data.xp%200} XP</span></div></section><div class="game-stats"><div class="game-stat"><strong>${passed} / ${lessons.length}</strong><span>本册已通关</span></div><div class="game-stat"><strong>${numeric(day.completed)}</strong><span>今日通关关卡 · 不重复计数</span></div><div class="game-stat"><strong>${numeric(day.correct)}</strong><span>今日答对题目</span></div></div><div class="game-daily"><h3>今天的小目标</h3><p class="${numeric(day.completed)>=1?'completed':''}">${numeric(day.completed)>=1?'✓':'○'} 通关 1 关 <small>${Math.min(1,numeric(day.completed))} / 1</small></p><p class="${vocabBadge?'completed':''}">${vocabBadge?'✓':'○'} 答对 5 道词汇题 <small>${Math.min(5,numeric(day.vocabularyCorrect))} / 5</small></p></div><div class="game-badges"><span class="game-badge ${vocabBadge?'earned':''}">✦ 词汇星章 · ${vocabBadge?'今日已获得':'今日答对5道词汇题解锁'}</span><span class="game-badge ${bookBadge?'earned':''}">${this.icon('star')} 第${this.book}册探索徽章 · ${bookBadge?'已获得':lessons.length?`通关本册${lessons.length}关解锁`:'本册关卡开放后解锁'}</span></div><div class="game-map">${nodes||'<div class="text-empty">本册资料尚未接入。补齐真实教材资料后再开放闯关。</div>'}</div><p class="game-rule">挑战规则：每关从本课题库和已有中文词义中选取 5 题，词义补充题为自编配套训练（非教材原配练习）。答对 4 题得两星，全部答对得三星。首通奖励 50 + 正确题数 × 10 XP；再次通关每日本关最多获得 10 XP。关卡解锁仅用于闯关，课文可以自由学习。进度保存在当前浏览器。</p>`;
     }
 
     questionPool(lesson) {
+      const bank=global.StudyKnowledge?.bank;
+      if(bank?.hasLesson(lesson.id)){const seen=new Set();return bank.questionsForLesson(lesson.id).filter(q=>{if(!q.graded||!q.conceptId||seen.has(q.conceptId))return false;seen.add(q.conceptId);return true;});}
       const base = (lesson.quiz || []).filter(question => text(question?.question) && Array.isArray(question.options) && question.options.length >= 2 && question.options.every(option=>text(option)) && new Set(question.options.map(normalized)).size===question.options.length && Number.isInteger(question.answer) && question.answer>=0 && question.answer<question.options.length).map(question => ({...question, options:question.options.slice(), type:question.type === 'vocabulary'?'vocabulary':'grammar'}));
       const seenWords = new Set();
       const vocabulary = (lesson.vocabulary || []).filter(word=>{if(!hasChineseMeaning(word)||seenWords.has(normalized(word.word)))return false;seenWords.add(normalized(word.word));return true;});
@@ -96,6 +100,7 @@
     }
 
     questions(lesson) {
+      const bank=global.StudyKnowledge?.bank;if(this.knowledgeBank!==bank){this.knowledgeBank=bank;this.questionPools.clear();}
       if (!this.questionPools.has(lesson)) this.questionPools.set(lesson,this.questionPool(lesson));
       const pool = this.questionPools.get(lesson), grammar = pool.find(question=>question.type==='grammar');
       if (pool.length < 5) return [];
@@ -107,9 +112,9 @@
       if (!lesson) return;
       const levels = this.bookLessons(lesson.book), index = levels.findIndex(item=>item.id===id), data = this.data();
       if (index < 0) return;
-      if (!data.levels[id]?.passed && index > 0 && !data.levels[levels[index-1].id]?.passed) { this.options.toast?.('先通过上一关，就能解锁这里。课文仍然可以自由学习。'); return; }
       const questions = this.questions(lesson);
-      if (questions.length !== 5) { this.options.toast?.('本关题库还在准备中，请先学习课文。'); return; }
+      if (questions.length !== 5) { this.options.toast?.('本关题库复核中，已确认 '+(this.questionPools.get(lesson)?.length||0)+' 个独立知识点，满5题后开放挑战。'); return; }
+      if (!data.levels[id]?.passed && index > 0 && !data.levels[levels[index-1].id]?.passed) { this.options.toast?.('先通过上一关，就能解锁这里。课文仍然可以自由学习。'); return; }
       this.session = {lesson, questions, index:0, answers:[], correct:0, wrong:0, finished:false, reward:0};
       this.options.openDialog(`第${lesson.book}册 · 第${index+1}关`,this.challengeHTML(),'');
     }

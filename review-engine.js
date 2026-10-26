@@ -13,6 +13,7 @@
   const cards=[],seen=new Set();
   for(const lesson of Array.isArray(lessons)?lessons:[]){
    if(!lesson?.id||!integer(Number(lesson.book),1,4)||!Number.isFinite(Number(lesson.number)))continue;
+   const bank=global.StudyKnowledge?.bank,registered=bank?.hasLesson(lesson.id),seenConcepts=new Set();
    const sourceLesson={id:String(lesson.id),book:Number(lesson.book),number:Number(lesson.number),title:text(lesson.title,180)};
    function add(kind,target,prompt,extra={}){
     target=text(target,2000);prompt=text(prompt,2000);if(!target||!prompt)return;
@@ -20,17 +21,19 @@
     if(seen.has(id)||!validId(id))return;seen.add(id);
     cards.push({id,kind,target,prompt,sourceLesson,...extra});
    }
-   for(const v of (lesson.vocabulary||[]).slice(0,100)){
+   for(const original of (lesson.vocabulary||[]).slice(0,100)){
+    const v=registered?bank.wordForLesson(lesson.id,original?.word):original;
     if(!v?.word||!v.meaning)continue;
-    add('word',v.word,v.meaning,{phonetic:text(v.phonetic,100),pos:text(v.pos,30),example:text(v.example,1000)});
+    add('word',v.word,v.meaning,{phonetic:text(v.phonetic,100),pos:text(v.pos,30),example:text(v.example,1000),...(v.conceptId?{conceptId:v.conceptId}:{})});
    }
    for(const p of (lesson.usage||[]).slice(0,100)){
     if(!p?.phrase||!p.meaning)continue;
     add('phrase',p.phrase,p.meaning,{example:text(p.example,1000),explanation:text(p.note,1500),matchedForm:text(p.matchedForm,200),variants:Array.isArray(p.variants)?p.variants.slice(0,20).map(v=>text(v,200)).filter(Boolean):[]});
    }
-   for(const q of (lesson.quiz||[]).slice(0,100)){
+   for(const q of (registered?bank.quizForLesson(lesson.id):lesson.quiz||[]).slice(0,100)){
     if(q?.type==='vocabulary'||!Array.isArray(q?.options)||!integer(q.answer,0,q.options.length-1))continue;
-    add('grammar',q.options[q.answer],q.question,{options:q.options.map(x=>text(x,500)),answer:q.answer,explanation:text(q.explanation,2000)});
+    if(registered&&(!q.graded||!q.conceptId||seenConcepts.has(q.conceptId)))continue;if(q.conceptId)seenConcepts.add(q.conceptId);
+    add('grammar',q.options[q.answer],q.question,{options:q.options.map(x=>text(x,500)),answer:q.answer,explanation:text(q.explanation,2000),...(q.conceptId?{conceptId:q.conceptId}:{})});
    }
   }
   return cards;
