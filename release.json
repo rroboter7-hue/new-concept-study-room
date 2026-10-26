@@ -1,17 +1,22 @@
 {
   "build": "2026-10-26-book34-audio",
-  "preparedAt": "2026-10-26T05:33:46.465Z",
+  "preparedAt": "2026-10-26T05:48:26.543808+00:00",
   "book2": {
-    "passages": 96,
+    "book": 2,
+    "total": 96,
+    "proofread": 96,
+    "draft": 0,
+    "corrections": 203,
+    "sourceSha256": "30f1219bd738cfbfea00e8bc8e1b51f752a3eb1d47c87090f0120ded0a203633",
+    "sourceUrl": "resources/30f1219bd738cfbf.pdf",
+    "candidateSha256": "6dab6504246da5dd35451b93f34ca4e102ac936468b2d4d8400018bb647e3ae3"
+  },
+  "learning": {
+    "canonicalAnswers": true,
     "translatedLessons": 96,
     "translatedParagraphs": 170,
-    "translationLabel": "自编中文译文（非教材官方译文）",
-    "canonicalAnswers": true
-  },
-  "pilot": {
-    "query": "pilot=1",
-    "book": 2,
-    "lessons": [
+    "pilotQuery": "pilot=1",
+    "pilotLessons": [
       1,
       2,
       3,
@@ -25,8 +30,8 @@
     ],
     "physicalPhoneKeyboardVerified": false
   },
-  "staticFiles": 1663,
-  "staticBytes": 395751508,
+  "staticFiles": 1791,
+  "staticBytes": 756201965,
   "nativeearsAdvancedAudio": {
     "books": {
       "3": 60,
