@@ -1,6 +1,6 @@
 {
-  "build": "2026-10-26-public-mobile-reviewed-packs",
-  "preparedAt": "2026-10-26T09:06:57.517Z",
+  "build": "2026-10-26-public-mobile-source-labels",
+  "preparedAt": "2026-10-26T09:20:59.627Z",
   "book2": {
     "book": 2,
     "total": 96,
@@ -102,10 +102,11 @@
       8,
       9,
       10
-    ]
+    ],
+    "notesOriginsExplicit": true
   },
   "staticFiles": 1983,
-  "staticBytes": 810417895,
+  "staticBytes": 810415339,
   "nativeearsAdvancedAudio": {
     "books": {
       "3": 60,
