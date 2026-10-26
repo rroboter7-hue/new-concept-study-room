@@ -36,6 +36,8 @@
     add('grammar',q.options[q.answer],q.question,{options:q.options.map(x=>text(x,500)),answer:q.answer,explanation:text(q.explanation,2000),...(q.conceptId?{conceptId:q.conceptId}:{})});
    }
   }
+  const registry=global.StudyPracticePacks?.registry;
+  if(registry)for(const lesson of Array.isArray(lessons)?lessons:[]){const pack=registry.get(lesson.id);if(!pack)continue;for(const q of pack.tasks.filter(q=>q.category==='grammar'&&q.type==='choice')){const id='review:'+encodeURIComponent(lesson.id)+':grammar:'+encodeURIComponent(normalize(q.prompt));if(seen.has(id))continue;seen.add(id);cards.push({id,kind:'grammar',target:q.options[q.answer],prompt:q.prompt,options:q.options.slice(),answer:q.answer,explanation:q.rule,conceptId:q.conceptId,sourceType:'authored-practice-pack',sourceLesson:{id:String(lesson.id),book:lesson.book,number:lesson.number,title:lesson.title}});}}
   return cards;
  }
 
