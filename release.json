@@ -1,6 +1,6 @@
 {
-  "build": "2026-10-26-sentence-pairs",
-  "preparedAt": "2026-10-26T07:52:43.130738+00:00",
+  "build": "2026-10-26-reading-polish",
+  "preparedAt": "2026-10-26T08:24:53.696902+00:00",
   "book2": {
     "book": 2,
     "total": 96,
@@ -224,6 +224,18 @@
       390,
       844
     ],
-    "physicalPhoneKeyboardVerified": false
+    "physicalPhoneKeyboardVerified": false,
+    "polish": {
+      "stickyTranslationControl": true,
+      "minimumTouchTargetPx": 44,
+      "sameSentenceOnTranslationToggle": true,
+      "ttsHighlightRestoredAfterRedraw": true,
+      "lessonScopedSpeechState": true,
+      "staleSingleParagraphTranslationRetained": true,
+      "mobileWidthChecks": [
+        320,
+        390
+      ]
+    }
   }
 }

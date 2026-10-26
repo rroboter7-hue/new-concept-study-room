@@ -104,6 +104,7 @@
       var currentTime = audio ? Math.max(0, Number(audio.currentTime) || 0) : this._readBaseTime() / this._rate;
       return {
         playing: this._playing,
+        lessonId: this._lesson?.id || null,
         mode: this._mode,
         mediaSource: this._mediaSource,
         currentTime: currentTime,

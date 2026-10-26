@@ -64,7 +64,7 @@
     }
     group.rows.push(row);
    });
-   if(!usable&&source.length>1&&p.zh)fallbacks.push({paragraphIndex,zh:String(p.zh),reason:candidate?'source-drift':'not-aligned'});
+   if(!usable&&(source.length>1||candidate)&&p.zh)fallbacks.push({paragraphIndex,zh:String(p.zh),reason:candidate?'source-drift':'not-aligned'});
   });
   return {rows,groups,fallbacks,hasAligned};
  }
