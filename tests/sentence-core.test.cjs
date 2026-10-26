@@ -118,6 +118,19 @@ test('an empty check returns exactly the five ordered rows and no invented progr
   assert.equal(result.rulesOnly, true);
 });
 
+test('optional target selection only removes the missing selection issue, leaving explicit coverage intact', () => {
+  const answers = { affirmative: 'She reads a book.' };
+  const legacy = call('check', { answers }).rows[0];
+  assert.equal(legacy.status, 'needs-work');
+  assert.match(legacy.issues.join(' '), /目标词/);
+  const optional = call('check', { answers, requireTarget: false }).rows[0];
+  assert.equal(optional.status, 'ready');
+  assert.deepEqual(optional.issues, []);
+  const explicit = call('check', { answers, target: 'apple', requireTarget: false }).rows[0];
+  assert.equal(explicit.status, 'needs-work');
+  assert.match(explicit.issues.join(' '), /apple/);
+});
+
 test('five supported sentences can finish limited checks with explicit human-review limitations', () => {
   const result = call('check', { answers: { affirmative: 'I read a book.', negative: 'I do not read a book.', yesno: 'Do I read a book?', wh: 'Where do I read a book?', combined: 'My sister looks at a book.' }, target: { word: 'book' }, oldWord: { word: 'sister' }, oldPhrase: { phrase: 'look at' }, grammarCheck });
   assert.deepEqual(result.rows.map(item => item.status), ['ready', 'ready', 'ready', 'ready', 'ready']);

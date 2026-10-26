@@ -77,7 +77,7 @@
   }
   origins(q){
    const rows=this.options.getOrigins?.(this.options.getLesson()?.id,q)||[];if(!rows.length)return '';
-   return '<aside class="pack-origin-note"><strong>旧知复现</strong>'+rows.slice(0,3).map(origin=>'<button type="button" class="resource-text-button" data-pack-action="origin" data-pack-origin="'+this.e(origin.lessonId)+'">第'+Number(origin.book)+'册第'+Number(origin.number)+'课 · '+this.e(origin.label||origin.sourceLabel||'相关知识')+'</button>').join('')+'</aside>';
+   return '<aside class="pack-origin-note"><strong>前课词语线索</strong>'+rows.slice(0,3).map(origin=>'<button type="button" class="resource-text-button" data-pack-action="origin" data-pack-origin="'+this.e(origin.lessonId)+'">第'+Number(origin.book)+'册第'+Number(origin.number)+'课 · '+this.e(origin.label||origin.sourceLabel||'相关知识')+'</button>').join('')+'</aside>';
   }
   render(){
    const p=this.pack(),s=this.session(),e=this.e;if(!p)return '<div class="empty-state"><p>本课单元训练仍在复核，可先使用已有专项练习。</p></div>';
@@ -99,6 +99,7 @@
   }
   refresh(focus=false){const root=document.getElementById('unit-practice-content');if(!root)return;root.innerHTML=this.render();if(focus)global.requestAnimationFrame?.(()=>{const title=root.querySelector?.('.pack-task-title');title?.focus({preventScroll:true});title?.scrollIntoView({block:'nearest',behavior:'auto'});});}
   action(b){const d=b.dataset;switch(d.packAction){case'start':this.start();break;case'choose':this.choose(Number(d.packAnswer),d.packFollowup);break;case'submit':this.submitCurrent();break;case'submit-followup':this.followup(d.packFollowup);break;case'listen':this.playAudio();break;case'next':this.next();break;case'previous':this.previous();break;case'only-wrong':this.retryWrong();break;case'save-result':this.commitResult();this.refresh();break;case'knowledge':{const q=this.pack()?.tasks.find(q=>q.id===d.packTask);if(q)this.options.openKnowledge?.(q.sourceLessonId,q.conceptId);break;}case'read':this.options.readLesson?.();break;case'origin':this.options.openOrigin?.(d.packOrigin);break;case'backup':this.options.backup?.();break;case'full-result':{const old=this.state().lastFull?.[this.pack()?.lessonId];if(old&&this.save(old,{archive:true}))this.refresh(true);break;}}}
+  reloadFromStorage(){this.pendingDrafts.clear();this.committedAttempts.clear();this.audioToken++;this.audioStatus={};}
   destroy(){document.removeEventListener('click',this.listener);document.removeEventListener('input',this.input);this.audioToken++;}
  }
  global.LessonPractice=LessonPractice;

@@ -2,7 +2,7 @@
 
 > **For agentic workers:** Use subagent-driven-development for independent content/core tasks, then integrate and verify together.
 
-**Goal:** Expand the first ten Book 2 lessons to about twelve reviewed questions, revisit earlier knowledge actively, and let learners check any number of sentences locally and copy them for manual Doubao review without API fees.
+**Goal:** Expand the all 96 Book 2 lessons to twelve reviewed questions, revisit earlier knowledge actively, and let learners check any number of sentences locally and copy them for manual Doubao review without API fees.
 
 **Architecture:** Keep the existing static vanilla-JavaScript site and canonical knowledge bank. Add a pure bulk parser/check/prompt module and an independent per-lesson bulk draft panel alongside the existing five-step practice. Append reviewed authored questions through the supported knowledge pipeline. Correct recurrence selection without changing existing review scheduling or mastery criteria.
 
@@ -15,7 +15,7 @@
 - Preserve existing draft fields, backup format, study records and audio.
 - No paid API, key, backend, automatic transmission to Doubao or fabricated correctness scores.
 - No silent truncation of bulk input; storage failures remain visible and in-memory text survives.
-- First ten Book 2 lessons receive about twelve effective graded items; identify self-authored content and earlier source lessons accurately.
+- All 96 Book 2 lessons receive twelve effective graded items; identify self-authored content and earlier source lessons accurately.
 - Physical phone keyboard and real next-day learning are not verified by viewport emulation or simulated clocks.
 - Keep concurrent main-branch changes when publishing; never force push.
 
@@ -29,9 +29,13 @@
 
 ## Tasks
 
-- [ ] Write failing core tests; implement `StudySentenceBatch.parse/checkRow/buildPrompt/sanitizeDraft`.
-- [ ] Write UI lifecycle tests; add per-lesson bulk drafts, asynchronous local checking, cancellation and clipboard fallback; integrate backup and flush events.
-- [ ] Add and independently review question expansion for Book 2 lessons 1–10; preserve stable old question IDs and original indices.
-- [ ] Quantify recurrence coverage; fix irrelevant grammar-card selection and diversity/learned prioritization, with regression tests.
-- [ ] Run all regression tests and fresh mobile/desktop browser flows, including copy, reload and review navigation.
-- [ ] Merge latest remote changes, publish original website and inspect deployed build. Record physical-phone and longitudinal verification as pending.
+- [x] Write failing core tests; implement `StudySentenceBatch.parse/checkRow/buildPrompt/sanitizeDraft`.
+- [x] Write UI lifecycle tests; add per-lesson bulk drafts, asynchronous local checking, cancellation and clipboard fallback; integrate backup and flush events.
+- [x] Add and independently review question expansion for Book 2 lessons 1–96; preserve stable old question IDs and original indices.
+- [x] Quantify recurrence coverage; fix irrelevant grammar-card selection and diversity/learned prioritization, with regression tests.
+- [x] Run all regression tests and fresh mobile/desktop browser flows, including copy, reload and review navigation.
+- [x] Merge latest remote changes, publish original website and inspect deployed build. Record physical-phone and longitudinal verification as pending.
+
+## Verification limits
+
+Physical phone keyboard behavior and actual next-day learning remain unverified; simulated clock boundaries do not establish learning retention. Some new expanded concepts have no separate reviewed follow-up question and display that limitation.

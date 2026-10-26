@@ -1,6 +1,6 @@
 {
   "build": "2026-10-26-reviewed-packs-book1-first10",
-  "preparedAt": "2026-10-26T07:38:57.126Z",
+  "preparedAt": "2026-10-26T08:12:32.489Z",
   "book2": {
     "book": 2,
     "total": 96,
@@ -46,6 +46,14 @@
     "expandedQuizQuestions": 120,
     "fullMobileQuery": "pilot=all",
     "actualNextDayRetestVerified": false,
+    "expandedAuthoredAdditions": 877,
+    "earlierRetrievalMinimumPerLesson": 2,
+    "earlierRetrievalStartsAtLesson": 2,
+    "contextCorrections": [
+      "l011-turn",
+      "l096-spectacle"
+    ],
+    "simulatedRetestBoundariesVerified": true,
     "balancedPracticePacks": {
       "book": 2,
       "lessons": 10,
@@ -63,8 +71,8 @@
     "wrongConceptsRejoinSpacedReview": true,
     "syntheticListeningWordAudioAdded": 6
   },
-  "staticFiles": 1933,
-  "staticBytes": 809437593,
+  "staticFiles": 1950,
+  "staticBytes": 809616270,
   "nativeearsAdvancedAudio": {
     "books": {
       "3": 60,
@@ -111,15 +119,26 @@
     "automaticAI": false,
     "noFixedSentenceCount": true,
     "completePromptParts": true,
-    "draftBackup": true
+    "draftBackup": true,
+    "implementation": "context-preserving-batch-v2",
+    "notesInBackup": true,
+    "manualPromptExport": true,
+    "noAutomaticSemanticGrade": true
   },
   "recurrence": {
     "learnedPriority": true,
     "balancedKinds": true,
     "exactReviewCardMatching": true,
     "mistakesRevisitEarlier": true,
-    "preserveFutureDrillDates": true
+    "preserveFutureDrillDates": true,
+    "allMatchesExpandable": true,
+    "recallBeforeDefinition": true,
+    "actualStudiedSource": true,
+    "modernProgressRecognized": true,
+    "earlyPracticeNoScheduleWrites": true,
+    "dictionaryFallbackLabelled": true
   },
+  "staticSnapshotExcludesReleaseManifest": true,
   "book1": {
     "readingUnits": 10,
     "totalReadingUnits": 72,

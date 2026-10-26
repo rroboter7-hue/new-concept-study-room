@@ -36,7 +36,7 @@
  }
 
  function create(input,options={}){
-  const lessons=list(input).filter(l=>l?.id&&Number(l.book)===2),byLesson=new Map(lessons.map(l=>[l.id,l])),records=new Map(),words=new Map(),pools=new Map(),quizzes=new Map(),legacyByLesson=new Map(),vocabularySources=new Map(),originalVocabulary=new Map(),vocabularyAudits=new Map();
+  const lessons=list(input).filter(l=>l?.id&&Number(l.book)===2),byLesson=new Map(lessons.map(l=>[l.id,l])),records=new Map(),sourceAliases=new Map(),words=new Map(),pools=new Map(),quizzes=new Map(),legacyByLesson=new Map(),vocabularySources=new Map(),originalVocabulary=new Map(),vocabularyAudits=new Map();
   const audit={legacyQuestions:[],vocabularyEntries:[],issues:[],expansionQuestions:[],expansionIssues:[]},grammarRows=auditRows(options.grammarAudit);
   for(const lesson of lessons){
    const grouped=new Map(),local=new Map(),source=vocabularySource(lesson);
@@ -108,19 +108,21 @@
     // tests the existing source word. Do not fork its meaning or knowledge ID.
     // Grammar/comprehension sourceConceptIds are provenance, not automatic aliases.
     const record=sourceWord||{id:raw.conceptId,conceptId:raw.conceptId,kind:'grammar',lessonId:destination.id,sourceLessonId:source.id,sourceConceptIds:sourceIds.slice(),label:text(raw.category)||raw.type,status:'approved',source:{evidence:clone(evidence),authoredQuestionId:raw.id}};
-    if(!sourceWord&&records.has(record.id)){fail('duplicate-concept-id','扩展知识编号已使用，不能覆盖原有知识记录');continue;}
+    if(!sourceWord&&(records.has(record.id)||sourceAliases.has(record.id))||sourceWord&&((records.has(raw.conceptId)&&raw.conceptId!==sourceWord.id)||(sourceAliases.has(raw.conceptId)&&sourceAliases.get(raw.conceptId)!==sourceWord.id))){fail('duplicate-concept-id','扩展知识编号已使用，不能覆盖原有知识记录');continue;}
     const q={...clone(raw),conceptId:record.id,knowledgeId:record.id,originalConceptId:raw.conceptId,...(sourceWord?{word:sourceWord.word,sourceWord:sourceWord.word,meaning:sourceWord.meaning}:{}),graded:true,explanation:text(raw.explanation)||raw.rule+'\n'+Object.entries(raw.wrongReasons).map(([option,reason])=>'“'+option+'”：'+reason).join('\n')+'\n自编对比例句：'+raw.contrastExamples.join(' / ')};
     delete q.gameConceptId; // A manifest cannot claim an unreviewed skill alias.
     const gameVariant=gameSkillVariants[q.id],gameRecord=gameVariant&&records.get(conceptId(destination.id,'grammar',gameVariant.key));
     if(q.type==='grammar'&&gameRecord?.kind==='grammar'&&gameRecord.lessonId===destination.id&&q.question===gameVariant.question&&q.answer===gameVariant.answer&&JSON.stringify(q.options)===JSON.stringify(gameVariant.options))q.gameConceptId=gameRecord.id;
-    if(!sourceWord)records.set(record.id,record);extraIds.add(q.id);quizzes.get(destination.id).push(q);pools.get(destination.id).push(q);
+    if(!sourceWord)records.set(record.id,record);else if(raw.conceptId!==record.id)sourceAliases.set(raw.conceptId,record.id);
+    extraIds.add(q.id);quizzes.get(destination.id).push(q);pools.get(destination.id).push(q);
     audit.expansionQuestions.push({id:q.id,lessonId:destination.id,conceptId:record.id,originalConceptId:raw.conceptId,sourceLessonId:source.id,sourceConceptIds:sourceIds.slice(),status:'approved'});
    }
   }
   const bank={
    revision:++revision,audit,
    hasLesson:id=>byLesson.has(id),
-   get:id=>records.has(id)?clone(records.get(id)):null,
+   // Compatibility aliases resolve the one canonical record, never a new sense.
+   get:id=>{const sourceId=sourceAliases.get(id)||id;return records.has(sourceId)?clone(records.get(sourceId)):null;},
    wordForLesson(lessonId,word){const record=words.get(lessonId)?.get(norm(word));return record?{...clone(record.source.vocabulary),word:record.word,meaning:record.meaning,conceptId:record.id,sourceLessonId:lessonId}:null;},
    vocabularyForLesson(lessonId){return Array.from(words.get(lessonId)?.values()||[],record=>({...clone(record.source.vocabulary),word:record.word,meaning:record.meaning,conceptId:record.id,sourceLessonId:lessonId}));},
    questionsForLesson:id=>clone(pools.get(id)||[]),
@@ -129,6 +131,6 @@
   };
   return bank;
  }
- const API={version:'1.2.1',create,conceptId,bank:null,install(lessons,options){const bank=create(lessons,options);bank.apply(lessons);API.bank=bank;return bank;},wordForLesson(lessonId,word){return API.bank?.wordForLesson(lessonId,word)||null;},vocabularyForLesson(lessonId){return API.bank?.vocabularyForLesson(lessonId)||[];},questionsForLesson(lessonId){return API.bank?.questionsForLesson(lessonId)||[];}};
+ const API={version:'1.2.2',create,conceptId,bank:null,install(lessons,options){const bank=create(lessons,options);bank.apply(lessons);API.bank=bank;return bank;},wordForLesson(lessonId,word){return API.bank?.wordForLesson(lessonId,word)||null;},vocabularyForLesson(lessonId){return API.bank?.vocabularyForLesson(lessonId)||[];},questionsForLesson(lessonId){return API.bank?.questionsForLesson(lessonId)||[];}};
  global.StudyKnowledge=API;
 })(window);

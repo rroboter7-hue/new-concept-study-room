@@ -52,12 +52,22 @@
     if(lesson.source==='original')return {sourceType:'original',sourceLabel:'原创补充内容'};
     return {sourceType:'notes',sourceLabel:'学习笔记例句（非教材原文）'};
   }
-  function introduction(lesson,item,kind){
+  // These exact pairs are extraction mistakes in the supplied notes, not definitions.
+  var BAD_GLOSSES={make:'多模仿少创造',catch:'特殊疑问词',live:'国家城市'};
+  function definitionFor(item,kind,glossary){
+    item=item||{};var label=normalize(kind==='usage'?item.phrase:item.word),original=String(item.meaning||'').trim();
+    function usable(value){return !!value&&!/未附(?:独立)?中文释义|未提供中文释义|暂无释义|待(?:补充|复核)|原笔记习惯表达/.test(value)&&BAD_GLOSSES[label]!==value;}
+    if(usable(original)&&item.needsContextReview!==true)return {meaning:original,originalMeaning:original,meaningStatus:'source-definition',definitionSource:String(item.meaningSource||item.source||'来源课程词义；需结合本句理解')};
+    var entry=kind==='vocabulary'&&glossary&&Object.hasOwn(glossary,label)?glossary[label]:null,value=entry&&String(entry.meaning||'').trim();
+    if(entry&&normalize(entry.word)===label&&usable(value))return {meaning:value,originalMeaning:original,meaningStatus:'dictionary-fallback',definitionSource:'通用词典释义补充；尚未判定本句具体词义'};
+    return {meaning:'',originalMeaning:original,meaningStatus:'needs-context-review',definitionSource:'来源词义待语境核对；当前仅确认词形复现'};
+  }
+  function introduction(lesson,item,kind,glossary){
     var note=lesson.source==='provided'||/笔记/.test(String(item.source||''));
     return {lessonId:lesson.id,book:lesson.book,number:lesson.number,title:String(lesson.textbook&&lesson.textbook.title||lesson.title||''),
       sourceType:item.sourceType||(note?'notes':lesson.source==='original'?'original':'provided'),sourceLabel:item.sourceLabel||(note?'学习笔记 · '+(kind==='vocabulary'?'词表':kind==='usage'?'搭配':'语法知识点'):'来源课程知识点'),
       sourceDocId:item.sourceDocId||lesson.sourceDocId||null,sourcePage:item.sourcePage||lesson.sourcePage||null,
-      meaning:String(item.meaning||''),definitionSource:String(item.meaningSource||item.source||'')};
+      ...definitionFor(item,kind,glossary)};
   }
   function patternsFor(item,kind){
     var label=kind==='vocabulary'?item.word:item.phrase,base=tokens(String(label||'')).map(function(t){return t.value;});
@@ -67,62 +77,22 @@
     return patterns;
   }
   function phraseForms(phrase){var value=normalize(phrase),patterns=patternsFor({phrase:phrase},'usage');if(!patterns.length||patterns[0].join(' ')!==value)return value?[value]:[];return patterns.map(function(pattern){return pattern.join(' ');});}
-  // Only explicit concept identities can connect a grammar note to a review card.
-  // Scoped knowledge IDs share a final canonical key, but a card's scope must
-  // still agree with its source lesson. Titles and question text are not IDs.
-  function grammarIdentities(item,sourceLessonId){
-    var values=[],ids=[],invalidScope=false;
-    [item,item&&item.evidence,item&&item.metadata].forEach(function(value){
-      if(!value||typeof value!=='object')return;
-      ['knowledgeId','conceptId','grammarConceptId'].forEach(function(key){if(typeof value[key]==='string'&&value[key].trim())values.push(value[key]);});
-    });
-    if(item&&typeof item.key==='string'&&item.key.indexOf('grammar:id:')===0)values.push(item.key.slice(11));
-    values.forEach(function(value){
-      var scoped=value.match(/^knowledge:([^:]+):grammar:(.+)$/);
-      if(scoped){
-        try{
-          if(sourceLessonId!=null&&decodeURIComponent(scoped[1])!==String(sourceLessonId)){invalidScope=true;return;}
-          value=decodeURIComponent(scoped[2]);
-        }catch(_){invalidScope=true;return;}
-      }else if(/^knowledge:/.test(value)){invalidScope=true;return;}
-      var id=normalize(value);if(id&&ids.indexOf(id)===-1)ids.push(id);
-    });
-    return invalidScope?[]:ids;
+  function grammarKey(item){
+    var value=item.knowledgeId||item.conceptId||item.grammarConceptId,match=typeof value==='string'&&value.match(/^knowledge:[^:]+:grammar:(.+)$/);
+    if(match){try{value=decodeURIComponent(match[1]);}catch(_){value='';}}
+    return value?'id:'+normalize(value):item.title?'title:'+normalize(item.title):'';
   }
-  function grammarKey(item){var ids=grammarIdentities(item);return ids.length?'id:'+ids[0]:item.title?'title:'+normalize(item.title):'';}
-  function balanced(rows){
-    var selected=[];
-    [true,false].forEach(function(studied){
-      var buckets=['vocabulary','usage','grammar'].map(function(kind){return rows.filter(function(row){return row.hasStudiedOrigin===studied&&row.kind===kind;});});
-      for(var offset=0;buckets.some(function(bucket){return offset<bucket.length;});offset++)buckets.forEach(function(bucket){if(bucket[offset])selected.push(bucket[offset]);});
+  function balancedPreview(rows){
+    var out=[];
+    [true,false].forEach(function(known){
+      var groups=['vocabulary','usage','grammar'].map(function(kind){return rows.filter(function(row){return row.hasStudiedOrigin===known&&row.kind===kind;});});
+      var count=Math.max.apply(null,groups.map(function(group){return group.length;}));
+      for(var i=0;i<count;i++)groups.forEach(function(group){if(group[i])out.push(group[i]);});
     });
-    return selected;
+    return out;
   }
-  // Pure selection: prefer the displayed learned origin, one card per concept, and never
-  // turn a broad grammar tag into every question from the source lesson.
-  function selectReviewCards(items,cards,options){
-    options=options||{};var studiedOnly=options.studiedOnly!==false,seen=new Set(),concepts=new Set(),selected=[];
-    function forms(value,primary){return [value&&value[primary],value&&value.matchedForm].concat(strings(value&&value.variants)).filter(function(form){return typeof form==='string'&&form.trim();}).map(normalize);}
-    strings(items).forEach(function(item){
-      if(!item)return;var concept=item.key||item.kind+':'+normalize(item.label);if(concepts.has(concept))return;
-      var candidates=strings(cards).filter(function(card){
-        if(!card||!card.id||!card.sourceLesson||seen.has(card.id)||/未附独立中文释义|未提供中文释义/.test(String(card.prompt||'')))return false;
-        if(!strings(item.origins).some(function(origin){return origin&&origin.lessonId===card.sourceLesson.id&&(!studiedOnly||origin.studied===true);}))return false;
-        if(item.kind==='grammar'){
-          if(card.kind!=='grammar')return false;
-          var wanted=grammarIdentities(item),available=grammarIdentities(card,card.sourceLesson.id);
-          return wanted.some(function(id){return available.indexOf(id)!==-1;});
-        }
-        if(card.kind!==(item.kind==='vocabulary'?'word':item.kind==='usage'?'phrase':null))return false;
-        var wanted=forms(item,'label'),available=forms(card,'target');
-        return wanted.some(function(form){return available.indexOf(form)!==-1;});
-      });
-      candidates.sort(function(a,b){return Number(b.sourceLesson.id===item.origin?.lessonId)-Number(a.sourceLesson.id===item.origin?.lessonId);});
-      if(candidates.length){var card=candidates[0];seen.add(card.id);concepts.add(concept);selected.push(card);}
-    });
-    return selected;
-  }
-  function build(input){
+  function build(input,options){
+    var glossary=options&&options.glossary;
     var seenIds=new Set(),lessons=strings(input).filter(function(l){if(!l||!l.id||seenIds.has(String(l.id))||!Number.isFinite(Number(l.book))||!Number.isFinite(Number(l.number)))return false;seenIds.add(String(l.id));return true;}).map(function(l){
       return {id:String(l.id),book:Number(l.book),number:Number(l.number),title:l.title,source:l.source,sourceDocId:l.sourceDocId,sourcePage:l.sourcePage,textbook:l.textbook,
         vocabulary:strings(l.vocabulary),usage:strings(l.usage),grammar:strings(l.grammar),paragraphs:strings(l.paragraphs)};
@@ -136,7 +106,7 @@
           if(!label.trim()||key===kind+':'||inLesson.has(key))return;inLesson.add(key);
           var concept=concepts.get(key);
           if(!concept){concept={key:key,kind:kind,label:label,meaning:String(item.meaning||''),patterns:kind==='grammar'?[]:patternsFor(item,kind),introductions:[]};concepts.set(key,concept);}
-          concept.introductions.push({lesson:lesson,origin:introduction(lesson,item,kind)});
+          concept.introductions.push({lesson:lesson,origin:introduction(lesson,item,kind,glossary)});
         });
       });
     });
@@ -156,9 +126,11 @@
                 if(ts[i+n].value!==pattern[n])return;
                 if(n&&!/^[\s‘’“”"']*$/.test(part.text.slice(ts[i+n-1].end,ts[i+n].start)))return;
               }
+              // The fixed noun phrase "living room" does not reuse the verb live.
+              if(c.kind==='vocabulary'&&normalize(c.label)==='live'&&token.value==='living'&&ts[i+1]&&ts[i+1].value==='room')return;
               var origins=prior(c);if(!origins.length)return;
               var start=ts[i].start,end=ts[i+pattern.length-1].end,matched=part.text.slice(start,end),type=passageType(lesson,paragraph);
-              hits.set(c.key,{id:'recurrence:'+lesson.id+':'+c.key,key:c.key,kind:c.kind,label:c.label,meaning:c.meaning||origins[0].meaning,matchedForm:matched,matchType:normalize(matched)===normalize(c.label)?'exact':'finite-inflection',
+              hits.set(c.key,{id:'recurrence:'+lesson.id+':'+c.key,key:c.key,kind:c.kind,label:c.label,meaning:origins[0].meaning,semanticMatch:false,matchedForm:matched,matchType:normalize(matched)===normalize(c.label)?'exact':'finite-inflection',
                 origins:origins,evidence:{type:'passage-token-match',sentence:part.text,paragraphIndex:paragraphIndex,fromParagraph:true,sourceType:type.sourceType,sourceLabel:type.sourceLabel,
                   sourcePage:paragraph&&paragraph.sourcePage||lesson.textbook&&lesson.textbook.sourcePdfPage||lesson.sourcePage||null,matchStart:part.start+start,matchEnd:part.start+end}});
             });
@@ -176,13 +148,15 @@
       var lesson=byId.get(String(id));if(!lesson)return [];
       options=options||{};var value=options.studiedIds,studied=new Set(Array.isArray(value)?value.map(String):value&&typeof value.forEach==='function'?Array.from(value,String):[]);
       var limit=options.limit==null?30:Number(options.limit);if(!Number.isFinite(limit))limit=30;limit=Math.max(0,Math.min(100,Math.floor(limit)));
-      var annotated=baseFor(lesson).map(function(hit){
+      var rows=baseFor(lesson).map(function(hit){
         var origins=hit.origins.map(function(origin){return Object.assign({},origin,{studied:studied.has(origin.lessonId)});});
-        var origin=origins.find(function(value){return value.studied;})||origins[0];
-        return Object.assign({},hit,{origin:origin,origins:origins,studied:origin.studied,hasStudiedOrigin:origin.studied,evidence:Object.assign({},hit.evidence)});
+        var chosen=origins.find(function(origin){return origin.studied;})||origins[0];
+        return Object.assign({},hit,hit.kind==='grammar'?{}:{meaning:chosen.meaning,meaningStatus:chosen.meaningStatus,definitionSource:chosen.definitionSource},{origin:chosen,origins:origins,studied:chosen.studied,hasStudiedOrigin:chosen.studied,evidence:Object.assign({},hit.evidence)});
       });
-      return balanced(annotated).slice(0,limit);
+      return balancedPreview(rows).slice(0,limit);
     }});
   }
-  root.StudyRecurrence=Object.freeze({version:VERSION,build:build,selectReviewCards:selectReviewCards,phraseForms:phraseForms,finiteForms:Object.freeze(Object.fromEntries(Object.entries(FORMS).map(function(entry){return [entry[0],Object.freeze(entry[1].slice())];})))});
+  // Compatibility with the earlier call order; both entry points use one matcher.
+  function selectReviewCards(items,cards,options){return root.StudyReview&&typeof root.StudyReview.matchRecurrences==='function'?root.StudyReview.matchRecurrences(cards,items,options):[];}
+  root.StudyRecurrence=Object.freeze({version:VERSION,build:build,definitionFor:definitionFor,selectReviewCards:selectReviewCards,phraseForms:phraseForms,finiteForms:Object.freeze(Object.fromEntries(Object.entries(FORMS).map(function(entry){return [entry[0],Object.freeze(entry[1].slice())];})))});
 })(typeof window!=='undefined'?window:globalThis);

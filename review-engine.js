@@ -7,7 +7,60 @@
  const integer=(v,min,max)=>Number.isInteger(v)&&v>=min&&v<=max;
  const nowOf=options=>timestamp(options?.now)?options.now:Date.now();
  const validId=id=>typeof id==='string'&&id.startsWith('review:')&&id.length<=8000;
+ const own=(value,key)=>value&&typeof value==='object'&&!Array.isArray(value)?Object.getOwnPropertyDescriptor(value,key)?.value:undefined;
  function dayKey(at=Date.now()){return new Date(at+OFFSET).toISOString().slice(0,10);}
+
+ function hasStudied(record){
+  const attempts=own(record,'attempts'),progress=own(record,'learningProgress');
+  return own(record,'completed')===true||typeof attempts==='number'&&Number.isFinite(attempts)&&Math.floor(attempts)>0||timestamp(own(progress,'readAt'))||timestamp(own(progress,'firstPracticedAt'));
+ }
+
+ function grammarIds(item,sourceId){
+  const values=[],ids=[];
+  for(const value of [item,own(item,'evidence'),own(item,'metadata')])for(const field of ['knowledgeId','conceptId','grammarConceptId']){const id=own(value,field);if(typeof id==='string'&&id.trim())values.push(id);}
+  const key=own(item,'key');if(typeof key==='string'&&key.startsWith('grammar:id:'))values.push(key.slice('grammar:id:'.length));
+  for(let value of values){
+   const scoped=value.match(/^knowledge:([^:]+):grammar:(.+)$/);
+   if(scoped){try{if(sourceId!==undefined&&decodeURIComponent(scoped[1])!==sourceId)return [];value=decodeURIComponent(scoped[2]);}catch{return [];}}
+   else if(value.startsWith('knowledge:'))return [];
+   value=normalize(value);if(value&&!ids.includes(value))ids.push(value);
+  }
+  return ids;
+ }
+
+ function matchRecurrences(cards,hits,options={}){
+  const seen=new Set(),concepts=new Set(),selected=[],studiedOnly=options.studiedOnly!==false;
+  const forms=(item,primary)=>[own(item,primary),own(item,'matchedForm'),...(Array.isArray(own(item,'variants'))?item.variants:[])].filter(value=>typeof value==='string'&&value.trim()).map(normalize);
+  for(const hit of Array.isArray(hits)?hits:[]){
+   if(!hit)continue;const concept=hit.key||hit.kind+':'+normalize(hit.label);if(concepts.has(concept))continue;
+   const candidates=(Array.isArray(cards)?cards:[]).filter(card=>{
+    const id=own(card,'id'),sourceId=own(own(card,'sourceLesson'),'id'),kind=own(card,'kind');
+    if(typeof id!=='string'||typeof sourceId!=='string'||seen.has(id)||/未附(?:独立)?中文释义|未提供中文释义/.test(text(card.prompt)))return false;
+    if(!(Array.isArray(hit?.origins)?hit.origins:[]).some(origin=>own(origin,'lessonId')===sourceId&&(!studiedOnly||own(origin,'studied')===true)))return false;
+    if(hit.kind==='grammar')return kind==='grammar'&&grammarIds(hit).some(key=>grammarIds(card,sourceId).includes(key));
+    return kind===(hit.kind==='vocabulary'?'word':hit.kind==='usage'?'phrase':null)&&forms(hit,'label').some(form=>forms(card,'target').includes(form));
+   });
+   candidates.sort((a,b)=>Number(b.sourceLesson.id===hit.origin?.lessonId)-Number(a.sourceLesson.id===hit.origin?.lessonId));
+   if(candidates.length){selected.push(candidates[0]);seen.add(candidates[0].id);concepts.add(concept);}
+  }
+  return selected;
+ }
+
+ function lexicalCue(item,kind){
+  const rawMeaning=text(item.meaning),knownBad={make:'多模仿少创造',catch:'特殊疑问词',live:'国家城市'};
+  const unusable=item.needsContextReview===true||/未附(?:独立)?中文释义|未提供中文释义|暂无释义|待(?:补充|复核)|原笔记习惯表达/.test(rawMeaning)||knownBad[normalize(item.word)]===rawMeaning;
+  const definition=global.StudyRecurrence?.definitionFor(item,kind,global.STUDY_GLOSSARY),meaning=definition?definition.meaning:unusable?'':rawMeaning;
+  if(meaning)return {prompt:meaning,promptType:'meaning-recall'};
+  const example=text(item.example,1000),target=text(kind==='vocabulary'?item.word:item.phrase),forms=[text(item.matchedForm),target];
+  for(const form of forms.filter(Boolean)){
+   const escaped=form.replace(/[.*+?^${}()|[\]\\]/g,'\\$&').replace(/\s+/g,'\\s+'),pattern='(^|[^A-Za-z0-9’\'\\-])('+escaped+')(?=$|[^A-Za-z0-9’\'\\-])',match=new RegExp(pattern,'i').exec(example);
+   if(!match)continue;
+   const cloze=example.replace(new RegExp(pattern,'gi'),(_,prefix)=>prefix+'____');
+   if((cloze.match(/[A-Za-z]+/g)||[]).length<2)continue;
+   return {prompt:'根据来源例句补全表达：'+cloze,promptType:'source-cloze',matchedForm:match[2]};
+  }
+  return null;
+ }
 
  function cardsForLessons(lessons){
   const cards=[],seen=new Set();
@@ -23,12 +76,12 @@
    }
    for(const original of (lesson.vocabulary||[]).slice(0,100)){
     const v=registered?bank.wordForLesson(lesson.id,original?.word):original;
-    if(!v?.word||!v.meaning)continue;
-    add('word',v.word,v.meaning,{phonetic:text(v.phonetic,100),pos:text(v.pos,30),example:text(v.example,1000),...(v.conceptId?{conceptId:v.conceptId}:{})});
+    if(!v?.word)continue;const cue=lexicalCue(v,'vocabulary');if(!cue)continue;
+    add('word',v.word,cue.prompt,{...cue,phonetic:text(v.phonetic,100),pos:text(v.pos,30),example:text(v.example,1000),...(v.conceptId?{conceptId:v.conceptId}:{})});
    }
    for(const p of (lesson.usage||[]).slice(0,100)){
-    if(!p?.phrase||!p.meaning||/未附(?:独立)?中文释义|未提供中文释义/.test(p.meaning))continue;
-    add('phrase',p.phrase,p.meaning,{example:text(p.example,1000),explanation:text(p.note,1500),matchedForm:text(p.matchedForm,200),variants:Array.isArray(p.variants)?p.variants.slice(0,20).map(v=>text(v,200)).filter(Boolean):[]});
+    if(!p?.phrase)continue;const cue=lexicalCue(p,'usage');if(!cue)continue;
+    add('phrase',p.phrase,cue.prompt,{...cue,example:text(p.example,1000),explanation:text(p.note,1500),matchedForm:cue.matchedForm||text(p.matchedForm,200),variants:Array.isArray(p.variants)?p.variants.slice(0,20).map(v=>text(v,200)).filter(Boolean):[]});
    }
    for(const q of (registered?bank.quizForLesson(lesson.id):lesson.quiz||[]).slice(0,100)){
     if(q?.type==='vocabulary'||!Array.isArray(q?.options)||!integer(q.answer,0,q.options.length-1))continue;
@@ -78,6 +131,14 @@
  // inferred: stage and repetition/lapse counts change only after actual review.
  function revisitMistakes(raw,cards,conceptIds,options={}){
   const state=sanitize(raw),now=nowOf(options),wrong=new Set((Array.isArray(conceptIds)?conceptIds:[]).filter(id=>typeof id==='string'));
+  const bank=options.knowledgeBank||global.StudyKnowledge?.bank;
+  if(typeof bank?.get==='function')for(const id of [...wrong]){
+   const record=bank.get(id);
+   if(record?.kind==='word'&&record.status==='current-vocabulary'&&record.id===record.conceptId&&record.id==='knowledge:'+encodeURIComponent(record.lessonId)+':word:'+encodeURIComponent(normalize(record.word))&&
+    (record.id===id||(Array.isArray(bank.audit?.expansionQuestions)&&bank.audit.expansionQuestions.some(row=>row.status==='approved'&&row.originalConceptId===id&&row.conceptId===record.id))))wrong.add(record.id);
+   if(record?.id!==id||!id.startsWith('knowledge:'+encodeURIComponent(record.lessonId)+':'))continue;
+   for(const sourceId of Array.isArray(record.sourceConceptIds)?record.sourceConceptIds:[]){const source=bank.get(sourceId);if(source?.id===sourceId&&sourceId.startsWith('knowledge:'+encodeURIComponent(source.lessonId)+':'))wrong.add(sourceId);}
+  }
   for(const card of Array.isArray(cards)?cards:[]){
    const sourceId=card?.sourceLesson?.id,kind=card?.kind==='word'?'word':card?.kind==='grammar'?'grammar':null;
    if(typeof sourceId!=='string'||!kind||!validId(card.id)||!wrong.has(card.conceptId))continue;
@@ -98,11 +159,39 @@
     if(!verified)continue;
    }else if(!card.conceptId.startsWith('knowledge:'+source+':'+kind+':'))continue;
    if(kind==='word'&&card.conceptId!=='knowledge:'+source+':word:'+encodeURIComponent(normalize(card.target)))continue;
+   if(kind==='word'&&typeof bank?.get==='function'){
+    const word=bank.get(card.conceptId);
+    if(word&&(word.kind!=='word'||word.status!=='current-vocabulary'||word.id!==card.conceptId||word.conceptId!==card.conceptId||word.lessonId!==sourceId||text(word.word,2000)!==card.target||text(word.meaning,2000)!==card.prompt))continue;
+   }
    const record=state.cards[card.id];
    if(!record||record.dueAt<=now||record.revision>=1000000)continue;
    record.dueAt=now;record.revision++;
   }
   return state;
+ }
+
+ // Expansion questions have their own IDs. Resolve their verified provenance
+ // through the installed bank instead of guessing a vocabulary card by its word.
+ function revisitQuestionMistakes(raw,cards,lessonId,questionIds,options={}){
+  const state=sanitize(raw),bank=global.StudyKnowledge?.bank,targets=new Set();
+  if(typeof lessonId!=='string'||typeof bank?.hasLesson!=='function'||typeof bank.questionsForLesson!=='function'||typeof bank.get!=='function'||!bank.hasLesson(lessonId))return state;
+  const requested=new Set((Array.isArray(questionIds)?questionIds:[]).filter(id=>typeof id==='string'));
+  for(const question of bank.questionsForLesson(lessonId)){
+   if(!question?.graded||!requested.has(question.id)||typeof question.conceptId!=='string')continue;
+   const record=bank.get(question.conceptId),kind=question.type==='vocabulary'?'word':question.type==='grammar'?'grammar':null;
+   if(!kind||record?.kind!==kind)continue;
+   if(kind==='grammar'){if(record.id===question.conceptId&&record.conceptId===question.conceptId&&record.lessonId===lessonId)targets.add(record.id);continue;}
+   const canonical='knowledge:'+encodeURIComponent(record.lessonId)+':word:'+encodeURIComponent(normalize(record.word));
+   if(record.status!=='current-vocabulary'||record.id!==canonical||record.conceptId!==canonical||record.lessonId!==question.sourceLessonId||!bank.hasLesson(record.lessonId)||question.lessonId!==lessonId)continue;
+   const authored=Array.isArray(bank.audit?.expansionQuestions)&&bank.audit.expansionQuestions.find(row=>row.id===question.id&&row.status==='approved'&&row.lessonId===lessonId&&row.conceptId===canonical&&row.sourceLessonId===record.lessonId);
+   if(!authored||question.conceptId!==canonical&&question.conceptId!==authored.originalConceptId||question.originalConceptId&&question.originalConceptId!==authored.originalConceptId)continue;
+   const sourceIds=question.sourceConceptIds;
+   if(!Array.isArray(sourceIds)||sourceIds.length!==1||sourceIds[0]!==canonical||!Array.isArray(authored.sourceConceptIds)||authored.sourceConceptIds.length!==1||authored.sourceConceptIds[0]!==canonical)continue;
+   const word=typeof bank.wordForLesson==='function'?bank.wordForLesson(record.lessonId,record.word):null;
+   if(!word||word.conceptId!==canonical||word.word!==record.word||word.meaning!==record.meaning||question.word!==record.word||question.meaning!==record.meaning)continue;
+   targets.add(canonical);
+  }
+  return revisitMistakes(state,cards,[...targets],{...options,knowledgeBank:bank});
  }
 
  function rate(raw,id,rating,options={}){
@@ -131,7 +220,7 @@
  }
 
  function answerForms(card){
-  const values=card?.kind==='phrase'?[card.target,card.matchedForm,...(Array.isArray(card.variants)?card.variants:[])]:[card?.target];
+  const values=card?.kind==='phrase'?[card.target,card.matchedForm,...(Array.isArray(card.variants)?card.variants:[])]:card?.promptType==='source-cloze'?[card.target,card.matchedForm]:[card?.target];
   return [...new Set(values.map(v=>text(v)).filter(Boolean).map(normalize).filter(Boolean))];
  }
 
@@ -151,5 +240,5 @@
   const answer=normalize(input);
   return {correct:Boolean(answer&&answerForms(card).includes(answer)),expected:card?.target||'',answer:String(input??'')};
  }
- global.StudyReview={cardsForLessons,sanitize,enroll,queue,revisitMistakes,rate,stats,dayKey,checkAnswer,hasPhrase,intervalDays:INTERVALS.slice()};
+ global.StudyReview={hasStudied,matchRecurrences,cardsForLessons,sanitize,enroll,queue,revisitMistakes,revisitQuestionMistakes,rate,stats,dayKey,checkAnswer,hasPhrase,intervalDays:INTERVALS.slice()};
 })(window);

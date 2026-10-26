@@ -251,3 +251,5 @@ test('long manual prompts preserve every row and source-original context across 
   for(const part of parts){const payload=JSON.parse(part.text.split('BEGIN_STUDY_SENTENCE_DATA_JSON\n')[1]);for(const group of payload.groups)assert.ok(group.originalText);}
   const long=core.parse('x'.repeat(15000));assert.ok(core.promptParts(long,{maxChars:5000})[0].text.includes('x'.repeat(15000)));
 });
+
+test('duplicate conversion labels are preserved and made explicit',()=>{const p=core.parse('原句：I read.\n否定句：I do not read.\n否定句：They do not read.','conversion');assert.equal(p.rows.length,3);assert.ok(p.warnings.some(w=>w.code==='duplicate-kind'));});
