@@ -57,5 +57,12 @@ test('untranslated paragraphs are still separated, with one honest missing-trans
  const html=core.render(bare,{alignments:[]});assert.equal((html.match(/暂无译文/g)||[]).length,1);
  assert.equal((html.match(/data-sentence="/g)||[]).length,5);
 });
+test('a stale alignment on a single-sentence paragraph retains its original Chinese as a labelled reference',()=>{
+ const current={id:'single',book:2,number:1,paragraphs:[{en:'A new sentence.',zh:'原段落保留的中文。'}]};
+ const previous=[{lessonId:'single',book:2,number:1,paragraphs:[{index:0,rows:[{en:'An old sentence.',zh:'不能误配的旧句译文。',kind:'narration',speaker:'旁白'}]}]}];
+ const m=core.model(current,previous);assert.equal(m.rows[0].zh,'');assert.equal(m.fallbacks[0]?.zh,'原段落保留的中文。');
+ const html=core.render(current,{alignments:previous});assert.match(html,/本段参考译文/);assert.match(html,/原段落保留的中文/);assert.doesNotMatch(html,/不能误配/);
+ assert.doesNotMatch(core.render(current,{alignments:previous,showTranslation:false}),/原段落保留的中文/);
+});
 
 test("printed source speaker labels survive unaligned Book1 reading",()=>{const lesson={id:"b1",book:1,number:5,paragraphs:[{speaker:"MR. BLAKE",en:"Good morning.",zh:""}]};const result=core.model(lesson,[]);assert.equal(result.groups[0].speaker,"MR. BLAKE");assert.equal(result.groups[0].kind,"speech");});

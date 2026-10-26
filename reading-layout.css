@@ -1,10 +1,16 @@
 @charset "UTF-8";
 .reading-layout { margin: 24px 0; }
+.reading-controls { position: sticky; top: env(safe-area-inset-top, 0px); z-index: 25; display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 48px; margin: 0 0 8px; padding: 2px 4px; border-bottom: 1px solid var(--line); background: #fffdfd; }
+.reading-controls-title { font-size: 13px; color: #53695e; }
+.reading-controls .check-label { min-height: 44px; padding: 7px 6px; gap: 8px; font-size: 14px; color: var(--teal-dark); }
+.reading-controls .check-label input { width: 18px; height: 18px; }
 .reading-block { margin: 22px 0; padding: 0 0 4px; }
-.reading-turn { display: flex; align-items: center; gap: 10px; margin: 0 0 10px; color: #466257; font-size: 13px; }
-.reading-turn strong { font-weight: 600; }
-.reading-turn small { padding: 2px 8px; border: 1px solid #c7d7cd; border-radius: 4px; color: #446052; background: #f1f6f1; font-size: 12px; }
+.reading-turn { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; margin: 0 0 10px; color: #466257; font-size: 13px; }
+.reading-turn strong { min-width: 0; font-weight: 600; overflow-wrap: anywhere; }
+.reading-turn small { flex-shrink: 0; padding: 2px 8px; border: 1px solid #c7d7cd; border-radius: 4px; color: #446052; background: #f1f6f1; font-size: 12px; }
 .reading-pair { padding: 10px 0 14px; }
+.reading-pair, .reading-block { scroll-margin-top: 70px; scroll-margin-bottom: calc(var(--player-height, 112px) + 20px); }
+.reading-pair.is-current { border-radius: 5px; background: #edf4ea; }
 .reading-pair + .reading-pair { border-top: 1px solid #edf0ed; }
 .reading-pair .english { margin: 0; line-height: 1.85; overflow-wrap: anywhere; }
 .reading-pair .translation { margin: 8px 0 0; padding: 0; color: #566761; font-size: 15px; line-height: 1.9; overflow-wrap: anywhere; }
@@ -22,4 +28,5 @@
  .reading-pair { padding: 8px 0 12px; }
  .reading-pair .english { font-size: 20px; line-height: 1.8; }
  .reading-pair .translation { font-size: 15px; line-height: 1.85; }
+ .reader-tabs .tab { min-height: 44px; }
 }
