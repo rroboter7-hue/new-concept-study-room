@@ -16,13 +16,13 @@
   "counts": {
     "sourceRows": 770611,
     "validSingleWordRows": 400181,
-    "entries": 11949,
+    "entries": 11973,
     "coreSelected": 6076,
-    "bilingual": 11344,
-    "chinese": 11949,
-    "english": 11344,
+    "bilingual": 11368,
+    "chinese": 11973,
+    "english": 11368,
     "methods": {
-      "exact": 11947,
+      "exact": 11971,
       "explicit-lemma": 2,
       "explicit-reverse-exchange": 0
     },
@@ -39,91 +39,99 @@
     "inputs": [
       {
         "file": "index.html",
-        "sha256": "a574abe3241c264ed767a7ddb8252f50eaca7184580852d4867bcf0733f0a255"
+        "sha256": "19550bae6d2bbb96be5b61caaa1de4d42fbe9d7ea2573ab9989c9a36f090a452"
       },
       {
         "file": "lexical-word-tokens.js",
-        "sha256": "c7889c727f9fe6c84bc19b28132b388a27868544e1e5aca9aaa1273be3737bee"
+        "sha256": "084d801958dadc0f8c72a6bbfde9fa5acd079460a5ad811f8bf465389c84c552"
       },
       {
         "file": "curriculum.js",
-        "sha256": "ad4454ce67e117ae12483a1a880abdcd2471f4a44fac70b4966bf0818559635c"
+        "sha256": "d76d50a09f56d36af2d8e8a089359ae829c2203cc7ae4ece2582e9dbe4b575cc"
       },
       {
         "file": "textbook-lessons.js",
-        "sha256": "9c285b39fa9329dafe8cbbafacd914f029f8c8a4b1598e7482deca81e69761fb"
+        "sha256": "4be74c96513da65bc726bf715fac8646c635061fdd7929fc1514394b87dbc5b1"
       },
       {
         "file": "book1-first10-lessons.js",
-        "sha256": "2f2615cad74d264eeb9416302997954a3fbeb23210249f4b15add576ee45e194"
+        "sha256": "7838b041633eb32ff931ea991b10e1264c3b4a50972c1c88ad4b0e5599003662"
       },
       {
         "file": "book1-first10-catalogue.js",
-        "sha256": "9c34cc3c4c909aba23fa81a17588ff395970033a1405671cd2955aa9faf192f3"
+        "sha256": "f1a78a14edc52e0a151d08fa444f3f4c9b147fe82c5c5b1c69d5bce216d667c1"
       },
       {
         "file": "book1-complete-lessons.js",
-        "sha256": "ce15c0025372a62651de679c5f2e92a6b1cd5742ebd3baf037895f38b044b375"
+        "sha256": "eb36ad104ce5d33e1667ed8c5283c6e247d4b81b78b8739b99ee5211bc8a2c9b"
       },
       {
         "file": "book2-lessons.js",
-        "sha256": "ee8d0517b8107f64bb79887bfc2cebd3e5fe0a46d475a16479d27d383f8a5265"
+        "sha256": "144450940c8cf0f8127ee9fc1eee73aaaadc2119c24c54d834f672d245b67aed"
       },
       {
         "file": "book2-translations.js",
-        "sha256": "5395a0c38f76cf6a7f578ead13a5fe2b7fe3ea5177217e1e7a0ae48bb1a5350e"
+        "sha256": "2f0489f8e69bd234410c8f566988d4c2869bf05f9da978446fe919c3f2e8a9b0"
       },
       {
         "file": "book2-reading-alignment.js",
-        "sha256": "b26c439d32c4b13aaa4880ba73d28e16c942f744f7d26b72dc508ece6a5560c2"
+        "sha256": "a24ae2f182503512647feccad4e73cabbd32b0510cb064632447fda5a70737c7"
       },
       {
         "file": "phrase-library.js",
-        "sha256": "6fb1098faa72c7ecd21da4cae4baeb1c066474af18e9b8b43b79b26a39ddc8dc"
+        "sha256": "d2967c88e84b17dc4620470076da82a20a0485f749ae0d8a7a2f04ceaeeb0022"
       },
       {
         "file": "book2-learning-support.js",
-        "sha256": "604129f40e8ba968c8ce8297e10be59739bbede4d4f4cdeec5f9de362eb7b4dc"
+        "sha256": "a467503cec892e985a1545db3a457cb9c0b35575ce3ec9c8a78437324d08fd51"
       },
       {
         "file": "book2-vocabulary.js",
-        "sha256": "af600c559e55f15ebc1f1136d7aeffe9c86d7bb80aa5b80d433812e4e58e071b"
+        "sha256": "15cdae2bb5eff156ce61a27d730db4b64b95baa39650623ae4376086777f7ad2"
       },
       {
         "file": "book2-source-spelling-fixes.js",
-        "sha256": "83849811cf37947db6a84c1e4ab1c1c837df2793c7d3c141f7c99ff1b728c488"
+        "sha256": "09ec2f07a26a6bc4afa81e3b91fea0769008fd5f52b3c5714e8633813103af5d"
       },
       {
         "file": "book2-additional-context-fixes.js",
-        "sha256": "fe4740b920d03e7035d30a7d0089c517bca1c52e3e505eee4e4463d882f114af"
+        "sha256": "b915a52e3264505fcb6ba1410c95b7bb658a7cd3626ddabb3c799845efd68789"
       },
       {
         "file": "book2-quality-support.js",
-        "sha256": "467b91c4e8feb3a26a3b40a89be1ed230a5e97cf1b4a63d052fcd02655aaa4ce"
+        "sha256": "d36d22551219534b7b84ab2fcca9775c7fc8a585498d8dcf985aed0002905e7e"
       },
       {
         "file": "book2-reviewed-context-vocabulary.js",
-        "sha256": "fd496d0414e5df1e2d699065a6a8631ef6b075893e64384f5a21ce17ed3177f0"
+        "sha256": "a375db3c6355bda8196c3596e75cdff4cf698a789aeaebaeb57b7d0cac5738af"
       },
       {
         "file": "book2-reviewed-usage.js",
-        "sha256": "78d0d5659e2141a45b176e2c3930b28988b7fafa051376775532a94904fbba8f"
+        "sha256": "77b645eecb3c6df307761ed0d656bd3b75a0f808051b4fd3fd8a4b18866f3637"
       },
       {
         "file": "book2-reviewed-example-corrections.js",
-        "sha256": "241edf0ade155004f539ebb21122835b4dcb73537a971c93d04ef3981208ed60"
+        "sha256": "b782f0f878507046d878fc45d0695a74d5f9d6d3717eb648962fb231a761d441"
+      },
+      {
+        "file": "book2-reviewed-usage-21-25.js",
+        "sha256": "86a8b92c3ae57ba8e41312474c9c9f06262b9abe0be1a598952232fd68bb0be1"
+      },
+      {
+        "file": "book2-lexical-source-corrections-26-27.js",
+        "sha256": "e4d64498044cb4829d96f9493ed318beb07b055acad30276f3f4e9bc6a96919d"
       },
       {
         "file": "book2-practice-packs.js",
-        "sha256": "43c0fbfb49c1203a0134ebf0a9349b36ff77bc641ec098c9685b88c467d91d5c"
+        "sha256": "7902be0d72c74e10ba627738c9ce02afb8c08343b99931eabb20266a4c504b37"
       },
       {
         "file": "book2-reviewed-questions.js",
-        "sha256": "d30f71480ecb668d530050f2109dff91b9bf7fea498638f404737434d2d09cbd"
+        "sha256": "0dd264b7ac4969c0dd89be5530b45783766e5f0292aa5a0045ad163ae3360418"
       },
       {
         "file": "study-knowledge.js",
-        "sha256": "bfc7f5e0abaa2d87f38086cedafa20dfd7a36d25958802b621189ce8415e7db4"
+        "sha256": "a0d7168e0e37eb5d4842a5118fa96e2a670c31995f76fd21f138b9bbe1b8eb21"
       },
       {
         "file": "pilot-question-expansion.js",
@@ -131,59 +139,59 @@
       },
       {
         "file": "book2-later-question-expansion.js",
-        "sha256": "94fe8ac150ccba12535a345e326cdcdeeef5c77f3bfe8003ce3b1e190199514f"
+        "sha256": "e7b43bfce712d35035d4a4edd63e28ed58d99c3d43d40d8ff6462d0879ba9005"
       },
       {
         "file": "book2-pack-supplements.js",
-        "sha256": "31a9ef0c10b50e652ff4d5ea13e1f4b70906459f72fa1e1e6ad86b73ee62365e"
+        "sha256": "0a7d4ce5b038c212b1f9760563c4e1b5838712e929e2189a96d0f6ed1c0ef71c"
       },
       {
         "file": "knowledge-bootstrap.js",
-        "sha256": "343ef69682b9342c052db1ba47aa51d3eda2891d37b723a43d6e5328bad905ae"
+        "sha256": "d76673adf77df6e0ad5b500d4385c3e079f6f9e995361e52fa27d8e317a9839e"
       },
       {
         "file": "practice-pack-core.js",
-        "sha256": "76bb72bd8f25976aa5d01ddda0f050d5dd7f3014d610b45174d91927fd084c8d"
+        "sha256": "2976f15b341083a85f42afcdfe142bfc49e62a0df880e14d89585e68cb18876c"
       },
       {
         "file": "practice-pack-bootstrap.js",
-        "sha256": "ba4e4aaec149a9a0f882f8c7eda6492cc0038d57ea4dd984d4e6fba7af8d1508"
+        "sha256": "42e40b21e76122caef01a2668bb0fc77d97244e4e72581386d141fc4445c3c67"
       },
       {
         "file": "recurrence.js",
-        "sha256": "7d8e82f0093ce3a22fb28f64c1456cbf12ef1da794a76ae6f5063908e5cec6cb"
+        "sha256": "7eb2ca5d42f35cf7d7f132f21136ec52b07d1782af73bc07643f47e42fc3b923"
       },
       {
         "file": "generated-audio.js",
-        "sha256": "cfcff8c834dae15e81be68a7ee6c3f186a34b01c99f5c451845baa3f22c8e1d8"
+        "sha256": "e4275a66a04253d6b7fcac05323779cf6e1b49705efdcce3473825b59a62fca5"
       },
       {
         "file": "practice-pack-word-audio.js",
-        "sha256": "0c48404fc3f67a875d9cd6c9ffba46f14dc923afcd3cb03cd4ceef6a077943af"
+        "sha256": "b9a20aa4fa6e89ffb5be28ada542c1a863e513ea7f870f25d52a3be95ee156b5"
       },
       {
         "file": "provided-audio.js",
-        "sha256": "4544dfeb87f5ae9ed71f7c8ed51ed04c7a0965d195905ecd8326026291bc06b7"
+        "sha256": "b8ced95adee0a371790af774f35b44219ccffabcf6a655dd9b1f26c39b7f110c"
       },
       {
         "file": "nativeears-audio.js",
-        "sha256": "d314a86714740b6efbddcfe05b4168560c8357be33fa6c966bc247c05bd3e6f4"
+        "sha256": "0159272964f6bc20d18009d3dd409efe5e2e38345b45c2e4ecbca42938c311d4"
       },
       {
         "file": "book1-first10-audio.js",
-        "sha256": "90ada0e3e52f2d29d129e972ff89b69d3cec3405033711d5625cc2e6e0b7e2fe"
+        "sha256": "f287c14e572fe2c00ec47ad0ec3b3e6fa505b28a123157eb2aad7d69598446b8"
       },
       {
         "file": "book1-complete-audio.js",
-        "sha256": "7672f8bbfe8ba2648408f98cb9c0e1c508e26dbc8757fda4689b8e30ebc9c8ec"
+        "sha256": "a9e5789fae08f0123a380bf5369c36f5bc9c9e6b36ad3acb47f8dc56ba070bd1"
       },
       {
         "file": "book2-packs20-word-audio.js",
-        "sha256": "3d591291c1dcf2f6ea48b24ad9d72edf8342e3bf6335216ed940d1c3c3106e42"
+        "sha256": "a87587e87fd2e8c42db9e9eb6ff5a03790e40ae003e9d03bee100f8994b4dd05"
       },
       {
         "file": "nativeears-advanced-catalogue.js",
-        "sha256": "914ba5799a509d5988a54da72e384a2d6e23f92498a7f264663b78a228c8b5aa"
+        "sha256": "024219118bca13b0cb3d4b54563b3146b93f01f05de90140a77177e6498e8ddd"
       },
       {
         "file": "nativeears-advanced-audio.js",
@@ -191,23 +199,23 @@
       },
       {
         "file": "book3-lessons.js",
-        "sha256": "f866e3a4a67c3aba6d16efdba396b0a714552cb9b3048efccc1d9e8581512c92"
+        "sha256": "93406bac2ac01691df5b45606b164535908e0b3416c9935a26cbe2a1682f3aa6"
       },
       {
         "file": "book4-lessons.js",
-        "sha256": "c549181d40b2353d1baab2ff3cbe8e3f8871af4774aa2b005a29a747301f506f"
+        "sha256": "ac8d460e66a9e6781d2f2b0bb2c7c1632778966b5c73512a078f3ba6ac0124c1"
       },
       {
         "file": "glossary.js",
-        "sha256": "e1bd1e1181334e4e8fd68966305a296238b013fbdc763efda636f668559b0451"
+        "sha256": "586a4ba71bc1218bfe7d2b75933ced5ccf25934c94d6f8298133c8ea5ed9c871"
       },
       {
         "file": "source-files.js",
-        "sha256": "eee19eac79542543452930d0dc709cce7e8e264800cbd5fbbc49a6fa92da8119"
+        "sha256": "153eca1721bd891668a18e6ee11492fa79411cfe4ad4264abaf0a95dbb2b941f"
       },
       {
         "file": "library.js",
-        "sha256": "fd5b25fa99dcff3c2e0397f241d02bf1315d8c026e122ba02b8b6e6404c153f4"
+        "sha256": "2dfe9185d2d9f12c27d41e57d6e6feb90f6902127557c3c38260bfadcbef082f"
       },
       {
         "file": "text-library.js",
@@ -215,127 +223,135 @@
       },
       {
         "file": "core.js",
-        "sha256": "4cd7ddfd2e0f441319e110b6fc48ff49f76bcf1f2f96d6d0697716bf0969053c"
+        "sha256": "5843100274c5fcd9f50fbef2127522c9fc85c994129680685bca62e2fcf640f0"
       },
       {
         "file": "review-engine.js",
-        "sha256": "7f187a2b213e8e4d3063bf0450f3350680286f8b60709e25f318a86cdbaf87ca"
+        "sha256": "53427bc5143792860a5e93155d5271f5023574ba268915fbd88caede9254b779"
       },
       {
         "file": "review-practice.js",
-        "sha256": "33792c8a27e336e6aafe7269bb9719a070aa69c257de3777d99eda960e5ada1f"
+        "sha256": "bb7465c9da229df6b0c78f70b4a0fd685ded64adf7756c29925488754d20e710"
       },
       {
         "file": "reading-layout.js",
-        "sha256": "2d9825b14bed10ec5b326a4b6cf7cc30e8ca6077bc99b38a9971ce4db59a2779"
+        "sha256": "2a7eb86c48e03ec94355a56d22745225c60e582d0b32eb7471dfb558e7a0dc57"
       },
       {
         "file": "book34-language-support.js",
-        "sha256": "d19c9c3067238e02beb77e3e24ca9049e3d98d1efa36a88ea7d08ffbd996765c"
+        "sha256": "2b1fb89c334800d8eb27a546e07284f764a6d95987116a46f17c121261b81290"
       },
       {
         "file": "book2-context-word-audio.js",
-        "sha256": "1230773df38794983c76e027d7d68a717bf87164da78ec3712e5a25d7cfe1db7"
+        "sha256": "b5b6ffe6df21cee533b0c8fc3d3a2f2eadb0571c78111f81674c5c1c36f28d82"
       },
       {
         "file": "book2-complete-word-audio.js",
-        "sha256": "c7ea26619216fc829115381b68f3dfbf92d9c989f6ab0e186043e79551ac5a6a"
+        "sha256": "ec562f5d53b830a3a6bcad5c37b6e78b40b03f968e7c9e996d2dfd97f9b8b5c7"
       },
       {
         "file": "ordinal-audio-alias-correction.js",
-        "sha256": "f9b89b1b4ae4b51e38aa42e3d555f4c6b2d3c8122aa9c6d304b1b056ac22db24"
+        "sha256": "7488a954c4f3af3a5ee5ae6a3a8e00a8f98ec2500ffdceb216e5d93a16da37b0"
+      },
+      {
+        "file": "book2-lexical-context-audio-26-27.js",
+        "sha256": "af40a154a6c92a6249849e72c7784693eab7b12f56f3e2f614e0ef86109d3e6a"
       },
       {
         "file": "delivery-audio.js",
-        "sha256": "421927879fc3bec1b3d806cbef4eb57cfa7089d68ab00a133963801c4112af91"
+        "sha256": "30792f0341379c9b156c96fb7832fd6041ce8521017e4571e50979f7fb91e5f1"
       },
       {
         "file": "audio.js",
-        "sha256": "203eefc945da2dd07cf062ab1a5decc43c508b06a2a41a1e5c61a3197adcd377"
+        "sha256": "bcca94251945f9cf3fe8de322118c51794f2f15b216fa35c9fc356ac2b1a2159"
       },
       {
         "file": "pilot-grammar-followups.js",
-        "sha256": "811e74ae299f6717f166b5662f61af140d8b5ae042d520fa1b829fada7e79abe"
+        "sha256": "0b3496096e0f2a26f0344f1a6d202de28bf8e85b15eb001c010990d3c12e9f33"
       },
       {
         "file": "learning-remediation.js",
-        "sha256": "2e70f1ef5bdd913181783cd0e3399719a9bd1c73c967213b9188de26e5d288c9"
+        "sha256": "b2bed40cc8ca5922d4eccbd4416b5af9aeced7e08f3b3677b63129b60104d90a"
       },
       {
         "file": "game.js",
-        "sha256": "2448afeb173a8220309e48da9e609b04688c1829f13cefdc28b1411e011258f9"
+        "sha256": "7d2dc66e95126ccc301ea04df3fb8db402b653d52cdeeb375f5adc82b9f0e47b"
       },
       {
         "file": "grammar-check.js",
-        "sha256": "bf733b3ad33131df66f4dc7d9a11e6d242a286c091cea23d45b58e34e60dc6e9"
+        "sha256": "244dcf0f97d0d12fe2787e11f2c573ca3b2cca82ee69a82a202df86b7569f28e"
+      },
+      {
+        "file": "context-meanings.js",
+        "sha256": "e54fec5f8d23a07aa4e9bb8f32846cb63f1fe14941b25abe6b2c76825cf0807b"
       },
       {
         "file": "lesson-word-targets.js",
-        "sha256": "76c761c5cc9e7358460d38260b2eefdf8f1a58346b1ecebed9085d5ef4d4e177"
+        "sha256": "fef7aff9d5d4f6e40e0460264c304e76a95373a075cb255bad40e7ac08670f5b"
       },
       {
         "file": "sentence-wordbank-data.js",
-        "sha256": "38295c8cca336efda43c33ccf6b20f1d2abcd320652d9d3819baab3fa0389d1c"
+        "sha256": "6afa670ba0c0dca66fd26a7f757a9cec597ff086377cbcd7f521992b96a549d4"
       },
       {
         "file": "sentence-core.js",
-        "sha256": "619118709e4498cf6e77aadd4edbc5c3386bd68ee6b4e54b66c11238e0f81433"
+        "sha256": "ddbc462422373cbcaa09f1a2c2e6c5622f5c80584a5d220dcbf63a2f2f8918ee"
       },
       {
         "file": "sentence-practice.js",
-        "sha256": "21663437a3c70c4ec9a425aca32007c290f0cfa834c46e496a214dce60782b44"
+        "sha256": "f7705acc3bf59eef1fdb7c33eca8b337927734996e0ec71a183d34b4a823cfbf"
       },
       {
         "file": "dictionary-service.js",
-        "sha256": "316fe841f8d755660cae636ea43bc351de559acb104fe083626590b898e6273b"
+        "sha256": "f547728b98317838c5f6d82622ffedf13dc28aacec43d41623ba90bd7e9f81c0"
       },
       {
         "file": "batch-sentence-core.js",
-        "sha256": "5fd8b841a151b947cb7be692201192b0c36b27385e467cab1a038cea73f3366f"
+        "sha256": "d4f5d4f2218ccafc13dae8e879180409789ae0743cf8404bd5d230cfb57e373e"
       },
       {
         "file": "batch-sentence-practice.js",
-        "sha256": "e3aa1fe292e342ec35cd0f14a6680763f69af7f1a999641bbdc9f18e7afd2124"
+        "sha256": "3ef14be567477d3027b0d10af15ec95aa9bd82757156e61d71dd31c6c1fd733b"
       },
       {
         "file": "output-practice.js",
-        "sha256": "f17412458b2b245c18ed61ad776ab963ec37f8e10cb437dacef07b272fdd685d"
+        "sha256": "3b19b115e2c9673ad7c86335973b4eb874c1f5fce04ce4025cad3ff29643d33f"
       },
       {
         "file": "phrase-practice.js",
-        "sha256": "318bcef9eb9af396cccac559a1a5b5fbf3c9f79ec02b9ed73ca33e007b23253b"
+        "sha256": "4573c17131696ebd51847e66e6af67d7c4023fc31ce3c5dce63e234289d75eac"
       },
       {
         "file": "text-reader.js",
-        "sha256": "c793e273f7400eeed4435c470e78767bf44170d26d97fcfd9120fd5a9d58c1a6"
+        "sha256": "6a5378f25b17503f58f84102686f5089755632cf1ebae95eae05a25c4db0cf1e"
       },
       {
         "file": "mobile-learning-shell.js",
-        "sha256": "cfff617cbdd3e5a9230b060ad28ae07746b2cea7994df343c99c74ea0aa630c3"
+        "sha256": "925ddc92f7ffddd9298e0b82dd5e4a71deff4380d2e3e51259d1c38a2bb5baa0"
       },
       {
         "file": "learning-progress.js",
-        "sha256": "3ebcd5305bd27b293174b670fb225b598bbb09e4b69d50128505f1ed894e068f"
+        "sha256": "f422e4d710d4a11423ca1ffeb19798ad77df9c4c7dd7080917acd47b1f51ac42"
       },
       {
         "file": "lesson-practice.js",
-        "sha256": "e2a364e10e1c1cb9c810c185b0ae5627c0431891f2500d141558de64f7e8f11e"
+        "sha256": "c2bca6ae701d07d13651a8fe5e89e7fd5ef118b3712268268b4394decc0b940c"
       },
       {
         "file": "reading-view.js",
-        "sha256": "e97c33fb7c3090becfea75f03fe0789b4a17fb5eb497ca73b5d0f4e2c76a6427"
+        "sha256": "568632893d06cbf75d925a3bcf79a31c2303b8dfe401881a9acbdad56d4113b7"
       },
       {
         "file": "learning-coach-core.js",
-        "sha256": "445760f1661322fdaeb90484502d6c022073152e39c16ee999584096c50c7f41"
+        "sha256": "d4096edd183e6e26cbe33e1d60fcf73f55f42e8a3e62abaa5fd925f34a434ba1"
       },
       {
         "file": "learning-coach.js",
-        "sha256": "f16ee66df98b9205db27fb9e5412f33acc08eaa6fa5ed12f961e358e7b086f0d"
+        "sha256": "c87ea44f340552aeebe51c255577c67c75f670d6ad2c5cfdda26eee95297801d"
       },
       {
         "file": "lesson-recall-core.js",
-        "sha256": "75fa4ca926814d499f00307175e161f3d8690f3c503b43b43e04a78393c02ec3"
+        "sha256": "68f075876020288bb1b25c3b08eb97a9cccd4b07273ec8feadb048bd0d49ddc2"
       },
       {
         "file": "lesson-recall-catalogue.js",
@@ -343,15 +359,23 @@
       },
       {
         "file": "lesson-recall.js",
-        "sha256": "ecc3e0debe1220aebddbe70915c2a2c5672f90db7e0d46b8bf7b3c502cba5589"
+        "sha256": "56e1e5993c169e8c253b3aa4bd2a1b33734cfbaee817625e984a7725fcfb98bb"
       },
       {
         "file": "dictionary-context.js",
-        "sha256": "cb9514c12ed9945c92bf8c34fb6d21215834bd49c33acb717e952e79fa3ce485"
+        "sha256": "f95d2fb82a3bb5afbd251e8c758406fff74974af7cfbb6eff908cf0d234c19e4"
       },
       {
         "file": "reading-font.js",
-        "sha256": "5c1bc0a59d5afce61368410e388e67374f11877a024bd03675fc7ffb62f39a9b"
+        "sha256": "11a6139864b845293514d2b7ed10bea1704f741eeb3d958cd8ced70e8784cf15"
+      },
+      {
+        "file": "mistake-history.js",
+        "sha256": "0338e92dccd9c7b58ffe6dc70c402d10d36168e3aca1c7207bfe59e7bf8ee89e"
+      },
+      {
+        "file": "study-storage.js",
+        "sha256": "6ba52f22a0b52023603f46403db15ef0f5ce998fd00c69d04d63c050ec970a71"
       },
       {
         "file": "text-data/4be758839e0f6e4b.json",
@@ -396,11 +420,11 @@
     ]
   },
   "coverage": {
-    "requested": 11621,
-    "recorded": 10008,
-    "bilingual": 9428,
-    "chinese": 10008,
-    "english": 9428,
+    "requested": 11655,
+    "recorded": 10041,
+    "bilingual": 9461,
+    "chinese": 10041,
+    "english": 9461,
     "unrecorded": [
       "able-camp-close-while-erupting",
       "able-tell-more",
@@ -1371,6 +1395,7 @@
       "nju",
       "njum",
       "noah's",
+      "nora's",
       "not-work",
       "note-a",
       "note-tear",
@@ -2645,39 +2670,39 @@
   "shards": [
     {
       "file": "a.json",
-      "entries": 766,
-      "bytes": 209791,
-      "sha256": "0bbc970eb7bf60c971eb35099fe8c2f3c8d34f73a04120563c175a775d4a8379"
+      "entries": 767,
+      "bytes": 210045,
+      "sha256": "714eca68da565ffda13746595aa21c62a8ef3dd7ba8cdb4e13aa76659109a3b9"
     },
     {
       "file": "b.json",
-      "entries": 650,
-      "bytes": 194065,
-      "sha256": "f92b08db3e0e5db43d950b99c47470508b749f7aef9b58c699294d48cd9d75ac"
+      "entries": 652,
+      "bytes": 194533,
+      "sha256": "aeab33827395f630a8e3c4b30ce8a447a764f4c1d8b3618399008370be415bec"
     },
     {
       "file": "c.json",
-      "entries": 1137,
-      "bytes": 365219,
-      "sha256": "88862907388c755eb37ba54ff346887af1fe2f4e88a093937d9c375e4ac14a20"
+      "entries": 1138,
+      "bytes": 365370,
+      "sha256": "e0f115c93014c0398ac966614b6f64c9b16178862e4b86a2eae9b28c87f98ffa"
     },
     {
       "file": "d.json",
-      "entries": 702,
-      "bytes": 200386,
-      "sha256": "c061eaee47673769dd70dcca1caec2dba8ba256535e062dc6861f3765bff69eb"
+      "entries": 704,
+      "bytes": 200857,
+      "sha256": "32aa12f5da1a7339ae70ed0bcff5d8ad10e4716eaee1f1f8d10b886ad07fb07b"
     },
     {
       "file": "e.json",
-      "entries": 539,
-      "bytes": 144456,
-      "sha256": "8ce886b06fd46a1fa2632267291a5a0065d69d9c3434e14de69d96802f0a8f74"
+      "entries": 541,
+      "bytes": 144925,
+      "sha256": "bb8756bceaf297b831be46f44b70e600bf401efed7cd61d33da1854caf2d1493"
     },
     {
       "file": "f.json",
-      "entries": 561,
-      "bytes": 179351,
-      "sha256": "9af175a961073da1d036886a5db0d08c07eb014611354b7a122d26c936833fa8"
+      "entries": 562,
+      "bytes": 179785,
+      "sha256": "6a8d57fa1dd5eebf0a3d01d2de49c0927ff34a9861571a5409c38662263844b0"
     },
     {
       "file": "g.json",
@@ -2687,9 +2712,9 @@
     },
     {
       "file": "h.json",
-      "entries": 401,
-      "bytes": 123032,
-      "sha256": "54471dfe2602a7cb162c54981e35d4fcf67ec6341b8aecb3c0212e82ff2787aa"
+      "entries": 403,
+      "bytes": 124171,
+      "sha256": "d1ba7d21be77ae3e3b4c14d82785105a06cabab200842f0c352c94a201f54ee9"
     },
     {
       "file": "i.json",
@@ -2717,9 +2742,9 @@
     },
     {
       "file": "m.json",
-      "entries": 587,
-      "bytes": 164722,
-      "sha256": "432613cea6e67ecfca1773cca3946cdfef6b30cf35b9c8163618ebc20af99427"
+      "entries": 591,
+      "bytes": 166187,
+      "sha256": "b0a2fdac3a9b15296422c08b5c00c5420d6315170301438038dcc745ff1de0fc"
     },
     {
       "file": "n.json",
@@ -2735,9 +2760,9 @@
     },
     {
       "file": "p.json",
-      "entries": 912,
-      "bytes": 296270,
-      "sha256": "c6daef35af70664716ba3b65e794507b5bf92a0379808e8d94f701ee1b620d7b"
+      "entries": 914,
+      "bytes": 296643,
+      "sha256": "ea681e3ab7bd8f99d0a1ce39f7846764918d61746cb5cb6b3a716fd94cacf074"
     },
     {
       "file": "q.json",
@@ -2747,15 +2772,15 @@
     },
     {
       "file": "r.json",
-      "entries": 693,
-      "bytes": 225323,
-      "sha256": "6a949e34c9ba655ebab9366383cd13cbe38d3293f19201155d8a48b76aecbd82"
+      "entries": 694,
+      "bytes": 225524,
+      "sha256": "6078d5466b3d937078009ccacef92d17643bd9a788fd5f07b6b2b9545d598592"
     },
     {
       "file": "s.json",
-      "entries": 1451,
-      "bytes": 458853,
-      "sha256": "ab4071cf79fb3eb5a663f565533066e7ca834c2fde9fb1c5a49b2227c272112f"
+      "entries": 1454,
+      "bytes": 459440,
+      "sha256": "b5e54ab4898ec8b9f565e4f18efe714868fbb17509e11e42c746157c450b6916"
     },
     {
       "file": "t.json",
@@ -2765,9 +2790,9 @@
     },
     {
       "file": "u.json",
-      "entries": 225,
-      "bytes": 53986,
-      "sha256": "bcedb879dafb1ca9beb4be7b08267f62798a40b43eb6e25738d8381e9e300271"
+      "entries": 227,
+      "bytes": 54381,
+      "sha256": "bf84cdeda33712de40f47dcf2d5940cf4d9e6acfc22d79fbd40f2dce54bfab40"
     },
     {
       "file": "v.json",
@@ -2777,9 +2802,9 @@
     },
     {
       "file": "w.json",
-      "entries": 391,
-      "bytes": 124930,
-      "sha256": "403b2080cada370aadf6a033c3c0b2960911110c8486f276f1c0fbac367fb958"
+      "entries": 392,
+      "bytes": 125167,
+      "sha256": "acc4fb863e22747c2cfc275b42821d4aa58a1a53bd70b44875bb02c053a0b834"
     },
     {
       "file": "x.json",

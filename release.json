@@ -1,6 +1,6 @@
 {
-  "build": "2026-10-27-book2-reviewed30",
-  "preparedAt": "2026-10-27T07:16:59.035Z",
+  "build": "2026-10-27-learning-reliability-six",
+  "preparedAt": "2026-10-27T08:14:08.940537+00:00",
   "book2": {
     "book": 2,
     "total": 96,
@@ -617,6 +617,38 @@
       "explicitRoundBinding": true,
       "atomicSaveAndRollback": true,
       "masteryRulesPreserved": true
+    },
+    "sixAuditFixes": {
+      "contextMeanings": {
+        "explicitReviewedSenses": 523,
+        "missingNewWordMeanings": 0,
+        "sourceIdentityBound": true,
+        "allGenericDictionarySensesReviewed": false
+      },
+      "guidedAndBatchWhConsistency": true,
+      "storage": {
+        "legacyKeyPreserved": true,
+        "crossTabReconciliation": true,
+        "mergeFirstBackupPreview": true,
+        "preImportRecoverySnapshot": true,
+        "pendingEditorPreserved": true,
+        "failedSaveDoesNotClaimSuccess": true
+      },
+      "mistakeHistory": {
+        "packTaskAndRevision": true,
+        "savedAnswersPreserved": true,
+        "sourceSpecificCorrection": true
+      },
+      "review": {
+        "expandedVocabulary": true,
+        "existingCardIdsPreserved": true,
+        "writingDoesNotGrantMastery": true
+      },
+      "recommendations": {
+        "studiedRecordsOrDeclaredRange": true,
+        "fullManualBankPreserved": true,
+        "phraseVerbPreferencePreserved": true
+      }
     }
   },
   "readingFont": {

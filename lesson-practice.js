@@ -45,7 +45,7 @@
    const p=this.pack(),s=this.session();if(!p||!s||s.stale||s.resultSaved)return false;const r=A.result(s,p);if(!r.complete||!r.full)return false;
    const accepted=this.committedAttempts.has(s.attemptId)||this.options.isAttemptSaved?.(p.lessonId,s.attemptId)===true;
    if(s.mode==='retest'&&!accepted&&!this.options.canRetest?.(p.lessonId,p.revision)){this.options.toast?.('复测条件已变化，本次不会计为复测通过。请重新安排完整复测。');return false;}
-   const wrong=r.wrongTaskIds.map(id=>{const q=p.tasks.find(q=>q.id===id),f=A.grade(q,s.answers[id].value);return {taskId:q.id,conceptId:q.conceptId,question:q.prompt,answer:f.correctAnswer,explanation:q.rule,sourceType:'authored-practice-pack'};});
+   const wrong=r.wrongTaskIds.map(id=>{const q=p.tasks.find(q=>q.id===id),f=A.grade(q,s.answers[id].value);return {taskId:q.id,conceptId:q.conceptId,question:q.prompt,answer:f.correctAnswer,selectedAnswer:f.selectedAnswer,reason:f.reason,revision:p.revision,explanation:q.rule,sourceType:'authored-practice-pack'};});
    const payload={attemptId:s.attemptId,lessonId:p.lessonId,revision:p.revision,mode:'unit-pack',isRetest:s.mode==='retest',score:r.percent,correct:r.correct,total:r.total,wrong,categories:r.categories};
    if(!accepted){try{if(this.options.saveResult?.(payload)===false){this.options.toast?.('结果尚未保存，可点击“保存本次结果”重试。');return false;}this.committedAttempts.add(s.attemptId);}catch{this.options.toast?.('结果尚未保存，请重试。');return false;}}
    return this.save({...s,resultSaved:true});

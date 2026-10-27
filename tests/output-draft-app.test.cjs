@@ -15,7 +15,7 @@ test('real app emergency backup retains failed draft writes and restoring it ref
  const h=await harness(options),first=await book4(h),answer='This unfinished answer must survive an emergency backup.';
  await h.click('[data-output-mode="retell"]');const before=JSON.stringify(h.api.data.outputDrafts);h.setStorageWritable(false);await h.input('[data-output-input="answer"]',answer);assert.equal(JSON.stringify(h.api.data.outputDrafts),before);assert.match(h.api.output.draftStatusText(),/草稿未保存/);
  await book4(h,2);await book4(h);assert.equal(h.api.output.answer,answer);const backup=h.api.backupData();assert(backup.outputDrafts,'backup contains output drafts');assert.equal(backup.outputDrafts.lessons[first.id].modes.retell.answer,answer);
- h.setStorageWritable(true);await h.click('[data-output-action="draft-save"]');assert.match(h.api.output.draftStatusText(),/草稿已保存/);await h.input('[data-output-input="answer"]','A newer answer that should be replaced by my backup.');h.api.restoreBackup({format:'zhixin-backup-v1',data:backup});assert.equal(h.api.output.answer,answer);assert.equal(h.document.querySelector('[data-output-input="answer"]').value,answer);
+ h.setStorageWritable(true);await h.click('[data-output-action="draft-save"]');assert.match(h.api.output.draftStatusText(),/草稿已保存/);await h.input('[data-output-input="answer"]','A newer answer that should be replaced by my backup.');h.api.restoreBackup({format:'zhixin-backup-v1',data:backup},{mode:'replace'});assert.equal(h.api.output.answer,answer);assert.equal(h.document.querySelector('[data-output-input="answer"]').value,answer);
 });
 
 test('daily retell references remain assisted after a fresh app bootstrap and task re-entry',async()=>{

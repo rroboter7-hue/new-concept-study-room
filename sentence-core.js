@@ -345,7 +345,63 @@
   }
   function expression(value, field) { return typeof value === 'string' ? value.trim() : text(object(value)[field]||(field==='word'?(object(value).phrase||object(value).label):''), 160).trim(); }
   function duplicateKey(value) { return expand(value).replace(/[^\p{L}\p{N}\s]/gu, '').replace(/\s+/g, ' ').trim(); }
-  function completion(options){options=object(options);var answers=object(options.answers),target=expression(options.target,'word'),kinds=requiredKinds(options.mode),keys=kinds.map(function(k){return duplicateKey(answers[k]);});return Boolean(target&&keys.every(Boolean)&&new Set(keys).size===kinds.length&&kinds.every(function(k){return typeof answers[k]==='string'&&answers[k].length<=400&&matchesExpression(answers[k],target);}));}
+  var LOCATIVE = new Set(['to','at','in','on','from','near','by','behind','under','outside','inside']);
+  var TIME_MARKERS = new Set(['last','next','every','this','that']);
+  function questionedTarget(sentence, original, target) {
+    // This exception covers short, supported transformations only. Compare the
+    // remaining words rather than accepting any question that starts with WH.
+    if (typeof sentence !== 'string' || typeof original !== 'string' || sentence.length > 400 || original.length > 400 || !target) return false;
+    var question = expand(sentence), sourceText = expand(original);
+    if (!/^[a-z0-9\s']+\?$/.test(question) || !/^[a-z0-9\s']+[.!]?$/.test(sourceText) || !matchesExpression(original, target)) return false;
+    var issues = [];
+    if (!analyze(question, 'wh', issues, []) || !analyze(sourceText, 'affirmative', issues, []) || issues.length) return false;
+    var words = sourceText.match(/[a-z]+(?:'[a-z]+)*|[0-9]+/g) || [], asked = question.match(/[a-z]+(?:'[a-z]+)*|[0-9]+/g) || [];
+    var targetWords = expand(target).match(/[a-z]+(?:'[a-z]+)*|[0-9]+/g) || [], wh = asked[0], s = subject(words, 0);
+    if (!targetWords.length || !s || !WH.has(wh)) return false;
+    var alternatives = forms(IRREGULAR_BASE[targetWords[0]] || targetWords[0]);
+    var verbIndex = afterAdverbs(words, s.end), sourceVerb = words[verbIndex], base = VERBS[sourceVerb];
+    var comparedSource = words.slice(), comparedQuestion;
+    var qSubject = AUX.has(asked[1]) ? subject(asked, 2) : null;
+    if (qSubject && words.slice(0, s.end).join(' ') === asked.slice(2, qSubject.end).join(' ')) {
+      var aux = asked[1], next = afterAdverbs(asked, qSubject.end);
+      if (BE.has(sourceVerb) || MODAL.has(sourceVerb)) {
+        if (aux !== sourceVerb) return false;
+        comparedQuestion = asked.slice(2, qSubject.end).concat([aux], asked.slice(qSubject.end));
+      } else {
+        if (!DO.has(aux) || !base || asked[next] !== base) return false;
+        var third = /[^aeiou]y$/.test(base) ? base.slice(0, -1) + 'ies' : /(?:s|x|z|ch|sh|o)$/.test(base) ? base + 'es' : base + 's';
+        if (aux === 'did') {
+          if (sourceVerb === third || /ing$/.test(sourceVerb) || sourceVerb === base && !['read','put'].includes(base)) return false;
+        } else if (sourceVerb !== base && sourceVerb !== third) return false;
+        comparedSource[verbIndex] = base;
+        comparedQuestion = asked.slice(2, qSubject.end).concat(asked.slice(qSubject.end));
+      }
+    } else if (['who','what','which'].includes(wh)) {
+      // A subject question retains the original predicate and its other facts.
+      comparedQuestion = asked.slice(1);
+    } else return false;
+    return words.some(function (word, start) {
+      var end = start + targetWords.length;
+      if (!alternatives.includes(word) || targetWords.slice(1).some(function (part, index) { return words[start + index + 1] !== part; })) return false;
+      var begin = start;
+      if (DETERMINERS.has(words[begin - 1])) begin--;
+      if (!qSubject) {
+        if (begin !== 0 || end !== s.end) return false;
+      } else if (wh === 'where') {
+        if (LOCATIVE.has(words[begin - 1])) begin--;
+        else if (!LOCATIVE.has(words[begin])) return false;
+      } else if (wh === 'when') {
+        if (TIME_MARKERS.has(words[begin - 1])) begin--;
+        else return false;
+        if (['on','in','at'].includes(words[begin - 1])) begin--;
+      } else if (!['who','what','which','whom'].includes(wh)) return false;
+      return comparedSource.slice(0, begin).concat(comparedSource.slice(end)).join(' ') === comparedQuestion.join(' ');
+    });
+  }
+  function targetCovered(kind, sentence, answers, target, mode) {
+    return matchesExpression(sentence, target) || kind === 'wh' && mode !== 'flexible' && mode !== 'phrase' && questionedTarget(sentence, answers.affirmative, target);
+  }
+  function completion(options){options=object(options);var answers=object(options.answers),target=expression(options.target,'word'),kinds=requiredKinds(options.mode),keys=kinds.map(function(k){return duplicateKey(answers[k]);});return Boolean(target&&keys.every(Boolean)&&new Set(keys).size===kinds.length&&kinds.every(function(k){return typeof answers[k]==='string'&&answers[k].length<=400&&targetCovered(k,answers[k],answers,target,options.mode);}));}
   // Persisted progress and rotation read only own data fields. Do not sanitize
   // answers here: truncating an imported overlong answer could fabricate completion.
   function draftValues(drafts) {
@@ -513,12 +569,13 @@
   // dictionary verb homographs. Keep genuine lower-case verbs and other
   // sentence-initial/title verbs eligible; this is not a capitalization rule.
   var sourceNameLabels = new Set(['Bob', 'Mike', 'Peter', 'Harry', 'Dement']);
+  var introductoryContractions = new Set(("i'm you're he's she's it's we're they're i've you've we've they've i'll you'll he'll she'll it'll we'll they'll i'd you'd he'd she'd it'd we'd they'd there's there'll there'd that's that'll that'd what's what'll what'd who's who'll who'd where's when's why's how's here's let's").split(' '));
   function recommendationEligible(item) {
     var category = ownValue(item, 'category'), value = recommendationExpression(item), normalized = normalize(value);
-    if (!normalized || !/[a-z]/.test(normalized)) return false;
+    if (!normalized || !/[a-z]/.test(normalized) || introductoryContractions.has(normalized)) return false;
     var label = ownValue(item, 'label');
     if (sourceNameLabels.has(value) || typeof label === 'string' && sourceNameLabels.has(label.trim())) return false;
-    if (category === 'verb') return /^[a-z]+(?:['-][a-z]+)*$/.test(normalized) && !introductoryVerbForms.has(normalized);
+    if (category === 'verb') return /^[a-z]+(?:['-][a-z]+)*$/.test(normalized) && !/'(?:s|re|ve|ll|d|m)$/.test(normalized) && !introductoryVerbForms.has(normalized);
     var phraseKey = introductoryPhraseKey(value);
     return category === 'phrase' && !introductoryVerbForms.has(normalized) && !introductoryPhrases.has(phraseKey)
       && !/^(?:next|last|this|every) (?:day|week|weekend|month|year)$/.test(phraseKey);
@@ -615,8 +672,11 @@
       if (!sentence) return { kind: kind, label: LABELS[index], status: 'empty', issues: [], notes: notes };
       writtenCount++;
       if (typeof answers[kind] === 'string' && answers[kind].length > 400) issues.push('每句最多 400 个字符，请缩短后再检查。');
+      var covered = target && targetCovered(kind, sentence, answers, target, options.mode);
       if (!target) { if (options.requireTarget !== false) issues.push('请先选择本轮目标词。'); }
-      else if (!matchesExpression(sentence, target)) issues.push('还未识别到目标词“' + target + '”或已支持的常见词形。');
+      else if (!covered) issues.push('还未识别到目标词“' + target + '”或已支持的常见词形。');
+      var questioned = covered && kind === 'wh' && !matchesExpression(sentence, target);
+      if (questioned) notes.push('特殊疑问词替代了原句中的目标信息；已保留其余已支持的主语、谓语和情境，所问内容仍需人工复核。');
       if (kind === 'combined') {
         if (!oldWord) { if (options.requireOldKnowledge !== false) issues.push('请先选择一个来自已学早期课程的旧词。'); }
         else if (target && (matchesExpression(oldWord, target) || matchesExpression(target, oldWord))) issues.push('旧词需要与目标词不同，不能使用同一词的其他词形。');
@@ -626,7 +686,7 @@
         var key = duplicateKey(sentence);
         if (KINDS.slice(0, 4).some(function (other) { return text(answers[other], 10000).trim() && duplicateKey(answers[other]) === key; })) issues.push('第五句需要另写一个新句子，不能逐字重复前四句。');
       }
-      review = !analyze(sentence.slice(0, 400), kind, issues, notes);
+      review = !analyze(sentence.slice(0, 400), kind, issues, notes) || questioned;
       if (typeof options.grammarCheck === 'function') {
         try {
           var grammarIssues = options.grammarCheck(sentence.slice(0, 400));

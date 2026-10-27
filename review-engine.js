@@ -78,13 +78,20 @@
     if(seen.has(id)||!validId(id))return;seen.add(id);
     cards.push({id,kind,target,prompt,sourceLesson,...extra});
    }
-   for(const original of (lesson.vocabulary||[]).slice(0,100)){
-    const v=registered?bank.wordForLesson(lesson.id,original?.word):original;
+   const baseVocabulary=(lesson.vocabulary||[]).map(original=>registered?bank.wordForLesson(lesson.id,original?.word)||original:original);
+   let reviewVocabulary=baseVocabulary;
+   try{const expanded=global.StudyLessonWordTargets?.vocabularyForLesson(lesson,baseVocabulary);if(Array.isArray(expanded))reviewVocabulary=expanded;}catch{/* A missing expansion must not hide existing review cards. */}
+   for(const original of reviewVocabulary.slice(0,1000)){
+    let v=original;
+    const corrected=global.StudyContextMeanings?.forLesson(lesson,original?.word);
+    if(original?.meaningProvenance?.kind==='self-authored-context'&&!corrected)continue;
+    if(corrected)v={...original,...corrected,word:original.word};
+    if(v?.meaningMissing===true||v?.needsContextReview===true)continue;
     if(!v?.word)continue;const cue=lexicalCue(v,'vocabulary');if(!cue)continue;
     const provenance={};for(const field of ['sourceType','sourceLabel','exampleSourceType','exampleSourceLabel','sourceDocId'])if(text(v[field],500))provenance[field]=text(v[field],500);
     if(integer(v.sourcePage,1,100000))provenance.sourcePage=v.sourcePage;
     if(v.contextEvidence&&typeof v.contextEvidence==='object'&&!Array.isArray(v.contextEvidence))provenance.contextEvidence={...v.contextEvidence,...(Array.isArray(v.contextEvidence.matchedForms)?{matchedForms:v.contextEvidence.matchedForms.slice()}:{})};
-    add('word',v.word,cue.prompt,{...cue,phonetic:text(v.phonetic,100),pos:text(v.pos,30),example:text(v.example,1000),...provenance,...(v.conceptId?{conceptId:v.conceptId}:{})});
+    add('word',v.word,cue.prompt,{...cue,phonetic:text(v.phonetic,100),pos:text(v.pos,30),example:text(v.example||v.sourceSentence,1000),...provenance,...(v.meaningSource?{meaningSource:text(v.meaningSource,300)}:{}),...(v.conceptId?{conceptId:v.conceptId}:{})});
    }
    for(const p of (lesson.usage||[]).slice(0,100)){
     if(!p?.phrase||p.practiceEligible===false)continue;if(p.usage21To25ReviewId&&(typeof global.StudyReviewedUsage21To25?.isUsageCurrent!=='function'||global.StudyReviewedUsage21To25.isUsageCurrent(p,lesson)!==true))continue;const cue=lexicalCue(p,'usage');if(!cue)continue;

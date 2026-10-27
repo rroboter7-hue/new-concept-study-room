@@ -8,7 +8,7 @@
     {kind:'affirmative',label:'肯定句',hint:'用目标词写一个完整的肯定原句。后面三句都沿用这句的人物、时态和情境。'},
     {kind:'negative',label:'否定句',hint:'把第 1 句改为否定句，保留目标词和原来的情境。注意 be、助动词与动词形式。'},
     {kind:'yesno',label:'一般疑问句',hint:'把第 1 句改为可用 yes / no 回答的问题，保留目标词，检查助动词和问号。'},
-    {kind:'wh',label:'特殊疑问句',hint:'围绕第 1 句用 what / who / where / when / why / how 等提问，并保留目标词。who 作主语时不一定需要 do。'},
+    {kind:'wh',label:'特殊疑问句',hint:'围绕第 1 句用 what / who / where / when / why / how 等提问，保留其余情境；疑问词可替代被询问的信息。who 作主语时不一定需要 do，句意和语法仍需人工复核。'},
     {kind:'combined',label:'旧知综合造句',hint:'用目标词另写一个新句子，可按需结合旧词或旧用法。不能逐字重复前四句。'}
   ];
   const flexibleSteps = [
@@ -66,6 +66,8 @@
       this.timer = null;
       this.failureNotified = false;
       this.adjustmentsOpen = false;
+      this.learningRangeOpen = false;
+      this.oldKnowledgeOpen = false;
       this.oldBank = [];
       this.wordCategory = 'all';
       this.wordLimit = 80;
@@ -87,6 +89,11 @@
       document.addEventListener('toggle', event => {
         if (!this.inside(event.target)) return;
         if (event.target.dataset?.sentenceAdjustments !== undefined) this.adjustmentsOpen = event.target.open;
+        if (event.target.dataset?.sentenceLearningRange !== undefined) {
+          this.learningRangeOpen = event.target.open;
+          const content = event.target.querySelector?.('[data-sentence-learning-content]');
+          if (content) content.innerHTML = event.target.open ? this.learningRangeContentHTML() : '';
+        }
         if (event.target?.dataset?.sentenceReference !== undefined && event.target.open) this.markAssisted();
       }, true);
     }
@@ -350,10 +357,70 @@
       return false;
     }
 
+    learningBookNumbers() {
+      const books = {'1':[],'2':[],'3':[],'4':[]};
+      for (const lesson of this.options.getLessons?.() || []) {
+        const book = ownData(lesson,'book'), number = ownData(lesson,'number');
+        if (Number.isInteger(book) && books[book] && Number.isInteger(number) && number > 0 && number <= 10000) books[book].push(number);
+      }
+      for (const book of Object.keys(books)) books[book] = [...new Set(books[book])].sort((a,b)=>a-b);
+      return books;
+    }
+
+    learningRange() {
+      let supplied;
+      try { supplied = this.options.getLearningRange?.(); } catch (_) { /* An unavailable preference grants no learned range. */ }
+      const result = {version:1,books:{'1':0,'2':0,'3':0,'4':0}}, numbers = this.learningBookNumbers();
+      const books = ownData(supplied,'version') === 1 ? ownData(supplied,'books') : null;
+      for (const book of Object.keys(result.books)) {
+        const value = ownData(books,book);
+        if (Number.isInteger(value) && value > 0) result.books[book] = numbers[book].filter(number=>number<=value).at(-1) || 0;
+      }
+      return result;
+    }
+
+    setLearningRangeBook(book, value) {
+      const numbers = this.learningBookNumbers();
+      if (!Object.prototype.hasOwnProperty.call(numbers,book) || !/^\d+$/.test(value)) return false;
+      const number = Number(value);
+      if (number !== 0 && !numbers[book].includes(number)) return false;
+      const range = this.learningRange();
+      if (range.books[book] === number) return true;
+      range.books[book] = number;
+      let saved = false;
+      try { saved = this.options.saveLearningRange?.(range) === true; } catch (_) { /* Keep the last saved preference on failure. */ }
+      if (!saved) { this.notify('已学范围未保存，请稍后重试。');this.redrawLearningRange(book);return false; }
+      this.ensureRecommendations();this.redrawLearningRange(book);return true;
+    }
+
+    redrawLearningRange(book) {
+      this.redraw();
+      document.querySelector('#sentence-practice-content')?.querySelector(`[data-sentence-learning-book="${book}"]`)?.focus?.({preventScroll:true});
+    }
+
+    recommendationPool() {
+      const range = this.learningRange(), learned = new Set(), records = this.options.getRecords?.() || {};
+      for (const lesson of this.options.getLessons?.() || []) {
+        const id = ownData(lesson,'id'), book = ownData(lesson,'book'), number = ownData(lesson,'number');
+        if (typeof id !== 'string' || !Number.isInteger(book) || !Number.isInteger(number) || !(book < this.currentLesson?.book || book === this.currentLesson?.book && number < this.currentLesson?.number)) continue;
+        const record = ownData(records,id), attempts = ownData(record,'attempts');
+        if (ownData(record,'completed') === true || typeof attempts === 'number' && Number.isFinite(attempts) && attempts > 0 || number > 0 && number <= (range.books[book] || 0)) learned.add(id);
+      }
+      return this.wordBank().filter(item => {
+        if (!this.core().recommendationEligible?.(item)) return false;
+        const ids = [item.source,...(item.sources || [])].map(source=>source?.id);
+        for (const alias of [item.key,...(item.aliases || [])]) {
+          const parts = alias.split(':');
+          if (parts.length === 3 && ['word','phrase'].includes(parts[0])) try { ids.push(decodeURIComponent(parts[1])); } catch (_) { /* Invalid aliases do not grant a source. */ }
+        }
+        return ids.some(id=>learned.has(id));
+      });
+    }
+
     recommendedOldItems() {
       const keys = this.lessonSelections.get(this.currentLesson?.id)?.recommendedOldKeys || [];
-      const bank = new Map(this.wordBank().map(item => [item.key, item]));
-      return keys.map(key => bank.get(key)).filter(item => this.core().recommendationEligible?.(item) === true);
+      const bank = new Map(this.recommendationPool().map(item => [item.key, item]));
+      return keys.map(key => bank.get(key)).filter(Boolean);
     }
 
     captureRecommendedItems(currentKeys) {
@@ -380,20 +447,21 @@
       if (!this.active || typeof this.core().recommendOldWords !== 'function' || typeof this.core().recommendationEligible !== 'function') return;
       const previous = this.lessonSelections.get(this.currentLesson.id) || {};
       const stored = Array.isArray(previous.recommendedOldKeys) ? previous.recommendedOldKeys : [], keys = this.normalizeOldKeys(stored);
-      const bank = new Map(this.wordBank().map(item => [item.key,item]));
-      const valid = previous.recommendationProfile === recommendationProfile && stored.length === keys.length && keys.every(key => this.core().recommendationEligible(bank.get(key)));
-      const hasEligible = this.wordBank().some(item => this.core().recommendationEligible(item));
+      const pool = this.recommendationPool(), poolKey = JSON.stringify(pool.map(item=>item.key)), bank = new Map(pool.map(item => [item.key,item]));
+      const valid = previous.recommendationProfile === recommendationProfile && stored.length === keys.length && keys.every(key => bank.has(key)) && (previous.recommendationPoolKey === undefined || previous.recommendationPoolKey === poolKey);
+      const hasEligible = pool.length > 0;
       if (!refresh && valid && (keys.length || previous.recommendationsReady && !hasEligible)) {
+        this.lessonSelections.set(this.currentLesson.id, {...previous,recommendationPoolKey:poolKey});
         if (JSON.stringify(stored) !== JSON.stringify(keys)) {
           this.captureRecommendedItems(stored);
-          this.lessonSelections.set(this.currentLesson.id, {...previous,recommendedOldKeys:keys});
+          this.lessonSelections.set(this.currentLesson.id, {...previous,recommendedOldKeys:keys,recommendationPoolKey:poolKey});
           this.remember(true);this.flush();
         }
         return;
       }
       if (refresh || stored.length) this.captureRecommendedItems(keys);
-      const items = this.core().recommendOldWords({profile:'phrases-verbs',items:this.wordBank(),drafts:this.allDrafts(),lessonId:this.currentLesson.id,previousKeys:refresh ? keys : [],count:4,random:this.options.random});
-      this.lessonSelections.set(this.currentLesson.id, {...previous,recommendedOldKeys:items.map(item => item.key),recommendationProfile,recommendationsReady:true});
+      const items = this.core().recommendOldWords({profile:'phrases-verbs',items:pool,drafts:this.allDrafts(),lessonId:this.currentLesson.id,previousKeys:refresh ? keys : [],count:4,random:this.options.random});
+      this.lessonSelections.set(this.currentLesson.id, {...previous,recommendedOldKeys:items.map(item => item.key),recommendationProfile,recommendationsReady:true,recommendationPoolKey:poolKey});
       this.remember(true);this.flush();
     }
 
@@ -646,11 +714,20 @@
 
     oldPickerEntryHTML() {
       const recommendations = this.recommendationsHTML();
-      return `<div class="sentence-old-picker">${recommendations || this.oldPickerTriggerHTML()}<div class="sentence-old-selection"><div class="sentence-selected-old" aria-label="已选旧词">${this.oldChipsHTML()}</div></div></div>`;
+      return `<div class="sentence-old-picker">${recommendations || `<p class="sentence-recommendation-empty">尚无可推荐的已学用法或动词。可设置已学范围，或从前课词库手动选用。</p>${this.oldPickerTriggerHTML()}`}${this.learningRangeHTML()}<div class="sentence-old-selection"><div class="sentence-selected-old" aria-label="已选旧词">${this.oldChipsHTML()}</div></div></div>`;
+    }
+
+    learningRangeHTML() {
+      return `<details class="sentence-learning-range" data-sentence-learning-range${this.learningRangeOpen ? ' open' : ''}><summary>已学范围（可选）</summary><div data-sentence-learning-content>${this.learningRangeOpen ? this.learningRangeContentHTML() : ''}</div></details>`;
+    }
+
+    learningRangeContentHTML() {
+      const range = this.learningRange(), numbers = this.learningBookNumbers();
+      return `<p>在本站之外学过的课程也可填写。推荐结合本站学习记录和此范围；设置范围不会标记课程完成或掌握。</p><div class="sentence-learning-books">${Object.keys(numbers).map(book=>`<label>第 ${book} 册 · 已学至<select data-sentence-learning-book="${book}"${numbers[book].length ? '' : ' disabled'}><option value="0"${range.books[book] === 0 ? ' selected' : ''}>未声明</option>${numbers[book].map(number=>`<option value="${number}"${range.books[book] === number ? ' selected' : ''}>第 ${number} 课</option>`).join('')}</select></label>`).join('')}</div>`;
     }
 
     oldPickerTriggerHTML() {
-      return `<button type="button" class="sentence-old-trigger" data-sentence-action="open-word-picker" aria-haspopup="dialog" aria-controls="sentence-word-picker">${this.pickerIcon('book','▤')}<strong>全部旧词</strong><span class="sentence-old-trigger-hint">${this.selectedOldItems().length ? `已选 ${this.selectedOldItems().length} 项` : '按需选用'}</span></button>`;
+      return `<button type="button" class="sentence-old-trigger" data-sentence-action="open-word-picker" aria-haspopup="dialog" aria-controls="sentence-word-picker">${this.pickerIcon('book','▤')}<strong>前课词库</strong><span class="sentence-old-trigger-hint">${this.selectedOldItems().length ? `已选 ${this.selectedOldItems().length} 项` : '按需选用'}</span></button>`;
     }
 
     recommendationsHTML() {
@@ -684,7 +761,7 @@
 
     wordPickerHTML() {
       const e = this.escape;
-      return `<dialog id="sentence-word-picker" class="sentence-word-dialog" aria-labelledby="sentence-word-title" aria-describedby="sentence-word-description"><div class="sentence-word-handle" aria-hidden="true"></div><header class="sentence-word-header"><div><h3 id="sentence-word-title">已学重点词表</h3><p id="sentence-word-description">汇总前面课程的重点，按需选用</p></div><button type="button" class="sentence-word-close" data-sentence-action="close-word-picker" aria-label="关闭词表">${this.pickerIcon('close','×')}</button></header><label class="sentence-word-search">${this.pickerIcon('search','⌕')}<span class="sentence-sr-only">搜索英文或中文</span><input type="search" data-sentence-input="word-search" maxlength="160" placeholder="搜索英文或中文" value="${e(this.wordSearch)}" autocomplete="off" autocapitalize="none" spellcheck="false"></label><div class="sentence-word-tabs" role="tablist" aria-label="旧知分类">${wordCategories.map(item => `<button type="button" id="sentence-word-tab-${item.key}" role="tab" data-sentence-action="word-category" data-sentence-category="${item.key}" aria-selected="${this.wordCategory === item.key}" aria-controls="sentence-word-list" tabindex="${this.wordCategory === item.key ? 0 : -1}">${item.label}</button>`).join('')}</div><p class="sentence-sr-only sentence-word-results" role="status" aria-live="polite"></p><div id="sentence-word-list" class="sentence-word-list" role="tabpanel" aria-labelledby="sentence-word-tab-${this.wordCategory}" tabindex="0"></div><footer class="sentence-word-footer">${this.wordPickerFooterHTML()}</footer></dialog>`;
+      return `<dialog id="sentence-word-picker" class="sentence-word-dialog" aria-labelledby="sentence-word-title" aria-describedby="sentence-word-description"><div class="sentence-word-handle" aria-hidden="true"></div><header class="sentence-word-header"><div><h3 id="sentence-word-title">前课词库</h3><p id="sentence-word-description">汇总前面课程的重点，包含尚未学过的表达，按需手动选用</p></div><button type="button" class="sentence-word-close" data-sentence-action="close-word-picker" aria-label="关闭词表">${this.pickerIcon('close','×')}</button></header><label class="sentence-word-search">${this.pickerIcon('search','⌕')}<span class="sentence-sr-only">搜索英文或中文</span><input type="search" data-sentence-input="word-search" maxlength="160" placeholder="搜索英文或中文" value="${e(this.wordSearch)}" autocomplete="off" autocapitalize="none" spellcheck="false"></label><div class="sentence-word-tabs" role="tablist" aria-label="旧知分类">${wordCategories.map(item => `<button type="button" id="sentence-word-tab-${item.key}" role="tab" data-sentence-action="word-category" data-sentence-category="${item.key}" aria-selected="${this.wordCategory === item.key}" aria-controls="sentence-word-list" tabindex="${this.wordCategory === item.key ? 0 : -1}">${item.label}</button>`).join('')}</div><p class="sentence-sr-only sentence-word-results" role="status" aria-live="polite"></p><div id="sentence-word-list" class="sentence-word-list" role="tabpanel" aria-labelledby="sentence-word-tab-${this.wordCategory}" tabindex="0"></div><footer class="sentence-word-footer">${this.wordPickerFooterHTML()}</footer></dialog>`;
     }
 
     refreshWordPickerList() {
@@ -832,6 +909,7 @@
     handleChange(event) {
       const select = event.target;
       if (!this.inside(select) || !this.currentLesson) return;
+      if (select.dataset.sentenceLearningBook !== undefined) { this.setLearningRangeBook(select.dataset.sentenceLearningBook,select.value);return; }
       if (select.dataset.sentenceOldKey !== undefined && this.active) {
         const key = select.dataset.sentenceOldKey, selected = this.active.draft.selectedOldKeys || [];
         if (select.checked && !selected.includes(key) && selected.length >= 100) {
@@ -933,7 +1011,7 @@
       const editor=phrase?
         '<h3 id="sentence-step-title">习惯用法造句</h3><p id="sentence-step-hint" class="sentence-note">用这个表达写一句与自己有关的话。先想清楚“谁、做什么、何时或何地”，再写英文；不必再做四种转换。</p><label class="sentence-field" for="sentence-answer">我的句子<textarea id="sentence-answer" class="sentence-textarea" data-sentence-input="answer" rows="4" maxlength="400" lang="en" spellcheck="true" autocapitalize="sentences" aria-describedby="sentence-step-hint sentence-counter" placeholder="例如：谁 + '+e(target.word||target.phrase)+' + 时间／地点…">'+e(draft.answers.affirmative)+'</textarea></label><div class="sentence-writing-tools"><button type="button" data-sentence-action="insert-target">插入目标表达</button><span id="sentence-counter" class="sentence-counter">'+draft.answers.affirmative.length+' / 400</span></div>':
         '<h3 id="sentence-step-title">四句型对照</h3><p id="sentence-four-hint" class="sentence-note">四句话放在一起，围绕同一人物、时态和情境，直接对照修改。</p>'+this.inlineFourHTML();
-      return '<div class="sentence-quick-workspace" data-writing-mode="'+draft.mode+'"><div class="sentence-writing-modes" role="group" aria-label="造句训练方式"><button type="button" data-sentence-action="writing-mode" data-sentence-mode="four" aria-pressed="'+(!phrase)+'">四句型转换</button><button type="button" data-sentence-action="writing-mode" data-sentence-mode="phrase" aria-pressed="'+phrase+'">习惯用法造句</button></div><label class="sentence-field sentence-quick-target">'+(phrase?'选择习惯用法':'选择目标词')+'<select class="sentence-select" data-sentence-select="target">'+(current.length?'<optgroup label="本课表达">'+options(current)+'</optgroup>':'')+(old.length?'<optgroup label="前面学过的表达">'+options(old)+'</optgroup>':'')+'</select></label><p class="sentence-quick-progress">本课已练 '+progress.done+' / '+progress.total+' '+(phrase?'项用法':'个词')+' · 已练不代表掌握<button type="button" data-sentence-action="next-unfinished"'+(progress.done===progress.total?' disabled':'')+'>下一个未练</button></p><section class="sentence-editor" aria-labelledby="sentence-step-title">'+editor+'<div class="sentence-draft-meta"><p class="sentence-save-status" data-save-state="'+status.state+'" role="status" aria-live="polite">'+e(status.text)+'</p></div><div class="sentence-actions sentence-quick-actions"><button type="button" class="button" data-sentence-action="check">检查基本要求</button><button type="button" class="button primary" data-sentence-action="copy-review">一键复制到豆包检查</button></div><p class="sentence-copy-note">'+(phrase?'复制句子与检查要求，到豆包粘贴即可。':'一次复制四句话、目标表达和检查要求，到豆包粘贴即可。')+'</p></section>'+this.copyFallbackHTML()+'<details class="sentence-quick-old"><summary>选用旧词与习惯用法（可选）</summary>'+this.oldPickerEntryHTML()+'</details><section class="sentence-feedback" aria-live="polite">'+this.feedbackHTML()+'</section>'+(draft.assisted?'<p class="sentence-note sentence-assisted">本轮已借助参考。</p>':'')+'<details class="sentence-quick-legacy"><summary>更多训练与旧版草稿</summary>'+this.controlsHTML(true)+'</details>'+this.referenceHTML()+this.wordPickerHTML()+'</div>';
+      return '<div class="sentence-quick-workspace" data-writing-mode="'+draft.mode+'"><div class="sentence-writing-modes" role="group" aria-label="造句训练方式"><button type="button" data-sentence-action="writing-mode" data-sentence-mode="four" aria-pressed="'+(!phrase)+'">四句型转换</button><button type="button" data-sentence-action="writing-mode" data-sentence-mode="phrase" aria-pressed="'+phrase+'">习惯用法造句</button></div><label class="sentence-field sentence-quick-target">'+(phrase?'选择习惯用法':'选择目标词')+'<select class="sentence-select" data-sentence-select="target">'+(current.length?'<optgroup label="本课表达">'+options(current)+'</optgroup>':'')+(old.length?'<optgroup label="前面学过的表达">'+options(old)+'</optgroup>':'')+'</select></label><p class="sentence-quick-progress">本课已练 '+progress.done+' / '+progress.total+' '+(phrase?'项用法':'个词')+' · 已练不代表掌握<button type="button" data-sentence-action="next-unfinished"'+(progress.done===progress.total?' disabled':'')+'>下一个未练</button></p><section class="sentence-editor" aria-labelledby="sentence-step-title">'+editor+'<div class="sentence-draft-meta"><p class="sentence-save-status" data-save-state="'+status.state+'" role="status" aria-live="polite">'+e(status.text)+'</p></div><div class="sentence-actions sentence-quick-actions"><button type="button" class="button" data-sentence-action="check">检查基本要求</button><button type="button" class="button primary" data-sentence-action="copy-review">一键复制到豆包检查</button></div><p class="sentence-copy-note">'+(phrase?'复制句子与检查要求，到豆包粘贴即可。':'一次复制四句话、目标表达和检查要求，到豆包粘贴即可。')+'</p></section>'+this.copyFallbackHTML()+'<details class="sentence-quick-old"'+(this.oldKnowledgeOpen?' open':'')+'><summary>选用旧词与习惯用法（可选）</summary>'+this.oldPickerEntryHTML()+'</details><section class="sentence-feedback" aria-live="polite">'+this.feedbackHTML()+'</section>'+(draft.assisted?'<p class="sentence-note sentence-assisted">本轮已借助参考。</p>':'')+'<details class="sentence-quick-legacy"><summary>更多训练与旧版草稿</summary>'+this.controlsHTML(true)+'</details>'+this.referenceHTML()+this.wordPickerHTML()+'</div>';
     }
 
     render() {
@@ -949,6 +1027,8 @@
     rememberAdjustments(root = document.querySelector('#sentence-practice-content')) {
       const panel = root?.querySelector('.sentence-adjustments');
       if (typeof panel?.open === 'boolean') this.adjustmentsOpen = panel.open;
+      const oldKnowledge = root?.querySelector('.sentence-quick-old');
+      if (typeof oldKnowledge?.open === 'boolean') this.oldKnowledgeOpen = oldKnowledge.open;
     }
 
     redraw(focusInput = false) {
@@ -1016,7 +1096,7 @@
       const adjustments = this.adjustmentsHTML();
       if (!target || !draft) return `<div class="sentence-header"><h3>五句练习</h3><p>本课暂无可用单词或习惯用法。</p></div>${adjustments}`;
       const list=this.stepList(),step = list[draft.step], flexible=draft.mode==='flexible',combined = draft.step === 4, status = this.saveState();
-      const hints = flexible?['用目标单词或习惯用法，联系自己的生活。','换一个时间、地点或人物，不必改成否定句。','回忆课文表达，试着变化人物、动作或情境。','用目标表达提出问题，或写一句对话回应。','可联系旧知，也可换个语境写一句。']:['用目标词，写一句完整的英文。','沿用第 1 句的人物、时态和情境。','保留目标词，写一个可用 yes / no 回答的问题。','保留目标词，用 what / who / where 等提问。','用目标词另写新句子，可按需结合旧知。'];
+      const hints = flexible?['用目标单词或习惯用法，联系自己的生活。','换一个时间、地点或人物，不必改成否定句。','回忆课文表达，试着变化人物、动作或情境。','用目标表达提出问题，或写一句对话回应。','可联系旧知，也可换个语境写一句。']:['用目标词，写一句完整的英文。','沿用第 1 句的人物、时态和情境。','保留目标词，写一个可用 yes / no 回答的问题。','沿用原句的其余情境，用 what / who / where 等提问；疑问词可替代被询问的信息，句意和语法仍需人工复核。','用目标词另写新句子，可按需结合旧知。'];
       const navigation = list.map((item,index) => `<li><button type="button" class="sentence-step${index === draft.step ? ' active' : ''}${draft.answers[item.kind].trim() ? ' written' : ''}" data-sentence-action="step" data-sentence-step="${index}"${index === draft.step ? ' aria-current="step"' : ''} aria-label="第 ${index + 1} 步 ${e(item.label)}${draft.answers[item.kind].trim() ? '，已填写' : ''}"><span>${index + 1}</span></button></li>`).join('');
       const original = !flexible && draft.step > 0 && !combined ? `<div class="sentence-original"><strong>第 1 句 · 肯定原句</strong><p lang="en">${draft.answers.affirmative.trim() ? e(draft.answers.affirmative) : '还没有原句，请先回到第 1 步。'}</p></div>` : '';
       if (!this.result && draft.checkedAt) this.result = this.evaluate();

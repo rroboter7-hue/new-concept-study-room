@@ -10,7 +10,7 @@ const lessons = [
   {id:'later',book:1,number:3,vocabulary:[{word:'letter',meaning:'信',isLessonNew:true}],usage:[]}
 ];
 
-function setup({drafts={},getVocabulary,getUsage,random=()=>0.3,lessonSet=lessons,defaultMode='flexible'}={}) {
+function setup({drafts={},records={old:{completed:true}},getVocabulary,getUsage,random=()=>0.3,lessonSet=lessons,defaultMode='flexible'}={}) {
   let current=lessons[1],markup='',carousel=null,writes=0;const handlers={},focus=[],saves=[],frames=[],windowHandlers={},observers=[];
   const attributes=html=>Object.fromEntries(Array.from(html.matchAll(/([\w-]+)="([^"]*)"/g),match=>[match[1],match[2]]));
   function node(attrs={}) {return {attrs,tabIndex:Number(attrs.tabindex||0),dataset:Object.fromEntries(Object.entries(attrs).filter(([key])=>key.startsWith('data-')).map(([key,value])=>[key.slice(5).replace(/-([a-z])/g,(_,letter)=>letter.toUpperCase()),value])),setAttribute(key,value){this.attrs[key]=String(value);},getAttribute(key){return this.attrs[key]??null;},classList:{toggle(){}},focus(){document.activeElement=this;focus.push('carousel');},closest(selector){return selector==='#sentence-practice-content'?content:selector==='[data-sentence-lesson-carousel]'?carousel:null;}};}
@@ -38,7 +38,7 @@ function setup({drafts={},getVocabulary,getUsage,random=()=>0.3,lessonSet=lesson
   const sandbox={document,console,setTimeout:()=>1,clearTimeout(){},requestAnimationFrame:fn=>{frames.push(fn);return frames.length;},addEventListener:(type,fn)=>windowHandlers[type]=fn,matchMedia:()=>({matches:true})};sandbox.window=sandbox;vm.createContext(sandbox);
   sandbox.ResizeObserver=class {constructor(callback){this.callback=callback;observers.push(this);}observe(target){this.target=target;}disconnect(){this.disconnected=true;}};
   for(const file of ['sentence-core.js','sentence-practice.js'])vm.runInContext(fs.readFileSync(path.join(__dirname,'..',file),'utf8'),sandbox);
-  const ui=new sandbox.SentencePractice({defaultMode,getLesson:()=>current,getLessons:()=>lessonSet,getRecords:()=>({}),getDrafts:()=>drafts,getVocabulary,getUsage,random,saveDraft:(key,value)=>{saves.push(key);drafts[key]=JSON.parse(JSON.stringify(value));return true;}});
+  const ui=new sandbox.SentencePractice({defaultMode,getLesson:()=>current,getLessons:()=>lessonSet,getRecords:()=>records,getDrafts:()=>drafts,getVocabulary,getUsage,random,saveDraft:(key,value)=>{saves.push(key);drafts[key]=JSON.parse(JSON.stringify(value));return true;}});
   const render=()=>content.innerHTML=ui.render();
   function event(type,dataset,value='',extra={}){const node={dataset,value,...extra,closest:selector=>selector==='#sentence-practice-content'?content:selector==='[data-sentence-action]'&&dataset.sentenceAction?node:null};handlers[type]?.({target:node,preventDefault(){},key:extra.key});}
   const action=(name,key)=>event('click',{sentenceAction:name,sentenceTargetKey:key,sentenceOldKey:key});
@@ -390,11 +390,11 @@ test('old-word access shares the recommendations heading and retains one accessi
   const h=setup();let html=h.render();
   assert.equal((html.match(/data-sentence-action="open-word-picker"/g)||[]).length,1);
   const heading=html.match(/<div class="sentence-recommendation-heading">[\s\S]*?<\/div>/)?.[0]||'';
-  assert.match(heading,/<button[^>]*data-sentence-action="open-word-picker"[^>]*aria-haspopup="dialog"[^>]*aria-controls="sentence-word-picker"[\s\S]*?全部旧词/);
+  assert.match(heading,/<button[^>]*data-sentence-action="open-word-picker"[^>]*aria-haspopup="dialog"[^>]*aria-controls="sentence-word-picker"[\s\S]*?前课词库/);
   h.setLesson(lessons[0]);html=h.render();
   assert.doesNotMatch(html,/class="sentence-recommendation-heading"/);
   assert.equal((html.match(/data-sentence-action="open-word-picker"/g)||[]).length,1);
-  assert.match(html,/<button[^>]*data-sentence-action="open-word-picker"[^>]*aria-haspopup="dialog"[^>]*aria-controls="sentence-word-picker"[\s\S]*?全部旧词/);
+  assert.match(html,/<button[^>]*data-sentence-action="open-word-picker"[^>]*aria-haspopup="dialog"[^>]*aria-controls="sentence-word-picker"[\s\S]*?前课词库/);
 });
 
 function largePickerSetup(){return setup({getVocabulary:lesson=>lesson.id==='old'?Array.from({length:200},(_,index)=>({word:'term'+String(index).padStart(3,'0'),pos:'v.',meaning:'词语释义'})):lesson.vocabulary});}

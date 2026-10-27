@@ -82,6 +82,13 @@
 .sentence-target strong { color: #18332e; font-family: var(--serif, Georgia, serif); font-size: 30px; font-weight: 600; overflow-wrap: anywhere; }
 .sentence-target p > span { color: #66736c; font-size: 17px; }
 .sentence-old-picker { margin: 0 0 12px; }
+.sentence-learning-range { margin: 6px 0 10px; color: #436c5e; }
+.sentence-learning-range > summary { min-height: 44px; padding: 10px 0; cursor: pointer; font-size: 13px; }
+.sentence-learning-range p, .sentence-recommendation-empty { margin: 2px 0 8px; color: #62746d; font-size: 12px; line-height: 1.6; }
+.sentence-learning-books { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+.sentence-learning-books label { display: grid; gap: 4px; min-width: 0; font-size: 12px; }
+.sentence-learning-books select { width: 100%; min-width: 0; min-height: 44px; padding: 6px 8px; border: 1px solid #d3dfd1; border-radius: 6px; background: #fff; color: #285549; font: inherit; font-size: 16px; }
+.sentence-learning-range > summary:focus-visible, .sentence-learning-books select:focus-visible { outline: 3px solid #91b8a8; outline-offset: 3px; }
 .sentence-old-trigger { display: grid; grid-template-columns: 24px max-content minmax(0, 1fr) 16px; align-items: center; gap: 10px; width: 100%; min-height: 62px; padding: 12px 15px; border: 1px solid #d8dfd8; border-radius: 10px; background: #fffefa; color: #23594f; text-align: left; cursor: pointer; font: inherit; }
 .sentence-old-trigger > span:first-child { display: flex; align-items: center; justify-content: center; }
 .sentence-old-trigger svg { width: 24px; height: 24px; }
