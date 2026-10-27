@@ -3,11 +3,11 @@
   "policy": "First exact spelling/form in learner-facing lesson.title followed by paragraphs[].en, in numeric book/lesson order. ASCII tokens [A-Za-z]+(?:[’'-][A-Za-z]+)*; lowercase and smart apostrophe normalization only. No stemming or omission of names/function words. Abbreviation-only dictionary glosses require a literal uppercase source acronym or an explicitly listed standard English contraction; otherwise retain the target with a missing meaning. Valid course glosses take precedence. Original vocabulary rows remain available; this is corpus novelty, not learner mastery.",
   "status": {
     "lessons": 276,
-    "newWords": 7448,
-    "missingMeaning": 261,
+    "newWords": 7447,
+    "missingMeaning": 260,
     "byBook": {
       "1": 1174,
-      "2": 1698,
+      "2": 1697,
       "3": 2556,
       "4": 2020
     },
@@ -62,6 +62,10 @@
     {
       "file": "book2-vocabulary.js",
       "sha256": "af600c559e55f15ebc1f1136d7aeffe9c86d7bb80aa5b80d433812e4e58e071b"
+    },
+    {
+      "file": "book2-source-spelling-fixes.js",
+      "sha256": "83849811cf37947db6a84c1e4ab1c1c837df2793c7d3c141f7c99ff1b728c488"
     },
     {
       "file": "book2-additional-context-fixes.js",
@@ -196,6 +200,10 @@
       "sha256": "1230773df38794983c76e027d7d68a717bf87164da78ec3712e5a25d7cfe1db7"
     },
     {
+      "file": "book2-complete-word-audio.js",
+      "sha256": "c7ea26619216fc829115381b68f3dfbf92d9c989f6ab0e186043e79551ac5a6a"
+    },
+    {
       "file": "delivery-audio.js",
       "sha256": "421927879fc3bec1b3d806cbef4eb57cfa7089d68ab00a133963801c4112af91"
     },
@@ -281,15 +289,15 @@
     },
     {
       "file": "lesson-recall-core.js",
-      "sha256": "660fba3cefba4a66429fc0671968edb0879d6dce00d5b28e6d9c5511390eaa86"
+      "sha256": "75fa4ca926814d499f00307175e161f3d8690f3c503b43b43e04a78393c02ec3"
     },
     {
       "file": "lesson-recall-catalogue.js",
-      "sha256": "8dce63eeb79658c29e3f811a9bdd03f28af3a9ab4f9ec91f72c69e43241d9307"
+      "sha256": "f789de74c2dcae71ba4839ee1450283d3036ef8e98889969ddc086c5be7ccf90"
     },
     {
       "file": "lesson-recall.js",
-      "sha256": "65f10e08562e9743e14f2c1658bc1af3a40fdd49df2adfcc6c580f07cfa1a086"
+      "sha256": "3ed53d4f619aa645da77ca45c5d6cde9df65f7b09c6ad327b7e9eda88f6cc122"
     }
   ],
   "dictionary": {
@@ -1431,10 +1439,9 @@
       "id": "nce-b2-eef57c-l041",
       "book": 2,
       "number": 41,
-      "sourceSha256": "8d45bceacda2414fe615da6dcba1e461e1d346fe0ff41a59b2f97878cda68fe7",
-      "newWords": 13,
+      "sourceSha256": "55279ac8c4a35425bff5a074dcad860ff3e177e34ba91408f0bec5c645932e6d",
+      "newWords": 12,
       "missingMeaning": [
-        "musn’t",
         "hats"
       ]
     },
@@ -3020,8 +3027,8 @@
   ],
   "artifact": {
     "file": "lesson-word-targets.js",
-    "sha256": "47ccb98546d39dc81a501775a9050baf2f4f92d51d08caf44eb57fa78f620064",
-    "bytes": 2617420
+    "sha256": "dd085b6663f30a7003ddd07ea51a21b94e7c6fd55f431e1923d8ff2cd335f18e",
+    "bytes": 2617480
   },
   "rebuild": "node dev/build-lesson-word-targets.cjs (offline; existing dictionary-data shards only)"
 }

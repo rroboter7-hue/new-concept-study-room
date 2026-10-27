@@ -1,6 +1,6 @@
 {
   "build": "2026-10-27-all-lesson-words",
-  "preparedAt": "2026-10-27T03:27:39.437408+00:00",
+  "preparedAt": "2026-10-27T04:06:08.732053+00:00",
   "book2": {
     "book": 2,
     "total": 96,
@@ -10,9 +10,10 @@
     "sourceSha256": "30f1219bd738cfbfea00e8bc8e1b51f752a3eb1d47c87090f0120ded0a203633",
     "sourceUrl": "resources/30f1219bd738cfbf.pdf",
     "candidateSha256": "6dab6504246da5dd35451b93f34ca4e102ac936468b2d4d8400018bb647e3ae3",
-    "additionalTextCorrections": 1,
+    "additionalTextCorrections": 2,
     "additionalTextCorrectionLessons": [
-      16
+      16,
+      41
     ],
     "additionalSourceBoundGlossCorrections": [
       {
@@ -28,6 +29,14 @@
       "notesExtensions": 1,
       "primaryVisualSourcePages": 22,
       "independentReviewLabel": "full semantic/source review with explicitly recorded visual scopes"
+    },
+    "sourceSpellingCorrection": {
+      "lesson": 41,
+      "original": "musn’t",
+      "corrected": "mustn’t",
+      "sourcePdfPage": 189,
+      "basis": "同页注释3",
+      "originalPreserved": true
     }
   },
   "learning": {
@@ -149,10 +158,23 @@
       "perLessonWordFiles": 1,
       "synthetic": true,
       "notTextbookOriginal": true
-    }
+    },
+    "completeBook2WordAudio": {
+      "lessons": 96,
+      "sourceWordForms": 2600,
+      "apostropheAliases": 48,
+      "newWaveFiles": 1427,
+      "sourceBytes": 67034948,
+      "synthetic": true,
+      "voice": "Microsoft Zira Desktop · en-US",
+      "notTextbookOriginalRecording": true,
+      "deviceSpeechVoiceRequired": false,
+      "heteronymsAllContextReviewed": false
+    },
+    "genericDictionarySensesClearlySeparated": true
   },
-  "staticFiles": 2754,
-  "staticBytes": 668059134,
+  "staticFiles": 4052,
+  "staticBytes": 731029694,
   "nativeearsAdvancedAudio": {
     "books": {
       "3": 60,
@@ -389,35 +411,27 @@
     "convertedTextPreserved": true,
     "gitHistoryRewritten": false
   },
-  "lessonWordPractice": {
-    "sourceBoundAllReadings": 276,
-    "firstAppearanceSpellings": 7448,
-    "includesNewForms": true,
-    "sourceTitleAndBody": true,
-    "allTargetsReachable": true,
-    "fiveSentencesPerTarget": true,
-    "practiceIsNotMastery": true,
-    "separateTargetDrafts": true,
-    "optionalEarlierWordsAndPhrases": true,
-    "stablePerLessonRecommendations": true,
-    "actualCheckedUseRotates": true,
-    "recommendationsWithoutSelectionAlsoCountWhenUsed": true,
-    "unusedFirstThenLeastRecent": true,
-    "twoColumnMobilePicker": true,
-    "searchKeyboardOnTapOnly": true,
-    "compactSingleRowPickerFooter": true,
-    "pendingMeanings": 261
-  },
-  "staticByteScope": "Source tree excluding release.json, Git metadata, build output and caches. Use delivery-report.json publishedBytes for deployed site capacity.",
   "lessonRecall": {
     "lessons": 276,
     "questions": 552,
     "choice": 276,
     "short": 276,
     "source": "self-authored-with-exact-passage-evidence",
-    "grading": "exact-closed-fact-aliases-and-specific-misconceptions",
+    "grading": "explicit-grammar-form-aliases-and-specific-misconceptions",
     "unmatchedParaphrases": "needs-check",
-    "savedIndependently": true
+    "savedIndependently": true,
+    "scope": "grammar",
+    "questionLanguage": "en",
+    "answerLanguage": "en",
+    "formats": [
+      "gap-fill",
+      "transformation",
+      "correction",
+      "word-order",
+      "form-choice"
+    ],
+    "chineseSupport": "post-answer-rule-explanations",
+    "storyComprehensionRemoved": true
   },
   "performance": {
     "lazyTextLibrary": true,
@@ -437,9 +451,9 @@
     "baselineSourceAudioBytesBefore": 793501147,
     "baselineSourceAudioBytesAfter": 647772668,
     "sourceAudioBytesSaved": 145728479,
-    "currentSourceAudioBytes": 648687148,
-    "currentAudioFiles": 2491,
-    "currentWavFiles": 2287,
+    "currentSourceAudioBytes": 715722096,
+    "currentAudioFiles": 3918,
+    "currentWavFiles": 3714,
     "unchangedMpegFrames": 1156263,
     "losslessMp3Files": 204,
     "retiredLessonAudioFiles": 38,
@@ -447,8 +461,30 @@
     "removedAudioBackedUp": true,
     "primaryLessonMappingsPreserved": 276,
     "previousWordMappingsPreserved": 2250,
-    "currentWordMappings": 2269,
+    "currentWordMappings": 3725,
     "contextWordMappings": 1,
     "gitHistoryRewritten": false
+  },
+  "staticByteScope": "Runtime source files, excluding release.json and dev/tests/Git/build caches; source WAVs are converted for delivery. Use delivery-report.json publishedBytes for deployed capacity.",
+  "lessonWordPractice": {
+    "sourceBoundAllReadings": 276,
+    "firstAppearanceSpellings": 7447,
+    "includesNewForms": true,
+    "sourceTitleAndBody": true,
+    "allTargetsReachable": true,
+    "fiveSentencesPerTarget": true,
+    "practiceIsNotMastery": true,
+    "separateTargetDrafts": true,
+    "optionalEarlierWordsAndPhrases": true,
+    "stablePerLessonRecommendations": true,
+    "actualCheckedUseRotates": true,
+    "recommendationsWithoutSelectionAlsoCountWhenUsed": true,
+    "unusedFirstThenLeastRecent": true,
+    "twoColumnMobilePicker": true,
+    "searchKeyboardOnTapOnly": true,
+    "compactSingleRowPickerFooter": true,
+    "pendingMeanings": 260,
+    "lazyWordPickerRows": true,
+    "initialPickerRows": 80
   }
 }

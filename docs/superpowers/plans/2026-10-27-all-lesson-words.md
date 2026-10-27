@@ -49,6 +49,7 @@ Files: sentence-practice.js; targeted sentence UI/mobile/picker tests.
 - [x] Observe red tests for complete mandatory queue, next unfinished word, target draft preservation, recommendation stability/refresh/consumption and no automatic search focus.
 - [x] Integrate context/progress/recommendation APIs, persist per-lesson suggestions through the existing selection draft, and render compact queue/cards/footer.
 - [x] Re-run UI and source-integration tests; keep pronunciation and multi-selection independent.
+- [x] Bound the large picker DOM: zero rows while closed, 80 initially, explicit +80 paging, full-bank search and retained drafts/selections.
 
 ### Task 4: Styling and bootstrap (root)
 
@@ -66,3 +67,5 @@ Files: sentence-practice.css; mobile-book-workspace.css if necessary; app.js; in
 - [ ] Merge concurrent main updates without overwriting, run affected merged checks, publish normally and verify live build/screenshots.
 
 Pre-merge verification: 669/669 full tests pass (full-tests-before-merge.log). CUA 390x844 showed14 fully visible old-word cards with search unfocused; 320x740 and390x420 remain scrollable with a reachable58px footer and no horizontal overflow. Local five-sentence private round with four shown but unselected old expressions reached1/12; switching targets/reload preserved independent answers. Nextlesson recommendations excluded allfour used expressions and stayedstable onreload. Manualrefresh/expanding currentwords preserved text. Independent review findings fixed with red-green tests: a. POS, cross-POS aliases, sparse/inherited sourcebinding, checked-evidence sanitation and recommendation history. Complete import retains261 honestly pending meanings;7448 first spellings/forms over276lessons.
+
+Final merged verification: preserved main through13d4377, including reviewed vocabulary, source spelling, complete static Book2 word audio, grammar practice, bounded caches and optimized delivery. The corrected source now has7447 first spellings/forms and260 pending meanings. Both generated input manifests match their files (82 dictionary inputs,70 lesson-word inputs). Full regression:753 tests,752 pass,0 fail,1 skipped because Windows does not allow the required file symlink (full-tests-publish-candidate.log). Independent picker review found no material regression. CUA measured closed picker0 rows/835 DOM nodes, open80 rows, explicit expansion160, full-bank scientist search, selection retention and close cleanup;390x844 shows14 complete cards,320x740 and390x420 keep the58px footer reachable without horizontal overflow.
