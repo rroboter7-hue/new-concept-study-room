@@ -39,7 +39,7 @@
     "inputs": [
       {
         "file": "index.html",
-        "sha256": "19550bae6d2bbb96be5b61caaa1de4d42fbe9d7ea2573ab9989c9a36f090a452"
+        "sha256": "b511f10ad29320631c0dce02106e458a828127b6b1168f2ece915ea4e2ae667d"
       },
       {
         "file": "lexical-word-tokens.js",
@@ -283,11 +283,11 @@
       },
       {
         "file": "context-meanings.js",
-        "sha256": "e54fec5f8d23a07aa4e9bb8f32846cb63f1fe14941b25abe6b2c76825cf0807b"
+        "sha256": "62524756b32605e395f9dfabfc691b1a83b230950384ebc191d5da6ce2bdc17d"
       },
       {
         "file": "lesson-word-targets.js",
-        "sha256": "fef7aff9d5d4f6e40e0460264c304e76a95373a075cb255bad40e7ac08670f5b"
+        "sha256": "82352ea297670e5eb45b09009e75bedf4fbb89cfc296238ff90ce54874d5cc8c"
       },
       {
         "file": "sentence-wordbank-data.js",

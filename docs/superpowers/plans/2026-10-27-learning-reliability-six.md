@@ -83,7 +83,14 @@ Root files: index.html, release.json, generated target/dictionary manifests, the
 - Full Windows release test run: 1,045 tests; 1,044 passed; 0 failed; 1 skipped because Windows cannot create the test file symlink. Linux CI will exercise that case.
 - Independent integration, storage, cache and source-manifest reviews approved.
 - All 83 LF-normalized target inputs and 95 raw dictionary selection inputs match; rebuilt target output is identical to source compilation.
-- 7,445 targets, 0 missing definitions; 523 explicitly reviewed self-authored contextual senses. Existing 3,963 review card IDs are retained; current catalog has 10,350 cards. Generic dictionary meanings remain visibly distinguished from reviewed senses.
+- 7,445 targets, 0 missing definitions; 527 explicitly reviewed self-authored contextual senses. Existing 3,963 review card IDs are retained; current catalog has 10,350 cards. Generic dictionary meanings remain visibly distinguished from reviewed senses.
 - Storage tests include 80 independent-data preemption cases and 40 same-card stale-hint cases. Realistic first-book profile peak: 2,820,540 UTF-16 bytes under a 5 MiB budget; no claim of unlimited local storage.
 - Browser tests at actual 341px width verified the natural WH omission, automatic contextual lookup, draft persistence after reload/range change/backup merge, preserved expanded range controls, and no horizontal overflow. Merge preview and contextual-meaning screenshots saved outside the runtime repository.
 - Browser automation connection was intermittent late in testing. Desktop state remained readable and showed the preserved draft; physical phone keyboard testing was not performed.
+
+### Final source-context spot check
+
+- Browser inspection caught four additional generic adjective fallbacks for Book 3 Lesson 1 (spotted, confirmed, observed, clinging). Added source-bound verb senses; four new regressions observed RED before the data repair.
+- Independent review approved all 527 source-bound rows and unchanged older definitions.
+- Final data/dictionary/target/review regressions: 48/48 passed. First Linux deployment run: 1,045/1,045 passed, zero skips; final patch will repeat the complete Linux gate before publishing.
+- Final cache tag: 2026-10-27-learning-reliability-six-final.

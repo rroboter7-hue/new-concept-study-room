@@ -1,6 +1,6 @@
 {
   "build": "2026-10-27-worksheet",
-  "preparedAt": "2026-10-27T09:06:50.807Z",
+  "preparedAt": "2026-10-27T09:29:50.537Z",
   "book2": {
     "book": 2,
     "total": 96,
@@ -620,7 +620,7 @@
     },
     "sixAuditFixes": {
       "contextMeanings": {
-        "explicitReviewedSenses": 523,
+        "explicitReviewedSenses": 527,
         "missingNewWordMeanings": 0,
         "sourceIdentityBound": true,
         "allGenericDictionarySensesReviewed": false

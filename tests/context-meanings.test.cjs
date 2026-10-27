@@ -10,6 +10,23 @@ const cases=[
   [3,1,'forty-five','四十五'],[3,1,'cornered','被逼入困境；走投无路'],[4,48,'aims','目标；目的（aim 的复数）']
 ];
 
+const pumaVerbCases=[
+  ['spotted','被发现；被看见（spot 的过去分词）','a wild puma had been spotted forty-five miles south of London'],
+  ['confirmed','证实；确认（confirm 的过去式）','experts confirmed that a puma will not attack a human being unless it is cornered'],
+  ['observed','被看见；被观察到（observe 的过去分词）','the puma was often observed at one place in the morning'],
+  ['clinging','附着；挂着（cling 的现在分词）','puma fur was found clinging to bushes']
+];
+for(const [word,meaning,evidence] of pumaVerbCases)test('Book 3 Lesson 1 '+word+' uses its passage verb sense instead of an adjective gloss',()=>{
+  const lesson=at(3,1),api=require('../context-meanings.js');
+  const target=builder.createManifest(lessons,dictionary).lessons.find(row=>row.id===lesson.id).targets.find(row=>row.word===word);
+  assert.equal(target.meaning,meaning);assert.equal(target.pos,'v.');assert.equal(target.meaningSource,'source-context-review');
+  const entry=resolver.resolve(word,{lesson});
+  assert.equal(entry.meaning,meaning);assert.equal(entry.pos,'v.');assert.equal(entry.meaningProvenance.kind,'self-authored-context');
+  assert.ok(entry.example.includes(evidence));
+  const changed={...lesson,paragraphs:lesson.paragraphs.map((p,i)=>i?{...p}:{...p,en:p.en+' '})};
+  assert.equal(api.forLesson(changed,word),null);assert.equal(api.forLesson(at(3,2),word),null);
+});
+
 test('confirmed ordinary/name meanings take priority over misleading generic senses in compiled targets',()=>{
   const manifest=builder.createManifest(lessons,dictionary);
   for(const [book,number,word,want] of cases){
