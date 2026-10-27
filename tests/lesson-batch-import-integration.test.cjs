@@ -101,7 +101,10 @@ test('real app four-form and native phrase editors both reach batch import with 
   for (let index=0;index<forms.length;index++) {
     await h.input(`[data-sentence-input="answer"][data-sentence-kind="${formKinds[index]}"]`,forms[index]);
   }
-  await h.click('[data-sentence-action="writing-mode"][data-sentence-mode="phrase"]');
+  const mode = h.document.querySelector('[data-sentence-select="mode"]');
+  mode.value = 'phrase';
+  for (const handler of h.document.listeners.change || []) await handler({target:mode});
+  await h.flush();
   assert.equal(sentencePractice.active.draft.mode,'phrase');
   await h.input('[data-sentence-input="answer"]','This native phrase sentence belongs to me.');
   const phraseTarget = sentencePractice.active.draft.targetKey;

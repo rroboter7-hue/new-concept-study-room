@@ -29,7 +29,7 @@ test('mobile output always exposes writing, dictation and retell while keeping b
   for (const [mode, id, renderer] of [['sentences','mobile-guided','sentence:render'], ['batch','mobile-batch','batch:render']]) {
     h.ui.mode = mode; h.calls.length = 0;
     const html = h.ui.render();
-    assert.equal(h.calls[0], `mode:${mode}`); assert.equal(h.calls[1], renderer);
+    assert.equal(h.calls[0], renderer); assert.equal(h.calls[1], `mode:${mode}`);
     const mainTabs = html.slice(0, html.indexOf(`id="${id}"`));
     assert.match(mainTabs, /data-output-mode="sentences"/);
     assert.match(mainTabs, /data-output-mode="write"/); assert.match(mainTabs, /data-output-mode="retell"/);

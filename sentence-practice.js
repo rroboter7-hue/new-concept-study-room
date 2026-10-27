@@ -94,12 +94,33 @@
     core() { return global.StudySentences; }
     stepList() { return this.active?.draft.mode==='phrase'?phraseSteps:this.active?.draft.mode==='four'?steps.slice(0,4):this.active?.draft.mode==='flexible'?flexibleSteps:steps; }
     isQuickMode() { return ['four','phrase'].includes(this.active?.draft.mode); }
+    usesWorksheetLayout() { return this.isQuickMode()||Boolean(this.currentLesson&&!this.active&&this.options.defaultMode==='four'); }
+    isPersonTarget(target) {
+      if(!target)return false;
+      const source=(this.options.getLessons?.()||[]).find(lesson=>lesson?.id===target.source?.id)||this.currentLesson;
+      try { if(this.options.isPersonNameTarget?.(target,source)===true)return true; } catch (_) { /* Explicit metadata remains usable when a policy is unavailable. */ }
+      let rows=source?.vocabulary;
+      if(typeof this.options.getVocabulary==='function'){
+        try { const provided=this.options.getVocabulary(source);if(Array.isArray(provided))rows=provided; } catch (_) { /* Keep source vocabulary. */ }
+      }
+      const normalized=value=>typeof value==='string'?value.normalize('NFKC').trim().toLowerCase():'';
+      const expression=normalized(target.word||target.label),matches=(Array.isArray(rows)?rows:[]).filter(row=>normalized(ownData(row,'word'))===expression);
+      return [target,...matches].some(row=>{
+        if(['isPersonName','isPersonalName','isHumanName','personName'].some(key=>ownData(row,key)===true))return true;
+        return ['entityType','nameType','properNameType','namedEntityType'].some(key=>/^(?:person|person[-_ ]?name|personal[-_ ]?name|human[-_ ]?name)$/.test(normalized(ownData(row,key))));
+      });
+    }
+    worksheetWordTargets() {
+      const words=(this.context?.targets||[]).filter(item=>(item.kind||'word')==='word'&&item.source?.id===this.currentLesson?.id);
+      const flagged=words.some(item=>typeof item.isLessonNew==='boolean');
+      return words.filter(item=>(!flagged||item.isLessonNew===true)&&!this.isPersonTarget(item));
+    }
     switchMode(mode) {
       if(!this.core()?.MODES.includes(mode)||!this.ensureState())return false;
       const draft=this.active?.draft,kind=mode==='phrase'?'phrase':mode==='four'?'word':null;
-      const candidates=this.context.targets.filter(item=>!kind||(item.kind||'word')===kind);
+      const candidates=mode==='four'?this.worksheetWordTargets():this.context.targets.filter(item=>!kind||(item.kind||'word')===kind);
       const target=candidates.find(item=>item.key===draft?.targetKey)||candidates.find(item=>item.source.id===this.currentLesson.id)||candidates[0];
-      if(!target){this.notify(mode==='phrase'?'本课暂无可用习惯用法，可先做四句型转换。':'本课暂无可用词项。');return false;}
+      if(!target){this.notify(mode==='phrase'?'本课暂无可用习惯用法，可先做四种转换。':mode==='four'?'本课暂无可练习的新词。':'本课暂无可用词项。');return false;}
       if(draft?.mode===mode&&draft.targetKey===target.key)return true;
       this.flush();this.loadTarget(target.key,draft?.sourceLessonIds||[],false,{mode,roundKey:draft?.targetKey===target.key?draft?.roundKey:''});
       this.updateContext();if(draft?.targetKey!==target.key)this.revealLessonTarget();this.markChanged(false);this.flush();this.redraw();return true;
@@ -111,6 +132,7 @@
       const target=this.context.targets.find(item=>(!kind||(item.kind||'word')===kind)&&item.key===request.targetKey)||this.context.targets.find(item=>(!kind||(item.kind||'word')===kind)&&String(item.word||item.phrase||'').toLowerCase()===expression);
       if(!target)return false;
       const requestedMode=request.sentenceMode==='four-forms'?'four':request.sentenceMode==='phrase-writing'?'phrase':this.core().MODES.includes(request.mode)?request.mode:'flexible';
+      if(requestedMode==='four'&&this.isPersonTarget(target))return false;
       this.flush();this.loadTarget(target.key,this.active?.draft.sourceLessonIds||[],false,{mode:requestedMode,roundKey:request.roundKey});
       this.active.draft.evidenceTargetKey=typeof request.targetKey==='string'?request.targetKey.slice(0,600):target.key;
       this.updateContext();this.revealLessonTarget();this.markChanged(false);this.flush();this.redraw();return true;
@@ -131,15 +153,22 @@
 
     wordBank() { return this.oldBank; }
 
+    selectionBank() {
+      const earlier=this.wordBank(),seen=new Set(earlier.map(item=>item.key));
+      const current=(this.context?.targets||[]).filter(item=>item.kind==='phrase'&&item.source?.id===this.currentLesson?.id&&!seen.has(item.key))
+        .map(item=>({...item,category:'phrase',phrase:item.phrase||item.word,label:item.label||item.phrase||item.word,aliases:[item.key]}));
+      return [...earlier,...current];
+    }
+
     selectedOldItems() {
       const selected = this.active?.draft.selectedOldKeys || [];
-      const byKey = new Map(this.wordBank().map(item => [item.key, item]));
+      const byKey = new Map(this.selectionBank().map(item => [item.key, item]));
       return selected.map(key => byKey.get(key)).filter(Boolean);
     }
 
     normalizeOldKeys(keys) {
       const aliases = new Map();
-      for (const item of this.wordBank()) {
+      for (const item of this.selectionBank()) {
         aliases.set(item.key, item.key);
         for (const alias of item.aliases || []) aliases.set(alias, item.key);
       }
@@ -227,6 +256,7 @@
 
     lessonTargets() {
       if(this.active?.draft.mode==='phrase')return (this.context?.targets||[]).filter(item=>item.kind==='phrase'&&item.source.id===this.currentLesson?.id);
+      if(this.active?.draft.mode==='four'||!this.active&&this.options.defaultMode==='four')return this.worksheetWordTargets();
       const words = (this.context?.targets || []).filter(item => (item.kind || 'word') === 'word' && item.source.id === this.currentLesson?.id);
       const flagged = words.some(item => typeof item.isLessonNew === 'boolean');
       return words.filter(item => !flagged || item.isLessonNew === true);
@@ -448,10 +478,17 @@
       }
       if (this.active && !this.context.targets.some(item => item.key === this.active.draft.targetKey)) {
         this.flush();
-        this.loadTarget(this.lessonTargets()[0]?.key || this.context.targets[0]?.key, safeSources);
+        const fallback=this.lessonTargets()[0]?.key||(this.active.draft.mode==='four'?undefined:this.context.targets[0]?.key);
+        this.loadTarget(fallback, safeSources);
         this.context = this.makeContext(this.active?.draft.sourceLessonIds || safeSources);
       }
-      if (!this.active && this.context.targets.length) this.loadTarget(this.lessonTargets()[0]?.key || this.context.targets[0].key, safeSources, true);
+      if (!this.active && this.context.targets.length) this.loadTarget(this.lessonTargets()[0]?.key || (this.options.defaultMode==='four'?undefined:this.context.targets[0].key), safeSources, true);
+      if(this.active?.draft.mode==='four'){
+        const target=this.target(),eligible=this.worksheetWordTargets(),review=this.active.draft.roundKey&&!this.isPersonTarget(target);
+        if(!eligible.some(item=>item.key===target?.key)&&!review){
+          this.flush();this.loadTarget(eligible[0]?.key,safeSources,false,{mode:'four',roundKey:''});
+        }
+      }
       this.syncOldSelection();
       this.remember();
       this.ensureRecommendations();
@@ -546,8 +583,10 @@
     updateSaveStatus() {
       const node = document.querySelector('#sentence-practice-content')?.querySelector('.sentence-save-status');
       if (node) {
-        const status = this.saveState();node.textContent = status.text;
+        const status = this.saveState();node.textContent = this.isQuickMode()?this.sheetSaveText(status):status.text;node.title=status.text;
         if (node.dataset) node.dataset.saveState = status.state;
+        const error=document.querySelector('#sentence-practice-content')?.querySelector('.sentence-sheet-save-error');
+        if(error){error.textContent=status.state==='failed'?status.text:'';error.hidden=status.state!=='failed';}
       }
     }
 
@@ -631,7 +670,8 @@
       const normalize = value => String(value || '').normalize('NFKC').replace(/[‘’]/g, "'").trim().toLowerCase();
       const query = normalize(this.wordSearch);
       const selected = new Set(this.active?.draft.selectedOldKeys || []);
-      return this.wordBank().filter(item => (this.wordCategory === 'all' || this.wordCategory === 'selected' ? this.wordCategory !== 'selected' || selected.has(item.key) : item.category === this.wordCategory) && (!query || normalize(`${item.label || item.word || item.phrase} ${item.meaning}`).includes(query)));
+      const bank=this.wordCategory==='selected'?this.selectionBank():this.wordBank();
+      return bank.filter(item => (this.wordCategory === 'all' || this.wordCategory === 'selected' ? this.wordCategory !== 'selected' || selected.has(item.key) : item.category === this.wordCategory) && (!query || normalize(`${item.label || item.word || item.phrase} ${item.meaning}`).includes(query)));
     }
 
     pickerIcon(name, fallback) {
@@ -714,12 +754,44 @@
       });
       const feedback = root?.querySelector('.sentence-feedback');
       if (feedback) feedback.innerHTML = this.feedbackHTML();
+      const phrase=root?.querySelector('[data-sentence-select="sheet-phrase"]');
+      if(phrase){phrase.innerHTML=this.sheetPhraseOptionsHTML();phrase.value=this.oldPhrase()?.key||'';}
     }
 
     inputKind(node) {
       const list=this.stepList(),named=node?.dataset?.sentenceKind;
       if(named)return list.some(item=>item.kind===named)?named:null;
       return list[this.active?.draft.step]?.kind||list[0]?.kind;
+    }
+
+    autoSizeWorksheetField(field) {
+      if(!this.isQuickMode()||!field?.style)return;
+      let computed=null;
+      try { computed=global.getComputedStyle?.(field)||null; } catch (_) { /* Test or detached fields can use measured borders. */ }
+      const number=value=>{const parsed=Number.parseFloat(value);return Number.isFinite(parsed)?parsed:0;};
+      const minimum=number(computed?.minHeight)||54;
+      const measuredBorder=Number(field.offsetHeight)-Number(field.clientHeight);
+      const border=computed?number(computed.borderTopWidth)+number(computed.borderBottomWidth):Number.isFinite(measuredBorder)?Math.max(0,measuredBorder):2;
+      const previous=field.style.height;
+      // Collapse to the CSS minimum before measuring, so deletion can shrink
+      // the field too. Only style changes; the value and selection stay intact.
+      field.style.height='0px';
+      const content=Number(field.scrollHeight);
+      if(!Number.isFinite(content)||content<=0){field.style.height=previous;return;}
+      field.style.height=Math.ceil(Math.max(minimum,content+border))+'px';
+      field.style.overflowY='hidden';
+    }
+
+    scheduleWorksheetSizing(expectedRoot=null) {
+      if(!this.usesWorksheetLayout())return;
+      const generation=this.lessonGroupRender,key=this.active?.key,lessonId=this.currentLesson?.id;
+      const mount=()=>{
+        const root=document.querySelector('#sentence-practice-content');
+        if(!root||expectedRoot&&root!==expectedRoot||generation!==this.lessonGroupRender||key!==this.active?.key||lessonId!==this.currentLesson?.id||this.options.getLesson?.()?.id!==lessonId||!this.usesWorksheetLayout())return;
+        root.querySelectorAll?.('textarea[data-sentence-input="answer"]').forEach(field=>this.autoSizeWorksheetField(field));
+      };
+      if(typeof global.requestAnimationFrame==='function')global.requestAnimationFrame(mount);
+      else global.setTimeout(mount,0);
     }
 
     handleInput(event) {
@@ -736,21 +808,34 @@
       if (input.value !== value) input.value = value;
       this.active.draft.answers[kind] = value;
       this.markChanged();
+      this.autoSizeWorksheetField(input);
       const root = document.querySelector('#sentence-practice-content');
       const counter = root?.querySelector(input.dataset.sentenceKind?`[data-sentence-counter="${kind}"]`:'.sentence-counter');
       if (counter) counter.textContent = `${value.length} / 400 字符`;
       const feedback = root?.querySelector('.sentence-feedback');
-      if (feedback) feedback.innerHTML = '<p class="sentence-note">输入已改变，可重新检查或复制到豆包检查。</p>';
+      if (feedback) feedback.innerHTML = this.isQuickMode()?'':'<p class="sentence-note">输入已改变，可重新检查或复制到豆包检查。</p>';
       this.copyFallback='';
       root?.querySelector('.sentence-copy-fallback')?.remove?.();
     }
 
     handleClick(event) {
       const button = event.target?.closest?.('[data-sentence-action]');
-      if (!button || !this.inside(button) || !this.active) return;
+      if (!button || !this.inside(button)) return;
       const action = button.dataset.sentenceAction;
+      if(action==='back'){event.preventDefault();this.flush();this.options.onBack?.();return;}
+      if(action==='navigate-mode'){
+        event.preventDefault();
+        if(['batch','write','retell','spell'].includes(button.dataset.sentenceMode)){this.flush();this.options.onNavigateMode?.(button.dataset.sentenceMode);}
+        return;
+      }
+      if(!this.active)return;
       if(action==='reference'){this.markAssisted();return;}
       event.preventDefault();
+      if(action==='current-lesson'){
+        const target=this.worksheetWordTargets()[0];if(!target)return;
+        const sources=this.active.draft.sourceLessonIds;this.flush();this.loadTarget(target.key,sources,false,{mode:'four',roundKey:''});
+        this.updateContext();this.markChanged(false);this.flush();this.redraw();return;
+      }
       if(action==='writing-mode'){this.switchMode(button.dataset.sentenceMode);return;}
       if(action==='copy-review'){void this.copyForReview();return;}
       if(action==='select-copy'){const field=document.querySelector('#sentence-practice-content')?.querySelector('.sentence-copy-fallback textarea');field?.focus?.();field?.select?.();return;}
@@ -801,7 +886,7 @@
         return;
       }
       if (action === 'speak-old') {
-        const item = this.wordBank().find(entry => entry.key === button.dataset.sentenceOldKey);
+        const item = this.selectionBank().find(entry => entry.key === button.dataset.sentenceOldKey);
         if (item) {
           try { Promise.resolve(this.options.speak?.(item.label || item.word || item.phrase)).catch(() => this.notify('暂时无法播放发音，请稍后重试。')); }
           catch (_) { this.notify('暂时无法播放发音，请稍后重试。'); }
@@ -843,8 +928,20 @@
         return;
       }
       const field = select.dataset.sentenceSelect;
+      if(field==='sheet-phrase'&&this.active){
+        if(select.value==='__more__'){
+          select.value=this.oldPhrase()?.key||'';
+          if(this.openWordPicker(select))this.setWordCategory('phrase');
+          return;
+        }
+        if(select.value&&!this.selectionBank().some(item=>item.category==='phrase'&&item.key===select.value))return;
+        const remaining=this.selectedOldItems().filter(item=>item.category!=='phrase').map(item=>item.key);
+        if(select.value&&remaining.length>=100){select.value=this.oldPhrase()?.key||'';this.notify('已选 100 项表达，请先移除部分选项再搭配用法。');return;}
+        this.setOldSelection(select.value?[...remaining,select.value]:remaining);return;
+      }
       if(field==='mode'&&this.active&&this.core().MODES.includes(select.value)){this.switchMode(select.value);return;}
-      if (field === 'target' && this.context.targets.some(item => item.key === select.value)) {
+      const targetChoices=this.active?.draft.mode==='four'?this.worksheetWordTargets():this.context.targets;
+      if (field === 'target' && targetChoices.some(item => item.key === select.value)) {
         const sources = this.active?.draft.sourceLessonIds || this.temporarySources;
         const mode=this.isQuickMode()?this.active.draft.mode:undefined;
         this.flush();this.loadTarget(select.value, sources,false,{mode});this.updateContext();this.revealLessonTarget();this.markChanged(false);this.redraw();
@@ -888,7 +985,7 @@
       return ['请帮我检查下面的英语练习。','课程：第 '+lesson.book+' 册 · 第 '+lesson.number+' 课 · '+String(lesson.title||''),
         '练习方式：'+(draft.mode==='four'?'四句型转换':draft.mode==='phrase'?'习惯用法造句':draft.mode==='transform'?'旧版五句句型训练':'旧版灵活五句'),
         '目标表达：'+(target.word||target.phrase)+(target.meaning?'（'+target.meaning+'）':''),
-        selected.length?'我按需选用的旧词／用法：'+selected.map(item=>(item.label||item.word||item.phrase)+(item.meaning?'（'+item.meaning+'）':'')).join('；'):'',
+        selected.length?'搭配词与习惯用法：'+selected.map(item=>(item.label||item.word||item.phrase)+(item.meaning?'（'+item.meaning+'）':'')).join('；'):'',
         '以下是我的原句，请逐句保留并检查：',
         ...list.map((step,index)=>(index+1)+'. '+step.label+'：'+(draft.answers[step.kind].trim()||'【未填写，请勿代写】')),
         '',
@@ -917,23 +1014,49 @@
       return `<section class="sentence-copy-fallback" aria-label="手动复制到豆包"><p>自动复制未完成，可长按以下文字手动复制，再到豆包粘贴。</p><textarea readonly rows="8" aria-label="待复制的句子与检查要求">${this.escape(this.copyFallback)}</textarea><button type="button" class="button subtle" data-sentence-action="select-copy">全选文本</button></section>`;
     }
 
+    sheetSaveText(status=this.saveState()) {
+      return {new:'未填写',pending:'保存中',saved:'已保存',failed:'未保存'}[status.state]||status.text;
+    }
+
+    sheetPhraseOptionsHTML() {
+      const e=this.escape,selected=this.oldPhrase()?.key||'',bank=this.selectionBank(),seen=new Set();
+      const current=bank.filter(item=>item.category==='phrase'&&item.source?.id===this.currentLesson?.id);
+      const chosen=this.selectedOldItems().filter(item=>item.category==='phrase');
+      const earlier=this.wordBank().filter(item=>item.category==='phrase');
+      const items=[...current,...chosen,...earlier.slice(-12)].filter(item=>!seen.has(item.key)&&seen.add(item.key));
+      return '<option value="">搭配用法（可选）</option>'+items.map(item=>'<option value="'+e(item.key)+'"'+(item.key===selected?' selected':'')+'>'+e(item.label||item.phrase)+(item.meaning?' · '+e(item.meaning):'')+'</option>').join('')+(earlier.length>12?'<option value="__more__">更多已学用法…</option>':'');
+    }
+
     inlineFourHTML() {
       const e=this.escape,draft=this.active.draft;
-      return '<div class="sentence-inline-grid">'+this.stepList().map((item,index)=>{
+      return '<div class="sentence-inline-grid">'+this.stepList().map(item=>{
         const id='sentence-answer-'+item.kind,counter='sentence-counter-'+item.kind;
-        return '<article class="sentence-inline-field"><label class="sentence-field" for="'+id+'"><span class="sentence-inline-label"><span>'+(index+1)+'</span>我的'+e(item.label)+'</span><textarea id="'+id+'" class="sentence-textarea" data-sentence-input="answer" data-sentence-kind="'+item.kind+'" rows="2" maxlength="400" lang="en" spellcheck="true" autocapitalize="sentences" aria-describedby="sentence-four-hint '+counter+'" placeholder="'+e(index===0?'用目标表达写肯定原句…':'对照肯定原句，改写成'+item.label+'…')+'">'+e(draft.answers[item.kind])+'</textarea></label><div class="sentence-writing-tools"><button type="button" data-sentence-action="insert-target" data-sentence-kind="'+item.kind+'" aria-label="在'+e(item.label)+'中插入目标表达">插入表达</button>'+(index?'<button type="button" data-sentence-action="reuse-original" data-sentence-kind="'+item.kind+'" aria-label="将肯定原句填入'+e(item.label)+'">沿用原句</button>':'')+'<span id="'+counter+'" class="sentence-counter" data-sentence-counter="'+item.kind+'">'+draft.answers[item.kind].length+' / 400</span></div></article>';
+        return '<article class="sentence-inline-field"><label class="sentence-field" for="'+id+'"><span class="sentence-inline-label">'+e(item.label)+'</span><textarea id="'+id+'" class="sentence-textarea" data-sentence-input="answer" data-sentence-kind="'+item.kind+'" rows="2" maxlength="400" lang="en" spellcheck="true" autocapitalize="sentences" aria-describedby="'+counter+'" placeholder="'+e(item.kind==='affirmative'?'写一句肯定句…':'请写'+item.label+'…')+'">'+e(draft.answers[item.kind])+'</textarea></label></article>';
       }).join('')+'</div>';
+    }
+
+    worksheetToolsHTML() {
+      const e=this.escape,draft=this.active.draft;
+      return '<details class="sentence-sheet-tools"><summary>书写辅助</summary>'+this.stepList().map(item=>'<div class="sentence-writing-tools"><span>'+e(item.label)+'</span><button type="button" data-sentence-action="insert-target" data-sentence-kind="'+item.kind+'">插入表达</button>'+(item.kind!=='affirmative'?'<button type="button" data-sentence-action="reuse-original" data-sentence-kind="'+item.kind+'">沿用原句</button>':'')+'<span id="sentence-counter-'+item.kind+'" class="sentence-counter" data-sentence-counter="'+item.kind+'">'+draft.answers[item.kind].length+' / 400</span></div>').join('')+'</details>';
+    }
+
+    emptyWorksheetHTML() {
+      const e=this.escape,nav=[['batch','批量检查'],['write','课文默写'],['retell','英文复述'],['spell','单词拼写']].map(([mode,label])=>'<button type="button" class="button subtle" data-sentence-action="navigate-mode" data-sentence-mode="'+mode+'">'+label+'</button>').join('');
+      return '<div class="sentence-quick-workspace sentence-worksheet"><header class="sentence-sheet-header"><button type="button" class="sentence-sheet-back" data-sentence-action="back" aria-label="返回课文">'+(this.options.icon?.('left')||'返回')+'</button><h3>造句练习</h3><span></span><details class="sentence-sheet-menu"><summary aria-label="更多练习选项">'+(this.options.icon?.('list')||'更多')+'</summary><div class="sentence-sheet-menu-content">'+nav+'</div></details></header><p class="sentence-note sentence-sheet-empty">本课暂无可练习的新词。</p></div>';
     }
 
     quickEditorHTML() {
       const e=this.escape,draft=this.active.draft,target=this.target(),phrase=draft.mode==='phrase',status=this.saveState();
       const current=this.lessonTargets().filter(item=>phrase?item.kind==='phrase':(item.kind||'word')==='word');
-      const old=current.some(item=>item.key===target.key)?[]:[target],progress=this.lessonProgress();
+      const reviewed=!current.some(item=>item.key===target.key),progress=this.lessonProgress();
       const options=rows=>rows.map(item=>this.optionHTML(item,draft.targetKey)).join('');
-      const editor=phrase?
-        '<h3 id="sentence-step-title">习惯用法造句</h3><p id="sentence-step-hint" class="sentence-note">用这个表达写一句与自己有关的话。先想清楚“谁、做什么、何时或何地”，再写英文；不必再做四种转换。</p><label class="sentence-field" for="sentence-answer">我的句子<textarea id="sentence-answer" class="sentence-textarea" data-sentence-input="answer" rows="4" maxlength="400" lang="en" spellcheck="true" autocapitalize="sentences" aria-describedby="sentence-step-hint sentence-counter" placeholder="例如：谁 + '+e(target.word||target.phrase)+' + 时间／地点…">'+e(draft.answers.affirmative)+'</textarea></label><div class="sentence-writing-tools"><button type="button" data-sentence-action="insert-target">插入目标表达</button><span id="sentence-counter" class="sentence-counter">'+draft.answers.affirmative.length+' / 400</span></div>':
-        '<h3 id="sentence-step-title">四句型对照</h3><p id="sentence-four-hint" class="sentence-note">四句话放在一起，围绕同一人物、时态和情境，直接对照修改。</p>'+this.inlineFourHTML();
-      return '<div class="sentence-quick-workspace" data-writing-mode="'+draft.mode+'"><div class="sentence-writing-modes" role="group" aria-label="造句训练方式"><button type="button" data-sentence-action="writing-mode" data-sentence-mode="four" aria-pressed="'+(!phrase)+'">四句型转换</button><button type="button" data-sentence-action="writing-mode" data-sentence-mode="phrase" aria-pressed="'+phrase+'">习惯用法造句</button></div><label class="sentence-field sentence-quick-target">'+(phrase?'选择习惯用法':'选择目标词')+'<select class="sentence-select" data-sentence-select="target">'+(current.length?'<optgroup label="本课表达">'+options(current)+'</optgroup>':'')+(old.length?'<optgroup label="前面学过的表达">'+options(old)+'</optgroup>':'')+'</select></label><p class="sentence-quick-progress">本课已练 '+progress.done+' / '+progress.total+' '+(phrase?'项用法':'个词')+' · 已练不代表掌握<button type="button" data-sentence-action="next-unfinished"'+(progress.done===progress.total?' disabled':'')+'>下一个未练</button></p><section class="sentence-editor" aria-labelledby="sentence-step-title">'+editor+'<div class="sentence-draft-meta"><p class="sentence-save-status" data-save-state="'+status.state+'" role="status" aria-live="polite">'+e(status.text)+'</p></div><div class="sentence-actions sentence-quick-actions"><button type="button" class="button" data-sentence-action="check">检查基本要求</button><button type="button" class="button primary" data-sentence-action="copy-review">一键复制到豆包检查</button></div><p class="sentence-copy-note">'+(phrase?'复制句子与检查要求，到豆包粘贴即可。':'一次复制四句话、目标表达和检查要求，到豆包粘贴即可。')+'</p></section>'+this.copyFallbackHTML()+'<details class="sentence-quick-old"><summary>选用旧词与习惯用法（可选）</summary>'+this.oldPickerEntryHTML()+'</details><section class="sentence-feedback" aria-live="polite">'+this.feedbackHTML()+'</section>'+(draft.assisted?'<p class="sentence-note sentence-assisted">本轮已借助参考。</p>':'')+'<details class="sentence-quick-legacy"><summary>更多训练与旧版草稿</summary>'+this.controlsHTML(true)+'</details>'+this.referenceHTML()+this.wordPickerHTML()+'</div>';
+      const nav=[['batch','批量检查'],['write','课文默写'],['retell','英文复述'],['spell','单词拼写']].map(([mode,label])=>'<button type="button" class="button subtle" data-sentence-action="navigate-mode" data-sentence-mode="'+mode+'">'+label+'</button>').join('');
+      const returnToLesson=reviewed&&current.length?'<button type="button" class="button subtle" data-sentence-action="current-lesson">返回本课新词</button>':'';
+      const menu='<details class="sentence-sheet-menu"><summary aria-label="更多练习选项">'+(this.options.icon?.('list')||'更多')+'</summary><div class="sentence-sheet-menu-content"><div class="sentence-sheet-navigation">'+returnToLesson+nav+'</div><p class="sentence-quick-progress">本课已练 '+progress.done+' / '+progress.total+' '+(phrase?'项用法':'个词')+' · 已练不代表掌握<button type="button" data-sentence-action="next-unfinished"'+(progress.done===progress.total?' disabled':'')+'>下一个未练</button></p>'+this.oldPickerEntryHTML()+this.worksheetToolsHTML()+'<details class="sentence-quick-legacy"><summary>更多训练与旧版草稿</summary>'+this.controlsHTML(true)+'</details>'+this.referenceHTML()+(draft.assisted?'<p class="sentence-note sentence-assisted">本轮已借助参考。</p>':'')+'<button type="button" class="button subtle" data-sentence-action="save">重试保存</button></div></details>';
+      const header='<header class="sentence-sheet-header"><button type="button" class="sentence-sheet-back" data-sentence-action="back" aria-label="返回课文">'+(this.options.icon?.('left')||'返回')+'</button><h3 id="sentence-step-title">造句练习</h3><p class="sentence-save-status" data-save-state="'+status.state+'" title="'+e(status.text)+'" role="status" aria-live="polite">'+e(this.sheetSaveText(status))+'</p>'+menu+'</header>';
+      const context='<div class="sentence-sheet-context"><p class="sentence-sheet-context-label">本组词汇</p><label class="sentence-sheet-target"><span class="sentence-sr-only">'+(phrase?'选择习惯用法':'选择目标词')+'</span>'+(reviewed?'<span class="sentence-select sentence-sheet-review-target" aria-label="复习任务目标">'+e(target.word||target.phrase)+'</span>':'<select class="sentence-select" data-sentence-select="target">'+(current.length?'<optgroup label="本课新词">'+options(current)+'</optgroup>':'')+'</select>')+'</label>'+(!phrase?'<label class="sentence-sheet-phrase"><span class="sentence-sr-only">搭配习惯用法（可选）</span><select class="sentence-select" data-sentence-select="sheet-phrase">'+this.sheetPhraseOptionsHTML()+'</select></label>':'')+'</div>';
+      const editor=phrase?'<div class="sentence-inline-grid"><article class="sentence-inline-field"><label class="sentence-field" for="sentence-answer"><span class="sentence-inline-label">我的句子</span><textarea id="sentence-answer" class="sentence-textarea" data-sentence-input="answer" rows="3" maxlength="400" lang="en" spellcheck="true" autocapitalize="sentences" aria-describedby="sentence-counter-affirmative" placeholder="写你的英文…">'+e(draft.answers.affirmative)+'</textarea></label></article></div>':this.inlineFourHTML();
+      return '<div class="sentence-quick-workspace sentence-worksheet" data-writing-mode="'+draft.mode+'">'+header+'<p class="sentence-sheet-save-error" role="alert"'+(status.state==='failed'?'':' hidden')+'>'+e(status.state==='failed'?status.text:'')+'</p>'+context+'<section class="sentence-editor" aria-labelledby="sentence-step-title">'+editor+'<div class="sentence-sheet-actions"><button type="button" class="button primary" data-sentence-action="check">检查这组</button><button type="button" class="button subtle" data-sentence-action="copy-review">复制给豆包</button></div></section>'+this.copyFallbackHTML()+'<section class="sentence-feedback" aria-live="polite">'+this.feedbackHTML()+'</section>'+this.wordPickerHTML()+'</div>';
     }
 
     render() {
@@ -942,8 +1065,8 @@
       if (!this.core()) return '<section id="sentence-practice-content" class="sentence-practice"><p class="sentence-note">造句规则尚未加载，请刷新后重试。</p></section>';
       this.rememberAdjustments();
       if (!this.ensureState()) return '<section id="sentence-practice-content" class="sentence-practice"><p class="sentence-note">请选择一篇课文后开始五句造句。</p></section>';
-      const html = `<section id="sentence-practice-content" class="sentence-practice" aria-label="${this.isQuickMode()?'造句练习':'五句造句练习'}">${this.bodyHTML()}</section>`;
-      this.scheduleLessonCarousel();return html;
+      const html = `<section id="sentence-practice-content" class="sentence-practice" aria-label="${this.usesWorksheetLayout()?'造句练习':'五句造句练习'}">${this.bodyHTML()}</section>`;
+      this.scheduleLessonCarousel();this.scheduleWorksheetSizing();this.options.onLayoutChange?.({worksheet:this.usesWorksheetLayout()});return html;
     }
 
     rememberAdjustments(root = document.querySelector('#sentence-practice-content')) {
@@ -958,7 +1081,8 @@
       this.rememberAdjustments(root);
       if (!root || !this.ensureState()) return;
       root.innerHTML = this.bodyHTML();
-      this.scheduleLessonCarousel();
+      this.options.onLayoutChange?.({worksheet:this.usesWorksheetLayout()});
+      this.scheduleLessonCarousel();this.scheduleWorksheetSizing(root);
       if (focusInput) root.querySelector(this.active.draft.mode==='four'?`textarea[data-sentence-kind="${typeof focusInput==='string'?focusInput:this.inputKind(null)}"]`:'.sentence-textarea')?.focus?.();
     }
 
@@ -997,6 +1121,7 @@
 
     bodyHTML() {
       if(this.isQuickMode()&&this.target())return this.quickEditorHTML();
+      if(this.usesWorksheetLayout()&&!this.active)return this.emptyWorksheetHTML();
       const quickEntries='<div class="sentence-writing-modes" role="group" aria-label="切换新的造句训练"><button type="button" data-sentence-action="writing-mode" data-sentence-mode="four" aria-pressed="false">四句型转换</button><button type="button" data-sentence-action="writing-mode" data-sentence-mode="phrase" aria-pressed="false">习惯用法造句</button></div><p class="sentence-note sentence-legacy-entry-note">当前旧版草稿会保留，切换后仍可在“更多训练与旧版草稿”中找回。</p>';
       if (this.isBookWorkspace()) return quickEntries+this.workspaceHTML();
       const e = this.escape, target = this.target(), draft = this.active?.draft, flexible = draft?.mode === 'flexible';
@@ -1034,10 +1159,10 @@
     feedbackHTML() {
       const e = this.escape, result = this.result;
       if(this.isQuickMode()) {
-        if(!result)return '<p class="sentence-note">写好后可检查基本要求，再复制到豆包核对语法和用法。本站的有限规则检查不代表整句正确。</p>';
+        if(!result)return '';
         if(result.error)return `<p class="sentence-note">${e(result.error)}</p>`;
         const labels={'empty':'尚未填写','needs-work':'需要修改','review':'需核对语法与句意','ready':'基本要求已检查'};
-        return `<h4>基本要求反馈</h4><p class="sentence-note">已填写 ${Number(result.writtenCount)||0} / ${this.stepList().length} 句；语法与自然度可复制给豆包进一步检查。</p>${(result.rows||[]).map(row=>`<article class="sentence-feedback-row" data-status="${Object.hasOwn(labels,row.status)?row.status:'review'}"><h5>${e(row.label)} · ${e(labels[row.status]||labels.review)}</h5>${row.issues?.length?`<ul>${row.issues.map(issue=>`<li>${e(issue)}</li>`).join('')}</ul>`:'<p class="sentence-note">暂未发现已覆盖的基本问题，仍需核对句意和语法。</p>'}</article>`).join('')}`;
+        return `<h4>已检查 ${Number(result.writtenCount)||0} / ${this.stepList().length} 句</h4>${(result.rows||[]).map(row=>`<article class="sentence-feedback-row" data-status="${Object.hasOwn(labels,row.status)?row.status:'review'}"><h5>${e(row.label)} · ${e(labels[row.status]||labels.review)}</h5>${row.issues?.length?`<ul>${row.issues.map(issue=>`<li>${e(issue)}</li>`).join('')}</ul>`:''}</article>`).join('')}<p class="sentence-note">本地检查有限，可复制给豆包复核。</p>`;
       }
       if (!result) return '<p class="sentence-note">填写后检查五句基本要求。这里只提供有限规则反馈；句意、自然度和语法仍需自己或老师核对，写完不代表掌握。</p>';
       if (result.error) return `<p class="sentence-note">${e(result.error)}</p>`;

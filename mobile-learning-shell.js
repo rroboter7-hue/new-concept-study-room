@@ -225,6 +225,7 @@
     syncPresentation() {
       const p=MobileLearningShell.presentationFor({mobile:this.mobile,view:this.state?.view,tab:this.state?.tab,outputMode:this.outputMode,keyboard:this.body.classList.contains('mls-keyboard-open')});
       this.body.classList.toggle('mls-focused-study',p.focused);this.body.classList.toggle('mls-writing-dark',p.writerDark);
+      this.body.classList.toggle('mls-sentence-sheet',p.focused&&this.state?.tab==='output'&&this.outputMode==='sentences'&&this.state?.sentenceWorksheet===true);
       this.body.setAttribute('data-mls-tab',this.state?.tab||'reading');
       if(this.inlinePlayerSlot)this.inlinePlayerSlot.hidden=!p.inlinePlayer;
       if(this.modeNav)for(const button of this.modeNav.querySelectorAll('[data-mobile-tab]')){const active=this.state?.view==='study'&&button.dataset.mobileTab===this.state?.tab&&(button.dataset.mobileTab!=='output'||this.outputMode==='sentences');button.setAttribute('aria-selected',String(active));}

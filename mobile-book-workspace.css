@@ -99,3 +99,20 @@
  .mls-book-workspace.mls-mobile .word-popover .word-source-label{font-size:13px}
 }
 @media(max-width:360px){.mls-book-workspace.mls-mobile .app-main{padding-left:17px;padding-right:17px}.mls-book-workspace.mls-mobile .mls-page-title{font-size:28px}.mls-book-workspace.mls-mobile .paragraph .english{font-size:22px}.mls-book-workspace .mls-header-lesson{font-size:15px!important}.mls-book-workspace.mls-mobile .mls-header{gap:6px}.mls-book-workspace.mls-mobile .mls-book-select{flex-basis:82px;max-width:82px;padding-right:20px;font-size:13px}.mls-book-workspace.mls-mobile .mls-course-button{font-size:15px;gap:4px;padding-left:0}.mls-book-workspace.mls-mobile .mls-course-button svg{width:18px;height:18px}.mls-book-workspace .mls-mode-nav button{font-size:14px}.mls-book-workspace .mls-quick-nav button{font-size:12px;gap:4px}}
+
+@media(max-width:760px){
+ body.mls-book-workspace.mls-mobile.mls-sentence-sheet{--player-height:0px;--mls-player-space:0px}
+ .mls-book-workspace.mls-mobile.mls-sentence-sheet .app-main{padding:18px max(22px,env(safe-area-inset-right)) max(22px,env(safe-area-inset-bottom)) max(22px,env(safe-area-inset-left));background:#fbf9f3}
+ .mls-book-workspace.mls-mobile.mls-sentence-sheet .mls-header,
+ .mls-book-workspace.mls-mobile.mls-sentence-sheet .mls-mode-nav,
+ .mls-book-workspace.mls-mobile.mls-sentence-sheet .mls-quick-nav,
+ .mls-book-workspace.mls-mobile.mls-sentence-sheet .mls-page-title,
+ .mls-book-workspace.mls-mobile.mls-sentence-sheet .player,
+ .mls-book-workspace.mls-mobile.mls-sentence-sheet .mls-inline-player,
+ .mls-book-workspace.mls-mobile.mls-sentence-sheet #output-content>.output-tabs,
+ .mls-book-workspace.mls-mobile.mls-sentence-sheet #output-content>.mls-output-more{display:none!important}
+ .mls-book-workspace.mls-mobile.mls-sentence-sheet .reader-panel{margin:0;padding:0}
+ .mls-book-workspace.mls-mobile.mls-sentence-sheet #sentence-practice-content{margin:0;padding:0}
+ .mls-book-workspace.mls-mobile.mls-sentence-sheet .toast{bottom:max(22px,env(safe-area-inset-bottom))}
+}
+@media(max-width:359px){.mls-book-workspace.mls-mobile.mls-sentence-sheet .app-main{padding-left:16px;padding-right:16px}}

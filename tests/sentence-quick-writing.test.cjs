@@ -62,7 +62,7 @@ test('quick editor shows four named forms, original reuse and explicit copy acti
   assert.equal((html.match(/<textarea\b/g)||[]).length,4);
   assert.equal((html.match(/data-sentence-action="step"/g)||[]).length,0);
   for(const name of ['肯定句','否定句','一般疑问句','特殊疑问句'])assert.ok(html.includes(name));
-  assert.match(html,/data-sentence-action="copy-review"/);assert.match(html,/复制到豆包检查/);
+  assert.match(html,/data-sentence-action="copy-review"/);assert.match(html,/复制给豆包/);
   Object.assign(h.ui.active.draft.answers,answers);h.ui.active.draft.step=1;
   assert.match(h.render(),/data-sentence-action="reuse-original"/);
   assert.equal(h.ui.switchMode('phrase'),true);assert.equal(h.ui.target().phrase,'pay attention');
@@ -120,13 +120,18 @@ test('idiom progress and next-unfinished use phrase targets rather than the word
 test('quick target controls stay bounded with a large learned history while old expressions remain searchable',()=>{
   const past=Array.from({length:100},(_,index)=>({id:'old'+index,book:1,number:index+1,vocabulary:Array.from({length:12},(_,word)=>({word:'word'+index+'x'+word,pos:'v.',meaning:'旧词'})),usage:[{phrase:'phrase '+index,meaning:'旧用法'}]}));
   const h=setup({past});let html=h.render();
+  const targetOptions=value=>(value.match(/<select[^>]*data-sentence-select="target"[^>]*>([\s\S]*?)<\/select>/)?.[1].match(/<option\b/g)||[]).length;
+  const phraseOptions=value=>(value.match(/<select[^>]*data-sentence-select="sheet-phrase"[^>]*>([\s\S]*?)<\/select>/)?.[1].match(/<option\b/g)||[]).length;
   assert.ok(h.ui.context.targets.length>1200);assert.ok(h.ui.wordBank().length>1200);
   assert.equal((html.match(/data-sentence-select="target"/g)||[]).length,1);
-  assert.equal((html.match(/<option\b/g)||[]).length,5,'one current word plus four training modes');
+  assert.equal(targetOptions(html),1,'only the current word is listed in the primary target selector');
+  assert.ok(phraseOptions(html)<=16,'the optional phrase list keeps current and recent choices bounded');
+  assert.match(html,/<option value="__more__">更多已学用法/);
   assert.doesNotMatch(html,/<option[^>]*>word99x11/);
   assert.equal(h.ui.openTarget({lessonId:'now',expression:'word99x11',kind:'word',mode:'four',roundKey:'old-review'}),true);
-  html=h.render();assert.match(html,/<option[^>]*selected>word99x11/);
-  assert.equal((html.match(/<option\b/g)||[]).length,6,'current word plus active old target and four training modes');
+  html=h.render();assert.match(html,/sentence-sheet-review-target[^>]*>word99x11/);
+  assert.equal(targetOptions(html),0,'an explicit old review has readonly context instead of adding old selectable words');
+  assert.match(html,/data-sentence-action="current-lesson"/);
   h.ui.switchMode('phrase');html=h.render();assert.equal((html.match(/<option\b/g)||[]).length,6,'two current phrases plus four training modes');
   assert.ok(h.ui.wordBank().some(item=>item.label==='word99x11'));
   h.ui.wordSearch='word99x11';assert.deepEqual(Array.from(h.ui.filteredOldItems(),item=>item.label),['word99x11']);

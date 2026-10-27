@@ -39,3 +39,16 @@ test('Escape dismisses the learning menu and returns keyboard focus to its trigg
  const h=setup();let focused=0,prevented=0;h.ui.menu.querySelector=()=>({focus(){focused++;}});
  h.ui.keydown({key:'Escape',preventDefault(){prevented++;}});assert.equal(h.ui.menu.open,false);assert.equal(focused,1);assert.equal(prevented,1);
 });
+
+
+test('worksheet chrome is scoped to the actual mobile sentence worksheet and clears on other routes',()=>{
+ const h=setup(),classes=new Set();
+ h.ui.body={classList:{toggle(name,on){if(on)classes.add(name);else classes.delete(name);},contains:name=>classes.has(name),remove:name=>classes.delete(name)},setAttribute(){}};
+ h.ui.state={view:'study',tab:'output'};
+ h.ui.setOutputMode('sentences',{sentenceWorksheet:true});assert.equal(classes.has('mls-sentence-sheet'),true);
+ h.ui.setOutputMode('batch',{sentenceWorksheet:false});assert.equal(classes.has('mls-sentence-sheet'),false);
+ h.ui.setOutputMode('sentences',{sentenceWorksheet:false});assert.equal(classes.has('mls-sentence-sheet'),false,'legacy sentence practice keeps its normal navigation');
+ h.ui.setOutputMode('sentences',{sentenceWorksheet:true});h.ui.state.tab='reading';h.ui.syncPresentation();assert.equal(classes.has('mls-sentence-sheet'),false);
+ h.ui.state={view:'daily-review',tab:'output',sentenceWorksheet:true};h.ui.syncPresentation();assert.equal(classes.has('mls-sentence-sheet'),false);
+ h.ui.state={view:'study',tab:'output',sentenceWorksheet:true};h.ui.mobile=false;h.ui.syncPresentation();assert.equal(classes.has('mls-sentence-sheet'),false);
+});
