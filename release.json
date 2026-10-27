@@ -1,6 +1,6 @@
 {
   "build": "2026-10-27-mobile-writing10-v2",
-  "preparedAt": "2026-10-27T06:14:32.077Z",
+  "preparedAt": "2026-10-27T06:20:02.803Z",
   "book2": {
     "book": 2,
     "total": 96,
@@ -231,8 +231,8 @@
     },
     "unsubmittedLegacyDictationDraftPersistence": true
   },
-  "staticFiles": 4227,
-  "staticBytes": 740418676,
+  "staticFiles": 4230,
+  "staticBytes": 740480028,
   "nativeearsAdvancedAudio": {
     "books": {
       "3": 60,
@@ -550,7 +550,13 @@
     "initialPickerRows": 80,
     "fourSentenceFormsPerWord": 4,
     "phraseSentences": 1,
-    "legacyDraftsPreserved": true
+    "legacyDraftsPreserved": true,
+    "recommendationProfile": "phrases-verbs-v1",
+    "recommendedPhrases": 3,
+    "recommendedVerbs": 1,
+    "introductoryExpressionsExcluded": true,
+    "manualWordBankPreserved": true,
+    "recommendationCacheMigrated": true
   },
   "learningReliability": {
     "contextBoundDictionary": true,

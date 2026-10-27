@@ -30,9 +30,9 @@ test('main tab and specific shortcut have unambiguous selected state',()=>{
  h.ui.body={classList:{toggle(){},remove(){},contains:()=>false},setAttribute(){}};
  h.ui.modeNav={querySelectorAll:()=>tabs};h.ui.quickNav={querySelectorAll:()=>shortcuts};h.ui.state={view:'study',tab:'output'};
  h.ui.setOutputMode('retell');
- assert.deepEqual(tabs.map(b=>b.attributes['aria-selected']),['false','true','false']);
+ assert.deepEqual(tabs.map(b=>b.attributes['aria-selected']),['false','false','false']);
  assert.deepEqual(shortcuts.map(b=>b.attributes['aria-pressed']),['false','true']);
- h.ui.setOutputMode('sentences');assert.deepEqual(shortcuts.map(b=>b.attributes['aria-pressed']),['false','false']);
+ h.ui.setOutputMode('sentences');assert.deepEqual(shortcuts.map(b=>b.attributes['aria-pressed']),['false','false']);assert.deepEqual(tabs.map(b=>b.attributes['aria-selected']),['false','true','false']);
  h.ui.state.view='daily-review';h.ui.syncPresentation();assert.equal(tabs.some(b=>b.attributes['aria-selected']==='true'),false);
 });
 test('Escape dismisses the learning menu and returns keyboard focus to its trigger',()=>{

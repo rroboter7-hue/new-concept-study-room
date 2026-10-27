@@ -227,7 +227,7 @@
       this.body.classList.toggle('mls-focused-study',p.focused);this.body.classList.toggle('mls-writing-dark',p.writerDark);
       this.body.setAttribute('data-mls-tab',this.state?.tab||'reading');
       if(this.inlinePlayerSlot)this.inlinePlayerSlot.hidden=!p.inlinePlayer;
-      if(this.modeNav)for(const button of this.modeNav.querySelectorAll('[data-mobile-tab]')){const active=this.state?.view==='study'&&button.dataset.mobileTab===this.state?.tab;button.setAttribute('aria-selected',String(active));}
+      if(this.modeNav)for(const button of this.modeNav.querySelectorAll('[data-mobile-tab]')){const active=this.state?.view==='study'&&button.dataset.mobileTab===this.state?.tab&&(button.dataset.mobileTab!=='output'||this.outputMode==='sentences');button.setAttribute('aria-selected',String(active));}
       if(this.quickNav)for(const button of this.quickNav.querySelectorAll('[data-mobile-output]'))button.setAttribute('aria-pressed',String(this.state?.view==='study'&&this.state?.tab==='output'&&button.dataset.mobileOutput===this.outputMode));
       this.body.classList.toggle('mls-player-collapsed', this.mobile && this.playerCollapsed);
       if (this.playerButton) {
