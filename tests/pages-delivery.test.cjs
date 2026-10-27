@@ -43,6 +43,12 @@ test('generated mapper changes only converted exact paths, including the fallbac
  assert.equal(c.STUDY_WORD_AUDIO.a,'audio/optimized/words/same.mp3');assert.equal(c.STUDY_WORD_AUDIO.other,'audio/words/same.wav?legacy=1');assert.equal(c.STUDY_LESSON_AUDIO.a,'audio/words/same.mp3');assert.equal(c.STUDY_LESSON_AUDIO.other,'audio/elsewhere/same.wav');assert.equal(c.STUDY_LESSON_AUDIO_FALLBACKS.a,'audio/optimized/lessons/story.mp3');
 });
 
+test('normal vocabulary audio named test, private or secret is retained inside the audio asset directory',async t=>{
+ const f=fixture(t),out=f.out('site');for(const word of ['test','private','secret'])f.write('audio/words/'+word+'.wav',f.wav);
+ fs.appendFileSync(path.join(f.source,'generated-audio.js'),'\nObject.assign(window.STUDY_WORD_AUDIO,{test:"audio/words/test.wav",private:"audio/words/private.wav",secret:"audio/words/secret.wav"});\n');
+ const report=await delivery.buildPages({sourceRoot:f.source,outputRoot:out,encoder:f.encoder,probe:f.probe});for(const word of ['test','private','secret'])assert(fs.existsSync(path.join(out,'audio/optimized/words/'+word+'.mp3')),word);assert.equal(report.audioReferences.total,7);
+});
+
 test('cache is reusable across new output folders and corrupted bytes cannot be reused',async t=>{
  const f=fixture(t),settings={sourceRoot:f.source,encoder:f.encoder,probe:f.probe};
  await delivery.buildPages({...settings,outputRoot:f.out('one')});assert.equal(f.encodes,1);

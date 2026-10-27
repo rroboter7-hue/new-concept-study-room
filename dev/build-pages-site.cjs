@@ -57,7 +57,9 @@ function runtimeFiles(sourceRoot){
   const target=plainPath(sourceRoot,relative);assertNotSymlink(target);
   for(const entry of fs.readdirSync(target,{withFileTypes:true}).sort((a,b)=>a.name.localeCompare(b.name))){
    const next=relative+'/'+entry.name,full=plainPath(sourceRoot,next);assertNotSymlink(full);
-   if(privateName(entry.name))continue;
+   // "test", "private" and "secret" are legitimate vocabulary filenames.
+   // Audio is already constrained by its explicit media extension allow-list.
+   if(entry.name.startsWith('.')||!relative.startsWith('audio/')&&relative!=='audio'&&privateName(entry.name))continue;
    if(entry.isDirectory())visit(next,extensions);
    else if(entry.isFile()&&(extensions.has(path.extname(entry.name).toLowerCase())||relative==='dictionary-data'&&entry.name==='LICENSE'))add(next);
   }
