@@ -6,6 +6,30 @@
   const canonical = text => words(text).map(word=>word.toLowerCase().replace(/’/g,"'")).join(' ');
   const stopWords = new Set('this that with from have been were they them what when which where your there then into just does will would could should about their these those some also very more because after before'.split(' '));
   const retellStopWords = new Set([...stopWords,...'a an the and or but for to of in on at by as is am are was be being has had do did not no it its i me my we us our he him his she her you so than can may must'.split(' ')]);
+  const draftModes=['write','spell','retell'], outputModes=[...draftModes,'sentences','batch'];
+  const safeLessonId=id=>typeof id==='string'&&/^[\w-]{1,160}$/.test(id)&&!['__proto__','constructor','prototype'].includes(id);
+  const object=value=>value&&typeof value==='object'&&!Array.isArray(value)?value:{};
+  function sanitizeDrafts(raw) {
+    const result={version:1,lessons:{}}, source=object(object(raw).lessons);let remaining=2000000;
+    const text=(value,max)=>{const clean=typeof value==='string'?value.slice(0,Math.min(max,remaining)):'';remaining-=clean.length;return clean;};
+    for(const id of Object.keys(source).slice(0,600)){
+      if(!safeLessonId(id)||Object.keys(result.lessons).length>=300||remaining<=0)continue;
+      const lesson=object(source[id]), entry={mode:outputModes.includes(lesson.mode)?lesson.mode:'write',assisted:lesson.assisted===true,roundKey:text(lesson.roundKey,1000),modes:{}};
+      for(const mode of draftModes){
+        if(!Object.prototype.hasOwnProperty.call(object(lesson.modes),mode))continue;
+        const saved=object(lesson.modes[mode]),draft={assisted:saved.assisted===true,roundKey:text(saved.roundKey,1000)};
+        if(mode==='write'){
+          draft.paragraphIndex=Number.isInteger(saved.paragraphIndex)?Math.max(0,Math.min(199,saved.paragraphIndex)):0;draft.answers={};
+          for(const index of Object.keys(object(saved.answers)).slice(0,200))if(/^(?:0|[1-9]\d{0,2})$/.test(index)&&Number(index)<200)draft.answers[index]=text(saved.answers[index],30000);
+        }else if(mode==='spell'){
+          draft.spellAnswers={};for(let i=0;i<8;i++)if(Object.prototype.hasOwnProperty.call(object(saved.spellAnswers),i))draft.spellAnswers[i]=text(saved.spellAnswers[i],200);
+        }else draft.answer=text(saved.answer,30000);
+        entry.modes[mode]=draft;
+      }
+      result.lessons[id]=entry;
+    }
+    return result;
+  }
 
   // Whole, consecutive tokens only: neither substrings nor punctuation can
   // manufacture a phrase. This measures lexical coverage, not story meaning.
@@ -61,16 +85,18 @@
       this.escape=this.options.escapeHTML || escapeText;
       this.icon=this.options.icon || (()=>'');
       this.current=null;
+      this.drafts=sanitizeDrafts(this.options.getState?.());this.draftSaveState=Object.keys(this.drafts.lessons).length?'saved':'new';
       this.reset();
       this.click=event=>{
         const button=event.target.closest && event.target.closest('[data-output-action]');
         if (!button || !button.closest('#output-content')) return;
         try {
           switch(button.dataset.outputAction) {
-            case 'mode':this.options.sentencePractice?.flush();this.options.batchPractice?.flush();this.options.batchPractice?.cancel(false);this.mode=button.dataset.outputMode;this.result=null;this.showOriginal=false;this.redraw();break;
-            case 'original':if(!this.showOriginal)this.assisted=true;this.showOriginal=!this.showOriginal;this.redraw();break;
+            case 'mode':this.switchMode(button.dataset.outputMode);break;
+            case 'original':if(!this.showOriginal)this.assisted=true;this.showOriginal=!this.showOriginal;this.flush();this.redraw();break;
             case 'submit':this.submit();break;case 'grammar-check':this.checkGrammar();break;case 'grammar-apply':this.applyGrammar(Number(button.dataset.grammarIndex));break;case 'grammar-all':this.applyGrammar(-1);break;
-            case 'retry':if(this.result)this.assisted=true;this.result=null;this.pendingEvidence=null;this.answer='';this.spellAnswers={};this.showOriginal=false;this.grammarIssues=null;this.grammarText='';this.redraw();break;
+            case 'retry':if(this.result)this.assisted=true;this.result=null;this.pendingEvidence=null;this.answer='';this.spellAnswers={};this.showOriginal=false;this.grammarIssues=null;this.grammarText='';this.flush();this.redraw();break;
+            case 'draft-save':this.flush();this.redraw();break;
             case 'evidence-retry':this.retryEvidence();break;
             case 'speak':{
               const word=this.spellWords()[Number(button.dataset.outputIndex)]?.word;
@@ -84,16 +110,17 @@
         const input=event.target;
         if (!input.closest || !input.closest('#output-content')) return;
         if (input.dataset.outputInput==='answer') {
-          this.answer=input.value;this.grammarIssues=null;this.grammarText='';const feedback=document.querySelector('#output-content .grammar-feedback');if(feedback)feedback.innerHTML='<p class="small-note">输入已改变，请重新检查。</p>';
+          this.answer=String(input.value||'').slice(0,30000);this.grammarIssues=null;this.grammarText='';const feedback=document.querySelector('#output-content .grammar-feedback');if(feedback)feedback.innerHTML='<p class="small-note">输入已改变，请重新检查。</p>';
           const count=document.querySelector('#output-content .output-counter');
           if (count) count.textContent=`${words(this.answer).length} 个英文单词`;
         }
-        if (input.dataset.outputSpell!==undefined) this.spellAnswers[input.dataset.outputSpell]=input.value;
+        if (/^[0-7]$/.test(input.dataset.outputSpell||'')) this.spellAnswers[input.dataset.outputSpell]=String(input.value||'').slice(0,200);
+        if(input.dataset.outputInput==='answer'||/^[0-7]$/.test(input.dataset.outputSpell||''))this.flush();
       };
       this.change=event=>{
         const select=event.target;
         if (select.dataset.outputParagraph===undefined || !select.closest('#output-content')) return;
-        this.paragraphIndex=Math.max(0,Number(select.value)||0);this.answer='';this.result=null;this.showOriginal=false;this.grammarIssues=null;this.grammarText='';this.redraw();
+        this.flush();this.paragraphIndex=Math.max(0,Math.min(199,Number(select.value)||0));this.answer=this.drafts.lessons[this.current?.id]?.modes.write?.answers[this.paragraphIndex]||'';this.result=null;this.pendingEvidence=null;this.showOriginal=false;this.grammarIssues=null;this.grammarText='';this.flush();this.redraw();
       };
       document.addEventListener('click',this.click);
       document.addEventListener('input',this.input);
@@ -102,8 +129,44 @@
 
     static compareWords(expected,actual) {return compareWords(expected,actual);}
     static countWords(text) {return words(text).length;}
+    static sanitizeDrafts(raw) {return sanitizeDrafts(raw);}
     reset() {this.grammarIssues=null;this.grammarText='';this.mode=this.options.defaultMode?.()||'write';this.paragraphIndex=0;this.answer='';this.spellAnswers={};this.result=null;this.showOriginal=false;this.scrambles={};this.assisted=false;this.roundKey='';this.roundLessonId='';this.pendingEvidence=null;}
-    setLesson(lesson) {if (lesson?.id!==this.current?.id) {this.options.sentencePractice?.flush();this.options.batchPractice?.flush();this.options.batchPractice?.cancel(false);this.reset();}this.current=lesson || null;}
+    loadMode(mode) {
+      this.reset();this.mode=outputModes.includes(mode)?mode:'write';
+      const entry=this.drafts.lessons[this.current?.id],draft=entry?.modes[this.mode];
+      // Seeing lesson references or feedback also supports the other output
+      // modes. Switching editors must not erase that lesson's exposure history.
+      this.assisted=entry?.assisted===true||draft?.assisted===true;this.roundKey=draft?.roundKey||entry?.roundKey||'';this.roundLessonId=this.roundKey?this.current.id:'';
+      if(!draft)return;
+      if(this.mode==='write'){this.paragraphIndex=Math.min(draft.paragraphIndex,Math.max(0,(this.current?.paragraphs||[]).filter(p=>p&&typeof p.en==='string'&&p.en.trim()).length-1));this.answer=draft.answers[this.paragraphIndex]||'';}
+      else if(this.mode==='spell')this.spellAnswers={...draft.spellAnswers};else this.answer=draft.answer;
+    }
+    captureDraft() {
+      const id=this.current?.id;if(!safeLessonId(id))return;
+      const entry=this.drafts.lessons[id]||(this.drafts.lessons[id]={mode:this.mode,assisted:false,roundKey:'',modes:{}});entry.mode=this.mode;entry.assisted=this.assisted===true;entry.roundKey=String(this.roundKey||'').slice(0,1000);
+      if(this.assisted)for(const draft of Object.values(entry.modes))draft.assisted=true;
+      if(!draftModes.includes(this.mode))return;
+      const draft={assisted:this.assisted===true,roundKey:String(this.roundKey||'').slice(0,1000)};
+      if(this.mode==='write'){draft.paragraphIndex=this.paragraphIndex;draft.answers={...entry.modes.write?.answers,[this.paragraphIndex]:this.answer};}
+      else if(this.mode==='spell')draft.spellAnswers={...this.spellAnswers};else draft.answer=this.answer;
+      entry.modes[this.mode]=draft;
+      entry.modes=Object.fromEntries(draftModes.filter(mode=>entry.modes[mode]).map(mode=>[mode,entry.modes[mode]]));
+    }
+    flush() {
+      this.captureDraft();if(!this.current)return true;
+      const snapshot=sanitizeDrafts(this.drafts);let saved=false;
+      // Imported data is bounded, and an over-capacity live draft stays in
+      // memory with an unsaved status instead of silently discarding answers.
+      try{if(JSON.stringify(snapshot)===JSON.stringify(this.drafts))saved=this.options.saveState?.(snapshot)===true;}catch{}
+      this.draftSaveState=saved?'saved':'failed';this.updateDraftStatus();return saved;
+    }
+    draftStatusText() {return this.draftSaveState==='saved'?'草稿已保存到此设备；未提交内容不计入成绩。':this.draftSaveState==='failed'?'草稿未保存；当前输入仍在本页，请重试保存后再刷新。':'输入后自动保存草稿，未提交内容不计入成绩。';}
+    updateDraftStatus() {const status=document.querySelector('#output-content [data-output-draft-status]');if(status)status.textContent=this.draftStatusText();const retry=document.querySelector('#output-content [data-output-draft-retry]');if(retry)retry.textContent=this.draftSaveState==='failed'?'重试保存草稿':'保存草稿';}
+    draftStatusHTML() {return `<p class="small-note" role="status" aria-live="polite" data-output-draft-status>${this.escape(this.draftStatusText())}</p><button type="button" class="button subtle" data-output-action="draft-save" data-output-draft-retry>${this.draftSaveState==='failed'?'重试保存草稿':'保存草稿'}</button>`;}
+    snapshot() {this.captureDraft();return sanitizeDrafts(this.drafts);}
+    reloadFromStorage() {this.drafts=sanitizeDrafts(this.options.getState?.());this.draftSaveState=Object.keys(this.drafts.lessons).length?'saved':'new';this.loadMode(this.drafts.lessons[this.current?.id]?.mode||this.options.defaultMode?.()||'write');this.redraw();}
+    switchMode(mode) {if(!outputModes.includes(mode))return;this.lesson();this.flush();this.options.sentencePractice?.flush();this.options.batchPractice?.flush();this.options.batchPractice?.cancel(false);this.loadMode(mode);this.flush();this.redraw();}
+    setLesson(lesson) {if (lesson?.id!==this.current?.id) {if(this.current)this.flush();this.options.sentencePractice?.flush();this.options.batchPractice?.flush();this.options.batchPractice?.cancel(false);this.current=lesson||null;this.loadMode(this.drafts.lessons[lesson?.id]?.mode||this.options.defaultMode?.()||'write');}else this.current=lesson||null;}
     lesson() {const lesson=this.options.getLesson?.() || this.current;if (lesson?.id!==this.current?.id)this.setLesson(lesson);else this.current=lesson;return lesson;}
     startTask({lessonId,mode='write',roundKey}={}) {
       const lesson=this.lesson(),normalized={dictation:'write',spelling:'spell',write:'write',spell:'spell',retell:'retell'}[mode];
@@ -111,9 +174,12 @@
       const key=roundKey.trim().slice(0,1000);
       // Entering the same task keeps its draft and exposure history. Only an
       // explicit new round hides references and clears answers together.
-      if(this.roundKey===key&&this.roundLessonId===lessonId)return true;
+      if(this.mode===normalized&&this.roundKey===key&&this.roundLessonId===lessonId)return true;
+      this.flush();this.loadMode(normalized);
+      if(this.roundKey===key&&this.roundLessonId===lessonId){this.flush();this.redraw();return true;}
       this.options.sentencePractice?.flush();this.options.batchPractice?.flush();this.options.batchPractice?.cancel(false);
-      this.reset();this.mode=normalized;this.roundKey=key;this.roundLessonId=lessonId;this.redraw();return true;
+      if(this.drafts.lessons[lessonId])delete this.drafts.lessons[lessonId].modes[normalized];
+      this.reset();this.mode=normalized;this.roundKey=key;this.roundLessonId=lessonId;this.flush();this.redraw();return true;
     }
     paragraphs() {return (this.lesson()?.paragraphs || []).filter(paragraph=>paragraph && typeof paragraph.en==='string' && paragraph.en.trim());}
     notify(message) {this.options.toast?.(message);}
@@ -189,11 +255,11 @@
       const tabs='<div class="output-tabs" aria-label="输出练习模式">'+(mobile?modes.filter(([mode])=>['sentences','batch'].includes(mode)):modes).map(modeHTML).join('')+'</div>';
       const more=mobile?'<details class="mls-output-more"'+(!primary?' open':'')+'><summary>其他练习</summary><div class="output-tabs">'+modes.filter(([mode])=>!['sentences','batch'].includes(mode)).map(modeHTML).join('')+'</div></details>':'';
       const content=this.mode==='sentences'&&sentenceAvailable?this.options.sentencePractice.render():this.mode==='batch'&&this.options.batchPractice?this.options.batchPractice.render():(this.mode==='spell'?this.renderSpell():this.mode==='retell'?this.renderRetell():this.renderWrite())+(this.mode!=='spell'?this.grammarHTML():'');
-      return tabs+(!primary?more:'')+content+(primary?more:'');
+      return tabs+(!primary?more:'')+content+(!primary?this.draftStatusHTML():'')+(primary?more:'');
     }
 
-    checkGrammar(redraw=true){if(!this.answer.trim()){this.notify('先写一段英文，再检查。');return;}if(!global.StudyGrammar){this.grammarText='';this.grammarIssues=null;this.notify('语法规则正在加载，请刷新后再试。');return;}if(redraw)this.assisted=true;this.grammarText=this.answer;this.grammarIssues=global.StudyGrammar.check(this.answer);if(redraw)this.redraw();}
-    applyGrammar(index){if(this.grammarText!==this.answer){this.notify('输入已改变，请重新检查。');return;}this.assisted=true;this.answer=index<0?global.StudyGrammar.applyAll(this.answer,this.grammarIssues||[]):global.StudyGrammar.apply(this.answer,(this.grammarIssues||[])[index]);this.result=null;this.grammarText=this.answer;this.grammarIssues=global.StudyGrammar.check(this.answer);this.redraw();this.notify('建议已填回输入框，请结合句意确认。');}
+    checkGrammar(redraw=true){if(!this.answer.trim()){this.notify('先写一段英文，再检查。');return;}if(!global.StudyGrammar){this.grammarText='';this.grammarIssues=null;this.notify('语法规则正在加载，请刷新后再试。');return;}if(redraw)this.assisted=true;this.grammarText=this.answer;this.grammarIssues=global.StudyGrammar.check(this.answer);if(redraw){this.flush();this.redraw();}}
+    applyGrammar(index){if(this.grammarText!==this.answer){this.notify('输入已改变，请重新检查。');return;}this.assisted=true;this.answer=index<0?global.StudyGrammar.applyAll(this.answer,this.grammarIssues||[]):global.StudyGrammar.apply(this.answer,(this.grammarIssues||[])[index]);this.result=null;this.grammarText=this.answer;this.grammarIssues=global.StudyGrammar.check(this.answer);this.flush();this.redraw();this.notify('建议已填回输入框，请结合句意确认。');}
     grammarHTML(){const e=this.escape,issues=this.grammarIssues;return `<section class="grammar-helper"><h3>基础语法检查与修改建议</h3><p>提交默写或复述后，会自动检查主谓一致、助动词、冠词和常见搭配，并在这里显示修改建议。全部在本地处理，最多检查前10000个字符；这是常见规则检查，复杂语法和句意仍需结合原文确认。</p><button class="button" data-output-action="grammar-check">${issues?'重新检查语法':'单独检查语法'}</button><div class="grammar-feedback">${issues?issues.length?`<h4>发现 ${issues.length} 处可检查的问题</h4>${issues.map((issue,i)=>`<article class="grammar-issue"><div><del>${e(issue.original)}</del><span> → </span><ins>${e(issue.replacement)}</ins></div><p>${e(issue.message)}</p><button class="button subtle" data-output-action="grammar-apply" data-grammar-index="${i}">采用此建议</button></article>`).join('')}<button class="button subtle" data-output-action="grammar-all">应用当前全部建议</button>`:'<p class="grammar-ok">已完成本地常见规则检查，未发现已覆盖类型的问题。可对照原文继续检查时态、句意和遗漏。</p>':''}</div></section>`;}
 
     originalHTML(paragraphs) {return this.showOriginal?`<div class="output-target">${paragraphs.map(paragraph=>`<p class="english">${this.escape(paragraph.en)}</p>`).join('')}</div>`:'';}
@@ -236,6 +302,7 @@
       // Subsequent attempts have access to this submission's comparison and
       // grammar feedback. The captured first-attempt evidence stays unchanged.
       this.assisted=true;
+      this.flush();
       this.persistOutput(pending);
     }
     evidenceSaved(pending) {

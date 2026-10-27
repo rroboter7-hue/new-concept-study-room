@@ -3,8 +3,8 @@
  const KINDS={word:'单词拼写',phrase:'习惯用法',grammar:'语法要点'};
  class ReviewPractice{
   constructor(options){
-   this.options=options;this.container=options.container;this.active=null;this.revealed=false;this.input='';this.writing=false;this.feedback=null;this.kind='';this.lessonId='';this.cardIds=null;this.practiceDone=new Set();this.reviewCardIds=null;this.practiceSerial=0;this.attemptAssistance=new Map();
-   this.container.addEventListener('click',e=>{const b=e.target.closest('[data-review-action]');if(b&&this.container.contains(b))this.action(b.dataset.reviewAction,b);});
+   this.options=options;this.container=options.container;this.active=null;this.revealed=false;this.input='';this.writing=false;this.feedback=null;this.kind='';this.lessonId='';this.cardIds=null;this.practiceDone=new Set();this.reviewCardIds=null;this.reviewTask=null;this.practiceSerial=0;this.attemptAssistance=new Map();
+   this.container.addEventListener('click',e=>{const b=e.target.closest('[data-review-action]');if(b&&this.container.contains(b))return this.action(b.dataset.reviewAction,b);});
    this.container.addEventListener('input',e=>{if(e.target.dataset.reviewInput!==undefined){if(this.revealed)this.markAssisted('edited-after-feedback');this.input=e.target.value;this.revealed=false;this.feedback=null;const area=this.container.querySelector('[data-review-feedback]');if(area)area.innerHTML='';this.container.querySelectorAll('[data-review-rating],[data-review-action="practice-next"],[data-review-action="practice-again"]').forEach(b=>b.disabled=true);}});
    this.container.addEventListener('change',e=>{if(e.target.dataset.reviewFilter!==undefined){this.kind=e.target.value;this.reset();this.render();}});
   }
@@ -14,20 +14,21 @@
   independentlyCorrect(){return this.revealed&&!this.writing&&this.feedback?.correct===true&&!this.isAssisted()&&!!this.input.trim();}
   cards(){const lessons=this.options.getLessons();if(this.lastLessons!==lessons){this.lastLessons=lessons;this.catalog=global.StudyReview.cardsForLessons(lessons);}return this.catalog;}
   reset(){this.active=null;this.revealed=false;this.input='';this.feedback=null;this.writing=false;}
-  clearFilters(){this.kind='';this.lessonId='';this.cardIds=null;this.reviewCardIds=null;this.practiceDone=new Set();this.reset();}
+  clearFilters(){this.kind='';this.lessonId='';this.cardIds=null;this.reviewCardIds=null;this.reviewTask=null;this.practiceDone=new Set();this.reset();}
   startPractice(cardIds){
    this.clearFilters();this.practiceSerial++;const requested=new Set(Array.isArray(cardIds)?cardIds.filter(id=>typeof id==='string'):[]);
    this.cardIds=new Set(this.cards().filter(card=>requested.has(card.id)).map(card=>card.id));return this.cardIds.size;
   }
   startDrill(cardIds){return this.startPractice(cardIds);}
-  startReview(cardIds){
+  startReview(cardIds,task=null){
    this.clearFilters();const requested=new Set(Array.isArray(cardIds)?cardIds.filter(id=>typeof id==='string'):[]);
+   if(task&&typeof task.id==='string'&&typeof task.roundKey==='string'&&typeof task.day==='string')this.reviewTask={taskId:task.id,roundKey:task.roundKey,day:task.day,cardRevisions:{...task.cardRevisions}};
    this.reviewCardIds=new Set(this.cards().filter(card=>requested.has(card.id)).map(card=>card.id));return this.reviewCardIds.size;
   }
   state(){return this.options.getState();}
   scopedCards(){const ids=this.cardIds||this.reviewCardIds;return ids?this.cards().filter(c=>ids.has(c.id)):this.cards();}
   due(){
-   if(!this.cardIds)return global.StudyReview.queue(this.state(),this.scopedCards(),{kind:this.kind,lessonId:this.lessonId});
+   if(!this.cardIds)return global.StudyReview.queue(this.state(),this.scopedCards(),{kind:this.kind,lessonId:this.lessonId}).filter(c=>!this.reviewTask||!Object.hasOwn(this.reviewTask.cardRevisions,c.id)||this.reviewTask.cardRevisions[c.id]===c.progress.revision);
    const state=global.StudyReview.sanitize(this.state());
    return this.scopedCards().filter(card=>!this.practiceDone.has(card.id)&&(!this.kind||card.kind===this.kind)&&(!this.lessonId||card.sourceLesson.id===this.lessonId)).map(card=>({...card,progress:{revision:null,...state.cards[card.id]}}));
   }
@@ -38,9 +39,9 @@
    let body='';
    if(!card){
     const next=stats.nextDueAt?new Intl.DateTimeFormat('zh-CN',{month:'numeric',day:'numeric',hour:'2-digit',minute:'2-digit'}).format(new Date(stats.nextDueAt)):'';
-    const heading=practice?'本轮旧知练习已完成':stats.enrolled?'当前没有到期项目':'从学过的一课开始';
-    const note=practice?'已练习的内容可回到课文继续使用；每日复习仍按原定时间安排。':stats.enrolled?(stats.todayRemaining?'今天还有稍后到期的项目，可届时再练。':'下一次复习'+(next?'：'+E(next):'会按学习情况安排')+'。'):'把已学课文加入复习后，系统会按到期时间安排单词、习惯用法和语法。';
-    body='<div class="review-empty"><h3>'+heading+'</h3><p>'+note+'</p>'+(!practice&&current?'<button class="button primary" data-review-action="enroll">把当前课加入每日复习</button>':'')+'</div>';
+    const heading=this.reviewTask?'本轮当前没有到期卡片':practice?'本轮旧知练习已完成':stats.enrolled?'当前没有到期项目':'从学过的一课开始';
+    const note=this.reviewTask?'已处理的卡片会保留复习排期；资料变更或尚未到期的卡片可暂缓，继续下一项。':practice?'已练习的内容可回到课文继续使用；每日复习仍按原定时间安排。':stats.enrolled?(stats.todayRemaining?'今天还有稍后到期的项目，可届时再练。':'下一次复习'+(next?'：'+E(next):'会按学习情况安排')+'。'):'把已学课文加入复习后，系统会按到期时间安排单词、习惯用法和语法。';
+    body='<div class="review-empty"><h3>'+heading+'</h3><p>'+note+'</p>'+(this.reviewTask?'<button class="button primary" data-review-action="continue-task">继续下一项</button>':!practice&&current?'<button class="button primary" data-review-action="enroll">把当前课加入每日复习</button>':'')+'</div>';
    }else{
     const source=card.sourceLesson,hideTitle=card.kind==='word'&&(card.exampleSourceType==='lesson-title'||card.sourceType==='lesson-title')&&!this.revealed;
     const sourceTitleHTML=hideTitle?'<p class="small-note">标题将在作答后显示。</p>':'<p class="english">'+E(source.title)+'</p>';
@@ -60,6 +61,7 @@
   }
   action(action,b){
    const R=global.StudyReview,c=this.active;
+   if(action==='continue-task')return this.options.onContinueTask?.();
    if(action==='enroll'){this.options.enrollCurrent();this.clearFilters();this.render();return;}
    if(action==='all'){this.clearFilters();this.render();return;}
    if(action==='backup'){this.options.backup();return;}
@@ -96,7 +98,7 @@
     let saved;
     try{saved=this.options.saveState(result.state);}catch{this.options.toast('复习进度未能保存，请重试；当前项目仍保留。');return;}
     if(saved!==true){this.options.toast('复习进度未能保存，请重试；当前项目仍保留。');return;}
-    try{this.options.onEvidence?.({type:'review',lessonId:c.sourceLesson.id,cardId:c.id,kind:c.kind,correct:evidence.correct,assisted:evidence.assisted,rating,answer:this.input,complete:true,at:result.state.cards[c.id].lastReviewedAt});}catch{}
+    try{this.options.onEvidence?.({type:'review',lessonId:c.sourceLesson.id,cardId:c.id,kind:c.kind,correct:evidence.correct,assisted:evidence.assisted,rating,answer:this.input,complete:true,at:result.state.cards[c.id].lastReviewedAt,...(this.reviewTask?{taskId:this.reviewTask.taskId,day:this.reviewTask.day,roundKey:this.reviewTask.roundKey,processed:true}:{})});}catch{}
     this.options.onChange?.();this.reset();this.render();return;
    }
   }

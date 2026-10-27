@@ -43,9 +43,10 @@ function setup(vocabulary = [], {local = false, savedWords = []} = {}) {
   if(local)context.StudyDictionary.lookupLocal=(word,{signal})=>new Promise((resolve,reject)=>localRequests.push({word,signal,resolve,reject}));
   vm.createContext(context);
   vm.runInContext(fs.readFileSync(path.join(project,'core.js'),'utf8'),context);
+  vm.runInContext(fs.readFileSync(path.join(project,'dictionary-context.js'),'utf8'),context);
   context.E=context.StudyCore.escapeHTML;
   const app=fs.readFileSync(path.join(project,'app.js'),'utf8');
-  const start=app.indexOf(' function dictionary(word)'),end=app.indexOf(' function renderRecords()');
+  const start=app.indexOf(' function dictionary('),end=app.indexOf(' function renderRecords()');
   assert.ok(start>=0&&end>start,'the actual dictionary UI functions must be available');
   vm.runInContext(app.slice(start,end),context);
   function open(word) {
@@ -67,10 +68,36 @@ test('one click automatically queries online even when the course already suppli
   await opening;
   assert.equal(h.context.selectedWord.meaning,'书');
   assert.equal(h.context.selectedWord.phonetic,'/bʊk/');
-  assert.match(h.popup.innerHTML,/课程 \/ 本地释义/);
+  assert.match(h.popup.innerHTML,/本课词表/);
   assert.match(h.popup.innerHTML,/在线英文释义/);
   assert.match(h.popup.innerHTML,/A written or printed work\./);
   assert.equal(h.context.selectedWord.pending,false);
+});
+
+test('an unrelated lesson cannot supply a malformed Chinese meaning or suppress the local dictionary', async () => {
+  const h=setup([],{local:true});
+  h.context.lessons=[{id:'unrelated',vocabulary:[{word:'may',meaning:'现在完成时',example:'May I have some water?'}]}];
+  const opening=h.open('may');
+  assert.notEqual(h.context.selectedWord.meaning,'现在完成时');
+  h.localRequests[0].resolve(localEntry('may','可能；也许'));
+  h.requests[0].resolve(onlineEntry('may','Used to express possibility.'));
+  await opening;
+  assert.equal(h.context.selectedWord.meaning,'可能；也许');
+  assert.doesNotMatch(chineseSection(h),/May I have some water|现在完成时/);
+});
+
+test('a corrected lookup repairs a bad legacy saved gloss without losing the learner record', async () => {
+  const h=setup([],{local:true,savedWords:[{word:'may',meaning:'现在完成时',lessonId:'old-source',mastered:true,note:'keep my note'}]});
+  const opening=h.open('may');
+  h.localRequests[0].resolve(localEntry('may','可能；也许'));
+  h.requests[0].resolve(onlineEntry('may','Used to express possibility.'));
+  await opening;
+  const saved=h.context.data.words[0];
+  assert.equal(saved.meaning,'可能；也许');
+  assert.equal(saved.legacyMeaning,'现在完成时');
+  assert.equal(saved.lessonId,'old-source');
+  assert.equal(saved.note,'keep my note');
+  assert.equal(saved.mastered,true);
 });
 
 test('late replies cannot replace a newer popup, including when the same word is reopened', async () => {
@@ -275,13 +302,16 @@ test('saved bilingual fields fill independently in either arrival order without 
   }
 });
 
-test('course Chinese and review notices stay authoritative while English-only local meanings remain explicitly English', async () => {
-  for(const meaning of ['本课行走的意思','本课词义暂待复核']){
+test('valid course Chinese stays authoritative while a review notice cannot suppress dictionary fallback', async () => {
+  for(const meaning of ['本课行走的意思']){
     const h=setup([{word:'walked',meaning}],{local:true}),opening=h.open('walked');
     h.localRequests[0].resolve(localEntry('walked','通用行走'));h.requests[0].resolve(onlineEntry('walked'));await opening;
     assert.equal(h.context.selectedWord.meaning,meaning);assert.match(h.popup.innerHTML,new RegExp(meaning));
     assert.doesNotMatch(h.popup.innerHTML,/通用行走/);
   }
+  const pending=setup([{word:'walked',meaning:'本课词义暂待复核'}],{local:true}),waiting=pending.open('walked');
+  pending.localRequests[0].resolve(localEntry('walked','通用行走'));pending.requests[0].resolve(onlineEntry('walked'));await waiting;
+  assert.equal(pending.context.selectedWord.meaning,'通用行走');assert.match(chineseSection(pending),/通用词典释义/);
   const h=setup([{word:'walked',meaning:'The course English meaning.'}],{local:true}),opening=h.open('walked');
   assert.match(h.popup.innerHTML,/英文释义/);assert.doesNotMatch(h.popup.innerHTML,/课程 \/ 本地释义<\/p><p class="meaning">[^<]*The course English/);
   h.localRequests[0].resolve(localEntry('walked','行走'));h.requests[0].resolve(onlineEntry('walked'));await opening;
@@ -297,14 +327,14 @@ test('arriving dictionary data never overwrites existing saved Chinese or its no
   h.context.saveWord();assert.equal(h.context.data.words.length,1);
 });
 
-test('all local provider text, headword and source attributes are escaped before rendering', async () => {
+test('untrusted local provider text is escaped and cannot supply an authoritative Chinese translation', async () => {
   const h=setup([],{local:true}),opening=h.open('walked');
   const entry=localEntry('walked','中文<img src=x onerror=alert(1)>','<b>Unsafe English</b>','<svg onload=alert(1)>');
   entry.sourceName='<script>source()</script>';entry.sourceUrl='https://github.com/skywind3000/ECDICT?x="<img src=x>';
   entry.meanings[0].partOfSpeech='<i>noun</i>';entry.meanings[0].definitions[0].example='<script>example()</script>';
   h.localRequests[0].resolve(entry);h.requests[0].reject(new Error('offline'));await opening;
   assert.doesNotMatch(h.popup.innerHTML,/<(?:img|script|svg|b|i)\b/i);
-  assert.match(h.popup.innerHTML,/中文&lt;img/);assert.match(h.popup.innerHTML,/原形：&lt;svg/);
+  assert.match(h.popup.innerHTML,/中文释义暂未收录/);assert.doesNotMatch(h.popup.innerHTML,/中文&lt;img/);assert.match(h.popup.innerHTML,/原形：&lt;svg/);
   assert.match(h.popup.innerHTML,/&lt;script&gt;example\(\)&lt;\/script&gt;/);
   assert.match(h.popup.innerHTML,/href="https:\/\/github\.com\/skywind3000\/ECDICT\?x=&quot;&lt;img src=x&gt;"/);
 });

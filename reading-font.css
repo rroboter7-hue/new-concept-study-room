@@ -1,0 +1,49 @@
+/* Scope scaling to reading text, keeping controls and exercise typography stable. */
+.reading-font-tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 16px;
+  padding: 8px 0;
+}
+.reading-font-tools .reading-font-label { margin-right: 4px; color: #53695e; font-size: 13px; }
+.reading-font-tools .button { min-width: 42px; min-height: 40px; padding: 8px 10px; }
+.reading-font-tools .button:disabled { opacity: .45; cursor: default; }
+.reading-font-tools .button:focus-visible { outline: 2px solid #739884; outline-offset: 2px; }
+.reading-font-value { min-width: 46px; text-align: center; font-size: 13px; font-variant-numeric: tabular-nums; color: #38584a; }
+.reading-font-status { color: #6b776d; font-size: 11px; }
+.reading-font-status:empty { display: none; }
+#reader-content .reading-layout .english,
+#reader-content > .paragraph .english,
+#reader-content .text-native-content > .note-line.english {
+  font-size: calc(22px * var(--reading-font-scale, 1));
+}
+#reader-content .reading-layout .translation,
+#reader-content > .paragraph .translation,
+#reader-content .reading-paragraph-translation,
+#reader-content .text-native-content > .note-line.chinese {
+  font-size: calc(15px * var(--reading-font-scale, 1));
+}
+@media (max-width: 760px) {
+  .reading-font-tools .button { min-height: 44px; }
+  .reading-font-tools .reading-font-status { flex-basis: 100%; }
+  .mls-mobile #reader-content .reading-layout .english,
+  .mls-mobile #reader-content > .paragraph .english,
+  .mls-mobile #reader-content .text-native-content > .note-line.english {
+    font-size: calc(24px * var(--reading-font-scale, 1));
+  }
+  .mls-mobile #reader-content .reading-layout .translation,
+  .mls-mobile #reader-content > .paragraph .translation,
+  .mls-mobile #reader-content .reading-paragraph-translation,
+  .mls-mobile #reader-content .text-native-content > .note-line.chinese {
+    font-size: calc(17px * var(--reading-font-scale, 1));
+  }
+}
+@media (max-width: 360px) {
+  .mls-mobile #reader-content .reading-layout .english,
+  .mls-mobile #reader-content > .paragraph .english,
+  .mls-mobile #reader-content .text-native-content > .note-line.english {
+    font-size: calc(22px * var(--reading-font-scale, 1));
+  }
+}
