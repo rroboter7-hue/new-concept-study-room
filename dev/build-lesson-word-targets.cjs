@@ -5,7 +5,8 @@
 const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),crypto=require('node:crypto');
 const DEFAULT_ROOT=path.resolve(__dirname,'..');
 const lexical=require('../lexical-word-tokens.js');
-const POLICY='First exact lexical spelling/form in learner-facing lesson.title then paragraphs[].en, in numeric book/lesson order. Shared lexical-word-tokens v1: complete numeric ordinal spans are preserved as text and excluded before lexical seen tracking; 21st-century contributes century, never st-century. Dotted St. is retained in source-bound quarantine until its Saint context is reviewed, never supplied a technical ST gloss. No stemming or global short-word blacklist. Other dictionary/course precedence and original vocabulary rows are preserved. This is corpus novelty, not learner mastery.';
+const contextMeanings=require('../context-meanings.js');
+const POLICY='First exact lexical spelling/form in learner-facing lesson.title then paragraphs[].en, in numeric book/lesson order. Shared lexical-word-tokens v1: complete numeric ordinal spans are preserved as text and excluded before lexical seen tracking; 21st-century contributes century, never st-century. Dotted St. is retained in source-bound quarantine until its Saint context is reviewed, never supplied a technical ST gloss. No stemming or global short-word blacklist. Valid original vocabulary takes precedence, then explicit self-authored source-bound context corrections, then ECDICT generic senses (not reviewed for lesson context). Original vocabulary rows are preserved. This is corpus novelty, not learner mastery.';
 const hash=value=>crypto.createHash('sha256').update(value).digest('hex');
 // Git may check scripts out with CRLF on Windows. Hash their UTF-8 text with
 // LF endings; dictionary shards and LICENSE retain their original byte hashes.
@@ -17,6 +18,9 @@ const normalize=value=>typeof value==='string'?value.replace(/[‘’]/g,"'").tr
 // the literal gloss; this exception only distinguishes contractions from acronyms.
 const STANDARD_CONTRACTIONS=new Set(["i'm","you're","he's","she's","it's","we're","they're","i've","we've","they've","you've","i'll","we'll","they'll","you'll","isn't","aren't","wasn't","weren't","don't","doesn't","didn't","can't","couldn't","won't","wouldn't","shouldn't","mustn't","haven't","hasn't","hadn't","who's","let's","i'd"]);
 const validMeaning=row=>row&&row.needsContextReview!==true&&typeof row.meaning==='string'&&/[\u3400-\u9fff]/.test(row.meaning)&&!/(?:释义待补充|待核释义|待核对|待补充|待审核)/.test(row.meaning);
+const isContextMeaning=row=>row?.meaningSource==='source-context-review'||row?.meaningProvenance?.kind==='self-authored-context';
+const sameIdentity=(left,right)=>left&&right&&Object.keys(left).length===Object.keys(right).length&&Object.keys(left).every(key=>Object.hasOwn(right,key)&&left[key]===right[key]);
+const isCurrentCorrection=(row,reviewed)=>reviewed&&row?.meaningProvenance?.kind==='self-authored-context'&&row.meaning===reviewed.meaning&&row.pos===reviewed.pos&&row.meaningProvenance.lessonId===reviewed.sourceLessonId&&row.meaningProvenance.sourceBindingSha256===reviewed.meaningProvenance.sourceBindingSha256&&sameIdentity(row.meaningProvenance.sourceIdentity,reviewed.meaningProvenance.sourceIdentity);
 const binding=lesson=>JSON.stringify([lesson.title,lesson.paragraphs.map(row=>row.en)]);
 
 function collectCorpus(projectRoot=DEFAULT_ROOT){
@@ -72,6 +76,8 @@ function createManifest(lessons,dictionary={},metadata={}){
     if(ids.has(lesson.id)||routes.has(route))throw Error('Duplicate reading lesson id or book/number: '+lesson.id);
     ids.add(lesson.id);routes.add(route);lessonsByBook[lesson.book]++;
     const vocabulary=Array.isArray(lesson.vocabulary)?lesson.vocabulary:[],targets=[],quarantinedTargets=[],quarantinedOccurrences=[],excludedOrdinals=[];
+    let reviewedSourceIdentity=null;
+    const reviewedDefinitions=Object.create(null);
     const sources=[{text:lesson.title,location:'title',paragraphIndex:null},...lesson.paragraphs.map((row,index)=>({text:row.en,location:'body',paragraphIndex:index}))];
     for(const source of sources)for(const token of lexical.scan(source.text)){
       const surface=token.surface,index=token.start,key=normalize(surface);
@@ -82,16 +88,17 @@ function createManifest(lessons,dictionary={},metadata={}){
         if(first){seen.add(key);quarantinedFirstOccurrences++;quarantinedTargets.push({...occurrence,meaning:'释义待语境核对',meaningMissing:true,meaningSource:'quarantined-abbreviation',needsContextReview:true,practiceEligible:false,isLessonNew:false});}
         continue;
       }
+      const correction=contextMeanings.forLesson(lesson,surface);
+      if(correction){reviewedSourceIdentity=correction.meaningProvenance.sourceIdentity;reviewedDefinitions[key]={meaning:correction.meaning,pos:correction.pos};}
       if(seen.has(key))continue;seen.add(key);
-      const original=vocabulary.find(row=>normalize(row?.word)===key&&validMeaning(row)),entry=dictionary[key];
-      // Reviewed against the shipped B1L9 dialogue and Chinese line “托尼好吗？”.
-      // This literal name occurrence must not inherit the adjective “tony”.
-      const tonyName=!original&&lesson.id==='nce-b1-4be758-l009'&&lesson.book===1&&lesson.number===9&&lesson.title==='第9课 · How are you today?'&&surface==='Tony'&&source.location==='body'&&source.text==='How is Tony?';
-      const meaning=original?.meaning.trim()||(tonyName?'人名（Tony）':dictionaryMeaning(entry,surface));
-      const target={word:surface,meaning:meaning||'释义待补充',pos:original&&typeof original.pos==='string'?original.pos:tonyName?'n.':posOf(entry),sourceSentence:source.location==='title'?source.text:sentenceAt(source.text,index),sourceLocation:source.location,isLessonNew:true,meaningMissing:!meaning,meaningSource:original?'lesson-vocabulary':tonyName?'source-context-review':meaning?'ECDICT':'unavailable'};
+      const original=vocabulary.find(row=>normalize(row?.word)===key&&validMeaning(row)&&(!isContextMeaning(row)||isCurrentCorrection(row,correction))),entry=dictionary[key];
+      const reviewed=(!original||isContextMeaning(original))&&correction;
+      const meaning=original?.meaning.trim()||reviewed?.meaning||dictionaryMeaning(entry,surface);
+      const target={word:surface,meaning:meaning||'释义待补充',pos:original&&typeof original.pos==='string'?original.pos:reviewed?reviewed.pos:posOf(entry),sourceSentence:source.location==='title'?source.text:sentenceAt(source.text,index),sourceLocation:source.location,isLessonNew:true,meaningMissing:!meaning,meaningSource:reviewed?'source-context-review':original?'lesson-vocabulary':meaning?'ECDICT':'unavailable'};
+      if(reviewed)for(const key of ['meaningProvenance','sourceType','sourceLabel','translationSource','sourceLessonId','sourceUrl','sourceSha256','sourcePdfPage','exampleSourceType','exampleSourceLabel','contextEvidence'])if(reviewed[key]!==undefined)target[key]=reviewed[key];
       const phonetic=original&&typeof original.phonetic==='string'&&original.phonetic.trim()?original.phonetic:entry&&typeof entry.phonetic==='string'?entry.phonetic:'';
       if(phonetic)target.phonetic=phonetic;
-      if(!original&&!tonyName&&meaning&&entry.headword)target.dictionaryHeadword=entry.headword;
+      if(!original&&!reviewed&&meaning&&entry.headword)target.dictionaryHeadword=entry.headword;
       if(!meaning)missingMeaning++;
       targets.push(target);activeWords++;byBook[lesson.book]++;
     }
@@ -103,7 +110,7 @@ function createManifest(lessons,dictionary={},metadata={}){
       target.sourceSentenceIndex=sentenceIndices.get(target.sourceSentence);delete target.sourceSentence;
     }
     const sourceBinding=binding(lesson);
-    rows.push({id:lesson.id,book:lesson.book,number:lesson.number,sourceBinding,sourceSha256:hash(sourceBinding),sourceSentences,targets,quarantinedTargets,quarantinedOccurrences,excludedOrdinals});
+    rows.push({id:lesson.id,book:lesson.book,number:lesson.number,sourceBinding,sourceSha256:hash(sourceBinding),...(reviewedSourceIdentity?{reviewedSourceIdentity,reviewedDefinitions}:{}),sourceSentences,targets,quarantinedTargets,quarantinedOccurrences,excludedOrdinals});
   }
   return {version:2,policy:POLICY,hashEncoding:HASH_ENCODING,status:{lessons:rows.length,newWords:activeWords,missingMeaning,quarantinedFirstOccurrences,quarantinedOccurrences:rows.reduce((n,r)=>n+r.quarantinedOccurrences.length,0),excludedOrdinalOccurrences,byBook,lessonsByBook},inputs:metadata.inputs||[],dictionary:metadata.dictionary||null,tokenizer:{file:'lexical-word-tokens.js',version:lexical.version},lessons:rows};
 }
@@ -114,6 +121,9 @@ function installLessonWordTargets(payload){
   var normalize=function(value){return typeof value==='string'?value.replace(/[‘’]/g,"'").trim().toLowerCase():'';};
   var clone=function(value){if(Array.isArray(value))return value.map(clone);if(value&&typeof value==='object'){var copy={};Object.keys(value).forEach(function(key){copy[key]=clone(value[key]);});return copy;}return value;};
   var validMeaning=function(row){return row&&row.needsContextReview!==true&&typeof row.meaning==='string'&&/[\u3400-\u9fff]/.test(row.meaning)&&!/(?:释义待补充|待核释义|待核对|待补充|待审核)/.test(row.meaning);};
+  var isContextMeaning=function(row){return row&&(row.meaningSource==='source-context-review'||row.meaningProvenance&&row.meaningProvenance.kind==='self-authored-context');};
+  var identityMatches=function(lesson,identity){return !!identity&&!!lesson&&!!lesson.textbook&&Object.keys(identity).every(function(key){return lesson.textbook[key]===identity[key];});};
+  var sameIdentity=function(left,right){return !!left&&!!right&&Object.keys(left).length===Object.keys(right).length&&Object.keys(right).every(function(key){return Object.prototype.hasOwnProperty.call(left,key)&&left[key]===right[key];});};
   var index=Object.create(null);
   payload.lessons.forEach(function(row){row.source=JSON.parse(row.sourceBinding);index[row.id]=row;});
   function statusForLesson(lesson){
@@ -128,20 +138,33 @@ function installLessonWordTargets(payload){
       var english=paragraph&&typeof paragraph==='object'?Object.getOwnPropertyDescriptor(paragraph,'en'):null;
       same=!!english&&Object.prototype.hasOwnProperty.call(english,'value')&&typeof english.value==='string'&&english.value===row.source[1][paragraphIndex];
     }
+    if(same&&row.reviewedSourceIdentity)same=identityMatches(lesson,row.reviewedSourceIdentity);
     return {bound:same,reason:same?'source-matched':'source-mismatch',newWords:same?row.targets.length:0};
   }
   function vocabularyForLesson(lesson,originalRows){
     var originals=Array.isArray(originalRows)?originalRows:lesson&&Array.isArray(lesson.vocabulary)?lesson.vocabulary:[];
-    var row=lesson&&index[lesson.id],targets=statusForLesson(lesson).bound?row.targets:[],byWord=Object.create(null),used=Object.create(null);
+    var row=lesson&&index[lesson.id],bound=statusForLesson(lesson).bound,targets=bound?row.targets:[],byWord=Object.create(null),used=Object.create(null);
     targets.forEach(function(target){byWord[normalize(target.word)]=target;});
     var result=originals.map(function(original){
       var copy=clone(original),key=normalize(original&&original.word),target=byWord[key];
       if(!copy||typeof copy!=='object'||Array.isArray(copy))return copy;
+      var proof=original.meaningProvenance,definition=row&&row.reviewedDefinitions&&row.reviewedDefinitions[key];
+      var currentContext=!isContextMeaning(original)||!!(bound&&row&&definition&&original.meaning===definition.meaning&&original.pos===definition.pos&&proof&&proof.kind==='self-authored-context'&&proof.lessonId===lesson.id&&proof.sourceBindingSha256===row.sourceSha256&&sameIdentity(proof.sourceIdentity,row.reviewedSourceIdentity)&&identityMatches(lesson,proof.sourceIdentity));
+      if(!currentContext){
+        if(copy.legacyMeaning===undefined)copy.legacyMeaning=copy.meaning;
+        if(copy.legacyPos===undefined)copy.legacyPos=copy.pos;
+        copy.legacyMeaningProvenance=clone(copy.meaningProvenance);copy.contextMeaningStale=true;
+        copy.meaning='释义待补充';copy.pos='';copy.meaningMissing=true;copy.meaningSource='unavailable';copy.meaningKind='unresolved';copy.meaningProvenance={version:1,kind:'unresolved'};
+        ['sourceType','sourceLabel','translationSource','sourceLessonId','sourceUrl','sourceSha256','sourcePdfPage','example','exampleSourceType','exampleSourceLabel','contextEvidence'].forEach(function(field){delete copy[field];});
+      }
       copy.isLessonNew=!!target;
       if(target){
         used[key]=true;copy.sourceSentence=row.sourceSentences[target.sourceSentenceIndex];copy.sourceLocation=target.sourceLocation;
-        if(!validMeaning(original)){copy.meaning=target.meaning;copy.meaningSource=target.meaningSource;copy.meaningMissing=target.meaningMissing;}
-        else{copy.meaningSource='lesson-vocabulary';copy.meaningMissing=false;}
+        if(!validMeaning(original)||!currentContext){
+          copy.meaning=target.meaning;copy.meaningSource=target.meaningSource;copy.meaningMissing=target.meaningMissing;
+          ['meaningProvenance','sourceType','sourceLabel','translationSource','sourceLessonId','sourceUrl','sourceSha256','sourcePdfPage','exampleSourceType','exampleSourceLabel','contextEvidence'].forEach(function(key){if(target[key]!==undefined)copy[key]=clone(target[key]);});
+        }
+        else{copy.meaningSource=isContextMeaning(original)?'source-context-review':original.meaningSource==='ECDICT'?'ECDICT':'lesson-vocabulary';copy.meaningMissing=false;}
         if(!copy.pos)copy.pos=target.pos;
         if(!copy.phonetic&&target.phonetic)copy.phonetic=target.phonetic;
       }

@@ -57,7 +57,7 @@ test('an explicit standard-contraction set retains source-backed abbreviation gl
 });
 
 test('the exact Book 1 Lesson 9 Tony introduction uses its reviewed name sense while course glosses and other contexts stay authoritative',()=>{
-  const lesson={id:'nce-b1-4be758-l009',book:1,number:9,title:'第9课 · How are you today?',paragraphs:[{en:'How is Tony?',zh:'托尼好吗？'}],vocabulary:[]};
+  const lesson=builder().collectCorpus().lessons.find(row=>row.id==='nce-b1-4be758-l009');
   const dictionary={tony:{translation:'a. 高贵的, 时髦的',phonetic:"'tәuni",headword:'tony'}};
   const api=load(builder().createManifest([lesson],dictionary)),row=api.newWordsForLesson(lesson).find(row=>row.word==='Tony');
   assert.equal(row.meaning,'人名（Tony）');assert.equal(row.pos,'n.');assert.equal(row.meaningSource,'source-context-review');
@@ -65,7 +65,7 @@ test('the exact Book 1 Lesson 9 Tony introduction uses its reviewed name sense w
   assert.equal(api.vocabularyForLesson(lesson,reviewed)[0].meaning,'托尼（课内已复核）');
   const course={...lesson,vocabulary:reviewed},courseApi=load(builder().createManifest([course],dictionary));
   assert.equal(courseApi.newWordsForLesson(course).find(row=>row.word==='Tony').meaning,'托尼（课内已复核）');
-  for(const changed of [{...lesson,id:'another-lesson'},{...lesson,paragraphs:[{en:'A tony restaurant.'}]}]){
+  for(const changed of [{...lesson,id:'another-lesson'},{...lesson,paragraphs:[{en:'A tony restaurant.'}]},{...lesson,paragraphs:lesson.paragraphs.map((p,i)=>i?{...p}:{...p,en:p.en+' '})}]){
     const alternate=load(builder().createManifest([changed],dictionary)).newWordsForLesson(changed).find(row=>row.word.toLowerCase()==='tony');
     assert.equal(alternate.meaning,'a. 高贵的, 时髦的');assert.equal(alternate.pos,'a.');
   }
@@ -195,7 +195,7 @@ test('shipped data covers every first spelling in all 276 final title and body t
   const puma=lessons.find(l=>l.book===3&&l.number===1),targets=Array.from(api.newWordsForLesson(puma)),keys=targets.map(row=>row.word.toLowerCase());
   assert.ok(keys.includes('puma'));assert.ok(keys.includes('spotted'));assert.ok(keys.includes('pumas'));assert.ok(keys.includes('blackberries'));
   const tins=api.newWordsForLesson(lessons.find(l=>l.book===1&&l.number===143)).find(row=>row.word==='tins');
-  assert.equal(tins.meaning,'释义待补充');assert.equal(tins.meaningMissing,true);assert.match(tins.sourceSentence,/rusty tins/);
+  assert.equal(tins.meaning,'金属罐（tin 的复数）');assert.equal(tins.meaningMissing,false);assert.equal(tins.meaningSource,'source-context-review');assert.match(tins.sourceSentence,/rusty tins/);
   const tony=api.newWordsForLesson(lessons.find(l=>l.book===1&&l.number===9)).find(row=>row.word==='Tony');
   assert.equal(tony.meaning,'人名（Tony）');assert.equal(tony.pos,'n.');assert.equal(tony.sourceSentence,'How is Tony?');
   assert.equal(JSON.stringify(c.LESSONS),before,'the browser module must not patch LESSONS');

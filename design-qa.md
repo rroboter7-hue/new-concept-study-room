@@ -1,3 +1,37 @@
+# Unified sentence worksheet — 2026-10-27
+
+final result: passed
+
+Selected target: first displayed concept, parent workspace `outputs/sentence-practice-concepts-2026-10-27/01-worksheet.png` (853×1844). Runtime remains the existing production website; no new prototype runtime or image assets were introduced.
+
+## Evidence and comparison
+
+The selected source and actual 390×844 screenshot were rendered side by side at equal 390px width in `.cache/worksheet-qa/compare.html`. Source scales uniformly to390×843; implementation is390×844. Synthetic local lesson uses exactly book / look for, two entered originals and two empty questions, matching the concept state. Comparison evidence is in the parent workspace `outputs/lesson-recall-upgrade/worksheet-visual-comparison.png`; merged actual capture `worksheet-mobile-merged.png`.
+
+First-pass P2 title drift was fixed by centering independently of the save badge. A later320px pass found a wrapped answer clipped inside its textarea; scoped auto-sizing now grows and shrinks on input and restored drafts without replacing fields or changing text/focus/caret. Narrow restore measured content78px/client78px, with no horizontal overflow. Both issues were recaptured after fixes.
+
+## Required fidelity surfaces
+
+- Fonts/typography: existing Arial/Microsoft YaHei UI,22px mobile title,17px form labels,18px English inputs; clear Chinese directions and English answers. Native system rasterization is an accepted platform difference.
+- Spacing/layout: one paper surface, shared two-column word/phrase context, four vertical rows with thin separators, primary check and quiet copy. At390×844 the complete short-answer sheet fits;320px long answers grow into natural page scrolling. Title is centered at195px on390px. Desktop1425px client width has no horizontal overflow; worksheet width630px in the existing reader panel.
+- Colors/tokens: paper#fbf9f3, ink#17342e, teal#265b50, sage#e9efe5, separators#dce1d7. Focus/error states remain visible.
+- Assets/icons: this design has no raster content. Reused project back/list icons and native selects. Native chevron instead of mock pencil and list instead of ellipsis are accepted P3 differences supporting real controls; no invented illustrations.
+- Copy/content: removed repeated training-mode tabs, paragraphs, field tools and duplicated mobile navigation. Default surface shows short form labels, honest save status, check/copy actions. Longer learning ranges, references and legacy modes stay in More. Placeholders shortened deliberately to match the user's request for fewer words.
+
+## Interaction and data checks
+
+Browser flow: open worksheet → select optional current phrase → type four answers → identify a deliberately incorrect third-person negative → correct it → copy all four plus phrase/context → back to reading → reopen with draft intact → More → batch import (four rows and context preserved). Changing learned range keeps More open and controls visible without losing answers. Console errors:0.
+
+Actual Book1 lesson5 selector was inspected in the browser: current new words such as student/French remain; Sophie/Luming/Xiaohui/Miss/Mr and prior handbag are absent. Source-bound finite policy covers273 human token forms,4 contextual titles and14 conventional honorific forms;283 current corpus target tokens match. Unknown source contexts are not guessed from capitalization or misleading surname senses.
+
+Existing imported lessons retain their authored vocabulary and optional phrase, guarded by imported source plus stored membership; canonical same-id collisions cannot bypass source novelty. Existing daily/native phrase/legacy drafts, task evidence and all backups remain separate. Storage, context-meaning and learned-range fixes from concurrent main were retained.
+
+Merged local regression:1078 tests,1064 pass,13 failures caused by omitted original media in sparse checkout,1 Windows symlink skip. Full source/media CI is required before deployment. Browser plugin absent; validation used the available in-app CUA browser/Playwright. Physical iOS/Android keyboards and native clipboard dialogs were not device-tested.
+
+Checklist: reference compared; P2s fixed and recaptured; mobile/desktop checked; primary flow and failure reminders checked; new-word/name policy verified; concurrent source behavior preserved. Publication is tracked by the deployment pipeline.
+
+---
+
 # Mobile workspace design QA
 
 final result: passed

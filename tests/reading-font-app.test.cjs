@@ -22,7 +22,7 @@ test('font changes report a temporary size on storage failure and restoring a ba
  assert.equal(h.document.documentElement.style.getPropertyValue('--reading-font-scale'),'1.3');
  assert.match(h.document.querySelector('[data-reading-font="status"]').textContent,/未保存/);
  h.setStorageWritable(true);const backup=h.api.backupData();backup.settings={...backup.settings,readingFontPercent:90};
- h.api.restoreBackup({format:'zhixin-backup-v1',data:backup});
+ h.api.restoreBackup({format:'zhixin-backup-v1',data:backup},{mode:'replace'});
  assert.equal(h.document.documentElement.style.getPropertyValue('--reading-font-scale'),'0.9');
  assert.equal(h.stored.settings.readingFontPercent,90);
 });

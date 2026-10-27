@@ -1,9 +1,9 @@
 (function (root, factory) {
   'use strict';
-  const api = factory();
+  const api = factory(typeof module === 'object' && module.exports ? require('./context-meanings.js') : root.StudyContextMeanings);
   if (typeof module === 'object' && module.exports) module.exports = api;
   else root.StudyDictionaryContext = api;
-})(typeof window !== 'undefined' ? window : globalThis, function () {
+})(typeof window !== 'undefined' ? window : globalThis, function (contextMeanings) {
   'use strict';
   const normalize = value => typeof value === 'string' ? value.normalize('NFKC').replace(/[‘’]/g, "'").trim().toLowerCase() : '';
   const wordOf = value => { const word = normalize(value); return word.length <= 64 && /^[a-z]+(?:[-'][a-z]+)*['-]?$/i.test(word) ? word : ''; };
@@ -26,7 +26,14 @@
 
   function sourceMatches(item, lesson, query, form = false) {
     if (!item || !lesson || item.needsContextReview === true || !isUsableMeaning(item.meaning)) return false;
+    if (item.meaningSource === 'ECDICT') return false;
     if (item.sourceLessonId && item.sourceLessonId !== lesson.id) return false;
+    // A copied context row still needs its complete original source. Its short
+    // excerpt must not turn a stale correction into a newly validated meaning.
+    if (item.meaningProvenance?.kind === 'self-authored-context') {
+      const reviewed = contextMeanings?.forLesson?.(lesson,query);
+      return !!reviewed && reviewed.meaning === item.meaning && reviewed.meaningProvenance.sourceBindingSha256 === item.meaningProvenance.sourceBindingSha256;
+    }
     const context = item.contextEvidence;
     if (context) {
       if (typeof context !== 'object' || Array.isArray(context)) return false;
@@ -148,6 +155,8 @@ function hash(text){
   function resolve(input, {lesson,bank,glossary,saved,preferNotes=false} = {}) {
     const query = wordOf(input), empty = {word:query,meaning:'',meaningKind:'unresolved',sourceLabel:'',example:'',meaningProvenance:{version:1,kind:'unresolved'}};
     if (!query) return empty;
+    const contextCorrection = contextMeanings?.forLesson?.(lesson,query);
+    if (contextCorrection) return contextCorrection;
     const rows = list(lesson?.vocabulary), notes = list(lesson?.notesVocabularyExtensions);
     const bankHasLesson = !!bank?.hasLesson?.(lesson?.id);
     const exact = bankHasLesson ? bank.wordForLesson?.(lesson.id, query) : rows.find(row => normalize(row?.word) === query);
@@ -159,6 +168,10 @@ function hash(text){
     const vocabulary = bankHasLesson ? list(bank.vocabularyForLesson?.(lesson.id)) : rows;
     const forms = vocabulary.filter(item => (list(item?.sourceForms).length ? item.sourceForms : list(item?.contextEvidence?.matchedForms)).some(form => normalize(form) === query) && sourceMatches(item,lesson,query,true));
     if (forms.length === 1) return lessonEntry(forms[0],lesson,query,true);
+    if (exact?.meaningSource === 'ECDICT') {
+      const dictionary = fromDictionary({word:query,headword:exact.dictionaryHeadword || query,translation:exact.meaning,phonetic:exact.phonetic,sourceName:'ECDICT'});
+      if (dictionary) return dictionary;
+    }
     const general = glossary && Object.hasOwn(glossary,query) ? glossary[query] : null;
     if (general && !general.sourceLessonId && !general.contextEvidence && !/本课|lesson-(?:title|passage)/.test((general.sourceLabel || '') + (general.sourceType || '')) && isUsableMeaning(general.meaning)) {
       return {...withoutPronunciationProof(general),word:query,meaning:clean(general.meaning),meaningKind:'glossary',translationSource:'通用词汇表',sourceLabel:'通用词汇表（未按本课语境筛选）',exampleSourceLabel:'通用词汇例句（非本课正文）',meaningProvenance:{version:1,kind:'glossary'}};

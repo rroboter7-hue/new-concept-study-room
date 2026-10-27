@@ -35,8 +35,9 @@ test('actual mobile app has one unified four-form worksheet with phrase context 
  assert(root.querySelector('[data-sentence-action="navigate-mode"][data-sentence-mode="batch"]')?.closest('.sentence-sheet-menu'),'batch checking remains discoverable in More');
 });
 
-test('same worksheet can use a current phrase and an earlier phrase without replacing its four answers or optional old words',async()=>{
- const h=await openWorksheet(),ui=h.api.sentencePractice;await fill(h);
+test('same worksheet can use a current phrase and an already learned earlier phrase without replacing its four answers or optional old words',async()=>{
+ const earlierLessonId='nce-b2-eef57c-l001';
+ const h=await openWorksheet({records:{[earlierLessonId]:{completed:true}}}),ui=h.api.sentencePractice;await fill(h);
  const current=ui.context.targets.find(item=>item.kind==='phrase'&&item.source.id===lessonId);assert(current);
  const oldWord=ui.wordBank().find(item=>item.category!=='phrase');assert(oldWord);
  ui.setOldSelection([oldWord.key]);
@@ -51,6 +52,9 @@ test('same worksheet can use a current phrase and an earlier phrase without repl
  const options=sheet(h).querySelector('[data-sentence-select="sheet-phrase"]').querySelectorAll('option');
  const currentText=(current.word||current.phrase).toLowerCase();
  const earlier=ui.wordBank().find(item=>item.category==='phrase'&&(item.label||item.phrase||item.word).toLowerCase()!==currentText&&options.some(option=>option.value===item.key));assert(earlier,'a different earlier learned phrase remains selectable');
+ const earlierSources=[earlier.source,...(earlier.sources||[])].map(source=>source?.id);
+ for(const alias of [earlier.key,...(earlier.aliases||[])]){const parts=alias.split(':');if(parts.length===3)earlierSources.push(decodeURIComponent(parts[1]));}
+ assert(earlierSources.includes(earlierLessonId),'automatic old phrase comes from the exact lesson the fixture has studied');
  await change(h,'[data-sentence-select="sheet-phrase"]',earlier.key);
  assert(ui.selectedOldItems().some(item=>item.key===earlier.key));
  assert(ui.active.draft.selectedOldKeys.includes(oldWord.key));

@@ -126,7 +126,7 @@ test('quick target controls stay bounded with a large learned history while old 
   assert.equal((html.match(/data-sentence-select="target"/g)||[]).length,1);
   assert.equal(targetOptions(html),1,'only the current word is listed in the primary target selector');
   assert.ok(phraseOptions(html)<=16,'the optional phrase list keeps current and recent choices bounded');
-  assert.match(html,/<option value="__more__">更多已学用法/);
+  assert.match(html,/<option value="__more__">更多前课用法/);
   assert.doesNotMatch(html,/<option[^>]*>word99x11/);
   assert.equal(h.ui.openTarget({lessonId:'now',expression:'word99x11',kind:'word',mode:'four',roundKey:'old-review'}),true);
   html=h.render();assert.match(html,/sentence-sheet-review-target[^>]*>word99x11/);

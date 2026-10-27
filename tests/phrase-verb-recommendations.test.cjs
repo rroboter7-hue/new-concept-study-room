@@ -32,6 +32,31 @@ test('auxiliaries, negative contractions and additional introductory verb forms 
   }
 });
 
+test('standalone pronoun and auxiliary contractions cannot enter focused recommendations while lexical apostrophes remain available', () => {
+  const contractions = ["I'm", "They're", "you're", "he's", "she's", "it's", "we're", "I've", "you've", "we've", "they've", "I'll", "you'll", "he'll", "she'll", "it'll", "we'll", "they'll", "I'd", "you'd", "he'd", "she'd", "we'd", "they'd", "there's", "that's", "what's", "who's", "where's", "let's", "don't", "can't", 'THEY’RE'];
+  const items = contractions.flatMap(value=>[word(value),phrase(value)]);
+  for (const item of items) assert.equal(core.recommendationEligible(item), false, item.label);
+  const lexical = [word("o'erleap"), phrase("mind one's own business"), phrase("don't count one's chickens")];
+  for (const item of lexical) assert.equal(core.recommendationEligible(item), true, item.label);
+  assert.deepEqual(labels(recommend({items:[...items,...lexical],count:20})), ["mind one's own business", "don't count one's chickens", "o'erleap"]);
+  const first = {id:'old',book:1,number:1,vocabulary:contractions.map(value=>({word:value,pos:'v.',meaning:'常用缩写'})),usage:[]};
+  const now = {id:'now',book:1,number:3,vocabulary:[],usage:[]};
+  const manual = core.wordBank({lessons:[first,now],currentLesson:now});
+  assert.ok(manual.some(item=>item.label==="I'm"));assert.ok(manual.some(item=>item.label==="They're"));
+});
+
+test('noun-subject auxiliary fragments are not automatic verbs while lexical apostrophe verbs and full phrases remain eligible', () => {
+  const fragments = ["dog's", 'shirt’s', "people're", "people've", "John'll", "John'd", "I’m"];
+  for (const value of fragments) assert.equal(core.recommendationEligible(word(value)), false, value);
+  const lexical = [word("rock'n'roll"), word("o'erleap"), phrase("get one's own back"), phrase("at one's wits' end")];
+  for (const item of lexical) assert.equal(core.recommendationEligible(item), true, item.label);
+  assert.deepEqual(labels(recommend({items:[...fragments.map(value=>word(value)),...lexical],count:20})), ["get one's own back", "at one's wits' end", "rock'n'roll", "o'erleap"]);
+  const first = {id:'old',book:1,number:1,vocabulary:fragments.map(value=>({word:value,pos:'v.',meaning:'名词和助动词的缩写'})),usage:[]};
+  const now = {id:'now',book:1,number:3,vocabulary:[],usage:[]};
+  const manual = core.wordBank({lessons:[first,now],currentLesson:now});
+  assert.ok(manual.some(item=>item.label==="dog's"));assert.ok(manual.some(item=>item.label==='shirt’s'));
+});
+
 test('verified source-name homographs are excluded without suppressing lower-case or other capitalized verbs', () => {
   for (const value of ['Bob', 'Mike', 'Peter', 'Harry', 'Dement']) {
     assert.equal(core.recommendationEligible(word(value)), false, value);
