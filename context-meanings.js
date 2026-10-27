@@ -16,7 +16,7 @@
   const data={
   "reviewId": "learning-reliability-six-2026-10-27",
   "reviewDataFile": "context-meanings-review.tsv",
-  "reviewDataSha256": "d2cafb6a3b1605dc9bfecb46d763b67c5527386752e5164240d3f47c834142a8",
+  "reviewDataSha256": "b06da3d184dfcf53b13233921e4043532479bbb44cffc81cf92673aadf14d5a9",
   "lessons": [
     {
       "id": "nce-b1-4be758-l005",
@@ -5247,6 +5247,38 @@
           "meaning": "被逼入困境；走投无路",
           "pos": "v.",
           "sourceSentence": "It immediately ran away when she saw it, and experts confirmed that a puma will not attack a human being unless it is cornered.",
+          "sourceLocation": "body",
+          "paragraphIndex": 1
+        },
+        "spotted": {
+          "word": "spotted",
+          "meaning": "被发现；被看见（spot 的过去分词）",
+          "pos": "v.",
+          "sourceSentence": "When reports came into London Zoo that a wild puma had been spotted forty-five miles south of London, they were not taken seriously.",
+          "sourceLocation": "body",
+          "paragraphIndex": 0
+        },
+        "confirmed": {
+          "word": "confirmed",
+          "meaning": "证实；确认（confirm 的过去式）",
+          "pos": "v.",
+          "sourceSentence": "It immediately ran away when she saw it, and experts confirmed that a puma will not attack a human being unless it is cornered.",
+          "sourceLocation": "body",
+          "paragraphIndex": 1
+        },
+        "observed": {
+          "word": "observed",
+          "meaning": "被看见；被观察到（observe 的过去分词）",
+          "pos": "v.",
+          "sourceSentence": "The search proved difficult, for the puma was often observed at one place in the morning and at another place twenty miles away in the evening.",
+          "sourceLocation": "body",
+          "paragraphIndex": 1
+        },
+        "clinging": {
+          "word": "clinging",
+          "meaning": "附着；挂着（cling 的现在分词）",
+          "pos": "v.",
+          "sourceSentence": "Paw prints were seen in a number of places and puma fur was found clinging to bushes.",
           "sourceLocation": "body",
           "paragraphIndex": 1
         }

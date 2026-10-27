@@ -272,7 +272,7 @@
     },
     {
       "file": "context-meanings.js",
-      "sha256": "e54fec5f8d23a07aa4e9bb8f32846cb63f1fe14941b25abe6b2c76825cf0807b"
+      "sha256": "62524756b32605e395f9dfabfc691b1a83b230950384ebc191d5da6ce2bdc17d"
     },
     {
       "file": "sentence-wordbank-data.js",
@@ -3768,8 +3768,8 @@
   ],
   "artifact": {
     "file": "lesson-word-targets.js",
-    "sha256": "fef7aff9d5d4f6e40e0460264c304e76a95373a075cb255bad40e7ac08670f5b",
-    "bytes": 3445670,
+    "sha256": "82352ea297670e5eb45b09009e75bedf4fbb89cfc296238ff90ce54874d5cc8c",
+    "bytes": 3451688,
     "hashEncoding": "utf8-lf"
   },
   "rebuild": "node dev/build-lesson-word-targets.cjs (offline; existing dictionary-data shards only)"

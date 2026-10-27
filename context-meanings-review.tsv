@@ -526,3 +526,8 @@
 4:47	ma	maître（此处指酒店领班）被现有分词器截出的 ASCII 片段	n.
 4:48	Periwigs	佩里维格斯（本课虚构的公司名）	n.
 1:9	Tony	人名（Tony）	n.
+# Confirmed verb senses in Book 3 Lesson 1, replacing unsuitable adjective-only dictionary glosses.
+3:1	spotted	被发现；被看见（spot 的过去分词）	v.
+3:1	confirmed	证实；确认（confirm 的过去式）	v.
+3:1	observed	被看见；被观察到（observe 的过去分词）	v.
+3:1	clinging	附着；挂着（cling 的现在分词）	v.
