@@ -1,6 +1,6 @@
 {
-  "build": "2026-10-27-swiping-word-groups",
-  "preparedAt": "2026-10-27T06:47:23.904065+00:00",
+  "build": "2026-10-27-four-forms-inline",
+  "preparedAt": "2026-10-27T06:57:33.381Z",
   "book2": {
     "book": 2,
     "total": 96,
@@ -231,8 +231,8 @@
     },
     "unsubmittedLegacyDictationDraftPersistence": true
   },
-  "staticFiles": 4235,
-  "staticBytes": 740544381,
+  "staticFiles": 4237,
+  "staticBytes": 740574315,
   "nativeearsAdvancedAudio": {
     "books": {
       "3": 60,
