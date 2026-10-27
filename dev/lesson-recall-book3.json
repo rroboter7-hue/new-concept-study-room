@@ -12,46 +12,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "动物园专家为什么后来决定调查美洲狮的报告？",
+          "focus": "grammar",
+          "grammarPoint": "Relative subject",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Relative subject. Choose the correct form: Pumas are large, cat-like animals ___ are found in America.",
           "options": [
-            "动物园已确认自己丢失了一只美洲狮",
-            "村民已经把美洲狮关进了笼子",
-            "证据不断增加，目击描述又十分相似"
+            "what",
+            "which",
+            "whose"
           ],
-          "answer": 2,
-          "explanation": "调查的原因是证据累积且目击描述相似；当时并未确认它来自哪家动物园。",
+          "answer": 1,
+          "explanation": "关系词在定语从句中作主语；指物可用 which，不能用 what 或表示所属的 whose。",
           "wrongReasons": [
-            "“动物园已确认自己丢失了一只美洲狮”与本课内容不符。调查的原因是证据累积且目击描述相似；当时并未确认它来自哪家动物园。",
-            "“村民已经把美洲狮关进了笼子”与本课内容不符。调查的原因是证据累积且目击描述相似；当时并未确认它来自哪家动物园。",
-            ""
+            "“what”不符合这里的语法结构。关系词在定语从句中作主语；指物可用 which，不能用 what 或表示所属的 whose。",
+            "",
+            "“whose”不符合这里的语法结构。关系词在定语从句中作主语；指物可用 which，不能用 what 或表示所属的 whose。"
           ],
           "evidence": {
             "paragraphIndex": 0,
-            "quote": "However, as the evidence began to accumulate, experts from the Zoo felt obliged to investigate, for the descriptions given by people who claimed to have seen the puma were extraordinarily similar."
+            "quote": "Pumas are large, cat-like animals which are found in America."
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "村庄里目击美洲狮的那位女子当时在采什么？请写水果名（中文或英文）。",
+          "focus": "grammar",
+          "grammarPoint": "Past perfect passive",
+          "exercise": "transformation",
+          "prompt": "Change to the past perfect passive. Begin with \"A wild puma\" and omit the agent: People had spotted a wild puma.",
           "answers": [
-            "blackberries",
-            "blackberry",
-            "黑莓"
+            "A wild puma had been spotted."
           ],
-          "explanation": "原文写的是 blackberries（黑莓），不是草莓。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "strawberries",
-                "草莓"
-              ],
-              "feedback": "原文写的是 blackberries（黑莓），不是草莓。"
-            }
-          ],
+          "explanation": "过去完成时被动结构为 had been + 过去分词，表示过去某时之前已发生的被动动作。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "The hunt for the puma began in a small village where a woman picking blackberries saw ‘a large cat’ only five yards away from her."
+            "paragraphIndex": 0,
+            "quote": "a wild puma had been spotted"
           }
         }
       ]
@@ -66,46 +62,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "牧师得知钟在一点敲十三下后，最终是什么态度？",
+          "focus": "grammar",
+          "grammarPoint": "Causative have",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Causative have. Choose the correct form: to have the church clock ___",
           "options": [
-            "认为钟已经完全修好，不再有任何问题",
-            "认为能重新报时总比完全不响好",
-            "要求修钟者立刻赔偿所有村民"
+            "repair",
+            "repairing",
+            "repaired"
           ],
-          "answer": 1,
-          "explanation": "牧师知道报时仍有毛病，但认为十三下也好过钟一直不响。",
+          "answer": 2,
+          "explanation": "have + 宾语 + 过去分词表示让人做某事；宾语与动词是被动关系。",
           "wrongReasons": [
-            "“认为钟已经完全修好，不再有任何问题”与本课内容不符。牧师知道报时仍有毛病，但认为十三下也好过钟一直不响。",
-            "",
-            "“要求修钟者立刻赔偿所有村民”与本课内容不符。牧师知道报时仍有毛病，但认为十三下也好过钟一直不响。"
+            "“repair”不符合这里的语法结构。have + 宾语 + 过去分词表示让人做某事；宾语与动词是被动关系。",
+            "“repairing”不符合这里的语法结构。have + 宾语 + 过去分词表示让人做某事；宾语与动词是被动关系。",
+            ""
           ],
           "evidence": {
-            "paragraphIndex": 6,
-            "quote": "‘Thirteen is not as good as one, but it's better than nothing."
+            "paragraphIndex": 0,
+            "quote": "to have the church clock repaired"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "半夜修钟的当地杂货商叫什么？请写英文姓名。",
+          "focus": "grammar",
+          "grammarPoint": "Present perfect",
+          "exercise": "gap-fill",
+          "prompt": "Use the present perfect: The clock ___ silent ever since. (be) Write exactly 2 words.",
           "answers": [
-            "Bill Wilkins",
-            "Bill",
-            "Wilkins"
+            "has been"
           ],
-          "explanation": "修钟的人是当地杂货商 Bill Wilkins，不是其他课文的人物。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "Alfred Bloggs",
-                "Alfred"
-              ],
-              "feedback": "修钟的人是当地杂货商 Bill Wilkins，不是其他课文的人物。"
-            }
-          ],
+          "explanation": "现在完成时结构为 has/have + 过去分词；注意单复数和不规则动词。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "In the torchlight, he caught sight of a figure whom he immediately recognized as Bill Wilkins, our local grocer."
+            "paragraphIndex": 0,
+            "quote": "has been silent ever since"
           }
         }
       ]
@@ -120,49 +112,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "考古学家拼好女神像后，最惊讶的发现是什么？",
+          "focus": "grammar",
+          "grammarPoint": "Past deduction",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Past deduction. Choose the correct form: The city at one time ___ prosperous",
           "options": [
-            "她的外貌竟像一位现代女性",
-            "她原来是一位罗马皇帝",
-            "她的身份和姓名都已得到证实"
+            "must have been",
+            "must be",
+            "must being"
           ],
           "answer": 0,
-          "explanation": "重建后的女神像看起来非常现代；考古学家仍未查明她的身份。",
+          "explanation": "对过去情况的推测用情态动词 + have + 过去分词，不能误用现在时结构。",
           "wrongReasons": [
             "",
-            "“她原来是一位罗马皇帝”与本课内容不符。重建后的女神像看起来非常现代；考古学家仍未查明她的身份。",
-            "“她的身份和姓名都已得到证实”与本课内容不符。重建后的女神像看起来非常现代；考古学家仍未查明她的身份。"
+            "“must be”不符合这里的语法结构。对过去情况的推测用情态动词 + have + 过去分词，不能误用现在时结构。",
+            "“must being”不符合这里的语法结构。对过去情况的推测用情态动词 + have + 过去分词，不能误用现在时结构。"
           ],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "When the archaeologists reconstructed the fragments, they were amazed to find that the goddess turned out to be a very modern-looking woman."
+            "paragraphIndex": 0,
+            "quote": "The city at one time must have been prosperous"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "这次考古发现位于哪座爱琴海岛屿？请写岛名（中文或英文）。",
+          "focus": "grammar",
+          "grammarPoint": "Past simple passive",
+          "exercise": "transformation",
+          "prompt": "Change to the passive. Begin with \"An interesting discovery\" and keep the agent with \"by\": Archaeologists made an interesting discovery.",
           "answers": [
-            "Kea",
-            "凯阿岛",
-            "基亚岛",
-            "基阿岛",
-            "凯阿",
-            "基亚"
+            "An interesting discovery was made by archaeologists."
           ],
-          "explanation": "地点是 Kea，不是克里特岛。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "Crete",
-                "克里特岛"
-              ],
-              "feedback": "地点是 Kea，不是克里特岛。"
-            }
-          ],
+          "explanation": "一般过去时被动结构为 was/were + 过去分词；注意不规则过去分词。",
+          "commonMistakes": [],
           "evidence": {
             "paragraphIndex": 0,
-            "quote": "Some time ago, an interesting discovery was made by archaeologists on the Aegean island of Kea."
+            "quote": "an interesting discovery was made by archaeologists"
           }
         }
       ]
@@ -177,51 +162,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "阿尔弗为什么接受收入只有原来一半的办公室工作？",
+          "focus": "grammar",
+          "grammarPoint": "Gerund after a preposition",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Gerund after a preposition. Choose the correct form: the privilege of ___ white-collar workers",
           "options": [
-            "他认为办公室工作的收入会立刻翻倍",
-            "他的妻子已经公开揭穿了他的工作",
-            "他认为社会地位的提高值得牺牲收入"
+            "become",
+            "becoming",
+            "to become"
           ],
-          "answer": 2,
-          "explanation": "阿尔弗看重白领身份和地位，愿意为此少挣钱；妻子并未发现真相。",
+          "answer": 1,
+          "explanation": "介词后接名词或动名词；动词要改为 -ing 形式，不能直接接动词原形。",
           "wrongReasons": [
-            "“他认为办公室工作的收入会立刻翻倍”与本课内容不符。阿尔弗看重白领身份和地位，愿意为此少挣钱；妻子并未发现真相。",
-            "“他的妻子已经公开揭穿了他的工作”与本课内容不符。阿尔弗看重白领身份和地位，愿意为此少挣钱；妻子并未发现真相。",
-            ""
+            "“become”不符合这里的语法结构。介词后接名词或动名词；动词要改为 -ing 形式，不能直接接动词原形。",
+            "",
+            "“to become”不符合这里的语法结构。介词后接名词或动名词；动词要改为 -ing 形式，不能直接接动词原形。"
           ],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "He will be earning only half as much as he used to, but he feels that his rise in status is well worth the loss of money."
+            "paragraphIndex": 0,
+            "quote": "the privilege of becoming white-collar workers"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "阿尔弗一直向妻子隐瞒的实际职业是什么？请写职业（中文或英文）。",
+          "focus": "grammar",
+          "grammarPoint": "Inversion after such",
+          "exercise": "transformation",
+          "prompt": "Rewrite with inversion, beginning with \"Such\": Human nature is such.",
           "answers": [
-            "dustman",
-            "a dustman",
-            "垃圾清运工",
-            "清洁工",
-            "垃圾工",
-            "清洁员"
+            "Such is human nature."
           ],
-          "explanation": "他当时实际是一名 dustman（垃圾清运工），办公室工作是后来才找到的。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "grocer",
-                "杂货商",
-                "office worker",
-                "办公室职员"
-              ],
-              "feedback": "他当时实际是一名 dustman（垃圾清运工），办公室工作是后来才找到的。"
-            }
-          ],
+          "explanation": "表语 such 置于句首时，系动词置于主语前：Such is human nature。",
+          "commonMistakes": [],
           "evidence": {
             "paragraphIndex": 0,
-            "quote": "This can give rise to curious situations, as it did in the case of Alfred Bloggs who worked as a dustman for the Ellesmere Corporation."
+            "quote": "Such is human nature"
           }
         }
       ]
@@ -236,50 +212,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "记者为什么迟迟不能回复编辑的催促？",
+          "focus": "grammar",
+          "grammarPoint": "Past perfect passive",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Past perfect passive. Choose the correct form: a journalist ___ by a well-known magazine",
           "options": [
-            "他一直在国外度假没有开展采访",
-            "他数宫殿台阶时被捕并被关进监狱",
-            "他拒绝核实台阶数和围墙高度"
+            "had instructed",
+            "had been instructing",
+            "had been instructed"
           ],
-          "answer": 1,
-          "explanation": "记者执行核查任务时被捕，直到获准发传真才解释失联原因。",
+          "answer": 2,
+          "explanation": "过去完成时被动结构为 had been + 过去分词，表示过去某时之前已发生的被动动作。",
           "wrongReasons": [
-            "“他一直在国外度假没有开展采访”与本课内容不符。记者执行核查任务时被捕，直到获准发传真才解释失联原因。",
-            "",
-            "“他拒绝核实台阶数和围墙高度”与本课内容不符。记者执行核查任务时被捕，直到获准发传真才解释失联原因。"
+            "“had instructed”不符合这里的语法结构。过去完成时被动结构为 had been + 过去分词，表示过去某时之前已发生的被动动作。",
+            "“had been instructing”不符合这里的语法结构。过去完成时被动结构为 had been + 过去分词，表示过去某时之前已发生的被动动作。",
+            ""
           ],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "However, he had at last been allowed to send a fax in which he informed the editor that he had been arrested while counting the 1,084 steps leading to the fifteen-foot wall which surrounded the president’s palace."
+            "paragraphIndex": 0,
+            "quote": "a journalist had been instructed by a well-known magazine"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "通往总统府围墙的台阶共有多少级？请写数字或英文数词。",
+          "focus": "grammar",
+          "grammarPoint": "Infinitive complement",
+          "exercise": "gap-fill",
+          "prompt": "Complete with the correct form of \"publish\": The editor refused ___ it. Write exactly 2 words.",
           "answers": [
-            "1084",
-            "1,084",
-            "one thousand and eighty-four",
-            "one thousand eighty-four",
-            "1084级",
-            "一千零八十四级",
-            "一千零八十四"
+            "to publish"
           ],
-          "explanation": "核实后的精确数字是 1,084 级，不能用约一千级代替。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "1000",
-                "一千"
-              ],
-              "feedback": "核实后的精确数字是 1,084 级，不能用约一千级代替。"
-            }
-          ],
+          "explanation": "此处动词或形容词后接 to + 动词原形，不接动名词。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "However, he had at last been allowed to send a fax in which he informed the editor that he had been arrested while counting the 1,084 steps leading to the fifteen-foot wall which surrounded the president’s palace."
+            "paragraphIndex": 0,
+            "quote": "refused to publish it"
           }
         }
       ]
@@ -294,50 +262,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "泰勒先生和店员怎样试图阻止珠宝抢劫？",
+          "focus": "grammar",
+          "grammarPoint": "Perfect continuous",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Perfect continuous. Choose the correct form: Two of his assistants ___ busily since eight o’clock",
           "options": [
-            "从楼上向歹徒扔家具，随后又追出去",
-            "把橱窗全部锁上后静静等待",
-            "开车堵住拱廊并当场抓住全部歹徒"
+            "had been working",
+            "had working",
+            "have been worked"
           ],
           "answer": 0,
-          "explanation": "他们从楼上扔家具反击，但最终没能阻止歹徒逃走。",
+          "explanation": "完成进行时为 has/have/had been + doing，强调到参照时点持续进行的动作。",
           "wrongReasons": [
             "",
-            "“把橱窗全部锁上后静静等待”与本课内容不符。他们从楼上扔家具反击，但最终没能阻止歹徒逃走。",
-            "“开车堵住拱廊并当场抓住全部歹徒”与本课内容不符。他们从楼上扔家具反击，但最终没能阻止歹徒逃走。"
+            "“had working”不符合这里的语法结构。完成进行时为 has/have/had been + doing，强调到参照时点持续进行的动作。",
+            "“have been worked”不符合这里的语法结构。完成进行时为 has/have/had been + doing，强调到参照时点持续进行的动作。"
           ],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "He and his staff began throwing furniture out of the window."
+            "paragraphIndex": 0,
+            "quote": "Two of his assistants had been working busily since eight o’clock"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "抢劫从开始到结束大约用了几分钟？请写数字或英文数词。",
+          "focus": "grammar",
+          "grammarPoint": "Word order",
+          "exercise": "word-order",
+          "prompt": "Put these words in order, using every word or part once. Begin with \"The shops\" and put \"just\" after \"were\": just / the shops / opening / were",
           "answers": [
-            "3",
-            "three",
-            "three minutes",
-            "3分钟",
-            "三分钟",
-            "三"
+            "The shops were just opening."
           ],
-          "explanation": "原文是 three minutes（三分钟），不是三十分钟。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "30",
-                "thirty",
-                "三十分钟"
-              ],
-              "feedback": "原文是 three minutes（三分钟），不是三十分钟。"
-            }
-          ],
+          "explanation": "按英语句法排列主语、助动词、状语和主要动词；不要按中文顺序排列。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "The raid was all over in three minutes, for the men scrambled back into the car and it moved off at a fantastic speed."
+            "paragraphIndex": 0,
+            "quote": "The expensive shops in a famous arcade near Piccadilly were just opening."
           }
         }
       ]
@@ -352,47 +312,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "英格兰银行为什么能把约翰烧毁的钱兑换回来？",
+          "focus": "grammar",
+          "grammarPoint": "Modal bare infinitive",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Modal bare infinitive. Choose the correct form: People who live in Britain ___ despair",
           "options": [
-            "只要口头声称丢钱就会全额赔偿",
-            "银行接受了他自行印制新钞票的计划",
-            "残存的钞票仍有可供识别的部分"
+            "needn’t to",
+            "needn’t",
+            "needn’t be"
           ],
-          "answer": 2,
-          "explanation": "银行说明，只要残片仍能识别，就可以退还相应的钱。",
+          "answer": 1,
+          "explanation": "情态动词后直接接动词原形，不加 to，也不加第三人称单数词尾。",
           "wrongReasons": [
-            "“只要口头声称丢钱就会全额赔偿”与本课内容不符。银行说明，只要残片仍能识别，就可以退还相应的钱。",
-            "“银行接受了他自行印制新钞票的计划”与本课内容不符。银行说明，只要残片仍能识别，就可以退还相应的钱。",
-            ""
+            "“needn’t to”不符合这里的语法结构。情态动词后直接接动词原形，不加 to，也不加第三人称单数词尾。",
+            "",
+            "“needn’t be”不符合这里的语法结构。情态动词后直接接动词原形，不加 to，也不加第三人称单数词尾。"
           ],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "‘So long as there’s something to identify, we will give people their money back,’ said a spokeswoman for the Bank."
+            "paragraphIndex": 0,
+            "quote": "People who live in Britain needn’t despair"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "约翰把钱包放进什么电器里保管，后来被误加热？请写电器名（中文或英文）。",
+          "focus": "grammar",
+          "grammarPoint": "Past participle modifier",
+          "exercise": "transformation",
+          "prompt": "Expand the reduced clause with \"which is\". Write the whole noun phrase: a team called Mutilated Ladies.",
           "answers": [
-            "microwave oven",
-            "microwave",
-            "a microwave oven",
-            "微波炉"
+            "a team which is called Mutilated Ladies"
           ],
-          "explanation": "开头提到洗衣机的常见事故，但约翰这个具体案例发生在微波炉里。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "washing machine",
-                "洗衣机"
-              ],
-              "feedback": "开头提到洗衣机的常见事故，但约翰这个具体案例发生在微波炉里。"
-            }
-          ],
+          "explanation": "名词与后置动词为被动关系时，可用过去分词作定语，相当于被动定语从句。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "John had a very good day and put his wallet containing £ 3,000 into the microwave oven for safekeeping."
+            "paragraphIndex": 0,
+            "quote": "a team called Mutilated Ladies"
           }
         }
       ]
@@ -407,45 +362,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "修道士为什么更喜欢冬天而不是夏天？",
+          "focus": "grammar",
+          "grammarPoint": "Present participle modifier",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Present participle modifier. Choose the correct form: travellers ___ the dangerous Pass",
           "options": [
-            "冬季天气温暖，所有人都能轻松步行过山口",
-            "冬季游客少，他们能有更多清静和独处",
-            "冬季有更多驾车游客带来收入"
+            "crossed",
+            "to crossing",
+            "crossing"
           ],
-          "answer": 1,
-          "explanation": "冬天通行的人很少，修道士因此有更多私密和清静的生活。",
+          "answer": 2,
+          "explanation": "名词与后置动词为主动关系时，可用现在分词 -ing 作定语。",
           "wrongReasons": [
-            "“冬季天气温暖，所有人都能轻松步行过山口”与本课内容不符。冬天通行的人很少，修道士因此有更多私密和清静的生活。",
-            "",
-            "“冬季有更多驾车游客带来收入”与本课内容不符。冬天通行的人很少，修道士因此有更多私密和清静的生活。"
+            "“crossed”不符合这里的语法结构。名词与后置动词为主动关系时，可用现在分词 -ing 作定语。",
+            "“to crossing”不符合这里的语法结构。名词与后置动词为主动关系时，可用现在分词 -ing 作定语。",
+            ""
           ],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "The monks prefer winter to summer for they have more privacy."
+            "paragraphIndex": 0,
+            "quote": "travellers crossing the dangerous Pass"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "圣伯纳德大山口连接瑞士和哪个国家？请写国名（中文或英文）。",
+          "focus": "grammar",
+          "grammarPoint": "Past participle modifier",
+          "exercise": "transformation",
+          "prompt": "Reduce the relative clause using a past participle: the monastery which was founded in the eleventh century.",
           "answers": [
-            "Italy",
-            "意大利"
+            "the monastery founded in the eleventh century"
           ],
-          "explanation": "文中明确说山口连接 Switzerland 和 Italy，不是法国。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "France",
-                "法国"
-              ],
-              "feedback": "文中明确说山口连接 Switzerland 和 Italy，不是法国。"
-            }
-          ],
+          "explanation": "名词与后置动词为被动关系时，可用过去分词作定语，相当于被动定语从句。",
+          "commonMistakes": [],
           "evidence": {
             "paragraphIndex": 0,
-            "quote": "Bernard Pass connects Switzerland to Italy."
+            "quote": "which was founded in the eleventh century"
           }
         }
       ]
@@ -460,43 +412,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "猫从高处坠落时，张开四肢有什么作用？",
+          "focus": "grammar",
+          "grammarPoint": "Infinitive complement",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Infinitive complement. Choose the correct form: Cats never fail ___ human beings.",
           "options": [
-            "增大空气阻力，减轻落地冲击",
-            "让身体更紧缩，从而增加撞击力",
-            "确保每只猫都不会受伤或死亡"
+            "to fascinate",
+            "fascinating",
+            "fascinate"
           ],
           "answer": 0,
-          "explanation": "张开四肢会增加空气阻力并减少落地冲击，但并不意味着所有猫都安全。",
+          "explanation": "此处动词或形容词后接 to + 动词原形，不接动名词。",
           "wrongReasons": [
             "",
-            "“让身体更紧缩，从而增加撞击力”与本课内容不符。张开四肢会增加空气阻力并减少落地冲击，但并不意味着所有猫都安全。",
-            "“确保每只猫都不会受伤或死亡”与本课内容不符。张开四肢会增加空气阻力并减少落地冲击，但并不意味着所有猫都安全。"
+            "“fascinating”不符合这里的语法结构。此处动词或形容词后接 to + 动词原形，不接动名词。",
+            "“fascinate”不符合这里的语法结构。此处动词或形容词后接 to + 动词原形，不接动名词。"
           ],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "This increases their air-resistance and reduces the shock of impact when they hit the ground."
+            "paragraphIndex": 0,
+            "quote": "Cats never fail to fascinate human beings."
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "研究中坠落三十二层楼的猫叫什么？请写英文名字。",
+          "focus": "grammar",
+          "grammarPoint": "Present perfect",
+          "exercise": "gap-fill",
+          "prompt": "Use the present perfect and the -ed form: Humans ___ to respect feline independence. (learn) Write exactly 2 words.",
           "answers": [
-            "Sabrina"
+            "have learned"
           ],
-          "explanation": "Sabrina 是高楼坠落案例中的猫；Rastus 是另一课被绑架的猫。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "Rastus"
-              ],
-              "feedback": "Sabrina 是高楼坠落案例中的猫；Rastus 是另一课被绑架的猫。"
-            }
-          ],
+          "explanation": "现在完成时结构为 has/have + 过去分词；注意单复数和不规则动词。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "One cat, Sabrina, fell 32 storeys, yet only suffered from a broken tooth."
+            "paragraphIndex": 0,
+            "quote": "humans have learned to respect feline independence"
           }
         }
       ]
@@ -511,46 +462,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "泰坦尼克号为什么最终迅速下沉？",
+          "focus": "grammar",
+          "grammarPoint": "Past continuous",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Past continuous. Choose the correct form: She ___ 1,316 passengers and a crew of 891.",
           "options": [
-            "它原本完全没有水密舱",
-            "船员只因听到轻微声响便主动把船凿沉",
-            "十六个水密舱中已有五个进水"
+            "were carrying",
+            "was carrying",
+            "was carry"
           ],
-          "answer": 2,
-          "explanation": "原设计可在两个舱进水时仍漂浮，但实际有五个舱进水，超过了这一条件。",
+          "answer": 1,
+          "explanation": "过去进行时结构为 was/were + 动词 -ing；注意主语的单复数。",
           "wrongReasons": [
-            "“它原本完全没有水密舱”与本课内容不符。原设计可在两个舱进水时仍漂浮，但实际有五个舱进水，超过了这一条件。",
-            "“船员只因听到轻微声响便主动把船凿沉”与本课内容不符。原设计可在两个舱进水时仍漂浮，但实际有五个舱进水，超过了这一条件。",
-            ""
+            "“were carrying”不符合这里的语法结构。过去进行时结构为 was/were + 动词 -ing；注意主语的单复数。",
+            "",
+            "“was carry”不符合这里的语法结构。过去进行时结构为 was/were + 动词 -ing；注意主语的单复数。"
           ],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "Below, the captain realized to his horror that the Titanic was sinking rapidly, for five of her sixteen watertight compartments had already been flooded!"
+            "paragraphIndex": 0,
+            "quote": "She was carrying 1,316 passengers and a crew of 891."
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "泰坦尼克号这次航行的目的地是哪座城市？请写城市名（中文或英文）。",
+          "focus": "grammar",
+          "grammarPoint": "Past perfect passive",
+          "exercise": "gap-fill",
+          "prompt": "Use the past perfect passive and include \"ever\": the largest ship that ___ . (build) Write exactly 4 words.",
           "answers": [
-            "New York",
-            "纽约",
-            "纽约市"
+            "had ever been built"
           ],
-          "explanation": "Southampton 是出发港，New York 才是目的地。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "Southampton",
-                "南安普敦"
-              ],
-              "feedback": "Southampton 是出发港，New York 才是目的地。"
-            }
-          ],
+          "explanation": "过去完成时被动结构为 had been + 过去分词，表示过去某时之前已发生的被动动作。",
+          "commonMistakes": [],
           "evidence": {
             "paragraphIndex": 0,
-            "quote": "The great ship, Titanic, sailed for New York from Southampton on April 10th, 1912."
+            "quote": "the largest ship that had ever been built"
           }
         }
       ]
@@ -565,46 +512,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "海关官员最后为什么相信瓶子里不是香水？",
+          "focus": "grammar",
+          "grammarPoint": "Passive causative make",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Passive causative make. Choose the correct form: honest people are often made ___ guilty",
           "options": [
-            "瓶子里根本没有任何东西",
-            "闻到瓶内难闻的气味，确认了叙述者的解释",
-            "叙述者拿出了香水免税证明"
+            "feel",
+            "feeling",
+            "to feel"
           ],
-          "answer": 1,
-          "explanation": "官员闻到不愉快的味道，才相信叙述者关于自制发胶的解释。",
+          "answer": 2,
+          "explanation": "主动 make somebody do 变被动后，须补回 to，成为 be made to do。",
           "wrongReasons": [
-            "“瓶子里根本没有任何东西”与本课内容不符。官员闻到不愉快的味道，才相信叙述者关于自制发胶的解释。",
-            "",
-            "“叙述者拿出了香水免税证明”与本课内容不符。官员闻到不愉快的味道，才相信叙述者关于自制发胶的解释。"
+            "“feel”不符合这里的语法结构。主动 make somebody do 变被动后，须补回 to，成为 be made to do。",
+            "“feeling”不符合这里的语法结构。主动 make somebody do 变被动后，须补回 to，成为 be made to do。",
+            ""
           ],
           "evidence": {
-            "paragraphIndex": 10,
-            "quote": "He was greeted by an unpleasant smell which convinced him that I was telling the truth."
+            "paragraphIndex": 0,
+            "quote": "honest people are often made to feel guilty"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "小瓶里实际装的是什么？请写物品名（中文或英文）。",
+          "focus": "grammar",
+          "grammarPoint": "Question formation",
+          "exercise": "transformation",
+          "prompt": "Make a yes/no question: You are going through the Green Channel.",
           "answers": [
-            "hair gel",
-            "发胶",
-            "自制发胶"
+            "Are you going through the Green Channel?"
           ],
-          "explanation": "官员起初以为是香水，但叙述者说并证实那是 hair gel。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "perfume",
-                "香水"
-              ],
-              "feedback": "官员起初以为是香水，但叙述者说并证实那是 hair gel。"
-            }
-          ],
+          "explanation": "一般疑问句将已有的助动词或 be 提到主语前；没有助动词的实义动词句需用 do/does/did。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 7,
-            "quote": "‘It’s hair gel.’ Then I added with a smile, ‘It’s a strange mixture I make myself.’"
+            "paragraphIndex": 0,
+            "quote": "when you are going through the Green Channel"
           }
         }
       ]
@@ -619,48 +562,43 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "两名男子为什么离开珊瑚岛时还感到遗憾？",
+          "focus": "grammar",
+          "grammarPoint": "Relative place",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Relative place. Choose the correct form: a sort of paradise ___ the sun always shines",
           "options": [
-            "他们能收集雨水并捕到海鲜，生活得很好",
-            "岛上有豪华旅馆和固定的啤酒供应",
-            "他们一直饥饿，急于等待更大的救援船"
+            "where",
+            "which",
+            "what"
           ],
           "answer": 0,
-          "explanation": "他们利用小艇收雨水，用鱼枪捕龙虾和鱼，因此并没有经历想象中的悲惨荒岛生活。",
+          "explanation": "先行词在从句中作地点状语，用 where；从句的主语和谓语已经完整。",
           "wrongReasons": [
             "",
-            "“岛上有豪华旅馆和固定的啤酒供应”与本课内容不符。他们利用小艇收雨水，用鱼枪捕龙虾和鱼，因此并没有经历想象中的悲惨荒岛生活。",
-            "“他们一直饥饿，急于等待更大的救援船”与本课内容不符。他们利用小艇收雨水，用鱼枪捕龙虾和鱼，因此并没有经历想象中的悲惨荒岛生活。"
+            "“which”不符合这里的语法结构。先行词在从句中作地点状语，用 where；从句的主语和谓语已经完整。",
+            "“what”不符合这里的语法结构。先行词在从句中作地点状语，用 where；从句的主语和谓语已经完整。"
           ],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "They caught lobster and fish every day, and, as one of them put it ‘ate like kings’."
+            "paragraphIndex": 0,
+            "quote": "a sort of paradise where the sun always shines"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "两人最后被哪一种船救起？请写船只类型（中文或英文）。",
+          "focus": "grammar",
+          "grammarPoint": "Negative formation",
+          "exercise": "transformation",
+          "prompt": "Make this statement negative, using \"not\": Most of us have formed an unrealistic picture of life on a desert island.",
           "answers": [
-            "tanker",
-            "a tanker",
-            "passing tanker",
-            "油轮",
-            "路过的油轮"
+            "Most of us have not formed an unrealistic picture of life on a desert island.",
+            "Most of us haven't formed an unrealistic picture of life on a desert island."
           ],
-          "explanation": "救他们的是路过的 tanker（油轮），不是渔船。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "fishing boat",
-                "渔船"
-              ],
-              "feedback": "救他们的是路过的 tanker（油轮），不是渔船。"
-            }
-          ],
+          "explanation": "否定结构在助动词后加 not；用 do/does/did 时，实义动词还原。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "When a passing tanker rescued them five days later, both men were genuinely sorry that they had to leave."
+            "paragraphIndex": 0,
+            "quote": "Most of us have formed an unrealistic picture of life on a desert island."
           }
         }
       ]
@@ -675,49 +613,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "理查兹太太为什么躲进楼梯下的小储藏室？",
+          "focus": "grammar",
+          "grammarPoint": "Too ... to",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Too ... to. Choose the correct form: She was ___ excited to do any housework that morning",
           "options": [
-            "她听见陌生的脚步声，想故意恶作剧",
-            "她听见丈夫回来，想把面包藏起来",
-            "她以为来的是面包师，不想用鬼装吓到他"
+            "enough",
+            "too",
+            "very"
           ],
-          "answer": 2,
-          "explanation": "她以为敲门的是面包师，为避免吓人而躲起来，却碰上了抄表员。",
+          "answer": 1,
+          "explanation": "too + 形容词 + to do 表示程度太高以致不能做；enough 与 very 不能直接替换该结构。",
           "wrongReasons": [
-            "“她听见陌生的脚步声，想故意恶作剧”与本课内容不符。她以为敲门的是面包师，为避免吓人而躲起来，却碰上了抄表员。",
-            "“她听见丈夫回来，想把面包藏起来”与本课内容不符。她以为敲门的是面包师，为避免吓人而躲起来，却碰上了抄表员。",
-            ""
+            "“enough”不符合这里的语法结构。too + 形容词 + to do 表示程度太高以致不能做；enough 与 very 不能直接替换该结构。",
+            "",
+            "“very”不符合这里的语法结构。too + 形容词 + to do 表示程度太高以致不能做；enough 与 very 不能直接替换该结构。"
           ],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "Not wanting to frighten the poor man, Mrs. Richards quickly hid in the small storeroom under the stairs."
+            "paragraphIndex": 0,
+            "quote": "She was too excited to do any housework that morning"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "实际打开储藏室门的人是来做什么的？请写工作内容（中文或英文）。",
+          "focus": "grammar",
+          "grammarPoint": "Question formation",
+          "exercise": "transformation",
+          "prompt": "Make a yes/no question in the past perfect: Her husband had gone to work.",
           "answers": [
-            "read the meter",
-            "reading the meter",
-            "read meter",
-            "抄表",
-            "抄电表",
-            "查电表"
+            "Had her husband gone to work?"
           ],
-          "explanation": "她起初以为是送面包的人，但进来的是电力公司的抄表员。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "deliver bread",
-                "送面包"
-              ],
-              "feedback": "她起初以为是送面包的人，但进来的是电力公司的抄表员。"
-            }
-          ],
+          "explanation": "一般疑问句将已有的助动词或 be 提到主语前；没有助动词的实义动词句需用 do/does/did。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "Mrs. Richards realized that it must be the man from the Electricity Board who had come to read the meter."
+            "paragraphIndex": 0,
+            "quote": "her husband had gone to work"
           }
         }
       ]
@@ -732,49 +663,43 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "霍克伍德在和平时期主要怎样赚钱？",
+          "focus": "grammar",
+          "grammarPoint": "Gerund subject",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Gerund subject. Choose the correct form: ___ ‘protection money’ is not a modern crime.",
           "options": [
-            "只在公共市场出售普通农产品",
-            "先破坏农场，再索要离开的保护费",
-            "免费帮助各城邦修复农场"
+            "Obtain",
+            "Obtained",
+            "Obtaining"
           ],
-          "answer": 1,
-          "explanation": "和平时他用破坏和威胁索取保护费，这正是文章带有讽刺意味的地方。",
+          "answer": 2,
+          "explanation": "动名词短语可作主语；在此处不能直接用动词原形作主语。",
           "wrongReasons": [
-            "“只在公共市场出售普通农产品”与本课内容不符。和平时他用破坏和威胁索取保护费，这正是文章带有讽刺意味的地方。",
-            "",
-            "“免费帮助各城邦修复农场”与本课内容不符。和平时他用破坏和威胁索取保护费，这正是文章带有讽刺意味的地方。"
+            "“Obtain”不符合这里的语法结构。动名词短语可作主语；在此处不能直接用动词原形作主语。",
+            "“Obtained”不符合这里的语法结构。动名词短语可作主语；在此处不能直接用动词原形作主语。",
+            ""
           ],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "In times of peace, when business was bad, Hawkwood and his men would march into a city-state and, after burning down a few farms, would offer to go away if protection money was paid to them."
+            "paragraphIndex": 0,
+            "quote": "Obtaining ‘protection money’ is not a modern crime."
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "霍克伍德去世时多少岁？请写数字或英文数词。",
+          "focus": "grammar",
+          "grammarPoint": "Active and passive",
+          "exercise": "transformation",
+          "prompt": "Change to active. Begin with \"If people\": If the money was not paid promptly.",
           "answers": [
-            "80",
-            "eighty",
-            "80岁",
-            "八十",
-            "八十岁"
+            "If people did not pay the money promptly.",
+            "If people didn't pay the money promptly."
           ],
-          "explanation": "他约六百年前到意大利，但去世年龄是 eighty（八十岁）。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "60",
-                "sixty",
-                "六十岁"
-              ],
-              "feedback": "他约六百年前到意大利，但去世年龄是 eighty（八十岁）。"
-            }
-          ],
+          "explanation": "主动和被动转换须保留时态；被动主语是原主动宾语，使用 be + 过去分词。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "When he died at the age of eighty, the Florentines gave him a state funeral and had a picture painted which was dedicated to the memory of ‘the most valiant soldier and most notable leader, Signor Giovanni Haukodue’."
+            "paragraphIndex": 0,
+            "quote": "If the money was not paid promptly"
           }
         }
       ]
@@ -789,48 +714,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "乔治的胳膊为什么会卡在排水沟盖里？",
+          "focus": "grammar",
+          "grammarPoint": "Present simple passive",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Present simple passive. Choose the correct form: If fifty pence pieces ___ for sweets",
           "options": [
-            "他伸手去捡掉进排水沟的五十便士",
-            "他想从排水沟里找一大盒巧克力",
-            "他想把整个排水沟盖从地上搬走"
+            "are not exchanged",
+            "do not exchange",
+            "are not exchanging"
           ],
           "answer": 0,
-          "explanation": "硬币掉进排水沟后，乔治伸胳膊去捡，结果硬币没找到，胳膊也拔不出来。",
+          "explanation": "一般现在时被动结构为 am/is/are + 过去分词；主语是动作的承受者。",
           "wrongReasons": [
             "",
-            "“他想从排水沟里找一大盒巧克力”与本课内容不符。硬币掉进排水沟后，乔治伸胳膊去捡，结果硬币没找到，胳膊也拔不出来。",
-            "“他想把整个排水沟盖从地上搬走”与本课内容不符。硬币掉进排水沟后，乔治伸胳膊去捡，结果硬币没找到，胳膊也拔不出来。"
+            "“do not exchange”不符合这里的语法结构。一般现在时被动结构为 am/is/are + 过去分词；主语是动作的承受者。",
+            "“are not exchanging”不符合这里的语法结构。一般现在时被动结构为 am/is/are + 过去分词；主语是动作的承受者。"
           ],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "George took off his jacket, rolled up his sleeves and pushed his right arm through the drain cover."
+            "paragraphIndex": 0,
+            "quote": "If fifty pence pieces are not exchanged for sweets"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "最后是谁用特殊油脂救出了乔治？请写职业（中文或英文）。",
+          "focus": "grammar",
+          "grammarPoint": "Question formation",
+          "exercise": "transformation",
+          "prompt": "Make a yes/no question using \"do\": Children always appreciate small gifts of money.",
           "answers": [
-            "fire fighters",
-            "firefighters",
-            "two fire fighters",
-            "消防员",
-            "两名消防员"
+            "Do children always appreciate small gifts of money?"
           ],
-          "explanation": "肥皂和黄油没有奏效，最后是两名消防员用特殊油脂把他救出。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "police",
-                "警察"
-              ],
-              "feedback": "肥皂和黄油没有奏效，最后是两名消防员用特殊油脂把他救出。"
-            }
-          ],
+          "explanation": "一般疑问句将已有的助动词或 be 提到主语前；没有助动词的实义动词句需用 do/does/did。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "The fire brigade was called and two fire fighters freed George using a special type of grease."
+            "paragraphIndex": 0,
+            "quote": "Children always appreciate small gifts of money."
           }
         }
       ]
@@ -845,52 +764,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "大雨怎样揭穿了阿列科对小羊的说法？",
+          "focus": "grammar",
+          "grammarPoint": "Past perfect",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Past perfect. Choose the correct form: a little white lamb which her husband ___ her",
           "options": [
-            "雨水把一只原本白羊变成了纯黑色",
-            "小羊在雨中跑回玛丽的家并开口作证",
-            "黑色染料被雨水冲掉，小羊变得几乎全白"
+            "had gave",
+            "had given",
+            "had giving"
           ],
-          "answer": 2,
-          "explanation": "小羊的黑色是染上去的，雨水洗掉染料后露出了白色羊毛。",
+          "answer": 1,
+          "explanation": "过去完成时为 had + 过去分词，不能在 had 后接一般过去式或 -ing。",
           "wrongReasons": [
-            "“雨水把一只原本白羊变成了纯黑色”与本课内容不符。小羊的黑色是染上去的，雨水洗掉染料后露出了白色羊毛。",
-            "“小羊在雨中跑回玛丽的家并开口作证”与本课内容不符。小羊的黑色是染上去的，雨水洗掉染料后露出了白色羊毛。",
-            ""
+            "“had gave”不符合这里的语法结构。过去完成时为 had + 过去分词，不能在 had 后接一般过去式或 -ing。",
+            "",
+            "“had giving”不符合这里的语法结构。过去完成时为 had + 过去分词，不能在 had 后接一般过去式或 -ing。"
           ],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "Its wool, which had been dyed black, had been washed clean by the rain!"
+            "paragraphIndex": 0,
+            "quote": "a little white lamb which her husband had given her"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "迪米特里在阿列科家避雨多久后，才出门发现小羊变白？请写时长。",
+          "focus": "grammar",
+          "grammarPoint": "Past participle as object complement",
+          "exercise": "gap-fill",
+          "prompt": "Complete using a past participle: She kept it ___ to a tree. (tie) Write exactly 1 word.",
           "answers": [
-            "half an hour",
-            "a half hour",
-            "30 minutes",
-            "thirty minutes",
-            "半小时",
-            "三十分钟",
-            "30分钟",
-            "半个小时",
-            "半个钟头"
+            "tied"
           ],
-          "explanation": "原文说半小时后出门，不是两小时后。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "two hours",
-                "两小时"
-              ],
-              "feedback": "原文说半小时后出门，不是两小时后。"
-            }
-          ],
+          "explanation": "keep + 宾语 + 过去分词表示使宾语保持某种被动状态；it 指羊，是被拴住的，因此用 tied。这是宾语补足语，不是后置定语。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "When he went outside half an hour later, he was astonished to find that the little black lamb was almost white."
+            "paragraphIndex": 0,
+            "quote": "She kept it tied to a tree"
           }
         }
       ]
@@ -905,44 +814,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "为什么设计者必须考虑地球的形状？",
+          "focus": "grammar",
+          "grammarPoint": "Relative person after a preposition",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Relative person after a preposition. Choose the correct form: an Italian about ___ little is known",
           "options": [
-            "桥只需要承载三辆汽车",
-            "大桥的跨度非常长",
-            "桥要建在完全没有海水的平地上"
+            "who",
+            "which",
+            "whom"
           ],
-          "answer": 1,
-          "explanation": "文章将考虑地球形状直接归因于大桥非常长，而非车辆数量或平地条件。",
+          "answer": 2,
+          "explanation": "介词提前时，指人的关系代词作宾语用 whom。",
           "wrongReasons": [
-            "“桥只需要承载三辆汽车”与本课内容不符。文章将考虑地球形状直接归因于大桥非常长，而非车辆数量或平地条件。",
-            "",
-            "“桥要建在完全没有海水的平地上”与本课内容不符。文章将考虑地球形状直接归因于大桥非常长，而非车辆数量或平地条件。"
+            "“who”不符合这里的语法结构。介词提前时，指人的关系代词作宾语用 whom。",
+            "“which”不符合这里的语法结构。介词提前时，指人的关系代词作宾语用 whom。",
+            ""
           ],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "The bridge is so long that the shape of the earth had to be taken into account by its designer."
+            "paragraphIndex": 0,
+            "quote": "an Italian about whom little is known"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "这座韦拉扎诺大桥的设计者叫什么？请写英文姓名。",
+          "focus": "grammar",
+          "grammarPoint": "Present simple passive",
+          "exercise": "transformation",
+          "prompt": "Change to the passive. Begin with \"Four huge cables\" and keep the agent with \"by\": Two great towers support four huge cables.",
           "answers": [
-            "Othmar Ammann",
-            "Ammann"
+            "Four huge cables are supported by two great towers."
           ],
-          "explanation": "Verrazano 是大桥纪念的探险者，设计者是 Othmar Ammann。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "Verrazano"
-              ],
-              "feedback": "Verrazano 是大桥纪念的探险者，设计者是 Othmar Ammann。"
-            }
-          ],
+          "explanation": "一般现在时被动结构为 am/is/are + 过去分词；主语是动作的承受者。",
+          "commonMistakes": [],
           "evidence": {
             "paragraphIndex": 1,
-            "quote": "The Verrazano Bridge, which was designed by Othmar Ammann, joins Brooklyn to Staten Island."
+            "quote": "Two great towers support four huge cables."
           }
         }
       ]
@@ -957,46 +864,43 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "这次雕塑展为什么连叙述者也感到惊讶？",
+          "focus": "grammar",
+          "grammarPoint": "Modal perfect",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Modal perfect. Choose the correct form: people who take no interest in art ___ to notice",
           "options": [
-            "展品会运动并带有闪光、电火花等电气效果",
-            "展品全部是传统大理石人像",
-            "所有展品都只靠一阵风才能活动"
+            "cannot have failed",
+            "cannot has failed",
+            "cannot have fail"
           ],
           "answer": 0,
-          "explanation": "这批动态雕塑有磁化球体、闪烁彩灯和电火花，并非普通静态雕像。",
+          "explanation": "情态动词完成结构为情态动词 + have + 过去分词；have 不随主语变化。",
           "wrongReasons": [
             "",
-            "“展品全部是传统大理石人像”与本课内容不符。这批动态雕塑有磁化球体、闪烁彩灯和电火花，并非普通静态雕像。",
-            "“所有展品都只靠一阵风才能活动”与本课内容不符。这批动态雕塑有磁化球体、闪烁彩灯和电火花，并非普通静态雕像。"
+            "“cannot has failed”不符合这里的语法结构。情态动词完成结构为情态动词 + have + 过去分词；have 不随主语变化。",
+            "“cannot have fail”不符合这里的语法结构。情态动词完成结构为情态动词 + have + 过去分词；have 不随主语变化。"
           ],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "Some of them are dangerous!’ The objects on display were pieces of moving sculpture."
+            "paragraphIndex": 0,
+            "quote": "people who take no interest in art cannot have failed to notice"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "展厅中央高架中的彩灯被比作什么？请写比较对象（中文或英文）。",
+          "focus": "grammar",
+          "grammarPoint": "Negative formation",
+          "exercise": "transformation",
+          "prompt": "Make this statement negative with \"does not\": Modern sculpture surprises us.",
           "answers": [
-            "traffic lights",
-            "交通信号灯",
-            "红绿灯"
+            "Modern sculpture does not surprise us.",
+            "Modern sculpture doesn't surprise us."
           ],
-          "explanation": "彩灯不断闪烁，被比作失常的交通信号灯。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "candles",
-                "蜡烛"
-              ],
-              "feedback": "彩灯不断闪烁，被比作失常的交通信号灯。"
-            }
-          ],
+          "explanation": "否定结构在助动词后加 not；用 do/does/did 时，实义动词还原。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "These lights flickered continuously like traffic lights which have gone mad."
+            "paragraphIndex": 0,
+            "quote": "Modern sculpture rarely surprises us any more."
           }
         }
       ]
@@ -1011,52 +915,43 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "拉姆齐太太为什么没有报警，而是付了赎金？",
+          "focus": "grammar",
+          "grammarPoint": "Present simple agreement",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Present simple agreement. Choose the correct form: He usually ___ a short walk in the evenings",
           "options": [
-            "她认为绑架动物完全合法",
-            "警方事先要求她必须付款",
-            "她担心报警后就再也见不到猫"
+            "take",
+            "takes",
+            "taking"
           ],
-          "answer": 2,
-          "explanation": "匿名信让她害怕失去拉斯特斯，因此改变了报警的主意。",
+          "answer": 1,
+          "explanation": "一般现在时第三人称单数主语后，实义动词需用第三人称单数形式。",
           "wrongReasons": [
-            "“她认为绑架动物完全合法”与本课内容不符。匿名信让她害怕失去拉斯特斯，因此改变了报警的主意。",
-            "“警方事先要求她必须付款”与本课内容不符。匿名信让她害怕失去拉斯特斯，因此改变了报警的主意。",
-            ""
+            "“take”不符合这里的语法结构。一般现在时第三人称单数主语后，实义动词需用第三人称单数形式。",
+            "",
+            "“taking”不符合这里的语法结构。一般现在时第三人称单数主语后，实义动词需用第三人称单数形式。"
           ],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "At first, she decided to go to the police, but fearing that she would never see Rastus again—the letter had made that quite clear—she changed her mind."
+            "paragraphIndex": 0,
+            "quote": "He usually takes a short walk in the evenings"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "绑匪要求的赎金是多少英镑？请写金额。",
+          "focus": "grammar",
+          "grammarPoint": "Infinitive complement",
+          "exercise": "transformation",
+          "prompt": "Replace \"failed to\" with \"did not manage to\": He failed to arrive.",
           "answers": [
-            "1000",
-            "1,000",
-            "£1000",
-            "£1,000",
-            "1000 pounds",
-            "one thousand pounds",
-            "一千英镑",
-            "1000英镑"
+            "He did not manage to arrive.",
+            "He didn't manage to arrive."
           ],
-          "explanation": "赎金是 £1,000，不是 £100。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "100",
-                "£100",
-                "一百英镑"
-              ],
-              "feedback": "赎金是 £1,000，不是 £100。"
-            }
-          ],
+          "explanation": "此处动词或形容词后接 to + 动词原形，不接动名词。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "Ramsay paid a ransom of £1,000."
+            "paragraphIndex": 0,
+            "quote": "he failed to arrive"
           }
         }
       ]
@@ -1071,50 +966,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "布莱里奥在七月二十五日抢先成功飞越海峡，一个直接原因是什么？",
+          "focus": "grammar",
+          "grammarPoint": "Past simple passive",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Past simple passive. Choose the correct form: before the first attempt ___",
           "options": [
-            "布莱里奥的试飞持续了整整一周",
-            "拉瑟姆没能早起按时起飞",
-            "拉瑟姆的飞机事先已经飞到了多佛"
+            "made",
+            "was making",
+            "was made"
           ],
-          "answer": 1,
-          "explanation": "两人本计划当天起飞，但拉瑟姆没能早起；布莱里奥试飞后先行出发。",
+          "answer": 2,
+          "explanation": "一般过去时被动结构为 was/were + 过去分词；注意不规则过去分词。",
           "wrongReasons": [
-            "“布莱里奥的试飞持续了整整一周”与本课内容不符。两人本计划当天起飞，但拉瑟姆没能早起；布莱里奥试飞后先行出发。",
-            "",
-            "“拉瑟姆的飞机事先已经飞到了多佛”与本课内容不符。两人本计划当天起飞，但拉瑟姆没能早起；布莱里奥试飞后先行出发。"
+            "“made”不符合这里的语法结构。一般过去时被动结构为 was/were + 过去分词；注意不规则过去分词。",
+            "“was making”不符合这里的语法结构。一般过去时被动结构为 was/were + 过去分词；注意不规则过去分词。",
+            ""
           ],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "Both planes were going to take off on July 25th, but Latham failed to get up early enough."
+            "paragraphIndex": 0,
+            "quote": "before the first attempt was made"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "布莱里奥飞越海峡用了多少分钟？请写数字或英文数词。",
+          "focus": "grammar",
+          "grammarPoint": "Active and passive",
+          "exercise": "transformation",
+          "prompt": "Change to active. Begin with \"Engine failure\" and use \"forced him\": He was forced to land on the sea.",
           "answers": [
-            "37",
-            "thirty-seven",
-            "thirty seven",
-            "37分钟",
-            "三十七分钟",
-            "三十七"
+            "Engine failure forced him to land on the sea."
           ],
-          "explanation": "twenty-six 是此前陆上试飞的英里数；跨海飞行耗时三十七分钟。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "26",
-                "twenty-six",
-                "二十六分钟"
-              ],
-              "feedback": "twenty-six 是此前陆上试飞的英里数；跨海飞行耗时三十七分钟。"
-            }
-          ],
+          "explanation": "主动和被动转换须保留时态；被动主语是原主动宾语，使用 be + 过去分词。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "His great flight lasted thirty-seven minutes."
+            "paragraphIndex": 0,
+            "quote": "he was forced to land on the sea"
           }
         }
       ]
@@ -1129,51 +1016,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "门多萨收入很高，为什么后来仍负债并入狱？",
+          "focus": "grammar",
+          "grammarPoint": "Modal passive",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Modal passive. Choose the correct form: a prizefighter could ___ seriously injured or even killed",
           "options": [
-            "他花钱挥霍，最终无力偿还债务",
-            "他从未收到过任何比赛报酬",
-            "他因拒绝戴拳击手套被判入狱"
+            "be",
+            "been",
+            "being"
           ],
           "answer": 0,
-          "explanation": "高收入并未使他免于贫困，因为他非常挥霍，后来因欠债不还入狱。",
+          "explanation": "情态动词被动结构为情态动词 + be + 过去分词，不是 been 或 being。",
           "wrongReasons": [
             "",
-            "“他从未收到过任何比赛报酬”与本课内容不符。高收入并未使他免于贫困，因为他非常挥霍，后来因欠债不还入狱。",
-            "“他因拒绝戴拳击手套被判入狱”与本课内容不符。高收入并未使他免于贫困，因为他非常挥霍，后来因欠债不还入狱。"
+            "“been”不符合这里的语法结构。情态动词被动结构为情态动词 + be + 过去分词，不是 been 或 being。",
+            "“being”不符合这里的语法结构。情态动词被动结构为情态动词 + be + 过去分词，不是 been 或 being。"
           ],
           "evidence": {
-            "paragraphIndex": 2,
-            "quote": "Despite this, he was so extravagant that he was always in debt."
+            "paragraphIndex": 0,
+            "quote": "a prizefighter could be seriously injured or even killed"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "门多萨在第几次与汉弗莱斯交手时获胜？请写次数（中文或英文）。",
+          "focus": "grammar",
+          "grammarPoint": "Question formation",
+          "exercise": "transformation",
+          "prompt": "Make a yes/no question: They were known as prizefighters.",
           "answers": [
-            "third",
-            "the third",
-            "3",
-            "third match",
-            "第三次",
-            "第三",
-            "三"
+            "Were they known as prizefighters?"
           ],
-          "explanation": "他前两次都输了，到第三次交手才获胜。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "first",
-                "第一次",
-                "1"
-              ],
-              "feedback": "他前两次都输了，到第三次交手才获胜。"
-            }
-          ],
+          "explanation": "一般疑问句将已有的助动词或 be 提到主语前；没有助动词的实义动词句需用 do/does/did。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 2,
-            "quote": "It was not until his third match in 1790 that he finally beat Humphries and became Champion of England."
+            "paragraphIndex": 0,
+            "quote": "they were known as ‘prizefighters’"
           }
         }
       ]
@@ -1188,47 +1066,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "扮演贵族的演员如何化解空白信纸的恶作剧？",
+          "focus": "grammar",
+          "grammarPoint": "Go on doing",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Go on doing. Choose the correct form: actors who are required to go on ___ the same lines",
           "options": [
-            "立即当众承认自己完全忘记台词",
-            "撕掉信纸并结束整场演出",
-            "借口光线昏暗，让狱卒替他读信"
+            "repeat",
+            "repeating",
+            "to repeating"
           ],
-          "answer": 2,
-          "explanation": "贵族把空白信纸交还给狱卒，要求对方朗读，把难题推了回去。",
+          "answer": 1,
+          "explanation": "go on doing 表示继续做同一件事；后接动名词，不是动词原形。",
           "wrongReasons": [
-            "“立即当众承认自己完全忘记台词”与本课内容不符。贵族把空白信纸交还给狱卒，要求对方朗读，把难题推了回去。",
-            "“撕掉信纸并结束整场演出”与本课内容不符。贵族把空白信纸交还给狱卒，要求对方朗读，把难题推了回去。",
-            ""
+            "“repeat”不符合这里的语法结构。go on doing 表示继续做同一件事；后接动名词，不是动词原形。",
+            "",
+            "“to repeating”不符合这里的语法结构。go on doing 表示继续做同一件事；后接动名词，不是动词原形。"
           ],
           "evidence": {
-            "paragraphIndex": 2,
-            "quote": "Read the letter to me.’ And he promptly handed the sheet of paper to the gaoler."
+            "paragraphIndex": 0,
+            "quote": "actors who are required to go on repeating the same lines"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "狱卒借口回后台取什么物品，才拿回正常的信？请写物品（中文或英文）。",
+          "focus": "grammar",
+          "grammarPoint": "So ... that and such ... that",
+          "exercise": "transformation",
+          "prompt": "Rewrite with \"such ... that\". Begin with \"They are such\": Some plays are so successful that they run for years on end.",
           "answers": [
-            "glasses",
-            "a pair of glasses",
-            "眼镜",
-            "一副眼镜"
+            "They are such successful plays that they run for years on end."
           ],
-          "explanation": "狱卒说要取眼镜，回来时带了眼镜和写有台词的信。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "torch",
-                "手电筒"
-              ],
-              "feedback": "狱卒说要取眼镜，回来时带了眼镜和写有台词的信。"
-            }
-          ],
+          "explanation": "so 后接形容词；such 后接名词短语，注意单复数和冠词。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 2,
-            "quote": "I must get my glasses.’ With this, he hurried off the stage."
+            "paragraphIndex": 0,
+            "quote": "Some plays are so successful that they run for years on end."
           }
         }
       ]
@@ -1243,51 +1116,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "罗伯特邀请叙述者吃晚饭时，两人为什么大吃一惊？",
+          "focus": "grammar",
+          "grammarPoint": "Second conditional",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Second conditional. Choose the correct form: If you lived in the Mediterranean, for instance, you ___ octopus a great delicacy.",
           "options": [
-            "罗伯特发现送来的其实是龙虾",
-            "蜗牛逃出纸袋，爬满了门厅",
-            "叙述者已经提前吃光了所有蜗牛"
+            "will consider",
+            "would considered",
+            "would consider"
           ],
-          "answer": 1,
-          "explanation": "晚饭原本要吃蜗牛，但它们已从纸袋逃出，爬满了门厅。",
+          "answer": 2,
+          "explanation": "假设现在的非真实情形，if 从句用过去式，主句用 would + 动词原形。",
           "wrongReasons": [
-            "“罗伯特发现送来的其实是龙虾”与本课内容不符。晚饭原本要吃蜗牛，但它们已从纸袋逃出，爬满了门厅。",
-            "",
-            "“叙述者已经提前吃光了所有蜗牛”与本课内容不符。晚饭原本要吃蜗牛，但它们已从纸袋逃出，爬满了门厅。"
+            "“will consider”不符合这里的语法结构。假设现在的非真实情形，if 从句用过去式，主句用 would + 动词原形。",
+            "“would considered”不符合这里的语法结构。假设现在的非真实情形，if 从句用过去式，主句用 would + 动词原形。",
+            ""
           ],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "To our dismay, we saw that there were snails everywhere: they had escaped from the paper bag and had taken complete possession of the hall!"
+            "paragraphIndex": 0,
+            "quote": "If you lived in the Mediterranean, for instance, you would consider octopus a great delicacy."
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "送给罗伯特的蜗牛，是叙述者从自家什么地方收集的？请写地点类型。",
+          "focus": "grammar",
+          "grammarPoint": "Modal passive",
+          "exercise": "transformation",
+          "prompt": "Change to the passive, beginning with \"What\": What can people eat?",
           "answers": [
-            "garden",
-            "my garden",
-            "his garden",
-            "the garden",
-            "花园",
-            "自家花园"
+            "What can be eaten?"
           ],
-          "explanation": "蜗牛是从叙述者自家花园收集来的，并不是在商店买的。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "shop",
-                "market",
-                "商店",
-                "市场"
-              ],
-              "feedback": "蜗牛是从叙述者自家花园收集来的，并不是在商店买的。"
-            }
-          ],
+          "explanation": "情态动词被动结构为情态动词 + be + 过去分词，不是 been 或 being。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "For years he has been asking me to collect snails from my garden and take them to him."
+            "paragraphIndex": 0,
+            "quote": "what can be eaten and what cannot be eaten"
           }
         }
       ]
@@ -1302,47 +1166,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "乔治对衣柜里的骷髅不以为意，原因是什么？",
+          "focus": "grammar",
+          "grammarPoint": "Present perfect passive",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Present perfect passive. Choose the correct form: secret which ___ from strangers for years",
           "options": [
-            "他年轻时学过医，确实保存着一副骷髅",
-            "他以为朋友看到的只是画中的图案",
-            "那具骷髅是为了掩盖谋杀案而藏起来的"
+            "has been concealed",
+            "has concealed",
+            "has been concealing"
           ],
           "answer": 0,
-          "explanation": "这是乔治医学生时期留下的真实骷髅，并非小说中比喻的家族丑闻。",
+          "explanation": "现在完成时被动结构为 has/have been + 过去分词；注意主语的单复数。",
           "wrongReasons": [
             "",
-            "“他以为朋友看到的只是画中的图案”与本课内容不符。这是乔治医学生时期留下的真实骷髅，并非小说中比喻的家族丑闻。",
-            "“那具骷髅是为了掩盖谋杀案而藏起来的”与本课内容不符。这是乔治医学生时期留下的真实骷髅，并非小说中比喻的家族丑闻。"
+            "“has concealed”不符合这里的语法结构。现在完成时被动结构为 has/have been + 过去分词；注意主语的单复数。",
+            "“has been concealing”不符合这里的语法结构。现在完成时被动结构为 has/have been + 过去分词；注意主语的单复数。"
           ],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "You forget that I was a medical student once upon a time.’"
+            "paragraphIndex": 0,
+            "quote": "secret which has been concealed from strangers for years"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "乔治后来从事什么写作？请写作品类型（中文或英文）。",
+          "focus": "grammar",
+          "grammarPoint": "Active and passive",
+          "exercise": "transformation",
+          "prompt": "Change to active. Begin with \"People\": The terrible secret is called a skeleton in the cupboard.",
           "answers": [
-            "detective stories",
-            "detective story",
-            "侦探小说",
-            "推理小说"
+            "People call the terrible secret a skeleton in the cupboard."
           ],
-          "explanation": "乔治没有成为医生，后来成为成功的侦探小说作家。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "medical textbooks",
-                "医学教材"
-              ],
-              "feedback": "乔治没有成为医生，后来成为成功的侦探小说作家。"
-            }
-          ],
+          "explanation": "主动和被动转换须保留时态；被动主语是原主动宾语，使用 be + 过去分词。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "Instead of becoming a doctor, however, he became a successful writer of detective stories."
+            "paragraphIndex": 0,
+            "quote": "The terrible secret is called ‘a skeleton in the cupboard’."
           }
         }
       ]
@@ -1357,45 +1216,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "卡蒂萨克号为什么在比赛中失去领先优势？",
+          "focus": "grammar",
+          "grammarPoint": "Modal passive",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Modal passive. Choose the correct form: can still ___ at Greenwich",
           "options": [
-            "船长一开始就决定放弃比赛",
-            "对手把它拖回了上海港",
-            "暴风雨损坏船舵，临时船舵限制了速度"
+            "be saw",
+            "be seen",
+            "see"
           ],
-          "answer": 2,
-          "explanation": "失去船舵后只能装临时船舵并减速，后来又停港换新舵，因此耽误了航程。",
+          "answer": 1,
+          "explanation": "情态动词被动结构为情态动词 + be + 过去分词，不是 been 或 being。",
           "wrongReasons": [
-            "“船长一开始就决定放弃比赛”与本课内容不符。失去船舵后只能装临时船舵并减速，后来又停港换新舵，因此耽误了航程。",
-            "“对手把它拖回了上海港”与本课内容不符。失去船舵后只能装临时船舵并减速，后来又停港换新舵，因此耽误了航程。",
-            ""
+            "“be saw”不符合这里的语法结构。情态动词被动结构为情态动词 + be + 过去分词，不是 been 或 being。",
+            "",
+            "“see”不符合这里的语法结构。情态动词被动结构为情态动词 + be + 过去分词，不是 been 或 being。"
           ],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "In August, she was struck by a very heavy storm during which her rudder was torn away."
+            "paragraphIndex": 0,
+            "quote": "can still be seen at Greenwich"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "卡蒂萨克号现在可以在哪个地方参观？请写地名（中文或英文）。",
+          "focus": "grammar",
+          "grammarPoint": "Active and passive",
+          "exercise": "transformation",
+          "prompt": "Change to active. Begin with \"Thousands of people\": She is visited by thousands of people each year.",
           "answers": [
-            "Greenwich",
-            "格林尼治"
+            "Thousands of people visit her each year."
           ],
-          "explanation": "上海是当年比赛的出发地；文中说船现在陈列在 Greenwich。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "Shanghai",
-                "上海"
-              ],
-              "feedback": "上海是当年比赛的出发地；文中说船现在陈列在 Greenwich。"
-            }
-          ],
+          "explanation": "主动和被动转换须保留时态；被动主语是原主动宾语，使用 be + 过去分词。",
+          "commonMistakes": [],
           "evidence": {
             "paragraphIndex": 0,
-            "quote": "One of the most famous sailing ships of the nineteenth century, the Cutty Sark, can still be seen at Greenwich."
+            "quote": "is visited by thousands of people each year"
           }
         }
       ]
@@ -1410,48 +1266,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "饼干制造商为什么最终支付了超出预期的奖金？",
+          "focus": "grammar",
+          "grammarPoint": "Passive gerund",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Passive gerund. Choose the correct form: No one can avoid ___ by advertisements.",
           "options": [
-            "厂家最后把每磅奖金改为了一百美元",
-            "有人烤出了重达二千四百磅的巨型饼干",
-            "所有参赛者的饼干都不到一磅"
+            "be influenced",
+            "to be influenced",
+            "being influenced"
           ],
-          "answer": 1,
-          "explanation": "比赛按每磅十美元收购最大饼干；巨型饼干重达2,400磅，因此花费远超预期。",
+          "answer": 2,
+          "explanation": "此处既需要动名词又需要被动含义，所以用 being + 过去分词。",
           "wrongReasons": [
-            "“厂家最后把每磅奖金改为了一百美元”与本课内容不符。比赛按每磅十美元收购最大饼干；巨型饼干重达2,400磅，因此花费远超预期。",
-            "",
-            "“所有参赛者的饼干都不到一磅”与本课内容不符。比赛按每磅十美元收购最大饼干；巨型饼干重达2,400磅，因此花费远超预期。"
+            "“be influenced”不符合这里的语法结构。此处既需要动名词又需要被动含义，所以用 being + 过去分词。",
+            "“to be influenced”不符合这里的语法结构。此处既需要动名词又需要被动含义，所以用 being + 过去分词。",
+            ""
           ],
           "evidence": {
-            "paragraphIndex": 2,
-            "quote": "But just before the competition closed, a lorry arrived at the factory with a truly colossal biscuit which weighed 2,400 pounds."
+            "paragraphIndex": 0,
+            "quote": "No one can avoid being influenced by advertisements."
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "最后的大饼干由什么身份的人烤制？请写身份（中文或英文）。",
+          "focus": "grammar",
+          "grammarPoint": "Question formation",
+          "exercise": "transformation",
+          "prompt": "Make a yes/no question: Advertisers have made a close study of human nature.",
           "answers": [
-            "college student",
-            "a college student",
-            "university student",
-            "大学生",
-            "一名大学生"
+            "Have advertisers made a close study of human nature?"
           ],
-          "explanation": "参赛大饼干出自大学生，并不是厂家自己制作的。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "biscuit manufacturer",
-                "饼干厂商"
-              ],
-              "feedback": "参赛大饼干出自大学生，并不是厂家自己制作的。"
-            }
-          ],
+          "explanation": "一般疑问句将已有的助动词或 be 提到主语前；没有助动词的实义动词句需用 do/does/did。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 2,
-            "quote": "It had been baked by a college student who had used over 1,000 pounds of flour, 800 pounds of sugar, 200 pounds of fat, and 400 pounds of various other ingredients."
+            "paragraphIndex": 0,
+            "quote": "advertisers have made a close study of human nature"
           }
         }
       ]
@@ -1466,45 +1316,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "作者认为真正的流浪汉与乞丐有什么重要区别？",
+          "focus": "grammar",
+          "grammarPoint": "Gerund after a preposition",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Gerund after a preposition. Choose the correct form: everyone lives by ___ something",
           "options": [
-            "流浪汉选择独立生活，不要求别人怜悯自己",
-            "流浪汉拥有稳定高薪，因此从不需要食物",
-            "流浪汉必须通过固定商店出售货物才能生存"
+            "selling",
+            "sell",
+            "to sell"
           ],
           "answer": 0,
-          "explanation": "文中的流浪汉珍视独立和尊严，即使请求一点钱也不要求对方怜悯。",
+          "explanation": "介词后接名词或动名词；动词要改为 -ing 形式，不能直接接动词原形。",
           "wrongReasons": [
             "",
-            "“流浪汉拥有稳定高薪，因此从不需要食物”与本课内容不符。文中的流浪汉珍视独立和尊严，即使请求一点钱也不要求对方怜悯。",
-            "“流浪汉必须通过固定商店出售货物才能生存”与本课内容不符。文中的流浪汉珍视独立和尊严，即使请求一点钱也不要求对方怜悯。"
+            "“sell”不符合这里的语法结构。介词后接名词或动名词；动词要改为 -ing 形式，不能直接接动词原形。",
+            "“to sell”不符合这里的语法结构。介词后接名词或动名词；动词要改为 -ing 形式，不能直接接动词原形。"
           ],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "A tramp may ask you for money, but he will never ask you to feel sorry for him."
+            "paragraphIndex": 0,
+            "quote": "everyone lives by selling something"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "文中说教师靠出售什么为生？请写名词（中文或英文）。",
+          "focus": "grammar",
+          "grammarPoint": "Active and passive",
+          "exercise": "transformation",
+          "prompt": "Change to active. Begin with \"People have said that\": It has been said that everyone lives by selling something.",
           "answers": [
-            "knowledge",
-            "知识"
+            "People have said that everyone lives by selling something."
           ],
-          "explanation": "knowledge 对应教师；wisdom 在文中对应哲学家。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "wisdom",
-                "智慧"
-              ],
-              "feedback": "knowledge 对应教师；wisdom 在文中对应哲学家。"
-            }
-          ],
+          "explanation": "主动和被动转换须保留时态；被动主语是原主动宾语，使用 be + 过去分词。",
+          "commonMistakes": [],
           "evidence": {
             "paragraphIndex": 0,
-            "quote": "In the light of this statement, teachers live by selling knowledge, philosophers by selling wisdom and priests by selling spiritual comfort."
+            "quote": "It has been said that everyone lives by selling something."
           }
         }
       ]
@@ -1519,53 +1366,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "叙述者为什么发现五英镑买来的钢笔仍然太贵？",
+          "focus": "grammar",
+          "grammarPoint": "No sooner ... than",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: No sooner ... than. Choose the correct form: I had no sooner got off the ship ___ I was assailed",
           "options": [
-            "钢笔只是包装盒太小，笔本身完全正常",
-            "他回船后发现卖者忘了给钢笔配包装盒",
-            "钢笔无法装墨水，从来写不出一个字"
+            "when",
+            "than",
+            "then"
           ],
-          "answer": 2,
-          "explanation": "看似便宜的钢笔不能装墨水，也从未写过字，因此没有实用价值。",
+          "answer": 1,
+          "explanation": "no sooner 与 than 搭配；不是 when 或 then。",
           "wrongReasons": [
-            "“钢笔只是包装盒太小，笔本身完全正常”与本课内容不符。看似便宜的钢笔不能装墨水，也从未写过字，因此没有实用价值。",
-            "“他回船后发现卖者忘了给钢笔配包装盒”与本课内容不符。看似便宜的钢笔不能装墨水，也从未写过字，因此没有实用价值。",
-            ""
+            "“when”不符合这里的语法结构。no sooner 与 than 搭配；不是 when 或 then。",
+            "",
+            "“then”不符合这里的语法结构。no sooner 与 than 搭配；不是 when 或 then。"
           ],
           "evidence": {
-            "paragraphIndex": 2,
-            "quote": "No matter how hard I tried, it was impossible to fill this beautiful pen with ink and to this day it has never written a single word!"
+            "paragraphIndex": 1,
+            "quote": "I had no sooner got off the ship than I was assailed"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "卖者最初声称这支钢笔价值多少英镑？请写金额。",
+          "focus": "grammar",
+          "grammarPoint": "Past participle modifier",
+          "exercise": "transformation",
+          "prompt": "Expand the reduced clause with \"which were\". Write the whole noun phrase: small boats loaded with wares.",
           "answers": [
-            "50",
-            "£50",
-            "fifty pounds",
-            "50 pounds",
-            "五十英镑",
-            "50英镑"
+            "small boats which were loaded with wares"
           ],
-          "explanation": "卖者声称价值五十英镑，特别报价三十英镑，最后成交价才是五英镑。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "5",
-                "£5",
-                "五英镑",
-                "30",
-                "£30",
-                "三十英镑"
-              ],
-              "feedback": "卖者声称价值五十英镑，特别报价三十英镑，最后成交价才是五英镑。"
-            }
-          ],
+          "explanation": "名词与后置动词为被动关系时，可用过去分词作定语，相当于被动定语从句。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 2,
-            "quote": "The man said that the pen was worth £50, but as a special favour, he would let me have it for £30."
+            "paragraphIndex": 0,
+            "quote": "Small boats loaded with wares"
           }
         }
       ]
@@ -1580,48 +1416,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "故事结尾为什么体现了带有残酷意味的幽默？",
+          "focus": "grammar",
+          "grammarPoint": "Embedded wh-clause",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Embedded wh-clause. Choose the correct form: depends on ___ we have been brought up",
           "options": [
-            "医生和病人其实从来没有去过医院",
-            "刚庆祝出院的人又滑倒，摔断了另一条腿",
-            "病人终于在圣诞节前完全康复"
+            "that",
+            "which",
+            "where"
           ],
-          "answer": 1,
-          "explanation": "他原本右腿受伤，好不容易出院参加聚会，却又摔断左腿，悲剧性反转构成所谓病态幽默。",
+          "answer": 2,
+          "explanation": "嵌入式疑问从句采用疑问词 + 主语 + 谓语的陈述语序，不用直接疑问句倒装。",
           "wrongReasons": [
-            "“医生和病人其实从来没有去过医院”与本课内容不符。他原本右腿受伤，好不容易出院参加聚会，却又摔断左腿，悲剧性反转构成所谓病态幽默。",
-            "",
-            "“病人终于在圣诞节前完全康复”与本课内容不符。他原本右腿受伤，好不容易出院参加聚会，却又摔断左腿，悲剧性反转构成所谓病态幽默。"
+            "“that”不符合这里的语法结构。嵌入式疑问从句采用疑问词 + 主语 + 谓语的陈述语序，不用直接疑问句倒装。",
+            "“which”不符合这里的语法结构。嵌入式疑问从句采用疑问词 + 主语 + 谓语的陈述语序，不用直接疑问句倒装。",
+            ""
           ],
           "evidence": {
-            "paragraphIndex": 2,
-            "quote": "He was still mumbling something about hospitals at the end of the party when he slipped on a piece of ice and broke his left leg."
+            "paragraphIndex": 0,
+            "quote": "depends on where we have been brought up"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "故事开始时，病人摔断的是哪一条腿？请写左右（中文或英文）。",
+          "focus": "grammar",
+          "grammarPoint": "Bare infinitive after make",
+          "exercise": "gap-fill",
+          "prompt": "Use the correct form of \"laugh\": The joke would make an Englishman ___ to tears. Write exactly 1 word.",
           "answers": [
-            "right",
-            "right leg",
-            "右腿",
-            "右"
+            "laugh"
           ],
-          "explanation": "开始是右腿骨折，左腿是结尾再次滑倒时摔断的。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "left",
-                "left leg",
-                "左腿"
-              ],
-              "feedback": "开始是右腿骨折，左腿是结尾再次滑倒时摔断的。"
-            }
-          ],
+          "explanation": "主动使役结构 make + 宾语 + 动词原形，不带 to，也不用 -ing。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 2,
-            "quote": "A man who had broken his right leg was taken to hospital a few weeks before Christmas."
+            "paragraphIndex": 0,
+            "quote": "a joke which would make an Englishman laugh to tears"
           }
         }
       ]
@@ -1636,47 +1466,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "村民以为农场闹鬼，实际发生了什么？",
+          "focus": "grammar",
+          "grammarPoint": "Past simple passive",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Past simple passive. Choose the correct form: The farm ___ by two brothers",
           "options": [
-            "一名隐藏多年的男子白天睡觉、夜里劳动",
-            "农场主雇了演员在月下制造幻觉",
-            "夜间工作全由相邻农场的机器人完成"
+            "was owned",
+            "owned",
+            "was owning"
           ],
           "answer": 0,
-          "explanation": "埃里克长期藏在农场，白天睡觉晚上干活，旁人不知他的存在才以为有鬼。",
+          "explanation": "一般过去时被动结构为 was/were + 过去分词；注意不规则过去分词。",
           "wrongReasons": [
             "",
-            "“农场主雇了演员在月下制造幻觉”与本课内容不符。埃里克长期藏在农场，白天睡觉晚上干活，旁人不知他的存在才以为有鬼。",
-            "“夜间工作全由相邻农场的机器人完成”与本课内容不符。埃里克长期藏在农场，白天睡觉晚上干活，旁人不知他的存在才以为有鬼。"
+            "“owned”不符合这里的语法结构。一般过去时被动结构为 was/were + 过去分词；注意不规则过去分词。",
+            "“was owning”不符合这里的语法结构。一般过去时被动结构为 was/were + 过去分词；注意不规则过去分词。"
           ],
           "evidence": {
-            "paragraphIndex": 2,
-            "quote": "He used to sleep during the day and work at night, quite unaware of the fact that he had become the ghost of Endley."
+            "paragraphIndex": 0,
+            "quote": "The farm was owned by two brothers"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "被误认为鬼魂的第三兄弟叫什么？请写英文姓名。",
+          "focus": "grammar",
+          "grammarPoint": "Infinitive complement",
+          "exercise": "gap-fill",
+          "prompt": "Complete with the correct form of \"work\": No one was willing ___ there long. Write exactly 2 words.",
           "answers": [
-            "Eric Cox",
-            "Eric"
+            "to work"
           ],
-          "explanation": "Joe和Bob是公开经营农场的兄弟；藏起来的是Eric Cox。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "Joe Cox",
-                "Bob Cox",
-                "Joe",
-                "Bob"
-              ],
-              "feedback": "Joe和Bob是公开经营农场的兄弟；藏起来的是Eric Cox。"
-            }
-          ],
+          "explanation": "此处动词或形容词后接 to + 动词原形，不接动名词。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "Everyone went to the funeral, for the ‘ghost’ was none other than Eric Cox, a third brother who was supposed to have died as a young man."
+            "paragraphIndex": 0,
+            "quote": "no one was willing to work there long"
           }
         }
       ]
@@ -1691,50 +1516,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "迪基为什么要求店员数三万枚便士？",
+          "focus": "grammar",
+          "grammarPoint": "Gerund after a preposition",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Gerund after a preposition. Choose the correct form: They disregard social conventions without ___ conscious",
           "options": [
-            "他不知道手表的价格只有三英镑",
-            "店员主动要求只收便士作为纪念",
-            "用这笔付款教训以衣着取人的店员"
+            "be",
+            "being",
+            "to be"
           ],
-          "answer": 2,
-          "explanation": "店员因迪基被雨淋得狼狈而拒绝服务，迪基随后用三百英镑便士付款来反击这种势利。",
+          "answer": 1,
+          "explanation": "介词后接名词或动名词；动词要改为 -ing 形式，不能直接接动词原形。",
           "wrongReasons": [
-            "“他不知道手表的价格只有三英镑”与本课内容不符。店员因迪基被雨淋得狼狈而拒绝服务，迪基随后用三百英镑便士付款来反击这种势利。",
-            "“店员主动要求只收便士作为纪念”与本课内容不符。店员因迪基被雨淋得狼狈而拒绝服务，迪基随后用三百英镑便士付款来反击这种势利。",
-            ""
+            "“be”不符合这里的语法结构。介词后接名词或动名词；动词要改为 -ing 形式，不能直接接动词原形。",
+            "",
+            "“to be”不符合这里的语法结构。介词后接名词或动名词；动词要改为 -ing 形式，不能直接接动词原形。"
           ],
           "evidence": {
-            "paragraphIndex": 2,
-            "quote": "It contained £300 in pennies."
+            "paragraphIndex": 0,
+            "quote": "They disregard social conventions without being conscious"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "迪基用了几年策划那场把自己作品当名家作品展示的玩笑？请写年数。",
+          "focus": "grammar",
+          "grammarPoint": "Infinitive complement",
+          "exercise": "gap-fill",
+          "prompt": "Complete with the correct form of \"draw\": True eccentrics never set out ___ attention to themselves. Write exactly 2 words.",
           "answers": [
-            "4",
-            "four",
-            "four years",
-            "4年",
-            "四年",
-            "四"
+            "to draw"
           ],
-          "explanation": "假名家画展的玩笑花了他四年时间。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "3",
-                "three",
-                "三年"
-              ],
-              "feedback": "假名家画展的玩笑花了他四年时间。"
-            }
-          ],
+          "explanation": "此处动词或形容词后接 to + 动词原形，不接动名词。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 2,
-            "quote": "It took him four years to stage this elaborate joke simply to prove that critics do not always know what they are talking about."
+            "paragraphIndex": 0,
+            "quote": "True eccentrics never deliberately set out to draw attention to themselves."
           }
         }
       ]
@@ -1749,45 +1566,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "打捞出的箱子为什么让船员意识到找错了沉船？",
+          "focus": "grammar",
+          "grammarPoint": "Past perfect passive",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Past perfect passive. Choose the correct form: a radio message from the mainland ___",
           "options": [
-            "箱里装着目标船长刚发出的电报",
-            "箱内是旧日海员的私人物品，并非目标黄金货物",
-            "箱子是空的，无法证明任何船只存在"
+            "had received",
+            "had been receiving",
+            "had been received"
           ],
-          "answer": 1,
-          "explanation": "箱里是海员Alan Fielding的书、衣服、照片和旧信，说明打捞到的是另一艘早年沉船。",
+          "answer": 2,
+          "explanation": "过去完成时被动结构为 had been + 过去分词，表示过去某时之前已发生的被动动作。",
           "wrongReasons": [
-            "“箱里装着目标船长刚发出的电报”与本课内容不符。箱里是海员Alan Fielding的书、衣服、照片和旧信，说明打捞到的是另一艘早年沉船。",
-            "",
-            "“箱子是空的，无法证明任何船只存在”与本课内容不符。箱里是海员Alan Fielding的书、衣服、照片和旧信，说明打捞到的是另一艘早年沉船。"
+            "“had received”不符合这里的语法结构。过去完成时被动结构为 had been + 过去分词，表示过去某时之前已发生的被动动作。",
+            "“had been receiving”不符合这里的语法结构。过去完成时被动结构为 had been + 过去分词，表示过去某时之前已发生的被动动作。",
+            ""
           ],
           "evidence": {
-            "paragraphIndex": 2,
-            "quote": "The chest contained the personal belongings of a seaman, Alan Fielding."
+            "paragraphIndex": 0,
+            "quote": "A radio message from the mainland had been received"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "后来查明，这艘意外发现的沉船叫什么？请写英文船名。",
+          "focus": "grammar",
+          "grammarPoint": "Question formation",
+          "exercise": "transformation",
+          "prompt": "Make a yes/no question: The salvage operation had been a complete failure.",
           "answers": [
-            "Karen",
-            "the Karen"
+            "Had the salvage operation been a complete failure?"
           ],
-          "explanation": "Elkor是正在打捞的船，意外发现的沉船叫Karen。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "Elkor",
-                "the Elkor"
-              ],
-              "feedback": "Elkor是正在打捞的船，意外发现的沉船叫Karen。"
-            }
-          ],
+          "explanation": "一般疑问句将已有的助动词或 be 提到主语前；没有助动词的实义动词句需用 do/does/did。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 2,
-            "quote": "The captain learnt from the letter that the name of the lost ship was the Karen."
+            "paragraphIndex": 0,
+            "quote": "The salvage operation had been a complete failure."
           }
         }
       ]
@@ -1802,47 +1616,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "混乱的交通事故中，谁反而得到了好处？",
+          "focus": "grammar",
+          "grammarPoint": "Unreal past after as if",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Unreal past after as if. Choose the correct form: It is as if a single unimportant event ___ up a chain of reactions.",
           "options": [
-            "两只流浪狗吃掉了散落的蛋糕",
-            "卡车司机得到了额外一车新啤酒",
-            "所有司机因此提前到家"
+            "set",
+            "sets",
+            "setting"
           ],
           "answer": 0,
-          "explanation": "只有两只流浪狗吃到了剩下的蛋糕，其他人都遭遇了损失或堵车。",
+          "explanation": "as if 引导非真实情形时，可用过去式表达与现在事实不同的设想。",
           "wrongReasons": [
             "",
-            "“卡车司机得到了额外一车新啤酒”与本课内容不符。只有两只流浪狗吃到了剩下的蛋糕，其他人都遭遇了损失或堵车。",
-            "“所有司机因此提前到家”与本课内容不符。只有两只流浪狗吃到了剩下的蛋糕，其他人都遭遇了损失或堵车。"
+            "“sets”不符合这里的语法结构。as if 引导非真实情形时，可用过去式表达与现在事实不同的设想。",
+            "“setting”不符合这里的语法结构。as if 引导非真实情形时，可用过去式表达与现在事实不同的设想。"
           ],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "Only two stray dogs benefited from all this confusion, for they greedily devoured what was left of the cake."
+            "paragraphIndex": 0,
+            "quote": "It is as if a single unimportant event set up a chain of reactions."
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "文中卡车装载的是什么？请写货物（中文或英文）。",
+          "focus": "grammar",
+          "grammarPoint": "Question formation",
+          "exercise": "transformation",
+          "prompt": "Make a yes/no question. Keep \"all\": We have all experienced days when everything goes wrong.",
           "answers": [
-            "empty beer bottles",
-            "beer bottles",
-            "空啤酒瓶",
-            "啤酒空瓶"
+            "Have we all experienced days when everything goes wrong?"
           ],
-          "explanation": "卡车上载的是空啤酒瓶，急刹车后许多瓶子掉到路上。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "full beer bottles",
-                "满啤酒瓶"
-              ],
-              "feedback": "卡车上载的是空啤酒瓶，急刹车后许多瓶子掉到路上。"
-            }
-          ],
+          "explanation": "一般疑问句将已有的助动词或 be 提到主语前；没有助动词的实义动词句需用 do/does/did。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "The lorry was loaded with empty beer bottles and hundreds of them slid off the back of the vehicle and on to the road."
+            "paragraphIndex": 0,
+            "quote": "We have all experienced days when everything goes wrong."
           }
         }
       ]
@@ -1857,46 +1666,43 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "弗兰克为什么敢买下箱底的小画？",
+          "focus": "grammar",
+          "grammarPoint": "Present simple passive",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Present simple passive. Choose the correct form: rare objects ___ in glass cases",
           "options": [
-            "古董商已把它鉴定为价值数十万英镑的真迹",
-            "他只因为画框里藏着黄金才付款",
-            "画的构图和线条让他认出了潜在的艺术价值"
+            "beautifully display",
+            "are beautifully displayed",
+            "are beautifully displaying"
           ],
-          "answer": 2,
-          "explanation": "弗兰克凭自己的鉴赏知识看出画的价值；古董商只随便看了一眼，未识别其真正价值。",
+          "answer": 1,
+          "explanation": "一般现在时被动结构为 am/is/are + 过去分词；主语是动作的承受者。",
           "wrongReasons": [
-            "“古董商已把它鉴定为价值数十万英镑的真迹”与本课内容不符。弗兰克凭自己的鉴赏知识看出画的价值；古董商只随便看了一眼，未识别其真正价值。",
-            "“他只因为画框里藏着黄金才付款”与本课内容不符。弗兰克凭自己的鉴赏知识看出画的价值；古董商只随便看了一眼，未识别其真正价值。",
-            ""
+            "“beautifully display”不符合这里的语法结构。一般现在时被动结构为 am/is/are + 过去分词；主语是动作的承受者。",
+            "",
+            "“are beautifully displaying”不符合这里的语法结构。一般现在时被动结构为 am/is/are + 过去分词；主语是动作的承受者。"
           ],
           "evidence": {
-            "paragraphIndex": 2,
-            "quote": "As its composition and line reminded him of an Italian painting he knew well, he decided to buy it."
+            "paragraphIndex": 0,
+            "quote": "rare objects are beautifully displayed in glass cases"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "后来确认，这幅小画是哪位画家的作品？请写英文姓名或中文译名。",
+          "focus": "grammar",
+          "grammarPoint": "Negative formation",
+          "exercise": "transformation",
+          "prompt": "Make this statement negative with \"does not\": Someone has to muster up courage.",
           "answers": [
-            "Correggio",
-            "科雷乔",
-            "柯雷乔"
+            "Someone does not have to muster up courage.",
+            "Someone doesn't have to muster up courage."
           ],
-          "explanation": "被发现的未知杰作出自Correggio，不是米开朗琪罗。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "Michelangelo",
-                "米开朗琪罗"
-              ],
-              "feedback": "被发现的未知杰作出自Correggio，不是米开朗琪罗。"
-            }
-          ],
+          "explanation": "否定结构在助动词后加 not；用 do/does/did 时，实义动词还原。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 2,
-            "quote": "The tiny painting proved to be an unknown masterpiece by Correggio and was worth hundreds of thousands of pounds."
+            "paragraphIndex": 0,
+            "quote": "no one has to muster up courage"
           }
         }
       ]
@@ -1911,50 +1717,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "作者为什么说小偷还没交给警方，正义就已伸张？",
+          "focus": "grammar",
+          "grammarPoint": "Present perfect passive",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Present perfect passive. Choose the correct form: a man’s innocence or guilt ___ beyond doubt",
           "options": [
-            "小偷在进入珠宝店前已主动赔偿全部损失",
-            "小偷困在狭窄烟囱里近十小时，已经自食苦果",
-            "店员已经自行审判并判他入狱"
+            "have been proved",
+            "has proved",
+            "has been proved"
           ],
-          "answer": 1,
-          "explanation": "小偷试图入室盗窃却被困烟囱，长时间的困境本身就是对其行为的惩罚。",
+          "answer": 2,
+          "explanation": "现在完成时被动结构为 has/have been + 过去分词；注意主语的单复数。",
           "wrongReasons": [
-            "“小偷在进入珠宝店前已主动赔偿全部损失”与本课内容不符。小偷试图入室盗窃却被困烟囱，长时间的困境本身就是对其行为的惩罚。",
-            "",
-            "“店员已经自行审判并判他入狱”与本课内容不符。小偷试图入室盗窃却被困烟囱，长时间的困境本身就是对其行为的惩罚。"
+            "“have been proved”不符合这里的语法结构。现在完成时被动结构为 has/have been + 过去分词；注意主语的单复数。",
+            "“has proved”不符合这里的语法结构。现在完成时被动结构为 has/have been + 过去分词；注意主语的单复数。",
+            ""
           ],
           "evidence": {
-            "paragraphIndex": 2,
-            "quote": "He had been there for nearly ten hours."
+            "paragraphIndex": 0,
+            "quote": "a man’s innocence or guilt has been proved beyond doubt"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "消防员凿开的那堵墙厚多少英寸？请写数字或英文数词。",
+          "focus": "grammar",
+          "grammarPoint": "Word order",
+          "exercise": "word-order",
+          "prompt": "Put these words in order, using every word or part once. Begin with \"The word justice\" and put \"usually\" after \"is\": usually / with courts of law / the word justice / associated / is",
           "answers": [
-            "18",
-            "eighteen",
-            "eighteen inches",
-            "18英寸",
-            "十八英寸",
-            "十八"
+            "The word justice is usually associated with courts of law."
           ],
-          "explanation": "墙厚十八英寸；近十小时是小偷被困的时间，不能把两个量混淆。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "10",
-                "ten",
-                "十英寸"
-              ],
-              "feedback": "墙厚十八英寸；近十小时是小偷被困的时间，不能把两个量混淆。"
-            }
-          ],
+          "explanation": "按英语句法排列主语、助动词、状语和主要动词；不要按中文顺序排列。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 2,
-            "quote": "After chipping through a wall which was eighteen inches thick, they found that a man had been trapped in the chimney."
+            "paragraphIndex": 0,
+            "quote": "The word justice is usually associated with courts of law."
           }
         }
       ]
@@ -1969,45 +1767,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "弗朗茨为什么起初不相信工人可能是自己的兄弟？",
+          "focus": "grammar",
+          "grammarPoint": "Comparison",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Comparison. Choose the correct form: We are less credulous ___ we used to be.",
           "options": [
-            "他一直以为兄弟已在战争中阵亡",
-            "他确信兄弟从未离开过自己家",
-            "他认定兄弟比自己年长一百岁"
+            "than",
+            "as",
+            "that"
           ],
           "answer": 0,
-          "explanation": "弗朗茨以为兄弟战争期间已经阵亡；妻子则因相貌相似而坚持追查。",
+          "explanation": "比较结构须保持比较级或原级与对应搭配一致，注意 than 和 as 的使用。",
           "wrongReasons": [
             "",
-            "“他确信兄弟从未离开过自己家”与本课内容不符。弗朗茨以为兄弟战争期间已经阵亡；妻子则因相貌相似而坚持追查。",
-            "“他认定兄弟比自己年长一百岁”与本课内容不符。弗朗茨以为兄弟战争期间已经阵亡；妻子则因相貌相似而坚持追查。"
+            "“as”不符合这里的语法结构。比较结构须保持比较级或原级与对应搭配一致，注意 than 和 as 的使用。",
+            "“that”不符合这里的语法结构。比较结构须保持比较级或原级与对应搭配一致，注意 than 和 as 的使用。"
           ],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "Franz poured scorn on the idea, pointing out that his brother had been killed in action during the war."
+            "paragraphIndex": 0,
+            "quote": "We are less credulous than we used to be."
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "最终找到的失散兄弟叫什么？请写英文姓名。",
+          "focus": "grammar",
+          "grammarPoint": "Gerund after a preposition",
+          "exercise": "gap-fill",
+          "prompt": "Complete with the correct form of \"present\": A novelist would conclude his story by ___ his readers with coincidences. Write exactly 1 word.",
           "answers": [
-            "Hans Bussman",
-            "Hans"
+            "presenting"
           ],
-          "explanation": "Franz是寻找兄弟的人，失散后找到的是Hans。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "Franz Bussman",
-                "Franz"
-              ],
-              "feedback": "Franz是寻找兄弟的人，失散后找到的是Hans。"
-            }
-          ],
+          "explanation": "介词后接名词或动名词；动词要改为 -ing 形式，不能直接接动词原形。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "Needless to say, the man’s name was Hans Bussman and he really was Franz’s long-lost brother."
+            "paragraphIndex": 0,
+            "quote": "a novelist would bring his story to a conclusion by presenting his readers"
           }
         }
       ]
@@ -2022,51 +1817,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "叙述者对所谓快车的误会是怎样造成的？",
+          "focus": "grammar",
+          "grammarPoint": "Modal passive",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Modal passive. Choose the correct form: Ships may ___ by storms",
           "options": [
-            "车站临时把一列正在运营的快车改成了货车",
-            "乘客故意把所有车站名称改掉",
-            "他没注意时刻表脚注写着这项服务已停开"
+            "be delay",
+            "be delayed",
+            "delaying"
           ],
-          "answer": 2,
-          "explanation": "他只看到时刻表正文，没有查看星号引向的停开说明，因此误认为慢车应当是快车。",
+          "answer": 1,
+          "explanation": "情态动词被动结构为情态动词 + be + 过去分词，不是 been 或 being。",
           "wrongReasons": [
-            "“车站临时把一列正在运营的快车改成了货车”与本课内容不符。他只看到时刻表正文，没有查看星号引向的停开说明，因此误认为慢车应当是快车。",
-            "“乘客故意把所有车站名称改掉”与本课内容不符。他只看到时刻表正文，没有查看星号引向的停开说明，因此误认为慢车应当是快车。",
-            ""
+            "“be delay”不符合这里的语法结构。情态动词被动结构为情态动词 + be + 过去分词，不是 been 或 being。",
+            "",
+            "“delaying”不符合这里的语法结构。情态动词被动结构为情态动词 + be + 过去分词，不是 been 或 being。"
           ],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "It said: ‘This service has been suspended.’"
+            "paragraphIndex": 0,
+            "quote": "Ships may be delayed by storms"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "按时刻表，原来那班快车的行程应是多少小时多少分钟？请写时长。",
+          "focus": "grammar",
+          "grammarPoint": "Question formation",
+          "exercise": "transformation",
+          "prompt": "Make a yes/no question. Keep \"learnt\": We have learnt to expect that trains will be punctual.",
           "answers": [
-            "1 hour 17 minutes",
-            "one hour and seventeen minutes",
-            "one hour seventeen minutes",
-            "1小时17分钟",
-            "一小时十七分钟",
-            "77 minutes",
-            "77分钟"
+            "Have we learnt to expect that trains will be punctual?"
           ],
-          "explanation": "时刻表标的是一小时十七分钟，而实际乘坐慢车耗时更久。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "2 hours",
-                "two hours",
-                "两小时"
-              ],
-              "feedback": "时刻表标的是一小时十七分钟，而实际乘坐慢车耗时更久。"
-            }
-          ],
+          "explanation": "一般疑问句将已有的助动词或 be 提到主语前；没有助动词的实义动词句需用 do/does/did。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "It went direct from my local station and the journey lasted a mere hour and seventeen minutes."
+            "paragraphIndex": 0,
+            "quote": "We have learnt to expect that trains will be punctual."
           }
         }
       ]
@@ -2081,47 +1867,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "新证据为什么动摇了历法起源于农业的看法？",
+          "focus": "grammar",
+          "grammarPoint": "Time-clause tense",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Time-clause tense. Choose the correct form: when they ___ to record the history of our own times",
           "options": [
-            "研究者发现农业比人类出现得还早",
-            "冰河时代猎人的符号已记录天数和月相",
-            "所有古代符号都已证明只是没有意义的装饰"
+            "will come",
+            "will coming",
+            "come"
           ],
-          "answer": 1,
-          "explanation": "这些早于农业的符号与天数、月相有关，说明人类更早就试图理解季节。",
+          "answer": 2,
+          "explanation": "表示将来的时间从句通常用一般现在时，而不是 will + 动词。",
           "wrongReasons": [
-            "“研究者发现农业比人类出现得还早”与本课内容不符。这些早于农业的符号与天数、月相有关，说明人类更早就试图理解季节。",
-            "",
-            "“所有古代符号都已证明只是没有意义的装饰”与本课内容不符。这些早于农业的符号与天数、月相有关，说明人类更早就试图理解季节。"
+            "“will come”不符合这里的语法结构。表示将来的时间从句通常用一般现在时，而不是 will + 动词。",
+            "“will coming”不符合这里的语法结构。表示将来的时间从句通常用一般现在时，而不是 will + 动词。",
+            ""
           ],
           "evidence": {
-            "paragraphIndex": 2,
-            "quote": "They have found that it is connected with the passage of days and the phases of the moon."
+            "paragraphIndex": 0,
+            "quote": "when they come to record the history of our own times"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "这些游牧者在最后一个冰河时代主要靠狩猎和哪项活动生活？请写活动（中文或英文）。",
+          "focus": "grammar",
+          "grammarPoint": "Embedded wh-clause",
+          "exercise": "transformation",
+          "prompt": "Expand the infinitive clause using \"should\": They will hardly know which facts to select.",
           "answers": [
-            "fishing",
-            "捕鱼",
-            "钓鱼"
+            "They will hardly know which facts they should select."
           ],
-          "explanation": "原文明确是hunting and fishing，当时并非靠农业生活。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "farming",
-                "耕种",
-                "农业"
-              ],
-              "feedback": "原文明确是hunting and fishing，当时并非靠农业生活。"
-            }
-          ],
+          "explanation": "嵌入式疑问从句采用疑问词 + 主语 + 谓语的陈述语序，不用直接疑问句倒装。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 2,
-            "quote": "The nomads who made these markings lived by hunting and fishing during the last Ice Age which began about 35,000 B.C."
+            "paragraphIndex": 0,
+            "quote": "They will hardly know which facts to select"
           }
         }
       ]
@@ -2136,50 +1917,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "汽车在浅水池中停下时，布鲁斯宣布了什么问题？",
+          "focus": "grammar",
+          "grammarPoint": "Past simple passive",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Past simple passive. Choose the correct form: Even though the road ___ with boulders",
           "options": [
-            "发动机里已经没有机油",
-            "汽车没有安装方向盘",
-            "水池忽然变成了深海"
+            "was littered",
+            "littered",
+            "was littering"
           ],
           "answer": 0,
-          "explanation": "仪表黄灯亮起后，他说发动机没有机油，印证了同行者之前对路况损害汽车的担心。",
+          "explanation": "一般过去时被动结构为 was/were + 过去分词；注意不规则过去分词。",
           "wrongReasons": [
             "",
-            "“汽车没有安装方向盘”与本课内容不符。仪表黄灯亮起后，他说发动机没有机油，印证了同行者之前对路况损害汽车的担心。",
-            "“水池忽然变成了深海”与本课内容不符。仪表黄灯亮起后，他说发动机没有机油，印证了同行者之前对路况损害汽车的担心。"
+            "“littered”不符合这里的语法结构。一般过去时被动结构为 was/were + 过去分词；注意不规则过去分词。",
+            "“was littering”不符合这里的语法结构。一般过去时被动结构为 was/were + 过去分词；注意不规则过去分词。"
           ],
           "evidence": {
-            "paragraphIndex": 2,
-            "quote": "A yellow light on the dashboard flashed angrily and Bruce cheerfully announced that there was no oil in the engine!"
+            "paragraphIndex": 0,
+            "quote": "Even though the road was littered with boulders"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "布鲁斯起初说下一个村庄还有多少英里？请写数字或英文数词。",
+          "focus": "grammar",
+          "grammarPoint": "Participle clause",
+          "exercise": "transformation",
+          "prompt": "Expand the participle clause using \"As he\". Use the past simple in both clauses: Glancing at his map, he informed us of the route.",
           "answers": [
-            "20",
-            "twenty",
-            "twenty miles",
-            "20英里",
-            "二十英里",
-            "二十"
+            "As he glanced at his map, he informed us of the route."
           ],
-          "explanation": "起初是二十英里；越过裂缝后他才说剩下十五英里。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "15",
-                "fifteen",
-                "十五英里"
-              ],
-              "feedback": "起初是二十英里；越过裂缝后他才说剩下十五英里。"
-            }
-          ],
+          "explanation": "分词状语的逻辑主语须与主句主语一致；主动用 -ing，被动用过去分词。",
+          "commonMistakes": [],
           "evidence": {
             "paragraphIndex": 0,
-            "quote": "Glancing at his map, he informed us that the next village was a mere twenty miles away."
+            "quote": "Glancing at his map, he informed us"
           }
         }
       ]
@@ -2194,48 +1967,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "学生的恶作剧为什么会引起警察与工人的冲突？",
+          "focus": "grammar",
+          "grammarPoint": "Infinitive complement",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Infinitive complement. Choose the correct form: It has never been explained why university students seem ___ practical jokes",
           "options": [
-            "他真的拆除了大学门口的消防设备",
-            "他要求两方共同修好电话亭",
-            "他分别谎称对方是乔装恶作剧的学生"
+            "enjoying",
+            "to enjoy",
+            "enjoy"
           ],
-          "answer": 2,
-          "explanation": "学生先骗警察说工人是假冒的，再骗工人说警察是假冒的，使双方都误判了对方。",
+          "answer": 1,
+          "explanation": "此处动词或形容词后接 to + 动词原形，不接动名词。",
           "wrongReasons": [
-            "“他真的拆除了大学门口的消防设备”与本课内容不符。学生先骗警察说工人是假冒的，再骗工人说警察是假冒的，使双方都误判了对方。",
-            "“他要求两方共同修好电话亭”与本课内容不符。学生先骗警察说工人是假冒的，再骗工人说警察是假冒的，使双方都误判了对方。",
-            ""
+            "“enjoying”不符合这里的语法结构。此处动词或形容词后接 to + 动词原形，不接动名词。",
+            "",
+            "“enjoy”不符合这里的语法结构。此处动词或形容词后接 to + 动词原形，不接动名词。"
           ],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "He added that a student had dressed up as a policeman and was playing all sorts of silly jokes on people."
+            "paragraphIndex": 0,
+            "quote": "It has never been explained why university students seem to enjoy practical jokes"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "工人当时使用的道路施工工具是什么？请写工具（中文或英文）。",
+          "focus": "grammar",
+          "grammarPoint": "Relative subject",
+          "exercise": "transformation",
+          "prompt": "Combine using \"which\": Students create amusing situations. The situations are funny to everyone except the victims.",
           "answers": [
-            "pneumatic drill",
-            "a pneumatic drill",
-            "风钻",
-            "气钻",
-            "气动钻"
+            "Students create amusing situations which are funny to everyone except the victims."
           ],
-          "explanation": "施工工具是pneumatic drill（风钻），不是普通铲子。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "spade",
-                "铲子"
-              ],
-              "feedback": "施工工具是pneumatic drill（风钻），不是普通铲子。"
-            }
-          ],
+          "explanation": "关系词在定语从句中作主语；指物可用 which，不能用 what 或表示所属的 whose。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "When a student recently saw two workmen using a pneumatic drill outside his university, he immediately telephoned the police and informed them that two students dressed up as workmen were tearing up the road with a pneumatic drill."
+            "paragraphIndex": 0,
+            "quote": "Students often create amusing situations which are funny to everyone except the victims."
           }
         }
       ]
@@ -2250,54 +2017,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "叙述者反对理想化乡村生活时，指出了哪项现实负担？",
+          "focus": "grammar",
+          "grammarPoint": "Subject agreement",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Subject agreement. Choose the correct form: only one of them ___ ever gone to live in the country",
           "options": [
-            "所有乡村居民都能步行几分钟到剧院",
-            "漫长通勤和冬夜缺少娱乐",
-            "乡村商店总比城市选择更多"
+            "have",
+            "having",
+            "has"
           ],
-          "answer": 1,
-          "explanation": "叙述者指出每天通勤可达四小时，乡村的便利程度并不像朋友称赞的那样理想。",
+          "answer": 2,
+          "explanation": "谓语应与语法主语一致，不能被邻近名词的单复数误导。",
           "wrongReasons": [
-            "“所有乡村居民都能步行几分钟到剧院”与本课内容不符。叙述者指出每天通勤可达四小时，乡村的便利程度并不像朋友称赞的那样理想。",
-            "",
-            "“乡村商店总比城市选择更多”与本课内容不符。叙述者指出每天通勤可达四小时，乡村的便利程度并不像朋友称赞的那样理想。"
+            "“have”不符合这里的语法结构。谓语应与语法主语一致，不能被邻近名词的单复数误导。",
+            "“having”不符合这里的语法结构。谓语应与语法主语一致，不能被邻近名词的单复数误导。",
+            ""
           ],
           "evidence": {
             "paragraphIndex": 0,
-            "quote": "Why people are prepared to tolerate a four-hour journey each day for the dubious privilege of living in the country is beyond me."
+            "quote": "only one of them has ever gone to live in the country"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "那位真正搬去乡下的朋友，在几个月内就回到了城里？请写月数（中文或英文）。",
+          "focus": "grammar",
+          "grammarPoint": "Question formation",
+          "exercise": "transformation",
+          "prompt": "Make a yes/no question. Replace \"never\" with \"ever\": The quiet life of the country has never appealed to me.",
           "answers": [
-            "6",
-            "six",
-            "six months",
-            "6 months",
-            "within six months",
-            "六个月",
-            "6个月",
-            "六个月内",
-            "6个月内",
-            "半年内",
-            "半年"
+            "Has the quiet life of the country ever appealed to me?"
           ],
-          "explanation": "原文说他在六个月内（within six months）回到了城里，并未说恰好住满六个月。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "six years",
-                "六年"
-              ],
-              "feedback": "原文是六个月之内回城，不是六年。"
-            }
-          ],
+          "explanation": "一般疑问句将已有的助动词或 be 提到主语前；没有助动词的实义动词句需用 do/does/did。",
+          "commonMistakes": [],
           "evidence": {
             "paragraphIndex": 0,
-            "quote": "Though they extol the virtues of the peaceful life, only one of them has ever gone to live in the country and he was back in town within six months."
+            "quote": "The quiet life of the country has never appealed to me."
           }
         }
       ]
@@ -2312,49 +2067,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "深入大型洞穴探险为什么需要像军事行动那样精密筹划？",
+          "focus": "grammar",
+          "grammarPoint": "Gerund after a preposition",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Gerund after a preposition. Choose the correct form: the chance of ___ an unexpected discovery",
           "options": [
-            "无法事先准确预知全部困难，必须准备绳梯和补给",
-            "洞穴里已经铺好了安全观光铁路",
-            "只要挑一个星期天下午就能轻松完成"
+            "making",
+            "make",
+            "to make"
           ],
           "answer": 0,
-          "explanation": "深洞探险无法预知具体困难，因此要事先布置绳梯和补给基地，绝非随意散步。",
+          "explanation": "介词后接名词或动名词；动词要改为 -ing 形式，不能直接接动词原形。",
           "wrongReasons": [
             "",
-            "“洞穴里已经铺好了安全观光铁路”与本课内容不符。深洞探险无法预知具体困难，因此要事先布置绳梯和补给基地，绝非随意散步。",
-            "“只要挑一个星期天下午就能轻松完成”与本课内容不符。深洞探险无法预知具体困难，因此要事先布置绳梯和补给基地，绝非随意散步。"
+            "“make”不符合这里的语法结构。介词后接名词或动名词；动词要改为 -ing 形式，不能直接接动词原形。",
+            "“to make”不符合这里的语法结构。介词后接名词或动名词；动词要改为 -ing 形式，不能直接接动词原形。"
           ],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "Precautions of this sort are necessary, for it is impossible to foretell the exact nature of the difficulties which will confront the pot-holer."
+            "paragraphIndex": 0,
+            "quote": "the chance of making an unexpected discovery"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "探险队为抵御冰冷湖水，穿了什么特殊服装？请写服装（中文或英文）。",
+          "focus": "grammar",
+          "grammarPoint": "Dummy it",
+          "exercise": "transformation",
+          "prompt": "Rewrite using \"it\" as a formal subject: To give a satisfactory explanation is impossible.",
           "answers": [
-            "rubber suits",
-            "special rubber suits",
-            "rubber suit",
-            "橡胶衣",
-            "橡胶服",
-            "特制橡胶服"
+            "It is impossible to give a satisfactory explanation."
           ],
-          "explanation": "他们穿特制橡胶服隔绝冰水，而不是普通棉衬衫。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "cotton shirts",
-                "棉衬衫"
-              ],
-              "feedback": "他们穿特制橡胶服隔绝冰水，而不是普通棉衬衫。"
-            }
-          ],
+          "explanation": "形式主语或形式宾语 it 占位，真正的内容由后面的不定式或从句承担。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 2,
-            "quote": "To protect themselves from the icy water, they had to wear special rubber suits."
+            "paragraphIndex": 0,
+            "quote": "It is impossible to give a satisfactory explanation"
           }
         }
       ]
@@ -2369,50 +2117,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "巨型馅饼盘为什么在运河中翻沉？",
+          "focus": "grammar",
+          "grammarPoint": "Correlative comparison",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Correlative comparison. Choose the correct form: the bigger the risk an insurance company takes, the ___ the premium",
           "options": [
-            "委员会故意用它测试海底深度",
-            "运输卡车直接撞碎了整个盘子",
-            "一群青少年登上盘子跳舞，超过了它的承受能力"
+            "high",
+            "higher",
+            "highest"
           ],
-          "answer": 2,
-          "explanation": "青少年在盘子上聚会跳舞，使其承受不住而倾覆，并非专门进行的沉水试验。",
+          "answer": 1,
+          "explanation": "the + 比较级，the + 比较级，表示越……就越……。",
           "wrongReasons": [
-            "“委员会故意用它测试海底深度”与本课内容不符。青少年在盘子上聚会跳舞，使其承受不住而倾覆，并非专门进行的沉水试验。",
-            "“运输卡车直接撞碎了整个盘子”与本课内容不符。青少年在盘子上聚会跳舞，使其承受不住而倾覆，并非专门进行的沉水试验。",
-            ""
+            "“high”不符合这里的语法结构。the + 比较级，the + 比较级，表示越……就越……。",
+            "",
+            "“highest”不符合这里的语法结构。the + 比较级，the + 比较级，表示越……就越……。"
           ],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "Dancing proved to be more than the dish could bear, for during the party it capsized and sank in seven feet of water."
+            "paragraphIndex": 0,
+            "quote": "the bigger the risk an insurance company takes, the higher the premium"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "这个巨型馅饼盘长多少英尺？请写数字或英文数词。",
+          "focus": "grammar",
+          "grammarPoint": "Infinitive complement",
+          "exercise": "gap-fill",
+          "prompt": "Complete with the correct form of \"insure\": Insurance companies are normally willing ___ anything. Write exactly 2 words.",
           "answers": [
-            "18",
-            "eighteen",
-            "eighteen feet",
-            "18英尺",
-            "十八英尺",
-            "十八"
+            "to insure"
           ],
-          "explanation": "盘子长十八英尺、宽六英尺，题目问的是长度。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "6",
-                "six",
-                "六英尺"
-              ],
-              "feedback": "盘子长十八英尺、宽六英尺，题目问的是长度。"
-            }
-          ],
+          "explanation": "此处动词或形容词后接 to + 动词原形，不接动名词。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "Admittedly it was an unusual pie dish, for it was eighteen feet long and six feet wide."
+            "paragraphIndex": 0,
+            "quote": "Insurance companies are normally willing to insure anything."
           }
         }
       ]
@@ -2427,51 +2167,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "作者为什么认为飞机最能兼顾长途旅行的速度与舒适？",
+          "focus": "grammar",
+          "grammarPoint": "Gerund after enjoy",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Gerund after enjoy. Choose the correct form: Hardly anyone can positively enjoy ___ in a train",
           "options": [
-            "乘客坐飞机完全看不到山谷或云层",
-            "到达快，途中平稳，旅客抵达时仍精神饱满",
-            "飞机总是比所有其他交通工具更便宜"
+            "sit",
+            "to sit",
+            "sitting"
           ],
-          "answer": 1,
-          "explanation": "作者承认机票贵、有人怕飞行，但强调飞机速度快、平稳，抵达后不必长时间恢复疲劳。",
+          "answer": 2,
+          "explanation": "enjoy 后接动名词，不接动词原形或不定式。",
           "wrongReasons": [
-            "“乘客坐飞机完全看不到山谷或云层”与本课内容不符。作者承认机票贵、有人怕飞行，但强调飞机速度快、平稳，抵达后不必长时间恢复疲劳。",
-            "",
-            "“飞机总是比所有其他交通工具更便宜”与本课内容不符。作者承认机票贵、有人怕飞行，但强调飞机速度快、平稳，抵达后不必长时间恢复疲劳。"
+            "“sit”不符合这里的语法结构。enjoy 后接动名词，不接动词原形或不定式。",
+            "“to sit”不符合这里的语法结构。enjoy 后接动名词，不接动词原形或不定式。",
+            ""
           ],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "But nothing can match them for speed and comfort."
+            "paragraphIndex": 0,
+            "quote": "Hardly anyone can positively enjoy sitting in a train"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "文章举例说飞机可在多少英尺的高度飞行？请写数字或英文数词。",
+          "focus": "grammar",
+          "grammarPoint": "Present participle modifier",
+          "exercise": "transformation",
+          "prompt": "Expand the participle phrase using \"who are\": people travelling long distances. Write the whole noun phrase.",
           "answers": [
-            "30000",
-            "30,000",
-            "thirty thousand",
-            "30000 feet",
-            "30,000 feet",
-            "三万英尺",
-            "30000英尺"
+            "people who are travelling long distances"
           ],
-          "explanation": "例子中的高度是30,000英尺，不是3,000英尺。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "3000",
-                "three thousand",
-                "三千英尺"
-              ],
-              "feedback": "例子中的高度是30,000英尺，不是3,000英尺。"
-            }
-          ],
+          "explanation": "名词与后置动词为主动关系时，可用现在分词 -ing 作定语。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "Travelling at a height of 30,000 feet, far above the clouds, and at over 500 miles an hour is an exhilarating experience."
+            "paragraphIndex": 0,
+            "quote": "People travelling long distances"
           }
         }
       ]
@@ -2486,50 +2217,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "五胞胎的出生为什么让这个家庭再也难以过正常生活？",
+          "focus": "grammar",
+          "grammarPoint": "Modal passive",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Modal passive. Choose the correct form: this freedom can easily ___",
           "options": [
-            "媒体和商家把他们的姓名、故事变成了有市场价值的商品",
-            "家人立即拒绝了所有报道并彻底隐居",
-            "父母的经济状况始终完全没有变化"
+            "be abused",
+            "be abuse",
+            "abusing"
           ],
           "answer": 0,
-          "explanation": "报道带来财富和声名，也使家庭被商业化，无法继续原来的普通生活。",
+          "explanation": "情态动词被动结构为情态动词 + be + 过去分词，不是 been 或 being。",
           "wrongReasons": [
             "",
-            "“家人立即拒绝了所有报道并彻底隐居”与本课内容不符。报道带来财富和声名，也使家庭被商业化，无法继续原来的普通生活。",
-            "“父母的经济状况始终完全没有变化”与本课内容不符。报道带来财富和声名，也使家庭被商业化，无法继续原来的普通生活。"
+            "“be abuse”不符合这里的语法结构。情态动词被动结构为情态动词 + be + 过去分词，不是 been 或 being。",
+            "“abusing”不符合这里的语法结构。情态动词被动结构为情态动词 + be + 过去分词，不是 been 或 being。"
           ],
           "evidence": {
-            "paragraphIndex": 2,
-            "quote": "They had become the victims of commercialization, for their names had acquired a market value."
+            "paragraphIndex": 0,
+            "quote": "this freedom can easily be abused"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "这次出生的五胞胎中有几个男孩？请写数量（中文或英文）。",
+          "focus": "grammar",
+          "grammarPoint": "Question formation",
+          "exercise": "transformation",
+          "prompt": "Make a yes/no question: Stories about people often attract far more public attention than political events.",
           "answers": [
-            "1",
-            "one",
-            "one boy",
-            "一个男孩",
-            "一名男孩",
-            "一"
+            "Do stories about people often attract far more public attention than political events?"
           ],
-          "explanation": "五胞胎是四个女孩和一个男孩，不能把女孩数当成男孩数。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "4",
-                "four",
-                "四个男孩"
-              ],
-              "feedback": "五胞胎是四个女孩和一个男孩，不能把女孩数当成男孩数。"
-            }
-          ],
+          "explanation": "一般疑问句将已有的助动词或 be 提到主语前；没有助动词的实义动词句需用 do/does/did。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "But they suddenly became the parents of quintuplets, four girls and a boy, an event which radically changed their lives."
+            "paragraphIndex": 0,
+            "quote": "Stories about people often attract far more public attention than political events."
           }
         }
       ]
@@ -2544,48 +2267,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "叙述者修好割草机的计划为什么最终失败？",
+          "focus": "grammar",
+          "grammarPoint": "Inversion after so + adjective",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Inversion after so + adjective. Choose the correct form: So great ___ our passion for doing things for ourselves",
           "options": [
-            "他从一开始就把全部维修交给了专家",
-            "他找到故障后立刻把新割草机买回家",
-            "拆散后装回去还剩一些零件，机器依旧不工作"
+            "does",
+            "is",
+            "has"
           ],
-          "answer": 2,
-          "explanation": "他虽然找到了链条故障，但重新组装后多出零件，机器仍无法工作，表现了逞强DIY的局限。",
+          "answer": 1,
+          "explanation": "so + 形容词前置时，可将系动词移到主语前：So great is our passion ...。",
           "wrongReasons": [
-            "“他从一开始就把全部维修交给了专家”与本课内容不符。他虽然找到了链条故障，但重新组装后多出零件，机器仍无法工作，表现了逞强DIY的局限。",
-            "“他找到故障后立刻把新割草机买回家”与本课内容不符。他虽然找到了链条故障，但重新组装后多出零件，机器仍无法工作，表现了逞强DIY的局限。",
-            ""
+            "“does”不符合本句结构。so + 形容词前置时，可将系动词移到主语前：So great is our passion ...。",
+            "",
+            "“has”不符合本句结构。so + 形容词前置时，可将系动词移到主语前：So great is our passion ...。"
           ],
           "evidence": {
-            "paragraphIndex": 2,
-            "quote": "I was not surprised to find that the machine still refused to work after I had reassembled it, for the simple reason that I was left with several curiously shaped bits of metal which did not seem to fit anywhere."
+            "paragraphIndex": 0,
+            "quote": "So great is our passion for doing things for ourselves"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "被发现断裂的是驱动车轮的什么部件？请写部件（中文或英文）。",
+          "focus": "grammar",
+          "grammarPoint": "Past participle modifier",
+          "exercise": "transformation",
+          "prompt": "Expand the participle phrase using \"who are\": newlyweds armed with the right tools and materials. Write the whole noun phrase.",
           "answers": [
-            "chain",
-            "a chain",
-            "the chain",
-            "链条",
-            "传动链条"
+            "newlyweds who are armed with the right tools and materials"
           ],
-          "explanation": "原文故障是链条的一节断了，不是皮带故障。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "belt",
-                "皮带"
-              ],
-              "feedback": "原文故障是链条的一节断了，不是皮带故障。"
-            }
-          ],
+          "explanation": "名词与后置动词为被动关系时，可用过去分词作定语，相当于被动定语从句。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 2,
-            "quote": "One of the links in the chain that drives the wheels had snapped."
+            "paragraphIndex": 0,
+            "quote": "Armed with the right tools and materials"
           }
         }
       ]
@@ -2600,48 +2317,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "文章为什么说便宜食品也可能有高昂代价？",
+          "focus": "grammar",
+          "grammarPoint": "Gerund after keep",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Gerund after keep. Choose the correct form: We keep ___ all four methods",
           "options": [
-            "作者认为所有有机蔬菜都免费供应",
-            "工业化生产可能带来疾病、农药等污染问题",
-            "便宜食品必定完全没有任何营养"
+            "try",
+            "to try",
+            "trying"
           ],
-          "answer": 1,
-          "explanation": "作者用疾病、农药和化肥的影响说明低价格之外还可能有健康与污染代价，并未说所有便宜食品必无营养。",
+          "answer": 2,
+          "explanation": "keep doing 表示持续做某事，后用动名词，不接不定式。",
           "wrongReasons": [
-            "“作者认为所有有机蔬菜都免费供应”与本课内容不符。作者用疾病、农药和化肥的影响说明低价格之外还可能有健康与污染代价，并未说所有便宜食品必无营养。",
-            "",
-            "“便宜食品必定完全没有任何营养”与本课内容不符。作者用疾病、农药和化肥的影响说明低价格之外还可能有健康与污染代价，并未说所有便宜食品必无营养。"
+            "“try”不符合这里的语法结构。keep doing 表示持续做某事，后用动名词，不接不定式。",
+            "“to try”不符合这里的语法结构。keep doing 表示持续做某事，后用动名词，不接不定式。",
+            ""
           ],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "The price we pay for cheap food may be already too high: Mad Cow Disease (BSE) in cattle, salmonella in chicken and eggs, and listeria in dairy products."
+            "paragraphIndex": 0,
+            "quote": "We keep trying all four methods"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "调查中，哪种动物夜间不停地叫被评为最严重的噪声污染？请写动物（中文或英文）。",
+          "focus": "grammar",
+          "grammarPoint": "Gerund after a preposition",
+          "exercise": "gap-fill",
+          "prompt": "Complete with the correct form of \"pollute\": the problem of ___ our planet Write exactly 1 word.",
           "answers": [
-            "dogs",
-            "dog",
-            "狗",
-            "犬"
+            "polluting"
           ],
-          "explanation": "调查列出的最高噪声干扰是夜间不停的狗叫。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "cats",
-                "cat",
-                "猫"
-              ],
-              "feedback": "调查列出的最高噪声干扰是夜间不停的狗叫。"
-            }
-          ],
+          "explanation": "介词后接名词或动名词；动词要改为 -ing 形式，不能直接接动词原形。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 2,
-            "quote": "A recent survey of the effects of noise revealed (surprisingly?) that dogs barking incessantly in the night rated the highest form of noise pollution on a scale ranging from 1 to 7."
+            "paragraphIndex": 1,
+            "quote": "the problem of polluting our planet"
           }
         }
       ]
@@ -2656,46 +2367,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "这次偏远村庄之行为什么推翻了夫妻俩的预想？",
+          "focus": "grammar",
+          "grammarPoint": "Not only ... but also",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Not only ... but also. Choose the correct form: ___ from foreign tourists, but even from their own countrymen",
           "options": [
-            "村民沉默地盯视他们，明显不欢迎外来者",
-            "村民热情举办了公开欢迎宴会",
-            "他们从头到尾都没有见到任何居民"
+            "not only",
+            "neither",
+            "whether"
           ],
           "answer": 0,
-          "explanation": "村庄看似无人，后来孩子、男人和老妇都出现并沉默注视他们，让两人意识到自己不受欢迎。",
+          "explanation": "not only 与 but (also) 配对，连接的成分要保持平行。",
           "wrongReasons": [
             "",
-            "“村民热情举办了公开欢迎宴会”与本课内容不符。村庄看似无人，后来孩子、男人和老妇都出现并沉默注视他们，让两人意识到自己不受欢迎。",
-            "“他们从头到尾都没有见到任何居民”与本课内容不符。村庄看似无人，后来孩子、男人和老妇都出现并沉默注视他们，让两人意识到自己不受欢迎。"
+            "“neither”不符合这里的语法结构。not only 与 but (also) 配对，连接的成分要保持平行。",
+            "“whether”不符合这里的语法结构。not only 与 but (also) 配对，连接的成分要保持平行。"
           ],
           "evidence": {
-            "paragraphIndex": 2,
-            "quote": "There was no doubt that we were unwelcome visitors."
+            "paragraphIndex": 0,
+            "quote": "not only from foreign tourists, but even from their own countrymen"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "夫妻俩午餐打开了哪种鱼的罐头？请写鱼名（中文或英文）。",
+          "focus": "grammar",
+          "grammarPoint": "Reduced adjectival relative clause",
+          "exercise": "transformation",
+          "prompt": "Reduce the relative clause by omitting \"which are\": places which are inaccessible to tourists.",
           "answers": [
-            "sardines",
-            "sardine",
-            "沙丁鱼"
+            "places inaccessible to tourists"
           ],
-          "explanation": "野餐吃的是沙丁鱼罐头，不是金枪鱼罐头。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "tuna",
-                "金枪鱼"
-              ],
-              "feedback": "野餐吃的是沙丁鱼罐头，不是金枪鱼罐头。"
-            }
-          ],
+          "explanation": "本句定语从句的关系代词 which 和 be 动词 are 可以一起省略，保留形容词短语 inaccessible to tourists 修饰 places。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 2,
-            "quote": "Sitting down on a dilapidated wooden fence near the field, we opened a couple of tins of sardines and had a picnic lunch."
+            "paragraphIndex": 0,
+            "quote": "places which are inaccessible to tourists"
           }
         }
       ]
@@ -2710,45 +2417,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "哈丽特姑妈为什么解雇了贝茜？",
+          "focus": "grammar",
+          "grammarPoint": "Second conditional",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Second conditional. Choose the correct form: If she ___ alive today she would not be able to air her views",
           "options": [
-            "贝茜从来不会做饭，也从未得到信任",
-            "贝茜要求每天工作超过八小时",
-            "她发现贝茜醉酒，并在上菜时出了大乱子"
+            "will be",
+            "were",
+            "is"
           ],
-          "answer": 2,
-          "explanation": "贝茜曾连续三年表现出色，但突然暴露醉酒问题；事后还发现她衣柜里堆着空酒瓶。",
+          "answer": 1,
+          "explanation": "假设现在的非真实情形，if 从句用过去式，主句用 would + 动词原形。",
           "wrongReasons": [
-            "“贝茜从来不会做饭，也从未得到信任”与本课内容不符。贝茜曾连续三年表现出色，但突然暴露醉酒问题；事后还发现她衣柜里堆着空酒瓶。",
-            "“贝茜要求每天工作超过八小时”与本课内容不符。贝茜曾连续三年表现出色，但突然暴露醉酒问题；事后还发现她衣柜里堆着空酒瓶。",
-            ""
+            "“will be”不符合这里的语法结构。假设现在的非真实情形，if 从句用过去式，主句用 would + 动词原形。",
+            "",
+            "“is”不符合这里的语法结构。假设现在的非真实情形，if 从句用过去式，主句用 would + 动词原形。"
           ],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "She reluctantly came to the conclusion that Bessie was drunk."
+            "paragraphIndex": 0,
+            "quote": "If she were alive today she would not be able to air her views"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "姑妈的乡间大宅叫什么？请写英文名称。",
+          "focus": "grammar",
+          "grammarPoint": "Active and passive",
+          "exercise": "transformation",
+          "prompt": "Change to active. Begin with \"People\": Servants were employed to do housework.",
           "answers": [
-            "The Gables",
-            "Gables"
+            "People employed servants to do housework."
           ],
-          "explanation": "The Gables是姑妈的住宅，Endley Farm属于另一篇故事。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "Endley Farm",
-                "Endley"
-              ],
-              "feedback": "The Gables是姑妈的住宅，Endley Farm属于另一篇故事。"
-            }
-          ],
+          "explanation": "主动和被动转换须保留时态；被动主语是原主动宾语，使用 be + 过去分词。",
+          "commonMistakes": [],
           "evidence": {
             "paragraphIndex": 0,
-            "quote": "She had a huge, rambling country house called ‘The Gables’."
+            "quote": "servants were employed to do housework"
           }
         }
       ]
@@ -2763,50 +2467,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "叙述者为什么又恢复了在电视前打瞌睡的老习惯？",
+          "focus": "grammar",
+          "grammarPoint": "Infinitive complement",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Infinitive complement. Choose the correct form: We resolve ___ up earlier each morning",
           "options": [
-            "全家从第一天起就禁止他做任何阅读",
-            "他觉得独自在房间读书又冷又孤单，转去电视前假装读书",
-            "他已按计划读完了每分钟一千词的训练书"
+            "getting",
+            "get",
+            "to get"
           ],
-          "answer": 1,
-          "explanation": "独自读书时的寒冷和孤独使他回到电视前，随后再次打瞌睡，新年计划又落空。",
+          "answer": 2,
+          "explanation": "此处动词或形容词后接 to + 动词原形，不接动名词。",
           "wrongReasons": [
-            "“全家从第一天起就禁止他做任何阅读”与本课内容不符。独自读书时的寒冷和孤独使他回到电视前，随后再次打瞌睡，新年计划又落空。",
-            "",
-            "“他已按计划读完了每分钟一千词的训练书”与本课内容不符。独自读书时的寒冷和孤独使他回到电视前，随后再次打瞌睡，新年计划又落空。"
+            "“getting”不符合这里的语法结构。此处动词或形容词后接 to + 动词原形，不接动名词。",
+            "“get”不符合这里的语法结构。此处动词或形容词后接 to + 动词原形，不接动名词。",
+            ""
           ],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "One night, however, feeling cold and lonely, I went downstairs and sat in front of the television pretending to read."
+            "paragraphIndex": 0,
+            "quote": "We resolve to get up earlier each morning"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "年初每天计划的体操最初持续几分钟？请写数字或英文数词。",
+          "focus": "grammar",
+          "grammarPoint": "Question formation",
+          "exercise": "transformation",
+          "prompt": "Make a yes/no question: The New Year is a time for resolutions.",
           "answers": [
-            "11",
-            "eleven",
-            "eleven minutes",
-            "11分钟",
-            "十一分钟",
-            "十一"
+            "Is the New Year a time for resolutions?"
           ],
-          "explanation": "最初的运动时长是十一分钟；一月十日是后来计划彻底落空的日期。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "10",
-                "ten",
-                "十分钟"
-              ],
-              "feedback": "最初的运动时长是十一分钟；一月十日是后来计划彻底落空的日期。"
-            }
-          ],
+          "explanation": "一般疑问句将已有的助动词或 be 提到主语前；没有助动词的实义动词句需用 do/does/did。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "The daily exercises lasted only eleven minutes and I proposed to do them early in the morning before anyone had got up."
+            "paragraphIndex": 0,
+            "quote": "The New Year is a time for resolutions."
           }
         }
       ]
@@ -2821,45 +2517,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "文章为什么认为巴格里特的电脑预测格外令人惊讶？",
+          "focus": "grammar",
+          "grammarPoint": "Modal perfect",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Modal perfect. Choose the correct form: Who ___",
           "options": [
-            "他在电脑尚不普及时就预见了多种后来常见的用途",
-            "他准确预言了互联网的全部细节和名称",
-            "他坚信电脑会自行思考并统治世界"
+            "could have imagined",
+            "could has imagined",
+            "could have imagine"
           ],
           "answer": 0,
-          "explanation": "巴格里特早在二十世纪六十年代就预测了小型电脑、导航和辅助诊断等用途，但没有预见互联网。",
+          "explanation": "情态动词完成结构为情态动词 + have + 过去分词；have 不随主语变化。",
           "wrongReasons": [
             "",
-            "“他准确预言了互联网的全部细节和名称”与本课内容不符。巴格里特早在二十世纪六十年代就预测了小型电脑、导航和辅助诊断等用途，但没有预见互联网。",
-            "“他坚信电脑会自行思考并统治世界”与本课内容不符。巴格里特早在二十世纪六十年代就预测了小型电脑、导航和辅助诊断等用途，但没有预见互联网。"
+            "“could has imagined”不符合这里的语法结构。情态动词完成结构为情态动词 + have + 过去分词；have 不随主语变化。",
+            "“could have imagine”不符合这里的语法结构。情态动词完成结构为情态动词 + have + 过去分词；have 不随主语变化。"
           ],
           "evidence": {
-            "paragraphIndex": 2,
-            "quote": "Considering how recent these developments are, it is even more remarkable that as long ago as the 1960s, an Englishman, Leon Bagrit, was able to predict some of the uses of computers which we know today."
+            "paragraphIndex": 0,
+            "quote": "Who could have imagined"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "文中把一九七五年推出的哪台机器称为第一台家用电脑？请写英文名称。",
+          "focus": "grammar",
+          "grammarPoint": "Dummy it",
+          "exercise": "transformation",
+          "prompt": "Rewrite using \"it\" as a formal subject and an infinitive: Predicting the future is notoriously difficult.",
           "answers": [
-            "Altair",
-            "the Altair"
+            "It is notoriously difficult to predict the future."
           ],
-          "explanation": "按文中的历史叙述，一九七五年的Altair首先指向家用电脑的未来，Apple和IBM产品随后出现。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "Apple",
-                "IBM"
-              ],
-              "feedback": "按文中的历史叙述，一九七五年的Altair首先指向家用电脑的未来，Apple和IBM产品随后出现。"
-            }
-          ],
+          "explanation": "形式主语或形式宾语 it 占位，真正的内容由后面的不定式或从句承担。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "In 1975, a primitive machine called the Altair, was launched in the USA."
+            "paragraphIndex": 0,
+            "quote": "Predicting the future is notoriously difficult."
           }
         }
       ]
@@ -2874,50 +2567,49 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "哈里为什么停止了编造化妆品名称捉弄店员的游戏？",
+          "focus": "grammar",
+          "grammarPoint": "Second conditional",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Second conditional. Choose the correct form: If you were to ask Harry what was in the bottle, he ___ you",
           "options": [
-            "店员每次都立刻识破骗局并赶他出去",
-            "他买的第一瓶香泥经证实只是普通清水",
-            "店员真的拿出香泥，他只好花钱买下而自认失败"
+            "will tell",
+            "would tell",
+            "would told"
           ],
-          "answer": 2,
-          "explanation": "哈里以为香泥不存在，没想到店里真有，最后不得不买下，意识到这种玩笑可能很花钱。",
+          "answer": 1,
+          "explanation": "假设现在的非真实情形，if 从句用过去式，主句用 would + 动词原形。",
           "wrongReasons": [
-            "“店员每次都立刻识破骗局并赶他出去”与本课内容不符。哈里以为香泥不存在，没想到店里真有，最后不得不买下，意识到这种玩笑可能很花钱。",
-            "“他买的第一瓶香泥经证实只是普通清水”与本课内容不符。哈里以为香泥不存在，没想到店里真有，最后不得不买下，意识到这种玩笑可能很花钱。",
-            ""
+            "“will tell”不符合这里的语法结构。假设现在的非真实情形，if 从句用过去式，主句用 would + 动词原形。",
+            "",
+            "“would told”不符合这里的语法结构。假设现在的非真实情形，if 从句用过去式，主句用 would + 动词原形。"
           ],
           "evidence": {
-            "paragraphIndex": 2,
-            "quote": "From then on, Harry decided that this little game he had invented might prove to be expensive."
+            "paragraphIndex": 0,
+            "quote": "If you were to ask Harry what was in the bottle, he would tell you"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "哈里最后为那瓶香泥付了多少英镑？请写金额。",
+          "focus": "grammar",
+          "grammarPoint": "Present simple passive",
+          "exercise": "correction",
+          "prompt": "Correct the grammatical error. Rewrite the whole sentence or phrase: It is fill with what looks like a thick, greyish substance.",
           "answers": [
-            "20",
-            "£20",
-            "twenty pounds",
-            "20 pounds",
-            "二十英镑",
-            "20英镑"
+            "It is filled with what looks like a thick, greyish substance."
           ],
-          "explanation": "他最后付了twenty pounds（二十英镑），不是二百。",
+          "explanation": "一般现在时被动结构为 am/is/are + 过去分词；主语是动作的承受者。",
           "commonMistakes": [
             {
               "answers": [
-                "200",
-                "£200",
-                "二百英镑"
+                "It is fill with what looks like a thick, greyish substance."
               ],
-              "feedback": "他最后付了twenty pounds（二十英镑），不是二百。"
+              "feedback": "一般现在时被动结构为 am/is/are + 过去分词；主语是动作的承受者。"
             }
           ],
           "evidence": {
-            "paragraphIndex": 2,
-            "quote": "He was glad to get away with a mere twenty pounds and he beat a hasty retreat, clutching the precious bottle under his arm."
+            "paragraphIndex": 0,
+            "quote": "it is filled with what looks like a thick, greyish substance"
           }
         }
       ]
@@ -2932,50 +2624,43 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "监察专员怎样查明了警察粗暴对待外国人的事实？",
+          "focus": "grammar",
+          "grammarPoint": "Gerund after a preposition",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Gerund after a preposition. Choose the correct form: system for ___ the individual citizen",
           "options": [
-            "未经调查便立即修改了全国法律",
-            "收到第二次类似投诉后，派律师实地调查",
-            "只凭最初档案的否认就永久结案"
+            "protect",
+            "to protect",
+            "protecting"
           ],
-          "answer": 1,
-          "explanation": "最初官方档案未显示问题，第二起相似投诉促使专员派人核查，才发现档案外的偏见和粗暴行为。",
+          "answer": 2,
+          "explanation": "介词后接名词或动名词；动词要改为 -ing 形式，不能直接接动词原形。",
           "wrongReasons": [
-            "“未经调查便立即修改了全国法律”与本课内容不符。最初官方档案未显示问题，第二起相似投诉促使专员派人核查，才发现档案外的偏见和粗暴行为。",
-            "",
-            "“只凭最初档案的否认就永久结案”与本课内容不符。最初官方档案未显示问题，第二起相似投诉促使专员派人核查，才发现档案外的偏见和粗暴行为。"
+            "“protect”不符合这里的语法结构。介词后接名词或动名词；动词要改为 -ing 形式，不能直接接动词原形。",
+            "“to protect”不符合这里的语法结构。介词后接名词或动名词；动词要改为 -ing 形式，不能直接接动词原形。",
+            ""
           ],
           "evidence": {
-            "paragraphIndex": 2,
-            "quote": "It was impossible for the Ombudsman to take action, but when he received a similar complaint from another foreigner in the same village, he immediately sent one of his lawyers to investigate the matter."
+            "paragraphIndex": 0,
+            "quote": "system for protecting the individual citizen"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "公民必须用什么形式向监察专员提出投诉？请写形式（中文或英文）。",
+          "focus": "grammar",
+          "grammarPoint": "Active and passive",
+          "exercise": "transformation",
+          "prompt": "Change to active. Begin with \"Other countries\": It has been adopted in other countries too.",
           "answers": [
-            "in writing",
-            "writing",
-            "written",
-            "书面",
-            "书面形式",
-            "书面投诉"
+            "Other countries have adopted it too.",
+            "Other countries have adopted it, too."
           ],
-          "explanation": "文中要求投诉必须以书面形式提出，而不是只打电话。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "by telephone",
-                "telephone",
-                "电话"
-              ],
-              "feedback": "文中要求投诉必须以书面形式提出，而不是只打电话。"
-            }
-          ],
+          "explanation": "主动和被动转换须保留时态；被动主语是原主动宾语，使用 be + 过去分词。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "As complaints must be made in writing, the Ombudsman receives an average of 1,200 letters a year."
+            "paragraphIndex": 0,
+            "quote": "it has been adopted in other countries too"
           }
         }
       ]
@@ -2990,47 +2675,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "蚂蚁最后怎样绕过树干上的黏胶带？",
+          "focus": "grammar",
+          "grammarPoint": "Present perfect passive",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Present perfect passive. Choose the correct form: We ___ up to fear insects.",
           "options": [
-            "沿房屋墙壁爬到树叶上",
-            "把整棵桃树搬离了花园",
-            "停止爬树，全部离开了院子"
+            "have been brought",
+            "have brought",
+            "have been bringing"
           ],
           "answer": 0,
-          "explanation": "蚂蚁找到经房屋墙壁到树叶的新路线，使叙述者的胶带封锁失败。",
+          "explanation": "现在完成时被动结构为 has/have been + 过去分词；注意主语的单复数。",
           "wrongReasons": [
             "",
-            "“把整棵桃树搬离了花园”与本课内容不符。蚂蚁找到经房屋墙壁到树叶的新路线，使叙述者的胶带封锁失败。",
-            "“停止爬树，全部离开了院子”与本课内容不符。蚂蚁找到经房屋墙壁到树叶的新路线，使叙述者的胶带封锁失败。"
+            "“have brought”不符合这里的语法结构。现在完成时被动结构为 has/have been + 过去分词；注意主语的单复数。",
+            "“have been bringing”不符合这里的语法结构。现在完成时被动结构为 has/have been + 过去分词；注意主语的单复数。"
           ],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "They were climbing up the wall of the house and then on to the leaves of the tree."
+            "paragraphIndex": 0,
+            "quote": "We have been brought up to fear insects."
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "蚂蚁爬树是为了从哪种小虫身上获取甜汁？请写虫名（中文或英文）。",
+          "focus": "grammar",
+          "grammarPoint": "Preposition choice",
+          "exercise": "gap-fill",
+          "prompt": "Complete with the correct preposition: We regard them ___ unnecessary creatures. Write exactly 1 word.",
           "answers": [
-            "aphids",
-            "aphid",
-            "蚜虫"
+            "as"
           ],
-          "explanation": "树叶下聚集的是蚜虫，蚂蚁从它们那里获取甜汁，并非向蜜蜂取蜜。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "bees",
-                "bee",
-                "蜜蜂"
-              ],
-              "feedback": "树叶下聚集的是蚜虫，蚂蚁从它们那里获取甜汁，并非向蜜蜂取蜜。"
-            }
-          ],
+          "explanation": "注意固定结构中介词与其后成分的搭配；介词后接名词或动名词。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "Clusters of tiny insects called aphids were to be found on the underside of the leaves."
+            "paragraphIndex": 0,
+            "quote": "We regard them as unnecessary creatures"
           }
         }
       ]
@@ -3045,46 +2725,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "按文章的解释，寻找外星生命的望远镜为什么需要远离地球？",
+          "focus": "grammar",
+          "grammarPoint": "Gerund subject",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Gerund subject. Choose the correct form: Finding planets ___ proving hard enough",
           "options": [
-            "越靠近地球，任何望远镜都完全无法看见月球",
-            "望远镜只能在行星表面使用",
-            "地球热量和太阳系尘埃会干扰探测"
+            "are",
+            "is",
+            "be"
           ],
-          "answer": 2,
-          "explanation": "文章说明地面热量会妨碍探测，近地空间又受尘埃影响，更远处尘埃才会变稀薄。",
+          "answer": 1,
+          "explanation": "动名词短语可作主语；在此处不能直接用动词原形作主语。",
           "wrongReasons": [
-            "“越靠近地球，任何望远镜都完全无法看见月球”与本课内容不符。文章说明地面热量会妨碍探测，近地空间又受尘埃影响，更远处尘埃才会变稀薄。",
-            "“望远镜只能在行星表面使用”与本课内容不符。文章说明地面热量会妨碍探测，近地空间又受尘埃影响，更远处尘埃才会变稀薄。",
-            ""
+            "“are”不符合这里的语法结构。动名词短语可作主语；在此处不能直接用动词原形作主语。",
+            "",
+            "“be”不符合这里的语法结构。动名词短语可作主语；在此处不能直接用动词原形作主语。"
           ],
           "evidence": {
-            "paragraphIndex": 2,
-            "quote": "A telescope would have to be as far away as the planet Jupiter to look for life in outer space, because the dust becomes thinner the further we travel towards the outer edges of our own solar system."
+            "paragraphIndex": 0,
+            "quote": "Finding planets is proving hard enough"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "文中认为其他行星上最可能先发现哪种微小生命？请写生命形式（中文或英文）。",
+          "focus": "grammar",
+          "grammarPoint": "Dummy it",
+          "exercise": "transformation",
+          "prompt": "Rewrite using \"it\" as a formal object: Recent developments have made detecting planets possible.",
           "answers": [
-            "bacteria",
-            "bacterium",
-            "细菌"
+            "Recent developments have made it possible to detect planets."
           ],
-          "explanation": "文章把细菌作为更可能发现的低等生命形式，而小绿人仍属于科幻想象。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "little green men",
-                "小绿人"
-              ],
-              "feedback": "文章把细菌作为更可能发现的低等生命形式，而小绿人仍属于科幻想象。"
-            }
-          ],
+          "explanation": "形式主语或形式宾语 it 占位，真正的内容由后面的不定式或从句承担。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 2,
-            "quote": "The life forms most likely to develop on a planet would be bacteria."
+            "paragraphIndex": 0,
+            "quote": "Recent developments in astronomy have made it possible to detect planets"
           }
         }
       ]
@@ -3099,47 +2775,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "洪水中，叙述者一家为什么担心新搬来的邻居？",
+          "focus": "grammar",
+          "grammarPoint": "Modal bare infinitive",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Modal bare infinitive. Choose the correct form: Without it we could not ___ a living.",
           "options": [
-            "叙述者自家所有牲畜已经冲入邻居房子",
-            "邻居农场地势低，电话又因洪水中断",
-            "邻居住在山顶并明确拒绝任何联系"
+            "made",
+            "to make",
+            "make"
           ],
-          "answer": 1,
-          "explanation": "新邻居的农场地势较低，洪水还切断电话，使叙述者无法了解他们的情况。",
+          "answer": 2,
+          "explanation": "情态动词后直接接动词原形，不加 to，也不加第三人称单数词尾。",
           "wrongReasons": [
-            "“叙述者自家所有牲畜已经冲入邻居房子”与本课内容不符。新邻居的农场地势较低，洪水还切断电话，使叙述者无法了解他们的情况。",
-            "",
-            "“邻居住在山顶并明确拒绝任何联系”与本课内容不符。新邻居的农场地势较低，洪水还切断电话，使叙述者无法了解他们的情况。"
+            "“made”不符合这里的语法结构。情态动词后直接接动词原形，不加 to，也不加第三人称单数词尾。",
+            "“to make”不符合这里的语法结构。情态动词后直接接动词原形，不加 to，也不加第三人称单数词尾。",
+            ""
           ],
           "evidence": {
-            "paragraphIndex": 3,
-            "quote": "We were, however, worried about our nearest neighbours, whose farm was low lying and who were newcomers to the district."
+            "paragraphIndex": 0,
+            "quote": "Without it we could not make a living."
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "邻居一家及动物乘什么漂在洪水中？请写载具（中文或英文）。",
+          "focus": "grammar",
+          "grammarPoint": "Relative subject",
+          "exercise": "transformation",
+          "prompt": "Combine using \"which\". Begin with \"The river which forms the boundary\": The river forms the boundary. It plays an important part in our lives.",
           "answers": [
-            "raft",
-            "a raft",
-            "木筏",
-            "筏子"
+            "The river which forms the boundary plays an important part in our lives."
           ],
-          "explanation": "出现的是载着全家和动物的木筏，并不是油轮。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "tanker",
-                "油轮"
-              ],
-              "feedback": "出现的是载着全家和动物的木筏，并不是油轮。"
-            }
-          ],
+          "explanation": "关系词在定语从句中作主语；指物可用 which，不能用 what 或表示所属的 whose。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 3,
-            "quote": "Suddenly a raft appeared, looking rather like Noah's ark, carrying the whole family, a few hens, the dogs, a cat, and a bird in a cage."
+            "paragraphIndex": 0,
+            "quote": "The river which forms the eastern boundary of our farm"
           }
         }
       ]
@@ -3154,50 +2825,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "叙述者为什么两次沿地图路线前行，却始终找不到老村庄？",
+          "focus": "grammar",
+          "grammarPoint": "Bare infinitive after let",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Bare infinitive after let. Choose the correct form: I stopped to let the car ___ off",
           "options": [
-            "村庄和山谷已被人工水库淹没",
-            "父亲从来没有在那个地区住过",
-            "村庄只是临时关闭了所有道路"
+            "cool",
+            "to cool",
+            "cooling"
           ],
           "answer": 0,
-          "explanation": "路线没有把他带到记忆中的村庄，因为村庄已被人工水库淹没；旧地图也没有标出湖。",
+          "explanation": "let + 宾语 + 动词原形，不能加 to，也不能用 -ing。",
           "wrongReasons": [
             "",
-            "“父亲从来没有在那个地区住过”与本课内容不符。路线没有把他带到记忆中的村庄，因为村庄已被人工水库淹没；旧地图也没有标出湖。",
-            "“村庄只是临时关闭了所有道路”与本课内容不符。路线没有把他带到记忆中的村庄，因为村庄已被人工水库淹没；旧地图也没有标出湖。"
+            "“to cool”不符合这里的语法结构。let + 宾语 + 动词原形，不能加 to，也不能用 -ing。",
+            "“cooling”不符合这里的语法结构。let + 宾语 + 动词原形，不能加 to，也不能用 -ing。"
           ],
           "evidence": {
-            "paragraphIndex": 2,
-            "quote": "The lake was not a natural one, but a man-made reservoir."
+            "paragraphIndex": 0,
+            "quote": "I stopped to let the car cool off"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "父亲带叙述者移居国外时，叙述者几岁？请写年龄（中文或英文）。",
+          "focus": "grammar",
+          "grammarPoint": "Past perfect",
+          "exercise": "gap-fill",
+          "prompt": "Use the past perfect of \"expect\": I ___ to be near my objective by now. Write exactly 2 words.",
           "answers": [
-            "5",
-            "five",
-            "five years old",
-            "5岁",
-            "五岁",
-            "五"
+            "had expected"
           ],
-          "explanation": "移居时只有五岁；十八年是离乡至此次回访所经过的时间。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "18",
-                "eighteen",
-                "十八岁"
-              ],
-              "feedback": "移居时只有五岁；十八年是离乡至此次回访所经过的时间。"
-            }
-          ],
+          "explanation": "过去完成时为 had + 过去分词，不能在 had 后接一般过去式或 -ing。",
+          "commonMistakes": [],
           "evidence": {
             "paragraphIndex": 0,
-            "quote": "I was only five when my father had taken me abroad, and that was eighteen years ago."
+            "quote": "I had expected to be near my objective by now"
           }
         }
       ]
@@ -3212,48 +2875,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "警察为什么推测盗贼当天还抢过别的地方？",
+          "focus": "grammar",
+          "grammarPoint": "Relative place",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Relative place. Choose the correct form: ___ she lived",
           "options": [
-            "门口有一张盗贼留下的全部行程表",
-            "老太太已经亲眼看见他们进入另一间公寓",
-            "发现的红色包裹中装着并不属于老太太的珠宝"
+            "which",
+            "where",
+            "what"
           ],
-          "answer": 2,
-          "explanation": "包裹里的珠宝并非老太太所有，暗示盗贼在进入她家前已做过别的案子。",
+          "answer": 1,
+          "explanation": "先行词在从句中作地点状语，用 where；从句的主语和谓语已经完整。",
           "wrongReasons": [
-            "“门口有一张盗贼留下的全部行程表”与本课内容不符。包裹里的珠宝并非老太太所有，暗示盗贼在进入她家前已做过别的案子。",
-            "“老太太已经亲眼看见他们进入另一间公寓”与本课内容不符。包裹里的珠宝并非老太太所有，暗示盗贼在进入她家前已做过别的案子。",
-            ""
+            "“which”不符合这里的语法结构。先行词在从句中作地点状语，用 where；从句的主语和谓语已经完整。",
+            "",
+            "“what”不符合这里的语法结构。先行词在从句中作地点状语，用 where；从句的主语和谓语已经完整。"
           ],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "There was no trace of fingerprints, but the inspector found a dirty red bundle that contained jewellery which the old lady said was not hers."
+            "paragraphIndex": 0,
+            "quote": "where she lived"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "老太太发现被盗后，先请谁陪她检查公寓？请写人员身份（中文或英文）。",
+          "focus": "grammar",
+          "grammarPoint": "Gerund after a preposition",
+          "exercise": "transformation",
+          "prompt": "Reduce the time clause to a phrase with a gerund: before she went out. Use \"before\" followed immediately by a gerund.",
           "answers": [
-            "porter",
-            "the porter",
-            "门房",
-            "门卫",
-            "看门人"
+            "before going out"
           ],
-          "explanation": "她先去找门房陪同查看，后来才打电话向女儿求助。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "daughter",
-                "女儿"
-              ],
-              "feedback": "她先去找门房陪同查看，后来才打电话向女儿求助。"
-            }
-          ],
+          "explanation": "介词后接名词或动名词；动词要改为 -ing 形式，不能直接接动词原形。",
+          "commonMistakes": [],
           "evidence": {
             "paragraphIndex": 0,
-            "quote": "Her first impulse was to go round all the rooms looking for the thieves, but then she decided that at her age it might be more prudent to have someone with her, so she went to fetch the porter from his basement."
+            "quote": "before going out"
           }
         }
       ]
@@ -3268,46 +2925,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "作者认为有意识的收藏爱好与随意囤积杂物有何不同？",
+          "focus": "grammar",
+          "grammarPoint": "Gerund after a preposition",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Gerund after a preposition. Choose the correct form: without ___ aware of doing so",
           "options": [
-            "收藏的唯一价值是完全不占任何空间",
-            "收藏能带来学习、交友和逐渐增长的自信",
-            "收藏只会让人永远足不出户而不学习"
+            "be",
+            "to be",
+            "being"
           ],
-          "answer": 1,
-          "explanation": "认真收藏会促使人查资料、结交同好、交流和演讲，从而增长知识与自信，不能等同于无选择地囤杂物。",
+          "answer": 2,
+          "explanation": "介词后接名词或动名词；动词要改为 -ing 形式，不能直接接动词原形。",
           "wrongReasons": [
-            "“收藏的唯一价值是完全不占任何空间”与本课内容不符。认真收藏会促使人查资料、结交同好、交流和演讲，从而增长知识与自信，不能等同于无选择地囤杂物。",
-            "",
-            "“收藏只会让人永远足不出户而不学习”与本课内容不符。认真收藏会促使人查资料、结交同好、交流和演讲，从而增长知识与自信，不能等同于无选择地囤杂物。"
+            "“be”不符合这里的语法结构。介词后接名词或动名词；动词要改为 -ing 形式，不能直接接动词原形。",
+            "“to be”不符合这里的语法结构。介词后接名词或动名词；动词要改为 -ing 形式，不能直接接动词原形。",
+            ""
           ],
           "evidence": {
-            "paragraphIndex": 2,
-            "quote": "This hobby educates one not only in the chosen subject, but also in general matters which have some bearing on it."
+            "paragraphIndex": 0,
+            "quote": "without being aware of doing so"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "节俭的人拆包裹后会保留细绳和哪种包装纸？请写纸张（中文或英文）。",
+          "focus": "grammar",
+          "grammarPoint": "Present simple passive",
+          "exercise": "transformation",
+          "prompt": "Make this statement passive. Begin with \"Unwanted objects\" and omit the agent: They leave unwanted objects in drawers, cupboards and attics for years.",
           "answers": [
-            "brown paper",
-            "牛皮纸",
-            "棕色包装纸"
+            "Unwanted objects are left in drawers, cupboards and attics for years."
           ],
-          "explanation": "为再次包装而保存的是细绳和brown paper（牛皮纸），不是文中另一位收集服装剪报的人所用的报纸。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "newspaper",
-                "报纸"
-              ],
-              "feedback": "为再次包装而保存的是细绳和brown paper（牛皮纸），不是文中另一位收集服装剪报的人所用的报纸。"
-            }
-          ],
+          "explanation": "一般现在时被动结构为 am/is/are + 过去分词；主语是动作的承受者。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "Among these I would list string and brown paper, kept by thrifty people when a parcel has been opened, to save buying these two requisites."
+            "paragraphIndex": 0,
+            "quote": "They leave unwanted objects in drawers, cupboards and attics for years"
           }
         }
       ]
@@ -3322,48 +2975,54 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "女孩已经提前到站，为什么仍眼看着火车离开？",
+          "focus": "grammar",
+          "grammarPoint": "Inversion",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Inversion. Choose the correct form: Only in a sparsely-populated rural community ___ possible to disregard it.",
           "options": [
-            "这趟车在该站只收邮件，不接乘客",
-            "她到站时其实比时刻表晚了两小时",
-            "站长误以为火车今天全部停运"
+            "is it",
+            "it is",
+            "it does"
           ],
           "answer": 0,
-          "explanation": "父亲未注意时刻表的小标记，这列车在该站只停下来装邮件，因此女孩不能上车。",
+          "explanation": "否定或限制性成分位于句首等规定情形会引起主语和助动词或系动词倒装。",
           "wrongReasons": [
             "",
-            "“她到站时其实比时刻表晚了两小时”与本课内容不符。父亲未注意时刻表的小标记，这列车在该站只停下来装邮件，因此女孩不能上车。",
-            "“站长误以为火车今天全部停运”与本课内容不符。父亲未注意时刻表的小标记，这列车在该站只停下来装邮件，因此女孩不能上车。"
+            "“it is”不符合这里的语法结构。否定或限制性成分位于句首等规定情形会引起主语和助动词或系动词倒装。",
+            "“it does”不符合这里的语法结构。否定或限制性成分位于句首等规定情形会引起主语和助动词或系动词倒装。"
           ],
           "evidence": {
-            "paragraphIndex": 2,
-            "quote": "He agreed that a train did come into the station at the time on the paper and that it did stop, but only to take on mail, not passengers."
+            "paragraphIndex": 0,
+            "quote": "Only in a sparsely-populated rural community is it possible to disregard it."
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "时刻表旁边表示只办理邮件业务的小字母是什么？请写字母。",
+          "focus": "grammar",
+          "grammarPoint": "Modal passive",
+          "exercise": "correction",
+          "prompt": "Correct the grammatical error. Rewrite the whole sentence or phrase: Correct the passive form: Nothing could ever be bring to a conclusion.",
           "answers": [
-            "o",
-            "O"
+            "Nothing could ever be brought to a conclusion."
           ],
-          "explanation": "站长指出的是一个很小的字母o，不是x。",
+          "explanation": "情态动词被动结构为情态动词 + be + 过去分词，不是 been 或 being。",
           "commonMistakes": [
             {
               "answers": [
-                "x",
-                "X"
+                "Correct the passive form: Nothing could ever be bring to a conclusion."
               ],
-              "feedback": "站长指出的是一个很小的字母o，不是x。"
+              "feedback": "情态动词被动结构为情态动词 + be + 过去分词，不是 been 或 being。"
             }
           ],
           "evidence": {
-            "paragraphIndex": 2,
-            "quote": "The porter went to fetch one and arrived back with the station master, who produced it with a flourish and pointed out a microscopic ‘o’ beside the time of the arrival of the train at his station; this little ‘o’ indicated that the train only stopped for mail."
+            "paragraphIndex": 0,
+            "quote": "nothing could ever be brought to a conclusion"
           }
         }
       ]
     }
-  ]
+  ],
+  "language": "en",
+  "scope": "grammar"
 }

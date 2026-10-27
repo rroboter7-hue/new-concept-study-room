@@ -1,6 +1,6 @@
 {
-  "build": "2026-10-27-book2-usage-sources",
-  "preparedAt": "2026-10-27T04:11:51.006Z",
+  "build": "2026-10-27-book2-usage-grammar",
+  "preparedAt": "2026-10-27T04:19:36.934Z",
   "book2": {
     "book": 2,
     "total": 96,
@@ -190,8 +190,8 @@
       "editorialNoticeAcrossAllPracticeModes": true
     }
   },
-  "staticFiles": 4053,
-  "staticBytes": 732299889,
+  "staticFiles": 4054,
+  "staticBytes": 734979659,
   "nativeearsAdvancedAudio": {
     "books": {
       "3": 60,
@@ -434,9 +434,21 @@
     "choice": 276,
     "short": 276,
     "source": "self-authored-with-exact-passage-evidence",
-    "grading": "exact-closed-fact-aliases-and-specific-misconceptions",
+    "grading": "explicit-grammar-form-aliases-and-specific-misconceptions",
     "unmatchedParaphrases": "needs-check",
-    "savedIndependently": true
+    "savedIndependently": true,
+    "scope": "grammar",
+    "questionLanguage": "en",
+    "answerLanguage": "en",
+    "formats": [
+      "gap-fill",
+      "transformation",
+      "correction",
+      "word-order",
+      "form-choice"
+    ],
+    "chineseSupport": "post-answer-rule-explanations",
+    "storyComprehensionRemoved": true
   },
   "performance": {
     "lazyTextLibrary": true,
@@ -470,5 +482,26 @@
     "contextWordMappings": 1,
     "gitHistoryRewritten": false
   },
-  "staticByteScope": "Runtime source files, excluding release.json and dev/tests/Git/build caches; source WAVs are converted for delivery. Use delivery-report.json publishedBytes for deployed capacity."
+  "staticByteScope": "Runtime source files, excluding release.json and dev/tests/Git/build caches; source WAVs are converted for delivery. Use delivery-report.json publishedBytes for deployed capacity.",
+  "lessonWordPractice": {
+    "sourceBoundAllReadings": 276,
+    "firstAppearanceSpellings": 7447,
+    "includesNewForms": true,
+    "sourceTitleAndBody": true,
+    "allTargetsReachable": true,
+    "fiveSentencesPerTarget": true,
+    "practiceIsNotMastery": true,
+    "separateTargetDrafts": true,
+    "optionalEarlierWordsAndPhrases": true,
+    "stablePerLessonRecommendations": true,
+    "actualCheckedUseRotates": true,
+    "recommendationsWithoutSelectionAlsoCountWhenUsed": true,
+    "unusedFirstThenLeastRecent": true,
+    "twoColumnMobilePicker": true,
+    "searchKeyboardOnTapOnly": true,
+    "compactSingleRowPickerFooter": true,
+    "pendingMeanings": 260,
+    "lazyWordPickerRows": true,
+    "initialPickerRows": 80
+  }
 }

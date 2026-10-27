@@ -27,13 +27,14 @@ function setup({drafts={},current=lessons[2]}={}) {
 const find=(h,label)=>h.ui.wordBank().find(item=>item.label===label);
 const selected=h=>Array.from(h.ui.selectedOldItems(),item=>item.label).sort();
 
-test('drawer replaces source-course choices with three word classes and meaningful empty feedback',()=>{
+test('drawer starts with all old words and offers category and selected filters',()=>{
   const h=setup();let html=h.render();
-  assert.match(html,/选用旧词/);assert.doesNotMatch(html,/data-sentence-source=|data-sentence-select="old-(?:word|phrase)"|sentence-knowledge-source/);
+  assert.match(html,/全部旧词/);assert.doesNotMatch(html,/data-sentence-source=|data-sentence-select="old-(?:word|phrase)"|sentence-knowledge-source/);
   h.ui.openWordPicker(h.trigger);html=h.render();
   assert.match(html,/<dialog\b/);assert.match(html,/已学重点词表/);assert.match(html,/动词/);assert.match(html,/形容词/);assert.match(html,/习惯用法/);assert.match(html,/完成选择/);
   assert.ok(find(h,'send'));assert.ok(find(h,'friendly'));assert.ok(find(h,'make a decision'));
-  assert.equal(find(h,'postcard'),undefined);assert.equal(find(h,'damage'),undefined);assert.equal(find(h,'welcome'),undefined);
+  assert.ok(find(h,'postcard'));assert.equal(find(h,'damage'),undefined);assert.equal(find(h,'welcome'),undefined);
+  assert.equal(h.ui.wordCategory,'all');assert.match(html,/data-sentence-category="selected"/);
   assert.deepEqual(h.records,{});
 });
 
@@ -87,7 +88,7 @@ test('switching course and target keeps choices separate and source labels escap
 });
 
 test('new picker assets retain native dialog semantics, safe text and no external dependency',()=>{
-  const h=setup();h.render();h.ui.openWordPicker(h.trigger);const html=h.render();
+  const h=setup();h.render();h.ui.openWordPicker(h.trigger);const html=h.ui.wordPickerHTML()+h.ui.wordPickerListHTML();
   assert.match(html,/aria-labelledby=/);assert.match(html,/type="search"/);assert.match(html,/type="checkbox"/);assert.match(html,/role="tablist"/);assert.match(html,/aria-selected=/);
   assert.doesNotMatch(html,/https?:\/\/|<script\b/);
 });

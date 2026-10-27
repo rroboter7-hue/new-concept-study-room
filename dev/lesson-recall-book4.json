@@ -12,45 +12,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "不会书写的人们怎样保存自己的历史？",
+          "focus": "grammar",
+          "grammarPoint": "Modal perfect",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Modal perfect. Choose the correct form: They may also ___ wood and skins",
           "options": [
-            "把所有经历写进印刷书籍",
-            "只依靠同时代的录像资料",
-            "一代代讲述传说和史诗"
+            "has used",
+            "have use",
+            "have used"
           ],
           "answer": 2,
-          "explanation": "不会书写的人通过讲述并代代传承传说来保存历史，书面记录并不适用于这一前提。",
+          "explanation": "情态动词完成结构为情态动词 + have + 过去分词；have 不随主语变化。",
           "wrongReasons": [
-            "“把所有经历写进印刷书籍”与本课内容不符。不会书写的人通过讲述并代代传承传说来保存历史，书面记录并不适用于这一前提。",
-            "“只依靠同时代的录像资料”与本课内容不符。不会书写的人通过讲述并代代传承传说来保存历史，书面记录并不适用于这一前提。",
+            "“has used”不符合这里的语法结构。情态动词完成结构为情态动词 + have + 过去分词；have 不随主语变化。",
+            "“have use”不符合这里的语法结构。情态动词完成结构为情态动词 + have + 过去分词；have 不随主语变化。",
             ""
           ],
           "evidence": {
-            "paragraphIndex": 0,
-            "quote": "The only way that they can preserve their history is to recount it as sagas—legends handed down from one generation of storytellers to another."
+            "paragraphIndex": 2,
+            "quote": "They may also have used wood and skins"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "远古人类特别常用哪种石头制作工具？请写石料名（中文或英文）。",
+          "focus": "grammar",
+          "grammarPoint": "Neither ... nor",
+          "exercise": "transformation",
+          "prompt": "Combine with \"neither ... nor\": Archaeologists have no history. They have no legends. Begin with \"Archaeologists have\".",
           "answers": [
-            "flint",
-            "燧石"
+            "Archaeologists have neither history nor legends."
           ],
-          "explanation": "文中强调flint（燧石）较易加工，不是大理石。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "marble",
-                "大理石"
-              ],
-              "feedback": "文中强调flint（燧石）较易加工，不是大理石。"
-            }
-          ],
+          "explanation": "neither 与 nor 配对，表示两者都不；不能与 or 混用。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 2,
-            "quote": "Fortunately, however, ancient men made tools of stone, especially flint, because this is easier to shape than other kinds."
+            "paragraphIndex": 1,
+            "quote": "archaeologists have neither history nor legends"
           }
         }
       ]
@@ -65,50 +62,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "作者为什么主张把蜘蛛视为朋友？",
+          "focus": "grammar",
+          "grammarPoint": "Second conditional",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Second conditional. Choose the correct form: if it ___ not for the protection we get",
           "options": [
-            "它们主要靠吃农作物保护庄稼",
-            "它们消灭大量可能危害人类的昆虫",
-            "它们与昆虫完全属于同一种动物"
+            "were",
+            "will be",
+            "be"
           ],
-          "answer": 1,
-          "explanation": "文章论点是蜘蛛捕食许多害虫，从而对人类有益，并明确区分蜘蛛与昆虫。",
+          "answer": 0,
+          "explanation": "假设现在的非真实情形，if 从句用过去式，主句用 would + 动词原形。",
           "wrongReasons": [
-            "“它们主要靠吃农作物保护庄稼”与本课内容不符。文章论点是蜘蛛捕食许多害虫，从而对人类有益，并明确区分蜘蛛与昆虫。",
             "",
-            "“它们与昆虫完全属于同一种动物”与本课内容不符。文章论点是蜘蛛捕食许多害虫，从而对人类有益，并明确区分蜘蛛与昆虫。"
+            "“will be”不符合这里的语法结构。假设现在的非真实情形，if 从句用过去式，主句用 would + 动词原形。",
+            "“be”不符合这里的语法结构。假设现在的非真实情形，if 从句用过去式，主句用 would + 动词原形。"
           ],
           "evidence": {
             "paragraphIndex": 0,
-            "quote": "Because they destroy so many insects, and insects include some of the greatest enemies of the human race."
+            "quote": "if it were not for the protection we get"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "文中用腿的数量区分蜘蛛与昆虫：蜘蛛有几条腿？请写数量。",
+          "focus": "grammar",
+          "grammarPoint": "Gerund after a preposition",
+          "exercise": "gap-fill",
+          "prompt": "Complete with the correct form of \"kill\": Spiders are busy in ___ insects. Write exactly 1 word.",
           "answers": [
-            "8",
-            "eight",
-            "eight legs",
-            "八条",
-            "八条腿",
-            "八"
+            "killing"
           ],
-          "explanation": "蜘蛛有八条腿；文中说昆虫不超过六条。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "6",
-                "six",
-                "六条腿"
-              ],
-              "feedback": "蜘蛛有八条腿；文中说昆虫不超过六条。"
-            }
-          ],
+          "explanation": "介词后接名词或动名词；动词要改为 -ing 形式，不能直接接动词原形。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "One can tell the difference almost at a glance, for a spider always has eight legs and an insect never more than six."
+            "paragraphIndex": 2,
+            "quote": "Spiders are busy for at least half the year in killing insects."
           }
         }
       ]
@@ -123,50 +112,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "早期登山者与现代登山者选择路线的主要区别是什么？",
+          "focus": "grammar",
+          "grammarPoint": "Correlative comparison",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Correlative comparison. Choose the correct form: the more difficult it is, the ___ it is regarded",
           "options": [
-            "早期登山者主要找容易登顶的路线，现代人更追求路线难度",
-            "早期登山者只求刺激，完全不在意山顶",
-            "两者都只在已有铁路上登山"
+            "highly",
+            "more highly",
+            "most highly"
           ],
-          "answer": 0,
-          "explanation": "早期先驱的目标是登上尚未征服的山顶，因此寻找最容易的路线，而非刻意增加刺激。",
+          "answer": 1,
+          "explanation": "the + 比较级，the + 比较级，表示越……就越……。",
           "wrongReasons": [
+            "“highly”不符合这里的语法结构。the + 比较级，the + 比较级，表示越……就越……。",
             "",
-            "“早期登山者只求刺激，完全不在意山顶”与本课内容不符。早期先驱的目标是登上尚未征服的山顶，因此寻找最容易的路线，而非刻意增加刺激。",
-            "“两者都只在已有铁路上登山”与本课内容不符。早期先驱的目标是登上尚未征服的山顶，因此寻找最容易的路线，而非刻意增加刺激。"
+            "“most highly”不符合这里的语法结构。the + 比较级，the + 比较级，表示越……就越……。"
           ],
           "evidence": {
             "paragraphIndex": 0,
-            "quote": "The early climbers were looking for the easiest way to the top, because the summit was the prize they sought especially if it had never been attained before."
+            "quote": "the more difficult it is, the more highly it is regarded"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "文中说一些旅店供应的面包可能陈放多久？请写时长（中文或英文）。",
+          "focus": "grammar",
+          "grammarPoint": "Past deduction",
+          "exercise": "transformation",
+          "prompt": "Express a strong deduction about the past, using \"must have been\": The change to the Alps was very hard indeed.",
           "answers": [
-            "twelve months",
-            "12 months",
-            "one year",
-            "a year",
-            "十二个月",
-            "一年",
-            "12个月"
+            "The change to the Alps must have been very hard indeed."
           ],
-          "explanation": "文章说面包有时已有十二个月，不是十二天。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "twelve days",
-                "十二天"
-              ],
-              "feedback": "文章说面包有时已有十二个月，不是十二天。"
-            }
-          ],
+          "explanation": "对过去情况的推测用情态动词 + have + 过去分词，不能误用现在时结构。",
+          "commonMistakes": [],
           "evidence": {
             "paragraphIndex": 1,
-            "quote": "Such inns as there were were generally dirty and flea-ridden; the food simply local cheese accompanied by bread often twelve months old, all washed down with coarse wine."
+            "quote": "the change to the Alps must have been very hard indeed"
           }
         }
       ]
@@ -181,48 +162,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "按文中的实验叙述，薇拉的皮肤感知能力出现了什么限制？",
+          "focus": "grammar",
+          "grammarPoint": "Present perfect passive",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Present perfect passive. Choose the correct form: Several cases ___ in Russia recently",
           "options": [
-            "不管任何条件，她都可以用双手感知",
-            "她必须睁着眼才能通过皮肤感知",
-            "双手一湿，用手指感知的能力就消失"
+            "has been reported",
+            "have reported",
+            "have been reported"
           ],
           "answer": 2,
-          "explanation": "文本说她蒙眼时才表现出这种能力，而且手一湿，手指的感知能力便消失；这是阅读实验叙述，不是对能力真实性的独立证明。",
+          "explanation": "现在完成时被动结构为 has/have been + 过去分词；注意主语的单复数。",
           "wrongReasons": [
-            "“不管任何条件，她都可以用双手感知”与本课内容不符。文本说她蒙眼时才表现出这种能力，而且手一湿，手指的感知能力便消失；这是阅读实验叙述，不是对能力真实性的独立证明。",
-            "“她必须睁着眼才能通过皮肤感知”与本课内容不符。文本说她蒙眼时才表现出这种能力，而且手一湿，手指的感知能力便消失；这是阅读实验叙述，不是对能力真实性的独立证明。",
+            "“has been reported”不符合这里的语法结构。现在完成时被动结构为 has/have been + 过去分词；注意主语的单复数。",
+            "“have reported”不符合这里的语法结构。现在完成时被动结构为 has/have been + 过去分词；注意主语的单复数。",
             ""
           ],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "It was also found that although she could perceive things with her fingers this ability ceased the moment her hands were wet."
+            "paragraphIndex": 0,
+            "quote": "Several cases have been reported in Russia recently"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "首先注意到薇拉这种能力的是她的哪位家人？请写亲属身份（中文或英文）。",
+          "focus": "grammar",
+          "grammarPoint": "Infinitive complement",
+          "exercise": "gap-fill",
+          "prompt": "Complete with the correct form of \"put\": She happened ___ her hands on the door. Write exactly 2 words.",
           "answers": [
-            "father",
-            "her father",
-            "父亲",
-            "爸爸"
+            "to put"
           ],
-          "explanation": "文中写明首先注意到这点的是她父亲。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "mother",
-                "her mother",
-                "母亲"
-              ],
-              "feedback": "文中写明首先注意到这点的是她父亲。"
-            }
-          ],
+          "explanation": "此处动词或形容词后接 to + 动词原形，不接动名词。",
+          "commonMistakes": [],
           "evidence": {
             "paragraphIndex": 0,
-            "quote": "This ability was first noticed by her father."
+            "quote": "happened to put her hands on the door"
           }
         }
       ]
@@ -237,49 +212,49 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "作者会怎样对待自己认为观点错误的年轻人？",
+          "focus": "grammar",
+          "grammarPoint": "Cleft sentence with who",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Cleft sentence with who. Choose the correct form: it is older people ___ create it",
           "options": [
-            "拒绝与所有年轻人进行交流",
-            "把对方当作平等的人进行讨论和争辩",
-            "只用年纪大这一点要求对方服从"
+            "who",
+            "what",
+            "whose"
           ],
-          "answer": 1,
-          "explanation": "作者认为年龄本身不能成为要求尊重的理由，愿意把年轻人当作平等的人来论辩。",
+          "answer": 0,
+          "explanation": "强调句 It is ... who/that ... 在强调人时可用 who；这里强调 older people。what 和 whose 不能引出此处完整的谓语部分。",
           "wrongReasons": [
-            "“拒绝与所有年轻人进行交流”与本课内容不符。作者认为年龄本身不能成为要求尊重的理由，愿意把年轻人当作平等的人来论辩。",
             "",
-            "“只用年纪大这一点要求对方服从”与本课内容不符。作者认为年龄本身不能成为要求尊重的理由，愿意把年轻人当作平等的人来论辩。"
+            "“what”不符合本句结构。强调句 It is ... who/that ... 在强调人时可用 who；这里强调 older people。what 和 whose 不能引出此处完整的谓语部分。",
+            "“whose”不符合本句结构。强调句 It is ... who/that ... 在强调人时可用 who；这里强调 older people。what 和 whose 不能引出此处完整的谓语部分。"
           ],
           "evidence": {
-            "paragraphIndex": 2,
-            "quote": "I accept that we are equals, and I will argue with him, as an equal, if I think he is wrong."
+            "paragraphIndex": 0,
+            "quote": "it is older people who create it"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "作者说年轻人正在积极寻找什么，以获得明确的自我定位？请写名词（中文或英文）。",
+          "focus": "grammar",
+          "grammarPoint": "Subject agreement",
+          "exercise": "correction",
+          "prompt": "Correct the grammatical error. Rewrite the whole sentence or phrase: The young is after all human beings.",
           "answers": [
-            "identity",
-            "an identity",
-            "身份",
-            "自我身份",
-            "自我认同",
-            "认同感"
+            "The young are after all human beings."
           ],
-          "explanation": "这里强调年轻人寻求identity（自我身份和认同），并非物质财富。",
+          "explanation": "谓语应与语法主语一致，不能被邻近名词的单复数误导。",
           "commonMistakes": [
             {
               "answers": [
-                "money",
-                "金钱"
+                "The young is after all human beings."
               ],
-              "feedback": "这里强调年轻人寻求identity（自我身份和认同），并非物质财富。"
+              "feedback": "谓语应与语法主语一致，不能被邻近名词的单复数误导。"
             }
           ],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "For one thing, being a problem gives you a certain identity, and that is one of the things the young are busily engaged in seeking."
+            "paragraphIndex": 0,
+            "quote": "the young are after all human beings"
           }
         }
       ]
@@ -294,47 +269,43 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "作者为什么反对体育比赛必然促进国际友好的说法？",
+          "focus": "grammar",
+          "grammarPoint": "Past participle modifier",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Past participle modifier. Choose the correct form: Nearly all the sports ___ nowadays are competitive.",
           "options": [
-            "比赛一旦关系集体荣誉，可能激起强烈敌意",
-            "他认为任何村庄游戏都绝不可能有乐趣",
-            "他认为观众的态度从不影响体育氛围"
+            "practising",
+            "practised",
+            "to practising"
           ],
-          "answer": 0,
-          "explanation": "作者区分单纯娱乐与荣誉竞争：当失败被视为集体耻辱时，竞争可能引发敌意，尤其反映在观众和国家的态度上。",
+          "answer": 1,
+          "explanation": "名词与后置动词为被动关系时，可用过去分词作定语，相当于被动定语从句。",
           "wrongReasons": [
+            "“practising”不符合这里的语法结构。名词与后置动词为被动关系时，可用过去分词作定语，相当于被动定语从句。",
             "",
-            "“他认为任何村庄游戏都绝不可能有乐趣”与本课内容不符。作者区分单纯娱乐与荣誉竞争：当失败被视为集体耻辱时，竞争可能引发敌意，尤其反映在观众和国家的态度上。",
-            "“他认为观众的态度从不影响体育氛围”与本课内容不符。作者区分单纯娱乐与荣誉竞争：当失败被视为集体耻辱时，竞争可能引发敌意，尤其反映在观众和国家的态度上。"
+            "“to practising”不符合这里的语法结构。名词与后置动词为被动关系时，可用过去分词作定语，相当于被动定语从句。"
           ],
           "evidence": {
             "paragraphIndex": 1,
-            "quote": "On the village green, where you pick up sides and no feeling of local patriotism is involved, it is possible to play simply for the fun and exercise: but as soon as the question of prestige arises, as soon as you feel that you and some larger unit will be disgraced if you lose, the most savage combative instincts are aroused."
+            "quote": "Nearly all the sports practised nowadays are competitive."
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "文中把国际层面的体育比作什么？请写短语（中文或英文）。",
+          "focus": "grammar",
+          "grammarPoint": "Unless and if not",
+          "exercise": "transformation",
+          "prompt": "Replace \"unless\" with \"if ... not\". Keep the rest unchanged: The game has little meaning unless you do your utmost to win.",
           "answers": [
-            "mimic warfare",
-            "模拟战争",
-            "模仿战争",
-            "战争的模拟"
+            "The game has little meaning if you do not do your utmost to win.",
+            "The game has little meaning if you don't do your utmost to win."
           ],
-          "explanation": "文中用mimic warfare作比喻，强调其竞争和冲突性，而非把比赛说成和平条约。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "peace treaty",
-                "和平条约"
-              ],
-              "feedback": "文中用mimic warfare作比喻，强调其竞争和冲突性，而非把比赛说成和平条约。"
-            }
-          ],
+          "explanation": "unless 在条件句中相当于 if ... not；改写时注意否定关系。",
+          "commonMistakes": [],
           "evidence": {
             "paragraphIndex": 1,
-            "quote": "At the international level, sport is frankly mimic warfare."
+            "quote": "the game has little meaning unless you do your utmost to win"
           }
         }
       ]
@@ -349,45 +320,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "蝙蝠的叫声在文中为何不属于单纯的语言交流？",
+          "focus": "grammar",
+          "grammarPoint": "Relative object after a preposition",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Relative object after a preposition. Choose the correct form: a case in ___ the voice plays a strictly utilitarian role",
           "options": [
-            "所有叫声都只为了向人类传达词语",
-            "蝙蝠不会接收任何回声",
-            "它们利用回声定位障碍和猎物，具有实际导航用途"
+            "that",
+            "what",
+            "which"
           ],
           "answer": 2,
-          "explanation": "文章用回声定位说明动物声音可以有工具性用途：避开障碍并寻找昆虫，不一定是语言。",
+          "explanation": "介词提前、先行词指物时，关系代词用 which，不能用 that 或 what。",
           "wrongReasons": [
-            "“所有叫声都只为了向人类传达词语”与本课内容不符。文章用回声定位说明动物声音可以有工具性用途：避开障碍并寻找昆虫，不一定是语言。",
-            "“蝙蝠不会接收任何回声”与本课内容不符。文章用回声定位说明动物声音可以有工具性用途：避开障碍并寻找昆虫，不一定是语言。",
+            "“that”不符合这里的语法结构。介词提前、先行词指物时，关系代词用 which，不能用 that 或 what。",
+            "“what”不符合这里的语法结构。介词提前、先行词指物时，关系代词用 which，不能用 that 或 what。",
             ""
           ],
           "evidence": {
-            "paragraphIndex": 2,
-            "quote": "It has been found that certain bats emit squeaks and by receiving the echoes, they can locate and steer clear of obstacles—or locate flying insects on which they feed."
+            "paragraphIndex": 0,
+            "quote": "a case in which the voice plays a strictly utilitarian role"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "文中把蝙蝠回声定位的原理与哪种技术作比较？请写技术名称（中文或英文）。",
+          "focus": "grammar",
+          "grammarPoint": "Correlative comparison",
+          "exercise": "gap-fill",
+          "prompt": "Complete the paired comparative: The further away the obstruction is, the ___ the echo takes to return. (long) Write exactly 1 word.",
           "answers": [
-            "radar",
-            "雷达"
+            "longer"
           ],
-          "explanation": "比较对象是radar（雷达），不是一般广播。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "radio broadcasting",
-                "广播"
-              ],
-              "feedback": "比较对象是radar（雷达），不是一般广播。"
-            }
-          ],
+          "explanation": "the + 比较级，the + 比较级，表示越……就越……。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 2,
-            "quote": "This echo-location in bats is often compared with radar, the principle of which is similar."
+            "paragraphIndex": 1,
+            "quote": "The further off this solid obstruction, the longer time will elapse"
           }
         }
       ]
@@ -402,46 +370,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "欧美企业为什么质疑双重产品测试？",
+          "focus": "grammar",
+          "grammarPoint": "Cleft sentence",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Cleft sentence. Choose the correct form: it is differences in national regulations, far more than tariffs, ___ put sand in the wheels of trade",
           "options": [
-            "欧盟与美国已经取消了全部产品标准",
-            "同一种安全产品在两地重复测试，增加了不必要的阻碍",
-            "企业认为医疗设备和电器永远不需安全测试"
+            "that",
+            "what",
+            "whose"
           ],
-          "answer": 1,
-          "explanation": "企业希望避免重复合格测试，而不是取消产品安全标准本身。",
+          "answer": 0,
+          "explanation": "强调句结构为 It is/was + 被强调部分 + that/who + 其余部分。",
           "wrongReasons": [
-            "“欧盟与美国已经取消了全部产品标准”与本课内容不符。企业希望避免重复合格测试，而不是取消产品安全标准本身。",
             "",
-            "“企业认为医疗设备和电器永远不需安全测试”与本课内容不符。企业希望避免重复合格测试，而不是取消产品安全标准本身。"
+            "“what”不符合这里的语法结构。强调句结构为 It is/was + 被强调部分 + that/who + 其余部分。",
+            "“whose”不符合这里的语法结构。强调句结构为 It is/was + 被强调部分 + that/who + 其余部分。"
           ],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "So, ask businesses on both sides of the Atlantic, why have two lots of tests where one would do?"
+            "paragraphIndex": 0,
+            "quote": "it is differences in national regulations, far more than tariffs, that put sand in the wheels of trade"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "文中哪一种个人护理电器被用来说明重复安全测试？请写器具（中文或英文）。",
+          "focus": "grammar",
+          "grammarPoint": "Past participle modifier",
+          "exercise": "transformation",
+          "prompt": "Expand with \"which are\". Write the whole noun phrase: chickens slaughtered in the United States.",
           "answers": [
-            "electric razor",
-            "an electric razor",
-            "电动剃须刀"
+            "chickens which are slaughtered in the United States"
           ],
-          "explanation": "举例的是electric razor（电动剃须刀）；另一个例子是医疗透析机。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "hair dryer",
-                "吹风机"
-              ],
-              "feedback": "举例的是electric razor（电动剃须刀）；另一个例子是医疗透析机。"
-            }
-          ],
+          "explanation": "名词与后置动词为被动关系时，可用过去分词作定语，相当于被动定语从句。",
+          "commonMistakes": [],
           "evidence": {
             "paragraphIndex": 0,
-            "quote": "An electric razor that meets the European Union's safety standards must be approved by American testers before it can be sold in the United States, and an American-made dialysis machine needs the EU’s okay before it hits the market in Europe."
+            "quote": "Chickens slaughtered in the United States"
           }
         }
       ]
@@ -456,47 +420,43 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "阿尔弗雷德为什么采用不断骚扰敌军而非公开决战的策略？",
+          "focus": "grammar",
+          "grammarPoint": "Past participle describing the subject",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Past participle describing the subject. Choose the correct form: Alfred visited Danish camps ___ as a minstrel.",
           "options": [
-            "他发现丹麦军队纪律松散、补给依赖零散抢掠",
-            "他已经拥有远远超过丹麦军队的大军",
-            "他认为丹麦人完全不需要食物供应"
+            "disguising",
+            "disguised",
+            "to disguising"
           ],
-          "answer": 0,
-          "explanation": "他侦察后认定敌军不耐久战且补给无组织，于是阻止抢掠并用机动作战消耗敌人。",
+          "answer": 1,
+          "explanation": "disguised as a minstrel 描写 Alfred 处于乔装状态，具有被动含义；它描述 Alfred，不是紧邻的 camps。",
           "wrongReasons": [
+            "“disguising”不符合本句结构。disguised as a minstrel 描写 Alfred 处于乔装状态，具有被动含义；它描述 Alfred，不是紧邻的 camps。",
             "",
-            "“他已经拥有远远超过丹麦军队的大军”与本课内容不符。他侦察后认定敌军不耐久战且补给无组织，于是阻止抢掠并用机动作战消耗敌人。",
-            "“他认为丹麦人完全不需要食物供应”与本课内容不符。他侦察后认定敌军不耐久战且补给无组织，于是阻止抢掠并用机动作战消耗敌人。"
+            "“to disguising”不符合本句结构。disguised as a minstrel 描写 Alfred 处于乔装状态，具有被动含义；它描述 Alfred，不是紧邻的 camps。"
           ],
           "evidence": {
-            "paragraphIndex": 2,
-            "quote": "But Alfred had deduced that the Danes were no longer fit for prolonged battle: and that their commissariat had no organization, but depended on irregular raids."
+            "paragraphIndex": 0,
+            "quote": "visiting Danish camps disguised as a minstrel"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "阿尔弗雷德潜入丹麦营地时乔装成什么人？请写身份（中文或英文）。",
+          "focus": "grammar",
+          "grammarPoint": "Negative formation",
+          "exercise": "transformation",
+          "prompt": "Make this statement negative. Keep \"learned\": Alfred had learned many of their ballads in his youth.",
           "answers": [
-            "minstrel",
-            "a minstrel",
-            "吟游诗人",
-            "游吟艺人"
+            "Alfred had not learned many of their ballads in his youth.",
+            "Alfred hadn't learned many of their ballads in his youth."
           ],
-          "explanation": "他扮作受欢迎的吟游诗人进入敌营，而非警察。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "policeman",
-                "警察"
-              ],
-              "feedback": "他扮作受欢迎的吟游诗人进入敌营，而非警察。"
-            }
-          ],
+          "explanation": "否定结构在助动词后加 not；用 do/does/did 时，实义动词还原。",
+          "commonMistakes": [],
           "evidence": {
             "paragraphIndex": 0,
-            "quote": "Alfred the Great acted as his own spy, visiting Danish camps disguised as a minstrel."
+            "quote": "Alfred had learned many of their ballads in his youth"
           }
         }
       ]
@@ -511,45 +471,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "按文中的预测，桌面芯片设计设备为什么可能催生更多新创企业？",
+          "focus": "grammar",
+          "grammarPoint": "Passive gerund",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Passive gerund. Choose the correct form: without ___ by expensive failures",
           "options": [
-            "它会禁止工程师设计定制芯片",
-            "它让每次试验都必须投入更多资金",
-            "它能减少试制芯片的时间和成本，降低失败代价"
+            "be penalized",
+            "to be penalized",
+            "being penalized"
           ],
           "answer": 2,
-          "explanation": "设计、测试和生产时间与费用下降后，工程师更能自由尝试创意，从而有利于小型创业。",
+          "explanation": "此处既需要动名词又需要被动含义，所以用 being + 过去分词。",
           "wrongReasons": [
-            "“它会禁止工程师设计定制芯片”与本课内容不符。设计、测试和生产时间与费用下降后，工程师更能自由尝试创意，从而有利于小型创业。",
-            "“它让每次试验都必须投入更多资金”与本课内容不符。设计、测试和生产时间与费用下降后，工程师更能自由尝试创意，从而有利于小型创业。",
+            "“be penalized”不符合这里的语法结构。此处既需要动名词又需要被动含义，所以用 being + 过去分词。",
+            "“to be penalized”不符合这里的语法结构。此处既需要动名词又需要被动含义，所以用 being + 过去分词。",
             ""
           ],
           "evidence": {
             "paragraphIndex": 0,
-            "quote": "As the time and cost of making a chip drop to a few days and a few hundred dollars, engineers may soon be free to let their imaginations soar without being penalized by expensive failures."
+            "quote": "without being penalized by expensive failures"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "文章举出的华裔工程师Alex Au把工厂设在哪里？请写地区（中文或英文）。",
+          "focus": "grammar",
+          "grammarPoint": "Bare infinitive after let",
+          "exercise": "gap-fill",
+          "prompt": "Use the correct form of \"soar\": They can let their imaginations ___. Write exactly 1 word.",
           "answers": [
-            "Taiwan",
-            "台湾"
+            "soar"
           ],
-          "explanation": "Alex Au设厂在台湾；堪萨斯城是文中另一位印度裔创业者的例子。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "Kansas City",
-                "堪萨斯城"
-              ],
-              "feedback": "Alex Au设厂在台湾；堪萨斯城是文中另一位印度裔创业者的例子。"
-            }
-          ],
+          "explanation": "let + 宾语 + 动词原形，不能加 to，也不能用 -ing。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "from Hong Kong, has set up a Taiwan factory to challenge Japan's near lock on the memory-chip market."
+            "paragraphIndex": 0,
+            "quote": "let their imaginations soar"
           }
         }
       ]
@@ -564,48 +521,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "作者认为老年人减轻死亡恐惧的一种方法是什么？",
+          "focus": "grammar",
+          "grammarPoint": "Present perfect",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Present perfect. Choose the correct form: an old man who ___ human joys and sorrows",
           "options": [
-            "否认别人会继续自己未完成的工作",
-            "逐渐扩大兴趣，让自我与更广阔的生活相融",
-            "只关心自己，尽可能缩小生活范围"
+            "has known",
+            "have known",
+            "has knew"
           ],
-          "answer": 1,
-          "explanation": "作者建议把兴趣从个人自我向外扩展，让自己关心的事物在个人生命之后仍继续。",
+          "answer": 0,
+          "explanation": "现在完成时结构为 has/have + 过去分词；注意单复数和不规则动词。",
           "wrongReasons": [
-            "“否认别人会继续自己未完成的工作”与本课内容不符。作者建议把兴趣从个人自我向外扩展，让自己关心的事物在个人生命之后仍继续。",
             "",
-            "“只关心自己，尽可能缩小生活范围”与本课内容不符。作者建议把兴趣从个人自我向外扩展，让自己关心的事物在个人生命之后仍继续。"
+            "“have known”不符合这里的语法结构。现在完成时结构为 has/have + 过去分词；注意单复数和不规则动词。",
+            "“has knew”不符合这里的语法结构。现在完成时结构为 has/have + 过去分词；注意单复数和不规则动词。"
           ],
           "evidence": {
             "paragraphIndex": 0,
-            "quote": "The best way to overcome it—so at least it seems to me—is to make your interests gradually wider and more impersonal, until bit by bit the walls of the ego recede, and your life becomes increasingly merged in the universal life."
+            "quote": "an old man who has known human joys and sorrows"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "作者把个人生命比作哪种自然水体？请写名词（中文或英文）。",
+          "focus": "grammar",
+          "grammarPoint": "Active and passive",
+          "exercise": "transformation",
+          "prompt": "Change to active. Begin with \"The fear of death\" and keep \"some old people\" as the object: Some old people are oppressed by the fear of death.",
           "answers": [
-            "river",
-            "a river",
-            "河流",
-            "河"
+            "The fear of death oppresses some old people."
           ],
-          "explanation": "作者用河流最终汇入大海比喻个人生命，不是静止的湖泊。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "lake",
-                "a lake",
-                "湖泊"
-              ],
-              "feedback": "作者用河流最终汇入大海比喻个人生命，不是静止的湖泊。"
-            }
-          ],
+          "explanation": "主动和被动转换须保留时态；被动主语是原主动宾语，使用 be + 过去分词。",
+          "commonMistakes": [],
           "evidence": {
             "paragraphIndex": 0,
-            "quote": "An individual human existence should be like a river—small at first, narrowly contained within its banks, and rushing passionately past boulders and over waterfalls."
+            "quote": "Some old people are oppressed by the fear of death."
           }
         }
       ]
@@ -620,49 +571,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "按课文的说明，银行付出伪造签名的支票会由谁承担损失？",
+          "focus": "grammar",
+          "grammarPoint": "Gerund after a preposition",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Gerund after a preposition. Choose the correct form: by ___ a cheque in favour of another person",
           "options": [
-            "银行，而不是客户",
-            "客户，无论签名是否伪造",
-            "替客户印刷姓名的普通商店"
+            "draw",
+            "drawing",
+            "to draw"
           ],
-          "answer": 0,
-          "explanation": "文中强调银行必须识别客户签名，即使伪造很逼真也不能据此转嫁损失；此题仅检验课文内容。",
+          "answer": 1,
+          "explanation": "介词后接名词或动名词；动词要改为 -ing 形式，不能直接接动词原形。",
           "wrongReasons": [
+            "“draw”不符合这里的语法结构。介词后接名词或动名词；动词要改为 -ing 形式，不能直接接动词原形。",
             "",
-            "“客户，无论签名是否伪造”与本课内容不符。文中强调银行必须识别客户签名，即使伪造很逼真也不能据此转嫁损失；此题仅检验课文内容。",
-            "“替客户印刷姓名的普通商店”与本课内容不符。文中强调银行必须识别客户签名，即使伪造很逼真也不能据此转嫁损失；此题仅检验课文内容。"
+            "“to draw”不符合这里的语法结构。介词后接名词或动名词；动词要改为 -ing 形式，不能直接接动词原形。"
           ],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "If this facilitates forgery, it is the bank which will lose, not the customer."
+            "paragraphIndex": 0,
+            "quote": "by drawing a cheque in favour of another person"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "按文中开户存款的说明，客户有存款余额时，银行相对于客户是债务人还是债权人？请写关系。",
+          "focus": "grammar",
+          "grammarPoint": "Modal passive",
+          "exercise": "transformation",
+          "prompt": "Change to the passive. Begin with \"Repayment\" and omit the agent: A customer may demand repayment at any time.",
           "answers": [
-            "debtor",
-            "a debtor",
-            "债务人",
-            "债务方"
+            "Repayment may be demanded at any time."
           ],
-          "explanation": "客户把钱借给银行时，银行是债务人，客户是债权人；透支时关系会相反。此题仅检验课文中的关系说明。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "creditor",
-                "a creditor",
-                "债权人",
-                "债权方"
-              ],
-              "feedback": "客户把钱借给银行时，银行是债务人，客户是债权人；透支时关系会相反。此题仅检验课文中的关系说明。"
-            }
-          ],
+          "explanation": "情态动词被动结构为情态动词 + be + 过去分词，不是 been 或 being。",
+          "commonMistakes": [],
           "evidence": {
             "paragraphIndex": 0,
-            "quote": "When anyone opens a current account at a bank, he is lending the bank money, repayment of which he may demand at any time, either in cash or by drawing a cheque in favour of another person."
+            "quote": "repayment of which he may demand at any time"
           }
         }
       ]
@@ -677,45 +621,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "钻井工人为什么不追求旧式的石油井喷场面？",
+          "focus": "grammar",
+          "grammarPoint": "Infinitive complement",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Infinitive complement. Choose the correct form: has done more ___ deep drilling than any other mining activity",
           "options": [
-            "井喷说明地下一定完全没有石油",
-            "井喷是收集岩石样本唯一可行的方法",
-            "井喷浪费油气，他们希望受控引出石油"
+            "improving",
+            "to improving",
+            "to improve"
           ],
           "answer": 2,
-          "explanation": "井喷会浪费油气，工人用泥浆控制压力，待能够有控制地引出时再采出。",
+          "explanation": "此处动词或形容词后接 to + 动词原形，不接动名词。",
           "wrongReasons": [
-            "“井喷说明地下一定完全没有石油”与本课内容不符。井喷会浪费油气，工人用泥浆控制压力，待能够有控制地引出时再采出。",
-            "“井喷是收集岩石样本唯一可行的方法”与本课内容不符。井喷会浪费油气，工人用泥浆控制压力，待能够有控制地引出时再采出。",
+            "“improving”不符合这里的语法结构。此处动词或形容词后接 to + 动词原形，不接动名词。",
+            "“to improving”不符合这里的语法结构。此处动词或形容词后接 to + 动词原形，不接动名词。",
             ""
           ],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "We endeavour to avoid the old, romantic idea of a gusher, which wastes oil and gas."
+            "paragraphIndex": 0,
+            "quote": "has done more to improve deep drilling than any other mining activity"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "文中说钻井管内循环的什么物质用于控制压力？请写物质（中文或英文）。",
+          "focus": "grammar",
+          "grammarPoint": "Question formation",
+          "exercise": "transformation",
+          "prompt": "Make a yes/no question: The deepest holes of all are made for oil.",
           "answers": [
-            "mud",
-            "泥浆"
+            "Are the deepest holes of all made for oil?"
           ],
-          "explanation": "用于控制井内压力的是循环泥浆，而不是沙子。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "sand",
-                "沙子"
-              ],
-              "feedback": "用于控制井内压力的是循环泥浆，而不是沙子。"
-            }
-          ],
+          "explanation": "一般疑问句将已有的助动词或 be 提到主语前；没有助动词的实义动词句需用 do/does/did。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "This pressure must be under control, and we control it by means of the mud which we circulate down the drill pipe."
+            "paragraphIndex": 0,
+            "quote": "The deepest holes of all are made for oil"
           }
         }
       ]
@@ -730,49 +671,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "为什么假设拥有极密传感器和无限强电脑，仍无法准确预报一个月后的天气？",
+          "focus": "grammar",
+          "grammarPoint": "Passive infinitive",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Passive infinitive. Choose the correct form: some starting data has to ___",
           "options": [
-            "所有天气变化都与初始误差无关",
-            "传感器间微小而未测到的波动会逐步放大",
-            "电脑只要把时间写对就一定能准确预报"
+            "be guessed",
+            "be guess",
+            "guessing"
           ],
-          "answer": 1,
-          "explanation": "即使测量极精细，传感器之间仍藏有细微波动，误差会逐层放大到全球尺度。",
+          "answer": 0,
+          "explanation": "不定式的被动结构为 to be + 过去分词；情态动词后的被动不带 to。",
           "wrongReasons": [
-            "“所有天气变化都与初始误差无关”与本课内容不符。即使测量极精细，传感器之间仍藏有细微波动，误差会逐层放大到全球尺度。",
             "",
-            "“电脑只要把时间写对就一定能准确预报”与本课内容不符。即使测量极精细，传感器之间仍藏有细微波动，误差会逐层放大到全球尺度。"
+            "“be guess”不符合这里的语法结构。不定式的被动结构为 to be + 过去分词；情态动词后的被动不带 to。",
+            "“guessing”不符合这里的语法结构。不定式的被动结构为 to be + 过去分词；情态动词后的被动不带 to。"
           ],
           "evidence": {
-            "paragraphIndex": 3,
-            "quote": "By 12.01, those fluctuations will already have created small errors one foot away."
+            "paragraphIndex": 2,
+            "quote": "some starting data has to be guessed"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "文中假设的传感器彼此相隔多少英尺？请写数量。",
+          "focus": "grammar",
+          "grammarPoint": "Question formation",
+          "exercise": "transformation",
+          "prompt": "Make a yes/no question with \"can\": Ground stations and satellites can see everywhere.",
           "answers": [
-            "1",
-            "one",
-            "one foot",
-            "1英尺",
-            "一英尺"
+            "Can ground stations and satellites see everywhere?"
           ],
-          "explanation": "理想化假设是一英尺一台；六十英里是前文现实模型网格的量级。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "60",
-                "sixty",
-                "六十英尺"
-              ],
-              "feedback": "理想化假设是一英尺一台；六十英里是前文现实模型网格的量级。"
-            }
-          ],
+          "explanation": "一般疑问句将已有的助动词或 be 提到主语前；没有助动词的实义动词句需用 do/does/did。",
+          "commonMistakes": [],
           "evidence": {
             "paragraphIndex": 2,
-            "quote": "But suppose the earth could be covered with sensors spaced one foot apart, rising at one-foot intervals all the way to the top of the atmosphere."
+            "quote": "ground stations and satellites cannot see everywhere"
           }
         }
       ]
@@ -787,49 +721,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "过度保密会怎样妨碍工业科研？",
+          "focus": "grammar",
+          "grammarPoint": "Relative object after a preposition",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Relative object after a preposition. Choose the correct form: the general atmosphere of secrecy in ___ it is carried out",
           "options": [
-            "限制研究人员与其他科学家的有效联系",
-            "确保所有科学发现都会立刻公开",
-            "让研究人员不再需要任何书籍资料"
+            "that",
+            "which",
+            "what"
           ],
-          "answer": 0,
-          "explanation": "保密会妨碍同行交流，甚至限制同一公司不同部门之间的联系，并可能使借书也变得困难。",
+          "answer": 1,
+          "explanation": "介词提前、先行词指物时，关系代词用 which，不能用 that 或 what。",
           "wrongReasons": [
+            "“that”不符合这里的语法结构。介词提前、先行词指物时，关系代词用 which，不能用 that 或 what。",
             "",
-            "“确保所有科学发现都会立刻公开”与本课内容不符。保密会妨碍同行交流，甚至限制同一公司不同部门之间的联系，并可能使借书也变得困难。",
-            "“让研究人员不再需要任何书籍资料”与本课内容不符。保密会妨碍同行交流，甚至限制同一公司不同部门之间的联系，并可能使借书也变得困难。"
+            "“what”不符合这里的语法结构。介词提前、先行词指物时，关系代词用 which，不能用 that 或 what。"
           ],
           "evidence": {
             "paragraphIndex": 0,
-            "quote": "In so far as any inquiry is a secret one, it naturally limits all those engaged in carrying it out from effective contact with their fellow scientists either in other countries or in universities, or even, often enough, in other departments of the same firm."
+            "quote": "the general atmosphere of secrecy in which it is carried out"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "文中说某些公司不愿借阅科技书籍，怕竞争者从哪里追踪研究方向？请写记录类型（中文或英文）。",
+          "focus": "grammar",
+          "grammarPoint": "Past participle modifier",
+          "exercise": "transformation",
+          "prompt": "Expand with \"who are\". Write the whole noun phrase: all those engaged in carrying it out.",
           "answers": [
-            "library records",
-            "borrowing records",
-            "book borrowing records",
-            "借书记录",
-            "借阅记录",
-            "图书馆借阅记录"
+            "all those who are engaged in carrying it out"
           ],
-          "explanation": "这里担心的是借书登记暴露所查的书，进而泄露研究方向，并不是已经公开的专利登记。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "patent register",
-                "专利登记"
-              ],
-              "feedback": "这里担心的是借书登记暴露所查的书，进而泄露研究方向，并不是已经公开的专利登记。"
-            }
-          ],
+          "explanation": "名词与后置动词为被动关系时，可用过去分词作定语，相当于被动定语从句。",
+          "commonMistakes": [],
           "evidence": {
             "paragraphIndex": 0,
-            "quote": "Many firms, for instance, have great difficulty in obtaining technical or scientific books from libraries because they are unwilling to have their names entered as having taken out such and such a book, for fear the agents of other firms should be able to trace the kind of research they are likely to be undertaking."
+            "quote": "all those engaged in carrying it out"
           }
         }
       ]
@@ -844,48 +771,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "作者批评现代城市规划忽视了什么？",
+          "focus": "grammar",
+          "grammarPoint": "Present perfect passive",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Present perfect passive. Choose the correct form: the influence of the factory upon the physiological and mental state of the workers ___",
           "options": [
-            "地面每平方英尺的收入最大化",
-            "如何把大量人口挤进巨大建筑",
-            "居民真正的生理和精神需要"
+            "have been completely neglected",
+            "has completely neglected",
+            "has been completely neglected"
           ],
           "answer": 2,
-          "explanation": "文章认为城市以经济收益和拥挤建筑为导向，并未以居民真正的福祉为中心。",
+          "explanation": "现在完成时被动结构为 has/have been + 过去分词；注意主语的单复数。",
           "wrongReasons": [
-            "“地面每平方英尺的收入最大化”与本课内容不符。文章认为城市以经济收益和拥挤建筑为导向，并未以居民真正的福祉为中心。",
-            "“如何把大量人口挤进巨大建筑”与本课内容不符。文章认为城市以经济收益和拥挤建筑为导向，并未以居民真正的福祉为中心。",
+            "“have been completely neglected”不符合这里的语法结构。现在完成时被动结构为 has/have been + 过去分词；注意主语的单复数。",
+            "“has completely neglected”不符合这里的语法结构。现在完成时被动结构为 has/have been + 过去分词；注意主语的单复数。",
             ""
           ],
           "evidence": {
             "paragraphIndex": 0,
-            "quote": "Obviously, it has not been planned for the good of its inhabitants."
+            "quote": "the influence of the factory upon the physiological and mental state of the workers has been completely neglected"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "作者说工业忽视了人为生活方式对工人自身以及哪一代人的影响？请写人群关系（中文或英文）。",
+          "focus": "grammar",
+          "grammarPoint": "Gerund after a preposition",
+          "exercise": "gap-fill",
+          "prompt": "Complete with the correct form of \"give\": Industry has expanded without ___ any consideration to these effects. Write exactly 1 word.",
           "answers": [
-            "descendants",
-            "their descendants",
-            "后代",
-            "子孙",
-            "工人的后代"
+            "giving"
           ],
-          "explanation": "作者强调工人及其后代都可能受影响，不是指他们已经生活过的祖先。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "ancestors",
-                "祖先"
-              ],
-              "feedback": "作者强调工人及其后代都可能受影响，不是指他们已经生活过的祖先。"
-            }
-          ],
+          "explanation": "介词后接名词或动名词；动词要改为 -ing 形式，不能直接接动词原形。",
+          "commonMistakes": [],
           "evidence": {
             "paragraphIndex": 0,
-            "quote": "It has expanded without any idea of the true nature of the human beings who run the machines, and without giving any consideration to the effects produced on the individuals and on their descendants by the artificial mode of existence imposed by the factory."
+            "quote": "without giving any consideration"
           }
         }
       ]
@@ -900,48 +821,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "文章用兔黏液瘤病的传播提出了什么警示？",
+          "focus": "grammar",
+          "grammarPoint": "Modal perfect",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Modal perfect. Choose the correct form: the herbage which ___ millions of sheep and cattle",
           "options": [
-            "疾病传播后所有动物都必定立即获得免疫力",
-            "人引入的疾病可能扩散到预想范围之外，难以控制",
-            "疾病始终严格停留在最初那一处庄园"
+            "might have maintained",
+            "might has maintained",
+            "might have maintain"
           ],
-          "answer": 1,
-          "explanation": "法国医生原想清除自己庄园的兔子，但病害扩散到更广地区，文章由此追问人能否控制引入的疾病。",
+          "answer": 0,
+          "explanation": "情态动词完成结构为情态动词 + have + 过去分词；have 不随主语变化。",
           "wrongReasons": [
-            "“疾病传播后所有动物都必定立即获得免疫力”与本课内容不符。法国医生原想清除自己庄园的兔子，但病害扩散到更广地区，文章由此追问人能否控制引入的疾病。",
             "",
-            "“疾病始终严格停留在最初那一处庄园”与本课内容不符。法国医生原想清除自己庄园的兔子，但病害扩散到更广地区，文章由此追问人能否控制引入的疾病。"
+            "“might has maintained”不符合这里的语法结构。情态动词完成结构为情态动词 + have + 过去分词；have 不随主语变化。",
+            "“might have maintain”不符合这里的语法结构。情态动词完成结构为情态动词 + have + 过去分词；have 不随主语变化。"
           ],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "It did not, however, remain within the confines of his estate."
+            "paragraphIndex": 0,
+            "quote": "the herbage which might have maintained millions of sheep and cattle"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "澳大利亚利用哪种昆虫传播这种兔病？请写昆虫（中文或英文）。",
+          "focus": "grammar",
+          "grammarPoint": "Parallel structure",
+          "exercise": "gap-fill",
+          "prompt": "Complete with parallel gerunds: It caused devastation by burrowing and by ___ the herbage. (devour) Write exactly 1 word.",
           "answers": [
-            "mosquito",
-            "mosquitoes",
-            "蚊子",
-            "蚊"
+            "devouring"
           ],
-          "explanation": "文本中的传播媒介是一种蚊子，而非苍蝇。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "fly",
-                "flies",
-                "苍蝇"
-              ],
-              "feedback": "文本中的传播媒介是一种蚊子，而非苍蝇。"
-            }
-          ],
+          "explanation": "并列的成分应保持语法形式一致，不能随意混用动名词和不定式。",
+          "commonMistakes": [],
           "evidence": {
             "paragraphIndex": 0,
-            "quote": "Later it was found that there was a type of mosquito which acted as the carrier of this disease and passed it on to the rabbits."
+            "quote": "by burrowing and by devouring the herbage"
           }
         }
       ]
@@ -956,48 +871,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "文中生物学家怎样解释海豚偶尔把人推上岸的现象？",
+          "focus": "grammar",
+          "grammarPoint": "Concessive however",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Concessive however. Choose the correct form: ___ intelligent they may be",
           "options": [
-            "可能出于好奇或游戏，不能据此认定有救生动机",
-            "已证明它们像救生员一样明确懂得所有人的危险",
-            "因为它们把人当作固定食物带回岸边"
+            "whatever",
+            "however",
+            "whichever"
           ],
-          "answer": 0,
-          "explanation": "作者提醒不要把人类式的救生动机轻易赋予海豚，它们的动作也可能是出于好奇和游戏。",
+          "answer": 1,
+          "explanation": "however + 形容词 + 主语 + 谓语表示无论多么……，相当于 no matter how。",
           "wrongReasons": [
+            "“whatever”不符合这里的语法结构。however + 形容词 + 主语 + 谓语表示无论多么……，相当于 no matter how。",
             "",
-            "“已证明它们像救生员一样明确懂得所有人的危险”与本课内容不符。作者提醒不要把人类式的救生动机轻易赋予海豚，它们的动作也可能是出于好奇和游戏。",
-            "“因为它们把人当作固定食物带回岸边”与本课内容不符。作者提醒不要把人类式的救生动机轻易赋予海豚，它们的动作也可能是出于好奇和游戏。"
+            "“whichever”不符合这里的语法结构。however + 形容词 + 主语 + 谓语表示无论多么……，相当于 no matter how。"
           ],
           "evidence": {
             "paragraphIndex": 0,
-            "quote": "On the occasions when they have pushed to shore an unconscious human being they have much more likely done it out of curiosity or for sport, as in riding the bow waves of a ship."
+            "quote": "however intelligent they may be"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "一九二八年拍到海豚合力推上岸的东西是什么？请写物品（中文或英文）。",
+          "focus": "grammar",
+          "grammarPoint": "Gerund after a preposition",
+          "exercise": "gap-fill",
+          "prompt": "Complete with the correct form of \"surround\": They protect them by ___ them in defensive formation. Write exactly 1 word.",
           "answers": [
-            "mattress",
-            "a mattress",
-            "waterlogged mattress",
-            "浸水床垫",
-            "床垫"
+            "surrounding"
           ],
-          "explanation": "照片中的对象是浸透水的床垫，并不是船或溺水者。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "boat",
-                "船"
-              ],
-              "feedback": "照片中的对象是浸透水的床垫，并不是船或溺水者。"
-            }
-          ],
+          "explanation": "介词后接名词或动名词；动词要改为 -ing 形式，不能直接接动词原形。",
+          "commonMistakes": [],
           "evidence": {
             "paragraphIndex": 0,
-            "quote": "In 1928 some porpoises were photographed working like beavers to push ashore a waterlogged mattress."
+            "quote": "by surrounding them in defensive formation"
           }
         }
       ]
@@ -1012,45 +921,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "文章所述睡眠实验更突出哪种干扰的影响？",
+          "focus": "grammar",
+          "grammarPoint": "Perfect continuous",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Perfect continuous. Choose the correct form: Speculations about its nature ___ on",
           "options": [
-            "只要躺着肌肉放松，就完全不需要睡眠",
-            "睡眠期间大脑电活动必定完全停止",
-            "持续打断做梦，而不只是一般性打断睡眠"
+            "has been going",
+            "have going",
+            "have been going"
           ],
           "answer": 2,
-          "explanation": "对照组同样被叫醒，但打断眼动睡眠的一组出现更多问题，文章据此突出梦被打断的作用。",
+          "explanation": "完成进行时为 has/have/had been + doing，强调到参照时点持续进行的动作。",
           "wrongReasons": [
-            "“只要躺着肌肉放松，就完全不需要睡眠”与本课内容不符。对照组同样被叫醒，但打断眼动睡眠的一组出现更多问题，文章据此突出梦被打断的作用。",
-            "“睡眠期间大脑电活动必定完全停止”与本课内容不符。对照组同样被叫醒，但打断眼动睡眠的一组出现更多问题，文章据此突出梦被打断的作用。",
+            "“has been going”不符合这里的语法结构。完成进行时为 has/have/had been + doing，强调到参照时点持续进行的动作。",
+            "“have going”不符合这里的语法结构。完成进行时为 has/have/had been + doing，强调到参照时点持续进行的动作。",
             ""
           ],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "The implications of all this were that it was not the disturbance of sleep that mattered, but the disturbance of dreaming."
+            "paragraphIndex": 0,
+            "quote": "Speculations about its nature have been going on"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "文中研究睡眠眼动的美国精神科医生叫什么？请写英文姓名。",
+          "focus": "grammar",
+          "grammarPoint": "Active and passive",
+          "exercise": "transformation",
+          "prompt": "Change to active. Begin with \"A brief period of lying down\" and keep \"rest\" as the object: Rest can be achieved by a brief period of lying down.",
           "answers": [
-            "William Dement",
-            "Dement"
+            "A brief period of lying down can achieve rest."
           ],
-          "explanation": "睡眠实验的研究者是William Dement，不是西部片演员William Hart。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "William Hart",
-                "Hart"
-              ],
-              "feedback": "睡眠实验的研究者是William Dement，不是西部片演员William Hart。"
-            }
-          ],
+          "explanation": "主动和被动转换须保留时态；被动主语是原主动宾语，使用 be + 过去分词。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "Some years ago an American psychiatrist named William Dement published experiments dealing with the recording of eye-movements during sleep."
+            "paragraphIndex": 0,
+            "quote": "can be achieved by a brief period lying"
           }
         }
       ]
@@ -1065,52 +971,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "按文章的论述，蛇毒的主要用途是什么？",
+          "focus": "grammar",
+          "grammarPoint": "Gerund after a preposition",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Gerund after a preposition. Choose the correct form: without ___ poison",
           "options": [
-            "取代蛇的所有消化器官",
-            "帮助蛇更省力地捕获猎物",
-            "专门为了攻击人类而产生"
+            "using",
+            "use",
+            "to use"
           ],
-          "answer": 1,
-          "explanation": "文章强调蛇毒主要用于捕获鼠类等猎物，并非专为对付人类而获得；本题检验文章的论述。",
+          "answer": 0,
+          "explanation": "介词后接名词或动名词；动词要改为 -ing 形式，不能直接接动词原形。",
           "wrongReasons": [
-            "“取代蛇的所有消化器官”与本课内容不符。文章强调蛇毒主要用于捕获鼠类等猎物，并非专为对付人类而获得；本题检验文章的论述。",
             "",
-            "“专门为了攻击人类而产生”与本课内容不符。文章强调蛇毒主要用于捕获鼠类等猎物，并非专为对付人类而获得；本题检验文章的论述。"
+            "“use”不符合这里的语法结构。介词后接名词或动名词；动词要改为 -ing 形式，不能直接接动词原形。",
+            "“to use”不符合这里的语法结构。介词后接名词或动名词；动词要改为 -ing 形式，不能直接接动词原形。"
           ],
           "evidence": {
-            "paragraphIndex": 2,
-            "quote": "Snakes did not acquire their poison for use against man but for use against prey such as rats and mice, and the effects on these of viperine poison is almost immediate."
+            "paragraphIndex": 0,
+            "quote": "without using poison"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "文中把作用于神经的毒液称为什么？请写英文术语或中文名称。",
+          "focus": "grammar",
+          "grammarPoint": "Word order",
+          "exercise": "word-order",
+          "prompt": "Put these words in order, using every word or part once. Put the parts in order. Begin with \"How\": is a mystery / that snakes manufactured poison / how / it came about",
           "answers": [
-            "neurotoxic",
-            "neurotoxic venom",
-            "神经毒",
-            "神经毒液",
-            "neurotoxin",
-            "neurotoxins",
-            "神经毒素",
-            "神经性毒液"
+            "How it came about that snakes manufactured poison is a mystery."
           ],
-          "explanation": "neurotoxic指神经毒；文中haemolytic对应作用于血液的毒。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "haemolytic",
-                "hemolytic",
-                "血液毒"
-              ],
-              "feedback": "neurotoxic指神经毒；文中haemolytic对应作用于血液的毒。"
-            }
-          ],
+          "explanation": "按英语句法排列主语、助动词、状语和主要动词；不要按中文顺序排列。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 2,
-            "quote": "The makers of the nerve poison include the mambas and the cobras and their venom is called neurotoxic."
+            "paragraphIndex": 0,
+            "quote": "How it came about that snakes manufactured poison is a mystery."
           }
         }
       ]
@@ -1125,48 +1021,49 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "哈特的西部片主角为何容易赢得早期观众的理解？",
+          "focus": "grammar",
+          "grammarPoint": "Past perfect",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Past perfect. Choose the correct form: He ___ in it as a child",
           "options": [
-            "他们常是被排斥、与自身和环境冲突的边疆人物",
-            "他们总是毫无矛盾、只为财富行事的政客",
-            "他们从未与社会环境发生过任何冲突"
+            "had live",
+            "had lived",
+            "had living"
           ],
-          "answer": 0,
-          "explanation": "哈特塑造的是边疆环境中的局外人和内心矛盾的好坏兼具人物，观众容易理解他们的处境。",
+          "answer": 1,
+          "explanation": "过去完成时为 had + 过去分词，不能在 had 后接一般过去式或 -ing。",
           "wrongReasons": [
+            "“had live”不符合这里的语法结构。过去完成时为 had + 过去分词，不能在 had 后接一般过去式或 -ing。",
             "",
-            "“他们总是毫无矛盾、只为财富行事的政客”与本课内容不符。哈特塑造的是边疆环境中的局外人和内心矛盾的好坏兼具人物，观众容易理解他们的处境。",
-            "“他们从未与社会环境发生过任何冲突”与本课内容不符。哈特塑造的是边疆环境中的局外人和内心矛盾的好坏兼具人物，观众容易理解他们的处境。"
+            "“had living”不符合这里的语法结构。过去完成时为 had + 过去分词，不能在 had 后接一般过去式或 -ing。"
           ],
           "evidence": {
-            "paragraphIndex": 2,
-            "quote": "Hart’s good-bad man was always an outsider, always one of the disinherited, and if he found it necessary to shoot a sheriff or rob a bank along the way, his early audiences found it easy to understand and forgive, especially when it was Hart who, in the end, overcame the attacking Indians."
+            "paragraphIndex": 1,
+            "quote": "He had lived in it as a child"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "文中哈特处于无可争议顶峰的时期，从哪一年开始？请写年份。",
+          "focus": "grammar",
+          "grammarPoint": "Past participle after be",
+          "exercise": "correction",
+          "prompt": "Correct the grammatical error. Rewrite the whole sentence or phrase: His hero was firmly root in his memories and experiences.",
           "answers": [
-            "1914",
-            "一九一四",
-            "一九一四年",
-            "1914年"
+            "His hero was firmly rooted in his memories and experiences."
           ],
-          "explanation": "文中给出的顶峰时期是1914年至1924年，问开始年份应答1914。",
+          "explanation": "rooted 在 was 后作表语，表示深植于某处的状态；此处应使用过去分词 rooted，不是动词原形 root。它不是后置定语。",
           "commonMistakes": [
             {
               "answers": [
-                "1924",
-                "一九二四",
-                "1924年"
+                "His hero was firmly root in his memories and experiences."
               ],
-              "feedback": "文中给出的顶峰时期是1914年至1924年，问开始年份应答1914。"
+              "feedback": "rooted 在 was 后作表语，表示深植于某处的状态；此处应使用过去分词 rooted，不是动词原形 root。它不是后置定语。"
             }
           ],
           "evidence": {
-            "paragraphIndex": 0,
-            "quote": "From 1914 to 1924 he was supreme and unchallenged."
+            "paragraphIndex": 1,
+            "quote": "his hero was firmly rooted in his memories and experiences"
           }
         }
       ]
@@ -1181,46 +1078,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "文章为什么把知识比作双刃剑？",
+          "focus": "grammar",
+          "grammarPoint": "Modal passive",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Modal passive. Choose the correct form: could ___ to another",
           "options": [
-            "所有知识都会自动提高人的道德水平",
-            "知识只要被储存就永远不会产生实际作用",
-            "同样的科学知识既可用于伤害，也可用于救治"
+            "be communicate",
+            "communicating",
+            "be communicated"
           ],
           "answer": 2,
-          "explanation": "知识能造福也能作恶；作者用炮手摧毁身体与外科医生修复身体形成对照。",
+          "explanation": "情态动词被动结构为情态动词 + be + 过去分词，不是 been 或 being。",
           "wrongReasons": [
-            "“所有知识都会自动提高人的道德水平”与本课内容不符。知识能造福也能作恶；作者用炮手摧毁身体与外科医生修复身体形成对照。",
-            "“知识只要被储存就永远不会产生实际作用”与本课内容不符。知识能造福也能作恶；作者用炮手摧毁身体与外科医生修复身体形成对照。",
+            "“be communicate”不符合这里的语法结构。情态动词被动结构为情态动词 + be + 过去分词，不是 been 或 being。",
+            "“communicating”不符合这里的语法结构。情态动词被动结构为情态动词 + be + 过去分词，不是 been 或 being。",
             ""
           ],
           "evidence": {
             "paragraphIndex": 0,
-            "quote": "As is so often pointed out, knowledge is a two-edged weapon which can be used equally for good or evil."
+            "quote": "could be communicated to another"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "哪项发明使知识不仅能传播，而且能被保存？请写发明（中文或英文）。",
+          "focus": "grammar",
+          "grammarPoint": "Question formation",
+          "exercise": "transformation",
+          "prompt": "Make a yes/no question: It has made extraordinary progress in the accumulation of knowledge.",
           "answers": [
-            "writing",
-            "文字",
-            "书写"
+            "Has it made extraordinary progress in the accumulation of knowledge?"
           ],
-          "explanation": "这一步指文字的发明；印刷术在后文进一步加快知识增长。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "printing",
-                "印刷术"
-              ],
-              "feedback": "这一步指文字的发明；印刷术在后文进一步加快知识增长。"
-            }
-          ],
+          "explanation": "一般疑问句将已有的助动词或 be 提到主语前；没有助动词的实义动词句需用 do/does/did。",
+          "commonMistakes": [],
           "evidence": {
             "paragraphIndex": 0,
-            "quote": "With the invention of writing, a great advance was made, for knowledge could then be not only communicated but also stored."
+            "quote": "it has made extraordinary progress in the accumulation of knowledge"
           }
         }
       ]
@@ -1235,47 +1128,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "信天翁与鸭的飞行方式在文章中主要有何区别？",
+          "focus": "grammar",
+          "grammarPoint": "Relative subject",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Relative subject. Choose the correct form: the smaller albatross, ___ may keep company with the vessel",
           "options": [
-            "两者都只能飞几秒钟且绝不逆风",
-            "信天翁借助气流滑翔，鸭靠强健肌肉有力振翅",
-            "信天翁从不利用空气，鸭只靠漂浮前进"
+            "which",
+            "what",
+            "whose"
           ],
-          "answer": 1,
-          "explanation": "作者把信天翁作为借气流的滑翔型代表，把鸭作为依靠强肌肉振动短翼的代表。",
+          "answer": 0,
+          "explanation": "关系词在定语从句中作主语；指物可用 which，不能用 what 或表示所属的 whose。",
           "wrongReasons": [
-            "“两者都只能飞几秒钟且绝不逆风”与本课内容不符。作者把信天翁作为借气流的滑翔型代表，把鸭作为依靠强肌肉振动短翼的代表。",
             "",
-            "“信天翁从不利用空气，鸭只靠漂浮前进”与本课内容不符。作者把信天翁作为借气流的滑翔型代表，把鸭作为依靠强肌肉振动短翼的代表。"
+            "“what”不符合这里的语法结构。关系词在定语从句中作主语；指物可用 which，不能用 what 或表示所属的 whose。",
+            "“whose”不符合这里的语法结构。关系词在定语从句中作主语；指物可用 which，不能用 what 或表示所属的 whose。"
           ],
           "evidence": {
             "paragraphIndex": 0,
-            "quote": "The albatross is the king of the gliders, the class of fliers which harness the air to their purpose, but must yield to its opposition."
+            "quote": "the smaller albatross, which may keep company with the vessel"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "文中说哪种鸟兼有两类飞行方式的长处？请写鸟名（中文或英文）。",
+          "focus": "grammar",
+          "grammarPoint": "Subject agreement",
+          "exercise": "gap-fill",
+          "prompt": "Complete with the correct present form of \"be\": The currents of air that the ship directs upwards ___ enough to support the bird. Write exactly 1 word.",
           "answers": [
-            "swallow",
-            "the swallow",
-            "swallows",
-            "燕子"
+            "are"
           ],
-          "explanation": "文章说燕子兼具两类长处；喜鹊出现在末尾关于旧迷信的例子中。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "magpie",
-                "喜鹊"
-              ],
-              "feedback": "文章说燕子兼具两类长处；喜鹊出现在末尾关于旧迷信的例子中。"
-            }
-          ],
+          "explanation": "谓语应与语法主语一致，不能被邻近名词的单复数误导。",
+          "commonMistakes": [],
           "evidence": {
             "paragraphIndex": 0,
-            "quote": "The swallow shares the virtues of both schools in highest measure."
+            "quote": "The currents of air that the walls of the ship direct upwards"
           }
         }
       ]
@@ -1290,49 +1178,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "作者对美所暗示的超越性意义持什么态度？",
+          "focus": "grammar",
+          "grammarPoint": "Subject agreement",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Subject agreement. Choose the correct form: That all great art has this power of suggesting a world beyond ___ undeniable.",
           "options": [
-            "这种体验难以用人类语言和意义强行解释",
-            "只要找到一个定义，就能彻底消除所有审美体验",
-            "美完全等同于日常食物是否美味"
+            "are",
+            "is",
+            "be"
           ],
-          "answer": 0,
-          "explanation": "作者承认美能使人似乎瞥见超越的境界，但反对用有限的人类意义强行解释不可言说之物。",
+          "answer": 1,
+          "explanation": "谓语应与语法主语一致，不能被邻近名词的单复数误导。",
           "wrongReasons": [
+            "“are”不符合这里的语法结构。谓语应与语法主语一致，不能被邻近名词的单复数误导。",
             "",
-            "“只要找到一个定义，就能彻底消除所有审美体验”与本课内容不符。作者承认美能使人似乎瞥见超越的境界，但反对用有限的人类意义强行解释不可言说之物。",
-            "“美完全等同于日常食物是否美味”与本课内容不符。作者承认美能使人似乎瞥见超越的境界，但反对用有限的人类意义强行解释不可言说之物。"
+            "“be”不符合这里的语法结构。谓语应与语法主语一致，不能被邻近名词的单复数误导。"
           ],
           "evidence": {
             "paragraphIndex": 1,
-            "quote": "But, if this world is not merely a bad joke, life a vulgar flare amid the cool radiance of the stars, and existence an empty laugh braying across the mysteries; if these intimations of a something behind and beyond are not evil humour born of indigestion, or whimsies sent by the devil to mock and madden us, if, in a word, beauty means something, yet we must not seek to interpret the meaning."
+            "quote": "That all great art has this power of suggesting a world beyond is undeniable."
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "文章开头，年轻人看到什么自然景象而受到感动？请写景象（中文或英文）。",
+          "focus": "grammar",
+          "grammarPoint": "Active and passive",
+          "exercise": "transformation",
+          "prompt": "Change to active. Begin with \"People\" and retain both \"language\" and the purpose phrase: Language was invented to convey the meanings of this world.",
           "answers": [
-            "sunset",
-            "a sunset",
-            "日落",
-            "落日",
-            "夕阳"
+            "People invented language to convey the meanings of this world."
           ],
-          "explanation": "开头是sunset（日落），不是sunrise（日出）。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "sunrise",
-                "a sunrise",
-                "日出"
-              ],
-              "feedback": "开头是sunset（日落），不是sunrise（日出）。"
-            }
-          ],
+          "explanation": "主动和被动转换须保留时态；被动主语是原主动宾语，使用 be + 过去分词。",
+          "commonMistakes": [],
           "evidence": {
             "paragraphIndex": 0,
-            "quote": "A young man sees a sunset and, unable to understand or to express the emotion that it rouses in him, concludes that it must be the gateway to a world that lies beyond."
+            "quote": "language, which was invented to convey the meanings of this world"
           }
         }
       ]
@@ -1347,45 +1228,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "作者为什么不认为那名女打字员的故事足以证明噪声导致精神疾病？",
+          "focus": "grammar",
+          "grammarPoint": "Infinitive complement",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Infinitive complement. Choose the correct form: they are not prepared even ___ the possibility",
           "options": [
-            "作者认为所有噪声都绝不影响任何人",
-            "因为故事没有提及她的具体工资",
-            "单个故事不能区分噪声是病因还是疾病表现"
+            "admitting",
+            "admit",
+            "to admit"
           ],
           "answer": 2,
-          "explanation": "作者要求区别因果：抱怨噪声可能是原因，也可能是症状，因而需要大样本研究而非单一轶事。",
+          "explanation": "此处动词或形容词后接 to + 动词原形，不接动名词。",
           "wrongReasons": [
-            "“作者认为所有噪声都绝不影响任何人”与本课内容不符。作者要求区别因果：抱怨噪声可能是原因，也可能是症状，因而需要大样本研究而非单一轶事。",
-            "“因为故事没有提及她的具体工资”与本课内容不符。作者要求区别因果：抱怨噪声可能是原因，也可能是症状，因而需要大样本研究而非单一轶事。",
+            "“admitting”不符合这里的语法结构。此处动词或形容词后接 to + 动词原形，不接动名词。",
+            "“admit”不符合这里的语法结构。此处动词或形容词后接 to + 动词原形，不接动名词。",
             ""
           ],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "Now the snag in this sort of anecdote is of course that one cannot distinguish cause and effect."
+            "paragraphIndex": 0,
+            "quote": "they are not prepared even to admit the possibility"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "美国海军研究航空母舰噪声的项目叫什么？请写英文项目名称。",
+          "focus": "grammar",
+          "grammarPoint": "Content clause with that",
+          "exercise": "gap-fill",
+          "prompt": "Complete the content clause: They admit the possibility ___ noise affects people. Use the conjunction introducing the content, not a relative pronoun. Write exactly 1 word.",
           "answers": [
-            "Project Anehin",
-            "Anehin"
+            "that"
           ],
-          "explanation": "文章中的项目名是Project Anehin，不是阿波罗计划。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "Project Apollo",
-                "Apollo"
-              ],
-              "feedback": "文章中的项目名是Project Anehin，不是阿波罗计划。"
-            }
-          ],
+          "explanation": "that 引导名词的同位语或内容从句，说明名词的具体内容；that 在从句中不作成分。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 2,
-            "quote": "Some time ago the United States Navy, for instance, examined a very large number of men working on aircraft carriers: the study was known as Project Anehin."
+            "paragraphIndex": 0,
+            "quote": "the possibility that noise affects people"
           }
         }
       ]
@@ -1400,47 +1278,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "为什么水中或近水生物的遗骸更容易保存？",
+          "focus": "grammar",
+          "grammarPoint": "Gerund after a preposition",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Gerund after a preposition. Choose the correct form: all living creatures live by ___ on something else",
           "options": [
-            "陆地动物一死就会自行变成石头",
-            "泥沙可迅速掩埋遗体，减少腐败或被食腐动物吃掉的机会",
-            "所有水生生物本来就不会腐败"
+            "feeding",
+            "feed",
+            "to feed"
           ],
-          "answer": 1,
-          "explanation": "迅速掩埋是保存的必要条件之一，水域泥沙更容易覆盖遗体；即便如此，真正保存下来的仍只占少数。",
+          "answer": 0,
+          "explanation": "介词后接名词或动名词；动词要改为 -ing 形式，不能直接接动词原形。",
           "wrongReasons": [
-            "“陆地动物一死就会自行变成石头”与本课内容不符。迅速掩埋是保存的必要条件之一，水域泥沙更容易覆盖遗体；即便如此，真正保存下来的仍只占少数。",
             "",
-            "“所有水生生物本来就不会腐败”与本课内容不符。迅速掩埋是保存的必要条件之一，水域泥沙更容易覆盖遗体；即便如此，真正保存下来的仍只占少数。"
+            "“feed”不符合这里的语法结构。介词后接名词或动名词；动词要改为 -ing 形式，不能直接接动词原形。",
+            "“to feed”不符合这里的语法结构。介词后接名词或动名词；动词要改为 -ing 形式，不能直接接动词原形。"
           ],
           "evidence": {
-            "paragraphIndex": 0,
-            "quote": "It is animals and plants which lived in or near water whose remains are most likely to be preserved, for one of the necessary conditions of preservation is quick burial, and it is only in the seas and rivers, and sometimes lakes, where mud and silt have been continuously deposited, that bodies and the like can be rapidly covered over and preserved."
+            "paragraphIndex": 1,
+            "quote": "all living creatures live by feeding on something else"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "文中复原的著名猛犸象现藏于哪座城市的古生物博物馆？请写城市（中文或英文）。",
+          "focus": "grammar",
+          "grammarPoint": "Inversion",
+          "exercise": "transformation",
+          "prompt": "Rewrite with inversion, beginning with \"Only by chance\": It is only by chance that such a fate is avoided.",
           "answers": [
-            "St. Petersburg",
-            "Saint Petersburg",
-            "St Petersburg",
-            "圣彼得堡"
+            "Only by chance is such a fate avoided."
           ],
-          "explanation": "猛犸象在圣彼得堡；洛杉矶对应后文的拉布雷亚沥青坑。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "Los Angeles",
-                "洛杉矶"
-              ],
-              "feedback": "猛犸象在圣彼得堡；洛杉矶对应后文的拉布雷亚沥青坑。"
-            }
-          ],
+          "explanation": "否定或限制性成分位于句首等规定情形会引起主语和助动词或系动词倒装。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 2,
-            "quote": "The mammoth has now been restored in the Palaeontological Museum in St. Petersburg."
+            "paragraphIndex": 1,
+            "quote": "it is only by chance that such a fate is avoided"
           }
         }
       ]
@@ -1455,45 +1328,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "瓦萨号在首航开始不久沉没的直接过程是什么？",
+          "focus": "grammar",
+          "grammarPoint": "Past perfect",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Past perfect. Choose the correct form: ___ her measurements and armament",
           "options": [
-            "阵风使船严重侧倾，较低炮门入水，海水涌入",
-            "它与另一艘远洋巨轮正面相撞",
-            "船在离港前就把全部帆和炮主动拆掉"
+            "had dictate",
+            "had dictated",
+            "had dictating"
           ],
-          "answer": 0,
-          "explanation": "船先向左舷倾斜，货物与人员继续滑向左边，低层炮门没入水中，进水最终导致沉没。",
+          "answer": 1,
+          "explanation": "过去完成时为 had + 过去分词，不能在 had 后接一般过去式或 -ing。",
           "wrongReasons": [
+            "“had dictate”不符合这里的语法结构。过去完成时为 had + 过去分词，不能在 had 后接一般过去式或 -ing。",
             "",
-            "“它与另一艘远洋巨轮正面相撞”与本课内容不符。船先向左舷倾斜，货物与人员继续滑向左边，低层炮门没入水中，进水最终导致沉没。",
-            "“船在离港前就把全部帆和炮主动拆掉”与本课内容不符。船先向左舷倾斜，货物与人员继续滑向左边，低层炮门没入水中，进水最终导致沉没。"
+            "“had dictating”不符合这里的语法结构。过去完成时为 had + 过去分词，不能在 had 后接一般过去式或 -ing。"
           ],
           "evidence": {
-            "paragraphIndex": 4,
-            "quote": "The lower gun-ports were now below water and the inrush sealed the ship’s fate."
+            "paragraphIndex": 1,
+            "quote": "had dictated her measurements and armament"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "瓦萨号沉没在哪座城市的港口？请写城市（中文或英文）。",
+          "focus": "grammar",
+          "grammarPoint": "Past simple irregular",
+          "exercise": "gap-fill",
+          "prompt": "Complete with the past simple of \"sink\": the story of a galleon that ___ Write exactly 1 word.",
           "answers": [
-            "Stockholm",
-            "斯德哥尔摩"
+            "sank"
           ],
-          "explanation": "沉没地点是瑞典的斯德哥尔摩港，不是哥本哈根。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "Copenhagen",
-                "哥本哈根"
-              ],
-              "feedback": "沉没地点是瑞典的斯德哥尔摩港，不是哥本哈根。"
-            }
-          ],
+          "explanation": "一般过去时中不规则动词需使用对应过去式；sink 的过去式是 sank。",
+          "commonMistakes": [],
           "evidence": {
             "paragraphIndex": 0,
-            "quote": "For nearly three and a half centuries she lay at the bottom of Stockholm harbour until her discovery in 1956."
+            "quote": "the story of a galleon that sank"
           }
         }
       ]
@@ -1508,45 +1378,49 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "作者借卡莱尔送剩药的故事批评了什么？",
+          "focus": "grammar",
+          "grammarPoint": "Inversion",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Inversion. Choose the correct form: Nor ___ only the ignorant and ill-educated person",
           "options": [
-            "认真核对诊断后按需要提供治疗",
-            "所有医生都从不愿给病人任何药物",
-            "未了解病情和药物成分，却盲信有药就能治病"
+            "it is",
+            "it does",
+            "is it"
           ],
           "answer": 2,
-          "explanation": "卡莱尔既不知道药物是什么，也不了解朋友的病情，却相信旧药一样有益，暴露了对药瓶的盲目信任。",
+          "explanation": "否定或限制性成分位于句首等规定情形会引起主语和助动词或系动词倒装。",
           "wrongReasons": [
-            "“认真核对诊断后按需要提供治疗”与本课内容不符。卡莱尔既不知道药物是什么，也不了解朋友的病情，却相信旧药一样有益，暴露了对药瓶的盲目信任。",
-            "“所有医生都从不愿给病人任何药物”与本课内容不符。卡莱尔既不知道药物是什么，也不了解朋友的病情，却相信旧药一样有益，暴露了对药瓶的盲目信任。",
+            "“it is”不符合这里的语法结构。否定或限制性成分位于句首等规定情形会引起主语和助动词或系动词倒装。",
+            "“it does”不符合这里的语法结构。否定或限制性成分位于句首等规定情形会引起主语和助动词或系动词倒装。",
             ""
           ],
           "evidence": {
             "paragraphIndex": 1,
-            "quote": "Carlyle was entirely ignorant of what the bottle in his pocket contained, of the nature of the illness from which his friend was suffering, and of what had previously been wrong with his wife, but a medicine that had worked so well in one form of illness would surely be of equal benefit in another, and comforted by the thought of the help he was bringing to his friend, he hastened to Henry Taylor's house."
+            "quote": "Nor is it only the ignorant and ill-educated person"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "卡莱尔带去探望的患病朋友叫什么？请写英文姓名。",
+          "focus": "grammar",
+          "grammarPoint": "Gerund after a preposition",
+          "exercise": "correction",
+          "prompt": "Correct the grammatical error. Rewrite the whole sentence or phrase: of cease to rise",
           "answers": [
-            "Henry Taylor",
-            "Taylor"
+            "of ceasing to rise"
           ],
-          "explanation": "Thomas Carlyle是带药探望的人，生病的朋友叫Henry Taylor。",
+          "explanation": "介词后接名词或动名词；动词要改为 -ing 形式，不能直接接动词原形。",
           "commonMistakes": [
             {
               "answers": [
-                "Thomas Carlyle",
-                "Carlyle"
+                "of cease to rise"
               ],
-              "feedback": "Thomas Carlyle是带药探望的人，生病的朋友叫Henry Taylor。"
+              "feedback": "介词后接名词或动名词；动词要改为 -ing 形式，不能直接接动词原形。"
             }
           ],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "It is recounted of Thomas Carlyle that when he heard of the illness of his friend, Henry Taylor, he went off immediately to visit him, carrying with him in his pocket what remained of a bottle of medicine formerly prescribed for an indisposition of Mrs. Carlyle’s."
+            "paragraphIndex": 0,
+            "quote": "shows no signs at present of ceasing to rise"
           }
         }
       ]
@@ -1561,45 +1435,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "气垫船怎样减少水面对船的阻力？",
+          "focus": "grammar",
+          "grammarPoint": "Absolute participle clause",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Absolute participle clause. Choose the correct form: the strangest of them ___ perhaps the hovercraft",
           "options": [
-            "只把发动机换成更大的桨而不抬高船体",
-            "让船体乘在气垫上，抬离水面",
-            "把船完全沉入海底后滑行"
+            "being",
+            "be",
+            "to being"
           ],
-          "answer": 1,
-          "explanation": "科克雷尔的思路是用空气垫抬起船体，从而减少表面船受到的波浪阻力。",
+          "answer": 0,
+          "explanation": "独立主格结构有自己的逻辑主语；名词短语后用分词 being，而不是另起谓语 be。",
           "wrongReasons": [
-            "“只把发动机换成更大的桨而不抬高船体”与本课内容不符。科克雷尔的思路是用空气垫抬起船体，从而减少表面船受到的波浪阻力。",
             "",
-            "“把船完全沉入海底后滑行”与本课内容不符。科克雷尔的思路是用空气垫抬起船体，从而减少表面船受到的波浪阻力。"
+            "“be”不符合这里的语法结构。独立主格结构有自己的逻辑主语；名词短语后用分词 being，而不是另起谓语 be。",
+            "“to being”不符合这里的语法结构。独立主格结构有自己的逻辑主语；名词短语后用分词 being，而不是另起谓语 be。"
           ],
           "evidence": {
             "paragraphIndex": 0,
-            "quote": "His answer was to lift the vessel out of the water by making it ride on a cushion of air, no more than one or two feet thick."
+            "quote": "the strangest of them being perhaps the hovercraft"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "文中提出气垫船想法的工程师叫什么？请写英文姓名。",
+          "focus": "grammar",
+          "grammarPoint": "Gerund after a preposition",
+          "exercise": "gap-fill",
+          "prompt": "Complete with the correct form of \"decide\": People have had difficulty in ___ how to classify the craft. Write exactly 1 word.",
           "answers": [
-            "Christopher Cockerell",
-            "Cockerell"
+            "deciding"
           ],
-          "explanation": "气垫船的提出者是Christopher Cockerell；Carver Mead是另一篇芯片技术文章中的人物。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "Carver Mead",
-                "Mead"
-              ],
-              "feedback": "气垫船的提出者是Christopher Cockerell；Carver Mead是另一篇芯片技术文章中的人物。"
-            }
-          ],
+          "explanation": "介词后接名词或动名词；动词要改为 -ing 形式，不能直接接动词原形。",
+          "commonMistakes": [],
           "evidence": {
             "paragraphIndex": 0,
-            "quote": "In 1953, a former electronics engineer in his fifties, Christopher Cockerell, who had turned to boat-building on the Norfolk Broads, suggested an idea on which he had been working for many years to the British Government and industrial circles."
+            "quote": "people have had difficulty in deciding"
           }
         }
       ]
@@ -1614,47 +1485,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "后来海洋勘测推翻了人们对海床的哪种简单想象？",
+          "focus": "grammar",
+          "grammarPoint": "Past simple passive",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Past simple passive. Choose the correct form: the first samples ___ by dredging the bottom",
           "options": [
-            "海床并非一片平坦，而有丰富地形和深度差异",
-            "所有海洋都只有几英寸深",
-            "海床仅存在于靠岸的沙滩之下"
+            "was collected",
+            "were collected",
+            "were collecting"
           ],
-          "answer": 0,
-          "explanation": "系统测深使人们能绘制海底地形图，认识到海床有多样地形，而不是简单的平面。",
+          "answer": 1,
+          "explanation": "一般过去时被动结构为 was/were + 过去分词；注意不规则过去分词。",
           "wrongReasons": [
+            "“was collected”不符合这里的语法结构。一般过去时被动结构为 was/were + 过去分词；注意不规则过去分词。",
             "",
-            "“所有海洋都只有几英寸深”与本课内容不符。系统测深使人们能绘制海底地形图，认识到海床有多样地形，而不是简单的平面。",
-            "“海床仅存在于靠岸的沙滩之下”与本课内容不符。系统测深使人们能绘制海底地形图，认识到海床有多样地形，而不是简单的平面。"
+            "“were collecting”不符合这里的语法结构。一般过去时被动结构为 was/were + 过去分词；注意不规则过去分词。"
           ],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "Today, enough soundings are available to enable a relief map of the Atlantic to be drawn and we know something of the great variety of the sea bed’s topography."
+            "paragraphIndex": 0,
+            "quote": "the first samples were collected by dredging the bottom"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "文中哪次著名船舶考察使海底研究成为重要学科？请写英文船名。",
+          "focus": "grammar",
+          "grammarPoint": "Inversion",
+          "exercise": "transformation",
+          "prompt": "Rewrite with inversion, beginning with \"Not until 1869\" and using \"did\": They obtained this series of deep soundings only in 1869.",
           "answers": [
-            "Challenger",
-            "H. M. S. Challenger",
-            "HMS Challenger",
-            "挑战者号"
+            "Not until 1869 did they obtain this series of deep soundings."
           ],
-          "explanation": "文中指Challenger考察；Vasa是另一篇沉船故事。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "Vasa",
-                "瓦萨号"
-              ],
-              "feedback": "文中指Challenger考察；Vasa是另一篇沉船故事。"
-            }
-          ],
+          "explanation": "否定或限制性成分位于句首等规定情形会引起主语和助动词或系动词倒装。",
+          "commonMistakes": [],
           "evidence": {
             "paragraphIndex": 0,
-            "quote": "Shortly after this the famous H. M. S. Challenger expedition established the study of the sea-floor as a subject worthy of the most qualified physicists and geologists."
+            "quote": "it was not until 1869"
           }
         }
       ]
@@ -1669,47 +1535,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "雕塑家和敏锐的欣赏者需要怎样理解形体？",
+          "focus": "grammar",
+          "grammarPoint": "Present perfect passive",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Present perfect passive. Choose the correct form: sculpture ___ as the most difficult of all arts",
           "options": [
-            "只记住物体作为食物或故事符号的用途",
-            "只看一幅平面轮廓就绝不考虑另一面",
-            "在头脑中把握物体完整的三维空间形态"
+            "has described",
+            "have been described",
+            "has been described"
           ],
           "answer": 2,
-          "explanation": "作者要求把握形体的体积、重量、重心及各面，而非只看平面轮廓或附会用途。",
+          "explanation": "现在完成时被动结构为 has/have been + 过去分词；注意主语的单复数。",
           "wrongReasons": [
-            "“只记住物体作为食物或故事符号的用途”与本课内容不符。作者要求把握形体的体积、重量、重心及各面，而非只看平面轮廓或附会用途。",
-            "“只看一幅平面轮廓就绝不考虑另一面”与本课内容不符。作者要求把握形体的体积、重量、重心及各面，而非只看平面轮廓或附会用途。",
+            "“has described”不符合这里的语法结构。现在完成时被动结构为 has/have been + 过去分词；注意主语的单复数。",
+            "“have been described”不符合这里的语法结构。现在完成时被动结构为 has/have been + 过去分词；注意主语的单复数。",
             ""
           ],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "He must strive continually to think of, and use, form in its full spatial completeness."
+            "paragraphIndex": 0,
+            "quote": "sculpture has been described as the most difficult of all arts"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "作者举哪种食物为例，要求先把它看作单一立体形状？请写物品（中文或英文）。",
+          "focus": "grammar",
+          "grammarPoint": "Infinitive after ability",
+          "exercise": "gap-fill",
+          "prompt": "Complete with the correct form of \"respond\": the ability ___ to form in three dimensions Write exactly 2 words.",
           "answers": [
-            "egg",
-            "an egg",
-            "鸡蛋",
-            "蛋"
+            "to respond"
           ],
-          "explanation": "这一具体论证首先举的是egg；梨出现在后面的形体清单中。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "pear",
-                "梨"
-              ],
-              "feedback": "这一具体论证首先举的是egg；梨出现在后面的形体清单中。"
-            }
-          ],
+          "explanation": "名词 ability 后用 to + 动词原形说明具备做某事的能力：the ability to respond。这里不定式修饰名词 ability。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 2,
-            "quote": "He must, for example, perceive an egg as a simple single solid shape, quite apart from its significance as food, or from the literary idea that it will become a bird."
+            "paragraphIndex": 0,
+            "quote": "the ability to respond to form in three dimensions"
           }
         }
       ]
@@ -1724,46 +1585,49 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "作者为什么认为可以更理解伽利略时代的怀疑者？",
+          "focus": "grammar",
+          "grammarPoint": "Cleft sentence",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Cleft sentence. Choose the correct form: it is only in modern times ___ Galileo has become a problem child",
           "options": [
-            "所有反对者都亲自重复了同样实验并得到相同结果",
-            "使用望远镜需要经验，曲面玻璃当时又常被用来制造幻象",
-            "当时已人人熟练掌握现代望远镜的所有功能"
+            "that",
+            "what",
+            "whose"
           ],
-          "answer": 1,
-          "explanation": "作者提醒读者把怀疑放回时代背景：仪器使用需要经验，曲面玻璃又与视觉骗局联系在一起。",
+          "answer": 0,
+          "explanation": "强调句结构为 It is/was + 被强调部分 + that/who + 其余部分。",
           "wrongReasons": [
-            "“所有反对者都亲自重复了同样实验并得到相同结果”与本课内容不符。作者提醒读者把怀疑放回时代背景：仪器使用需要经验，曲面玻璃又与视觉骗局联系在一起。",
             "",
-            "“当时已人人熟练掌握现代望远镜的所有功能”与本课内容不符。作者提醒读者把怀疑放回时代背景：仪器使用需要经验，曲面玻璃又与视觉骗局联系在一起。"
+            "“what”不符合这里的语法结构。强调句结构为 It is/was + 被强调部分 + that/who + 其余部分。",
+            "“whose”不符合这里的语法结构。强调句结构为 It is/was + 被强调部分 + that/who + 其余部分。"
           ],
           "evidence": {
-            "paragraphIndex": 2,
-            "quote": "We can perhaps forgive those who said the moons of Jupiter were produced by Galileo's spyglass if we recall that in his day, as for centuries before, curved glass was the popular contrivance for producing not truth but illusion, untruth; and if a single curved glass would distort nature, how much more would a pair of them?"
+            "paragraphIndex": 0,
+            "quote": "it is only in modern times that Galileo has become a problem child"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "传统故事中，伽利略从哪个城市的斜塔上落下不同重物？请写城市。",
+          "focus": "grammar",
+          "grammarPoint": "Present perfect",
+          "exercise": "correction",
+          "prompt": "Correct the grammatical error. Rewrite the whole sentence or phrase: The scientific dust has long since settle.",
           "answers": [
-            "Pisa",
-            "比萨",
-            "比萨市"
+            "The scientific dust has long since settled."
           ],
-          "explanation": "文中回顾的传统故事地点是Pisa（比萨）斜塔。作者接着说明现代历史研究已使旧有形象更加复杂。",
+          "explanation": "现在完成时结构为 has/have + 过去分词；注意单复数和不规则动词。",
           "commonMistakes": [
             {
               "answers": [
-                "Florence",
-                "佛罗伦萨"
+                "The scientific dust has long since settle."
               ],
-              "feedback": "文中回顾的传统故事地点是Pisa（比萨）斜塔。作者接着说明现代历史研究已使旧有形象更加复杂。"
+              "feedback": "现在完成时结构为 has/have + 过去分词；注意单复数和不规则动词。"
             }
           ],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "He was the man who climbed the Leaning Tower of Pisa and dropped various weights from the top, who rolled balls down inclined planes, and then generalized the results of his many experiments into the famous law of free fall."
+            "paragraphIndex": 0,
+            "quote": "the scientific dust has long since settled"
           }
         }
       ]
@@ -1778,46 +1642,43 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "作者认为部落传统教育在哪一点上体现了平等？",
+          "focus": "grammar",
+          "grammarPoint": "Past participle modifier",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Past participle modifier. Choose the correct form: ___ of one of the greatest twentieth-century opportunities",
           "options": [
-            "传统知识传授给每个成员，让所有人都有共同的生活准备",
-            "只有付得起高额学费的人才能学习",
-            "所有儿童都必须离开父母到海外学习"
+            "depriving",
+            "deprived",
+            "to depriving"
           ],
-          "answer": 0,
-          "explanation": "文章用传统知识人人共享、人人接受教育，说明一种理想的平等起点。",
+          "answer": 1,
+          "explanation": "名词与后置动词为被动关系时，可用过去分词作定语，相当于被动定语从句。",
           "wrongReasons": [
+            "“depriving”不符合这里的语法结构。名词与后置动词为被动关系时，可用过去分词作定语，相当于被动定语从句。",
             "",
-            "“只有付得起高额学费的人才能学习”与本课内容不符。文章用传统知识人人共享、人人接受教育，说明一种理想的平等起点。",
-            "“所有儿童都必须离开父母到海外学习”与本课内容不符。文章用传统知识人人共享、人人接受教育，说明一种理想的平等起点。"
+            "“to depriving”不符合这里的语法结构。名词与后置动词为被动关系时，可用过去分词作定语，相当于被动定语从句。"
           ],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "Among tribal people all knowledge inherited by tradition is shared by all; it is taught to every member of the tribe so that in this respect everybody is equally equipped for life."
+            "paragraphIndex": 0,
+            "quote": "deprived of one of the greatest twentieth-century opportunities"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "文中列举的强制入学立法年份中，一六四二年对应哪个国家？请写国名。",
+          "focus": "grammar",
+          "grammarPoint": "Participle clause",
+          "exercise": "transformation",
+          "prompt": "Expand the participle phrase. Use \"Because modern states are convinced\" and keep the main clause: Convinced of the importance of education, modern states invest in learning.",
           "answers": [
-            "Germany",
-            "德国"
+            "Because modern states are convinced of the importance of education, modern states invest in learning.",
+            "Because modern states are convinced of the importance of education, they invest in learning."
           ],
-          "explanation": "作者给出的对应是德国1642年，英格兰对应1876年；本题只核对课文所列年代。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "England",
-                "英国",
-                "英格兰"
-              ],
-              "feedback": "作者给出的对应是德国1642年，英格兰对应1876年；本题只核对课文所列年代。"
-            }
-          ],
+          "explanation": "分词状语的逻辑主语须与主句主语一致；主动用 -ing，被动用过去分词。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 2,
-            "quote": "There are no ‘illiterates’—if the term can be applied to peoples without a script—while our own compulsory school attendance became law in Germany in 1642, in France in 1806, and in England in 1876, and is still non-existent in a number of ‘civilized’ nations."
+            "paragraphIndex": 0,
+            "quote": "Convinced of the importance of education"
           }
         }
       ]
@@ -1832,47 +1693,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "父母讥讽孩子赞美朋友家庭，可能造成什么后果？",
+          "focus": "grammar",
+          "grammarPoint": "Bare infinitive after make",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Bare infinitive after make. Choose the correct form: makes them ___",
           "options": [
-            "孩子立刻更加相信父母绝不会犯错",
-            "孩子立刻把朋友家的做法全盘否定",
-            "孩子以后不愿再谈自己拜访的人和地方"
+            "to resolve",
+            "resolving",
+            "resolve"
           ],
           "answer": 2,
-          "explanation": "父母以敌意回应会使青少年失望并收起交流，之后父母又抱怨孩子保密，形成自己造成的隔阂。",
+          "explanation": "主动使役结构 make + 宾语 + 动词原形，不带 to，也不用 -ing。",
           "wrongReasons": [
-            "“孩子立刻更加相信父母绝不会犯错”与本课内容不符。父母以敌意回应会使青少年失望并收起交流，之后父母又抱怨孩子保密，形成自己造成的隔阂。",
-            "“孩子立刻把朋友家的做法全盘否定”与本课内容不符。父母以敌意回应会使青少年失望并收起交流，之后父母又抱怨孩子保密，形成自己造成的隔阂。",
+            "“to resolve”不符合这里的语法结构。主动使役结构 make + 宾语 + 动词原形，不带 to，也不用 -ing。",
+            "“resolving”不符合这里的语法结构。主动使役结构 make + 宾语 + 动词原形，不带 to，也不用 -ing。",
             ""
           ],
           "evidence": {
             "paragraphIndex": 0,
-            "quote": "Such a loss of dignity and descent into childish behaviour on the part of the adults deeply shocks the adolescents, and makes them resolve that in future they will not talk to their parents about the places or people they visit."
+            "quote": "makes them resolve"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "文中把青少年反应视为观察力和哪种判断能力发展的信号？请写短语。",
+          "focus": "grammar",
+          "grammarPoint": "Future continuous",
+          "exercise": "gap-fill",
+          "prompt": "Complete using the future continuous with \"will\": Before very long the parents ___ . (complain) Write exactly 3 words.",
           "answers": [
-            "independent judgment",
-            "independent judgement",
-            "独立判断",
-            "独立判断能力"
+            "will be complaining"
           ],
-          "explanation": "作者把这种变化看作独立判断能力的发展，不是盲目服从。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "blind obedience",
-                "盲目服从"
-              ],
-              "feedback": "作者把这种变化看作独立判断能力的发展，不是盲目服从。"
-            }
-          ],
+          "explanation": "将来进行时结构为 will be + 动词 -ing，表示将来某时正在进行的动作。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "If parents were prepared for this adolescent reaction, and realized that it was a sign that the child was growing up and developing valuable powers of observation and independent judgment, they would not be so hurt, and therefore would not drive the child into opposition by resenting and resisting it."
+            "paragraphIndex": 0,
+            "quote": "the parents will be complaining"
           }
         }
       ]
@@ -1887,45 +1743,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "文章为什么设想月球可成为太空工业枢纽？",
+          "focus": "grammar",
+          "grammarPoint": "Infinitive complement",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Infinitive complement. Choose the correct form: The Moon is likely ___ the industrial hub of the Solar System",
           "options": [
-            "从月球出发需要比地球更高的逃逸速度",
-            "低重力使从月球发射的能耗显著降低",
-            "月球表面重力比地球高六倍"
+            "to become",
+            "becoming",
+            "become"
           ],
-          "answer": 1,
-          "explanation": "文章把月球工业潜力与低重力、较低发射能耗联系起来，而不是把月球说成引力更强。",
+          "answer": 0,
+          "explanation": "此处动词或形容词后接 to + 动词原形，不接动名词。",
           "wrongReasons": [
-            "“从月球出发需要比地球更高的逃逸速度”与本课内容不符。文章把月球工业潜力与低重力、较低发射能耗联系起来，而不是把月球说成引力更强。",
             "",
-            "“月球表面重力比地球高六倍”与本课内容不符。文章把月球工业潜力与低重力、较低发射能耗联系起来，而不是把月球说成引力更强。"
+            "“becoming”不符合这里的语法结构。此处动词或形容词后接 to + 动词原形，不接动名词。",
+            "“become”不符合这里的语法结构。此处动词或形容词后接 to + 动词原形，不接动名词。"
           ],
           "evidence": {
             "paragraphIndex": 0,
-            "quote": "The reason lies in its gravity."
+            "quote": "The Moon is likely to become the industrial hub of the Solar System"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "文中因红色沙漠而被称为红色行星的是哪颗行星？请写名称。",
+          "focus": "grammar",
+          "grammarPoint": "Comparison",
+          "exercise": "gap-fill",
+          "prompt": "Complete with the comparative of \"little\": It requires ___ energy than the journey from Earth. Write exactly 1 word.",
           "answers": [
-            "Mars",
-            "火星"
+            "less"
           ],
-          "explanation": "文章称Mars为红色行星，金星不符合这里的描述。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "Venus",
-                "金星"
-              ],
-              "feedback": "文章称Mars为红色行星，金星不符合这里的描述。"
-            }
-          ],
+          "explanation": "比较结构须保持比较级或原级与对应搭配一致，注意 than 和 as 的使用。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 6,
-            "quote": "It is a world of red sandy deserts (hence its name — the Red Planet), cloudless skies, savage sandstorms, chasms wider than the Grand Canyon and at least one mountain more than twice as tall as Everest."
+            "paragraphIndex": 0,
+            "quote": "it requires 97 per cent less energy"
           }
         }
       ]
@@ -1940,54 +1793,49 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "按作者的企业类比，员工可靠负责为什么能降低管理成本？",
+          "focus": "grammar",
+          "grammarPoint": "Gerund after a preposition",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Gerund after a preposition. Choose the correct form: could be used for ___ the country",
           "options": [
-            "每项工作不必再另派人层层监督检查",
-            "员工会因此不再承担任何工作任务",
-            "管理费用会自动变成无限的外部资源"
+            "develop",
+            "developing",
+            "to develop"
           ],
-          "answer": 0,
-          "explanation": "当人们能主动负责时，监督检查的层级可以减少；作者据此类比团结国家的治理成本。",
+          "answer": 1,
+          "explanation": "介词后接名词或动名词；动词要改为 -ing 形式，不能直接接动词原形。",
           "wrongReasons": [
+            "“develop”不符合这里的语法结构。介词后接名词或动名词；动词要改为 -ing 形式，不能直接接动词原形。",
             "",
-            "“员工会因此不再承担任何工作任务”与本课内容不符。当人们能主动负责时，监督检查的层级可以减少；作者据此类比团结国家的治理成本。",
-            "“管理费用会自动变成无限的外部资源”与本课内容不符。当人们能主动负责时，监督检查的层级可以减少；作者据此类比团结国家的治理成本。"
+            "“to develop”不符合这里的语法结构。介词后接名词或动名词；动词要改为 -ing 形式，不能直接接动词原形。"
           ],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "It will be low because it will be necessary to have only one man looking after each job, without having another man to check upon what he is doing, keep him in line, and report on him to someone else."
+            "paragraphIndex": 0,
+            "quote": "could be used for developing the country"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "按文章的企业类比，管理费用上升后，可用于分红或未来发展的钱会增加还是减少？请写短答。",
+          "focus": "grammar",
+          "grammarPoint": "Embedded wh-clause",
+          "exercise": "correction",
+          "prompt": "Correct the grammatical error. Rewrite the whole sentence or phrase: It should not be forgotten how small are those resources.",
           "answers": [
-            "decrease",
-            "decreases",
-            "less",
-            "less money",
-            "fall",
-            "减少",
-            "变少",
-            "下降"
+            "It should not be forgotten how small those resources are."
           ],
-          "explanation": "管理开支增加后，剩余可分红或再投资的资金会减少，而不是增加。",
+          "explanation": "嵌入式疑问从句采用疑问词 + 主语 + 谓语的陈述语序，不用直接疑问句倒装。",
           "commonMistakes": [
             {
               "answers": [
-                "increase",
-                "increases",
-                "more",
-                "增加",
-                "变多"
+                "It should not be forgotten how small are those resources."
               ],
-              "feedback": "管理开支增加后，剩余可分红或再投资的资金会减少，而不是增加。"
+              "feedback": "嵌入式疑问从句采用疑问词 + 主语 + 谓语的陈述语序，不用直接疑问句倒装。"
             }
           ],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "As administrative overheads rise, so the earnings of the business after meeting the expense of administration, will fall; and the business will have less money to distribute as dividends or invest directly in its future progress and development."
+            "paragraphIndex": 0,
+            "quote": "it should not be forgotten how small those resources are"
           }
         }
       ]
@@ -2002,50 +1850,43 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "作者为什么说人类衰老不能简单等同于钟表发条耗尽？",
+          "focus": "grammar",
+          "grammarPoint": "Possessive its",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Possessive its. Choose the correct form: the human body is at ___ most vigorous",
           "options": [
-            "人和金属钟表都能永远完全自行修复",
-            "文章认为人类衰老只取决于钟表是否走动",
-            "发条可以重新上紧，而人的自我修复能力会随年龄减弱"
+            "it's",
+            "it",
+            "its"
           ],
           "answer": 2,
-          "explanation": "耗尽能量的表可以上发条；作者讨论的人体变化还涉及曾经具有的自我修复能力逐渐丧失。",
+          "explanation": "its 是形容词性物主代词；it is/it has 的缩写不能在这里表示所属。",
           "wrongReasons": [
-            "“人和金属钟表都能永远完全自行修复”与本课内容不符。耗尽能量的表可以上发条；作者讨论的人体变化还涉及曾经具有的自我修复能力逐渐丧失。",
-            "“文章认为人类衰老只取决于钟表是否走动”与本课内容不符。耗尽能量的表可以上发条；作者讨论的人体变化还涉及曾经具有的自我修复能力逐渐丧失。",
+            "“it's”不符合这里的语法结构。its 是形容词性物主代词；it is/it has 的缩写不能在这里表示所属。",
+            "“it”不符合这里的语法结构。its 是形容词性物主代词；it is/it has 的缩写不能在这里表示所属。",
             ""
           ],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "A run-down watch is still a watch and can be rewound."
+            "paragraphIndex": 0,
+            "quote": "the human body is at its most vigorous"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "按本文用作比较的年龄，人的活力和抗死亡风险状态最好时是几岁？请写年龄。",
+          "focus": "grammar",
+          "grammarPoint": "Active and passive",
+          "exercise": "transformation",
+          "prompt": "Change to active. Begin with \"People\". Keep \"this decline in vigour with the passing of time\" as the object: This decline in vigour with the passing of time is called ageing.",
           "answers": [
-            "12",
-            "twelve",
-            "twelve years old",
-            "12岁",
-            "十二岁",
-            "十二"
+            "People call this decline in vigour with the passing of time ageing.",
+            "People call this decline in vigour with the passing of time aging."
           ],
-          "explanation": "文章以十二岁作为讨论活力与抵抗力的起点，不是八十岁；这是对课文说法的理解题。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "80",
-                "eighty",
-                "八十岁"
-              ],
-              "feedback": "文章以十二岁作为讨论活力与抵抗力的起点，不是八十岁；这是对课文说法的理解题。"
-            }
-          ],
+          "explanation": "主动和被动转换须保留时态；被动主语是原主动宾语，使用 be + 过去分词。",
+          "commonMistakes": [],
           "evidence": {
             "paragraphIndex": 0,
-            "quote": "At the age of twelve years, the human body is at its most vigorous."
+            "quote": "This decline in vigour with the passing of time is called ageing."
           }
         }
       ]
@@ -2060,45 +1901,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "作者为什么提醒旅行者也要留意饮料中的冰？",
+          "focus": "grammar",
+          "grammarPoint": "Modal passive",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Modal passive. Choose the correct form: tap-water supplies should ___ as particularly suspect",
           "options": [
-            "只要有冰，原先污染的水就必定变成纯净水",
-            "冰的安全程度取决于制冰用水的安全程度",
-            "任何冰都能自动杀死水里的所有病原体"
+            "be regarded",
+            "be regard",
+            "regarding"
           ],
-          "answer": 1,
-          "explanation": "课文强调不能把结冰本身当成净化措施，冰也会继承制冰水的风险。",
+          "answer": 0,
+          "explanation": "情态动词被动结构为情态动词 + be + 过去分词，不是 been 或 being。",
           "wrongReasons": [
-            "“只要有冰，原先污染的水就必定变成纯净水”与本课内容不符。课文强调不能把结冰本身当成净化措施，冰也会继承制冰水的风险。",
             "",
-            "“任何冰都能自动杀死水里的所有病原体”与本课内容不符。课文强调不能把结冰本身当成净化措施，冰也会继承制冰水的风险。"
+            "“be regard”不符合这里的语法结构。情态动词被动结构为情态动词 + be + 过去分词，不是 been 或 being。",
+            "“regarding”不符合这里的语法结构。情态动词被动结构为情态动词 + be + 过去分词，不是 been 或 being。"
           ],
           "evidence": {
-            "paragraphIndex": 3,
-            "quote": "Ice is only as safe as the water from which it is made, and should not be put in drinks unless it is known to be safe."
+            "paragraphIndex": 0,
+            "quote": "tap-water supplies should be regarded as particularly suspect"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "文中明确说不能依赖哪种饮品成分来给水消毒？请写成分（中文或英文）。",
+          "focus": "grammar",
+          "grammarPoint": "Gerund after avoid",
+          "exercise": "gap-fill",
+          "prompt": "Complete with the correct form of \"drink\": Travellers should avoid ___ tap-water. Write exactly 1 word.",
           "answers": [
-            "alcohol",
-            "酒精"
+            "drinking"
           ],
-          "explanation": "这一段讨论的是酒精不能被简单依赖为饮水消毒手段，并非糖。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "sugar",
-                "糖"
-              ],
-              "feedback": "这一段讨论的是酒精不能被简单依赖为饮水消毒手段，并非糖。"
-            }
-          ],
+          "explanation": "avoid 后接动名词，不接不定式或动词原形。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 4,
-            "quote": "Alcohol may be a medical disinfectant, but should not be relied upon to sterilize water."
+            "paragraphIndex": 1,
+            "quote": "should avoid drinking tap-water"
           }
         }
       ]
@@ -2113,46 +1951,49 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "作者为什么认为作家不能用外界评价替代内心判断？",
+          "focus": "grammar",
+          "grammarPoint": "Gerund clause after a preposition",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Gerund clause after a preposition. Choose the correct form: I never heard of anyone ___ a ‘skeleton’",
           "options": [
-            "创作是反复探索并重塑自身材料的过程，迎合读者可能使其迷失",
-            "作品只要按学校教的大纲写一次就已完成",
-            "所有作家开始写作前都精确知道最终结局"
+            "make",
+            "making",
+            "to make"
           ],
-          "answer": 0,
-          "explanation": "作家在修改中发现内容和自我，必须有内在的严格判断；单为迎合外界而写可能破坏这一过程。",
+          "answer": 1,
+          "explanation": "heard of 后的介词 of 接 -ing 从句 anyone making ...；anyone 是 making 的逻辑主语。这里不是直接用动词原形，也不是普通的名词后置定语。",
           "wrongReasons": [
+            "“make”不符合本句结构。heard of 后的介词 of 接 -ing 从句 anyone making ...；anyone 是 making 的逻辑主语。这里不是直接用动词原形，也不是普通的名词后置定语。",
             "",
-            "“作品只要按学校教的大纲写一次就已完成”与本课内容不符。作家在修改中发现内容和自我，必须有内在的严格判断；单为迎合外界而写可能破坏这一过程。",
-            "“所有作家开始写作前都精确知道最终结局”与本课内容不符。作家在修改中发现内容和自我，必须有内在的严格判断；单为迎合外界而写可能破坏这一过程。"
+            "“to make”不符合本句结构。heard of 后的介词 of 接 -ing 从句 anyone making ...；anyone 是 making 的逻辑主语。这里不是直接用动词原形，也不是普通的名词后置定语。"
           ],
           "evidence": {
-            "paragraphIndex": 2,
-            "quote": "For this reason also the writer, like any other artist, has no resting place, no crowd or movement in which he may take comfort, no judgment from outside which can replace the judgment from within."
+            "paragraphIndex": 0,
+            "quote": "I never heard of anyone making a ‘skeleton’"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "那位写了九个月小说的作家，后来把故事背景从克什米尔改到哪里？请写地区。",
+          "focus": "grammar",
+          "grammarPoint": "Embedded wh-clause",
+          "exercise": "correction",
+          "prompt": "Correct the grammatical error. Rewrite the whole sentence or phrase: They have little idea where are they going.",
           "answers": [
-            "Scottish Highlands",
-            "the Scottish Highlands",
-            "苏格兰高地"
+            "They have little idea where they are going."
           ],
-          "explanation": "克什米尔是原设定，修改后的背景是苏格兰高地。",
+          "explanation": "嵌入式疑问从句采用疑问词 + 主语 + 谓语的陈述语序，不用直接疑问句倒装。",
           "commonMistakes": [
             {
               "answers": [
-                "Kashmir",
-                "克什米尔"
+                "They have little idea where are they going."
               ],
-              "feedback": "克什米尔是原设定，修改后的背景是苏格兰高地。"
+              "feedback": "嵌入式疑问从句采用疑问词 + 主语 + 谓语的陈述语序，不用直接疑问句倒装。"
             }
           ],
           "evidence": {
             "paragraphIndex": 0,
-            "quote": "They have a character, perhaps two; they are in that condition of eager discomfort which passes for inspiration; all admit radical changes of destination once the journey has begun; one, to my certain knowledge, spent nine months on a novel about Kashmir, then reset the whole thing in the Scottish Highlands."
+            "quote": "they have little idea where they are going"
           }
         }
       ]
@@ -2167,46 +2008,43 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "深水海浪向前传播时，水面微粒通常怎样运动？",
+          "focus": "grammar",
+          "grammarPoint": "Irregular plural",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Irregular plural. Choose the correct form: These ocean waves are among the earth’s most complicated natural ___.",
           "options": [
-            "随着浪永久直冲岸边，不再返回",
-            "始终完全静止，连上下移动也没有",
-            "大致沿圆形轨道运动，再回到起点附近"
+            "phenomenon",
+            "phenomenons",
+            "phenomena"
           ],
           "answer": 2,
-          "explanation": "传播的是波动；深水中的微粒大致作圆周运动，并不是整堵海水一直向岸边平移。",
+          "explanation": "phenomenon 的复数是 phenomena；此处指复数自然现象，不能用单数或规则词尾。",
           "wrongReasons": [
-            "“随着浪永久直冲岸边，不再返回”与本课内容不符。传播的是波动；深水中的微粒大致作圆周运动，并不是整堵海水一直向岸边平移。",
-            "“始终完全静止，连上下移动也没有”与本课内容不符。传播的是波动；深水中的微粒大致作圆周运动，并不是整堵海水一直向岸边平移。",
+            "“phenomenon”不符合这里的语法结构。phenomenon 的复数是 phenomena；此处指复数自然现象，不能用单数或规则词尾。",
+            "“phenomenons”不符合这里的语法结构。phenomenon 的复数是 phenomena；此处指复数自然现象，不能用单数或规则词尾。",
             ""
           ],
           "evidence": {
-            "paragraphIndex": 3,
-            "quote": "An ocean wave passing through deep water causes a particle on the surface to move in a roughly circular orbit, drawing the particle first towards the advancing wave, then up into the wave, then forward with it and then—as the wave leaves the particles behind—back to its starting point again."
+            "paragraphIndex": 1,
+            "quote": "These ocean waves are among the earth’s most complicated natural phenomena."
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "波浪最高点的英文术语是什么？请写英文或中文术语。",
+          "focus": "grammar",
+          "grammarPoint": "Active and passive",
+          "exercise": "transformation",
+          "prompt": "Change to the passive. Begin with \"The atmosphere of the earth\" and keep the agent with \"by\": Rays from the sun excite and energize the atmosphere of the earth.",
           "answers": [
-            "crest",
-            "wave crest",
-            "波峰"
+            "The atmosphere of the earth is excited and energized by rays from the sun.",
+            "The atmosphere of the earth is excited and energised by rays from the sun."
           ],
-          "explanation": "crest是波峰；trough是最低点，即波谷。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "trough",
-                "波谷"
-              ],
-              "feedback": "crest是波峰；trough是最低点，即波谷。"
-            }
-          ],
+          "explanation": "主动和被动转换须保留时态；被动主语是原主动宾语，使用 be + 过去分词。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "The basic features include a crest (the highest point of the wave), a trough (the lowest point), a height (the vertical distance from the trough to the crest), a wave length (the horizontal distance between two wave crests), and a period (which is the time it takes a wave crest to travel one wave length)."
+            "paragraphIndex": 0,
+            "quote": "Rays from the sun excite and energize the atmosphere of the earth"
           }
         }
       ]
@@ -2221,50 +2059,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "按作者比较，温和训练法为什么优于单纯鞭打？",
+          "focus": "grammar",
+          "grammarPoint": "Present perfect passive",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Present perfect passive. Choose the correct form: Two main techniques ___ for training elephants",
           "options": [
-            "鞭打会使象永远没有怨恨、也绝无攻击风险",
-            "更需要早期耐心，但能培养较愉快、长期可靠的象",
-            "完全不需要驯象员也能立即让所有野象服从"
+            "have been used",
+            "has been used",
+            "have used"
           ],
-          "answer": 1,
-          "explanation": "文章认为粗暴方法会使动物怨恨，而温和方法虽慢，却更可能形成长期良好合作；这是课文立场的比较。",
+          "answer": 0,
+          "explanation": "现在完成时被动结构为 has/have been + 过去分词；注意主语的单复数。",
           "wrongReasons": [
-            "“鞭打会使象永远没有怨恨、也绝无攻击风险”与本课内容不符。文章认为粗暴方法会使动物怨恨，而温和方法虽慢，却更可能形成长期良好合作；这是课文立场的比较。",
             "",
-            "“完全不需要驯象员也能立即让所有野象服从”与本课内容不符。文章认为粗暴方法会使动物怨恨，而温和方法虽慢，却更可能形成长期良好合作；这是课文立场的比较。"
+            "“has been used”不符合这里的语法结构。现在完成时被动结构为 has/have been + 过去分词；注意主语的单复数。",
+            "“have used”不符合这里的语法结构。现在完成时被动结构为 has/have been + 过去分词；注意主语的单复数。"
           ],
           "evidence": {
             "paragraphIndex": 0,
-            "quote": "The gentle method requires more patience in the early stages, but produces a cheerful, good-tempered elephant who will give many years of loyal service."
+            "quote": "Two main techniques have been used for training elephants"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "文中说首先应给每头象安排几名全权负责的固定驯象员？请写数量。",
+          "focus": "grammar",
+          "grammarPoint": "Gerund after a preposition",
+          "exercise": "gap-fill",
+          "prompt": "Complete with the correct form of \"set\": The method consists of ___ an elephant to work. Write exactly 1 word.",
           "answers": [
-            "1",
-            "one",
-            "one mahout",
-            "一名",
-            "一个",
-            "一"
+            "setting"
           ],
-          "explanation": "作者强调single mahout，即一名固定负责人；两侧辅助者不等于另换主人。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "two",
-                "2",
-                "两名"
-              ],
-              "feedback": "作者强调single mahout，即一名固定负责人；两侧辅助者不等于另换主人。"
-            }
-          ],
+          "explanation": "介词后接名词或动名词；动词要改为 -ing 形式，不能直接接动词原形。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "The first essential in elephant training is to assign to the animal a single mahout who will be entirely responsible for the job."
+            "paragraphIndex": 0,
+            "quote": "consists of setting an elephant to work"
           }
         }
       ]
@@ -2279,49 +2109,49 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "早期地震仪怎样在地面震动时留下曲线？",
+          "focus": "grammar",
+          "grammarPoint": "Neither ... nor",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Neither ... nor. Choose the correct form: instruments that neither slumbered ___ slept",
           "options": [
-            "利用重物和笔相对不动，让纸随地面移动",
-            "让笔和纸永远以完全相同方向、速度同时移动",
-            "只记录科学家听见的声音，不接触地面"
+            "or",
+            "nor",
+            "but"
           ],
-          "answer": 0,
-          "explanation": "重物因惯性相对稳定，纸在笔下移动，便把地面运动记录成线条。",
+          "answer": 1,
+          "explanation": "neither 与 nor 配对，表示两者都不；不能与 or 混用。",
           "wrongReasons": [
+            "“or”不符合这里的语法结构。neither 与 nor 配对，表示两者都不；不能与 or 混用。",
             "",
-            "“让笔和纸永远以完全相同方向、速度同时移动”与本课内容不符。重物因惯性相对稳定，纸在笔下移动，便把地面运动记录成线条。",
-            "“只记录科学家听见的声音，不接触地面”与本课内容不符。重物因惯性相对稳定，纸在笔下移动，便把地面运动记录成线条。"
+            "“but”不符合这里的语法结构。neither 与 nor 配对，表示两者都不；不能与 or 混用。"
           ],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "In the midst of all this movement, the weight and the pen would be still."
+            "paragraphIndex": 0,
+            "quote": "instruments that neither slumbered nor slept"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "文中最先描述的装置只能记录波动的哪个方向分量？请写方向（中文或英文）。",
+          "focus": "grammar",
+          "grammarPoint": "Relative object after a preposition",
+          "exercise": "correction",
+          "prompt": "Correct the grammatical error. Rewrite the whole sentence or phrase: the rigid table upon that these rods stood",
           "answers": [
-            "horizontal",
-            "horizontal component",
-            "水平",
-            "水平分量"
+            "the rigid table upon which these rods stood"
           ],
-          "explanation": "该装置只记录水平分量，完整运动需要其他布置才能分别记录。",
+          "explanation": "介词提前、先行词指物时，关系代词用 which，不能用 that 或 what。",
           "commonMistakes": [
             {
               "answers": [
-                "vertical",
-                "vertical component",
-                "垂直",
-                "垂直分量"
+                "the rigid table upon that these rods stood"
               ],
-              "feedback": "该装置只记录水平分量，完整运动需要其他布置才能分别记录。"
+              "feedback": "介词提前、先行词指物时，关系代词用 which，不能用 that 或 what。"
             }
           ],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "The apparatus thus described, however, records only the horizontal component of the wave movement, which is, in fact, much more complicated."
+            "paragraphIndex": 0,
+            "quote": "the rigid table upon which these stood"
           }
         }
       ]
@@ -2336,47 +2166,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "文章把与外星智慧生命联系的最大障碍归结为什么？",
+          "focus": "grammar",
+          "grammarPoint": "Positive agreement with so",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Positive agreement with so. Choose the correct form: Venus is far too hot, and so ___ Mercury.",
           "options": [
-            "所有无线电波都只传播几米",
-            "宇宙中完全不可能存在其他恒星",
-            "天文尺度的遥远距离"
+            "does",
+            "has",
+            "is"
           ],
           "answer": 2,
-          "explanation": "作者主要担忧极遥远距离带来的通信和航行困难，而不是认为没有其他恒星。",
+          "explanation": "肯定附和结构为 so + be/助动词/情态动词 + 主语。前面用 is hot，后面应为 so is Mercury，不能换成 does 或 has。",
           "wrongReasons": [
-            "“所有无线电波都只传播几米”与本课内容不符。作者主要担忧极遥远距离带来的通信和航行困难，而不是认为没有其他恒星。",
-            "“宇宙中完全不可能存在其他恒星”与本课内容不符。作者主要担忧极遥远距离带来的通信和航行困难，而不是认为没有其他恒星。",
+            "“does”不符合本句结构。肯定附和结构为 so + be/助动词/情态动词 + 主语。前面用 is hot，后面应为 so is Mercury，不能换成 does 或 has。",
+            "“has”不符合本句结构。肯定附和结构为 so + be/助动词/情态动词 + 主语。前面用 is hot，后面应为 so is Mercury，不能换成 does 或 has。",
             ""
           ],
           "evidence": {
-            "paragraphIndex": 3,
-            "quote": "But here we come up against the most difficult of all obstacles to contact with people on other planets —the astronomical distances which separate us."
+            "paragraphIndex": 0,
+            "quote": "Venus far too hot, and so is Mercury"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "文章建议用哪种原子的天然辐射频率作为可共同识别的通信线索？请写元素。",
+          "focus": "grammar",
+          "grammarPoint": "Infinitive complement",
+          "exercise": "gap-fill",
+          "prompt": "Complete with the correct form of \"have\": Other stars are bound ___ planets like our own. Write exactly 2 words.",
           "answers": [
-            "hydrogen",
-            "氢",
-            "氢原子"
+            "to have"
           ],
-          "explanation": "文中建议的是氢原子的天然发射频率，不是氧。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "oxygen",
-                "氧",
-                "氧原子"
-              ],
-              "feedback": "文中建议的是氢原子的天然发射频率，不是氧。"
-            }
-          ],
+          "explanation": "此处动词或形容词后接 to + 动词原形，不接动名词。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 4,
-            "quote": "It is the natural frequency of emission of the hydrogen atoms in space and was discovered by us in 1951; it must be known to any kind of radio astronomer in the universe."
+            "paragraphIndex": 0,
+            "quote": "are bound to have planets like our own"
           }
         }
       ]
@@ -2391,45 +2216,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "作者为什么要求文化研究不偏重某一种文明？",
+          "focus": "grammar",
+          "grammarPoint": "Present perfect passive",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Present perfect passive. Choose the correct form: Custom ___ as a subject of any great moment.",
           "options": [
-            "研究者应先把邻人的信仰都判为低劣迷信",
-            "必须把相关文化及其变体一起比较，自己的文化也包括在内",
-            "科学只需研究西方一种地方变体就已足够"
+            "has not commonly been regarded",
+            "has not commonly regarded",
+            "have not commonly been regarded"
           ],
-          "answer": 1,
-          "explanation": "科学研究不能预先赋予某一种文化优先地位；应将相同前提下的制度并列研究，包括自己的文化。",
+          "answer": 0,
+          "explanation": "现在完成时被动结构为 has/have been + 过去分词；注意主语的单复数。",
           "wrongReasons": [
-            "“研究者应先把邻人的信仰都判为低劣迷信”与本课内容不符。科学研究不能预先赋予某一种文化优先地位；应将相同前提下的制度并列研究，包括自己的文化。",
             "",
-            "“科学只需研究西方一种地方变体就已足够”与本课内容不符。科学研究不能预先赋予某一种文化优先地位；应将相同前提下的制度并列研究，包括自己的文化。"
+            "“has not commonly regarded”不符合这里的语法结构。现在完成时被动结构为 has/have been + 过去分词；注意主语的单复数。",
+            "“have not commonly been regarded”不符合这里的语法结构。现在完成时被动结构为 has/have been + 过去分词；注意主语的单复数。"
           ],
           "evidence": {
-            "paragraphIndex": 2,
-            "quote": "In the first place, any scientific study requires that there be no preferential weighting of one or another of the items in the series it selects for its consideration."
+            "paragraphIndex": 0,
+            "quote": "Custom has not commonly been regarded as a subject of any great moment."
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "文中用母语词汇与婴儿自造词的比例打比方的学者是谁？请写英文姓名。",
+          "focus": "grammar",
+          "grammarPoint": "Concessive however",
+          "exercise": "transformation",
+          "prompt": "Replace \"no matter how\" with \"however\". Keep the rest: No matter how aberrant they are.",
           "answers": [
-            "John Dewey",
-            "Dewey"
+            "However aberrant they are."
           ],
-          "explanation": "这个关于习俗影响力的类比出自John Dewey，并非伽利略。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "Galileo",
-                "伽利略"
-              ],
-              "feedback": "这个关于习俗影响力的类比出自John Dewey，并非伽利略。"
-            }
-          ],
+          "explanation": "however + 形容词 + 主语 + 谓语表示无论多么……，相当于 no matter how。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "John Dewey has said in all seriousness that the part played by custom in shaping the behaviour of the individual, as against any way in which he can affect traditional custom, is as the proportion of the total vocabulary of his mother tongue against those words of his own baby talk that are taken up into the vernacular of his family."
+            "paragraphIndex": 0,
+            "quote": "no matter how aberrant"
           }
         }
       ]
@@ -2444,49 +2266,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "作者为什么比较摩洛哥与加利福尼亚？",
+          "focus": "grammar",
+          "grammarPoint": "Past deduction",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Past deduction. Choose the correct form: competition with other creatures ___ critical",
           "options": [
-            "说明类似自然条件下，不同思想也会带来不同发展",
-            "证明两地气候和自然资源完全相反",
-            "说明现代环境只由洞穴和野兽构成"
+            "must be",
+            "must have been",
+            "must been"
           ],
-          "answer": 0,
-          "explanation": "作者用自然条件类似而发展不同的地区，突出思想和心态在人的环境中的重要性。",
+          "answer": 1,
+          "explanation": "对过去情况的推测用情态动词 + have + 过去分词，不能误用现在时结构。",
           "wrongReasons": [
+            "“must be”不符合这里的语法结构。对过去情况的推测用情态动词 + have + 过去分词，不能误用现在时结构。",
             "",
-            "“证明两地气候和自然资源完全相反”与本课内容不符。作者用自然条件类似而发展不同的地区，突出思想和心态在人的环境中的重要性。",
-            "“说明现代环境只由洞穴和野兽构成”与本课内容不符。作者用自然条件类似而发展不同的地区，突出思想和心态在人的环境中的重要性。"
+            "“must been”不符合这里的语法结构。对过去情况的推测用情态动词 + have + 过去分词，不能误用现在时结构。"
           ],
           "evidence": {
-            "paragraphIndex": 2,
-            "quote": "Yet their present development is wholly different, not so much because of different people even, but because of the different thoughts that exist in the minds of their inhabitants."
+            "paragraphIndex": 0,
+            "quote": "competition with other creatures must have been critical"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "按作者在开头的论述，最后一种曾与人类竞争的生物是什么？请写生物名。",
+          "focus": "grammar",
+          "grammarPoint": "Second conditional",
+          "exercise": "transformation",
+          "prompt": "Rewrite as a second conditional. Begin with \"If I had no modern weapons\" and keep \"would\": Without modern weapons, I would make a very poor show.",
           "answers": [
-            "mosquito",
-            "the mosquito",
-            "mosquitoes",
-            "蚊子",
-            "蚊"
+            "If I had no modern weapons, I would make a very poor show."
           ],
-          "explanation": "作者开头举熊作原始环境的例子，但随后称最后的竞争生物是mosquito（蚊子）；此题核对原文论述。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "bear",
-                "bears",
-                "熊"
-              ],
-              "feedback": "作者开头举熊作原始环境的例子，但随后称最后的竞争生物是mosquito（蚊子）；此题核对原文论述。"
-            }
-          ],
+          "explanation": "假设现在的非真实情形，if 从句用过去式，主句用 would + 动词原形。",
+          "commonMistakes": [],
           "evidence": {
             "paragraphIndex": 0,
-            "quote": "The last creature to compete with man was the mosquito."
+            "quote": "without modern weapons, I would make a very poor show"
           }
         }
       ]
@@ -2501,51 +2316,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "作者为什么强调爱好必须提前长期培养？",
+          "focus": "grammar",
+          "grammarPoint": "Correlative comparison",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Correlative comparison. Choose the correct form: The stronger the will, the ___ futile the task.",
           "options": [
-            "只要临时命令自己感兴趣，就一定立刻完全放松",
-            "任何与工作无关的知识都必然马上解除焦虑",
-            "真正能转移心绪的兴趣需要选择、积累和照料，无法临时凭意志制造"
+            "most",
+            "much",
+            "more"
           ],
           "answer": 2,
-          "explanation": "爱好应是真实、长期发展的兴趣，不能等到需要时才临时命令自己喜欢某件事。",
+          "explanation": "the + 比较级，the + 比较级，表示越……就越……。",
           "wrongReasons": [
-            "“只要临时命令自己感兴趣，就一定立刻完全放松”与本课内容不符。爱好应是真实、长期发展的兴趣，不能等到需要时才临时命令自己喜欢某件事。",
-            "“任何与工作无关的知识都必然马上解除焦虑”与本课内容不符。爱好应是真实、长期发展的兴趣，不能等到需要时才临时命令自己喜欢某件事。",
+            "“most”不符合这里的语法结构。the + 比较级，the + 比较级，表示越……就越……。",
+            "“much”不符合这里的语法结构。the + 比较级，the + 比较级，表示越……就越……。",
             ""
           ],
           "evidence": {
-            "paragraphIndex": 1,
-            "quote": "The growth of alternative mental interests is a long process."
+            "paragraphIndex": 0,
+            "quote": "The stronger the will, the more futile the task."
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "作者建议一个人至少有几个真正的爱好？请写数量范围。",
+          "focus": "grammar",
+          "grammarPoint": "Past participle in a passive verb",
+          "exercise": "gap-fill",
+          "prompt": "Complete using the past participle of \"choose\": if this something else is rightly ___ Write exactly 1 word.",
           "answers": [
-            "two or three",
-            "2 or 3",
-            "2-3",
-            "two to three",
-            "两三个",
-            "两个或三个",
-            "两到三个"
+            "chosen"
           ],
-          "explanation": "作者提出至少两三个，而且这些爱好必须真实，并非一个临时爱好即可。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "one",
-                "1",
-                "一个"
-              ],
-              "feedback": "作者提出至少两三个，而且这些爱好必须真实，并非一个临时爱好即可。"
-            }
-          ],
+          "explanation": "if 从句中的 something else 是被选择的对象，因此 is 后用 choose 的过去分词 chosen，构成被动语态；不是后置定语。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 2,
-            "quote": "To be really happy and really safe, one ought to have at least two or three hobbies, and they must all be real."
+            "paragraphIndex": 0,
+            "quote": "if this something else is rightly chosen"
           }
         }
       ]
@@ -2560,47 +2366,42 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "作者认为野营除了省钱，还给旅行者什么重要好处？",
+          "focus": "grammar",
+          "grammarPoint": "Gerund after a preposition",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Gerund after a preposition. Choose the correct form: it is far from ___ the only one",
           "options": [
-            "保证所有野营者都比住酒店的人贫穷",
-            "免去酒店等级与礼仪的压力，并保有自主移动的自由",
-            "使旅行者必须永远固定在同一家酒店"
+            "being",
+            "be",
+            "to be"
           ],
-          "answer": 1,
-          "explanation": "野营可解除不熟悉酒店礼仪的拘束，又让人掌握自己的交通和离开不理想度假地的选择，并不只是一种省钱办法。",
+          "answer": 0,
+          "explanation": "介词后接名词或动名词；动词要改为 -ing 形式，不能直接接动词原形。",
           "wrongReasons": [
-            "“保证所有野营者都比住酒店的人贫穷”与本课内容不符。野营可解除不熟悉酒店礼仪的拘束，又让人掌握自己的交通和离开不理想度假地的选择，并不只是一种省钱办法。",
             "",
-            "“使旅行者必须永远固定在同一家酒店”与本课内容不符。野营可解除不熟悉酒店礼仪的拘束，又让人掌握自己的交通和离开不理想度假地的选择，并不只是一种省钱办法。"
+            "“be”不符合这里的语法结构。介词后接名词或动名词；动词要改为 -ing 形式，不能直接接动词原形。",
+            "“to be”不符合这里的语法结构。介词后接名词或动名词；动词要改为 -ing 形式，不能直接接动词原形。"
           ],
           "evidence": {
-            "paragraphIndex": 2,
-            "quote": "From all such fears camping releases him."
+            "paragraphIndex": 0,
+            "quote": "it is far from being the only one"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "营地告示禁止利用取水处做什么？请写活动（中文或英文）。",
+          "focus": "grammar",
+          "grammarPoint": "Past participle modifier",
+          "exercise": "transformation",
+          "prompt": "Expand with \"which are\". Write the whole noun phrase: bicycles made for two.",
           "answers": [
-            "car washing",
-            "washing cars",
-            "wash cars",
-            "洗车"
+            "bicycles which are made for two"
           ],
-          "explanation": "文章举出的告示禁止用取水处洗车，不是这里提及的做饭禁令。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "cooking",
-                "做饭"
-              ],
-              "feedback": "文章举出的告示禁止用取水处洗车，不是这里提及的做饭禁令。"
-            }
-          ],
+          "explanation": "名词与后置动词为被动关系时，可用过去分词作定语，相当于被动定语从句。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 5,
-            "quote": "Notices forbidding the open-air drying of clothes, or the use of water points for car washing, or those inviting ‘our camping friends’ to a dance or a boat trip are printed not only in French or Italian or Spanish, but also in English, German and Dutch."
+            "paragraphIndex": 0,
+            "quote": "bicycles made for two"
           }
         }
       ]
@@ -2615,48 +2416,47 @@
         {
           "id": "content-1",
           "type": "choice",
-          "prompt": "按这篇投资组合文章，为什么不能把全部钱押在一家公司上？",
+          "focus": "grammar",
+          "grammarPoint": "Gerund after a preposition",
+          "exercise": "form-choice",
+          "prompt": "Grammar focus: Gerund after a preposition. Choose the correct form: go about ___ that",
           "options": [
-            "风险过度集中，会使投资者任凭运气摆布",
-            "那样能保证所有人获得同样的高收益",
-            "不同投资者的目标和心理承受力必定完全一致"
+            "achieve",
+            "achieving",
+            "to achieve"
           ],
-          "answer": 0,
-          "explanation": "文章主张先确定个人目标，并分散风险；不同情况没有唯一相同的正确组合，此题仅核对原文论点。",
+          "answer": 1,
+          "explanation": "介词后接名词或动名词；动词要改为 -ing 形式，不能直接接动词原形。",
           "wrongReasons": [
+            "“achieve”不符合这里的语法结构。介词后接名词或动名词；动词要改为 -ing 形式，不能直接接动词原形。",
             "",
-            "“那样能保证所有人获得同样的高收益”与本课内容不符。文章主张先确定个人目标，并分散风险；不同情况没有唯一相同的正确组合，此题仅核对原文论点。",
-            "“不同投资者的目标和心理承受力必定完全一致”与本课内容不符。文章主张先确定个人目标，并分散风险；不同情况没有唯一相同的正确组合，此题仅核对原文论点。"
+            "“to achieve”不符合这里的语法结构。介词后接名词或动名词；动词要改为 -ing 形式，不能直接接动词原形。"
           ],
           "evidence": {
-            "paragraphIndex": 4,
-            "quote": "The golden rule here is spread your risk—if you put all of your money into Periwigs International, you're setting yourself up as a hostage to fortune."
+            "paragraphIndex": 0,
+            "quote": "go about achieving that"
           }
         },
         {
           "id": "content-2",
           "type": "short",
-          "prompt": "文中用来举例说明集中押注危险的公司叫什么？请写英文名称。",
+          "focus": "grammar",
+          "grammarPoint": "Present participle modifier",
+          "exercise": "transformation",
+          "prompt": "Expand the participle phrase using \"who are\". Write the whole noun phrase: tipsters offering get-rich-quick opportunities.",
           "answers": [
-            "Periwigs International",
-            "Periwigs"
+            "tipsters who are offering get-rich-quick opportunities"
           ],
-          "explanation": "集中押注的公司例子是Periwigs International；Las Vegas用来比喻赌博心态。",
-          "commonMistakes": [
-            {
-              "answers": [
-                "Las Vegas",
-                "拉斯维加斯"
-              ],
-              "feedback": "集中押注的公司例子是Periwigs International；Las Vegas用来比喻赌博心态。"
-            }
-          ],
+          "explanation": "名词与后置动词为主动关系时，可用现在分词 -ing 作定语。",
+          "commonMistakes": [],
           "evidence": {
-            "paragraphIndex": 4,
-            "quote": "The golden rule here is spread your risk—if you put all of your money into Periwigs International, you're setting yourself up as a hostage to fortune."
+            "paragraphIndex": 0,
+            "quote": "offering ‘get-rich-quick’ opportunities"
           }
         }
       ]
     }
-  ]
+  ],
+  "language": "en",
+  "scope": "grammar"
 }

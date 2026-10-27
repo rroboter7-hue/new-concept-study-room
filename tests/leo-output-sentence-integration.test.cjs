@@ -57,7 +57,8 @@ test('when availability changes, an active sentence mode flushes its draft and f
   let allowed = true;
   const h = setup(() => allowed);
   h.output.render();h.mode('sentences');h.input('I keep my book.');
-  assert.equal(Object.keys(h.drafts).length,0);
+  assert.equal(Object.values(h.drafts).some(draft=>draft.answers?.affirmative==='I keep my book.'),false);
+  assert.equal(h.practice.active.draft.answers.affirmative,'I keep my book.');
   allowed = false;
   const html = h.output.render();
   assert.equal(h.output.mode,'write');

@@ -54,11 +54,14 @@
     return meaning;
   }
   function bankCategory(pos) {
+    if (pos !== undefined && typeof pos !== 'string') return '';
     var tokens = normalize(pos).match(/[a-z]+|[\u3400-\u9fff]+/g) || [];
     // Multi-POS words use one stable card/key; explicit verb takes precedence.
     if (tokens.some(function (token) { return ['v','vt','vi','verb','verbs','动词','及物动词','不及物动词','助动词'].includes(token); })) return 'verb';
-    if (tokens.some(function (token) { return ['adj','adjective','adjectives','形容词'].includes(token); })) return 'adjective';
-    return '';
+    if (tokens.some(function (token) { return ['a','adj','adjective','adjectives','形容词'].includes(token); })) return 'adjective';
+    if (tokens.some(function (token) { return ['n','noun','nouns','名词'].includes(token); })) return 'noun';
+    if (tokens.some(function (token) { return ['adv','adverb','adverbs','副词'].includes(token); })) return 'adverb';
+    return 'word';
   }
   function mergeBankMeanings(first, next) {
     var seen = new Set(), meanings = [];
@@ -107,7 +110,8 @@
         return { item: item, category: bankCategory(ownValue(item, 'pos')), expression: normalize(text(ownValue(item, 'word'), 160).trim()) };
       }).filter(function (row) { return row.category && row.expression && bankMeaning(row.item); });
       var categories = new Map();
-      wordRows.forEach(function (row) { if (!categories.has(row.expression) || row.category === 'verb') categories.set(row.expression, row.category); });
+      var priority = { verb: 5, adjective: 4, noun: 3, adverb: 2, word: 1 };
+      wordRows.forEach(function (row) { if (!categories.has(row.expression) || priority[row.category] > priority[categories.get(row.expression)]) categories.set(row.expression, row.category); });
       wordRows.forEach(function (row) { if (categories.get(row.expression) === row.category) add(row.item, lesson, row.category, 'word'); });
       (Array.isArray(usage) ? usage : []).forEach(function (item) { add(item, lesson, 'phrase', 'phrase'); });
     });
@@ -130,17 +134,28 @@
       var record = own(records, lesson.id) ? object(records[lesson.id]) : {};
       return selected.has(lesson.id) || record.completed === true || typeof record.attempts === 'number' && Number.isFinite(record.attempts) && record.attempts > 0;
     });
+    var getVocabulary = ownValue(options, 'getVocabulary');
     function items(list, field, label) {
       var result = [];
       list.forEach(function (lesson) {
         var used = new Set();
-        (Array.isArray(lesson[field]) ? lesson[field] : []).forEach(function (item) {
+        var rows = lesson[field];
+        if (field === 'vocabulary' && typeof getVocabulary === 'function') {
+          try { var provided = getVocabulary(lesson); if (Array.isArray(provided)) rows = provided; } catch (_) { /* An unavailable expansion keeps the original vocabulary. */ }
+        }
+        (Array.isArray(rows) ? rows : []).forEach(function (item) {
           item = object(item);
           var value = text(item[label], 160).trim(), normalized = normalize(value);
           if (!normalized || used.has(normalized)) return;
           used.add(normalized);
           var entry = { key: itemKey(label === 'word' ? 'word' : 'phrase', lesson.id, normalized), meaning: text(item.meaning, 1200), source: source(lesson) };
           entry[label] = value;
+          var isLessonNew = ownValue(item, 'isLessonNew');
+          if (typeof isLessonNew === 'boolean') entry.isLessonNew = isLessonNew;
+          ['sourceSentence', 'sourceLocation'].forEach(function (field) {
+            var detail = ownValue(item, field);
+            if (typeof detail === 'string') entry[field] = text(detail, field === 'sourceSentence' ? 2000 : 300);
+          });
           result.push(entry);
         });
       });
@@ -153,16 +168,26 @@
     return { targets: targets, oldWords: items(learned, 'vocabulary', 'word'), oldPhrases: items(learned, 'usage', 'phrase'), earlierLessons: earlier.map(source) };
   }
   function sanitizeDraft(value) {
-    value = object(value);
-    var answers = object(value.answers), result = {};
-    KINDS.forEach(function (kind) { result[kind] = text(answers[kind], 400); });
+    var supplied = object(value);
+    value = {};
+    ['answers', 'step', 'targetKey', 'sourceLessonIds', 'oldWordKey', 'oldPhraseKey', 'selectedOldKeys', 'recommendedOldKeys', 'mode', 'roundKey', 'assisted', 'evidenceTargetKey', 'checkedAt'].forEach(function (field) {
+      if (own(supplied, field)) value[field] = ownValue(supplied, field);
+    });
+    var answers = object(value.answers), result = {}, answersChanged = own(value, 'answers') && answers !== value.answers;
+    KINDS.forEach(function (kind) {
+      var answer = ownValue(answers, kind);
+      result[kind] = text(answer, 400);
+      if (own(answers, kind) && answer !== result[kind]) answersChanged = true;
+    });
     var ids = (Array.isArray(value.sourceLessonIds) ? value.sourceLessonIds : []).filter(function (id) { return typeof id === 'string' && ID.test(id); });
     var selected = own(value, 'selectedOldKeys') ? ownValue(value, 'selectedOldKeys') : [ownValue(value, 'oldWordKey'), ownValue(value, 'oldPhraseKey')];
     var selectedOldKeys = Array.from(new Set((Array.isArray(selected) ? selected : []).map(function (key) { return text(key, 600).trim(); }).filter(Boolean))).slice(0, 100);
+    var recommended = ownValue(value, 'recommendedOldKeys');
+    var recommendedOldKeys = Array.from(new Set((Array.isArray(recommended) ? recommended : []).map(function (key) { return text(key, 600).trim(); }).filter(Boolean))).slice(0, 20);
     return { step: Number.isFinite(value.step) ? Math.max(0, Math.min(4, Math.floor(value.step))) : 0,
-      targetKey: text(value.targetKey, 600), sourceLessonIds: Array.from(new Set(ids)).slice(0, 200), oldWordKey: text(value.oldWordKey, 600), oldPhraseKey: text(value.oldPhraseKey, 600), selectedOldKeys: selectedOldKeys, answers: result,
+      targetKey: text(value.targetKey, 600), sourceLessonIds: Array.from(new Set(ids)).slice(0, 200), oldWordKey: text(value.oldWordKey, 600), oldPhraseKey: text(value.oldPhraseKey, 600), selectedOldKeys: selectedOldKeys, recommendedOldKeys: recommendedOldKeys, answers: result,
       mode:value.mode==='flexible'?'flexible':'transform',roundKey:validRoundKey(value.roundKey)?value.roundKey:'',assisted:value.assisted===true,evidenceTargetKey:text(value.evidenceTargetKey,600),
-      checkedAt: typeof value.checkedAt === 'number' && Number.isFinite(value.checkedAt) && value.checkedAt >= 0 && value.checkedAt <= 8640000000000000 ? Math.floor(value.checkedAt) : 0 };
+      checkedAt: !answersChanged && typeof value.checkedAt === 'number' && Number.isFinite(value.checkedAt) && value.checkedAt >= 0 && value.checkedAt <= 8640000000000000 ? Math.floor(value.checkedAt) : 0 };
   }
   function draftKey(lessonId, targetKey) { return 'v1:' + encoded(text(lessonId, 160)) + ':' + encoded(text(targetKey, 600)); }
   function validRoundKey(value){return typeof value==='string'&&/^[A-Za-z0-9][A-Za-z0-9._:-]{0,79}$/.test(value);}
@@ -315,6 +340,116 @@
   function expression(value, field) { return typeof value === 'string' ? value.trim() : text(object(value)[field]||(field==='word'?(object(value).phrase||object(value).label):''), 160).trim(); }
   function duplicateKey(value) { return expand(value).replace(/[^\p{L}\p{N}\s]/gu, '').replace(/\s+/g, ' ').trim(); }
   function completion(options){options=object(options);var answers=object(options.answers),target=expression(options.target,'word'),keys=KINDS.map(function(k){return duplicateKey(answers[k]);});return Boolean(target&&keys.every(Boolean)&&new Set(keys).size===5&&KINDS.every(function(k){return typeof answers[k]==='string'&&answers[k].length<=400&&matchesExpression(answers[k],target);}));}
+  // Persisted progress and rotation read only own data fields. Do not sanitize
+  // answers here: truncating an imported overlong answer could fabricate completion.
+  function draftValues(drafts) {
+    if (!drafts || typeof drafts !== 'object') return [];
+    return Object.keys(drafts).map(function (key) {
+      var descriptor = Object.getOwnPropertyDescriptor(drafts, key);
+      return descriptor && own(descriptor, 'value') ? descriptor.value : undefined;
+    }).filter(function (draft) { return draft && typeof draft === 'object' && !Array.isArray(draft); });
+  }
+  function draftAnswers(draft) {
+    var supplied = ownValue(draft, 'answers'), answers = {};
+    KINDS.forEach(function (kind) {
+      var answer = ownValue(supplied, kind);
+      if (typeof answer === 'string') answers[kind] = answer;
+    });
+    return answers;
+  }
+  function checkedTime(draft) {
+    var at = ownValue(draft, 'checkedAt');
+    return typeof at === 'number' && Number.isFinite(at) && at > 0 && at <= 8640000000000000 ? at : 0;
+  }
+  function plainExpression(item) {
+    var value = ownValue(item, 'word') || ownValue(item, 'phrase') || ownValue(item, 'label');
+    return typeof value === 'string' && value.length <= 160 ? value.trim() : '';
+  }
+  function boundedKey(value) { return typeof value === 'string' && value.length <= 600 && value.trim() ? value : ''; }
+  function lessonProgress(options) {
+    var targets = ownValue(options, 'targets'), drafts = draftValues(ownValue(options, 'drafts')), seen = new Set();
+    var items = (Array.isArray(targets) ? targets : []).filter(function (target) {
+      var key = boundedKey(ownValue(target, 'key'));
+      if (!key || seen.has(key)) return false;
+      seen.add(key); return true;
+    }).map(function (target) {
+      var key = ownValue(target, 'key'), word = plainExpression(target), written = 0, checked = false, complete = false;
+      drafts.forEach(function (draft) {
+        if (ownValue(draft, 'targetKey') !== key) return;
+        var answers = draftAnswers(draft), at = checkedTime(draft);
+        written = Math.max(written, KINDS.filter(function (kind) { return typeof answers[kind] === 'string' && answers[kind].length <= 400 && answers[kind].trim(); }).length);
+        if (at) {
+          checked = true;
+          if (completion({ target: word, answers: answers })) complete = true;
+        }
+      });
+      return { key: key, written: written, checked: checked, complete: complete };
+    });
+    return { total: items.length, done: items.filter(function (item) { return item.complete; }).length, items: items };
+  }
+  function decodedTarget(key) {
+    if (!boundedKey(key) || /^(?:word|phrase):long:[0-9a-f]{16}$/i.test(key)) return '';
+    var parts = /^(word|phrase):([^:]+):([^:]+)$/.exec(key);
+    if (!parts) return '';
+    try {
+      var id = decodeURIComponent(parts[2]), value = decodeURIComponent(parts[3]);
+      return ID.test(id) && value.length <= 160 && value.trim() ? value.trim() : '';
+    } catch (_) { return ''; }
+  }
+  function recommendOldWords(options) {
+    var supplied = ownValue(options, 'items'), count = ownValue(options, 'count');
+    if (count === undefined) count = 4;
+    if (!Array.isArray(supplied) || typeof count !== 'number' || !Number.isFinite(count) || count <= 0) return [];
+    count = Math.min(20, Math.floor(count));
+    var random = ownValue(options, 'random'), previous = ownValue(options, 'previousKeys');
+    if (typeof random !== 'function') random = Math.random;
+    var previousKeys = new Set((Array.isArray(previous) ? previous : []).filter(function (key) { return boundedKey(key); }));
+    var seen = new Map(), candidates = [];
+    supplied.forEach(function (item) {
+      var key = boundedKey(ownValue(item, 'key')), value = plainExpression(item), phrase = ownValue(item, 'category') === 'phrase' || key.indexOf('phrase:') === 0;
+      var identity = (phrase ? 'phrase:' : 'word:') + normalize(value);
+      if (!key || !value) return;
+      var aliases = ownValue(item, 'aliases');
+      var keys = [key].concat(Array.isArray(aliases) ? aliases.filter(function (alias) { return boundedKey(alias); }) : []);
+      var candidate = seen.get(identity);
+      if (candidate) {
+        candidate.keys = Array.from(new Set(candidate.keys.concat(keys)));
+        candidate.previous = candidate.previous || keys.some(function (alias) { return previousKeys.has(alias); });
+      } else {
+        candidate = { item: item, keys: keys, value: value, phrase: phrase, lastUsed: 0, previous: keys.some(function (alias) { return previousKeys.has(alias); }) };
+        seen.set(identity, candidate); candidates.push(candidate);
+      }
+    });
+    draftValues(ownValue(options, 'drafts')).forEach(function (draft) {
+      var at = checkedTime(draft), target = decodedTarget(ownValue(draft, 'targetKey'));
+      if (!at || !target) return;
+      var answers = draftAnswers(draft);
+      if (!completion({ target: target, answers: answers })) return;
+      var selected = own(draft, 'selectedOldKeys') ? ownValue(draft, 'selectedOldKeys') : [ownValue(draft, 'oldWordKey'), ownValue(draft, 'oldPhraseKey')];
+      var recommended = ownValue(draft, 'recommendedOldKeys');
+      var keys = new Set((Array.isArray(selected) ? selected : []).concat(Array.isArray(recommended) ? recommended : []).filter(function (key) { return boundedKey(key); }));
+      candidates.forEach(function (candidate) {
+        if (candidate.keys.some(function (key) { return keys.has(key); }) && KINDS.some(function (kind) { return matchesExpression(answers[kind], candidate.value); })) candidate.lastUsed = Math.max(candidate.lastUsed, at);
+      });
+    });
+    var unused = candidates.filter(function (candidate) { return !candidate.lastUsed; });
+    var pool = unused.length ? unused : candidates.slice();
+    // Shuffle first so stable sorting resolves equal usage/previous-choice groups
+    // using the injected random source rather than source lesson order.
+    for (var index = pool.length - 1; index > 0; index--) {
+      var value;
+      try { value = random(); } catch (_) { value = 0; }
+      if (typeof value !== 'number' || !Number.isFinite(value)) value = 0;
+      var other = Math.floor(Math.max(0, Math.min(0.9999999999999999, value)) * (index + 1));
+      var held = pool[index]; pool[index] = pool[other]; pool[other] = held;
+    }
+    pool.sort(function (a, b) { return Number(a.previous) - Number(b.previous) || a.lastUsed - b.lastUsed; });
+    var result = [], phrase = pool.find(function (candidate) { return candidate.phrase; });
+    if (phrase && count > 1) result.push(phrase);
+    pool.filter(function (candidate) { return !candidate.phrase; }).slice(0, count - result.length).forEach(function (candidate) { result.push(candidate); });
+    pool.forEach(function (candidate) { if (result.length < count && !result.includes(candidate)) result.push(candidate); });
+    return result.map(function (candidate) { return candidate.item; });
+  }
   function flexibleCheck(options){
     var answers=object(options.answers),target=expression(options.target,'word'),labels=['换一个语境','补充时间地点','模仿并改写','提问或回应','结合旧知'],written=0;
     var rows=KINDS.map(function(kind,index){var sentence=text(answers[kind],10000).trim(),issues=[],notes=[LIMITATION];if(!sentence)return {kind:kind,label:labels[index],status:'empty',issues:[],notes:notes};written++;
@@ -339,10 +474,10 @@
       if (!target) { if (options.requireTarget !== false) issues.push('请先选择本轮目标词。'); }
       else if (!matchesExpression(sentence, target)) issues.push('还未识别到目标词“' + target + '”或已支持的常见词形。');
       if (kind === 'combined') {
-        if (!oldWord) issues.push('请先选择一个来自已学早期课程的旧词。');
+        if (!oldWord) { if (options.requireOldKnowledge !== false) issues.push('请先选择一个来自已学早期课程的旧词。'); }
         else if (target && (matchesExpression(oldWord, target) || matchesExpression(target, oldWord))) issues.push('旧词需要与目标词不同，不能使用同一词的其他词形。');
         else if (!matchesExpression(sentence, oldWord)) issues.push('还未识别到已选旧词“' + oldWord + '”或已支持的词形。');
-        if (!oldPhrase) issues.push('请先选择一个来自已学早期课程的旧用法或短语。');
+        if (!oldPhrase) { if (options.requireOldKnowledge !== false) issues.push('请先选择一个来自已学早期课程的旧用法或短语。'); }
         else if (!matchesExpression(sentence, oldPhrase)) issues.push('还未识别到已选旧用法“' + oldPhrase + '”或已支持的词形；请保留搭配。');
         var key = duplicateKey(sentence);
         if (KINDS.slice(0, 4).some(function (other) { return text(answers[other], 10000).trim() && duplicateKey(answers[other]) === key; })) issues.push('第五句需要另写一个新句子，不能逐字重复前四句。');
@@ -366,5 +501,5 @@
     return { rows: rows, writtenCount: writtenCount, readyForReview: writtenCount === 5 && rows.every(function (row) { return row.status !== 'needs-work'; }), rulesOnly: true };
   }
 
-  return Object.freeze({ KINDS: KINDS, context: context, wordBank: wordBank, sanitizeDraft: sanitizeDraft, draftKey: draftKey, modeDraftKey:modeDraftKey,roundDraftKey:roundDraftKey,validRoundKey:validRoundKey,completion:completion,matchesExpression: matchesExpression, check: check });
+  return Object.freeze({ KINDS: KINDS, context: context, wordBank: wordBank, sanitizeDraft: sanitizeDraft, lessonProgress: lessonProgress, recommendOldWords: recommendOldWords, draftKey: draftKey, modeDraftKey:modeDraftKey,roundDraftKey:roundDraftKey,validRoundKey:validRoundKey,completion:completion,matchesExpression: matchesExpression, check: check });
 });

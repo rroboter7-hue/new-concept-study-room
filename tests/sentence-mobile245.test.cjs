@@ -29,7 +29,7 @@ function setup({records={},drafts={},mobile=true}={}) {
   return {ui,render,drafts,records,evidence,dialog,focusCalls,event,open:()=>ui.openWordPicker(trigger),close:()=>ui.closeWordPicker(),change:(name,value)=>event('change',{sentenceSelect:name},value),step:index=>event('click',{sentenceAction:'step',sentenceStep:String(index)}),input:value=>event('input',{sentenceInput:'answer'},value),check:()=>event('click',{sentenceAction:'check'}),reference:open=>event('toggle',{sentenceReference:''},'',{open}),setFailure:value=>{failure=value;},nativeOpen:open=>{content.querySelector('.sentence-adjustments').open=open;},setLesson:lesson=>{current=lesson;},toggle:open=>{content.querySelector('.sentence-adjustments').open=open;event('toggle',{sentenceAdjustments:''},'',{open});}};
 }
 
-function targetPanel(html){const found=html.match(/<div class="sentence-target">[\s\S]*?<\/div>/);assert.ok(found,'the current target should appear before the editor');return found[0];}
+function targetPanel(html){const found=html.match(/<div class="sentence-target">[\s\S]*?<\/div>/)||html.match(/<button[^>]*class="sentence-lesson-target active[^>]*>[\s\S]*?<\/button>/);assert.ok(found,'the current target should appear before the editor');return found[0];}
 function chips(html){const found=html.match(/<div class="sentence-selected-old"[^>]*>([\s\S]*?)<\/div>/);assert.ok(found,'selected expressions should stay beside the drawer trigger');return found[1];}
 const selected=h=>Array.from(h.ui.selectedOldItems(),item=>item.label).sort();
 function choose(h,labels){h.ui.setOldSelection(labels.map(label=>{const item=h.ui.wordBank().find(item=>item.label===label);assert.ok(item,`${label} should be available without course registration`);return item.key;}));}
@@ -37,7 +37,7 @@ function choose(h,labels){h.ui.setOldSelection(labels.map(label=>{const item=h.u
 test('mobile first sentence keeps target adjustments reachable and presents the old-word drawer before writing',()=>{
   const h=setup({records:{'old-word':{completed:true},'old-phrase':{attempts:1}}});const html=h.render();
   const target=targetPanel(html);
-  assert.match(target,/本次目标[\s\S]*?<strong[^>]*>book<\/strong>/);
+  assert.match(target,/aria-current="true"[\s\S]*?>book<\/span>/);
   assert.match(target,/书/);
   assert.doesNotMatch(target,/data-lesson=|第\s*1\s*册/);
   const details=html.match(/<details class="sentence-adjustments"[^>]*>[\s\S]*?<\/details>/)?.[0];

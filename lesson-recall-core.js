@@ -3,7 +3,7 @@
  const own=(o,k)=>Object.hasOwn(o||{},k),safeKey=k=>typeof k==='string'&&/^[a-zA-Z0-9_-]{1,160}$/.test(k)&&!['__proto__','constructor','prototype'].includes(k);
  const body=l=>(l?.paragraphs||[]).map(p=>p.en||'').join('\n\n');
  function fingerprint(lesson){const text=body(lesson);let h=2166136261;for(let i=0;i<text.length;i++)h=Math.imul(h^text.charCodeAt(i),16777619);return text.length+':'+(h>>>0).toString(16);}
- function normalize(value){return String(value??'').normalize('NFKC').toLowerCase().replace(/[‘’]/g,"'").replace(/[\p{P}\p{S}]/gu,char=>/[≠<>≤≥+−-]/.test(char)?char:' ').replace(/\s+/g,' ').trim();}
+ function normalize(value,options={}){let result=String(value??'').normalize('NFKC').toLowerCase().replace(/[‘’]/g,"'").replace(/[\p{P}\p{S}]/gu,char=>/[≠<>≤≥+−-]/.test(char)||(options.apostrophes&&char==="'")||(options.commas&&char===',')?char:' ').replace(/\s+/g,' ').trim();if(options.commas)result=result.replace(/\s*,\s*/g,',');return result;}
  function validateEntry(entry,lesson){
   const bad=reason=>({ok:false,reason});if(!entry||!lesson||entry.lessonId!==lesson.id||entry.book!==lesson.book||entry.number!==lesson.number||entry.title!==lesson.title)return bad('identity');
   if(entry.bodyFingerprint!==fingerprint(lesson))return bad('source-changed');
@@ -23,11 +23,15 @@
    if(!Number.isInteger(index)||index<0||index>=question.options.length)return {...base,status:'missing',correct:null};
    const correct=index===question.answer;return {...base,status:correct?'correct':'incorrect',correct,expected:question.options[question.answer],explanation:correct?question.explanation:question.wrongReasons[index]||question.explanation};
   }
-  const answer=normalize(value);if(!answer)return {...base,status:'missing',correct:null};
-  const expected=question.answers[0];if(question.answers.some(x=>normalize(x)===answer))return {...base,status:'correct',correct:true,expected,explanation:question.explanation};
-  const mistake=(question.commonMistakes||[]).find(m=>m.answers?.some(x=>normalize(x)===answer));
+  const grammar=question.focus==='grammar',format={apostrophes:grammar,commas:grammar&&question.punctuation==='commas'},norm=value=>normalize(value,format);
+  const answer=norm(value);if(!answer)return {...base,status:'missing',correct:null};
+  const expected=question.answers[0];
+  if(question.answerLanguage==='en'&&/\p{Script=Han}/u.test(String(value)))return {...base,status:'english-required',correct:null,expected,explanation:'这道题练习英文语法，请用英文按要求填写单词或改写句子。中文回答不计为正确；可对照下面的语法解析再试。'};
+  if(question.answers.some(x=>norm(x)===answer))return {...base,status:'correct',correct:true,expected,explanation:question.explanation};
+  if(grammar&&question.answers.some(x=>normalize(x)===normalize(value)))return {...base,status:'incorrect',correct:false,expected,explanation:format.commas?'词序接近参考答案，但本题的非限制性定语从句需要用逗号隔开；缩写和所有格中的撇号也不能省略。请对照参考句检查这些语法标点。':'词序接近参考答案，但缩写或所有格中的撇号缺失或位置不正确。请保留英文撇号，不要用空格替代。'};
+  const mistake=(question.commonMistakes||[]).find(m=>m.answers?.some(x=>norm(x)===answer));
   if(mistake)return {...base,status:'incorrect',correct:false,expected,explanation:mistake.feedback||question.explanation};
-  return {...base,status:'unmatched',correct:null,expected,explanation:'尚未匹配参考答案，请核对所问细节和下面的原文。不同的完整句式需要自行对照，系统不会仅因包含关键词就判为正确。'};
+  return {...base,status:'unmatched',correct:null,expected,explanation:question.focus==='grammar'?'尚未匹配本题要求的语法形式，请核对时态、助动词、语序和下面的例句。未列出的正确写法也可能需要复核，系统不会只因包含关键词而判为正确。':'尚未匹配参考答案，请核对所问细节和下面的原文。不同的完整句式需要自行对照，系统不会仅因包含关键词就判为正确。'};
  }
  function sanitize(raw){
   const out={version:1,lessons:{}};if(!raw?.lessons||typeof raw.lessons!=='object'||Array.isArray(raw.lessons))return out;
