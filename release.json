@@ -1,6 +1,6 @@
 {
-  "build": "2026-10-27-mobile-writing10",
-  "preparedAt": "2026-10-27T06:02:53.781Z",
+  "build": "2026-10-27-mobile-writing10-v2",
+  "preparedAt": "2026-10-27T06:14:32.077Z",
   "book2": {
     "book": 2,
     "total": 96,
@@ -232,7 +232,7 @@
     "unsubmittedLegacyDictationDraftPersistence": true
   },
   "staticFiles": 4227,
-  "staticBytes": 740416422,
+  "staticBytes": 740418676,
   "nativeearsAdvancedAudio": {
     "books": {
       "3": 60,
@@ -599,6 +599,7 @@
     "reuseOwnOriginal": true,
     "insertTargetAtCaret": true,
     "optionalOldWordBank": true,
+    "boundedTargetSelector": true,
     "doubaoCopy": {
       "includesLearnerInputs": true,
       "includesCheckingInstructions": true,

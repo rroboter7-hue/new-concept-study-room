@@ -43,7 +43,7 @@ test('habit sentence targets use the supplied reviewed usage with a safe unavail
   assert.deepEqual(core.context({...options,getUsage:()=>{throw Error('unavailable');}}).targets.map(item=>item.word),['raw fragment']);
 });
 
-function setup({clipboard}={}){
+function setup({clipboard,past=[]}={}){
   const events={},notices=[],fields={};let html='';
   const node=selector=>fields[selector]||=( {value:'',textContent:'',focus(){},select(){this.selected=true;},setAttribute(){}} );
   const content={get innerHTML(){return html;},set innerHTML(value){html=value;},querySelector:node};
@@ -52,7 +52,7 @@ function setup({clipboard}={}){
   const context={document,navigator:{clipboard},setTimeout:()=>1,clearTimeout(){},console};context.window=context;
   vm.createContext(context);
   for(const file of ['sentence-core.js','sentence-practice.js'])vm.runInContext(fs.readFileSync(path.join(__dirname,'..',file),'utf8'),context);
-  const drafts={};const ui=new context.SentencePractice({defaultMode:'four',getLesson:()=>lesson,getLessons:()=>[lesson],getDrafts:()=>drafts,saveDraft:(key,value)=>{drafts[key]=JSON.parse(JSON.stringify(value));return true;},toast:value=>notices.push(value)});
+  const drafts={};const ui=new context.SentencePractice({defaultMode:'four',getLesson:()=>lesson,getLessons:()=>[...past,lesson],getRecords:()=>Object.fromEntries(past.map(row=>[row.id,{completed:true}])),getDrafts:()=>drafts,saveDraft:(key,value)=>{drafts[key]=JSON.parse(JSON.stringify(value));return true;},toast:value=>notices.push(value)});
   content.innerHTML=ui.render();
   return {ui,content,node,notices,drafts,render:()=>content.innerHTML=ui.render()};
 }
@@ -114,4 +114,19 @@ test('idiom progress and next-unfinished use phrase targets rather than the word
   assert.match(h.render(),/本课已练 1 \/ 2 项用法/);
   assert.equal(h.ui.nextUnfinished(),true);assert.equal(h.ui.target().phrase,'look after');assert.equal(h.ui.active.draft.mode,'phrase');
   assert.equal(h.ui.lessonProgress().total,2);
+});
+
+test('quick target controls stay bounded with a large learned history while old expressions remain searchable',()=>{
+  const past=Array.from({length:100},(_,index)=>({id:'old'+index,book:1,number:index+1,vocabulary:Array.from({length:12},(_,word)=>({word:'word'+index+'x'+word,pos:'v.',meaning:'旧词'})),usage:[{phrase:'phrase '+index,meaning:'旧用法'}]}));
+  const h=setup({past});let html=h.render();
+  assert.ok(h.ui.context.targets.length>1200);assert.ok(h.ui.wordBank().length>1200);
+  assert.equal((html.match(/data-sentence-select="target"/g)||[]).length,1);
+  assert.equal((html.match(/<option\b/g)||[]).length,5,'one current word plus four training modes');
+  assert.doesNotMatch(html,/<option[^>]*>word99x11/);
+  assert.equal(h.ui.openTarget({lessonId:'now',expression:'word99x11',kind:'word',mode:'four',roundKey:'old-review'}),true);
+  html=h.render();assert.match(html,/<option[^>]*selected>word99x11/);
+  assert.equal((html.match(/<option\b/g)||[]).length,6,'current word plus active old target and four training modes');
+  h.ui.switchMode('phrase');html=h.render();assert.equal((html.match(/<option\b/g)||[]).length,6,'two current phrases plus four training modes');
+  assert.ok(h.ui.wordBank().some(item=>item.label==='word99x11'));
+  h.ui.wordSearch='word99x11';assert.deepEqual(Array.from(h.ui.filteredOldItems(),item=>item.label),['word99x11']);
 });
