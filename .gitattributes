@@ -18,3 +18,6 @@ lesson-word-targets-source.json -text
 
 # Frozen compatibility fixture uses a pinned raw-byte checksum.
 tests/fixtures/reviewed25-before-lessons30-baseline.json text eol=lf
+
+# Published30 compatibility fixture retains its pinned UTF8-LF bytes.
+tests/fixtures/reviewed30-before-sourcefix-baseline.json text eol=lf

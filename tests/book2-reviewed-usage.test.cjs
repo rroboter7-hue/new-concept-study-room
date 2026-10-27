@@ -11,7 +11,7 @@ function load({reviewed=true,stopBeforeUsage=false,mutate,skipLater=false}={}){
  const files=Array.from(fs.readFileSync(path.join(DIST,'index.html'),'utf8').matchAll(/<script\b[^>]*\bsrc\s*=\s*["']([^"']+)["'][^>]*>/gi),m=>m[1].split(/[?#]/)[0]);
  const wired=files.includes(FIX);if(process.env.USAGE_EXPECT_WIRED==='1')assert(wired,'reviewed usage is wired in actual index');
  const c={document:{addEventListener(){}},setTimeout(){},clearTimeout(){}};c.window=c;vm.createContext(c);let inserted=false;
- for(const f of files){if(f==='app.js')break;if(skipLater&&f==='book2-reviewed-usage-21-25.js')continue;
+ for(const f of files){if(f==='app.js')break;if(skipLater&&['book2-reviewed-usage-21-25.js','book2-reviewed-usage-26-30.js'].includes(f))continue;
   if(f===FIX||!wired&&!inserted&&f==='book2-practice-packs.js'){inserted=true;if(mutate)mutate(c);if(stopBeforeUsage)return c;if(reviewed)apply(c);if(f===FIX)continue;}
   vm.runInContext(fs.readFileSync(path.join(DIST,f),'utf8'),c,{filename:f});
  }
@@ -21,7 +21,7 @@ const l=(c,n)=>c.LESSONS.find(x=>x.book===2&&x.number===n),phrase=(c,n,p)=>l(c,n
 const before=load({reviewed:false}),after=load();
 const invalid=[[3,'Do you have to make this decision'],[6,'have done'],[8,'Do you enter for the garden competition'],[10,'for a long time. Has it belonged to'],[17,'At least, they will be giving five'],[19,'at once immediately']];
 function practice(c,lesson){return new c.PhrasePractice({getLesson:()=>lesson,escapeHTML:E,wordHTML:E});}
-test('independent: original first20 overlay retains its complete96-course history before the separately tested L21–25 review',()=>{
+test('independent: original first20 overlay retains its complete96-course history before the separately tested later review batches',()=>{
  const before=load({reviewed:false,skipLater:true}),after=load({skipLater:true});
  assert.equal(after.BOOK2_REVIEWED_USAGE_STATUS.appliedLessons,96);
  const first20=after.LESSONS.filter(l=>l.book===2&&l.number<=20);assert.equal(first20.reduce((n,l)=>n+l.usageSourceAudit.originalUsage.length,0),182);assert.equal(first20.reduce((n,l)=>n+l.usage.length,0),177);assert.equal(first20.flatMap(l=>l.usage).filter(p=>p.sourceType==='lesson-notes').length,102);
