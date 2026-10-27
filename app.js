@@ -135,7 +135,10 @@
   pop.style.top=Math.max(12,Math.min(top,window.innerHeight-height-12))+'px';
  }
  async function openWord(word,anchor){
-  hideWord(); selectedWord={...dictionary(word),word,pending:false,onlineError:'',onlineEntry:null};
+  hideWord();
+  const local=dictionary(word)||{},saved=data.words.find(item=>item.word.toLowerCase()===word.toLowerCase());
+  const meaning=hasChineseMeaning(local.meaning)?local.meaning:hasChineseMeaning(saved?.meaning)?saved.meaning:local.meaning||saved?.meaning||'';
+  selectedWord={...local,word,meaning,phonetic:local.phonetic||saved?.phonetic||'',pos:local.pos||saved?.pos||'',example:local.example||saved?.example||'',englishMeaning:saved?.englishMeaning||(!hasChineseMeaning(local.meaning)?local.meaning:'')||(!hasChineseMeaning(meaning)?meaning:''),definitionSource:saved?.definitionSource||'',translationSource:hasChineseMeaning(local.meaning)?local.translationSource||'':saved?.translationSource||'',pending:false,onlineError:'',localError:'',onlineEntry:null,localEntry:null};
   wordAnchor=anchor; anchor.classList.add('selected'); renderWord(); $('#word-popover').classList.remove('hidden');
   positionWord(); say(word);
   // One word click automatically starts lookup, including words with local meanings.
@@ -143,37 +146,61 @@
  }
  async function lookupOnlineWord(){
   if(!selectedWord||selectedWord.pending)return;
-  const request=++wordLookup,word=selectedWord.word;
+  const request=++wordLookup,target=selectedWord,word=target.word;
   dictionaryController?.abort(); const controller=new AbortController(); dictionaryController=controller;
-  selectedWord.pending=true; selectedWord.onlineError=''; renderWord(); positionWord();
-  try{
-   if(!window.StudyDictionary)throw new Error('Online dictionary not loaded');
-   const entry=await StudyDictionary.lookup(word.replace(/’/g,"'"),{signal:controller.signal});
-   if(request!==wordLookup||selectedWord?.word!==word)return;
-   selectedWord.onlineEntry=entry;
-   if(!selectedWord.phonetic)selectedWord.phonetic=entry.phonetic;
-   if(!selectedWord.meaning){selectedWord.meaning=entry.definition;selectedWord.pos=entry.pos;selectedWord.example=entry.example;selectedWord.online=true;}
-   const saved=data.words.find(item=>item.word.toLowerCase()===word.toLowerCase());
-   if(saved&&!saved.meaning){Object.assign(saved,{meaning:entry.definition,pos:entry.pos,example:entry.example,phonetic:saved.phonetic||entry.phonetic,online:true});persist();}
-  }catch(error){
-   if(request!==wordLookup||error.code==='aborted')return;
-   const messages={'not-found':'在线词典暂未收录这个词。','rate-limit':'在线词典请求较多，请稍后重试。','timeout':'在线查询超时，已有释义仍可使用。','invalid-word':'这个词形暂不支持在线查询。'};
-   selectedWord.onlineError=messages[error.code]||'暂时无法连接在线词典，已有释义仍可使用。';
-  }finally{
-   if(request===wordLookup){selectedWord.pending=false;dictionaryController=null;renderWord();positionWord();}
-  }
+  const currentRequest=()=>request===wordLookup&&selectedWord===target&&!controller.signal.aborted;
+  target.pending=true;target.onlineError='';target.localError='';renderWord();positionWord();
+  const lookup=async local=>{
+   try{
+    const provider=window.StudyDictionary?.[local?'lookupLocal':'lookup'];
+    if(typeof provider!=='function'){if(local)return;throw new Error('Online dictionary not loaded');}
+    const entry=await provider.call(StudyDictionary,word.replace(/’/g,"'"),{signal:controller.signal});
+    if(!currentRequest()||!entry)return;
+    target[local?'localEntry':'onlineEntry']=entry;
+    if(local&&!hasChineseMeaning(target.meaning)&&hasChineseMeaning(entry.translation)){target.meaning=entry.translation;target.translationSource=entry.sourceName||'ECDICT';target.online=false;}
+    const english=target.onlineEntry||target.localEntry;
+    if(english?.definition){target.englishMeaning=english.definition;target.definitionSource=english.sourceName||'';if(!target.meaning){target.meaning=english.definition;target.online=true;}}
+    if(!target.phonetic)target.phonetic=entry.phonetic||'';
+    if(!target.pos)target.pos=entry.pos||'';
+    if(!target.example)target.example=entry.example||entry.meanings?.[0]?.definitions?.[0]?.example||'';
+    updateSavedWordDefinition(target);
+   }catch(error){
+    if(!currentRequest()||error?.code==='aborted')return;
+    const messages={'not-found':'在线词典暂未收录这个词。','rate-limit':'在线词典请求较多，请稍后重试。','timeout':'在线查询超时，已有释义仍可使用。','invalid-word':'这个词形暂不支持在线查询。'};
+    if(local)target.localError='本地中文词典暂时无法读取，已有释义仍可使用。';
+    else target.onlineError=messages[error?.code]||'暂时无法连接在线词典，已有释义仍可使用。';
+   }finally{if(currentRequest()){renderWord();positionWord();}}
+  };
+  await Promise.all([lookup(true),lookup(false)]);
+  if(currentRequest()){target.pending=false;dictionaryController=null;renderWord();positionWord();}
+ }
+ function hasChineseMeaning(value){return typeof value==='string'&&/[\u3400-\u9fff]/.test(value);}
+ function updateSavedWordDefinition(value){
+  const saved=data.words.find(item=>item.word.toLowerCase()===value.word.toLowerCase());if(!saved)return;
+  const updates={};
+  if(hasChineseMeaning(value.meaning)&&!hasChineseMeaning(saved.meaning)){updates.meaning=value.meaning;updates.translationSource=value.translationSource||'';}
+  else if(!saved.meaning&&value.meaning)updates.meaning=value.meaning;
+  if(value.englishMeaning){updates.englishMeaning=value.englishMeaning;if(value.definitionSource)updates.definitionSource=value.definitionSource;}
+  for(const key of ['phonetic','pos','example'])if(!saved[key]&&value[key])updates[key]=value[key];
+  updates.online=!hasChineseMeaning(updates.meaning||saved.meaning)&&!!value.online;
+  if(Object.entries(updates).some(([key,item])=>saved[key]!==item)){Object.assign(saved,updates);persist();}
  }
  function renderWord(){
   const v=selectedWord,pop=$('#word-popover');if(!v)return;
-  const saved=data.words.some(x=>x.word.toLowerCase()===v.word.toLowerCase()),entry=v.onlineEntry;
-  const localMeaning=v.meaning&&!v.online?'<p class="word-source-label">课程 / 本地释义</p><p class="meaning">'+E(v.pos||'')+' '+E(v.meaning)+'</p>'+(v.example?'<p class="example">'+E(v.example)+'</p>':''):'';
-  const online=entry?'<section class="word-online-result"><p class="word-source-label">在线英文释义 · '+E(entry.sourceName)+'</p>'+entry.meanings.slice(0,3).map(m=>'<div class="word-online-sense"><strong>'+E(m.partOfSpeech)+'</strong>'+m.definitions.slice(0,2).map(d=>'<p>'+E(d.definition)+'</p>'+(d.example?'<p class="example">'+E(d.example)+'</p>':'')).join('')+'</div>').join('')+'<a href="'+E(entry.sourceUrl)+'" target="_blank" rel="noopener noreferrer">词典来源（新标签页）</a></section>':'';
-  const status=v.pending?'<p class="word-lookup-status" role="status">正在自动查询在线词典…</p>':v.onlineError?'<p class="word-lookup-error" role="status">'+E(v.onlineError)+'</p><button class="button subtle" id="retry-online-word">重试在线查询</button>':'';
+  const saved=data.words.some(x=>x.word.toLowerCase()===v.word.toLowerCase()),entry=v.onlineEntry||(v.localEntry?.definition?v.localEntry:null),chinese=hasChineseMeaning(v.meaning);
+  const localMeaning='<section class="word-chinese-result"><p class="word-source-label">中文释义'+(chinese?' · '+E(v.translationSource||'课程 / 本地释义'):'')+'</p><p class="meaning">'+(chinese?E(v.pos||'')+' '+E(v.meaning):v.pending?'正在查询中文释义…':'中文释义暂未收录。')+'</p>'+(chinese&&v.example?'<p class="example">'+E(v.example)+'</p>':'')+'</section>';
+  const definitions=entry?(Array.isArray(entry.meanings)?entry.meanings:[]).slice(0,3).map(m=>'<div class="word-online-sense"><strong>'+E(m.partOfSpeech)+'</strong>'+(Array.isArray(m.definitions)?m.definitions:[]).slice(0,v.onlineEntry?2:4).map(d=>'<p>'+E(d.definition)+'</p>'+(d.example?'<p class="example">'+E(d.example)+'</p>':'')).join('')+'</div>').join('')||'<p>'+E(entry.definition)+'</p>':v.englishMeaning?'<p>'+E(v.englishMeaning)+'</p>':'<p>英文释义暂未收录。</p>';
+  const source=entry&&/^https?:\/\//i.test(String(entry.sourceUrl||''))?'<a href="'+E(entry.sourceUrl)+'" target="_blank" rel="noopener noreferrer">词典来源（新标签页）</a>':'';
+  const online='<section class="word-online-result"><p class="word-source-label">'+(v.onlineEntry?'在线英文释义':'英文释义')+(entry?' · '+E(entry.sourceName):v.englishMeaning?' · '+E(v.definitionSource||'课程 / 本地'):'')+'</p>'+definitions+source+'</section>';
+  const headword=v.localEntry?.headword,original=typeof headword==='string'&&headword.toLowerCase()!==v.word.toLowerCase()?'<p class="word-source-label">原形：'+E(headword)+'</p>':'';
+  const error=[v.localError,v.onlineError].filter(Boolean).join(' ');
+  const status=v.pending?'<p class="word-lookup-status" role="status">正在自动查询中英文释义…</p>':error?'<p class="word-lookup-error" role="status">'+E(error)+'</p><button class="button subtle" id="retry-online-word">重试查询</button>':'';
   const links=window.StudyDictionary?StudyDictionary.links(v.word.replace(/’/g,"'")):[];
-  pop.innerHTML='<div class="popover-title"><strong>'+E(v.word)+'</strong><button class="icon-button" data-speak="'+E(v.word)+'" aria-label="再次朗读 '+E(v.word)+'">'+icon('volume')+'</button><button class="icon-button" id="close-word" aria-label="关闭释义">'+icon('close')+'</button></div><p class="phonetic">'+E(v.phonetic||'点击喇叭可再次发音')+'</p>'+localMeaning+online+status+(!localMeaning&&!online&&!v.pending?'<p class="meaning">暂未查到释义，仍可听发音和收藏。</p>':'')+'<div class="word-dictionary-links">'+links.map(l=>'<a href="'+E(l.url)+'" target="_blank" rel="noopener noreferrer">'+E(l.name)+' · 查中文（新标签页）</a>').join('')+'</div><div class="popover-actions"><button class="button subtle" id="save-word">'+icon(saved?'check':'plus')+(saved?'已在生词本':'加入生词本')+'</button></div>';
+  pop.innerHTML='<div class="popover-title"><strong>'+E(v.word)+'</strong><button class="icon-button" data-speak="'+E(v.word)+'" aria-label="再次朗读 '+E(v.word)+'">'+icon('volume')+'</button><button class="icon-button" id="close-word" aria-label="关闭释义">'+icon('close')+'</button></div><p class="phonetic">'+E(v.phonetic||'点击喇叭可再次发音')+'</p>'+original+localMeaning+online+status+'<div class="word-dictionary-links">'+links.map(l=>'<a href="'+E(l.url)+'" target="_blank" rel="noopener noreferrer">'+E(l.name)+' · 查中文（新标签页）</a>').join('')+'</div><div class="popover-actions"><button class="button subtle" id="save-word">'+icon(saved?'check':'plus')+(saved?'已在生词本':'加入生词本')+'</button></div>';
  }
- function saveWord(){if(data.words.some(x=>x.word.toLowerCase()===selectedWord.word.toLowerCase())){toast('这个单词已经在生词本里了。');return;}const wordSource=view==='daily-review'&&dailyReview?.active?lessons.find(l=>l.id===dailyReview.active.sourceLesson.id)||current:view==='library'&&outputContext?outputContext:current;data.words.push({word:selectedWord.word,meaning:selectedWord.meaning||'',phonetic:selectedWord.phonetic||'',pos:selectedWord.pos||'',example:selectedWord.example||'',online:!!selectedWord.online,lesson:wordSource.title,lessonId:wordSource.id,addedAt:Date.now(),mastered:false});persist();renderWord();$('#word-count').textContent=data.words.length;toast('已加入生词本，随时回来复习。');}
- function renderWords(){const words=data.words.filter(v=>!query||[v.word,v.meaning].join(' ').toLowerCase().includes(query));$('#words-view').innerHTML=`<div class="view-heading"><div><h2>我的生词本</h2><p>把遇见的单词，变成熟悉的表达。共 ${data.words.length} 词，已掌握 ${data.words.filter(v=>v.mastered).length} 词。</p></div><button class="button" id="export-words">${icon('download')}导出生词</button></div>${words.length?`<div class="saved-grid">${words.map(v=>`<article class="saved-card ${v.mastered?'mastered':''}"><div class="popover-title"><h3>${E(v.word)}</h3><button class="icon-button" data-speak="${E(v.word)}" aria-label="朗读 ${E(v.word)}">${icon('volume')}</button></div><p class="phonetic">${E(v.phonetic)} ${E(v.pos)}</p><p>${E(v.meaning||'收藏时未收录释义')}</p>${v.example?`<p class="example">${E(v.example)}</p>`:''}<small class="small-note">来自 ${E(v.lesson||'课文')}</small><div class="popover-actions"><button class="button subtle" data-master="${E(v.word)}">${icon('check')}${v.mastered?'已掌握':'标记掌握'}</button><button class="icon-button" data-remove-word="${E(v.word)}" aria-label="移除 ${E(v.word)}">${icon('trash')}</button></div></article>`).join('')}</div>`:`<div class="empty-state large-empty">${icon('notebook')}<h3>${query?'没有匹配的生词':'让你的第一颗单词种子发芽'}</h3><p>在课文中点击单词，再点“加入生词本”。</p><button class="button primary" data-view="study">去读一篇课文</button></div>`}`;}
+ function saveWord(){if(!selectedWord)return;if(data.words.some(x=>x.word.toLowerCase()===selectedWord.word.toLowerCase())){updateSavedWordDefinition(selectedWord);toast('这个单词已经在生词本里了。');return;}const wordSource=view==='daily-review'&&dailyReview?.active?lessons.find(l=>l.id===dailyReview.active.sourceLesson.id)||current:view==='library'&&outputContext?outputContext:current;data.words.push({word:selectedWord.word,meaning:selectedWord.meaning||'',englishMeaning:selectedWord.englishMeaning||'',definitionSource:selectedWord.definitionSource||'',translationSource:selectedWord.translationSource||'',phonetic:selectedWord.phonetic||'',pos:selectedWord.pos||'',example:selectedWord.example||'',online:!!selectedWord.online,lesson:wordSource?.title||'',lessonId:wordSource?.id||'',addedAt:Date.now(),mastered:false});persist();renderWord();$('#word-count').textContent=data.words.length;toast('已加入生词本，随时回来复习。');}
+ function savedWordMeaningHTML(value){const chinese=hasChineseMeaning(value.meaning),english=value.englishMeaning||(!chinese?value.meaning:'');return '<p>'+E(chinese?value.meaning:english?'中文释义暂未收录。':'收藏时未收录释义')+'</p>'+(english?'<p class="word-source-label">英文释义'+(value.definitionSource?' · '+E(value.definitionSource):'')+'</p><p class="english">'+E(english)+'</p>':'');}
+ function renderWords(){const words=data.words.filter(v=>!query||[v.word,v.meaning].join(' ').toLowerCase().includes(query));$('#words-view').innerHTML=`<div class="view-heading"><div><h2>我的生词本</h2><p>把遇见的单词，变成熟悉的表达。共 ${data.words.length} 词，已掌握 ${data.words.filter(v=>v.mastered).length} 词。</p></div><button class="button" id="export-words">${icon('download')}导出生词</button></div>${words.length?`<div class="saved-grid">${words.map(v=>`<article class="saved-card ${v.mastered?'mastered':''}"><div class="popover-title"><h3>${E(v.word)}</h3><button class="icon-button" data-speak="${E(v.word)}" aria-label="朗读 ${E(v.word)}">${icon('volume')}</button></div><p class="phonetic">${E(v.phonetic)} ${E(v.pos)}</p>${savedWordMeaningHTML(v)}${v.example?`<p class="example">${E(v.example)}</p>`:''}<small class="small-note">来自 ${E(v.lesson||'课文')}</small><div class="popover-actions"><button class="button subtle" data-master="${E(v.word)}">${icon('check')}${v.mastered?'已掌握':'标记掌握'}</button><button class="icon-button" data-remove-word="${E(v.word)}" aria-label="移除 ${E(v.word)}">${icon('trash')}</button></div></article>`).join('')}</div>`:`<div class="empty-state large-empty">${icon('notebook')}<h3>${query?'没有匹配的生词':'让你的第一颗单词种子发芽'}</h3><p>在课文中点击单词，再点“加入生词本”。</p><button class="button primary" data-view="study">去读一篇课文</button></div>`}`;}
  function renderRecords(){const records=Object.entries(data.records).filter(([id])=>lessons.some(l=>l.id===id)),completed=records.filter(([,r])=>r.completed).length,practiced=records.filter(([,r])=>r.attempts).length,attempts=records.reduce((s,[,r])=>s+(r.attempts||0),0);$('#records-view').innerHTML=`<div class="view-heading"><div><h2>学习记录</h2><p>每一小步，都在让你走得更远。</p></div><button class="button" id="export-backup">${icon('download')}备份学习数据</button></div><div class="stats-grid">${[[completed,'已读课文'],[practiced,'已练习课程'],[attempts,'累计练习次数'],[data.words.length,'收藏单词']].map(([n,t])=>`<div class="stat-card"><strong>${n}</strong><span>${t}</span></div>`).join('')}</div><div class="record-list">${records.length?records.sort((a,b)=>(b[1].lastAt||0)-(a[1].lastAt||0)).map(([id,r])=>{const l=lessons.find(l=>l.id===id);return`<div class="record-row"><span class="record-book">0${l.book}</span><div><strong>${E(l.title)}</strong><small>${r.lastAt?dateLabel(r.lastAt):''} · ${E(lessonProgress(id).summary)}${r.attempts?` · 练习 ${r.attempts} 次`:''}</small></div>${r.attempts?`<span class="record-score">${r.practicePack?'单元 '+r.practicePack.correct+'/'+r.practicePack.total:'最佳 '+r.best+'%'}</span>`:''}<button class="button subtle" data-lesson="${E(id)}">继续学习${icon('right')}</button>${(isPilotLesson(l)||unitPractice?.available(l))&&lessonProgress(id).canRetest?`<button class="button primary" data-retest="${E(id)}">隔天复测</button>`:''}${r.wrong?.length?`<button class="button subtle" data-review="${E(id)}">错题 ${r.wrong.length}</button>`:''}</div>`;}).join(''):'<div class="empty-state"><h3>从今天的一课开始</h3><p>标记已读或提交练习后，记录会出现在这里。</p><button class="button primary" data-view="study">开始学习</button></div>'}</div><p class="small-note">学习记录保存在当前浏览器。可导出 JSON 备份，在资料导入中恢复。</p>`;}
  function download(name,content,type='application/json'){const url=URL.createObjectURL(new Blob([content],{type})),a=document.createElement('a');a.href=url;a.download=name;document.body.append(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);}
  function openDialog(title,body,footer=''){returnFocus=document.activeElement;hideWord();$('#dialog-root').innerHTML=`<div class="dialog-overlay"><section class="dialog-card" role="dialog" aria-modal="true" aria-labelledby="dialog-title"><header class="dialog-header"><h2 id="dialog-title">${E(title)}</h2><button class="icon-button" id="close-dialog" aria-label="关闭弹窗">${icon('close')}</button></header><div class="dialog-body">${body}</div>${footer?`<div class="dialog-footer">${footer}</div>`:''}</section></div>`;$('#close-dialog').focus();}
@@ -231,7 +258,7 @@
  data.review=StudyReview.enroll(data.review,StudyReview.cardsForLessons(lessons.filter(l=>StudyReview.hasStudied(safeRecord(l.id)))));
  dailyReview=new ReviewPractice({container:$('#daily-review-view'),getLessons:()=>lessons,getState:()=>data.review,saveState:saveReviewState,escapeHTML:E,wordHTML,speak:say,toast,getCurrentLesson:()=>current,enrollCurrent:()=>enrollLessonReview(current),openLesson:selectLesson,backup:()=>download('知新-学习备份.json',JSON.stringify({format:'zhixin-backup-v1',exportedAt:new Date().toISOString(),data:backupData()},null,2)),onChange:updateReviewCount,onEvidence:coachEvidence,taskBarHTML:()=>coach?.activeTask?.type==='review'?coach.taskBarHTML(coach.activeTask.lessonId):''});
  unitPractice=new LessonPractice({registry:window.StudyPracticePacks?.registry,getLesson:()=>current,getState:()=>data.unitPractice,saveState:saveUnitPracticeState,saveResult:saveUnitPracticeResult,isAttemptSaved:(id,attemptId)=>(safeRecord(id).practicePack?.savedAttemptIds||[]).includes(attemptId),canRetest:canRetestPack,escapeHTML:E,wordHTML,toast,speak:word=>audio.speakWord(word),openKnowledge,readLesson:()=>setTab('reading'),openOrigin:(id,kind)=>kind==="notes"?openKnowledge(id,""):openSourceLesson(id),getOrigins:packOrigins,backup:()=>download('知新-学习备份.json',JSON.stringify({format:'zhixin-backup-v1',exportedAt:new Date().toISOString(),data:backupData()},null,2))});
- sentencePractice=new SentencePractice({getLesson:()=>outputContext||current,getLessons:()=>lessons,getRecords:()=>Object.fromEntries(Object.entries(data.records).map(([id,record])=>[id,{...record,completed:StudyReview.hasStudied(record)}])),getDrafts:()=>data.sentencePractice,saveDraft:(key,draft)=>{data.sentencePractice={...data.sentencePractice,[key]:StudySentences.sanitizeDraft(draft)};return persist();},grammarCheck:text=>window.StudyGrammar?StudyGrammar.check(text):null,escapeHTML:E,toast,onEvidence:coachEvidence});
+ sentencePractice=new SentencePractice({getLesson:()=>outputContext||current,getVocabulary:lesson=>{const bank=window.StudyKnowledge?.bank,rows=bank?.hasLesson(lesson.id)?bank.vocabularyForLesson(lesson.id):lesson.vocabulary;return window.StudySentenceWordbankData?.vocabularyForLesson(lesson,rows)||rows;},getUsage:lesson=>window.StudySentenceWordbankData?.usageForLesson(lesson)||lesson.usage,speak:say,icon,getLessons:()=>lessons,getRecords:()=>Object.fromEntries(Object.entries(data.records).map(([id,record])=>[id,{...record,completed:StudyReview.hasStudied(record)}])),getDrafts:()=>data.sentencePractice,saveDraft:(key,draft)=>{data.sentencePractice={...data.sentencePractice,[key]:StudySentences.sanitizeDraft(draft)};return persist();},grammarCheck:text=>window.StudyGrammar?StudyGrammar.check(text):null,escapeHTML:E,toast,onEvidence:coachEvidence});
  batchPractice=new BatchSentencePractice({getLesson:()=>outputContext||current,getDraft:id=>Object.hasOwn(data.sentenceBatches,id)?data.sentenceBatches[id]:Object.hasOwn(data.sentenceBatch,id)?data.sentenceBatch[id]:null,saveDraft:(id,draft)=>{data.sentenceBatches={...data.sentenceBatches,[id]:StudySentenceBatch.sanitizeDraft(draft)};return persist();},grammarCheck:text=>window.StudyGrammar?StudyGrammar.check(text):null,sentenceCheck:options=>StudySentences.check(options),getGuidedText:guidedBatchText,escapeHTML:E,toast,copyText:text=>navigator.clipboard.writeText(text),downloadText:(name,text)=>download(name,text,'text/plain;charset=utf-8')});
  output=new OutputPractice({getLesson:()=>outputContext||current,saveRecord:saveOutputRecord,icon,escapeHTML:E,toast,speak:say,sentencePractice,batchPractice,defaultMode:()=>document.body.classList.contains('mls-mobile')?'sentences':'write',isMobileWorkspace:()=>document.body.classList.contains('mls-book-workspace')&&document.body.classList.contains('mls-mobile'),onModeChange:mode=>mobileShell?.setOutputMode(mode,{view,tab:activeTab}),canPracticeSentences:lesson=>lessons.some(item=>item.id===lesson?.id),onEvidence:coachEvidence});
  window.addEventListener('pagehide',flushOutput);

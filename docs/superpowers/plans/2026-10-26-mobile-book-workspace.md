@@ -34,7 +34,7 @@
 - [x] Add focused editor and progressive advanced controls, preserving lifecycle tests.
 - [x] Inspect reading, guided and bulk states against selected references at 390x844; verify 320px and desktop restoration.
 - [x] Verify audio, lesson96, sources, draft reload/copy/backup, drawer and console; run the full suite.
-- [ ] Save design-qa.md, merge any concurrent remote changes, publish and verify the live build.
+- [x] Save design-qa.md, merge any concurrent remote changes, publish and verify the live build.
 
 Real phone keyboard and actual next-day retention remain separate pending acceptance; responsive browser checks do not substitute for them.
 
