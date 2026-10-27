@@ -1,6 +1,6 @@
 {
   "build": "2026-10-27-phrase-verb-recommendations",
-  "preparedAt": "2026-10-27T05:46:01.964186+00:00",
+  "preparedAt": "2026-10-27T06:03:01.334043+00:00",
   "book2": {
     "book": 2,
     "total": 96,
@@ -475,7 +475,7 @@
     "unmatchedParaphrases": "needs-check",
     "savedIndependently": true,
     "scope": "grammar",
-    "questionLanguage": "en",
+    "questionLanguage": "Chinese instructions with English exercise text",
     "answerLanguage": "en",
     "formats": [
       "gap-fill",
@@ -485,7 +485,11 @@
       "form-choice"
     ],
     "chineseSupport": "post-answer-rule-explanations",
-    "storyComprehensionRemoved": true
+    "storyComprehensionRemoved": true,
+    "instructionLanguage": "zh-CN",
+    "grammarLabelLanguage": "zh-CN",
+    "exerciseLanguage": "en",
+    "assessmentRevisionsPreserved": true
   },
   "performance": {
     "lazyTextLibrary": true,

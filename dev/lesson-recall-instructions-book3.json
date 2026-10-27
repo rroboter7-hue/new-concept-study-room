@@ -1,0 +1,1147 @@
+{
+  "version": 1,
+  "book": 3,
+  "language": "zh-CN",
+  "lessons": [
+    {
+      "lessonId": "nce-b3-fa4874-l001",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Relative subject. Choose the correct form: Pumas are large, cat-like animals ___ are found in America.",
+          "sourceGrammarPoint": "Relative subject",
+          "instructionZh": "选择正确的形式，填入空格：Pumas are large, cat-like animals ___ are found in America.",
+          "grammarPointZh": "定语从句：关系代词作主语"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Change to the past perfect passive. Begin with \"A wild puma\" and omit the agent: People had spotted a wild puma.",
+          "sourceGrammarPoint": "Past perfect passive",
+          "instructionZh": "改为过去完成时的被动语态，以 A wild puma 开头，并省略动作执行者：People had spotted a wild puma.",
+          "grammarPointZh": "过去完成时的被动语态"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l002",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Causative have. Choose the correct form: to have the church clock ___",
+          "sourceGrammarPoint": "Causative have",
+          "instructionZh": "选择正确的形式，填入空格：to have the church clock ___",
+          "grammarPointZh": "have 使役结构（让某事被做）"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Use the present perfect: The clock ___ silent ever since. (be) Write exactly 2 words.",
+          "sourceGrammarPoint": "Present perfect",
+          "instructionZh": "用 be 的现在完成时补全句子，只填 2 个词：The clock ___ silent ever since.",
+          "grammarPointZh": "现在完成时"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l003",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Past deduction. Choose the correct form: The city at one time ___ prosperous",
+          "sourceGrammarPoint": "Past deduction",
+          "instructionZh": "选择正确的形式，填入空格：The city at one time ___ prosperous",
+          "grammarPointZh": "对过去情况的推测"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Change to the passive. Begin with \"An interesting discovery\" and keep the agent with \"by\": Archaeologists made an interesting discovery.",
+          "sourceGrammarPoint": "Past simple passive",
+          "instructionZh": "改为被动语态，以 An interesting discovery 开头，并用 by 保留动作执行者：Archaeologists made an interesting discovery.",
+          "grammarPointZh": "一般过去时的被动语态"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l004",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Gerund after a preposition. Choose the correct form: the privilege of ___ white-collar workers",
+          "sourceGrammarPoint": "Gerund after a preposition",
+          "instructionZh": "选择正确的形式，填入空格：the privilege of ___ white-collar workers",
+          "grammarPointZh": "介词后接动名词（-ing 形式）"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Rewrite with inversion, beginning with \"Such\": Human nature is such.",
+          "sourceGrammarPoint": "Inversion after such",
+          "instructionZh": "改写为倒装句，以 Such 开头：Human nature is such.",
+          "grammarPointZh": "such 位于句首的倒装"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l005",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Past perfect passive. Choose the correct form: a journalist ___ by a well-known magazine",
+          "sourceGrammarPoint": "Past perfect passive",
+          "instructionZh": "选择正确的形式，填入空格：a journalist ___ by a well-known magazine",
+          "grammarPointZh": "过去完成时的被动语态"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Complete with the correct form of \"publish\": The editor refused ___ it. Write exactly 2 words.",
+          "sourceGrammarPoint": "Infinitive complement",
+          "instructionZh": "用 publish 的适当形式填空，只填 2 个词：The editor refused ___ it.",
+          "grammarPointZh": "动词或形容词后的不定式结构"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l006",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Perfect continuous. Choose the correct form: Two of his assistants ___ busily since eight o’clock",
+          "sourceGrammarPoint": "Perfect continuous",
+          "instructionZh": "选择正确的形式，填入空格：Two of his assistants ___ busily since eight o’clock",
+          "grammarPointZh": "完成进行时"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Put these words in order, using every word or part once. Begin with \"The shops\" and put \"just\" after \"were\": just / the shops / opening / were",
+          "sourceGrammarPoint": "Word order",
+          "instructionZh": "将下列单词或词组组成一句话，每项只用一次。以 The shops 开头，并把 just 放在 were 后：just / the shops / opening / were",
+          "grammarPointZh": "单词和词组的排列顺序"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l007",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Modal bare infinitive. Choose the correct form: People who live in Britain ___ despair",
+          "sourceGrammarPoint": "Modal bare infinitive",
+          "instructionZh": "选择正确的形式，填入空格：People who live in Britain ___ despair",
+          "grammarPointZh": "情态动词后接动词原形"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Expand the reduced clause with \"which is\". Write the whole noun phrase: a team called Mutilated Ladies.",
+          "sourceGrammarPoint": "Past participle modifier",
+          "instructionZh": "用 which is 展开省略的定语从句，写出整个名词短语：a team called Mutilated Ladies.",
+          "grammarPointZh": "过去分词作定语"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l008",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Present participle modifier. Choose the correct form: travellers ___ the dangerous Pass",
+          "sourceGrammarPoint": "Present participle modifier",
+          "instructionZh": "选择正确的形式，填入空格：travellers ___ the dangerous Pass",
+          "grammarPointZh": "现在分词作定语"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Reduce the relative clause using a past participle: the monastery which was founded in the eleventh century.",
+          "sourceGrammarPoint": "Past participle modifier",
+          "instructionZh": "用过去分词短语简化下面的定语从句：the monastery which was founded in the eleventh century.",
+          "grammarPointZh": "过去分词作定语"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l009",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Infinitive complement. Choose the correct form: Cats never fail ___ human beings.",
+          "sourceGrammarPoint": "Infinitive complement",
+          "instructionZh": "选择正确的形式，填入空格：Cats never fail ___ human beings.",
+          "grammarPointZh": "动词或形容词后的不定式结构"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Use the present perfect and the -ed form: Humans ___ to respect feline independence. (learn) Write exactly 2 words.",
+          "sourceGrammarPoint": "Present perfect",
+          "instructionZh": "用 learn 的现在完成时填空，过去分词使用 -ed 形式。只填 2 个词：Humans ___ to respect feline independence.",
+          "grammarPointZh": "现在完成时"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l010",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Past continuous. Choose the correct form: She ___ 1,316 passengers and a crew of 891.",
+          "sourceGrammarPoint": "Past continuous",
+          "instructionZh": "选择正确的形式，填入空格：She ___ 1,316 passengers and a crew of 891.",
+          "grammarPointZh": "过去进行时"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Use the past perfect passive and include \"ever\": the largest ship that ___ . (build) Write exactly 4 words.",
+          "sourceGrammarPoint": "Past perfect passive",
+          "instructionZh": "用 build 的过去完成时被动形式填空，并包含 ever。只填 4 个词：the largest ship that ___ .",
+          "grammarPointZh": "过去完成时的被动语态"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l011",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Passive causative make. Choose the correct form: honest people are often made ___ guilty",
+          "sourceGrammarPoint": "Passive causative make",
+          "instructionZh": "选择正确的形式，填入空格：honest people are often made ___ guilty",
+          "grammarPointZh": "make 使役结构的被动形式"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Make a yes/no question: You are going through the Green Channel.",
+          "sourceGrammarPoint": "Question formation",
+          "instructionZh": "将下面的句子改为一般疑问句：You are going through the Green Channel.",
+          "grammarPointZh": "一般疑问句的构成"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l012",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Relative place. Choose the correct form: a sort of paradise ___ the sun always shines",
+          "sourceGrammarPoint": "Relative place",
+          "instructionZh": "选择正确的形式，填入空格：a sort of paradise ___ the sun always shines",
+          "grammarPointZh": "定语从句：表示地点的关系词"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Make this statement negative, using \"not\": Most of us have formed an unrealistic picture of life on a desert island.",
+          "sourceGrammarPoint": "Negative formation",
+          "instructionZh": "用 not 将下面的句子改为否定句：Most of us have formed an unrealistic picture of life on a desert island.",
+          "grammarPointZh": "否定句的构成"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l013",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Too ... to. Choose the correct form: She was ___ excited to do any housework that morning",
+          "sourceGrammarPoint": "Too ... to",
+          "instructionZh": "选择正确的形式，填入空格：She was ___ excited to do any housework that morning",
+          "grammarPointZh": "程度副词与不定式结构"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Make a yes/no question in the past perfect: Her husband had gone to work.",
+          "sourceGrammarPoint": "Question formation",
+          "instructionZh": "用过去完成时将下面的句子改为一般疑问句：Her husband had gone to work.",
+          "grammarPointZh": "一般疑问句的构成"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l014",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Gerund subject. Choose the correct form: ___ ‘protection money’ is not a modern crime.",
+          "sourceGrammarPoint": "Gerund subject",
+          "instructionZh": "选择正确的形式，填入空格：___ ‘protection money’ is not a modern crime.",
+          "grammarPointZh": "动名词（-ing 形式）作主语"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Change to active. Begin with \"If people\": If the money was not paid promptly.",
+          "sourceGrammarPoint": "Active and passive",
+          "instructionZh": "将下面的从句改为主动语态，以 If people 开头：If the money was not paid promptly.",
+          "grammarPointZh": "主动语态与被动语态转换"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l015",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Present simple passive. Choose the correct form: If fifty pence pieces ___ for sweets",
+          "sourceGrammarPoint": "Present simple passive",
+          "instructionZh": "选择正确的形式，填入空格：If fifty pence pieces ___ for sweets",
+          "grammarPointZh": "一般现在时的被动语态"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Make a yes/no question using \"do\": Children always appreciate small gifts of money.",
+          "sourceGrammarPoint": "Question formation",
+          "instructionZh": "使用 do 将下面的句子改为一般疑问句：Children always appreciate small gifts of money.",
+          "grammarPointZh": "一般疑问句的构成"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l016",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Past perfect. Choose the correct form: a little white lamb which her husband ___ her",
+          "sourceGrammarPoint": "Past perfect",
+          "instructionZh": "选择正确的形式，填入空格：a little white lamb which her husband ___ her",
+          "grammarPointZh": "过去完成时"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Complete using a past participle: She kept it ___ to a tree. (tie) Write exactly 1 word.",
+          "sourceGrammarPoint": "Past participle as object complement",
+          "instructionZh": "用 tie 的过去分词填空，只填 1 个词：She kept it ___ to a tree.",
+          "grammarPointZh": "过去分词作宾语补足语"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l017",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Relative person after a preposition. Choose the correct form: an Italian about ___ little is known",
+          "sourceGrammarPoint": "Relative person after a preposition",
+          "instructionZh": "选择正确的形式，填入空格：an Italian about ___ little is known",
+          "grammarPointZh": "介词后指人的关系代词"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Change to the passive. Begin with \"Four huge cables\" and keep the agent with \"by\": Two great towers support four huge cables.",
+          "sourceGrammarPoint": "Present simple passive",
+          "instructionZh": "改为被动语态，以 Four huge cables 开头，并用 by 保留动作执行者：Two great towers support four huge cables.",
+          "grammarPointZh": "一般现在时的被动语态"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l018",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Modal perfect. Choose the correct form: people who take no interest in art ___ to notice",
+          "sourceGrammarPoint": "Modal perfect",
+          "instructionZh": "选择正确的形式，填入空格：people who take no interest in art ___ to notice",
+          "grammarPointZh": "情态动词与完成式"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Make this statement negative with \"does not\": Modern sculpture surprises us.",
+          "sourceGrammarPoint": "Negative formation",
+          "instructionZh": "用 does not 将下面的句子改为否定句：Modern sculpture surprises us.",
+          "grammarPointZh": "否定句的构成"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l019",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Present simple agreement. Choose the correct form: He usually ___ a short walk in the evenings",
+          "sourceGrammarPoint": "Present simple agreement",
+          "instructionZh": "选择正确的形式，填入空格：He usually ___ a short walk in the evenings",
+          "grammarPointZh": "一般现在时的主谓一致"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Replace \"failed to\" with \"did not manage to\": He failed to arrive.",
+          "sourceGrammarPoint": "Infinitive complement",
+          "instructionZh": "用 did not manage to 替换 failed to：He failed to arrive.",
+          "grammarPointZh": "动词或形容词后的不定式结构"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l020",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Past simple passive. Choose the correct form: before the first attempt ___",
+          "sourceGrammarPoint": "Past simple passive",
+          "instructionZh": "选择正确的形式，填入空格：before the first attempt ___",
+          "grammarPointZh": "一般过去时的被动语态"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Change to active. Begin with \"Engine failure\" and use \"forced him\": He was forced to land on the sea.",
+          "sourceGrammarPoint": "Active and passive",
+          "instructionZh": "改为主动语态，以 Engine failure 开头，并使用 forced him：He was forced to land on the sea.",
+          "grammarPointZh": "主动语态与被动语态转换"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l021",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Modal passive. Choose the correct form: a prizefighter could ___ seriously injured or even killed",
+          "sourceGrammarPoint": "Modal passive",
+          "instructionZh": "选择正确的形式，填入空格：a prizefighter could ___ seriously injured or even killed",
+          "grammarPointZh": "含情态动词的被动语态"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Make a yes/no question: They were known as prizefighters.",
+          "sourceGrammarPoint": "Question formation",
+          "instructionZh": "将下面的句子改为一般疑问句：They were known as prizefighters.",
+          "grammarPointZh": "一般疑问句的构成"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l022",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Go on doing. Choose the correct form: actors who are required to go on ___ the same lines",
+          "sourceGrammarPoint": "Go on doing",
+          "instructionZh": "选择正确的形式，填入空格：actors who are required to go on ___ the same lines",
+          "grammarPointZh": "go on 后的动词形式"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Rewrite with \"such ... that\". Begin with \"They are such\": Some plays are so successful that they run for years on end.",
+          "sourceGrammarPoint": "So ... that and such ... that",
+          "instructionZh": "用 such ... that改写，以 They are such 开头：Some plays are so successful that they run for years on end.",
+          "grammarPointZh": "so…that…与 such…that…结构转换"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l023",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Second conditional. Choose the correct form: If you lived in the Mediterranean, for instance, you ___ octopus a great delicacy.",
+          "sourceGrammarPoint": "Second conditional",
+          "instructionZh": "选择正确的形式，填入空格：If you lived in the Mediterranean, for instance, you ___ octopus a great delicacy.",
+          "grammarPointZh": "第二条件句（对现在或将来的假设）"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Change to the passive, beginning with \"What\": What can people eat?",
+          "sourceGrammarPoint": "Modal passive",
+          "instructionZh": "改为被动语态，以 What 开头：What can people eat?",
+          "grammarPointZh": "含情态动词的被动语态"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l024",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Present perfect passive. Choose the correct form: secret which ___ from strangers for years",
+          "sourceGrammarPoint": "Present perfect passive",
+          "instructionZh": "选择正确的形式，填入空格：secret which ___ from strangers for years",
+          "grammarPointZh": "现在完成时的被动语态"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Change to active. Begin with \"People\": The terrible secret is called a skeleton in the cupboard.",
+          "sourceGrammarPoint": "Active and passive",
+          "instructionZh": "改为主动语态，以 People 开头：The terrible secret is called a skeleton in the cupboard.",
+          "grammarPointZh": "主动语态与被动语态转换"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l025",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Modal passive. Choose the correct form: can still ___ at Greenwich",
+          "sourceGrammarPoint": "Modal passive",
+          "instructionZh": "选择正确的形式，填入空格：can still ___ at Greenwich",
+          "grammarPointZh": "含情态动词的被动语态"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Change to active. Begin with \"Thousands of people\": She is visited by thousands of people each year.",
+          "sourceGrammarPoint": "Active and passive",
+          "instructionZh": "改为主动语态，以 Thousands of people 开头：She is visited by thousands of people each year.",
+          "grammarPointZh": "主动语态与被动语态转换"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l026",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Passive gerund. Choose the correct form: No one can avoid ___ by advertisements.",
+          "sourceGrammarPoint": "Passive gerund",
+          "instructionZh": "选择正确的形式，填入空格：No one can avoid ___ by advertisements.",
+          "grammarPointZh": "动名词的被动形式"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Make a yes/no question: Advertisers have made a close study of human nature.",
+          "sourceGrammarPoint": "Question formation",
+          "instructionZh": "将下面的句子改为一般疑问句：Advertisers have made a close study of human nature.",
+          "grammarPointZh": "一般疑问句的构成"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l027",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Gerund after a preposition. Choose the correct form: everyone lives by ___ something",
+          "sourceGrammarPoint": "Gerund after a preposition",
+          "instructionZh": "选择正确的形式，填入空格：everyone lives by ___ something",
+          "grammarPointZh": "介词后接动名词（-ing 形式）"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Change to active. Begin with \"People have said that\": It has been said that everyone lives by selling something.",
+          "sourceGrammarPoint": "Active and passive",
+          "instructionZh": "改为主动语态，以 People have said that 开头：It has been said that everyone lives by selling something.",
+          "grammarPointZh": "主动语态与被动语态转换"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l028",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: No sooner ... than. Choose the correct form: I had no sooner got off the ship ___ I was assailed",
+          "sourceGrammarPoint": "No sooner ... than",
+          "instructionZh": "选择正确的形式，填入空格：I had no sooner got off the ship ___ I was assailed",
+          "grammarPointZh": "表示紧接发生的时间结构"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Expand the reduced clause with \"which were\". Write the whole noun phrase: small boats loaded with wares.",
+          "sourceGrammarPoint": "Past participle modifier",
+          "instructionZh": "用 which were 展开省略的定语从句，写出整个名词短语：small boats loaded with wares.",
+          "grammarPointZh": "过去分词作定语"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l029",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Embedded wh-clause. Choose the correct form: depends on ___ we have been brought up",
+          "sourceGrammarPoint": "Embedded wh-clause",
+          "instructionZh": "选择正确的形式，填入空格：depends on ___ we have been brought up",
+          "grammarPointZh": "疑问词引导的从句"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Use the correct form of \"laugh\": The joke would make an Englishman ___ to tears. Write exactly 1 word.",
+          "sourceGrammarPoint": "Bare infinitive after make",
+          "instructionZh": "用 laugh 的适当形式填空，只填 1 个词：The joke would make an Englishman ___ to tears.",
+          "grammarPointZh": "make 后接动词原形"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l030",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Past simple passive. Choose the correct form: The farm ___ by two brothers",
+          "sourceGrammarPoint": "Past simple passive",
+          "instructionZh": "选择正确的形式，填入空格：The farm ___ by two brothers",
+          "grammarPointZh": "一般过去时的被动语态"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Complete with the correct form of \"work\": No one was willing ___ there long. Write exactly 2 words.",
+          "sourceGrammarPoint": "Infinitive complement",
+          "instructionZh": "用 work 的适当形式填空，只填 2 个词：No one was willing ___ there long.",
+          "grammarPointZh": "动词或形容词后的不定式结构"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l031",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Gerund after a preposition. Choose the correct form: They disregard social conventions without ___ conscious",
+          "sourceGrammarPoint": "Gerund after a preposition",
+          "instructionZh": "选择正确的形式，填入空格：They disregard social conventions without ___ conscious",
+          "grammarPointZh": "介词后接动名词（-ing 形式）"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Complete with the correct form of \"draw\": True eccentrics never set out ___ attention to themselves. Write exactly 2 words.",
+          "sourceGrammarPoint": "Infinitive complement",
+          "instructionZh": "用 draw 的适当形式填空，只填 2 个词：True eccentrics never set out ___ attention to themselves.",
+          "grammarPointZh": "动词或形容词后的不定式结构"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l032",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Past perfect passive. Choose the correct form: a radio message from the mainland ___",
+          "sourceGrammarPoint": "Past perfect passive",
+          "instructionZh": "选择正确的形式，填入空格：a radio message from the mainland ___",
+          "grammarPointZh": "过去完成时的被动语态"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Make a yes/no question: The salvage operation had been a complete failure.",
+          "sourceGrammarPoint": "Question formation",
+          "instructionZh": "将下面的句子改为一般疑问句：The salvage operation had been a complete failure.",
+          "grammarPointZh": "一般疑问句的构成"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l033",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Unreal past after as if. Choose the correct form: It is as if a single unimportant event ___ up a chain of reactions.",
+          "sourceGrammarPoint": "Unreal past after as if",
+          "instructionZh": "选择正确的形式，填入空格：It is as if a single unimportant event ___ up a chain of reactions.",
+          "grammarPointZh": "as if 后表示非真实情况的过去式"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Make a yes/no question. Keep \"all\": We have all experienced days when everything goes wrong.",
+          "sourceGrammarPoint": "Question formation",
+          "instructionZh": "将下面的句子改为一般疑问句，并保留 all：We have all experienced days when everything goes wrong.",
+          "grammarPointZh": "一般疑问句的构成"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l034",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Present simple passive. Choose the correct form: rare objects ___ in glass cases",
+          "sourceGrammarPoint": "Present simple passive",
+          "instructionZh": "选择正确的形式，填入空格：rare objects ___ in glass cases",
+          "grammarPointZh": "一般现在时的被动语态"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Make this statement negative with \"does not\": Someone has to muster up courage.",
+          "sourceGrammarPoint": "Negative formation",
+          "instructionZh": "用 does not 将下面的句子改为否定句：Someone has to muster up courage.",
+          "grammarPointZh": "否定句的构成"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l035",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Present perfect passive. Choose the correct form: a man’s innocence or guilt ___ beyond doubt",
+          "sourceGrammarPoint": "Present perfect passive",
+          "instructionZh": "选择正确的形式，填入空格：a man’s innocence or guilt ___ beyond doubt",
+          "grammarPointZh": "现在完成时的被动语态"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Put these words in order, using every word or part once. Begin with \"The word justice\" and put \"usually\" after \"is\": usually / with courts of law / the word justice / associated / is",
+          "sourceGrammarPoint": "Word order",
+          "instructionZh": "将下列单词或词组组成一句话，每项只用一次。以 The word justice 开头，并把 usually 放在 is 后：usually / with courts of law / the word justice / associated / is",
+          "grammarPointZh": "单词和词组的排列顺序"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l036",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Comparison. Choose the correct form: We are less credulous ___ we used to be.",
+          "sourceGrammarPoint": "Comparison",
+          "instructionZh": "选择正确的形式，填入空格：We are less credulous ___ we used to be.",
+          "grammarPointZh": "比较结构"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Complete with the correct form of \"present\": A novelist would conclude his story by ___ his readers with coincidences. Write exactly 1 word.",
+          "sourceGrammarPoint": "Gerund after a preposition",
+          "instructionZh": "用 present 的适当形式填空，只填 1 个词：A novelist would conclude his story by ___ his readers with coincidences.",
+          "grammarPointZh": "介词后接动名词（-ing 形式）"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l037",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Modal passive. Choose the correct form: Ships may ___ by storms",
+          "sourceGrammarPoint": "Modal passive",
+          "instructionZh": "选择正确的形式，填入空格：Ships may ___ by storms",
+          "grammarPointZh": "含情态动词的被动语态"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Make a yes/no question. Keep \"learnt\": We have learnt to expect that trains will be punctual.",
+          "sourceGrammarPoint": "Question formation",
+          "instructionZh": "将下面的句子改为一般疑问句，并保留 learnt 的拼写：We have learnt to expect that trains will be punctual.",
+          "grammarPointZh": "一般疑问句的构成"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l038",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Time-clause tense. Choose the correct form: when they ___ to record the history of our own times",
+          "sourceGrammarPoint": "Time-clause tense",
+          "instructionZh": "选择正确的形式，填入空格：when they ___ to record the history of our own times",
+          "grammarPointZh": "时间状语从句的时态"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Expand the infinitive clause using \"should\": They will hardly know which facts to select.",
+          "sourceGrammarPoint": "Embedded wh-clause",
+          "instructionZh": "用 should 将不定式结构展开为从句：They will hardly know which facts to select.",
+          "grammarPointZh": "疑问词引导的从句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l039",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Past simple passive. Choose the correct form: Even though the road ___ with boulders",
+          "sourceGrammarPoint": "Past simple passive",
+          "instructionZh": "选择正确的形式，填入空格：Even though the road ___ with boulders",
+          "grammarPointZh": "一般过去时的被动语态"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Expand the participle clause using \"As he\". Use the past simple in both clauses: Glancing at his map, he informed us of the route.",
+          "sourceGrammarPoint": "Participle clause",
+          "instructionZh": "用 As he 展开分词短语，主从句都使用一般过去时：Glancing at his map, he informed us of the route.",
+          "grammarPointZh": "分词短语与状语从句转换"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l040",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Infinitive complement. Choose the correct form: It has never been explained why university students seem ___ practical jokes",
+          "sourceGrammarPoint": "Infinitive complement",
+          "instructionZh": "选择正确的形式，填入空格：It has never been explained why university students seem ___ practical jokes",
+          "grammarPointZh": "动词或形容词后的不定式结构"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Combine using \"which\": Students create amusing situations. The situations are funny to everyone except the victims.",
+          "sourceGrammarPoint": "Relative subject",
+          "instructionZh": "用 which 将下面两句合并为一句：Students create amusing situations. The situations are funny to everyone except the victims.",
+          "grammarPointZh": "定语从句：关系代词作主语"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-140ed4-l041",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Subject agreement. Choose the correct form: only one of them ___ ever gone to live in the country",
+          "sourceGrammarPoint": "Subject agreement",
+          "instructionZh": "选择正确的形式，填入空格：only one of them ___ ever gone to live in the country",
+          "grammarPointZh": "主谓一致"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Make a yes/no question. Replace \"never\" with \"ever\": The quiet life of the country has never appealed to me.",
+          "sourceGrammarPoint": "Question formation",
+          "instructionZh": "将下面的句子改为一般疑问句，并用 ever 替换 never：The quiet life of the country has never appealed to me.",
+          "grammarPointZh": "一般疑问句的构成"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-f4cefe-l042",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Gerund after a preposition. Choose the correct form: the chance of ___ an unexpected discovery",
+          "sourceGrammarPoint": "Gerund after a preposition",
+          "instructionZh": "选择正确的形式，填入空格：the chance of ___ an unexpected discovery",
+          "grammarPointZh": "介词后接动名词（-ing 形式）"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Rewrite using \"it\" as a formal subject: To give a satisfactory explanation is impossible.",
+          "sourceGrammarPoint": "Dummy it",
+          "instructionZh": "用 it 作形式主语改写下面的句子：To give a satisfactory explanation is impossible.",
+          "grammarPointZh": "it 作形式主语或形式宾语"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-63de95-l043",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Correlative comparison. Choose the correct form: the bigger the risk an insurance company takes, the ___ the premium",
+          "sourceGrammarPoint": "Correlative comparison",
+          "instructionZh": "选择正确的形式，填入空格：the bigger the risk an insurance company takes, the ___ the premium",
+          "grammarPointZh": "“越……越……”比较结构"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Complete with the correct form of \"insure\": Insurance companies are normally willing ___ anything. Write exactly 2 words.",
+          "sourceGrammarPoint": "Infinitive complement",
+          "instructionZh": "用 insure 的适当形式填空，只填 2 个词：Insurance companies are normally willing ___ anything.",
+          "grammarPointZh": "动词或形容词后的不定式结构"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-8160be-l044",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Gerund after enjoy. Choose the correct form: Hardly anyone can positively enjoy ___ in a train",
+          "sourceGrammarPoint": "Gerund after enjoy",
+          "instructionZh": "选择正确的形式，填入空格：Hardly anyone can positively enjoy ___ in a train",
+          "grammarPointZh": "enjoy 后的动词形式"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Expand the participle phrase using \"who are\": people travelling long distances. Write the whole noun phrase.",
+          "sourceGrammarPoint": "Present participle modifier",
+          "instructionZh": "用 who are 将分词短语展开为定语从句，写出整个名词短语：people travelling long distances.",
+          "grammarPointZh": "现在分词作定语"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b3-l045",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Modal passive. Choose the correct form: this freedom can easily ___",
+          "sourceGrammarPoint": "Modal passive",
+          "instructionZh": "选择正确的形式，填入空格：this freedom can easily ___",
+          "grammarPointZh": "含情态动词的被动语态"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Make a yes/no question: Stories about people often attract far more public attention than political events.",
+          "sourceGrammarPoint": "Question formation",
+          "instructionZh": "将下面的句子改为一般疑问句：Stories about people often attract far more public attention than political events.",
+          "grammarPointZh": "一般疑问句的构成"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b3-l046",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Inversion after so + adjective. Choose the correct form: So great ___ our passion for doing things for ourselves",
+          "sourceGrammarPoint": "Inversion after so + adjective",
+          "instructionZh": "选择正确的形式，填入空格：So great ___ our passion for doing things for ourselves",
+          "grammarPointZh": "so＋形容词位于句首的倒装"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Expand the participle phrase using \"who are\": newlyweds armed with the right tools and materials. Write the whole noun phrase.",
+          "sourceGrammarPoint": "Past participle modifier",
+          "instructionZh": "用 who are 将分词短语展开为定语从句，写出整个名词短语：newlyweds armed with the right tools and materials.",
+          "grammarPointZh": "过去分词作定语"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b3-l047",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Gerund after keep. Choose the correct form: We keep ___ all four methods",
+          "sourceGrammarPoint": "Gerund after keep",
+          "instructionZh": "选择正确的形式，填入空格：We keep ___ all four methods",
+          "grammarPointZh": "keep 后的动词形式"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Complete with the correct form of \"pollute\": the problem of ___ our planet Write exactly 1 word.",
+          "sourceGrammarPoint": "Gerund after a preposition",
+          "instructionZh": "用 pollute 的适当形式填空，只填 1 个词：the problem of ___ our planet",
+          "grammarPointZh": "介词后接动名词（-ing 形式）"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b3-l048",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Not only ... but also. Choose the correct form: ___ from foreign tourists, but even from their own countrymen",
+          "sourceGrammarPoint": "Not only ... but also",
+          "instructionZh": "选择正确的形式，填入空格：___ from foreign tourists, but even from their own countrymen",
+          "grammarPointZh": "并列递进结构"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Reduce the relative clause by omitting \"which are\": places which are inaccessible to tourists.",
+          "sourceGrammarPoint": "Reduced adjectival relative clause",
+          "instructionZh": "省略 which are，将定语从句简化：places which are inaccessible to tourists.",
+          "grammarPointZh": "定语从句的简化"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b3-l049",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Second conditional. Choose the correct form: If she ___ alive today she would not be able to air her views",
+          "sourceGrammarPoint": "Second conditional",
+          "instructionZh": "选择正确的形式，填入空格：If she ___ alive today she would not be able to air her views",
+          "grammarPointZh": "第二条件句（对现在或将来的假设）"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Change to active. Begin with \"People\": Servants were employed to do housework.",
+          "sourceGrammarPoint": "Active and passive",
+          "instructionZh": "改为主动语态，以 People 开头：Servants were employed to do housework.",
+          "grammarPointZh": "主动语态与被动语态转换"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b3-l050",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Infinitive complement. Choose the correct form: We resolve ___ up earlier each morning",
+          "sourceGrammarPoint": "Infinitive complement",
+          "instructionZh": "选择正确的形式，填入空格：We resolve ___ up earlier each morning",
+          "grammarPointZh": "动词或形容词后的不定式结构"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Make a yes/no question: The New Year is a time for resolutions.",
+          "sourceGrammarPoint": "Question formation",
+          "instructionZh": "将下面的句子改为一般疑问句：The New Year is a time for resolutions.",
+          "grammarPointZh": "一般疑问句的构成"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b3-l051",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Modal perfect. Choose the correct form: Who ___",
+          "sourceGrammarPoint": "Modal perfect",
+          "instructionZh": "选择正确的形式，填入空格：Who ___",
+          "grammarPointZh": "情态动词与完成式"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Rewrite using \"it\" as a formal subject and an infinitive: Predicting the future is notoriously difficult.",
+          "sourceGrammarPoint": "Dummy it",
+          "instructionZh": "用 it 作形式主语，并使用不定式结构改写：Predicting the future is notoriously difficult.",
+          "grammarPointZh": "it 作形式主语或形式宾语"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b3-l052",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Second conditional. Choose the correct form: If you were to ask Harry what was in the bottle, he ___ you",
+          "sourceGrammarPoint": "Second conditional",
+          "instructionZh": "选择正确的形式，填入空格：If you were to ask Harry what was in the bottle, he ___ you",
+          "grammarPointZh": "第二条件句（对现在或将来的假设）"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Correct the grammatical error. Rewrite the whole sentence or phrase: It is fill with what looks like a thick, greyish substance.",
+          "sourceGrammarPoint": "Present simple passive",
+          "instructionZh": "改正句中的语法错误，写出完整句子：It is fill with what looks like a thick, greyish substance.",
+          "grammarPointZh": "一般现在时的被动语态"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b3-l053",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Gerund after a preposition. Choose the correct form: system for ___ the individual citizen",
+          "sourceGrammarPoint": "Gerund after a preposition",
+          "instructionZh": "选择正确的形式，填入空格：system for ___ the individual citizen",
+          "grammarPointZh": "介词后接动名词（-ing 形式）"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Change to active. Begin with \"Other countries\": It has been adopted in other countries too.",
+          "sourceGrammarPoint": "Active and passive",
+          "instructionZh": "改为主动语态，以 Other countries 开头：It has been adopted in other countries too.",
+          "grammarPointZh": "主动语态与被动语态转换"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b3-l054",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Present perfect passive. Choose the correct form: We ___ up to fear insects.",
+          "sourceGrammarPoint": "Present perfect passive",
+          "instructionZh": "选择正确的形式，填入空格：We ___ up to fear insects.",
+          "grammarPointZh": "现在完成时的被动语态"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Complete with the correct preposition: We regard them ___ unnecessary creatures. Write exactly 1 word.",
+          "sourceGrammarPoint": "Preposition choice",
+          "instructionZh": "填入正确的介词，只填 1 个词：We regard them ___ unnecessary creatures.",
+          "grammarPointZh": "介词的选择"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b3-l055",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Gerund subject. Choose the correct form: Finding planets ___ proving hard enough",
+          "sourceGrammarPoint": "Gerund subject",
+          "instructionZh": "选择正确的形式，填入空格：Finding planets ___ proving hard enough",
+          "grammarPointZh": "动名词（-ing 形式）作主语"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Rewrite using \"it\" as a formal object: Recent developments have made detecting planets possible.",
+          "sourceGrammarPoint": "Dummy it",
+          "instructionZh": "用 it 作形式宾语改写下面的句子：Recent developments have made detecting planets possible.",
+          "grammarPointZh": "it 作形式主语或形式宾语"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b3-l056",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Modal bare infinitive. Choose the correct form: Without it we could not ___ a living.",
+          "sourceGrammarPoint": "Modal bare infinitive",
+          "instructionZh": "选择正确的形式，填入空格：Without it we could not ___ a living.",
+          "grammarPointZh": "情态动词后接动词原形"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Combine using \"which\". Begin with \"The river which forms the boundary\": The river forms the boundary. It plays an important part in our lives.",
+          "sourceGrammarPoint": "Relative subject",
+          "instructionZh": "用 which 将两句合并，以 The river which forms the boundary 开头：The river forms the boundary. It plays an important part in our lives.",
+          "grammarPointZh": "定语从句：关系代词作主语"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b3-l057",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Bare infinitive after let. Choose the correct form: I stopped to let the car ___ off",
+          "sourceGrammarPoint": "Bare infinitive after let",
+          "instructionZh": "选择正确的形式，填入空格：I stopped to let the car ___ off",
+          "grammarPointZh": "let 后接动词原形"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Use the past perfect of \"expect\": I ___ to be near my objective by now. Write exactly 2 words.",
+          "sourceGrammarPoint": "Past perfect",
+          "instructionZh": "用 expect 的过去完成时填空，只填 2 个词：I ___ to be near my objective by now.",
+          "grammarPointZh": "过去完成时"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b3-l058",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Relative place. Choose the correct form: ___ she lived",
+          "sourceGrammarPoint": "Relative place",
+          "instructionZh": "选择正确的形式，填入空格：___ she lived",
+          "grammarPointZh": "定语从句：表示地点的关系词"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Reduce the time clause to a phrase with a gerund: before she went out. Use \"before\" followed immediately by a gerund.",
+          "sourceGrammarPoint": "Gerund after a preposition",
+          "instructionZh": "将时间状语从句简化为动名词短语，保留 before，并在其后直接使用动名词：before she went out.",
+          "grammarPointZh": "介词后接动名词（-ing 形式）"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b3-l059",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Gerund after a preposition. Choose the correct form: without ___ aware of doing so",
+          "sourceGrammarPoint": "Gerund after a preposition",
+          "instructionZh": "选择正确的形式，填入空格：without ___ aware of doing so",
+          "grammarPointZh": "介词后接动名词（-ing 形式）"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Make this statement passive. Begin with \"Unwanted objects\" and omit the agent: They leave unwanted objects in drawers, cupboards and attics for years.",
+          "sourceGrammarPoint": "Present simple passive",
+          "instructionZh": "改为被动语态，以 Unwanted objects 开头，并省略动作执行者：They leave unwanted objects in drawers, cupboards and attics for years.",
+          "grammarPointZh": "一般现在时的被动语态"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b3-l060",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Inversion. Choose the correct form: Only in a sparsely-populated rural community ___ possible to disregard it.",
+          "sourceGrammarPoint": "Inversion",
+          "instructionZh": "选择正确的形式，填入空格：Only in a sparsely-populated rural community ___ possible to disregard it.",
+          "grammarPointZh": "倒装语序"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Correct the grammatical error. Rewrite the whole sentence or phrase: Correct the passive form: Nothing could ever be bring to a conclusion.",
+          "sourceGrammarPoint": "Modal passive",
+          "instructionZh": "改正被动语态中的语法错误，写出完整句子：Nothing could ever be bring to a conclusion.",
+          "grammarPointZh": "含情态动词的被动语态"
+        }
+      ]
+    }
+  ]
+}

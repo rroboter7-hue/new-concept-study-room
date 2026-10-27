@@ -324,11 +324,11 @@
     },
     {
       "file": "lesson-recall-catalogue.js",
-      "sha256": "f789de74c2dcae71ba4839ee1450283d3036ef8e98889969ddc086c5be7ccf90"
+      "sha256": "acca2b541e35ef24d18190913ed4689074f7fd963dbbe39951b74bf28e906ce1"
     },
     {
       "file": "lesson-recall.js",
-      "sha256": "4389a5ed1bfbdbbd13935a9ffe2c6398ddd0d6a038448d5ff267d664ecb5d676"
+      "sha256": "56e1e5993c169e8c253b3aa4bd2a1b33734cfbaee817625e984a7725fcfb98bb"
     },
     {
       "file": "dictionary-context.js",
@@ -4142,7 +4142,7 @@
   ],
   "artifact": {
     "file": "lesson-word-targets.js",
-    "sha256": "c605828e45b664a52692ebd0106393a272e53f34a5b6c89adc022d26f2c85e76",
+    "sha256": "47003d794ddf17bcff5d505e10004a8ad8f0c663e2ca70ed5a9edfe4ff11e7da",
     "bytes": 2645672,
     "hashEncoding": "utf8-lf"
   },
