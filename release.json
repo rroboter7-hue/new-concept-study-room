@@ -1,6 +1,6 @@
 {
-  "build": "2026-10-27-book2-word-audio-quality",
-  "preparedAt": "2026-10-27T03:44:48.223Z",
+  "build": "2026-10-27-book2-usage-sources",
+  "preparedAt": "2026-10-27T04:11:51.006Z",
   "book2": {
     "book": 2,
     "total": 96,
@@ -171,10 +171,27 @@
       "deviceSpeechVoiceRequired": false,
       "heteronymsAllContextReviewed": false
     },
-    "genericDictionarySensesClearlySeparated": true
+    "genericDictionarySensesClearlySeparated": true,
+    "reviewedUsageSources": {
+      "book": 2,
+      "totalSourceEntries": 448,
+      "activeEntries": 443,
+      "archivedFieldErrors": 6,
+      "first20SourceEntriesTextuallyReviewed": 182,
+      "first20ActiveEntries": 177,
+      "legalFirst20NotesEntriesPreserved": 102,
+      "independentlyVisuallyReviewedFieldRepairs": 6,
+      "independentClassificationSamples": 11,
+      "other76Lessons": "metadata-only-not-individually-reviewed",
+      "allExamplesIndependentlyVisuallyReviewed": false,
+      "expressionAndExampleProvenanceSeparate": true,
+      "sourceAndValueDriftRejectApproval": true,
+      "editedContentPreservedOnRevocation": true,
+      "editorialNoticeAcrossAllPracticeModes": true
+    }
   },
-  "staticFiles": 4052,
-  "staticBytes": 731029694,
+  "staticFiles": 4053,
+  "staticBytes": 732299889,
   "nativeearsAdvancedAudio": {
     "books": {
       "3": 60,
