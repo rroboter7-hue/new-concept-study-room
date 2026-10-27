@@ -1,5 +1,5 @@
 {
-  "build": "2026-10-27-memory-optimized",
+  "build": "2026-10-27-grammar-recall",
   "preparedAt": "2026-10-27T03:19:37.429Z",
   "book2": {
     "book": 2,
@@ -395,9 +395,21 @@
     "choice": 276,
     "short": 276,
     "source": "self-authored-with-exact-passage-evidence",
-    "grading": "exact-closed-fact-aliases-and-specific-misconceptions",
+    "grading": "explicit-grammar-form-aliases-and-specific-misconceptions",
     "unmatchedParaphrases": "needs-check",
-    "savedIndependently": true
+    "savedIndependently": true,
+    "scope": "grammar",
+    "questionLanguage": "en",
+    "answerLanguage": "en",
+    "formats": [
+      "gap-fill",
+      "transformation",
+      "correction",
+      "word-order",
+      "form-choice"
+    ],
+    "chineseSupport": "post-answer-rule-explanations",
+    "storyComprehensionRemoved": true
   },
   "performance": {
     "lazyTextLibrary": true,
