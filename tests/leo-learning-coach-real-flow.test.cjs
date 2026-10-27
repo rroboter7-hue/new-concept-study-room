@@ -4,7 +4,7 @@ const {harness}=require('./leo-coach-harness.cjs');
 test('real sentence inputs submit once through app callback into the bound daily task',async()=>{
  const h=await harness({pilot:false,realCoach:true,realOutput:true}),task=h.api.coach.plan.tasks.find(t=>t.type==='sentences');await h.api.coach.begin(task.id);
  assert.equal(task.mode,'four');const answers=['We had a private conversation yesterday.','We did not have a private conversation yesterday.','Did we have a private conversation yesterday?','When did we have a private conversation?'];
- for(let i=0;i<4;i++){await h.click('[data-sentence-step="'+i+'"]');await h.input('.sentence-textarea',answers[i]);}
+ const kinds=['affirmative','negative','yesno','wh'];for(let i=0;i<4;i++)await h.input('[data-sentence-input="answer"][data-sentence-kind="'+kinds[i]+'"]',answers[i]);
  await h.click('[data-sentence-action="check"]');const status=h.c.StudyCoach.taskStatus(h.api.data.coach,task);assert(status.done);assert.equal(status.assisted,false);assert.equal(status.evidence.length,1);assert.equal(status.evidence[0].lessonId,h.api.current.id);assert(h.stored.coach.events.length);assert.equal(h.api.data.records[task.lessonId]?.attempts,undefined);
 });
 test('real retell form records assisted output independently of formal quiz marks',async()=>{
