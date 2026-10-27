@@ -36,6 +36,83 @@
     return value && typeof value.id === 'string' && ID.test(value.id) && Number.isInteger(value.book) && value.book > 0 && value.book <= 4 && Number.isInteger(value.number) && value.number > 0 && value.number <= 10000;
   }
   function before(a, b) { return a.book < b.book || a.book === b.book && a.number < b.number; }
+  // The word bank is independent of site learning records: an earlier lesson may
+  // have been learned elsewhere. Read data properties only, never inherited rows.
+  function ownValue(value, field) {
+    if (!value || typeof value !== 'object' || Array.isArray(value)) return undefined;
+    var descriptor = Object.getOwnPropertyDescriptor(value, field);
+    return descriptor && own(descriptor, 'value') ? descriptor.value : undefined;
+  }
+  function bankLesson(value) {
+    return validLesson({ id: ownValue(value, 'id'), book: ownValue(value, 'book'), number: ownValue(value, 'number') });
+  }
+  function bankMeaning(item) {
+    var meaning = text(ownValue(item, 'meaning'), 1200).trim();
+    if (ownValue(item, 'needsContextReview') === true || !/[\u3400-\u9fff]/.test(meaning)) return '';
+    if (/未附|未提供|暂无|待(?:补|填|译|核|校|确认|整理|审)|缺少|缺失|占位|怎么找|[?？]/.test(meaning)) return '';
+    if (/^(?:句子|短语|词组|例句|用法|习惯表达|的用法\s*[:：]?)$/.test(meaning)) return '';
+    return meaning;
+  }
+  function bankCategory(pos) {
+    var tokens = normalize(pos).match(/[a-z]+|[\u3400-\u9fff]+/g) || [];
+    // Multi-POS words use one stable card/key; explicit verb takes precedence.
+    if (tokens.some(function (token) { return ['v','vt','vi','verb','verbs','动词','及物动词','不及物动词','助动词'].includes(token); })) return 'verb';
+    if (tokens.some(function (token) { return ['adj','adjective','adjectives','形容词'].includes(token); })) return 'adjective';
+    return '';
+  }
+  function mergeBankMeanings(first, next) {
+    var seen = new Set(), meanings = [];
+    (first + '；' + next).split(/[;；]/).forEach(function (part) {
+      part = part.trim();
+      var key = normalize(part);
+      if (key && !seen.has(key)) { seen.add(key); meanings.push(part); }
+    });
+    return meanings.join('；').slice(0, 1200);
+  }
+  function wordBank(options) {
+    options = object(options);
+    var current = ownValue(options, 'currentLesson'), supplied = ownValue(options, 'lessons');
+    if (!bankLesson(current) || !Array.isArray(supplied)) return [];
+    var seenLessons = new Set(), entries = new Map(), result = [];
+    var earlier = supplied.filter(function (lesson) { return bankLesson(lesson) && lesson.id !== current.id && before(lesson, current); })
+      .slice().sort(function (a, b) { return a.book - b.book || a.number - b.number || a.id.localeCompare(b.id); });
+    var getVocabulary = ownValue(options, 'getVocabulary'), getUsage = ownValue(options, 'getUsage');
+    function add(item, lesson, category, field) {
+      var label = text(ownValue(item, field), 160).trim(), normalized = normalize(label), meaning = bankMeaning(item);
+      if (!category || !normalized || !meaning) return;
+      var rawKey = itemKey(field === 'word' ? 'word' : 'phrase', lesson.id, normalized), groupKey = category + ':' + normalized;
+      var entry = entries.get(groupKey);
+      if (!entry) {
+        var origin = { id: lesson.id, book: lesson.book, number: lesson.number, title: text(ownValue(lesson, 'title'), 300) };
+        entry = { key: rawKey, category: category, label: label, meaning: meaning, pos: field === 'word' ? text(ownValue(item, 'pos'), 120).trim() : '', source: origin, sources: [], aliases: [] };
+        entry[field] = label;
+        entries.set(groupKey, entry); result.push(entry);
+      } else entry.meaning = mergeBankMeanings(entry.meaning, meaning);
+      if (!entry.sources.some(function (origin) { return origin.id === lesson.id; })) {
+        entry.sources.push({ id: lesson.id, book: lesson.book, number: lesson.number, title: text(ownValue(lesson, 'title'), 300) });
+      }
+      if (!entry.aliases.includes(rawKey)) entry.aliases.push(rawKey);
+    }
+    earlier.forEach(function (lesson) {
+      if (seenLessons.has(lesson.id)) return;
+      seenLessons.add(lesson.id);
+      var vocabulary = ownValue(lesson, 'vocabulary'), usage = ownValue(lesson, 'usage');
+      if (typeof getVocabulary === 'function') {
+        try { var provided = getVocabulary(lesson); if (Array.isArray(provided)) vocabulary = provided; } catch (_) { /* Keep the original lesson vocabulary if a lookup is unavailable. */ }
+      }
+      if (typeof getUsage === 'function') {
+        try { var providedUsage = getUsage(lesson); if (Array.isArray(providedUsage)) usage = providedUsage; } catch (_) { /* Keep the original lesson usage if a lookup is unavailable. */ }
+      }
+      var wordRows = (Array.isArray(vocabulary) ? vocabulary : []).map(function (item) {
+        return { item: item, category: bankCategory(ownValue(item, 'pos')), expression: normalize(text(ownValue(item, 'word'), 160).trim()) };
+      }).filter(function (row) { return row.category && row.expression && bankMeaning(row.item); });
+      var categories = new Map();
+      wordRows.forEach(function (row) { if (!categories.has(row.expression) || row.category === 'verb') categories.set(row.expression, row.category); });
+      wordRows.forEach(function (row) { if (categories.get(row.expression) === row.category) add(row.item, lesson, row.category, 'word'); });
+      (Array.isArray(usage) ? usage : []).forEach(function (item) { add(item, lesson, 'phrase', 'phrase'); });
+    });
+    return result;
+  }
   function context(options) {
     options = object(options);
     var empty = { targets: [], oldWords: [], oldPhrases: [], earlierLessons: [] };
@@ -80,8 +157,10 @@
     var answers = object(value.answers), result = {};
     KINDS.forEach(function (kind) { result[kind] = text(answers[kind], 400); });
     var ids = (Array.isArray(value.sourceLessonIds) ? value.sourceLessonIds : []).filter(function (id) { return typeof id === 'string' && ID.test(id); });
+    var selected = own(value, 'selectedOldKeys') ? ownValue(value, 'selectedOldKeys') : [ownValue(value, 'oldWordKey'), ownValue(value, 'oldPhraseKey')];
+    var selectedOldKeys = Array.from(new Set((Array.isArray(selected) ? selected : []).map(function (key) { return text(key, 600).trim(); }).filter(Boolean))).slice(0, 100);
     return { step: Number.isFinite(value.step) ? Math.max(0, Math.min(4, Math.floor(value.step))) : 0,
-      targetKey: text(value.targetKey, 600), sourceLessonIds: Array.from(new Set(ids)).slice(0, 200), oldWordKey: text(value.oldWordKey, 600), oldPhraseKey: text(value.oldPhraseKey, 600), answers: result,
+      targetKey: text(value.targetKey, 600), sourceLessonIds: Array.from(new Set(ids)).slice(0, 200), oldWordKey: text(value.oldWordKey, 600), oldPhraseKey: text(value.oldPhraseKey, 600), selectedOldKeys: selectedOldKeys, answers: result,
       mode:value.mode==='flexible'?'flexible':'transform',roundKey:validRoundKey(value.roundKey)?value.roundKey:'',assisted:value.assisted===true,evidenceTargetKey:text(value.evidenceTargetKey,600),
       checkedAt: typeof value.checkedAt === 'number' && Number.isFinite(value.checkedAt) && value.checkedAt >= 0 && value.checkedAt <= 8640000000000000 ? Math.floor(value.checkedAt) : 0 };
   }
@@ -287,5 +366,5 @@
     return { rows: rows, writtenCount: writtenCount, readyForReview: writtenCount === 5 && rows.every(function (row) { return row.status !== 'needs-work'; }), rulesOnly: true };
   }
 
-  return Object.freeze({ KINDS: KINDS, context: context, sanitizeDraft: sanitizeDraft, draftKey: draftKey, modeDraftKey:modeDraftKey,roundDraftKey:roundDraftKey,validRoundKey:validRoundKey,completion:completion,matchesExpression: matchesExpression, check: check });
+  return Object.freeze({ KINDS: KINDS, context: context, wordBank: wordBank, sanitizeDraft: sanitizeDraft, draftKey: draftKey, modeDraftKey:modeDraftKey,roundDraftKey:roundDraftKey,validRoundKey:validRoundKey,completion:completion,matchesExpression: matchesExpression, check: check });
 });

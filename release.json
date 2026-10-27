@@ -1,6 +1,6 @@
 {
   "build": "2026-10-27-bilingual-v2",
-  "preparedAt": "2026-10-27T02:01:42.981947+00:00",
+  "preparedAt": "2026-10-27T02:04:48.200660+00:00",
   "book2": {
     "book": 2,
     "total": 96,
@@ -111,8 +111,8 @@
     "retellLegacyNotesOutlinesLabelled": true,
     "unsubmittedLegacyRetellDraftPersistence": false
   },
-  "staticFiles": 2683,
-  "staticBytes": 929061496,
+  "staticFiles": 2721,
+  "staticBytes": 932839730,
   "nativeearsAdvancedAudio": {
     "books": {
       "3": 60,
@@ -280,7 +280,7 @@
     "palette": "cream-and-forest-green",
     "threePrimaryModes": true,
     "inlineOriginalAudioPlayer": true,
-    "guidedKnowledgeTimeline": true,
+    "guidedKnowledgeTimeline": false,
     "focusedBulkEditor": true,
     "manualDoubaoCopy": true,
     "responsiveBrowserWidths": [
@@ -317,5 +317,24 @@
     "inlineOldWordList": false,
     "knowledgeDefault": "collapsed",
     "recallUsesExistingRetell": true
+  },
+  "sentenceWordPicker": {
+    "design": "selected-option-2",
+    "categories": [
+      "verb",
+      "adjective",
+      "phrase"
+    ],
+    "priorCourseRange": true,
+    "freeMultiSelect": true,
+    "deduplicatedExpressions": true,
+    "sharedSearch": true,
+    "pronunciation": true,
+    "legacyDraftMigration": true,
+    "persistentSelections": true,
+    "sourceLabelsHidden": true,
+    "nativeModal": true,
+    "grammarChecksRemainFinite": true,
+    "reviewedSourceCorrections": 7
   }
 }

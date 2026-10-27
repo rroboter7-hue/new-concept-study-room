@@ -39,7 +39,7 @@
     "inputs": [
       {
         "file": "index.html",
-        "sha256": "36fcc02e52ce15830bf9aaf50dfa845a6074bcd2923aecd0dcd9a428f6f028e9"
+        "sha256": "6e606b85df2998aa5eb7e3e76eab159088589f532e27f337e65a1daca9a2e2e5"
       },
       {
         "file": "curriculum.js",
@@ -218,12 +218,16 @@
         "sha256": "bf733b3ad33131df66f4dc7d9a11e6d242a286c091cea23d45b58e34e60dc6e9"
       },
       {
+        "file": "sentence-wordbank-data.js",
+        "sha256": "38295c8cca336efda43c33ccf6b20f1d2abcd320652d9d3819baab3fa0389d1c"
+      },
+      {
         "file": "sentence-core.js",
-        "sha256": "728db9b9dfb3815f5e9c409870c1d427a07d48931aa5e73c5bc53e33f3119ce9"
+        "sha256": "e2ddebe80f81efae10012a5a91e10e0c6f95de4e414e635d95407dd37805e79a"
       },
       {
         "file": "sentence-practice.js",
-        "sha256": "fa428de891eda80824e0eae3b988d450a5cc4af93b7b2b46aa34285542615421"
+        "sha256": "e3c6b86b53c57bc6936ccc871829106396faf04d20d397517bc5bcf0c3e8d1c5"
       },
       {
         "file": "dictionary-service.js",

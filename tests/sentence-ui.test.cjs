@@ -8,7 +8,7 @@ const rootPath = path.resolve(__dirname, '..');
 const uiPath = path.join(rootPath, 'sentence-practice.js');
 const corePath = path.join(rootPath, 'sentence-core.js');
 const lessons = [
-  { id: 'old', book: 1, number: 1, title: 'Family', vocabulary: [{word:'sister',meaning:'姐妹'}], usage:[{phrase:'look at',meaning:'看'}] },
+  { id: 'old', book: 1, number: 1, title: 'Family', vocabulary: [{word:'friendly',pos:'adj.',meaning:'友好的'}], usage:[{phrase:'look at',meaning:'看'}] },
   { id: 'now', book: 1, number: 2, title: 'Books', vocabulary: [{word:'book',meaning:'书'},{word:'pen',meaning:'钢笔'}], usage:[] },
   { id: 'future', book: 1, number: 3, title: 'Tomorrow', vocabulary: [{word:'future',meaning:'将来'}], usage:[{phrase:'go to',meaning:'去'}] }
 ];
@@ -36,26 +36,37 @@ function setup({records = {}, drafts = {}, failure = false, grammarCheck, lesson
   return {ui,render,event,change,input,click,drafts,records,notices,context,timers,setLesson:l=>{current=l;},setFailure:v=>{fail=v;},runTimers:()=>{const callbacks=[...timers.values()];timers.clear();callbacks.forEach(fn=>fn());}};
 }
 
-test('shows one editable sentence with all five accessible steps and explicit earlier-source choices',()=>{
+const selected = h => Array.from(h.ui.selectedOldItems(), item => item.label).sort();
+function choose(h, labels) {
+  const keys=labels.map(label=>{const item=h.ui.wordBank().find(item=>item.label===label);assert.ok(item,`${label} should be available from earlier lessons`);return item.key;});
+  h.ui.setOldSelection(keys);
+}
+
+test('shows one editable sentence with five accessible steps and a focused old-word drawer',()=>{
   const h=setup(), html=h.render();
   assert.equal((html.match(/<textarea\b/g)||[]).length,1);
   assert.equal((html.match(/data-sentence-action="step"/g)||[]).length,5);
   assert.match(html,/maxlength="400"/);
-  assert.match(html,/第 1 册.*第 1 课/);
-  assert.match(html,/以前学过/);
+  assert.match(html,/data-sentence-select="target"/);
+  assert.match(html,/data-sentence-action="open-word-picker"/);
+  assert.match(html,/<dialog[^>]*aria-labelledby=/);
+  assert.match(html,/data-sentence-input="word-search"/);
+  assert.doesNotMatch(html,/data-sentence-source=|data-sentence-select="old-(?:word|phrase)"|sentence-knowledge-source/);
   assert.doesNotMatch(html,/<option[^>]*>[^<]*future/);
   assert.doesNotMatch(html,/100%|自动掌握/);
 });
 
-test('manual earlier source makes its old word and phrase available without changing course completion',()=>{
+test('earlier vocabulary is selectable without site records and does not change course completion',()=>{
   const h=setup();h.render();
-  h.event('change',{sentenceSource:'old'},'old',true,true);
-  const html=h.render();
-  assert.match(html,/<option[^>]*value="word:old:sister"/);
-  assert.match(html,/<option[^>]*value="phrase:old:look%20at"/);
+  for(const label of ['friendly','look at']) {
+    const item=h.ui.wordBank().find(item=>item.label===label);assert.ok(item);
+    h.event('change',{sentenceOldKey:item.key},item.key,true,true);
+  }
+  assert.deepEqual(selected(h),['friendly','look at']);
   h.ui.flush();
   assert.deepEqual(h.records,{});
-  assert.deepEqual(Object.values(h.drafts)[0].sourceLessonIds,['old']);
+  assert.deepEqual(Object.values(h.drafts)[0].sourceLessonIds,[]);
+  assert.equal(h.ui.active.draft.assisted,false);
 });
 
 test('keeps different targets and lessons isolated while preserving the current step',()=>{
@@ -94,22 +105,22 @@ test('reports failed persistence honestly and retains unsaved text across target
   assert.ok(Object.values(h.drafts).some(d=>d.answers.affirmative==='I keep this book.'));
 });
 
-test('restores explicit source and old selections from a saved per-target draft',()=>{
-  const h=setup();h.render();h.event('change',{sentenceSource:'old'},'old',true,true);
-  h.change('old-word','word:old:sister');h.change('old-phrase','phrase:old:look%20at');h.click('step',4);
-  h.input('My sister and I look at the book.');h.ui.flush();
+test('restores multiple old selections with a saved per-target writing draft',()=>{
+  const h=setup();h.render();choose(h,['friendly','look at']);h.click('step',4);
+  h.input('My friendly sister and I look at the book.');h.ui.flush();
   const restored=setup({drafts:JSON.parse(JSON.stringify(h.drafts))});
   const html=restored.render();
-  assert.match(html,/>My sister and I look at the book\.<\/textarea>/);
-  assert.match(html,/value="word:old:sister" selected/);
-  assert.match(html,/value="phrase:old:look%20at" selected/);
-  assert.match(html,/data-sentence-source="old"[^>]*checked/);
+  assert.match(html,/>My friendly sister and I look at the book\.<\/textarea>/);
+  assert.deepEqual(selected(restored),['friendly','look at']);
+  assert.equal(restored.ui.active.draft.step,4);
+  assert.match(html,/data-sentence-action="remove-old"[^>]*aria-label="移除 friendly/);
+  assert.match(html,/data-sentence-action="remove-old"[^>]*aria-label="移除 look at/);
 });
 
 test('checks local requirements without grading mastery and escapes rule feedback',()=>{
   const h=setup({records:{old:{attempts:1}},grammarCheck:()=>[{message:'Inspect <b>this</b>',original:'book',replacement:'book'}]});h.render();
-  h.change('old-word','word:old:sister');h.change('old-phrase','phrase:old:look%20at');
-  ['You look at the book.','You do not look at the book.','Do you look at the book?','Why do you look at the book?','My sister and I look at the book.'].forEach((answer,i)=>{h.click('step',i);h.input(answer);});
+  choose(h,['friendly','look at']);
+  ['You look at the book.','You do not look at the book.','Do you look at the book?','Why do you look at the book?','My friendly sister and I look at the book.'].forEach((answer,i)=>{h.click('step',i);h.input(answer);});
   h.click('check');const html=h.render();
   assert.match(html,/sentence-feedback-row/);
   assert.match(html,/Inspect &lt;b&gt;this&lt;\/b&gt;/);
@@ -125,45 +136,50 @@ test('ignores delegated events that originate outside its own root',()=>{
   assert.doesNotMatch(h.render(),/Outside input/);
 });
 
-test('keeps malformed and inherited history manually selectable rather than treating it as learned',()=>{
+test('malformed and inherited history neither blocks earlier choices nor treats them as learned targets',()=>{
   for (const records of [{old:{completed:'true',attempts:'2'}}, Object.create({old:{completed:true}})]) {
+    const originalRecords=JSON.stringify(records),ownedOld=Object.hasOwn(records,'old');
     const h=setup({records}), html=h.render();
-    const checkbox=html.match(/<input[^>]*data-sentence-source="old"[^>]*>/)[0];
-    assert.doesNotMatch(checkbox,/disabled|checked/);
-    h.event('change',{sentenceSource:'old'},'old',true,true);
-    assert.match(h.render(),/<option[^>]*value="phrase:old:look%20at"/);
+    assert.doesNotMatch(html,/<option[^>]*value="(?:word|phrase):old:/);
+    assert.deepEqual(selected(h),[]);
+    choose(h,['friendly','look at']);h.ui.flush();
+    assert.deepEqual(selected(h),['friendly','look at']);
+    assert.deepEqual(Object.values(h.drafts)[0].sourceLessonIds,[]);
+    assert.equal(JSON.stringify(h.records),originalRecords);
+    assert.equal(Object.hasOwn(h.records,'old'),ownedOld);
   }
 });
 
-test('does not offer an inflected form of the target as the different old word',()=>{
+test('a freely selected inflected target cannot satisfy the different-old-word transform requirement',()=>{
   const lessonSet=JSON.parse(JSON.stringify(lessons));
-  lessonSet[0].vocabulary.push({word:'books',meaning:'书的复数'});
-  const h=setup({records:{old:{completed:true}},lessonSet}), html=h.render();
-  const oldSelect=html.match(/<select[^>]*data-sentence-select="old-word"[\s\S]*?<\/select>/)[0];
-  assert.doesNotMatch(oldSelect,/word:old:books/);
-  assert.match(oldSelect,/word:old:sister/);
+  lessonSet[0].vocabulary.push({word:'books',pos:'v.',meaning:'预订'});
+  const h=setup({lessonSet});h.render();choose(h,['books','friendly','look at']);
+  assert.deepEqual(selected(h),['books','friendly','look at']);
+  assert.equal(h.ui.oldWord().word,'friendly');
+  assert.equal(h.ui.oldPhrase().phrase,'look at');
 });
 
-test('reload restores the last selected target with its step, sources and old selections',()=>{
-  const h=setup();h.render();h.event('change',{sentenceSource:'old'},'old',true,true);
-  h.change('target','word:now:pen');h.change('old-word','word:old:sister');h.change('old-phrase','phrase:old:look%20at');h.click('step',4);
-  h.input('My sister and I look at the pen.');h.ui.flush();
+test('reload restores the last selected target with its step and multiple old selections',()=>{
+  const h=setup();h.render();
+  h.change('target','word:now:pen');choose(h,['friendly','look at']);h.click('step',4);
+  h.input('My friendly sister and I look at the pen.');h.ui.flush();
   const restored=setup({drafts:JSON.parse(JSON.stringify(h.drafts))}), html=restored.render();
   assert.match(html,/<option value="word:now:pen" selected>/);
-  assert.match(html,/>My sister and I look at the pen\.<\/textarea>/);
-  assert.match(html,/value="word:old:sister" selected/);
-  assert.match(html,/value="phrase:old:look%20at" selected/);
-  assert.match(html,/data-sentence-source="old"[^>]*checked/);
+  assert.match(html,/>My friendly sister and I look at the pen\.<\/textarea>/);
+  assert.equal(restored.ui.active.draft.step,4);
+  assert.deepEqual(selected(restored),['friendly','look at']);
 });
 
-test('a lesson without current vocabulary can select an earlier source and restore its old target on reload',()=>{
+test('a lesson without current vocabulary restores an available learned target while an empty range stays explicit',()=>{
   const lessonSet=JSON.parse(JSON.stringify(lessons));lessonSet[1].vocabulary=[];
-  const h=setup({lessonSet});assert.doesNotMatch(h.render(),/<textarea/);
-  h.event('change',{sentenceSource:'old'},'old',true,true);
-  assert.match(h.render(),/<option value="word:old:sister" selected>/);
+  const empty=setup({lessonSet});assert.doesNotMatch(empty.render(),/<textarea/);assert.match(empty.render(),/暂无可用/);
+  const records={old:{completed:true}},h=setup({lessonSet,records});
+  assert.match(h.render(),/<option value="word:old:friendly" selected>/);
+  h.input('My friendly neighbour is here.');
   h.ui.flush();
-  const restored=setup({lessonSet,drafts:JSON.parse(JSON.stringify(h.drafts))});
-  assert.match(restored.render(),/<option value="word:old:sister" selected>/);
+  const restored=setup({lessonSet,records,drafts:JSON.parse(JSON.stringify(h.drafts))});
+  assert.match(restored.render(),/<option value="word:old:friendly" selected>/);
+  assert.match(restored.render(),/>My friendly neighbour is here\.<\/textarea>/);
 });
 
 test('reloading restored storage cancels stale pending drafts and displays the imported target and answers',()=>{
@@ -181,19 +197,21 @@ test('reloading restored storage cancels stale pending drafts and displays the i
   assert.equal(JSON.stringify(h.drafts).includes('Old unsaved book.'),false,'old in-memory input must not overwrite imported storage');
 });
 
-test('reenabling the only earlier source restores a stable editor when the lesson has no current vocabulary',()=>{
+test('clearing and reselecting old expressions never removes an available learned target or its draft',()=>{
   const lessonSet=JSON.parse(JSON.stringify(lessons));lessonSet[1].vocabulary=[];
-  const h=setup({lessonSet});h.render();
-  h.event('change',{sentenceSource:'old'},'old',true,true);h.input('My sister is here.');
-  h.event('change',{sentenceSource:'old'},'old',true,false);
-  assert.doesNotMatch(h.render(),/<textarea/);
-  h.event('change',{sentenceSource:'old'},'old',true,true);
+  const records={old:{completed:true}},h=setup({lessonSet,records});h.render();
+  choose(h,['look at']);h.input('My friendly sister is here.');h.click('clear-old');
+  assert.deepEqual(selected(h),[]);
+  assert.match(h.render(),/>My friendly sister is here\.<\/textarea>/);
+  choose(h,['look at']);
   for(let index=0;index<3;index++) {
     const html=h.render();
-    assert.match(html,/>My sister is here\.<\/textarea>/);
-    assert.match(html,/data-sentence-source="old"[^>]*checked/);
+    assert.match(html,/>My friendly sister is here\.<\/textarea>/);
+    assert.deepEqual(selected(h),['look at']);
+    assert.equal(h.ui.target().key,'word:old:friendly');
   }
   h.ui.flush();
-  const restored=setup({lessonSet,drafts:JSON.parse(JSON.stringify(h.drafts))});
-  assert.match(restored.render(),/>My sister is here\.<\/textarea>/);
+  const restored=setup({lessonSet,records,drafts:JSON.parse(JSON.stringify(h.drafts))});
+  assert.match(restored.render(),/>My friendly sister is here\.<\/textarea>/);
+  assert.deepEqual(selected(restored),['look at']);
 });
