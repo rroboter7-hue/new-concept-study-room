@@ -1,0 +1,4224 @@
+{
+  "version": 1,
+  "book": 1,
+  "lessons": [
+    {
+      "lessonId": "nce-b1-4be758-l001",
+      "book": 1,
+      "number": 1,
+      "title": "第1课 · Excuse me!",
+      "bodySha256": "fe78f1fcf2f3ae53f849aa7c442cbb33406c533e80a6918b85d15e644c21a9e5",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "双方在对话中反复确认的是哪件物品？",
+          "options": [
+            "手提包",
+            "外套",
+            "雨伞"
+          ],
+          "answer": 0,
+          "explanation": "对话两次问 Is this your handbag，谈的是手提包的归属。",
+          "wrongReasons": [
+            "",
+            "对话没有询问外套的归属，反复出现的是 handbag。",
+            "对话没有提到 umbrella，而是在确认 handbag。"
+          ],
+          "evidence": {
+            "paragraphIndex": 2,
+            "quote": "Is this your handbag?"
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "对方最终承认这个包是自己的吗？（填“是”或“否”，也可用英文）",
+          "answers": [
+            "yes",
+            "yes it is",
+            "是",
+            "是的",
+            "是自己的"
+          ],
+          "explanation": "对方回答 Yes, it is，随后道谢，确认了包的归属。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "no",
+                "no it is not",
+                "否",
+                "不是"
+              ],
+              "feedback": "这里不是否认包的归属；最后的回答是肯定的 Yes, it is。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 5,
+            "quote": "Yes, it is."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l003",
+      "book": 1,
+      "number": 3,
+      "title": "第3课 · Sorry, sir.",
+      "bodySha256": "0e82a107a70f7f8585d35e8e6bc3934f1057ffc3a1cff8259f1e012364cf94ce",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "顾客发现第一次拿到的物品有什么问题？",
+          "options": [
+            "外套不够暖",
+            "雨伞不是自己的",
+            "票上的号码看不清"
+          ],
+          "answer": 1,
+          "explanation": "顾客明确说 This is not my umbrella，服务员随后继续寻找。",
+          "wrongReasons": [
+            "顾客没有评价外套的保暖程度，只指出雨伞拿错了。",
+            "",
+            "顾客已出示票，服务员也读出了号码；问题是雨伞不对。"
+          ],
+          "evidence": {
+            "paragraphIndex": 4,
+            "quote": "This is not my umbrella."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "服务员读出的取物票号码是多少？（填数字或英文数词）",
+          "answers": [
+            "5",
+            "five",
+            "五",
+            "五号",
+            "5号",
+            "number five"
+          ],
+          "explanation": "服务员在道谢后说 Number five，票号是五。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "3",
+                "three",
+                "三",
+                "三号"
+              ],
+              "feedback": "票号是 five（五），不是 three（三）。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 2,
+            "quote": "Number five."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l005",
+      "book": 1,
+      "number": 5,
+      "title": "第5课 · Nice to meet you.",
+      "bodySha256": "6fa4087289f533cb82711d3839cd7314a18624641eb32779ef9bd48bc6ee77ca",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "Blake先生介绍Sophie时，说她是什么身份？",
+          "options": [
+            "一位新老师",
+            "一名办公室助理",
+            "一名新学生"
+          ],
+          "answer": 2,
+          "explanation": "介绍明确说 Sophie is a new student。",
+          "wrongReasons": [
+            "介绍中用的是 new student，并未说她是老师。",
+            "正文并未给Sophie安排办公室助理的职业。",
+            ""
+          ],
+          "evidence": {
+            "paragraphIndex": 2,
+            "quote": "Sophie is a new student."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "Sophie是哪国人？（填国家或国籍，可用中英文）",
+          "answers": [
+            "French",
+            "France",
+            "法国",
+            "法国人"
+          ],
+          "explanation": "正文在介绍Sophie后直接说 She is French。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "German",
+                "Germany",
+                "德国",
+                "德国人"
+              ],
+              "feedback": "German描述的是Hans，Sophie的国籍是French。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 2,
+            "quote": "She is French."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l007",
+      "book": 1,
+      "number": 7,
+      "title": "第7课 · Are you a teacher?",
+      "bodySha256": "b4a714a40ed9a0b1de8367ba956778f09b222429a7f137d94606463b12e98576",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "Robert在谈话中说明自己的职业是什么？",
+          "options": [
+            "键盘操作员",
+            "教师",
+            "工程师"
+          ],
+          "answer": 0,
+          "explanation": "Robert否认自己是教师，随后回答 I’m a keyboard operator。",
+          "wrongReasons": [
+            "",
+            "Robert在被问是不是教师时作了否定回答。",
+            "工程师是对方随后介绍的职业，Robert说自己是键盘操作员。"
+          ],
+          "evidence": {
+            "paragraphIndex": 11,
+            "quote": "I'm a keyboard operator."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "Robert是哪国人？（填国家或国籍，可用中英文）",
+          "answers": [
+            "Italian",
+            "Italy",
+            "意大利",
+            "意大利人"
+          ],
+          "explanation": "Robert在否认自己是法国人后，说自己是Italian。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "French",
+                "France",
+                "法国",
+                "法国人"
+              ],
+              "feedback": "Robert明确否认自己是法国人；法国人是Sophie。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 7,
+            "quote": "I'm Italian."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l009",
+      "book": 1,
+      "number": 9,
+      "title": "第9课 · How are you today?",
+      "bodySha256": "2d494950a979ca8db5748f79f8426919ae76bd55ca4336abb0704832406f91d8",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "关于Emma，谈话中给出的近况是怎样的？",
+          "options": [
+            "她正在生病",
+            "她也很好",
+            "她的情况完全没有被提及"
+          ],
+          "answer": 1,
+          "explanation": "回答说Emma也very well，即身体或近况很好。",
+          "wrongReasons": [
+            "回答是very well，没有说她生病。",
+            "",
+            "对话明确问了Emma，并回答她也很好。"
+          ],
+          "evidence": {
+            "paragraphIndex": 7,
+            "quote": "She's very well, too, Helen."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "Helen回应问候时叫出了哪个名字？（填英文人名或常用中文译名）",
+          "answers": [
+            "Steven",
+            "史蒂文",
+            "斯蒂文"
+          ],
+          "explanation": "对话开始先问候Helen，回应是 Hi, Steven。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "Tony",
+                "托尼"
+              ],
+              "feedback": "Tony是后来被问到近况的人，Helen当面问候的是Steven。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "Hi, Steven."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l011",
+      "book": 1,
+      "number": 11,
+      "title": "第11课 · Is this your shirt?",
+      "bodySha256": "4bbf33debe88fc7aeddfb1ffe64f1bc74db3c2b20787c2a8ad2a28525df15004",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "Dave说自己的衬衫是什么颜色？",
+          "options": [
+            "白色",
+            "绿色",
+            "蓝色"
+          ],
+          "answer": 2,
+          "explanation": "Dave拿自己的衬衫作对照，明确说 My shirt’s blue。",
+          "wrongReasons": [
+            "白色是Tim的衬衫颜色；Dave说自己的衬衫是蓝色。",
+            "正文没有把Dave的衬衫说成绿色。",
+            ""
+          ],
+          "evidence": {
+            "paragraphIndex": 3,
+            "quote": "My shirt’s blue."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "对白中，白色衬衫被认为可能属于谁？（填人名，可用中英文）",
+          "answers": [
+            "Tim",
+            "蒂姆",
+            "提姆"
+          ],
+          "explanation": "对白说Tim的衬衫是白色，并在后面由Tim确认归属。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "Dave",
+                "戴夫"
+              ],
+              "feedback": "Dave说自己的衬衫是蓝色，白色衬衫属于Tim。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 5,
+            "quote": "Perhaps it is, sir. Tim’s shirt’s white."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l013",
+      "book": 1,
+      "number": 13,
+      "title": "第13课 · A new dress",
+      "bodySha256": "f77c03f6c5bb64fd4bff249fd5d13c74e36c8a2c79970c212dc6c14e297e888a",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "说话者邀请对方上楼，主要是为了做什么？",
+          "options": [
+            "看她的新连衣裙",
+            "帮她买一顶帽子",
+            "替她整理卧室"
+          ],
+          "answer": 0,
+          "explanation": "在询问新连衣裙的颜色后，她邀请对方上楼看裙子。",
+          "wrongReasons": [
+            "",
+            "帽子已买好，邀请上楼的目的不是购物。",
+            "对话没有提出整理卧室的请求。"
+          ],
+          "evidence": {
+            "paragraphIndex": 2,
+            "quote": "Come upstairs and see it."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "新帽子是什么颜色？（填一个颜色词，可用中英文）",
+          "answers": [
+            "green",
+            "绿色",
+            "绿"
+          ],
+          "explanation": "帽子和连衣裙颜色相同，都是绿色。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "blue",
+                "蓝色",
+                "蓝"
+              ],
+              "feedback": "帽子不是蓝色；对话明确说green。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 8,
+            "quote": "It’s green, too."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l015",
+      "book": 1,
+      "number": 15,
+      "title": "第15课 · Your passports, please.",
+      "bodySha256": "ceb2ef0c468bbe2cbc3bd920e27951a3c2378ade16d9b001cc34ca44e2382593",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "出示护照的两位旅客怎样说明自己和朋友的国籍？",
+          "options": [
+            "自己和朋友都是瑞典人",
+            "自己是丹麦人，朋友是挪威人",
+            "自己是挪威人，朋友是丹麦人"
+          ],
+          "answer": 1,
+          "explanation": "旅客自称Danish，随后说明朋友是Norwegian。",
+          "wrongReasons": [
+            "旅客首先否认自己是瑞典人，朋友也被说成挪威人。",
+            "",
+            "这把两组人的国籍对调了：旅客是丹麦人，朋友是挪威人。"
+          ],
+          "evidence": {
+            "paragraphIndex": 3,
+            "quote": "They are Norwegian."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "旅客说自己的箱子是什么颜色？（填颜色，可用中英文）",
+          "answers": [
+            "brown",
+            "棕色",
+            "褐色",
+            "棕",
+            "褐"
+          ],
+          "explanation": "他们否认眼前那些箱子是自己的，并说自己的箱子是棕色。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "black",
+                "黑色",
+                "黑"
+              ],
+              "feedback": "正文说的是brown，不是black。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 8,
+            "quote": "Our cases are brown."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l017",
+      "book": 1,
+      "number": 17,
+      "title": "第17课 · How do you do?",
+      "bodySha256": "79be7d2becfa419bc290d587ce86eb459c31a1f2fd08ad033320985e237f5aea",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "Nicola和Claire在公司做什么工作？",
+          "options": [
+            "销售代表",
+            "办公室助理",
+            "键盘操作员"
+          ],
+          "answer": 2,
+          "explanation": "介绍两位勤奋的女士后，回答她们是keyboard operators。",
+          "wrongReasons": [
+            "销售代表是Michael和Jeremy的工作，不是Nicola和Claire的。",
+            "办公室助理是后面介绍的Jim。",
+            ""
+          ],
+          "evidence": {
+            "paragraphIndex": 5,
+            "quote": "They're keyboard operators."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "公司的年轻办公室助理叫什么名字？（填人名，可用中英文）",
+          "answers": [
+            "Jim",
+            "吉姆"
+          ],
+          "explanation": "最后介绍的年轻人是Jim，他是公司的office assistant。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "Michael",
+                "迈克尔"
+              ],
+              "feedback": "Michael被介绍为销售代表，办公室助理是Jim。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 11,
+            "quote": "This is Jim. He's our office assistant."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l019",
+      "book": 1,
+      "number": 19,
+      "title": "第19课 · Tired and thirsty",
+      "bodySha256": "e5ad4b91031e3fd8a43c3e753b81b3c22b92b877a06602252fe0fcdf044a67fd",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "孩子们吃到妈妈买的东西后，对自己是否好些了怎样回答？",
+          "options": [
+            "表示已经好多了",
+            "说比原来更饿更累",
+            "仍然回答一点也不好"
+          ],
+          "answer": 0,
+          "explanation": "妈妈再次问是否好些了，孩子们这次回答“Yes, we are, thank you!”。",
+          "wrongReasons": [
+            "",
+            "结尾孩子们给出肯定回答，没有说变得更饿更累。",
+            "最初坐下后曾说还不好，但吃过冰淇淋后已改为肯定回答。"
+          ],
+          "evidence": {
+            "paragraphIndex": 12,
+            "quote": "Yes, we are, thank you!"
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "妈妈一共买了几个冰淇淋？（填数量，可用中英文）",
+          "answers": [
+            "two",
+            "2",
+            "两个",
+            "两",
+            "二",
+            "2个",
+            "two ice creams",
+            "2 ice creams"
+          ],
+          "explanation": "她向小贩要的是Two ice creams。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "one",
+                "1",
+                "一个",
+                "一"
+              ],
+              "feedback": "这里要了two（两个），不是一个。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 7,
+            "quote": "Two ice creams please."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l021",
+      "book": 1,
+      "number": 21,
+      "title": "第21课 · Which book?",
+      "bodySha256": "2d1d941eecf065f528118579f25539fb51ba5ca34e9d9d84543d446f7595e2f3",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "最终递给对方的是哪本书？",
+          "options": [
+            "最先指的那本，不论颜色",
+            "红色的那本",
+            "蓝色的那本"
+          ],
+          "answer": 1,
+          "explanation": "对方先说不要那本，随后明确指定The red one。",
+          "wrongReasons": [
+            "对方先否定了Jane最初指的那本，再指定红色的。",
+            "",
+            "正文明确要求red one，不是蓝色的。"
+          ],
+          "evidence": {
+            "paragraphIndex": 3,
+            "quote": "The red one."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "被请求拿书的人叫什么名字？（填人名，可用中英文）",
+          "answers": [
+            "Jane",
+            "简",
+            "珍"
+          ],
+          "explanation": "第一句话直接称呼Jane，并请她拿一本书。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "Tim",
+                "蒂姆"
+              ],
+              "feedback": "这段拿书对话中被称呼的是Jane，没有Tim。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 0,
+            "quote": "Give me a book please, Jane."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l023",
+      "book": 1,
+      "number": 23,
+      "title": "第23课 · Which glasses?",
+      "bodySha256": "9c485082b5ed4cd64a5a6f37fec96a053e2005e068153d713214b1ab916e951d",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "对方最终要求拿哪一组玻璃杯？",
+          "options": [
+            "最开始指的那组",
+            "桌子下面的那组",
+            "架子上的那组"
+          ],
+          "answer": 2,
+          "explanation": "对方说不是那些，而是架子上的杯子。",
+          "wrongReasons": [
+            "最初指的杯子被否定，随后才指定架子上的杯子。",
+            "对话给出的位置是on the shelf，不是桌子下面。",
+            ""
+          ],
+          "evidence": {
+            "paragraphIndex": 3,
+            "quote": "The ones on the shelf."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "这次被请求递玻璃杯的人叫什么名字？（填人名，可用中英文）",
+          "answers": [
+            "Jane",
+            "简",
+            "珍"
+          ],
+          "explanation": "开头明确称呼Jane，请她拿一些玻璃杯。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "Tim",
+                "蒂姆"
+              ],
+              "feedback": "被请求拿杯子的人是Jane，不是Tim。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 0,
+            "quote": "Give me some glasses please, Jane."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l025",
+      "book": 1,
+      "number": 25,
+      "title": "第25课 · Mrs. Smith’s kitchen",
+      "bodySha256": "0d90f61ac75f45747ae0af48fd6311872c65f8f85ddc24ddf2fbe5a88b1b21af",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "Smith太太厨房里的冰箱放在哪里？",
+          "options": [
+            "右边",
+            "左边",
+            "房间正中间"
+          ],
+          "answer": 0,
+          "explanation": "正文介绍冰箱后紧接着说It is on the right。",
+          "wrongReasons": [
+            "",
+            "左边放的是电灶；冰箱在右边。",
+            "房间正中间放的是桌子，不是冰箱。"
+          ],
+          "evidence": {
+            "paragraphIndex": 0,
+            "quote": "The refrigerator is white. It is on the right."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "厨房里的电灶是什么颜色？（填颜色，可用中英文）",
+          "answers": [
+            "blue",
+            "蓝色",
+            "蓝"
+          ],
+          "explanation": "正文直接说The cooker is blue。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "white",
+                "白色",
+                "白"
+              ],
+              "feedback": "白色是冰箱的颜色，电灶是蓝色。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 0,
+            "quote": "The cooker is blue."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l027",
+      "book": 1,
+      "number": 27,
+      "title": "第27课 · Mrs. Smith’s living room",
+      "bodySha256": "c75467a53022dd8dcb032f61d56071d4771ddbbb5efef64954d22f9835f42fea",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "Smith太太客厅里的音响靠近哪里？",
+          "options": [
+            "窗户",
+            "门",
+            "扶手椅下面"
+          ],
+          "answer": 1,
+          "explanation": "正文明确说The stereo is near the door。",
+          "wrongReasons": [
+            "靠近窗户的是电视机，音响靠近门。",
+            "",
+            "扶手椅在桌边，正文没有说音响在椅子下面。"
+          ],
+          "evidence": {
+            "paragraphIndex": 0,
+            "quote": "The stereo is near the door."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "电视机上面放着什么读物？（填物品名称，可用中英文）",
+          "answers": [
+            "magazines",
+            "some magazines",
+            "杂志"
+          ],
+          "explanation": "电视机上放的是杂志；报纸放在桌上。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "newspapers",
+                "报纸"
+              ],
+              "feedback": "报纸在桌子上，电视机上放的是magazines。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 0,
+            "quote": "There are some magazines on the television."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l029",
+      "book": 1,
+      "number": 29,
+      "title": "第29课 · Come in, Amy.",
+      "bodySha256": "969097f00004d870f18682bf677e3ad923b6929a98dad5177acf43c9eb9831e1",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "Amy问该做什么后，Jones太太首先安排哪项整理工作？",
+          "options": [
+            "先把床铺好",
+            "先扫地",
+            "开窗给房间通风"
+          ],
+          "answer": 2,
+          "explanation": "Amy问自己该做什么后，第一条指令是打开窗户、给房间通风。",
+          "wrongReasons": [
+            "铺床是在放好衣服之后提出的，不是第一步。",
+            "扫地是最后提出的一项工作，最先是开窗通风。",
+            ""
+          ],
+          "evidence": {
+            "paragraphIndex": 4,
+            "quote": "Open the window and air the room."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "Amy应该把衣服放到哪里？（填家具名称，可用中英文）",
+          "answers": [
+            "wardrobe",
+            "the wardrobe",
+            "衣柜",
+            "衣橱"
+          ],
+          "explanation": "Jones太太让她把这些衣服放进衣柜。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "bed",
+                "the bed",
+                "床",
+                "床上"
+              ],
+              "feedback": "衣服应放进wardrobe，后面还有单独铺床的任务。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 5,
+            "quote": "Then put these clothes in the wardrobe."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l031",
+      "book": 1,
+      "number": 31,
+      "title": "第31课 · Where’s Sally?",
+      "bodySha256": "2dcb316b20dc66bbcdf87b9013342ad28e0dab616b713345d1626a0380d4fee0",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "花园里正在爬树的是谁？",
+          "options": [
+            "Tim",
+            "Sally",
+            "Jack"
+          ],
+          "answer": 0,
+          "explanation": "在追问谁在爬树时，对话再次明确回答Tim is。",
+          "wrongReasons": [
+            "",
+            "Sally坐在树下，爬树的是Tim。",
+            "Jack在回答Sally在哪里；正文说爬树的是Tim。"
+          ],
+          "evidence": {
+            "paragraphIndex": 7,
+            "quote": "Tim is."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "花园里的狗正在追什么动物？（填动物名称，可用中英文）",
+          "answers": [
+            "cat",
+            "a cat",
+            "猫",
+            "一只猫"
+          ],
+          "explanation": "狗穿过草地，正在追赶一只猫。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "bird",
+                "a bird",
+                "鸟",
+                "一只鸟"
+              ],
+              "feedback": "正文说追的是cat，不是bird。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 9,
+            "quote": "It’s running after a cat."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l033",
+      "book": 1,
+      "number": 33,
+      "title": "第33课 · A fine day",
+      "bodySha256": "6e73941ab6d3e591456096400cbb306670e71ad2490a02f90c715eecf1a52d7a",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "Jones一家此时正在做什么？",
+          "options": [
+            "坐船过河",
+            "步行过桥",
+            "坐飞机离开"
+          ],
+          "answer": 1,
+          "explanation": "正文明确描写一家人正在walking over the bridge。",
+          "wrongReasons": [
+            "他们在看河上的船，并没有乘船。",
+            "",
+            "Tim在看飞机，不代表全家在乘飞机。"
+          ],
+          "evidence": {
+            "paragraphIndex": 0,
+            "quote": "They are walking over the bridge."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "Sally正在看什么大型交通工具？（填名称，可用中英文）",
+          "answers": [
+            "ship",
+            "a big ship",
+            "big ship",
+            "轮船",
+            "大轮船",
+            "大船",
+            "船"
+          ],
+          "explanation": "Sally看的是一艘大船；Tim看的是飞机。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "aeroplane",
+                "airplane",
+                "plane",
+                "飞机"
+              ],
+              "feedback": "看飞机的是Tim，Sally看的是大船。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 0,
+            "quote": "Sally is looking at a big ship."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l035",
+      "book": 1,
+      "number": 35,
+      "title": "第35课 · Our village",
+      "bodySha256": "ca6c2c9413bd30d6e69ea3782ac98d811068f3c63b390f00ee32702ea1b2aa21",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "村庄所处的位置怎样？",
+          "options": [
+            "山顶上，远离河流",
+            "海边的一个岛上",
+            "两座山之间的山谷里"
+          ],
+          "answer": 2,
+          "explanation": "村庄在山谷中，位于两座山之间。",
+          "wrongReasons": [
+            "正文说村庄在山谷里，而且位于河边，不在山顶。",
+            "正文给出的是山谷、山丘和河流，没有岛屿位置。",
+            ""
+          ],
+          "evidence": {
+            "paragraphIndex": 0,
+            "quote": "Our village is in a valley. It is between two hills."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "学校大楼旁边是什么场所？（填场所名称，可用中英文）",
+          "answers": [
+            "park",
+            "a park",
+            "the park",
+            "公园"
+          ],
+          "explanation": "介绍学校大楼时说It is beside a park。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "river",
+                "the river",
+                "河",
+                "河流"
+              ],
+              "feedback": "这里问学校旁边的场所，正文明确说是park；村庄在河边是另一条位置描述。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 2,
+            "quote": "It is beside a park."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l037",
+      "book": 1,
+      "number": 37,
+      "title": "第37课 · Making a bookcase",
+      "bodySha256": "f5649788bdaf915de86709fc11792f9b048b6a3c0af40ea77e263eefb66ed341",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "George为什么想把书架漆成粉红色？",
+          "options": [
+            "书架送给女儿Susan，粉红色是她最喜欢的颜色",
+            "George自己的所有家具都是粉红色",
+            "Dan要求他必须用粉红色"
+          ],
+          "answer": 0,
+          "explanation": "George说明书架不是给自己，而是给女儿Susan；她最喜欢粉红色。",
+          "wrongReasons": [
+            "",
+            "正文没有说George的其他家具颜色；书架是给女儿做的。",
+            "Dan帮忙递锤子，并没有替书架决定颜色。"
+          ],
+          "evidence": {
+            "paragraphIndex": 12,
+            "quote": "This bookcase isn’t for me. It’s for my daughter, Susan. Pink’s her favourite colour."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "做书架时，George要Dan递大锤还是小锤？（填大小或工具短语，可用中英文）",
+          "answers": [
+            "big",
+            "large",
+            "the big one",
+            "big hammer",
+            "a big hammer",
+            "大",
+            "大的",
+            "大锤",
+            "大锤子",
+            "big one",
+            "the big hammer",
+            "large hammer",
+            "大的锤子",
+            "大号锤子"
+          ],
+          "explanation": "George否定最初指的锤子，指定要大的那把。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "small",
+                "small hammer",
+                "小",
+                "小锤",
+                "小锤子"
+              ],
+              "feedback": "他明确要的是“The big one”，即大锤，不是小锤。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 4,
+            "quote": "No, not that one. The big one."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l039",
+      "book": 1,
+      "number": 39,
+      "title": "第39课 · Don’t drop it!",
+      "bodySha256": "36fb2ea3ed5ecc4daabcb4479d47d5c21ca130b2f9fdf53092a3737335074ff5",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "最后一次关于花瓶摆放位置的指令是什么？",
+          "options": [
+            "放在桌子上",
+            "放在架子上",
+            "仍放在窗前，不再移动"
+          ],
+          "answer": 1,
+          "explanation": "最后的明确指令是Put it here, on this shelf。",
+          "wrongReasons": [
+            "桌子是Penny最先提出的位置，随后摆放建议发生了变化。",
+            "",
+            "Sam想放在窗前，但最后又被要求放在架子上。"
+          ],
+          "evidence": {
+            "paragraphIndex": 6,
+            "quote": "Put it here, on this shelf."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "结尾除了花瓶，说话者还称赞什么也很漂亮？（填物品名称，可用中英文）",
+          "answers": [
+            "flowers",
+            "the flowers",
+            "花",
+            "花朵",
+            "鲜花"
+          ],
+          "explanation": "结尾先赞花瓶漂亮，再称赞花朵也很漂亮。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "curtains",
+                "窗帘"
+              ],
+              "feedback": "结尾称赞的是flowers（花），没有评价窗帘。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 8,
+            "quote": "Those flowers are lovely, too."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l041",
+      "book": 1,
+      "number": 41,
+      "title": "第41课 · Penny’s bag",
+      "bodySha256": "4df2d8cb73559337ed663701253a23909ccd084f3fd72c95a19b798bc3104e76",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "Penny怎样回答袋子是否很重的问题？",
+          "options": [
+            "重得提不动",
+            "袋子里什么也没有",
+            "不很重"
+          ],
+          "answer": 2,
+          "explanation": "问袋子重不重时，Penny回答Not very，意为不很重。",
+          "wrongReasons": [
+            "Penny回答Not very，没有说重得提不动。",
+            "随后列出袋中的食物和日用品，袋子并不空。",
+            ""
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "Not very."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "袋子里有多少咖啡？（填重量，可用中英文）",
+          "answers": [
+            "half a pound",
+            "half a pound of coffee",
+            "0.5 pound",
+            "0.5 pounds",
+            "半磅",
+            "半磅咖啡",
+            "1/2 pound",
+            "half pound",
+            "half pound of coffee",
+            "0.5 lb"
+          ],
+          "explanation": "物品清单中咖啡是半磅，茶是四分之一磅。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "a pound",
+                "one pound",
+                "1 pound",
+                "一磅",
+                "quarter of a pound",
+                "四分之一磅"
+              ],
+              "feedback": "咖啡是half a pound；一磅是糖的数量，四分之一磅是茶的数量。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 9,
+            "quote": "Half a pound of coffee."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l043",
+      "book": 1,
+      "number": 43,
+      "title": "第43课 · Hurry up!",
+      "bodySha256": "556ddecdbae18b785c41caed68438c80a90963dca87bdcdf897aabe2ceb8aded",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "Sam一开始寻找茶叶时，能看到什么、看不到什么？",
+          "options": [
+            "看得到茶壶，看不到茶叶",
+            "看得到茶叶，看不到茶壶",
+            "茶叶和茶壶都找到了"
+          ],
+          "answer": 0,
+          "explanation": "Sam说I can see the teapot, but I can’t see the tea。",
+          "wrongReasons": [
+            "",
+            "Sam的原话恰好相反：看得到teapot，看不到tea。",
+            "他随后才发现面前的茶叶，最初并没有看到茶叶。"
+          ],
+          "evidence": {
+            "paragraphIndex": 7,
+            "quote": "I can see the teapot, but I can’t see the tea."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "杯子放在哪里？（填家具或储物位置，可用中英文）",
+          "answers": [
+            "cupboard",
+            "the cupboard",
+            "in the cupboard",
+            "橱柜",
+            "橱柜里",
+            "碗柜",
+            "碗柜里"
+          ],
+          "explanation": "寻找杯子时，回答说橱柜里有一些。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "kettle",
+                "茶壶",
+                "水壶",
+                "behind the teapot",
+                "茶壶后面"
+              ],
+              "feedback": "杯子在cupboard里；茶叶的位置和水壶的位置不能用来回答杯子在哪里。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 11,
+            "quote": "There are some in the cupboard."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l045",
+      "book": 1,
+      "number": 45,
+      "title": "第45课 · The boss’s letter",
+      "bodySha256": "abdd97b854837a33bd66f1dc3542c38728bdf28e8413017acec91a97b120277f",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "Pamela为什么无法替老板打这封信？",
+          "options": [
+            "她完全不会打字",
+            "老板的字迹太难辨认，她看不懂",
+            "她不愿意帮助Bob"
+          ],
+          "answer": 1,
+          "explanation": "她解释自己读不懂信，因为老板的手写字迹很糟糕。",
+          "wrongReasons": [
+            "她最初明确说自己会打字，困难是无法辨认这封信的字迹。",
+            "",
+            "Pamela答应帮忙并接过信，没有拒绝帮助的情节。"
+          ],
+          "evidence": {
+            "paragraphIndex": 13,
+            "quote": "I can’t read it! The boss’s handwriting is terrible!"
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "Pamela所在的办公室相对老板的办公室在哪里？（填相邻位置，可用中英文）",
+          "answers": [
+            "next door",
+            "隔壁",
+            "在隔壁"
+          ],
+          "explanation": "Bob说她在隔壁自己的办公室里。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "upstairs",
+                "楼上",
+                "downstairs",
+                "楼下"
+              ],
+              "feedback": "正文给出的是next door（隔壁），没有说楼上或楼下。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 3,
+            "quote": "She’s next door."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l047",
+      "book": 1,
+      "number": 47,
+      "title": "第47课 · A cup of coffee",
+      "bodySha256": "323f1f1ee43ade9a8f17ea40d6ca21ce502f367a298cef6ac73abcc84c7ac63e",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "Ann想要怎样的咖啡？",
+          "options": [
+            "加牛奶，不加糖",
+            "糖和牛奶都不加",
+            "加糖，不加牛奶的黑咖啡"
+          ],
+          "answer": 2,
+          "explanation": "Ann要糖，并拒绝加牛奶，说明自己喜欢black coffee。",
+          "wrongReasons": [
+            "Ann要糖，却明确说不喜欢咖啡里加牛奶。",
+            "她对要糖的提问回答Yes, please，所以不是两样都不加。",
+            ""
+          ],
+          "evidence": {
+            "paragraphIndex": 7,
+            "quote": "I don’t like milk in my coffee. I like black coffee."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "Ann接受咖啡时称呼了哪位招待她的人？（填人名，可用中英文）",
+          "answers": [
+            "Christine",
+            "克里斯廷",
+            "克里斯汀"
+          ],
+          "explanation": "Ann回答愿意喝一杯咖啡，并直接称呼对方Christine。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "Penny",
+                "彭妮",
+                "潘妮"
+              ],
+              "feedback": "本段招待Ann的人是Christine，不是其他对话中的Penny。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 3,
+            "quote": "Yes, please, Christine."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l049",
+      "book": 1,
+      "number": 49,
+      "title": "第49课 · At the butcher’s",
+      "bodySha256": "5571a226ff61498f29e2426881c1980246d43649dc80478a4701bc1c216d63be",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "Bird太太的丈夫对肉类有什么偏好？",
+          "options": [
+            "喜欢牛排，不喜欢鸡肉",
+            "喜欢鸡肉，不喜欢牛排",
+            "牛排和鸡肉都不喜欢"
+          ],
+          "answer": 0,
+          "explanation": "Bird太太说丈夫喜欢牛排，但不喜欢鸡肉。",
+          "wrongReasons": [
+            "",
+            "这把他的偏好说反了；正文是likes steak but doesn’t like chicken。",
+            "他明确喜欢steak，并非两种都不喜欢。"
+          ],
+          "evidence": {
+            "paragraphIndex": 11,
+            "quote": "My husband likes steak, but he doesn’t like chicken."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "Bird太太还要了多少肉馅？（填重量，可用中英文）",
+          "answers": [
+            "a pound",
+            "one pound",
+            "1 pound",
+            "一磅",
+            "一磅肉馅"
+          ],
+          "explanation": "除了一块牛排，她还要了一磅肉馅。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "half a pound",
+                "半磅",
+                "two pounds",
+                "两磅"
+              ],
+              "feedback": "正文要的是a pound（一磅）肉馅，不是半磅或两磅。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 8,
+            "quote": "And a pound of mince, too."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l051",
+      "book": 1,
+      "number": 51,
+      "title": "第51课 · A pleasant climate",
+      "bodySha256": "e0140cdd80efdf12044e5db52f8c649389f7850de57b8f9bb594c19a26f78188",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "对方怎样描述本国夏天的天气？",
+          "options": [
+            "六、七、八月常下雪",
+            "六、七、八月总是炎热，太阳每天都照耀",
+            "整个夏天每天都下雨"
+          ],
+          "answer": 1,
+          "explanation": "对方说夏季三个月总是热，太阳每天照耀。",
+          "wrongReasons": [
+            "下雪是在冬季的描述，夏季明确说always hot。",
+            "",
+            "夏天的描述是太阳每天照耀，不是每天有雨。"
+          ],
+          "evidence": {
+            "paragraphIndex": 7,
+            "quote": "It’s always hot in June, July and August. The sun shines every day."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "介绍气候的人来自哪个国家？（填国家，可用中英文）",
+          "answers": [
+            "Greece",
+            "希腊"
+          ],
+          "explanation": "对话开头说明I come from Greece。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "England",
+                "英国",
+                "英格兰"
+              ],
+              "feedback": "这课介绍的是Greece；来自England是下一篇气候对话。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "I come from Greece."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l053",
+      "book": 1,
+      "number": 53,
+      "title": "第53课 · An interesting climate",
+      "bodySha256": "b9c965a1852a6e8197f8811e6bf4bbbc79b4a6c2876bd8fe59459ad9d12797ed",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "对方为什么最喜欢春季和夏季？",
+          "options": [
+            "因为这两个季节每天都下雪",
+            "因为白天短、夜晚长",
+            "白天长、夜晚短，日出早、日落晚"
+          ],
+          "answer": 2,
+          "explanation": "喜欢春夏的理由紧接着说明：白天长、夜晚短，太阳升得早、落得晚。",
+          "wrongReasons": [
+            "正文描述日照时间，没有说春夏每天都下雪。",
+            "白天短夜晚长是秋冬的描述，不能用来解释对春夏的喜爱。",
+            ""
+          ],
+          "evidence": {
+            "paragraphIndex": 6,
+            "quote": "The days are long and the nights are short. The sun rises early and sets late."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "对方说英国人最爱谈论什么话题？（填话题，可用中英文）",
+          "answers": [
+            "climate",
+            "the climate",
+            "weather",
+            "the weather",
+            "our climate",
+            "气候",
+            "天气"
+          ],
+          "explanation": "末尾把本国气候称为最喜欢的谈话话题。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "football",
+                "足球",
+                "work",
+                "工作"
+              ],
+              "feedback": "本段一直在谈本国气候，最喜欢的谈话话题指天气或气候，不是足球、工作。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 7,
+            "quote": "It’s our favourite subject of conversation."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l055",
+      "book": 1,
+      "number": 55,
+      "title": "第55课 · The Sawyer family",
+      "bodySha256": "51f66c395a6958cdde14c8d79dfe300df67c82a5444ac138866b86000cb0d185",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "Sawyer太太下午通常做什么？",
+          "options": [
+            "见朋友，常常一起喝茶",
+            "每天带孩子去学校",
+            "去办公室上班"
+          ],
+          "answer": 0,
+          "explanation": "正文说她下午通常见朋友，而且常与朋友一起喝茶。",
+          "wrongReasons": [
+            "",
+            "每天送孩子上学的是父亲，不是Sawyer太太下午的活动。",
+            "她白天待在家做家务，下午通常见朋友。"
+          ],
+          "evidence": {
+            "paragraphIndex": 4,
+            "quote": "In the afternoon, she usually sees her friends. They often drink tea together."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "Sawyer一家住在King Street几号？（只填门牌号码，可用中英文）",
+          "answers": [
+            "87",
+            "eighty-seven",
+            "eighty seven",
+            "八十七",
+            "87号",
+            "八十七号"
+          ],
+          "explanation": "开头给出的住址是87 King Street。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "78",
+                "seventy-eight",
+                "七十八",
+                "78号"
+              ],
+              "feedback": "门牌是87，注意不要把两个数字倒写成78。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 0,
+            "quote": "The Sawyers live at 87 King Street."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l057",
+      "book": 1,
+      "number": 57,
+      "title": "第57课 · An unusual day",
+      "bodySha256": "a0794842a19e338cdf1580b0442b4ebfd84254a65313f2e0c0bf459a3dfd09a2",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "今天早上孩子们上学的方式与平时有什么不同？",
+          "options": [
+            "平时步行，今天坐汽车",
+            "平时坐汽车，今天步行",
+            "平时坐汽车，今天骑自行车"
+          ],
+          "answer": 1,
+          "explanation": "第一段对比每天乘汽车上学与今天步行上学。",
+          "wrongReasons": [
+            "这把平时和今天的方式对调了：平时by car，今天on foot。",
+            "",
+            "今天明确说on foot，是步行，不是骑车。"
+          ],
+          "evidence": {
+            "paragraphIndex": 0,
+            "quote": "The children go to school by car every day, but today, they are going to school on foot."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "今天晚上九点，Sawyer先生读的是什么？（填读物，可用中英文）",
+          "answers": [
+            "book",
+            "a book",
+            "an interesting book",
+            "有趣的书",
+            "书",
+            "一本书"
+          ],
+          "explanation": "他通常读报，但今晚读一本有趣的书。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "newspaper",
+                "报纸",
+                "newspapers"
+              ],
+              "feedback": "读报是平时的习惯；本题问今晚，他正读一本书。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 4,
+            "quote": "At the moment, he’s reading an interesting book."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l059",
+      "book": 1,
+      "number": 59,
+      "title": "第59课 · Is that all?",
+      "bodySha256": "6b601f9eb3555d26510a94126fe78261f9dd32cb469f5ee1b55a993012850c80",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "顾客为什么没有买粉笔？",
+          "options": [
+            "店里一盒粉笔都没有",
+            "顾客只想要小盒，店里只有大盒",
+            "他要大盒，店里只有小盒"
+          ],
+          "answer": 2,
+          "explanation": "顾客要一大盒粉笔，店员只有小盒，顾客随后说不要。",
+          "wrongReasons": [
+            "店员说还有small boxes，并不是完全没货。",
+            "这把供需的大小说反了：顾客要large box，店里只有small boxes。",
+            ""
+          ],
+          "evidence": {
+            "paragraphIndex": 10,
+            "quote": "I only have small boxes. Do you want one?"
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "购物结束时，顾客最后提醒店员还要给自己什么？（填物品，可用中英文）",
+          "answers": [
+            "change",
+            "my change",
+            "零钱",
+            "找零",
+            "找回的钱"
+          ],
+          "explanation": "结尾顾客说I want my change，是提醒店员找零。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "chalk",
+                "粉笔",
+                "glue",
+                "胶水"
+              ],
+              "feedback": "最后提醒的是change（找零）；粉笔和胶水是前面购物清单里的东西。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 15,
+            "quote": "I want my change."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l061",
+      "book": 1,
+      "number": 61,
+      "title": "第61课 · A bad cold",
+      "bodySha256": "2166ec1dc9ae9c44f3ef073e0adf06df6c0fa0b5833581974ca0bb0a26c844fa",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "医生对Jimmy的病情和休息时间作了什么说明？",
+          "options": [
+            "得了重感冒，需要卧床一周",
+            "只是累了，当天就能上学",
+            "发烧一个月，需要马上旅行"
+          ],
+          "answer": 0,
+          "explanation": "医生诊断重感冒，明确要求stay in bed for a week。",
+          "wrongReasons": [
+            "",
+            "医生说bad cold并要求卧床一周，不是当天即可上学。",
+            "正文没有一个月发烧或旅行的安排，医嘱是卧床一周。"
+          ],
+          "evidence": {
+            "paragraphIndex": 11,
+            "quote": "He has a bad cold, Mr. Williams, so he must stay in bed for a week."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "家人记住的医生电话号码是什么？（填五位数字，保留开头的0）",
+          "answers": [
+            "09754"
+          ],
+          "explanation": "对话中报出的号码是09754，首位0也是号码的一部分。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "9754",
+                "09745"
+              ],
+              "feedback": "医生号码是09754，要保留开头的0，并核对最后两位的顺序。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 8,
+            "quote": "It’s 09754."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l063",
+      "book": 1,
+      "number": 63,
+      "title": "第63课 · Thank you, doctor.",
+      "bodySha256": "9d97a18f489b77278322a17e4b978c6ded686ebb7c3ead64bf258912e4539aa3",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "Jimmy已经好转，医生还要求他怎样休息？",
+          "options": [
+            "马上恢复正常上学",
+            "再卧床两天，暂时不能上学",
+            "连续卧床两个月，完全不能起床"
+          ],
+          "answer": 1,
+          "explanation": "医生说他好多了，但还必须再卧床两天，暂时不能上学。",
+          "wrongReasons": [
+            "医生明确说mustn’t go to school yet，还不能上学。",
+            "",
+            "要求是another two days，并允许每天起床约两小时，不是两个月。"
+          ],
+          "evidence": {
+            "paragraphIndex": 4,
+            "quote": "You are better now, but you mustn’t get up yet. You must stay in bed for another two days."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "当天晚上，家里另一个重感冒躺在床上的人是谁？（填称呼或人名，可用中英文）",
+          "answers": [
+            "Mr. Williams",
+            "Mr Williams",
+            "Williams",
+            "威廉斯先生"
+          ],
+          "explanation": "医生问起Williams先生后，太太说明他也患了重感冒，正在床上。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "Mrs. Williams",
+                "Mrs Williams",
+                "威廉斯太太",
+                "Jimmy",
+                "吉米"
+              ],
+              "feedback": "这里问的是后来也生病的人；不是原先就生病的Jimmy，而是Mr. Williams。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 11,
+            "quote": "He has a bad cold, too!"
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l065",
+      "book": 1,
+      "number": 65,
+      "title": "第65课 · Not a baby",
+      "bodySha256": "b81337c7cc672b3c13de5682b4a3f81623bea1d271feb9c838f1f3a91ec16dec",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "妈妈为什么劝爸爸把前门钥匙给Jill？",
+          "options": [
+            "Jill只有八岁，需要出去上小学",
+            "Jill已经丢了钥匙，必须补配一把",
+            "Jill已十八岁，不再是小孩子，而且常常早回家"
+          ],
+          "answer": 2,
+          "explanation": "妈妈认为十八岁的Jill不是婴儿，还强调她一向回家早。",
+          "wrongReasons": [
+            "妈妈明确说eighteen，不是eight，也不是上小学的情节。",
+            "正文没有丢钥匙或补配钥匙的事；争论的是能否把钥匙交给她。",
+            ""
+          ],
+          "evidence": {
+            "paragraphIndex": 6,
+            "quote": "Jill's eighteen years old, Tom. She’s not a baby. Give her the key."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "爸爸最后规定，Jill最晚几点必须回家？（填晚上时间，可用数字、中英文）",
+          "answers": [
+            "11:15",
+            "23:15",
+            "a quarter past eleven",
+            "quarter past eleven",
+            "eleven fifteen",
+            "十一点一刻",
+            "晚上十一点一刻",
+            "十一点十五分",
+            "晚上十一点十五分",
+            "11:15 p.m.",
+            "11:15 pm",
+            "11.15 pm"
+          ],
+          "explanation": "爸爸起初要求十点半，最后改为不能晚于十一点一刻。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "10:30",
+                "22:30",
+                "half past ten",
+                "十点半",
+                "晚上十点半"
+              ],
+              "feedback": "十点半是最初提出的时间；最后规定放宽到了十一点一刻。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 8,
+            "quote": "But you mustn’t come home after a quarter past eleven."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l067",
+      "book": 1,
+      "number": 67,
+      "title": "第67课 · The weekend",
+      "bodySha256": "2ce7cf126d79dae8d3509b5c4cfd7e686e40325358d79288676e6de2fff74669",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "这一家人打算怎样度过周末？",
+          "options": [
+            "到乡下母亲家住三天",
+            "留在城里每天去肉店",
+            "到海外住一个月"
+          ],
+          "answer": 0,
+          "explanation": "他们准备在乡下度过三天，并住在说话者母亲家。",
+          "wrongReasons": [
+            "",
+            "肉店是对话开头谈到的去处，不是周末的三天计划。",
+            "计划说的是乡下母亲家三天，没有出国一个月。"
+          ],
+          "evidence": {
+            "paragraphIndex": 6,
+            "quote": "We're going to spend three days in the country."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "Jimmy上周一共缺课几天？（填数量，可用中英文）",
+          "answers": [
+            "four",
+            "4",
+            "四",
+            "四天",
+            "4天",
+            "four days",
+            "4 days"
+          ],
+          "explanation": "星期一、二、三、四都缺课，共四天。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "three",
+                "3",
+                "三天",
+                "3天"
+              ],
+              "feedback": "三天是全家的乡下周末计划；Jimmy上周缺课四天。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 5,
+            "quote": "He was absent on Monday, Tuesday, Wednesday and Thursday."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l069",
+      "book": 1,
+      "number": 69,
+      "title": "第69课 · The car race",
+      "bodySha256": "e0b6862a50efa011f2b48a16ff49fe9ca12216e9edf95286a7d79adb4ec70312",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "Billy Stewart在那场赛车比赛中有什么表现？",
+          "options": [
+            "驾驶十九号车最后到达",
+            "驾驶十五号车获胜",
+            "驾驶五号车退出比赛"
+          ],
+          "answer": 1,
+          "explanation": "获胜者是Billy Stewart，他驾驶十五号赛车。",
+          "wrongReasons": [
+            "文中获胜者驾驶十五号车，没有说Billy驾驶十九号车最后到达。",
+            "",
+            "五是紧跟在他后面的其他车辆数，并不是他的车号或退赛信息。"
+          ],
+          "evidence": {
+            "paragraphIndex": 3,
+            "quote": "The winner was Billy Stewart. He was in car number fifteen."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "比赛共有多少辆赛车参加？（填数量，可用中英文）",
+          "answers": [
+            "twenty",
+            "20",
+            "二十",
+            "二十辆",
+            "20辆",
+            "twenty cars",
+            "20 cars"
+          ],
+          "explanation": "正文明确说共有twenty cars。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "fifteen",
+                "15",
+                "十五",
+                "十五辆"
+              ],
+              "feedback": "十五是获胜赛车的号码，参赛车辆总数是二十。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 2,
+            "quote": "There were twenty cars in the race."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l071",
+      "book": 1,
+      "number": 71,
+      "title": "第71课 · He’s awful!",
+      "bodySha256": "5f0b4ec53220694c61bf2863655597f6e12f912873d33df311ddc90de14c2b03",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "Pauline最后怎样让Ron不再打电话？",
+          "options": [
+            "把电话交给老板，请老板邀请Ron来访",
+            "告诉Ron自己立即去找他",
+            "假装是自己的母亲，让他别再打给女儿"
+          ],
+          "answer": 2,
+          "explanation": "她装作自己的母亲说话，请Ron不要再打给自己的女儿，此后他没有再打。",
+          "wrongReasons": [
+            "老板在白天接过电话，最后让Ron停止来电的办法是假装母亲。",
+            "她没有约他见面，而是用母亲的身份要求停止来电。",
+            ""
+          ],
+          "evidence": {
+            "paragraphIndex": 9,
+            "quote": "This is Pauline’s mother. Please don’t telephone my daughter again!"
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "Ron昨天一共给Pauline打了几次电话？（填次数，可用中英文）",
+          "answers": [
+            "four",
+            "4",
+            "四",
+            "四次",
+            "4次",
+            "four times",
+            "4 times"
+          ],
+          "explanation": "Pauline说昨天四次、前天三次，要区分这两天。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "three",
+                "3",
+                "三",
+                "三次"
+              ],
+              "feedback": "三次是前天；本题问昨天，答案是四次。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "He telephoned me four times yesterday, and three times the day before yesterday."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l073",
+      "book": 1,
+      "number": 73,
+      "title": "第73课 · The way to King Street",
+      "bodySha256": "5110f7a0d669e29668080c794913c7db469140a7a1b80f735a91b255362cf070",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "Mrs. Mills问路时遇到的人为什么帮不上她？",
+          "options": [
+            "他是德国游客，不懂英语",
+            "他不愿意微笑或回应她",
+            "他在伦敦工作，不愿理游客"
+          ],
+          "answer": 0,
+          "explanation": "那个人不懂英语，说德语，是一名游客。",
+          "wrongReasons": [
+            "",
+            "他友好地微笑，并借助短语手册回应，问题在于语言不通。",
+            "正文说他自己也是游客，没有在伦敦工作的说明。"
+          ],
+          "evidence": {
+            "paragraphIndex": 3,
+            "quote": "He did not understand English! He spoke German. He was a tourist."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "那位游客为了用英语回应，拿出了哪种书？（填书的种类，可用中英文）",
+          "answers": [
+            "phrasebook",
+            "a phrasebook",
+            "phrase book",
+            "短语手册",
+            "会话手册",
+            "会话书"
+          ],
+          "explanation": "他取出短语手册，翻到一个句子后慢慢读出自己不会英语。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "dictionary",
+                "a dictionary",
+                "字典",
+                "词典"
+              ],
+              "feedback": "正文写的是phrasebook（短语或会话手册），不是dictionary。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 4,
+            "quote": "took out a phrasebook."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l075",
+      "book": 1,
+      "number": 75,
+      "title": "第75课 · Uncomfortable shoes",
+      "bodySha256": "f7fc3bd8d5282b83b9801b31ee5c6481275cba284ba31e432c4c302e12948f0f",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "店员为什么无法替顾客找到与旧鞋同款的鞋？",
+          "options": [
+            "这种款式今年刚上市，尚未开始出售",
+            "这种款式今年已不流行，店里现在没有",
+            "顾客完全没有说明尺码和颜色"
+          ],
+          "answer": 1,
+          "explanation": "店里一个月前还有同款，但现在没货，而且这款今年已经不流行。",
+          "wrongReasons": [
+            "店员说这种鞋去年和前年流行，今年不再流行，并非刚上市。",
+            "",
+            "顾客已说明五号、黑色，问题不是没有提供信息。"
+          ],
+          "evidence": {
+            "paragraphIndex": 11,
+            "quote": "But they're not in fashion this year."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "顾客提到的同款鞋上个月是在哪个国家买的？（填国家，可用中英文）",
+          "answers": [
+            "the U.S.",
+            "U.S.",
+            "US",
+            "USA",
+            "the USA",
+            "United States",
+            "the United States",
+            "America",
+            "美国"
+          ],
+          "explanation": "顾客说这双鞋并非在这家店买的，而是在美国买的。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "England",
+                "英国",
+                "英格兰",
+                "France",
+                "法国"
+              ],
+              "feedback": "那双鞋的购买地点是the U.S.（美国），不是英国或法国。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 8,
+            "quote": "No, she bought them in the U.S."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l077",
+      "book": 1,
+      "number": 77,
+      "title": "第77课 · Terrible toothache",
+      "bodySha256": "8f92f1b1554aaa365f02d2032b9ba58e3085b3e6331eb4f91e69a2b20fb393ad",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "Croft先生为什么坚持马上见牙医？",
+          "options": [
+            "他已预约了今天早上的治疗",
+            "他只是来替别人取消预约",
+            "牙痛非常严重，觉得等不下去"
+          ],
+          "answer": 2,
+          "explanation": "他没有预约，但说自己难受极了、牙痛得厉害，所以急着看牙医。",
+          "wrongReasons": [
+            "他明确说自己没有预约，是因剧烈牙痛要求马上就诊。",
+            "正文说他自己牙痛，并不是代别人取消预约。",
+            ""
+          ],
+          "evidence": {
+            "paragraphIndex": 5,
+            "quote": "I feel awful. I have a terrible toothache."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "护士后来提出当天几点可以看牙？（填下午时间，可用数字、中英文）",
+          "answers": [
+            "2 p.m.",
+            "2 pm",
+            "14:00",
+            "two p.m.",
+            "two pm",
+            "two in the afternoon",
+            "下午两点",
+            "下午二点",
+            "下午2点",
+            "2:00 p.m.",
+            "2:00 pm"
+          ],
+          "explanation": "护士先提出另一天的上午十点，后来又问当天是否能下午两点来。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "10 a.m.",
+                "10 am",
+                "10:00",
+                "上午十点"
+              ],
+              "feedback": "上午十点对应最先提出的另一个预约日期；后来提出的当天时间是下午两点。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 8,
+            "quote": "Can you come at 2 p.m.?"
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l079",
+      "book": 1,
+      "number": 79,
+      "title": "第79课 · Carol’s shopping list",
+      "bodySha256": "450b13a6fe92bc851c905cc1422512034cc2ca14518b86945d25e63ff04f071d",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "Carol为什么还必须去肉店？",
+          "options": [
+            "家里一点肉也没有了",
+            "家里的肉比土豆还多",
+            "Tom坚持只买啤酒和葡萄酒"
+          ],
+          "answer": 0,
+          "explanation": "Carol说需要买肉，因为家里haven’t got any meat at all。",
+          "wrongReasons": [
+            "",
+            "家里有很多土豆，但一点肉都没有，不能把土豆的数量套到肉上。",
+            "Tom问了酒，但Carol不准备买；去肉店是因为缺肉。"
+          ],
+          "evidence": {
+            "paragraphIndex": 7,
+            "quote": "We haven't got any meat at all."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "家里哪种蔬菜有很多：西红柿还是土豆？（填一种名称，可用中英文）",
+          "answers": [
+            "potatoes",
+            "potato",
+            "土豆",
+            "马铃薯"
+          ],
+          "explanation": "Carol说西红柿不多，但是土豆很多。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "tomatoes",
+                "tomato",
+                "西红柿",
+                "番茄"
+              ],
+              "feedback": "西红柿是haven’t got many，数量很多的是potatoes。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 6,
+            "quote": "we’ve got a lot of potatoes."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l081",
+      "book": 1,
+      "number": 81,
+      "title": "第81课 · Roast beef and potatoes",
+      "bodySha256": "ae6a1e6596716c62e0aefe153806052a7482b27e3d3f484649b09b8366ffd784",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "Carol为什么听完Tom的午餐后感到意外？",
+          "options": [
+            "Tom和Sam午餐什么都没有吃",
+            "晚餐也准备了烤牛肉和土豆，和午餐重复了",
+            "晚餐原本根本没准备"
+          ],
+          "answer": 1,
+          "explanation": "Tom与Sam午餐吃了烤牛肉和土豆，而Carol晚上也做了相同的菜。",
+          "wrongReasons": [
+            "他们已经在餐馆吃过午餐，且明确说了吃的菜。",
+            "",
+            "晚餐快准备好了，问题是菜品和他们午餐相同。"
+          ],
+          "evidence": {
+            "paragraphIndex": 17,
+            "quote": "you're going to have roast beef and potatoes again tonight!"
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "Carol说晚上几点可以吃饭？（填晚上时间，可用数字、中英文）",
+          "answers": [
+            "seven",
+            "7",
+            "7 p.m.",
+            "7 pm",
+            "19:00",
+            "seven o’clock",
+            "seven oclock",
+            "七点",
+            "晚上七点",
+            "seven p.m.",
+            "seven pm",
+            "7:00 p.m."
+          ],
+          "explanation": "她说晚餐差不多好了，七点钟可以吃饭。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "six",
+                "6",
+                "18:00",
+                "六点",
+                "晚上六点"
+              ],
+              "feedback": "正文说seven o’clock，不是六点。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 11,
+            "quote": "We can have dinner at seven o’clock."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l083",
+      "book": 1,
+      "number": 83,
+      "title": "第83课 · Going on holiday",
+      "bodySha256": "ac4dba499a805ed9f6550541ccfa2659e8f3fb658b70f8a68ee0d7b801ad33e8",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "Tom和Carol的房间为什么很乱？",
+          "options": [
+            "昨晚家里遭了贼",
+            "Sam搬来和他们一起长期居住",
+            "正在打包行李，准备明天度假出发"
+          ],
+          "answer": 2,
+          "explanation": "Carol说明他们正在打包行李，明天将离开去度假。",
+          "wrongReasons": [
+            "正文没有失窃情节，解释是正在收拾旅行箱。",
+            "Sam是来访者，房间乱是因为主人准备出门度假。",
+            ""
+          ],
+          "evidence": {
+            "paragraphIndex": 6,
+            "quote": "We're packing our suitcases. We're going to leave tomorrow."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "Sam今年已经度过的假期是在哪里过的？（填地点，可用中英文）",
+          "answers": [
+            "home",
+            "at home",
+            "家",
+            "家里",
+            "在家"
+          ],
+          "explanation": "Sam说自己已经休过假，但没有旅行，而是待在家里。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "Paris",
+                "巴黎",
+                "London",
+                "伦敦"
+              ],
+              "feedback": "Sam没有说去了某座城市，他说自己待在家里。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 11,
+            "quote": "I stayed at home!"
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l085",
+      "book": 1,
+      "number": 85,
+      "title": "第85课 · Paris in the spring",
+      "bodySha256": "d6d6ab1f4cfe3b90e009b53c4f0916720bf9c5caf9bf0f982d7f75a65390ef47",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "George是怎样看过《Paris in the Spring》这部电影的？",
+          "options": [
+            "去年在电视上看过",
+            "刚刚和Ken一起从电影院出来",
+            "上个月在巴黎电影院看过"
+          ],
+          "answer": 0,
+          "explanation": "George说自己已经看过这部电影，是去年在电视上看的。",
+          "wrongReasons": [
+            "",
+            "刚从电影院出来的是Ken，George早已在电视上看过。",
+            "正文没有George去巴黎看电影的情节，他甚至说没去过巴黎。"
+          ],
+          "evidence": {
+            "paragraphIndex": 6,
+            "quote": "I saw it on television last year."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "Ken是几月去巴黎的？（填月份，可用中英文）",
+          "answers": [
+            "April",
+            "四月",
+            "4月"
+          ],
+          "explanation": "Ken说自己曾在April到过巴黎。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "May",
+                "五月",
+                "5月",
+                "March",
+                "三月",
+                "3月"
+              ],
+              "feedback": "正文给出的月份是April（四月），不是三月或五月。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 9,
+            "quote": "I was there in April."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l087",
+      "book": 1,
+      "number": 87,
+      "title": "第87课 · A car crash",
+      "bodySha256": "88e2bf20abdc86108e9c605127127edd889cc8713ccf413280c0b60d5123a61f",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "修理人员最后怎样看待这辆撞坏的汽车？",
+          "options": [
+            "汽车已经完全修好，可以开走",
+            "虽然正努力修，但车主其实需要买新车",
+            "只是需要洗车，完全没有损坏"
+          ],
+          "answer": 1,
+          "explanation": "修理人员承认正在尝试修理，但直说车主需要一辆新车。",
+          "wrongReasons": [
+            "技师们仍在修理，车主还没有拿到修好的车。",
+            "",
+            "车主把车撞到了灯柱上，修理人员甚至建议更换汽车。"
+          ],
+          "evidence": {
+            "paragraphIndex": 12,
+            "quote": "But to tell you the truth, you need a new car!"
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "车主是几天前把汽车送来修理的？（填天数，可用中英文）",
+          "answers": [
+            "three",
+            "3",
+            "三",
+            "三天",
+            "3天",
+            "three days",
+            "3 days",
+            "three days ago",
+            "3 days ago"
+          ],
+          "explanation": "车主说三天前把车送到了这里。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "two",
+                "2",
+                "两",
+                "两天",
+                "二天"
+              ],
+              "feedback": "送修时间是three days ago（三天前），不是两天前。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 4,
+            "quote": "I brought it here three days ago."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l089",
+      "book": 1,
+      "number": 89,
+      "title": "第89课 · For sale",
+      "bodySha256": "da331a1fc1732b7148e070131dc26c32e8ae0b3be45f23cb8a7d02de2a3481e3",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "房主为什么想卖掉现在的房子？",
+          "options": [
+            "已经决定搬去国外工作",
+            "房子被损坏，无法居住",
+            "已经退休，想在乡下买一栋小房子"
+          ],
+          "answer": 2,
+          "explanation": "房主说自己刚退休，希望在乡下买小房子。",
+          "wrongReasons": [
+            "房主说自己刚退休，目的地是乡下，不是出国工作。",
+            "正文没有房屋损坏的说明，出售原因是退休后的居住计划。",
+            ""
+          ],
+          "evidence": {
+            "paragraphIndex": 9,
+            "quote": "Because I've just retired. I want to buy a small house in the country."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "房主已经在这所房子住了多少年？（填年数，可用中英文）",
+          "answers": [
+            "twenty",
+            "20",
+            "二十",
+            "二十年",
+            "20年",
+            "twenty years",
+            "20 years"
+          ],
+          "explanation": "他直接回答在这里住了二十年。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "ten",
+                "10",
+                "十",
+                "十年"
+              ],
+              "feedback": "正文是twenty years（二十年），不是ten years。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 5,
+            "quote": "I've lived here for twenty years."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l091",
+      "book": 1,
+      "number": 91,
+      "title": "第91课 · Poor Ian!",
+      "bodySha256": "f5d34c847e366221bc6019c8d213690e55bb32476a56af0238213d4b815b8bb8",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "Ian为什么离开这所房子？",
+          "options": [
+            "他本人不想搬，但妻子想搬",
+            "他讨厌所有邻居，急着离开",
+            "房子还没卖，所以必须放弃搬家"
+          ],
+          "answer": 0,
+          "explanation": "结尾明确对比Ian不想离开，而他的妻子想离开。",
+          "wrongReasons": [
+            "",
+            "大家说他是好邻居，并且他不愿离开，没有讨厌邻居的情节。",
+            "对话开头已说明房子上周卖掉了，搬家仍将进行。"
+          ],
+          "evidence": {
+            "paragraphIndex": 13,
+            "quote": "he didn’t want to leave, but his wife did!"
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "Ian准备什么时候搬到新房子？（填相对时间，可用中英文）",
+          "answers": [
+            "tomorrow afternoon",
+            "明天下午"
+          ],
+          "explanation": "他还住在原处，计划明天下午搬走。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "tomorrow morning",
+                "明天早上",
+                "明天上午",
+                "the day after tomorrow",
+                "后天"
+              ],
+              "feedback": "明天上午被明确否定；后天说的是新住户入住时间。Ian是明天下午搬走。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 5,
+            "quote": "Tomorrow afternoon."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l093",
+      "book": 1,
+      "number": 93,
+      "title": "第93课 · Our new neighbour",
+      "bodySha256": "ac1af575affcbd294a215bf6750134c23828f9751f740e1b397d629b6e767320",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "Nigel的工作和生活怎样与妻子形成对比？",
+          "options": [
+            "妻子是飞行员，他一直待在家里",
+            "他经常飞往各国，妻子通常待在家里",
+            "夫妻从没有去过国外"
+          ],
+          "answer": 1,
+          "explanation": "Nigel是飞行员，已去过很多国家；结尾说妻子通常在家。",
+          "wrongReasons": [
+            "这把人物说反了：Nigel是飞行员，妻子通常留在家里。",
+            "",
+            "正文说Nigel几乎到过世界每个国家，不是从未出国。"
+          ],
+          "evidence": {
+            "paragraphIndex": 7,
+            "quote": "But his wife isn’t very lucky. She usually stays at home!"
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "Nigel此刻在哪座城市？（填城市名，可用中英文）",
+          "answers": [
+            "Madrid",
+            "马德里"
+          ],
+          "explanation": "正文说At the moment, he’s in Madrid，其他城市是未来航班或返程安排。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "New York",
+                "纽约",
+                "Tokyo",
+                "东京",
+                "London",
+                "伦敦"
+              ],
+              "feedback": "纽约和东京是将来的目的地，伦敦是计划返回的地方；他现在在马德里。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 4,
+            "quote": "At the moment, he’s in Madrid."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l095",
+      "book": 1,
+      "number": 95,
+      "title": "第95课 · Tickets, please.",
+      "bodySha256": "ebe8cc9fcecad9ffafa6d6ee28d24b252bd5909622a40de416f82aa33d6035ef",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "两位乘客为什么错过了八点十九分开往伦敦的火车？",
+          "options": [
+            "火车临时改从别的站台发车",
+            "他们买的是去巴黎的车票",
+            "他们参考的钟慢了十分钟"
+          ],
+          "answer": 2,
+          "explanation": "他们以为才八点十五分，但车站说明那座钟慢了十分钟。",
+          "wrongReasons": [
+            "正文没有更换站台，误车原因是钟走慢了。",
+            "他们买的是去伦敦的往返票，目的地并未弄错。",
+            ""
+          ],
+          "evidence": {
+            "paragraphIndex": 14,
+            "quote": "That clock’s ten minutes slow."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "售票员说去伦敦的火车从几号站台出发？（填站台号，可用中英文）",
+          "answers": [
+            "two",
+            "2",
+            "二",
+            "二号",
+            "2号",
+            "Platform Two",
+            "Platform 2",
+            "二号站台"
+          ],
+          "explanation": "售票员明确回答Platform Two，并说明要过桥。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "one",
+                "1",
+                "一",
+                "一号",
+                "1号"
+              ],
+              "feedback": "正文指定的是Platform Two（二号站台），不是一号。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 3,
+            "quote": "Platform Two. Over the bridge."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l097",
+      "book": 1,
+      "number": 97,
+      "title": "第97课 · A small blue case",
+      "bodySha256": "a2c32feca5cf14caee7d59ba0c69af54e52d08b17c466fe4ecf3ce2a5baf878d",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "找回箱子的过程最后出现了什么问题？",
+          "options": [
+            "工作人员给他的仍是别人的箱子",
+            "箱子里的拉链已经全部修好",
+            "他发现自己其实从未丢过箱子"
+          ],
+          "answer": 0,
+          "explanation": "尽管核对了姓名地址并收了钱，乘客最后仍发现给错了箱子。",
+          "wrongReasons": [
+            "",
+            "正文没有维修拉链的情节，最后的抱怨是箱子不属于他。",
+            "他确实把箱子落在火车上，最后发现领到的箱子拿错了。"
+          ],
+          "evidence": {
+            "paragraphIndex": 15,
+            "quote": "This case doesn’t belong to me! You've given me the wrong case!"
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "乘客报出的Bridge Street门牌号码是多少？（填号码，可用中英文）",
+          "answers": [
+            "83",
+            "eighty-three",
+            "eighty three",
+            "八十三",
+            "83号",
+            "八十三号"
+          ],
+          "explanation": "David Hall报出的住址是Bridge Street八十三号。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "38",
+                "thirty-eight",
+                "三十八",
+                "38号"
+              ],
+              "feedback": "门牌号码是83，注意不要倒写成38。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 8,
+            "quote": "David Hall, 83, Bridge Street."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l099",
+      "book": 1,
+      "number": 99,
+      "title": "第99课 · Ow!",
+      "bodySha256": "905a26943106281643a05ed044a9e7ef908191b65bf4d7e712f31764cdac7714",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "Andy为什么无法站起来？",
+          "options": [
+            "刚刚睡醒，不想离开床",
+            "从楼梯上滑倒摔下，可能伤了背",
+            "只是鞋子太小，走路不舒服"
+          ],
+          "answer": 1,
+          "explanation": "Andy先说滑倒摔下楼梯，随后说可能伤了背，无法起身。",
+          "wrongReasons": [
+            "正文没有睡觉的情节，他说自己摔下楼梯并伤了背。",
+            "",
+            "正文不是买鞋故事，而是滑倒受伤后无法起身。"
+          ],
+          "evidence": {
+            "paragraphIndex": 4,
+            "quote": "I think that I’ve hurt my back."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "Lucy打算给哪位医生打电话？（填姓氏或医生称呼，可用中英文）",
+          "answers": [
+            "Carter",
+            "Dr. Carter",
+            "Dr Carter",
+            "卡特",
+            "卡特医生"
+          ],
+          "explanation": "Lucy说要打电话请Dr. Carter来看Andy。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "Williams",
+                "威廉斯",
+                "Smith",
+                "史密斯"
+              ],
+              "feedback": "这里请的是Carter医生，不是其他课文中的Williams或Smith。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 7,
+            "quote": "I'll phone Dr. Carter."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l101",
+      "book": 1,
+      "number": 101,
+      "title": "第101课 · A card from Jimmy",
+      "bodySha256": "3c77118aa767ee05b792abecf65f28773ca99422870605b7bbe1faff5dc4c8a4",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "母亲为什么不断让Penny把Jimmy的话再说一遍？",
+          "options": [
+            "明信片用法语写成，Penny不懂",
+            "Jimmy拒绝在卡片上写任何内容",
+            "听不清Penny念明信片的声音"
+          ],
+          "answer": 2,
+          "explanation": "母亲请Penny大点声，因为自己听不清。",
+          "wrongReasons": [
+            "正文没有法语明信片；母亲明确说听不见。",
+            "卡片上有抵达苏格兰、住旅舍和将写信等消息，并不是空白。",
+            ""
+          ],
+          "evidence": {
+            "paragraphIndex": 8,
+            "quote": "Speak up, Penny. I'm afraid I can’t hear you."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "Jimmy刚到达哪里？（填地区名，可用中英文）",
+          "answers": [
+            "Scotland",
+            "苏格兰"
+          ],
+          "explanation": "Jimmy在明信片中写自己刚到苏格兰。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "Australia",
+                "澳大利亚",
+                "England",
+                "英格兰"
+              ],
+              "feedback": "卡片上写的是Scotland（苏格兰），不是澳大利亚或英格兰。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "I have just arrived in Scotland"
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l103",
+      "book": 1,
+      "number": 103,
+      "title": "第103课 · The French test",
+      "bodySha256": "42799762b6cc4a71b95e5ce481ef1a5bda5b6ee410cce93b6ba6c20404573f71",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "考场里旁边那个人在写下姓名后做了什么？",
+          "options": [
+            "对着试卷坐了三小时，没有再写一个字",
+            "立即答完所有法语题",
+            "举手让老师给他换试卷"
+          ],
+          "answer": 0,
+          "explanation": "他只在卷首写了名字，之后看了三小时，没有继续作答。",
+          "wrongReasons": [
+            "",
+            "正文说他didn’t write a word，没有答完试题。",
+            "正文只说他坐着看试卷，并没有换试卷的行为。"
+          ],
+          "evidence": {
+            "paragraphIndex": 8,
+            "quote": "Then he sat there and looked at it for three hours! He didn’t write a word!"
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "谈到法语试卷时，说话者表示自己能答出多少道题？（填数量，可用中英文）",
+          "answers": [
+            "sixteen",
+            "16",
+            "十六",
+            "十六道",
+            "16道",
+            "sixteen questions",
+            "16 questions"
+          ],
+          "explanation": "他说能答出十六道简单题，其余题太难。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "six",
+                "6",
+                "六",
+                "六道",
+                "sixty",
+                "60",
+                "六十"
+              ],
+              "feedback": "原文是sixteen（十六），注意与six或sixty区分。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 3,
+            "quote": "I could answer sixteen of the questions."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l105",
+      "book": 1,
+      "number": 105,
+      "title": "第105课 · Full of mistakes",
+      "bodySha256": "51a2ef2af53ed485bc0afab89238aa39b2d650f43055df5d9f19caa35f5b3fbd",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "老板为什么要求Sandra重新打这封信？",
+          "options": [
+            "信的纸张颜色不合要求",
+            "信里错误很多，还把intelligent少打了一个l",
+            "Sandra把信寄给了错误的人"
+          ],
+          "answer": 1,
+          "explanation": "老板以intelligent少一个l为例，指出整封信错误很多，要求重打。",
+          "wrongReasons": [
+            "老板指出的是文字拼写等错误，没有评价纸张颜色。",
+            "",
+            "正文没有寄错收件人的情节，信还需要重新打。"
+          ],
+          "evidence": {
+            "paragraphIndex": 6,
+            "quote": "This letter’s full of mistakes. I want you to type it again."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "老板送给Sandra的小礼物是什么？（填物品，可用中英文）",
+          "answers": [
+            "dictionary",
+            "a dictionary",
+            "词典",
+            "字典"
+          ],
+          "explanation": "老板拿出一本词典，希望能帮助Sandra减少错误。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "bookcase",
+                "书架",
+                "typewriter",
+                "打字机"
+              ],
+              "feedback": "礼物是dictionary（词典），不是书架或打字机。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 10,
+            "quote": "It’s a dictionary."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l107",
+      "book": 1,
+      "number": 107,
+      "title": "第107课 · It’s too small.",
+      "bodySha256": "a64c4bcd53d7c47ceaf822c7059322388ab31d6d55ab6d322f7ec5f66cf4d65d",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "顾客为什么最后仍没买到满意的连衣裙？",
+          "options": [
+            "她完全不喜欢蓝色，只要绿色",
+            "店里没有任何连衣裙出售",
+            "她想要更大号的蓝裙，但店里最大的仍不合适"
+          ],
+          "answer": 2,
+          "explanation": "顾客要与蓝裙相同但合身的尺码；店员说明那已是店里最大的。",
+          "wrongReasons": [
+            "她明确觉得蓝裙更漂亮，希望找同款更大号，并非只要绿色。",
+            "店员展示了不止一条裙子，问题是尺码不合适。",
+            ""
+          ],
+          "evidence": {
+            "paragraphIndex": 7,
+            "quote": "This is the largest dress in the shop."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "绿色连衣裙与先看的蓝色连衣裙相比，尺码更大还是更小？（填比较结果，可用中英文）",
+          "answers": [
+            "smaller",
+            "smaller than the blue one",
+            "更小",
+            "较小",
+            "小一些",
+            "更小号",
+            "小",
+            "更小一点"
+          ],
+          "explanation": "顾客说绿色连衣裙更小，而且也不适合自己。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "larger",
+                "bigger",
+                "更大",
+                "较大"
+              ],
+              "feedback": "原文是smaller than the blue one，即比蓝裙更小，不是更大。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 4,
+            "quote": "It’s smaller than the blue one."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l109",
+      "book": 1,
+      "number": 109,
+      "title": "第109课 · A good idea",
+      "bodySha256": "9de303f67807c90ad2511b58ff2c33d355eb97ddb0d4ad4c86dd9d93e19dc61c",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "Jane想抽烟却发现烟盒空了，Charlotte随后建议什么？",
+          "options": [
+            "吃块饼干，少抽烟",
+            "马上再抽两支烟",
+            "不要再吃任何东西，只喝酒"
+          ],
+          "answer": 0,
+          "explanation": "Charlotte建议用饼干代替香烟，多吃一点、少抽一点。",
+          "wrongReasons": [
+            "",
+            "烟盒是空的，建议也是smoke less，不是再多抽两支。",
+            "正文没有劝酒，反而建议吃饼干。"
+          ],
+          "evidence": {
+            "paragraphIndex": 14,
+            "quote": "Have a biscuit instead. Eat more and smoke less!"
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "Jane希望咖啡里放多少茶匙糖？（填数量，可用中英文）",
+          "answers": [
+            "one and a half",
+            "one and a half teaspoonfuls",
+            "one and a half teaspoons",
+            "1.5",
+            "1 1/2",
+            "一茶匙半",
+            "一勺半",
+            "一又二分之一",
+            "一点五",
+            "1.5 teaspoonfuls",
+            "1.5 teaspoons",
+            "one-and-a-half teaspoons"
+          ],
+          "explanation": "两茶匙太多，她要的是一茶匙半。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "two",
+                "2",
+                "两",
+                "二",
+                "两茶匙",
+                "two teaspoonfuls"
+              ],
+              "feedback": "two teaspoonfuls是对方先提出的数量，Jane要求少一点，改为一茶匙半。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 5,
+            "quote": "One and a half teaspoonfuls, please."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l111",
+      "book": 1,
+      "number": 111,
+      "title": "第111课 · The most expensive model",
+      "bodySha256": "3028ea11041e1d3987947c5188013167b1ed42977bf35b8ef87f39873e546bb2",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "夫妻俩考虑分期付款，主要遇到什么困难？",
+          "options": [
+            "喜欢的电视机根本没有标价",
+            "更喜欢昂贵型号，但一次付清负担不起",
+            "店员说任何型号都不能分期买"
+          ],
+          "answer": 1,
+          "explanation": "他们喜欢较贵的电视机，但说不能一次承担那么多钱，因此询问分期购买。",
+          "wrongReasons": [
+            "店员已报出五百英镑的价格，困难在于负担不起。",
+            "",
+            "店员明确提供首付和每月付款的方案，并没有拒绝分期。"
+          ],
+          "evidence": {
+            "paragraphIndex": 2,
+            "quote": "We can’t afford all that money."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "店里最贵的那款电视机标价多少英镑？（填金额数字或英文数词）",
+          "answers": [
+            "500",
+            "five hundred",
+            "five hundred pounds",
+            "五百",
+            "五百英镑",
+            "500英镑",
+            "£500",
+            "500 pounds"
+          ],
+          "explanation": "最贵型号是五百英镑；三百英镑的是较便宜型号。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "300",
+                "three hundred",
+                "三百",
+                "300英镑"
+              ],
+              "feedback": "三百英镑是另一台较便宜电视机的价格，最贵型号是五百英镑。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "It costs five hundred pounds."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l113",
+      "book": 1,
+      "number": 113,
+      "title": "第113课 · Small change",
+      "bodySha256": "6bfa424bf84d6e3b3e7478fb09b6a4cb402a2749b58e9076049fd4c2117e03cc",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "售票员最初为什么要求那位乘客下车？",
+          "options": [
+            "乘客承认自己没有买票的钱",
+            "乘客买错了火车站台票",
+            "没人能替他的十英镑纸币找零"
+          ],
+          "answer": 2,
+          "explanation": "售票员和问到的乘客都不能找开大钞，因此要求他下车。",
+          "wrongReasons": [
+            "乘客有十英镑纸币，问题是缺少零钱，并非没有钱。",
+            "情节发生在公共汽车上，售票员问的是车费和零钱。",
+            ""
+          ],
+          "evidence": {
+            "paragraphIndex": 11,
+            "quote": "None of our passengers can change this note."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "持大面额纸币的乘客要坐车去哪个广场？（填地名，可用中英文）",
+          "answers": [
+            "Trafalgar Square",
+            "特拉法尔加广场",
+            "特拉法加广场"
+          ],
+          "explanation": "乘客一开始向售票员说明目的地为Trafalgar Square。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "King Street",
+                "国王街",
+                "Piccadilly",
+                "皮卡迪利"
+              ],
+              "feedback": "目的地是Trafalgar Square；本课不是去King Street问路的故事。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "Trafalgar Square, please."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l115",
+      "book": 1,
+      "number": 115,
+      "title": "第115课 · Knock, knock!",
+      "bodySha256": "5d1ee1acc0663855292c5d54a157b9aceae8557690019c295b09d744e1eb710e",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "Helen和Jim最初敲门没人回应，真正的原因是什么？",
+          "options": [
+            "大家都在花园里准备吃午饭",
+            "Carol和Tom早已搬家",
+            "午餐邀请已经取消"
+          ],
+          "answer": 0,
+          "explanation": "屋里安静不代表没有人在家；后来他们发现所有人都在花园里。",
+          "wrongReasons": [
+            "",
+            "主人后来在花园里招呼他们，没有搬家的情节。",
+            "主人仍邀请他们一起吃喝，午餐没有取消。"
+          ],
+          "evidence": {
+            "paragraphIndex": 6,
+            "quote": "Everyone's in the garden."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "Carol声称没有啤酒，是在开玩笑还是认真说明？（填“开玩笑”或“认真”，可用英文）",
+          "answers": [
+            "joking",
+            "a joke",
+            "only joking",
+            "开玩笑",
+            "玩笑"
+          ],
+          "explanation": "随后有人明确说她只是在开玩笑，并请Jim喝啤酒。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "serious",
+                "认真",
+                "认真的",
+                "really none left",
+                "真的没有了"
+              ],
+              "feedback": "“没有啤酒”只是玩笑，后面明确说She’s only joking。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 13,
+            "quote": "She's only joking."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l117",
+      "book": 1,
+      "number": 117,
+      "title": "第117课 · Tommy’s breakfast",
+      "bodySha256": "faf347c69fd155f13024038bab02b9f6485e829f0e8e36c2f613eb7adaab5f77",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "Tommy在早餐时把捡到的硬币怎样处理了？",
+          "options": [
+            "交给父亲，让父亲带去办公室",
+            "放进嘴里并已经吞下",
+            "藏进了餐桌抽屉"
+          ],
+          "answer": 1,
+          "explanation": "父母想取出硬币时已来不及，Tommy已经吞下去了。",
+          "wrongReasons": [
+            "父亲后来从办公室打电话，但孩子并没有把硬币交给他。",
+            "",
+            "正文说硬币进了嘴并被吞下，没有藏抽屉的情节。"
+          ],
+          "evidence": {
+            "paragraphIndex": 3,
+            "quote": "Tommy had already swallowed them!"
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "Tommy从地板上捡到几枚小硬币？（填数量，可用中英文）",
+          "answers": [
+            "two",
+            "2",
+            "两",
+            "二",
+            "两枚",
+            "2枚",
+            "two coins",
+            "2 coins",
+            "two small coins"
+          ],
+          "explanation": "母亲说Tommy在早餐时找到了two small coins。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "three",
+                "3",
+                "三",
+                "三枚"
+              ],
+              "feedback": "三次说的是Tommy后来去厕所的次数；捡到的是两枚硬币。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 2,
+            "quote": "Tommy, found two small coins on the floor."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l119",
+      "book": 1,
+      "number": 119,
+      "title": "第119课 · A true story",
+      "bodySha256": "dac0058b01ab4c29197745d818ad2a24abbec3c0a122870f8997849d9a455cc3",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "最后揭示，吓跑窃贼的说话声来自谁？",
+          "options": [
+            "埋伏在餐厅的警察",
+            "George在厨房大喊",
+            "George的鹦鹉"
+          ],
+          "answer": 2,
+          "explanation": "结尾George与鹦鹉对话，揭示是它的声音把窃贼吓跑。",
+          "wrongReasons": [
+            "正文没有警察埋伏，最后出现的是会说话的鹦鹉。",
+            "George听见声响后才下楼；吓跑窃贼的声音来自鹦鹉。",
+            ""
+          ],
+          "evidence": {
+            "paragraphIndex": 6,
+            "quote": "But George's parrot, Henry, was still there."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "George的鹦鹉叫什么名字？（填人名，可用中英文）",
+          "answers": [
+            "Henry",
+            "亨利"
+          ],
+          "explanation": "正文称这只鹦鹉为Henry。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "George",
+                "乔治"
+              ],
+              "feedback": "George是房主，鹦鹉的名字是Henry。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 6,
+            "quote": "George's parrot, Henry"
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l121",
+      "book": 1,
+      "number": 121,
+      "title": "第121课 · The man in a hat",
+      "bodySha256": "50be89e14f4d5618834c2f1f4589ee5c002f480945b6198f48c3f227a3b2eb08",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "Caroline怎样终于认出了买词典的顾客？",
+          "options": [
+            "顾客按要求戴上帽子后，她认出来了",
+            "顾客换上店员的制服后，她认出来了",
+            "顾客重新买了一大套书后，她才认出来"
+          ],
+          "answer": 0,
+          "explanation": "Caroline记得先前的顾客戴帽子，所以请他戴上帽子后认出了他。",
+          "wrongReasons": [
+            "",
+            "没有换制服的情节，Caroline记得顾客戴着帽子。",
+            "他是回来取之前忘拿的书，没有重新买一大套书来证明身份。"
+          ],
+          "evidence": {
+            "paragraphIndex": 12,
+            "quote": "Yes. I recognize him now."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "这位顾客先前买了几本词典？（填数量，可用中英文）",
+          "answers": [
+            "two",
+            "2",
+            "两",
+            "二",
+            "两本",
+            "2本",
+            "two dictionaries",
+            "2 dictionaries"
+          ],
+          "explanation": "他开头说自己半小时前买了two expensive dictionaries。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "one",
+                "1",
+                "一",
+                "一本"
+              ],
+              "feedback": "买的是two dictionaries（两本词典），不是一本。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 0,
+            "quote": "I bought two expensive dictionaries here half an hour ago"
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l123",
+      "book": 1,
+      "number": 123,
+      "title": "第123课 · A trip to Australia",
+      "bodySha256": "183a1b6f10852fc327d5599f865b3413ddea1ab5e7eec4b81abc8516f5a2fe52",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "Mike为什么回家后把旅行中留的胡子剃掉了？",
+          "options": [
+            "照片里的雇主要求他剃掉",
+            "妻子不喜欢他的胡子",
+            "Scott认为这样会显得更年轻"
+          ],
+          "answer": 1,
+          "explanation": "被问为什么剃胡子时，Mike回答My wife didn’t like it。",
+          "wrongReasons": [
+            "照片里的男子提供过工作，但剃胡子的原因是妻子不喜欢。",
+            "",
+            "正文没有Scott给出这种建议，Mike直接说妻子不喜欢。"
+          ],
+          "evidence": {
+            "paragraphIndex": 16,
+            "quote": "My wife didn’t like it!"
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "Mike旅行时乘坐的是哪种交通工具？（填交通工具，可用中英文）",
+          "answers": [
+            "ship",
+            "a ship",
+            "the ship",
+            "轮船",
+            "船"
+          ],
+          "explanation": "Mike指着照片介绍了他们旅行乘坐的船。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "plane",
+                "aeroplane",
+                "airplane",
+                "飞机"
+              ],
+              "feedback": "文中照片显示的是他们乘坐的ship（轮船），不是飞机。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 4,
+            "quote": "That’s the ship we travelled on."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l125",
+      "book": 1,
+      "number": 125,
+      "title": "第125课 · Tea for two",
+      "bodySha256": "794bbd683cf4ced8bb0eb71f1816c5fe582e70422a3b3cdf7b15bfcc2ec5a236",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "Peter为什么最后不用继续浇花园，可以去喝茶了？",
+          "options": [
+            "花园里的植物已经全部枯死",
+            "有人把花园搬走了",
+            "外面下雨了，花园不再需要他浇水"
+          ],
+          "answer": 2,
+          "explanation": "对方看见下雨，指出这意味着不用再浇花园，Peter便能喝茶。",
+          "wrongReasons": [
+            "正文没有植物全部枯死，而是刚好下雨了。",
+            "没有搬走花园的情节，转折是下雨。",
+            ""
+          ],
+          "evidence": {
+            "paragraphIndex": 9,
+            "quote": "It’s raining! That means you don’t need to water the garden."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "Peter回忆上一个干燥的夏季时，说多久就必须浇一次花园？（填频率，可用中英文）",
+          "answers": [
+            "every day",
+            "daily",
+            "each day",
+            "每天",
+            "天天",
+            "每日"
+          ],
+          "explanation": "他回忆去年夏天也很干燥，需要每天浇花园。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "once a week",
+                "weekly",
+                "每周一次",
+                "一周一次"
+              ],
+              "feedback": "原文是every day（每天），不是每周一次。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 5,
+            "quote": "I had to water it every day."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l127",
+      "book": 1,
+      "number": 127,
+      "title": "第127课 · A famous actress",
+      "bodySha256": "b8b9f08eb923d628f10aa0bcea98e3f53c739d9df70f27aa5866985080ef1a37",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "谈话者用什么经历说明Karen Marsh早已成名？",
+          "options": [
+            "自己还在上学时，她就已是著名演员",
+            "她昨天才第一次出演电影",
+            "她刚在学校演出中获得奖品"
+          ],
+          "answer": 0,
+          "explanation": "对话中有人说自己仍在上学时，Karen就已是著名女演员。",
+          "wrongReasons": [
+            "",
+            "对话恰好强调成名很早，并非昨天刚出道。",
+            "正文没有学校演出获奖的情节，提到的是说话者当时还在上学。"
+          ],
+          "evidence": {
+            "paragraphIndex": 9,
+            "quote": "She was a famous actress when I was still at school."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "Karen Marsh旁边的男演员叫什么名字？（填英文姓名或常用中文译名）",
+          "answers": [
+            "Conrad Reeves",
+            "康拉德·里夫斯",
+            "康拉德里夫斯",
+            "康拉德·里夫兹",
+            "康拉德里夫兹"
+          ],
+          "explanation": "她旁边的人被认作男演员Conrad Reeves。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "Karen Marsh",
+                "卡伦马什",
+                "凯伦马什"
+              ],
+              "feedback": "Karen Marsh是女演员；旁边的男演员是Conrad Reeves。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 3,
+            "quote": "That must be Conrad Reeves."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l129",
+      "book": 1,
+      "number": 129,
+      "title": "第129课 · Seventy miles an hour",
+      "bodySha256": "7e6b2085fd70520f9d22ac3e4cb543952920e5d6fb29a0c74f3ca7d4fa7e1aad",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "警察最后怎样处理Gary这次的超速行为？",
+          "options": [
+            "立即没收汽车并判他坐牢",
+            "这次不处罚，但警告不能再犯",
+            "允许他今后一直以每小时七十英里行驶"
+          ],
+          "answer": 1,
+          "explanation": "警察说I won’t charge you this time，随后警告不能再犯。",
+          "wrongReasons": [
+            "正文没有没收汽车或坐牢，警察说这次不予处罚。",
+            "",
+            "警察警告不要再犯，并没有允许今后这样驾驶。"
+          ],
+          "evidence": {
+            "paragraphIndex": 9,
+            "quote": "I won’t charge you this time. But you’d better not do it again!"
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "警察要求Gary出示什么证件？（填证件名称，可用中英文）",
+          "answers": [
+            "driving licence",
+            "driving license",
+            "driver’s licence",
+            "driver’s license",
+            "drivers licence",
+            "drivers license",
+            "驾照",
+            "驾驶证"
+          ],
+          "explanation": "警察要求查看驾驶执照。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "passport",
+                "护照",
+                "ticket",
+                "车票"
+              ],
+              "feedback": "本课是交通执法，要求的是driving licence，不是护照或车票。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 8,
+            "quote": "Let me see your driving licence."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l131",
+      "book": 1,
+      "number": 131,
+      "title": "第131课 · Don’t be so sure!",
+      "bodySha256": "d403899c1a27297cd687d6f8b61f577fd5664a2e6e2f671b2eed9340ed6aea94",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "Gary一家为什么往年常常最后没有出游？",
+          "options": [
+            "他们已经确定每年都乘飞机出国",
+            "他们从来都不愿去国外任何地方",
+            "妻子担心家、狗和花园无人照料，最终留在家里"
+          ],
+          "answer": 2,
+          "explanation": "Gary说妻子总担心谁来照看一切，结果他们每年最终在家照料。",
+          "wrongReasons": [
+            "今年是否出游尚未确定，往年往往留在家里，不能说每年已确定去埃及。",
+            "夫妇都想去埃及；问题是对照看家中事物的担心阻碍了出行。",
+            ""
+          ],
+          "evidence": {
+            "paragraphIndex": 7,
+            "quote": "In the end, we stay at home and look after everything!"
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "Gary的妻子今年想去哪个国家度假？（填国家名，可用中英文）",
+          "answers": [
+            "Egypt",
+            "埃及"
+          ],
+          "explanation": "Gary说妻子想去埃及，自己也想去，但还没有决定。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "Greece",
+                "希腊",
+                "Australia",
+                "澳大利亚"
+              ],
+              "feedback": "想去的地方是Egypt（埃及），并不是本书其他旅行中出现的国家。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "My wife wants to go to Egypt."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l133",
+      "book": 1,
+      "number": 133,
+      "title": "第133课 · Sensational news!",
+      "bodySha256": "99b75bcdac00e89ace10a590007ece511ae28cebdbed92ab5ea6a35990b25206",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "Karen Marsh说暂时不想再拍电影，给出的理由是什么？",
+          "options": [
+            "觉得非常疲倦，打算退休",
+            "电影胶片全部丢失，无法拍摄",
+            "她刚刚决定加入新的电影公司"
+          ],
+          "answer": 0,
+          "explanation": "她说自己很累，打算退休，很长一段时间不想再拍电影。",
+          "wrongReasons": [
+            "",
+            "正文没有胶片丢失，她说明的是疲倦和退休打算。",
+            "她说不想再拍一段时间，而不是宣布加入新公司。"
+          ],
+          "evidence": {
+            "paragraphIndex": 3,
+            "quote": "I’m going to retire. I feel very tired."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "报纸上这篇关于Karen Marsh的报道署名记者是谁？（填英文姓名或常用中文译名）",
+          "answers": [
+            "Alan Jones",
+            "艾伦·琼斯",
+            "艾伦琼斯",
+            "阿兰·琼斯",
+            "阿兰琼斯"
+          ],
+          "explanation": "读出的报道写着By our reporter, Alan Jones。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "Carlos",
+                "卡洛斯",
+                "Karen Marsh",
+                "卡伦马什"
+              ],
+              "feedback": "Carlos是后续报道中的未婚夫，Karen是受访者；本篇记者叫Alan Jones。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 4,
+            "quote": "By our reporter, Alan Jones."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l135",
+      "book": 1,
+      "number": 135,
+      "title": "第135课 · The latest report",
+      "bodySha256": "f006908a93400f42b5158f3263e58fcf9493de51c29239b56cc3fb8ed63c5f94",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "最新报道中，Karen Marsh对退休的态度有什么变化？",
+          "options": [
+            "已经确定永远不会退休",
+            "说可能退休，尚未决定，还要问未来的丈夫",
+            "宣布必须马上与未婚夫分开"
+          ],
+          "answer": 1,
+          "explanation": "她现在说自己可能退休，还拿不定主意，需要征询未来丈夫。",
+          "wrongReasons": [
+            "她使用may，并说明无法决定，不能说已确定绝不退休。",
+            "",
+            "她介绍Carlos是未来丈夫，计划下周结婚，并没有离婚。"
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "I may. I can’t make up my mind. I will have to ask my future husband."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "Karen Marsh介绍的未来丈夫叫什么名字？（填人名，可用中英文）",
+          "answers": [
+            "Carlos",
+            "卡洛斯"
+          ],
+          "explanation": "她把未来的丈夫介绍给记者，说His name is Carlos。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "Alan Jones",
+                "艾伦琼斯",
+                "Conrad Reeves",
+                "康拉德里夫斯"
+              ],
+              "feedback": "Alan Jones是记者，Conrad Reeves出现在较早的谈话中；这次介绍的未来丈夫是Carlos。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 3,
+            "quote": "His name is Carlos."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l137",
+      "book": 1,
+      "number": 137,
+      "title": "第137课 · A pleasant dream",
+      "bodySha256": "abc687a207577b7fb66ceca71032d1f45f59c61da5b596d84c3a49f84cf8fe29",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "Brian和Julie设想环游世界、买乡间大房子的前提是什么？",
+          "options": [
+            "他们已经拿到了奖金，正在花钱",
+            "先把现住的房子送给邻居",
+            "先赢得一大笔足球彩票奖金"
+          ],
+          "answer": 2,
+          "explanation": "谈话反复使用If we win a lot of money，结尾也强调一切取决于if。",
+          "wrongReasons": [
+            "整段都在用if设想中奖之后的事，并没有说已拿到奖金。",
+            "正文没有赠送房子的安排，所有计划依赖中奖。",
+            ""
+          ],
+          "evidence": {
+            "paragraphIndex": 5,
+            "quote": "If we win a lot of money we'll travel round the world"
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "Brian最先答应中奖后给Julie买什么衣物，而她表示不要？（填衣物名称，可用中英文）",
+          "answers": [
+            "mink coat",
+            "a mink coat",
+            "貂皮大衣",
+            "貂皮外套"
+          ],
+          "explanation": "Brian先说要买貂皮大衣，Julie则表示不要，希望看看世界。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "dress",
+                "a dress",
+                "连衣裙"
+              ],
+              "feedback": "最初许诺的礼物是mink coat（貂皮大衣），不是连衣裙。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 3,
+            "quote": "I'll buy you a mink coat."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l139",
+      "book": 1,
+      "number": 139,
+      "title": "第139课 · Is that you, John?",
+      "bodySha256": "8547111c3e95c8d19c48a12b7362c62efc6b570bec749fd77c906784290256ef",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "这通电话为什么始终让接听的人摸不着头脑？",
+          "options": [
+            "接听者虽也叫John Smith，却是正在修电话线的工程师",
+            "接听者完全不会英语",
+            "晚餐主人已经搬到国外"
+          ],
+          "answer": 0,
+          "explanation": "来电者认错同名的John Smith，接听者是电话工程师，不是预期的晚餐主人。",
+          "wrongReasons": [
+            "",
+            "对话中接听者能用英语回应；问题在于认错了同名的人。",
+            "正文没有搬家，最后揭示接听者是修电话线的人。"
+          ],
+          "evidence": {
+            "paragraphIndex": 11,
+            "quote": "I'm John Smith the telephone engineer and I'm repairing your telephone line."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "来电者原先答应晚上几点到对方家吃饭？（填时间，可用数字、中英文）",
+          "answers": [
+            "six",
+            "6",
+            "6 p.m.",
+            "6 pm",
+            "18:00",
+            "six o’clock",
+            "six oclock",
+            "六点",
+            "晚上六点",
+            "six p.m.",
+            "six pm",
+            "6:00 p.m."
+          ],
+          "explanation": "他本来答应六点到，但老板要他加班，所以会晚到。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "seven",
+                "7",
+                "19:00",
+                "七点",
+                "晚上七点"
+              ],
+              "feedback": "原先约定的是six o’clock（六点）；不要把其他课文的七点晚餐时间带进来。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 4,
+            "quote": "I said I would be at your house at six o’clock"
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l141",
+      "book": 1,
+      "number": 141,
+      "title": "第141课 · Sally’s first train ride",
+      "bodySha256": "f8ba8e6a1dd2ad54504e5789a010463d5c7e1c1e7a130f4f5a8cfc274b81a0d8",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "Sally为什么让叙述者感到尴尬？",
+          "options": [
+            "她把女士的手提包扔出窗外",
+            "她当面说化过妆的女士仍然很丑",
+            "她要求火车立刻停在自己家门口"
+          ],
+          "answer": 1,
+          "explanation": "女士说化妆是为了变美，Sally却说她仍然丑，这让叙述者很尴尬。",
+          "wrongReasons": [
+            "正文没有扔手提包，尴尬来自她当面说的话。",
+            "",
+            "她会对所见的一切提问，但没有让火车停在家门口的请求。"
+          ],
+          "evidence": {
+            "paragraphIndex": 0,
+            "quote": "‘But you are still ugly,’ Sally said."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "第一次乘火车的Sally几岁？（填年龄，可用中英文）",
+          "answers": [
+            "four",
+            "4",
+            "四",
+            "四岁",
+            "4岁",
+            "four years old",
+            "4 years old"
+          ],
+          "explanation": "开头称她为my four-year-old daughter。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "five",
+                "5",
+                "五",
+                "五岁"
+              ],
+              "feedback": "Sally的年龄是four（四岁），不是五岁。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 0,
+            "quote": "my four-year-old daughter, Sally"
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l143",
+      "book": 1,
+      "number": 143,
+      "title": "第143课 · A walk through the woods",
+      "bodySha256": "4262c8aa450e6b3ad285a20e7779605161d2eedaa2cc6f2a025203d71df5df16",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "叙述者在树林中看到的情况，与“保持清洁”的要求怎样冲突？",
+          "options": [
+            "垃圾筐装得很满，地上一点垃圾也没有",
+            "游客已经把旧汽车和所有垃圾全部清走",
+            "垃圾筐空着，地上却到处都是垃圾"
+          ],
+          "answer": 2,
+          "explanation": "虽然要求游客保持整洁并放了垃圾筐，垃圾筐却是空的，地上堆满垃圾。",
+          "wrongReasons": [
+            "正文恰好相反：垃圾筐是空的，地面却被垃圾覆盖。",
+            "他亲眼数到旧车和冰箱，不能说已经全部清走。",
+            ""
+          ],
+          "evidence": {
+            "paragraphIndex": 0,
+            "quote": "The litter baskets were empty and the ground was covered with pieces of paper"
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "叙述者在树林里数到了几辆旧汽车？（填数量，可用中英文）",
+          "answers": [
+            "seven",
+            "7",
+            "七",
+            "七辆",
+            "7辆",
+            "seven cars",
+            "7 cars",
+            "seven old cars"
+          ],
+          "explanation": "他数到七辆旧汽车和三台旧冰箱，数量不能混淆。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "three",
+                "3",
+                "三",
+                "三辆"
+              ],
+              "feedback": "三是旧冰箱的数量；旧汽车有seven（七）辆。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 0,
+            "quote": "I counted seven old cars and three old refrigerators."
+          }
+        }
+      ]
+    }
+  ]
+}

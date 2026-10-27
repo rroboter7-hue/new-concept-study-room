@@ -1,6 +1,6 @@
 {
-  "build": "2026-10-27-bilingual-v2",
-  "preparedAt": "2026-10-27T02:04:48.200660+00:00",
+  "build": "2026-10-27-checked-recall",
+  "preparedAt": "2026-10-27T02:30:00.683025+00:00",
   "book2": {
     "book": 2,
     "total": 96,
@@ -336,5 +336,23 @@
     "nativeModal": true,
     "grammarChecksRemainFinite": true,
     "reviewedSourceCorrections": 7
+  },
+  "lessonRecall": {
+    "lessons": 276,
+    "questions": 552,
+    "choice": 276,
+    "short": 276,
+    "source": "self-authored-with-exact-passage-evidence",
+    "grading": "exact-closed-fact-aliases-and-specific-misconceptions",
+    "unmatchedParaphrases": "needs-check",
+    "savedIndependently": true
+  },
+  "performance": {
+    "lazyTextLibrary": true,
+    "startupScriptBytesBefore": 9931828,
+    "textLibraryBytesBefore": 2654682,
+    "audioDelivery": "build-time-mp3-derivatives",
+    "repositoryOriginalAudioPreserved": true,
+    "sizeReport": "delivery-report.json"
   }
 }
