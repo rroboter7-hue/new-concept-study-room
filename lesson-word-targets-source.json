@@ -111,6 +111,18 @@
       "sha256": "e4d64498044cb4829d96f9493ed318beb07b055acad30276f3f4e9bc6a96919d"
     },
     {
+      "file": "book2-lexical-source-corrections-32-34.js",
+      "sha256": "47f55f3c4caf75f5adee93aedb5fb6deba5cc77106d1dc6481873da4b03fc785"
+    },
+    {
+      "file": "book2-reviewed-usage-26-30.js",
+      "sha256": "bbf74e3f6e5419b3b4920047a5094c60d06f9f0ce58032efd97ffe64ecf9ce27"
+    },
+    {
+      "file": "reviewed-usage-registry.js",
+      "sha256": "75490adbd9dbea8f2034b96a55f4ae6f5afddfd2b0d7fd8ccb9a879130980b06"
+    },
+    {
       "file": "book2-practice-packs.js",
       "sha256": "7902be0d72c74e10ba627738c9ce02afb8c08343b99931eabb20266a4c504b37"
     },
@@ -216,7 +228,7 @@
     },
     {
       "file": "review-engine.js",
-      "sha256": "53427bc5143792860a5e93155d5271f5023574ba268915fbd88caede9254b779"
+      "sha256": "ad39d91c5265dd624fec349aecea0e3b9a53e93cc556ad2770459052ef833b7c"
     },
     {
       "file": "review-practice.js",
@@ -304,7 +316,7 @@
     },
     {
       "file": "phrase-practice.js",
-      "sha256": "4573c17131696ebd51847e66e6af67d7c4023fc31ce3c5dce63e234289d75eac"
+      "sha256": "39904fa4b155997919e9d4a7c83ab97b3b040d165770d87c51cf602a82b11e9f"
     },
     {
       "file": "text-reader.js",
@@ -3768,8 +3780,8 @@
   ],
   "artifact": {
     "file": "lesson-word-targets.js",
-    "sha256": "82352ea297670e5eb45b09009e75bedf4fbb89cfc296238ff90ce54874d5cc8c",
-    "bytes": 3451688,
+    "sha256": "4e4757e18f9c8181810bd1ece307a98ee4a599d89dd0344af61059a52dfdd181",
+    "bytes": 3452048,
     "hashEncoding": "utf8-lf"
   },
   "rebuild": "node dev/build-lesson-word-targets.cjs (offline; existing dictionary-data shards only)"

@@ -52,6 +52,7 @@ async function harness({pilot=true,loaded={},realFormalShell=false,realCoach=fal
  real.add('dictionary-context.js');
  ['book2-reviewed-example-corrections.js','book2-reviewed-usage-21-25.js','book2-lexical-source-corrections-26-27.js','ordinal-audio-alias-correction.js'].forEach(file=>real.add(file));
  real.add('source-files.js');['study-storage.js','mistake-history.js','context-meanings.js'].forEach(file=>real.add(file));
+ ['book2-reviewed-usage-26-30.js','reviewed-usage-registry.js','book2-lexical-source-corrections-32-34.js'].forEach(file=>real.add(file));
  if(realOutput)real.add('output-practice.js');
  if(realCoach)['learning-coach-core.js','learning-coach.js','sentence-core.js'].forEach(file=>real.add(file));
  const scripts=Array.from(read('index.html').matchAll(/<script\b([^>]*)\bsrc="([^"]+)"[^>]*>/g),m=>m[2].split('?')[0]);for(const script of scripts)if(real.has(script))vm.runInContext(read(script),c,{filename:script});

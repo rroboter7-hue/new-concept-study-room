@@ -21,3 +21,6 @@ tests/fixtures/reviewed25-before-lessons30-baseline.json text eol=lf
 
 # Context review companion has a pinned raw-byte checksum.
 context-meanings-review.tsv text eol=lf
+
+# Frozen sourcefix30 compatibility fixture.
+tests/fixtures/reviewed30-before-sourcefix-baseline.json text eol=lf

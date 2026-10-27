@@ -1,6 +1,6 @@
 {
   "build": "2026-10-27-worksheet",
-  "preparedAt": "2026-10-27T09:29:50.537Z",
+  "preparedAt": "2026-10-27T09:33:20.782Z",
   "book2": {
     "book": 2,
     "total": 96,
@@ -41,8 +41,8 @@
   },
   "learning": {
     "canonicalAnswers": true,
-    "translatedLessons": 204,
-    "translatedParagraphs": 485,
+    "translatedLessons": 276,
+    "translatedParagraphs": 1244,
     "pilotQuery": "pilot=1",
     "pilotLessons": [
       1,
@@ -258,10 +258,60 @@
       "humanListeningClaimed": false,
       "globalNounAudioPreserved": true
     },
-    "activeBook2Usage": 440
+    "activeBook2Usage": 439,
+    "reviewedUsage26To30": {
+      "lessons": 5,
+      "originalItemsPreserved": 27,
+      "activeExpressions": 26,
+      "archivedFragments": 1,
+      "completeOriginalExamplesPreserved": 26,
+      "grammarNotes": 16,
+      "originalGrammarReviewCards": 5,
+      "learnOnlyPatterns": 6,
+      "originalGrammarAndPackRevisionsPreserved": true,
+      "scoredReviewSharesApprovalGate": true
+    },
+    "sourceLexicalCorrections32To34": {
+      "words": [
+        {
+          "lesson": 32,
+          "word": "once",
+          "pos": "adv."
+        },
+        {
+          "lesson": 33,
+          "word": "light",
+          "pos": "n.",
+          "meaning": "灯光；光"
+        },
+        {
+          "lesson": 34,
+          "word": "station",
+          "pos": "n."
+        },
+        {
+          "lesson": 34,
+          "word": "most",
+          "pos": "adv.",
+          "meaning": "非常；极其"
+        }
+      ],
+      "originalRecordsRetained": true,
+      "correctedBaseWordAnswers": 2,
+      "existing877ExpansionBindingsPreserved": true
+    },
+    "reviewedUsageRegistry": {
+      "providers": [
+        "21–25",
+        "26–30"
+      ],
+      "actualLessonContextRequired": true,
+      "unconfirmedWritingDraftRetained": true,
+      "unknownOrAmbiguousOwnersRejected": true
+    }
   },
-  "staticFiles": 4066,
-  "staticBytes": 736009218,
+  "staticFiles": 4072,
+  "staticBytes": 737690645,
   "nativeearsAdvancedAudio": {
     "books": {
       "3": 60,
