@@ -6,7 +6,7 @@ const vm = require('node:vm');
 
 const directory = path.resolve(__dirname, '..');
 
-function setup({drafts = {}, failSave = false, copyText = async () => {}, guided = '', grammarCheck} = {}) {
+function setup({drafts = {}, failSave = false, copyText = async () => {}, guided = '', grammarCheck, getLessonDrafts} = {}) {
   const handlers = {}, timers = new Map(), fields = new Map(), copies = [], downloads = [], notices = [];
   let serial = 0, current = {id:'now',title:'Books'}, failing = failSave;
   const root = {innerHTML:'',querySelector(selector) {
@@ -26,7 +26,7 @@ function setup({drafts = {}, failSave = false, copyText = async () => {}, guided
   const ui = new scope.BatchSentencePractice({getLesson:()=>current,getDraft:id=>drafts[id],
     saveDraft(id,draft){if(failing)return false;drafts[id]=JSON.parse(JSON.stringify(draft));return true;},
     grammarCheck:grammarCheck || (text=>scope.StudyGrammar.check(text)),sentenceCheck:options=>scope.StudySentences.check(options),
-    getGuidedText:()=>guided,toast:message=>notices.push(message),
+    getGuidedText:()=>guided,getLessonDrafts,toast:message=>notices.push(message),
     copyText:async text=>{copies.push(text);return copyText(text);},downloadText:(name,text)=>downloads.push({name,text})});
   const render=()=>{root.innerHTML=ui.render();return root.innerHTML;};
   function event(kind,dataset,value,{inside=true}={}) {
@@ -39,6 +39,23 @@ function setup({drafts = {}, failSave = false, copyText = async () => {}, guided
     mode:value=>event('change',{batchSelect:'mode'},value),click:action=>event('click',{batchAction:action}),
     finish(){while(next(0)){}},setLesson:value=>{current=value;},setFailure:value=>{failing=value;}};
 }
+
+test('whole-lesson import preserves manual writing, distinguishes free sentences and skips unchanged repeat imports',async()=>{
+ const bundles=[{sourceKey:'one',lessonId:'now',mode:'transform',target:{word:'book'},answers:{affirmative:'I have a book.',negative:'I do not have a book.'},selectedOldItems:[{word:'teacher',category:'noun'}]},{sourceKey:'two',lessonId:'now',mode:'flexible',target:{word:'pen'},answers:{affirmative:'A blue pen lies here.',negative:'My teacher borrowed a pen.'},selectedOldItems:[]},{sourceKey:'other',lessonId:'next',mode:'transform',target:{word:'alien'},answers:{affirmative:'This belongs to another lesson.'}}];
+ const requested=[],h=setup({getLessonDrafts:lesson=>{requested.push(lesson.id);return bundles;}});h.render();h.input('My manual sentence.');h.input('Keep these notes.','notes');
+ await h.click('lesson');const first=h.ui.active.draft.rawText;assert(first.startsWith('My manual sentence.'));assert.match(first,/A blue pen lies here/);assert.doesNotMatch(first,/another lesson/);assert.equal(h.ui.active.draft.notes,'Keep these notes.');
+ const parsed=h.ui.parseCurrent();assert.equal(parsed.rows.length,5);assert.equal(parsed.rows.filter(r=>r.kind==='free').length,3);assert.equal(parsed.rows.find(r=>r.kind==='negative').sourceOriginal,'I have a book.');
+ await h.click('lesson');assert.equal(h.ui.active.draft.rawText,first);assert.deepEqual(requested,['now','now']);assert.match(h.notices.join('\n'),/重复|已在|无需/);
+});
+
+test('one-click complete copy includes every sentence even beyond the segmented prompt size',async()=>{
+ const h=setup();h.render();h.input(Array.from({length:180},(_,i)=>`I wrote sentence ${i} about ${'books '.repeat(16)}.`).join('\n'));
+ await h.click('copy-all');assert.equal(h.copies.length,1);const text=h.copies[0],payload=JSON.parse(text.split('BEGIN_STUDY_SENTENCE_DATA_JSON\n')[1]);assert.equal(payload.rows.length,180);assert.match(payload.rows.at(-1).text,/sentence 179/);assert.equal(payload.lessonTitle,'Books');assert.match(h.ui.progress,/全部|180/);
+});
+
+test('a failed complete copy leaves the entire prompt available for manual copying',async()=>{
+ const h=setup({copyText:async()=>{throw Error('denied');}});h.render();h.input('First sentence.\nLast sentence.');await h.click('copy-all');assert.equal(h.ui.manualText,h.copies[0]);assert.match(h.render(),/readonly/);assert.match(h.ui.manualText,/Last sentence/);
+});
 
 test('standalone UI accepts arbitrary lines, escapes text, and ignores events outside its section',()=>{
   const h=setup();let html=h.render();

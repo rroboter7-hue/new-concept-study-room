@@ -17,6 +17,9 @@
     value = object(value);
     var result = {};
     ['target', 'oldWord', 'oldPhrase'].forEach(function (key) { if (typeof value[key] === 'string') result[key] = value[key]; });
+    ['oldWords', 'oldPhrases'].forEach(function (key) {
+      if (Array.isArray(value[key])) result[key] = value[key].filter(function (item) { return typeof item === 'string'; });
+    });
     return result;
   }
   function sanitizeDraft(value) {
@@ -26,25 +29,76 @@
 
   var LABELS = {
     '原句': 'affirmative', '肯定句': 'affirmative', '否定句': 'negative', '一般疑问句': 'yesno', '特殊疑问句': 'wh',
-    '综合句': 'combined', '综合造句': 'combined', '旧知综合句': 'combined', '旧知综合造句': 'combined',
+    '综合句': 'combined', '综合造句': 'combined', '旧知综合句': 'combined', '旧知综合造句': 'combined', '自由句': 'free',
     'original': 'affirmative', 'affirmative': 'affirmative', 'affirmative sentence': 'affirmative',
     'negative': 'negative', 'negative sentence': 'negative', 'yes/no question': 'yesno', 'yes-no question': 'yesno',
     'general question': 'yesno', 'wh question': 'wh', 'wh-question': 'wh', 'combined': 'combined', 'combined sentence': 'combined',
-    '目标词': 'target', '旧词': 'oldWord', '旧用法': 'oldPhrase', '旧短语': 'oldPhrase',
+    '目标词': 'target', '旧词': 'oldWord', '旧用法': 'oldPhrase', '旧短语': 'oldPhrase', '旧词列表': 'oldWords', '旧用法列表': 'oldPhrases',
     'target': 'target', 'target word': 'target', 'old word': 'oldWord', 'old phrase': 'oldPhrase'
   };
+  function expression(value, fallback) {
+    value = object(value);
+    return [value.word, value.phrase, value.label, fallback].find(function (item) { return typeof item === 'string' && item.trim(); }) || '';
+  }
+  function lessonImportBlocks(bundles) {
+    var labels = ['原句', '否定句', '一般疑问句', '特殊疑问句', '旧知综合句'];
+    return (Array.isArray(bundles) ? bundles : []).reduce(function (blocks, bundle) {
+      bundle = object(bundle);
+      var answers = object(bundle.answers), lines = [], rowCount = 0, oldWords = [], oldPhrases = [];
+      var target = expression(bundle.target, bundle.targetKey);
+      // JSON strings prevent multiline/context-looking targets from injecting
+      // a new label. Plain words remain convenient to read and edit.
+      if (target) lines.push('目标词：' + (/[\r\n]/.test(target) || /^\s*"/.test(target) || target !== target.trim() ? quotedJSON(target) : target));
+      (Array.isArray(bundle.selectedOldItems) ? bundle.selectedOldItems : []).forEach(function (item) {
+        item = object(item);
+        var text = expression(item);
+        if (!text) return;
+        var phrase = item.category === 'phrase' || item.kind === 'phrase' || typeof item.phrase === 'string' && !item.word;
+        (phrase ? oldPhrases : oldWords).push(text);
+      });
+      if (oldWords.length) lines.push('旧词列表：' + quotedJSON(oldWords));
+      if (oldPhrases.length) lines.push('旧用法列表：' + quotedJSON(oldPhrases));
+      KINDS.forEach(function (kind, index) {
+        var answer = string(answers[kind]);
+        if (!answer.trim()) return;
+        var answerLines = answer.split(/\r\n|\r|\n/);
+        lines.push((bundle.mode === 'flexible' || bundle.mode === 'phrase' ? '自由句' : labels[index]) + '：' + answerLines[0]);
+        answerLines.slice(1).forEach(function (line) { lines.push('    ' + line); });
+        rowCount += 1;
+      });
+      if (rowCount) blocks.push({ sourceKey: string(bundle.sourceKey), text: lines.join('\n'), rowCount: rowCount });
+      return blocks;
+    }, []);
+  }
   function parse(rawText, mode) {
-    var rows = [], groups = [], notices = [], current = null, pendingContext = {}, pendingLines = {};
+    var rows = [], groups = [], notices = [], current = null, pendingContext = {}, pendingLines = {}, lastAnswer = null;
     var conversion = mode === 'conversion';
     function duplicateContext(lineNumber) {
       notices.push('第 ' + lineNumber + ' 行重复上下文标签，已保留各项文字，请人工确认本组要求。');
+    }
+    function mergeContext(previous, next) {
+      return Array.isArray(previous) && Array.isArray(next) ? previous.concat(next) : previous + '\n' + next;
+    }
+    function contextContent(kind, content, lineNumber) {
+      if (kind === 'oldWords' || kind === 'oldPhrases') {
+        try {
+          var list = JSON.parse(content);
+          if (Array.isArray(list) && list.every(function (item) { return typeof item === 'string'; })) return list;
+        } catch (_) { /* Keep malformed handwritten context visible for review. */ }
+        notices.push('第 ' + lineNumber + ' 行旧知列表不是字符串 JSON 数组，已将原文保留为一项，请人工确认。');
+        return [content];
+      }
+      if (content.charAt(0) === '"') {
+        try { var decoded = JSON.parse(content); if (typeof decoded === 'string') return decoded; } catch (_) { /* Ordinary quoted text remains literal. */ }
+      }
+      return content;
     }
     function applyPending(linked) {
       if (!linked) return;
       Object.keys(pendingContext).forEach(function (key) {
         if (own(linked.context, key)) {
           duplicateContext(pendingLines[key]);
-          linked.context[key] += '\n' + pendingContext[key];
+          linked.context[key] = mergeContext(linked.context[key], pendingContext[key]);
         } else linked.context[key] = pendingContext[key];
       });
       pendingContext = {}; pendingLines = {};
@@ -63,6 +117,17 @@
       return row;
     }
     string(rawText).split(/\r\n|\r|\n/).forEach(function (rawLine, index) {
+      // Imports indent every continuation, including empty and label-looking
+      // lines. Handle this before labels/boundaries so learner text stays data.
+      if (conversion && lastAnswer && rawLine.slice(0, 4) === '    ') {
+        lastAnswer.row.text += '\n' + rawLine.slice(4);
+        if (lastAnswer.row.kind === 'affirmative') {
+          lastAnswer.group.sourceOriginal = lastAnswer.row.text;
+          lastAnswer.group.rows.forEach(function (row) { row.sourceOriginal = lastAnswer.row.text; });
+        }
+        return;
+      }
+      lastAnswer = null;
       var value = trimLine(rawLine), lineNumber = index + 1;
       if (!value.trim()) { applyPending(current); current = null; return; }
       if (!conversion) { add(value, 'free', lineNumber, null); return; }
@@ -77,26 +142,28 @@
         return;
       }
       var content = trimLine(match[2]);
-      if (['target', 'oldWord', 'oldPhrase'].includes(kind)) {
+      if (['target', 'oldWord', 'oldPhrase', 'oldWords', 'oldPhrases'].includes(kind)) {
         // The next labelled sentence decides ownership: an original opens a new
         // group; another conversion applies these requirements to the current one.
         if (own(pendingContext, kind)) {
           duplicateContext(lineNumber);
-          pendingContext[kind] += '\n' + content;
-        } else { pendingContext[kind] = content; pendingLines[kind] = lineNumber; }
+          pendingContext[kind] = mergeContext(pendingContext[kind], contextContent(kind, content, lineNumber));
+        } else { pendingContext[kind] = contextContent(kind, content, lineNumber); pendingLines[kind] = lineNumber; }
         return;
       }
       if (kind === 'affirmative') group(lineNumber, content);
+      else if (kind === 'free' && (!current || current.rows.some(function (row) { return row.kind !== 'free'; }) || own(pendingContext, 'target'))) group(lineNumber, '');
+      else if (kind !== 'free' && current && current.rows.every(function (row) { return row.kind === 'free'; })) group(lineNumber, '');
       else if (!current) group(lineNumber, '');
       else applyPending(current);
-      if (current.rows.some(function (row) { return row.kind === kind; })) notices.push('第 ' + lineNumber + ' 行重复句型标签，已保留该句；请确认它属于当前原句还是另一个转换组。');
-      add(content, kind, lineNumber, current);
-      if (!content) notices.push('第 ' + lineNumber + ' 行标签后的句子为空，已保留该行，请补充句子。');
+      if (kind !== 'free' && current.rows.some(function (row) { return row.kind === kind; })) notices.push('第 ' + lineNumber + ' 行重复句型标签，已保留该句；请确认它属于当前原句还是另一个转换组。');
+      lastAnswer = { row: add(content, kind, lineNumber, current), group: current };
     });
     applyPending(current);
     groups.forEach(function (item) {
-      if (!item.sourceOriginal) notices.push('第 ' + item.rows[0].lineNumber + ' 行所在转换组缺少原句；不能核对转换是否保持原句情境。');
+      if (!item.sourceOriginal && item.rows.some(function (row) { return row.kind !== 'free'; })) notices.push('第 ' + item.rows[0].lineNumber + ' 行所在转换组缺少原句；不能核对转换是否保持原句情境。');
     });
+    rows.forEach(function (row) { if (row.groupId && !row.text.trim()) notices.push('第 ' + row.lineNumber + ' 行标签后的句子为空，已保留该行，请补充句子。'); });
     if (Object.keys(pendingContext).length) notices.push('末尾的目标词或旧知上下文尚未关联句子，请补充原句或转换句。');
     return { rows: rows, groups: groups, notices: notices };
   }
@@ -106,7 +173,7 @@
     var original = string(row.text), kind = KINDS.includes(row.kind) ? row.kind : 'free';
     var issues = [], notes = [LIMITATION], checkContext = learningContext(row.context);
     Object.keys(checkContext).forEach(function (key) {
-      if (/[\r\n]/.test(checkContext[key])) {
+      if (typeof checkContext[key] === 'string' && /[\r\n]/.test(checkContext[key])) {
         delete checkContext[key];
         notes.push('本组有重复的学习要求，已完整保留多项文字；请先人工确认各项要求，不把它们猜作一个连写短语。');
       }
@@ -171,7 +238,8 @@
     '按每条 id 输出：原句 / 修改 / 中文理由 / 转换对应核对 / 不确定项。没有明确错误时保留原句，不强行改写。',
     '逐条定位明确的语法、词项、含义和自然度问题，给出正确句与中文理由；存在语义歧义或未知结构时说明不确定项，保留合法引用。',
     '转换句结合 sourceOriginal 核对人称、主语、时态和基本事实；允许 WH 特殊疑问句自然省略被询问的宾语等信息，不强求逐字保留。',
-    'context 中明确给出的目标词、旧词和旧用法需结合句型核对；未提供的要求不要自行补设。每段独立批改并保持 id，不遗漏任何 rows。'
+    '自由句（kind 为 free）按独立造句核查，不能把其位置猜作否定句或疑问句转换，也不要求提供转换原句。',
+    'context 中明确给出的目标词、旧词和旧用法需结合句型核对；oldWords / oldPhrases 是本组选择的旧知列表，不要求每个旧词或用法都出现在每一句中。未提供的要求不要自行补设。每段独立批改并保持 id，不遗漏任何 rows。'
   ].join('\n');
   var MARKER = '\nBEGIN_STUDY_SENTENCE_DATA_JSON\n';
   function quotedJSON(value) {
@@ -179,32 +247,46 @@
       return '\\u' + character.charCodeAt(0).toString(16).padStart(4, '0');
     });
   }
+  function promptGroups(parsed) {
+    var groups = new Map();
+    (Array.isArray(parsed.groups) ? parsed.groups : []).forEach(function (group) { groups.set(group.id, group); });
+    return groups;
+  }
+  function makePromptPart(selected, groups, lessonTitle) {
+    var selectedGroups = new Map(), rowIds = [];
+    var dataRows = selected.map(function (row) {
+      var source = string(row.sourceOriginal), context = learningContext(row.context);
+      if (row.groupId && !selectedGroups.has(row.groupId)) {
+        var group = object(groups.get(row.groupId));
+        selectedGroups.set(row.groupId, { id: row.groupId, sourceOriginal: typeof group.sourceOriginal === 'string' ? group.sourceOriginal : source,
+          context: learningContext(group.context || context), rowIds: [] });
+      }
+      if (row.groupId) selectedGroups.get(row.groupId).rowIds.push(row.id);
+      rowIds.push(row.id);
+      return { id: row.id, lineNumber: row.lineNumber, kind: row.kind, text: string(row.text), groupId: row.groupId || null, sourceOriginal: source, context: context };
+    });
+    return { text: REQUIREMENTS + MARKER + quotedJSON({ lessonTitle: lessonTitle, rows: dataRows, groups: Array.from(selectedGroups.values()) }), rowIds: rowIds };
+  }
+  function promptAll(value, options) {
+    var parsed = object(value), rows = Array.isArray(parsed.rows) ? parsed.rows : [];
+    if (!rows.length) return '';
+    // The entire copy is serialized once; chunk fitting deliberately lives only
+    // in promptParts and cannot impose a limit or quadratic scan here.
+    return makePromptPart(rows, promptGroups(parsed), string(object(options).lessonTitle)).text;
+  }
   function promptParts(value, options) {
     var parsed = object(value); options = object(options);
     var rows = Array.isArray(parsed.rows) ? parsed.rows : [];
     if (!rows.length) return [];
     var maxChars = Number.isFinite(options.maxChars) && options.maxChars > 0 ? Math.floor(options.maxChars) : 10000;
-    var lessonTitle = string(options.lessonTitle), groups = new Map(), blocks = [], parts = [], pending = [];
-    (Array.isArray(parsed.groups) ? parsed.groups : []).forEach(function (group) { groups.set(group.id, group); });
+    var lessonTitle = string(options.lessonTitle), groups = promptGroups(parsed), blocks = [], parts = [], pending = [];
     rows.forEach(function (row) {
       var last = blocks[blocks.length - 1];
       if (row.groupId && last && last[0].groupId === row.groupId) last.push(row);
       else blocks.push([row]);
     });
     function makePart(selected) {
-      var selectedGroups = new Map();
-      var dataRows = selected.map(function (row) {
-        var source = string(row.sourceOriginal), context = learningContext(row.context);
-        if (row.groupId && !selectedGroups.has(row.groupId)) {
-          var group = object(groups.get(row.groupId));
-          selectedGroups.set(row.groupId, { id: row.groupId, sourceOriginal: typeof group.sourceOriginal === 'string' ? group.sourceOriginal : source,
-            context: learningContext(group.context || context), rowIds: [] });
-        }
-        if (row.groupId) selectedGroups.get(row.groupId).rowIds.push(row.id);
-        return { id: row.id, lineNumber: row.lineNumber, kind: row.kind, text: string(row.text), groupId: row.groupId || null, sourceOriginal: source, context: context };
-      });
-      return { text: REQUIREMENTS + MARKER + quotedJSON({ lessonTitle: lessonTitle, rows: dataRows, groups: Array.from(selectedGroups.values()) }),
-        rowIds: selected.map(function (row) { return row.id; }) };
+      return makePromptPart(selected, groups, lessonTitle);
     }
     function fits(selected) { return makePart(selected).text.length <= maxChars; }
     function flush() { if (pending.length) { parts.push(makePart(pending)); pending = []; } }
@@ -223,5 +305,5 @@
     return parts;
   }
 
-  return Object.freeze({ sanitizeDraft: sanitizeDraft, parse: parse, checkRow: checkRow, promptParts: promptParts });
+  return Object.freeze({ sanitizeDraft: sanitizeDraft, lessonImportBlocks: lessonImportBlocks, parse: parse, checkRow: checkRow, promptParts: promptParts, promptAll: promptAll });
 });
