@@ -1,6 +1,6 @@
 {
-  "build": "2026-10-27-book2-context-repairs",
-  "preparedAt": "2026-10-27T02:10:02.475Z",
+  "build": "2026-10-27-book2-packs-through20",
+  "preparedAt": "2026-10-27T02:11:55.351Z",
   "book2": {
     "book": 2,
     "total": 96,
@@ -68,9 +68,9 @@
     "simulatedRetestBoundariesVerified": true,
     "balancedPracticePacks": {
       "book": 2,
-      "lessons": 10,
-      "tasks": 120,
-      "followups": 120,
+      "lessons": 20,
+      "tasks": 240,
+      "followups": 240,
       "defaultForReviewedLessons": true,
       "distribution": {
         "vocabulary": 3,
@@ -78,7 +78,8 @@
         "listening": 2,
         "comprehension": 2,
         "production": 2
-      }
+      },
+      "preservedFirst10Revisions": true
     },
     "wrongConceptsRejoinSpacedReview": true,
     "syntheticListeningWordAudioAdded": 6,
@@ -123,10 +124,15 @@
     "retellLegacyNotesOutlinesLabelled": true,
     "unsubmittedLegacyRetellDraftPersistence": false,
     "unresolvedExistingContextReviewItems": 22,
-    "newContextReviewIssuesThisBatch": 0
+    "newContextReviewIssuesThisBatch": 0,
+    "additionalPackWordAudio": {
+      "files": 14,
+      "synthetic": true,
+      "notTextbookOriginal": true
+    }
   },
-  "staticFiles": 2723,
-  "staticBytes": 932862045,
+  "staticFiles": 2739,
+  "staticBytes": 933835513,
   "nativeearsAdvancedAudio": {
     "books": {
       "3": 60,
