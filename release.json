@@ -1,6 +1,6 @@
 {
-  "build": "2026-10-27-pdf-archive",
-  "preparedAt": "2026-10-27T02:30:53.626Z",
+  "build": "2026-10-27-memory-optimized",
+  "preparedAt": "2026-10-27T03:09:27.075Z",
   "book2": {
     "book": 2,
     "total": 96,
@@ -131,15 +131,15 @@
       "notTextbookOriginal": true
     }
   },
-  "staticFiles": 2729,
-  "staticBytes": 810121512,
+  "staticFiles": 2728,
+  "staticBytes": 666039507,
   "nativeearsAdvancedAudio": {
     "books": {
       "3": 60,
       "4": 48
     },
     "files": 108,
-    "bytes": 360299925,
+    "bytes": 335533456,
     "seriesUrls": [
       "https://nativeears.mojoru.org/series/48",
       "https://nativeears.mojoru.org/series/47"
@@ -368,5 +368,43 @@
     "provenanceMetadataPreserved": true,
     "convertedTextPreserved": true,
     "gitHistoryRewritten": false
-  }
+  },
+  "lessonRecall": {
+    "lessons": 276,
+    "questions": 552,
+    "choice": 276,
+    "short": 276,
+    "source": "self-authored-with-exact-passage-evidence",
+    "grading": "exact-closed-fact-aliases-and-specific-misconceptions",
+    "unmatchedParaphrases": "needs-check",
+    "savedIndependently": true
+  },
+  "performance": {
+    "lazyTextLibrary": true,
+    "startupScriptBytesBefore": 9931828,
+    "textLibraryBytesBefore": 2654682,
+    "audioDelivery": "build-time-mp3-derivatives",
+    "repositoryOriginalAudioPreserved": false,
+    "sizeReport": "delivery-report.json",
+    "noteBodyCacheLimit": 2,
+    "dictionaryShardCacheLimit": 4,
+    "textLibraryBytesAfter": 4214,
+    "audioSourcePreservation": "MP3 audio payloads unchanged; removed cover art, padding and retired files are recoverable from verified local archive",
+    "capacityReport": "delivery-report.json"
+  },
+  "storageOptimization": {
+    "baselineCommit": "3bdb516",
+    "sourceAudioBytesBefore": 793501147,
+    "sourceAudioBytesAfter": 647772668,
+    "sourceAudioBytesSaved": 145728479,
+    "unchangedMpegFrames": 1156263,
+    "losslessMp3Files": 204,
+    "retiredLessonAudioFiles": 38,
+    "unreferencedWordAudioFiles": 2,
+    "removedAudioBackedUp": true,
+    "primaryLessonMappingsPreserved": 276,
+    "wordMappingsPreserved": 2250,
+    "gitHistoryRewritten": false
+  },
+  "staticByteScope": "Source tree excluding release.json, Git metadata, build output and caches. Use delivery-report.json publishedBytes for deployed site capacity."
 }

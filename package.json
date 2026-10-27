@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "test": "node --test",
-    "start": "node dev/serve.cjs"
+    "start": "node dev/serve.cjs",
+    "build": "node dev/build-pages-site.cjs",
+    "build:recall": "node dev/build-lesson-recall.cjs"
   }
 }

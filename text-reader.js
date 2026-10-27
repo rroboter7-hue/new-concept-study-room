@@ -1,50 +1,52 @@
 (() => {
  'use strict';
  class TextStudyLibrary {
-  constructor(options){this.options=options;this.doc=null;this.section=0;this.tab='text';this.sectionCache=new Map();this.pendingLoads=new Map();document.addEventListener('click',event=>{const b=event.target.closest('[data-text-action]');if(!b)return;options.beforeChange?.();switch(b.dataset.textAction){case'back':this.loadSeq=(this.loadSeq||0)+1;this.doc=null;options.onBack();break;case'section':this.section=Number(b.dataset.textSection)||0;this.render();break;case'tab':this.tab=b.dataset.textTab;this.render();break;}});document.addEventListener('change',event=>{if(event.target.classList.contains('text-section-select')){options.beforeChange?.();this.section=Number(event.target.value)||0;this.render();}});}
+  constructor(options){this.options=options;this.doc=null;this.section=0;this.tab='text';this.loads=new Map();this.sectionCache=new Map();document.addEventListener('click',event=>{const b=event.target.closest('[data-text-action]');if(!b)return;options.beforeChange?.();switch(b.dataset.textAction){case'back':this.loadSeq=(this.loadSeq||0)+1;this.doc=null;options.onBack();break;case'retry':if(this.doc)this.open(this.doc.id,this.requestedIndex);break;case'section':this.section=Number(b.dataset.textSection)||0;this.render();break;case'tab':this.tab=b.dataset.textTab;this.render();break;}});document.addEventListener('change',event=>{if(event.target.classList.contains('text-section-select')){options.beforeChange?.();this.section=Number(event.target.value)||0;this.render();}});}
+  validDocument(value,descriptor){
+   if(!value||value.id!==descriptor.id||value.title!==descriptor.title||value.book!==descriptor.book||!Array.isArray(value.sections)||value.sections.length>2000)return false;
+   if(Number.isInteger(descriptor.sectionCount)&&value.sections.length!==descriptor.sectionCount)return false;
+   return value.sections.every(section=>section&&typeof section==='object'&&!Array.isArray(section)&&typeof section.title==='string'&&['lines','english','keyPoints','vocabulary','grammar','usage'].every(key=>section[key]===undefined||Array.isArray(section[key]))&&['lines','english','keyPoints'].every(key=>(section[key]||[]).every(item=>typeof item==='string'))&&['vocabulary','grammar','usage'].every(key=>(section[key]||[]).every(item=>item&&typeof item==='object'&&!Array.isArray(item))));
+  }
+  async fetchDocument(descriptor){
+   const url=new URL(descriptor.dataUrl,location.href),expected=new URL('text-data/'+encodeURIComponent(descriptor.id)+'.json',location.href);
+   if(url.origin!==location.origin||url.pathname!==expected.pathname)throw Error('Invalid source');
+   const controller=typeof AbortController==='function'?new AbortController():null;let timer;
+   const request=(async()=>{const response=await fetch(url,{signal:controller?.signal,credentials:'same-origin'});if(!response.ok)throw Error('Unavailable');if(response.url&&new URL(response.url).origin!==url.origin)throw Error('Invalid source');const loaded=await response.json();if(!this.validDocument(loaded,descriptor))throw Error('Invalid document');return loaded.sections;})();
+   const timeout=new Promise((_,reject)=>{timer=setTimeout(()=>{controller?.abort();reject(Error('Timed out'));},this.options.loadTimeoutMs||15000);});
+   try{return await Promise.race([request,timeout]);}finally{clearTimeout(timer);}
+  }
   rememberSections(id,sections){
    this.sectionCache.delete(id);this.sectionCache.set(id,sections);
+   // A stale request may complete after navigation. Keep the visible document
+   // while evicting the least recently used of the other document bodies.
    while(this.sectionCache.size>2){const oldest=[...this.sectionCache.keys()].find(key=>key!==this.doc?.id);this.sectionCache.delete(oldest);}
    return sections;
   }
-  loadSections(descriptor){
-   if(this.pendingLoads.has(descriptor.id))return this.pendingLoads.get(descriptor.id);
-   // A repeated open shares its request; navigation invalidates rendering without
-   // cancelling a request that another open is still waiting for.
-   const request=(async()=>{
-    const url=new URL(descriptor.dataUrl,location.href);
-    if(!/^https?:$/.test(url.protocol)||url.origin!==location.origin)throw Error('Invalid source');
-    const response=await fetch(url);if(!response.ok)throw Error('Unavailable');
-    const loaded=await response.json();if(!Array.isArray(loaded.sections))throw Error('Invalid document');
-    return this.rememberSections(descriptor.id,loaded.sections);
-   })().finally(()=>this.pendingLoads.delete(descriptor.id));
-   this.pendingLoads.set(descriptor.id,request);return request;
+  loadDocument(descriptor){
+   if(Array.isArray(descriptor.sections))return Promise.resolve(descriptor.sections);
+   if(this.sectionCache.has(descriptor.id))return Promise.resolve(this.rememberSections(descriptor.id,this.sectionCache.get(descriptor.id)));
+   if(this.loads.has(descriptor.id))return this.loads.get(descriptor.id);
+   const pending=this.fetchDocument(descriptor).then(sections=>this.rememberSections(descriptor.id,sections));this.loads.set(descriptor.id,pending);
+   const clear=()=>{if(this.loads.get(descriptor.id)===pending)this.loads.delete(descriptor.id);};pending.then(clear,clear);return pending;
   }
   isCurrentLoad(seq,loading){
    if(seq!==this.loadSeq||this.options.isActive?.()===false)return false;
-   // The app may replace the library panel while a fetch is pending, then return
-   // to the catalog before it completes. That response must not reopen the book.
+   // The app can leave this view, replace the loading panel, and return to the
+   // library before a response arrives. That response must not reopen the book.
    return !loading||this.options.container.innerHTML.includes('data-text-loading="'+seq+'"');
   }
   async open(id,index=null){
    this.options.beforeChange?.();const descriptor=this.options.data.find(d=>d.id===id),seq=this.loadSeq=(this.loadSeq||0)+1;
    if(!descriptor){this.options.toast('这份资料的文字版尚在整理，请稍后重试。');return;}
-   if(this.options.isActive?.()===false)return;
-   this.doc=descriptor;this.tab='text';let sections=descriptor.sections,loading=false;
-   if(descriptor.dataUrl&&!Array.isArray(sections)){
-    if(this.sectionCache.has(descriptor.id))sections=this.rememberSections(descriptor.id,this.sectionCache.get(descriptor.id));
-    else{
-     loading=true;this.options.container.innerHTML='<div class="text-reader" data-text-loading="'+seq+'"><button class="button" data-text-action="back">返回教材资料</button><p>正在载入文字资料……</p></div>';
-     try{sections=await this.loadSections(descriptor);}catch{
-      if(!this.isCurrentLoad(seq,loading))return;
-      this.options.container.innerHTML='<div class="text-reader"><button class="button" data-text-action="back">返回教材资料</button><p>文字资料暂时未能加载，请返回后重新打开。</p></div>';return;
-     }
-    }
+   this.doc=descriptor;this.tab='text';this.requestedIndex=index;let sections=descriptor.sections;const loading=!Array.isArray(sections);
+   if(loading){
+    this.options.container.innerHTML='<div class="text-reader" data-text-loading="'+seq+'"><button class="button" data-text-action="back">返回教材资料</button><p role="status">正在载入文字资料……</p></div>';
+    try{sections=await this.loadDocument(descriptor);}catch{if(!this.isCurrentLoad(seq,loading))return;this.options.container.innerHTML='<div class="text-reader"><button class="button" data-text-action="back">返回教材资料</button><p role="status">文字资料暂时未能加载。请检查网络后重试。</p><button class="button primary" data-text-action="retry">重新加载</button></div>';return;}
    }
    if(!this.isCurrentLoad(seq,loading))return;
-   this.doc=descriptor.sections===sections?descriptor:{...descriptor,sections};
-   const first=sections?.findIndex(s=>(s.english||[]).length>0)??0;
-   this.section=Number.isInteger(index)&&index>=0?index:Math.max(0,descriptor.defaultSectionIndex??first);this.render();
+   this.doc=descriptor.sections===sections?descriptor:{...descriptor,sections};const count=sections.length,first=sections.findIndex(section=>(section.english||[]).length>0),preferred=descriptor.defaultSectionIndex;
+   const fallback=Number.isInteger(preferred)&&preferred>=0&&preferred<count?preferred:Math.max(0,first);
+   this.section=Number.isInteger(index)&&index>=0&&index<count?index:fallback;this.render();
   }
   lesson(section){return{id:'note-'+this.doc.id+'-'+section.id,book:this.doc.book||1,title:section.title,subtitle:this.doc.title,source:'provided',paragraphs:(section.english||[]).slice(0,25).map(en=>({en,zh:''})),vocabulary:(section.vocabulary||[]).slice(0,12),keyPoints:section.keyPoints||[],grammar:section.grammar||[],usage:section.usage||[]};}
   knowledge(section){const e=this.options.escapeHTML;const points=section.keyPoints||[],grammar=section.grammar||[],usage=section.usage||[];return `<div class="knowledge-grid">${points.length?`<section class="knowledge-card"><h3>本节重点知识</h3>${points.map((p,i)=>`<p><strong>${i+1}.</strong> ${e(p)}</p>`).join('')}</section>`:''}${grammar.map(g=>`<section class="knowledge-card grammar-card"><h3>${e(g.title||'语法要点')}</h3><p>${e(g.note||'')}</p>${g.example?`<p class="english">${this.options.wordHTML(g.example)}</p>`:''}</section>`).join('')}${usage.map(u=>`<section class="knowledge-card"><h3>${e(u.phrase)}</h3><p>${e(u.meaning||'')}</p>${u.example?`<p class="english">${this.options.wordHTML(u.example)}</p>`:''}</section>`).join('')}${(section.vocabulary||[]).length?`<section class="knowledge-card"><h3>本节词汇线索</h3>${section.vocabulary.map(v=>`<p>${this.options.wordHTML(v.word)} ${e(v.phonetic||'')} ${e(v.meaning||'')}</p>`).join('')}</section>`:''}${!points.length&&!grammar.length&&!usage.length?'<div class="text-empty">本节没有识别到独立的语法或用法条目，可从“文字阅读”查看原笔记。</div>':''}</div><p class="text-source-note">要点来自本节原笔记的文字整理，原始内容可在文字阅读中逐行核对。</p>`;}

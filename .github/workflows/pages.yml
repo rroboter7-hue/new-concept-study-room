@@ -1,0 +1,61 @@
+name: Optimized Pages deployment
+
+on:
+  push:
+    branches: [main, codex/lesson-recall-checking-20261027]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Check out source and original audio
+        uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Install audio encoder and metadata probe
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends ffmpeg
+          ffmpeg -version
+      - name: Reuse verified encoded audio
+        uses: actions/cache@v4
+        with:
+          path: .cache/encoded-audio
+          key: pages-audio-v1-${{ runner.os }}-${{ hashFiles('audio/**/*.wav', 'dev/build-pages-site.cjs') }}
+          restore-keys: |
+            pages-audio-v1-${{ runner.os }}-
+      - name: Test complete source with original media present
+        run: node --test
+      - name: Build and validate optimized site
+        run: node dev/build-pages-site.cjs
+      - name: Upload runtime site
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+
+  deploy:
+    if: github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-24.04
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy optimized site
+        id: deployment
+        uses: actions/deploy-pages@v4

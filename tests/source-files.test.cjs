@@ -38,7 +38,8 @@ test('all four reading books and converted text remain usable after source PDF r
   assert.deepEqual([1,2,3,4].map(book=>c.LESSONS.filter(l=>l.book===book).length),[72,96,60,48]);
   for(const lesson of c.LESSONS){assert.ok(lesson.textbook?.verified);assert.ok(lesson.paragraphs.every(p=>p.en.trim()&&p.zh.trim()));assert.ok(lesson.textbook.sourceUrl);assert.ok(c.StudySourceFiles.isArchived(lesson.textbook.sourceUrl));assert.ok(c.STUDY_LESSON_AUDIO[lesson.id]);}
   assert.ok(html.indexOf('source-files.js')<html.indexOf('app.js'));
-  const library=Array.isArray(c.TEXT_LIBRARY)?c.TEXT_LIBRARY:Object.values(c.TEXT_LIBRARY||{});
+  // The startup catalogue is lazy; verify the preserved documents themselves.
+  const library=require('../dev/split-text-library.cjs').documents(root);
   assert.ok(library.length>=9);
-  for(const item of c.STUDY_LIBRARY){if(c.StudySourceFiles.isArchived(item.url)){const text=library.find(row=>row.id===item.id);assert.ok(text,item.title);const sections=text.dataUrl?JSON.parse(fs.readFileSync(path.join(root,text.dataUrl),'utf8')).sections:text.sections;assert.ok(sections?.length,item.title);}}
+  for(const item of c.STUDY_LIBRARY){if(c.StudySourceFiles.isArchived(item.url)){const text=library.find(row=>row.id===item.id);assert.ok(text?.sections?.length,item.title);}}
 });
