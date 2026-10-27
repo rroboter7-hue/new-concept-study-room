@@ -1,6 +1,6 @@
 {
   "build": "2026-10-27-bilingual",
-  "preparedAt": "2026-10-27T01:52:23.716491+00:00",
+  "preparedAt": "2026-10-27T01:56:24.695571+00:00",
   "book2": {
     "book": 2,
     "total": 96,
@@ -104,10 +104,15 @@
       9,
       10
     ],
-    "notesOriginsExplicit": true
+    "notesOriginsExplicit": true,
+    "retellSourceBoundTargets": true,
+    "retellObservedInflections": true,
+    "retellCoverageIsLexicalOnly": true,
+    "retellLegacyNotesOutlinesLabelled": true,
+    "unsubmittedLegacyRetellDraftPersistence": false
   },
-  "staticFiles": 2680,
-  "staticBytes": 929031569,
+  "staticFiles": 2683,
+  "staticBytes": 929061496,
   "nativeearsAdvancedAudio": {
     "books": {
       "3": 60,

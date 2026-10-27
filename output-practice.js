@@ -5,6 +5,31 @@
   const words = text => String(text || '').normalize('NFKC').match(/[A-Za-z]+(?:['’][A-Za-z]+)*(?:-[A-Za-z]+)*|\d+/g) || [];
   const canonical = text => words(text).map(word=>word.toLowerCase().replace(/’/g,"'")).join(' ');
   const stopWords = new Set('this that with from have been were they them what when which where your there then into just does will would could should about their these those some also very more because after before'.split(' '));
+  const retellStopWords = new Set([...stopWords,...'a an the and or but for to of in on at by as is am are was be being has had do did not no it its i me my we us our he him his she her you so than can may must'.split(' ')]);
+
+  // Whole, consecutive tokens only: neither substrings nor punctuation can
+  // manufacture a phrase. This measures lexical coverage, not story meaning.
+  function containsExpression(text, expression) {
+    const source=String(text||'').normalize('NFKC').replace(/’/g,"'").toLowerCase(), target=words(expression).map(canonical);
+    if(!target.length)return false;
+    const tokens=[...source.matchAll(/[A-Za-z]+(?:['’][A-Za-z]+)*(?:-[A-Za-z]+)*|\d+/g)];
+    return tokens.some((token,index)=>target.every((part,offset)=>{
+      const next=tokens[index+offset];
+      return next&&canonical(next[0])===part&&(!offset||/^[\s‘’“”"']*$/.test(source.slice(tokens[index+offset-1].index+tokens[index+offset-1][0].length,next.index)));
+    }));
+  }
+  function finiteHeadForms(head,pos) {
+    const forms=new Set([head]),verb=/^(?:v(?:t|i)?\b|verb\b)/i.test(pos||''),noun=/^(?:n\b|noun\b)/i.test(pos||'');
+    if(verb)for(const form of global.StudyRecurrence?.finiteForms?.[head]||[])forms.add(canonical(form));
+    if(!/^[a-z]{3,}$/.test(head)||!verb&&!noun)return forms;
+    forms.add(/[^aeiou]y$/.test(head)?head.slice(0,-1)+'ies':/(?:s|x|z|ch|sh)$/.test(head)?head+'es':head+'s');
+    if(verb){
+      forms.add(/e$/.test(head)?head+'d':/[^aeiou]y$/.test(head)?head.slice(0,-1)+'ied':head+'ed');
+      forms.add(/ie$/.test(head)?head.slice(0,-2)+'ying':/[^e]e$/.test(head)?head.slice(0,-1)+'ing':head+'ing');
+      if(/^[^aeiou]*[aeiou][^aeiouwxy]$/.test(head)&&head.length<=4){forms.add(head+head.at(-1)+'ed');forms.add(head+head.at(-1)+'ing');}
+    }
+    return forms;
+  }
 
   function compareWords(expected, actual) {
     const original = words(expected), entered = words(actual);
@@ -112,11 +137,40 @@
       this.scrambles[word]=result;return result;
     }
 
-    keywords() {
+    legacyKeywords() {
       const lesson=this.lesson(), list=this.spellWords().slice(0,8).map(item=>item.word);
       (lesson?.usage || []).slice(0,3).forEach(item=>{if(item?.phrase && words(item.phrase).length<=6 && !list.some(word=>canonical(word)===canonical(item.phrase)))list.push(item.phrase);});
       return list.slice(0,10);
     }
+
+    retellTargets() {
+      const lesson=this.lesson();
+      if(lesson?.textbook?.verified!==true)return this.legacyKeywords().map(label=>({label,forms:[canonical(label)]}));
+      const paragraphs=this.paragraphs(),bank=global.StudyKnowledge?.bank,vocabulary=bank?.hasLesson(lesson.id)?bank.vocabularyForLesson(lesson.id):lesson.vocabulary||[];
+      const targetFor=(item,kind)=>{
+        const label=String(kind==='usage'?item?.phrase||'':item?.word||'').trim(),base=words(label).map(canonical);
+        if(!base.length||base.length>6)return null;
+        const head=base[0],known=vocabulary.find(word=>canonical(word.word)===head),pos=kind==='usage'?(known?.pos||((global.StudyRecurrence?.finiteForms?.[head])?'v.':'')):item.pos;
+        const heads=finiteHeadForms(head,pos),forms=new Set([...heads].map(form=>[form,...base.slice(1)].join(' ')));
+        for(const variant of [item.matchedForm,...(Array.isArray(item.variants)?item.variants:[])]){
+          if(typeof variant!=='string')continue;const parts=words(variant).map(canonical);
+          // Explicit single-word vocabulary variants are recorded aliases;
+          // phrase variants must retain every particle, negation and token order.
+          if(parts.length===base.length&&parts.slice(1).every((part,index)=>part===base[index+1])&&(kind!=='usage'&&base.length===1||heads.has(parts[0])))forms.add(parts.join(' '));
+        }
+        const observed=[...forms].filter(form=>paragraphs.some(paragraph=>containsExpression(paragraph.en,form)));
+        return observed.length?{label,forms:[...new Set([canonical(label),...observed])]}:null;
+      };
+      let targets=vocabulary.map(item=>targetFor(item,'vocabulary')).filter(Boolean);
+      if(!targets.length)targets=[...new Set(words(paragraphs.map(paragraph=>paragraph.en).join(' ')).map(canonical))].filter(word=>word.length>=4&&!retellStopWords.has(word)).map(label=>({label,forms:[label]}));
+      const result=[],seen=new Set();
+      const add=target=>{const key=canonical(target.label);if(!seen.has(key)){seen.add(key);result.push(target);}};
+      targets.slice(0,8).forEach(add);
+      (lesson.usage||[]).map(item=>targetFor(item,'usage')).filter(Boolean).slice(0,3).forEach(add);
+      return result.slice(0,10);
+    }
+
+    keywords() {return this.retellTargets().map(target=>target.label);}
 
     render() {
       const lesson=this.lesson();
@@ -169,7 +223,8 @@
     renderRetell() {
       const lesson=this.lesson(), keywords=this.keywords(), e=this.escape;
       const outlines=(Array.isArray(lesson.keyPoints)?lesson.keyPoints:typeof lesson.keyPoints==='string'?[lesson.keyPoints]:[]).filter(Boolean).slice(0,5);
-      return `<div class="output-intro"><h3>用自己的英文，把内容讲一遍</h3><p>${e(lesson.title)} · 参考关键词，用自己的话写至少5个英文单词。提交后会检查常见语法并给出修改建议；内容覆盖率单独按所列关键词和短语计算。</p></div><div class="retell-keywords">${keywords.map(keyword=>`<span class="keyword ${this.result?(this.result.covered.includes(keyword)?'covered':'missing'):''}">${e(keyword)}</span>`).join('')}</div>${outlines.length?`<div class="output-intro"><strong>已有内容要点</strong>${outlines.map(point=>`<p>${e(typeof point==='string'?point:point.en || point.text || point.title || '')}</p>`).join('')}</div>`:''}<div class="output-actions">${this.originalButton()}</div>${this.originalHTML(this.paragraphs())}${this.textarea('试着用自己的英文复述主要内容……')}${this.result?`<section class="output-result"><h3>内容覆盖率（关键词）${this.result.score}%</h3><p>已覆盖：${e(this.result.covered.join('、') || '暂无')}</p><p>未覆盖：${e(this.result.missing.join('、') || '全部覆盖')}</p><p class="small-note">共写 ${this.result.wordCount} 词。此分数只衡量关键词覆盖，语法问题与修改建议在下方单独显示。可展开原文自行对照。</p></section>`:''}${this.actions()}`;
+      const verified=lesson.textbook?.verified===true,noteHeading=verified&&lesson.source==='provided'?'学习笔记要点（不计入课文复述覆盖）':'已有内容要点';
+      return `<div class="output-intro"><h3>用自己的英文，把内容讲一遍</h3><p>${e(lesson.title)} · 参考关键词，用自己的话写至少5个英文单词。提交后会检查常见语法并给出修改建议；内容覆盖率单独按所列关键词和短语计算。</p>${verified?'<p class="small-note">关键词均有教材正文依据，接受所列原形及正文出现的词形；仅统计词语覆盖，不判断情节准确性或语义一致性。</p>':''}</div><div class="retell-keywords">${keywords.map(keyword=>`<span class="keyword ${this.result?(this.result.covered.includes(keyword)?'covered':'missing'):''}">${e(keyword)}</span>`).join('')}</div>${outlines.length?`<div class="output-intro"><strong>${noteHeading}</strong>${outlines.map(point=>`<p>${e(typeof point==='string'?point:point.en || point.text || point.title || '')}</p>`).join('')}</div>`:''}<div class="output-actions">${this.originalButton()}</div>${this.originalHTML(this.paragraphs())}${this.textarea('试着用自己的英文复述主要内容……')}${this.result?`<section class="output-result"><h3>内容覆盖率（关键词）${this.result.score}%</h3><p>已覆盖：${e(this.result.covered.join('、') || '暂无')}</p><p>未覆盖：${e(this.result.missing.join('、') || '全部覆盖')}</p><p class="small-note">共写 ${this.result.wordCount} 词。此分数只衡量关键词覆盖，语法问题与修改建议在下方单独显示。可展开原文自行对照。</p></section>`:''}${this.actions()}`;
     }
 
     record(score,details) {
@@ -213,8 +268,8 @@
       }else{
         const wordCount=words(this.answer).length;
         if(wordCount<5){this.notify('再多写一点，至少用5个英文单词复述。');return;}
-        const keywords=this.keywords(), text=' '+canonical(this.answer)+' ', covered=keywords.filter(keyword=>text.includes(' '+canonical(keyword)+' ')), missing=keywords.filter(keyword=>!covered.includes(keyword));
-        this.result={covered,missing,wordCount,score:keywords.length?Math.round(covered.length/keywords.length*100):0};
+        const targets=this.retellTargets(), text=' '+canonical(this.answer)+' ', verified=this.lesson()?.textbook?.verified===true,covered=targets.filter(target=>target.forms.some(form=>verified?containsExpression(this.answer,form):text.includes(' '+form+' '))).map(target=>target.label), missing=targets.filter(target=>!covered.includes(target.label)).map(target=>target.label);
+        this.result={covered,missing,wordCount,score:targets.length?Math.round(covered.length/targets.length*100):0};
         this.checkGrammar(false);
         this.record(this.result.score,{...this.result,feedbackType:'keyword-coverage',answer:this.answer,grammarIssues:this.grammarIssues,grammarChecked:!!global.StudyGrammar});
       }
