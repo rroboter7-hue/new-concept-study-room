@@ -1,30 +1,28 @@
 # One-click bilingual word definitions
 
-User requirement: clicking a word shows Chinese and English meanings automatically in the existing popup. Keep pronunciation, notebook, mobile layout and current learning state.
+User requirement: clicking a word automatically shows Chinese and English meanings in the existing study-site popup, retaining pronunciation and notebook use on phones.
 
-Implementation decision: retain the current English API, add a licensed ECDICT subset as same-origin letter shards, and request both in parallel. Course Chinese remains first; general dictionary definitions and headwords keep explicit provenance. The dictionary ships only definitions for current content and common words; unknown terms remain honestly uncollected, with the existing external-dictionary link available. No new account, paid API, remote student text submission or database migration is needed.
+Implementation: retain the English API and add licensed ECDICT data as lazy same-origin letter shards. Chinese and English fields, source labels, POS and examples stay separate. Course Chinese has priority. Shared request identity and cancellation prevent stale replies from replacing a newer popup. Notebook fields remain compatible. Unknown terms are explicitly uncollected.
 
-## Steps
+## Completed steps
 
-- [x] Inspect actual popup/service and reproduce the language gap: English-only API, course Chinese for some words.
-- [x] Add failing tests then implement lazy local lookup, validation, bounded fields, cache, abort and timeout.
-- [x] Compile a source-pinned, attributed subset and verify its content, source identity and reproducibility.
-- [x] Add actual popup tests before merging parallel results, separate languages, preserve notebook metadata and reject stale responses.
-- [x] Browser-check Chinese/English, source labels and narrow-screen popover; run full regression and independent review.
-- [ ] Publish to the original site without replacing concurrent remote changes, then verify the live popup.
+- [x] Reproduce the English-only gap and inspect the actual popup/service.
+- [x] Add failing tests, then implement validated local lookup, bounded fields, cache, abort and timeout.
+- [x] Build and verify a source-pinned ECDICT subset with MIT attribution, input/shard checksums and honest coverage.
+- [x] Test automatic parallel arrivals, source priority, stale requests, notebook metadata, and separate language provenance.
+- [x] Verify narrow-screen layout and notebook persistence; run independent review and the complete merged regression suite.
+- [x] Publish to the original site, preserving concurrent features, and verify the live phone popup.
 
-Ownership: root dictionary-service.js and local-service tests/release; data worker dev builder + dictionary-data + data tests; UI worker word-popup functions in app.js + dictionary-ui tests. No changes to quiz grading, SRS or mobile navigation.
+## Verified result
 
-Verification: new tests must fail before implementation. Full Node test suite is the final gate. Use CUA for actual browser interactions; test fixtures stay on the local preview. Public verification uses existing words without entering private examples or changing scores.
+- Published application commit: e461bd450ee14ae2267ff896b1942982ad8913fd.
+- Live build: 2026-10-27-bilingual-v2; GitHub Pages action 40436490533 succeeded.
+- Full merged regression: 601 passed, 0 failed/skipped. Dictionary-focused tests: 53 passed. New behavior and the Chinese POS/example fix were observed red before implementation and green after.
+- Independent reviews found no actionable high-priority issues. Historical saved fields without a recorded source cannot reliably have their original provenance reconstructed.
+- CUA local checks: 390px and 320px mobile, 1024px desktop, automatic bilingual lookup, went to go provenance, save/reload notebook compatibility, popup bounds and 16px mobile definition text.
+- Live phone verification: hall shows ECDICT Chinese n. 门厅, 走廊, 会堂 and online English A corridor; a hallway, without online POS or examples leaking into the Chinese section. Course metadata on large also remained independent. Live console errors: none.
+- Live screenshot: parent outputs/bilingual-word-popup/05-live-mobile-bilingual-v2.jpg. Full logs and qa.json are in the same parent output directory.
+- Preserved concurrent complete Book1 readings/audio, lesson recall flow, source-bound retelling targets and responsive sentence-word picker. All 60 dictionary corpus input hashes match.
+- Local tracked media required for full regression was restored from verified Git objects. No audio content or test was weakened. The task preview was stopped, temporary local tab closed and browser viewport reset.
 
-Progress: 50 dictionary-focused tests pass (including builder, provider timeout/cancellation, UI arrival-order and notebook compatibility). Independent review found no high-priority issues. Mobile 390px and 320px layouts, desktop 1024px, one-click bilingual results, original-form provenance, notebook save and reload were checked via CUA. All 59 corpus-input hashes and all 26 shard/license hashes match. Full regression is waiting for restoration of pre-existing tracked audio omitted by this sparse checkout; no application/test workaround is being introduced.
-
-Regression gate: full Node suite passed 549/549 with local-network permission (the sandbox otherwise blocks localhost range tests). All pre-existing audio files required by the new Book1 release were restored byte-for-byte from tracked Git objects; audio diff is empty. Before publish, merge ca6736d from origin/main to preserve the concurrent lesson-recall flow, then rerun the merged suite.
-
-Merged-release verification: preserved ca6736d lesson-recall app/CSS/tests and postReadingFlow, unified cache labels only after proving all three index versions have identical 59-script order and markup. Restored sparse media again after merge; refreshed offline dictionary manifest to the final index bytes. Final full Node suite: 558 tests passed, 0 failed/skipped (full-tests-publish.log). Independent review found no high-priority merge regressions. Publish/live check remains pending.
-
-Final concurrent-release merge: preserved 798ab57 source-bound retelling fixes and its tests/learning metadata. Index changes again proved cache-label-only. Refreshed the licensed local manifest to output-practice.js bytes. Final merged suite: 567/567 pass, 0 fail/skipped (full-tests-final-release.log); CUA confirmed one-click Chinese, English and went→go.
-
-Live initial release verified on GitHub Pages build fc024e2: automatic Chinese and English, 390px popover within bounds, console errors empty. Live beautiful lookup exposed online POS/example leaking into Chinese provenance. Added three red-then-green regression tests and isolated transient Chinese metadata; no persistence migration. Independent scoped review found no actionable issues (legacy source-unknown metadata remains inherently ambiguous). Corrected release full suite: 570/570 passed, 0 failed/skipped. Awaiting v2 live verification.
-
-Preserved concurrent 4cb2807 responsive sentence-word picker release. All original 59 scripts retained in order and new sentence-wordbank-data.js retained at its remote position; only app cache key/meta unified to v2. Manifest rebuilt for 60 inputs with no stale hashes. Final combined full suite: 601/601 pass, 0 failed/skipped (full-tests-word-picker-merged.log).
+Data: ECDICT pinned commit ab22ad36302cafc6349a050e2b60894855208055; 11,888 entries, 26 shards totaling 3,579,515 bytes. General dictionary coverage is finite; missing definitions remain labelled instead of invented. Full source CSV stays outside the repository for offline reproducibility.
