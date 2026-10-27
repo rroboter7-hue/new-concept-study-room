@@ -99,7 +99,9 @@ Final exact-tree regression evidence:517/517 passed, no skips/cancellations, in 
 - Arrow-key category switching and Escape focus return.
 - Refresh restores three selections, fifth-sentence step and the exact draft `Our friendly neighbours gave us a warm welcome.`
 - 320/390 px widths have no horizontal overflow; desktop centered dialog also captured.
-- Full node suite after final code changes: 551 tests, 551 passed, 0 failed. Includes local HTTP/range tests run in the authorized local environment.
+- Full node suite after final merged code changes: 598 tests, 598 passed, 0 failed. Includes local HTTP/range tests run in the authorized local environment.
 - Physical phone keyboard and sound output on a physical phone were not tested; the shortened viewport and audio callback/activation were tested.
 
 No remaining actionable P0/P1/P2 findings. Final result: passed.
+
+Merged remote `fc024e2` bilingual dictionary and source-bound lesson recall without replacing their implementation. Rechecked mobile word picker, saved draft, native modal and console after the merge; no relevant console errors.

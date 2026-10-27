@@ -37,4 +37,4 @@
 ### Task 3: Rendered verification and release
 - [x] Use existing local file/browser support without starting a server; capture matching mobile and desktop states.
 - [x] Verify multi-select, search, pronunciation, remove/clear, close/confirm/focus and refresh persistence; compare with selected mock.
-- [ ] Record design QA, bump release build, run full supported suite, preserve remote updates and publish verified changes.
+- [x] Record design QA, bump release build, run full supported suite, preserve remote updates and publish verified changes.
