@@ -113,7 +113,10 @@ test('filesystem operations resolve directory links before allowing a target', t
     catch (error) { if (error.code === 'EPERM') { t.skip('Windows sandbox does not permit creating junctions'); return; } throw error; }
     assert.throws(() => optimizer.resolveWithin(within, 'escape/new.mp3'), /outside|escapes|boundary/i);
   } finally {
-    if (fs.existsSync(link)) fs.rmdirSync(link);
+    if (fs.existsSync(link)) {
+      if (process.platform === 'win32') fs.rmdirSync(link);
+      else fs.unlinkSync(link);
+    }
     fs.rmdirSync(within); fs.rmdirSync(outside); fs.rmdirSync(temporary);
   }
 });
