@@ -183,7 +183,12 @@ test('retired files are absent and every four-book lesson and word mapping resol
   }
   assert.equal(Object.keys(scope.window.STUDY_LESSON_AUDIO).length,276);
   assert.equal(Object.keys(scope.window.STUDY_WORD_AUDIO).length,2250);
+  const previousWords={...scope.window.STUDY_WORD_AUDIO};
+  vm.runInNewContext(fs.readFileSync(path.join(root,'book2-context-word-audio.js'),'utf8'),scope,{filename:'book2-context-word-audio.js'});
+  assert.equal(Object.keys(scope.window.STUDY_WORD_AUDIO).length,2269);
+  for(const [word,url]of Object.entries(previousWords))assert.equal(scope.window.STUDY_WORD_AUDIO[word],url,'preserved word '+word);
   for (const url of [...Object.values(scope.window.STUDY_LESSON_AUDIO),...Object.values(scope.window.STUDY_WORD_AUDIO)]) assert.ok(fs.existsSync(path.join(root,url)),url);
+  for(const words of Object.values(scope.window.STUDY_CONTEXT_WORD_AUDIO||{}))for(const url of Object.values(words))assert.ok(fs.existsSync(path.join(root,url)),url);
   for (const url of Object.values(scope.window.STUDY_LESSON_AUDIO_FALLBACKS||{})) assert.ok(fs.existsSync(path.join(root,url)), 'fallback '+url);
   for (let n=1;n<=38;n++) assert.equal(fs.existsSync(path.join(root,'audio/provided/b2-'+String(n).padStart(3,'0')+'.mp3')),false);
   for (const word of ["i'm", "she's"]) assert.equal(fs.existsSync(path.join(root,'audio/words/'+word+'.wav')),false);

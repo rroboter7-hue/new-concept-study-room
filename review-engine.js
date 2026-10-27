@@ -81,7 +81,10 @@
    for(const original of (lesson.vocabulary||[]).slice(0,100)){
     const v=registered?bank.wordForLesson(lesson.id,original?.word):original;
     if(!v?.word)continue;const cue=lexicalCue(v,'vocabulary');if(!cue)continue;
-    add('word',v.word,cue.prompt,{...cue,phonetic:text(v.phonetic,100),pos:text(v.pos,30),example:text(v.example,1000),...(v.conceptId?{conceptId:v.conceptId}:{})});
+    const provenance={};for(const field of ['sourceType','sourceLabel','exampleSourceType','exampleSourceLabel','sourceDocId'])if(text(v[field],500))provenance[field]=text(v[field],500);
+    if(integer(v.sourcePage,1,100000))provenance.sourcePage=v.sourcePage;
+    if(v.contextEvidence&&typeof v.contextEvidence==='object'&&!Array.isArray(v.contextEvidence))provenance.contextEvidence={...v.contextEvidence,...(Array.isArray(v.contextEvidence.matchedForms)?{matchedForms:v.contextEvidence.matchedForms.slice()}:{})};
+    add('word',v.word,cue.prompt,{...cue,phonetic:text(v.phonetic,100),pos:text(v.pos,30),example:text(v.example,1000),...provenance,...(v.conceptId?{conceptId:v.conceptId}:{})});
    }
    for(const p of (lesson.usage||[]).slice(0,100)){
     if(!p?.phrase)continue;const cue=lexicalCue(p,'usage');if(!cue)continue;

@@ -5,7 +5,7 @@ const FILE='book2-additional-context-fixes.js',ID16='nce-b2-eef57c-l016',ID17='n
 function load({correct=true,mutate,stop=false}={}){
  const c={document:{addEventListener(){}}};c.window=c;vm.createContext(c);const run=file=>vm.runInContext(fs.readFileSync(path.join(DIST,file),'utf8'),c,{filename:file});let injected=false,before;
  for(const match of fs.readFileSync(path.join(DIST,'index.html'),'utf8').matchAll(/<script\b[^>]*src="([^"]+)"/g)){
-  const file=match[1].split(/[?#]/)[0];if(file==='app.js')break;if(file===FILE)continue;run(file);
+  const file=match[1].split(/[?#]/)[0];if(file==='app.js')break;if(file===FILE||file==='book2-reviewed-context-vocabulary.js')continue;run(file);
   if(file==='book2-vocabulary.js'){
    before=copy(c.LESSONS);mutate?.(c);if(correct&&fs.existsSync(path.join(DIST,FILE))){run(FILE);injected=true;}if(stop)break;
   }

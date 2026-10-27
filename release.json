@@ -1,6 +1,6 @@
 {
   "build": "2026-10-27-memory-optimized",
-  "preparedAt": "2026-10-27T03:09:27.075Z",
+  "preparedAt": "2026-10-27T03:13:45.528Z",
   "book2": {
     "book": 2,
     "total": 96,
@@ -20,7 +20,15 @@
         "word": "bright",
         "meaning": "鲜艳的"
       }
-    ]
+    ],
+    "reviewedContextVocabulary": {
+      "resolvedCases": 22,
+      "titleWords": 20,
+      "passageLexemes": 2,
+      "notesExtensions": 1,
+      "primaryVisualSourcePages": 22,
+      "independentReviewLabel": "full semantic/source review with explicitly recorded visual scopes"
+    }
   },
   "learning": {
     "canonicalAnswers": true,
@@ -123,16 +131,28 @@
     "retellCoverageIsLexicalOnly": true,
     "retellLegacyNotesOutlinesLabelled": true,
     "unsubmittedLegacyRetellDraftPersistence": false,
-    "unresolvedExistingContextReviewItems": 22,
+    "unresolvedExistingContextReviewItems": 0,
     "newContextReviewIssuesThisBatch": 0,
     "additionalPackWordAudio": {
       "files": 14,
       "synthetic": true,
       "notTextbookOriginal": true
+    },
+    "resolvedContextReviewItems": 22,
+    "titleContextVocabularyRestored": 20,
+    "passageAdverbDistinctFromNotesAdjective": true,
+    "observedVocabularyFormsSourceBound": true,
+    "contextualWordPronunciation": true,
+    "contextVocabularyWordAudio": {
+      "files": 20,
+      "globalWordFiles": 19,
+      "perLessonWordFiles": 1,
+      "synthetic": true,
+      "notTextbookOriginal": true
     }
   },
-  "staticFiles": 2728,
-  "staticBytes": 666039507,
+  "staticFiles": 2754,
+  "staticBytes": 668059054,
   "nativeearsAdvancedAudio": {
     "books": {
       "3": 60,
@@ -394,16 +414,21 @@
   },
   "storageOptimization": {
     "baselineCommit": "3bdb516",
-    "sourceAudioBytesBefore": 793501147,
-    "sourceAudioBytesAfter": 647772668,
+    "baselineSourceAudioBytesBefore": 793501147,
+    "baselineSourceAudioBytesAfter": 647772668,
     "sourceAudioBytesSaved": 145728479,
+    "currentSourceAudioBytes": 648687148,
+    "currentAudioFiles": 2491,
+    "currentWavFiles": 2287,
     "unchangedMpegFrames": 1156263,
     "losslessMp3Files": 204,
     "retiredLessonAudioFiles": 38,
     "unreferencedWordAudioFiles": 2,
     "removedAudioBackedUp": true,
     "primaryLessonMappingsPreserved": 276,
-    "wordMappingsPreserved": 2250,
+    "previousWordMappingsPreserved": 2250,
+    "currentWordMappings": 2269,
+    "contextWordMappings": 1,
     "gitHistoryRewritten": false
   },
   "staticByteScope": "Source tree excluding release.json, Git metadata, build output and caches. Use delivery-report.json publishedBytes for deployed site capacity."

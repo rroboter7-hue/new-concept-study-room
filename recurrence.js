@@ -69,11 +69,29 @@
       sourceDocId:item.sourceDocId||lesson.sourceDocId||null,sourcePage:item.sourcePage||lesson.sourcePage||null,
       ...definitionFor(item,kind,glossary)};
   }
-  function patternsFor(item,kind){
+  function observedForm(source,values){
+    var ts=tokens(String(source||''));
+    for(var i=0;i+values.length<=ts.length;i++){
+      var matches=true;
+      for(var j=0;j<values.length;j++)if(ts[i+j].value!==values[j]||j&&!/^[\s‘’“”"']*$/.test(source.slice(ts[i+j-1].end,ts[i+j].start))){matches=false;break;}
+      if(matches)return true;
+    }
+    return false;
+  }
+  function recordedWordForms(item,lesson){
+    var evidence=item.contextEvidence||{},source='';
+    if(!lesson||!lesson.textbook||lesson.textbook.verified!==true)return [];
+    if(item.sourceType==='lesson-title'&&evidence.sourceType==='lesson-title'&&evidence.sourceTitle===lesson.textbook.title)source=evidence.sourceTitle;
+    else if(item.sourceType==='textbook-passage'&&evidence.sourceType==='textbook-passage'&&Number.isInteger(evidence.sourceParagraphIndex)&&typeof evidence.sourceText==='string'&&evidence.sourceText&&String(lesson.paragraphs[evidence.sourceParagraphIndex]?.en||'').includes(evidence.sourceText))source=evidence.sourceText;
+    if(!source)return [];
+    return strings(item.sourceForms).slice(0,20).filter(function(form){if(typeof form!=='string')return false;var values=tokens(form).map(function(t){return t.value;});return values.length>0&&values.length<=12&&observedForm(source,values);});
+  }
+  function patternsFor(item,kind,lesson){
     var label=kind==='vocabulary'?item.word:item.phrase,base=tokens(String(label||'')).map(function(t){return t.value;});
     if(!base.length||base.length>12)return [];
     var patterns=[base],isVerb=kind==='usage'||!item.pos||/\b(?:v|vt|vi|verb)\b/i.test(String(item.pos));
     if(isVerb&&FORMS[base[0]])FORMS[base[0]].forEach(function(form){patterns.push([form].concat(base.slice(1)));});
+    if(kind==='vocabulary')recordedWordForms(item,lesson).forEach(function(form){var recorded=tokens(form).map(function(t){return t.value;});if(!patterns.some(function(p){return p.join(' ')===recorded.join(' ');}))patterns.push(recorded);});
     if(kind==='usage')[item.matchedForm].concat(strings(item.variants).slice(0,20)).forEach(function(form){
       if(typeof form!=='string')return;var recorded=tokens(form).map(function(t){return t.value;});
       if(recorded.length&&recorded.length<=12&&!patterns.some(function(p){return p.join(' ')===recorded.join(' ');}))patterns.push(recorded);
@@ -110,7 +128,7 @@
           if(!label.trim()||key===kind+':'||inLesson.has(key))return;inLesson.add(key);
           var concept=concepts.get(key);
           if(!concept){concept={key:key,kind:kind,label:label,meaning:String(item.meaning||''),patterns:[],introductions:[]};concepts.set(key,concept);}
-          if(kind!=='grammar')patternsFor(item,kind).forEach(function(values){
+          if(kind!=='grammar')patternsFor(item,kind,lesson).forEach(function(values){
             var pattern=concept.patterns.find(function(p){return p.values.join(' ')===values.join(' ');});
             if(!pattern){pattern={values:values,sources:new Set()};concept.patterns.push(pattern);}
             pattern.sources.add(lesson.id);

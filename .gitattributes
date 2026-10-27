@@ -9,3 +9,5 @@ text-data/*.json -text
 recall-data/*.json -text
 lesson-recall-catalogue.js text eol=lf
 text-library.js text eol=lf
+# This historical vocabulary fixture has a pinned raw-byte checksum.
+tests/fixtures/book2-context-previous-release.json text eol=lf
