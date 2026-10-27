@@ -141,7 +141,10 @@
   const allWords = Array.from(lessons.values()).flatMap(l => bank.vocabularyForLesson(l.id));
   // Exclude contextual senses already identified as unsuitable for this task.
   const excludedWords = new Set(['turn','spectacle','flat','tired','hot','wayle','hubble','kivu','mediterranean','utah','ex-','most']);
-  const vocabularyPool = source => bank.vocabularyForLesson(source.id).filter(w => !excludedWords.has(w.word.toLowerCase()));
+  // These legacy question IDs already bind specific word concepts. Newly
+  // restored contextual entries remain in the shared bank, but must not shift
+  // the old positional sampler and silently change a saved question's target.
+  const vocabularyPool = source => bank.vocabularyForLesson(source.id).filter(w => !excludedWords.has(w.word.toLowerCase()) && !(w.contextCorrections || []).some(c => String(c.id || '').startsWith('book2-reviewed-context-') && c.originalItem?.needsContextReview === true));
   function wordQuestion(destination, source, word, key) {
     const options = [word], seenWords = new Set([word.word.toLowerCase()]), seenMeanings = new Set([word.meaning]);
     // Restrict distractors to earlier/current lessons and avoid shared sense fragments
