@@ -3,3 +3,7 @@ book34-language-support.js text eol=lf
 # Preserve the generated dictionary and bundled license byte hashes on Windows.
 dictionary-data/*.json -text
 dictionary-data/LICENSE -text
+
+# Reproducible generated lesson-word data.
+lesson-word-targets.js text eol=lf
+lesson-word-targets-source.json -text

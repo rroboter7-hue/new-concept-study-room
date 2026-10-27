@@ -2,7 +2,7 @@
   'use strict';
 
   const escapeText = value => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
-  const wordCategories = [{key:'verb',label:'动词'},{key:'adjective',label:'形容词'},{key:'phrase',label:'习惯用法'}];
+  const wordCategories = [{key:'all',label:'全部'},{key:'verb',label:'动词'},{key:'adjective',label:'形容词'},{key:'phrase',label:'习惯用法'},{key:'selected',label:'已选'}];
   const steps = [
     {kind:'affirmative',label:'肯定句',hint:'用目标词写一个完整的肯定原句。后面三句都沿用这句的人物、时态和情境。'},
     {kind:'negative',label:'否定句',hint:'把第 1 句改为否定句，保留目标词和原来的情境。注意 be、助动词与动词形式。'},
@@ -33,7 +33,8 @@
       this.failureNotified = false;
       this.adjustmentsOpen = false;
       this.oldBank = [];
-      this.wordCategory = 'verb';
+      this.wordCategory = 'all';
+      this.lessonTargetsExpanded = false;
       this.wordSearch = '';
       this.pickerDialog = null;
       this.pickerTrigger = null;
@@ -114,7 +115,67 @@
     }
 
     makeContext(sourceLessonIds) {
-      return this.core().context({lessons:this.options.getLessons?.() || [],currentLesson:this.currentLesson,records:this.options.getRecords?.() || {},sourceLessonIds,includePhrases:true});
+      return this.core().context({lessons:this.options.getLessons?.() || [],currentLesson:this.currentLesson,records:this.options.getRecords?.() || {},getVocabulary:this.options.getVocabulary,sourceLessonIds,includePhrases:true});
+    }
+
+    allDrafts() {
+      const drafts = {...(this.options.getDrafts?.() || {})};
+      for (const entry of this.entries.values()) drafts[entry.key] = entry.draft;
+      return drafts;
+    }
+
+    lessonTargets() {
+      const words = (this.context?.targets || []).filter(item => (item.kind || 'word') === 'word' && item.source.id === this.currentLesson?.id);
+      const flagged = words.some(item => typeof item.isLessonNew === 'boolean');
+      return words.filter(item => !flagged || item.isLessonNew === true);
+    }
+
+    lessonProgress() { return this.core().lessonProgress({targets:this.lessonTargets(),drafts:this.allDrafts()}); }
+
+    chooseLessonTarget(key) {
+      if (!this.lessonTargets().some(item => item.key === key)) return false;
+      const draft = this.active?.draft;
+      this.flush();
+      this.loadTarget(key, draft?.sourceLessonIds || [], false, {mode:draft?.mode,roundKey:draft?.roundKey});
+      this.updateContext();this.markChanged(false);this.flush();this.redraw();
+      return true;
+    }
+
+    nextUnfinished() {
+      const targets = this.lessonTargets(), progress = this.lessonProgress();
+      const completed = new Set(progress.items.filter(item => item.complete).map(item => item.key));
+      const index = targets.findIndex(item => item.key === this.active?.draft.targetKey);
+      for (let offset = 1; offset <= targets.length; offset++) {
+        const target = targets[(index + offset + targets.length) % targets.length];
+        if (!completed.has(target.key)) return this.chooseLessonTarget(target.key);
+      }
+      return false;
+    }
+
+    recommendedOldItems() {
+      const keys = this.lessonSelections.get(this.currentLesson?.id)?.recommendedOldKeys || [];
+      const bank = new Map(this.wordBank().map(item => [item.key, item]));
+      return keys.map(key => bank.get(key)).filter(Boolean);
+    }
+
+    captureRecommendedItems() {
+      if (!this.active) return;
+      const previous = this.active.draft.recommendedOldKeys || [];
+      const keys = [...new Set([...previous,...this.recommendedOldItems().map(item => item.key)])].slice(0,20);
+      if (JSON.stringify(keys) === JSON.stringify(previous)) return;
+      this.active.draft.recommendedOldKeys = keys;
+      this.active.dirty = true;this.active.state = 'pending';
+    }
+
+    ensureRecommendations(refresh = false) {
+      if (!this.active || typeof this.core().recommendOldWords !== 'function') return;
+      if (refresh) this.captureRecommendedItems();
+      const previous = this.lessonSelections.get(this.currentLesson.id) || {};
+      const keys = this.normalizeOldKeys(previous.recommendedOldKeys);
+      if (!refresh && (keys.length || previous.recommendationsReady && !this.wordBank().length)) return;
+      const items = this.core().recommendOldWords({items:this.wordBank(),drafts:this.allDrafts(),lessonId:this.currentLesson.id,previousKeys:refresh ? keys : [],count:4,random:this.options.random});
+      this.lessonSelections.set(this.currentLesson.id, {...previous,recommendedOldKeys:items.map(item => item.key),recommendationsReady:true});
+      this.remember(true);this.flush();
     }
 
     selectionKey(lessonId) { return `selection:v1:${encodeURIComponent(String(lessonId).slice(0, 160))}`; }
@@ -122,10 +183,11 @@
     remember(persist = false) {
       if (!this.currentLesson || !this.active) return;
       const active = this.active.draft;
-      this.lessonSelections.set(this.currentLesson.id, {targetKey:active.targetKey,sourceLessonIds:[...active.sourceLessonIds],mode:active.mode,roundKey:active.roundKey});
+      const previous = this.lessonSelections.get(this.currentLesson.id) || {};
+      this.lessonSelections.set(this.currentLesson.id, {...previous,targetKey:active.targetKey,sourceLessonIds:[...active.sourceLessonIds],mode:active.mode,roundKey:active.roundKey});
       if (persist) {
         const key = this.selectionKey(this.currentLesson.id);
-        const draft = this.core().sanitizeDraft({targetKey:active.targetKey,step:active.step,sourceLessonIds:active.sourceLessonIds,oldWordKey:active.oldWordKey,oldPhraseKey:active.oldPhraseKey,selectedOldKeys:active.selectedOldKeys,mode:active.mode,roundKey:active.roundKey});
+        const draft = this.core().sanitizeDraft({targetKey:active.targetKey,step:active.step,sourceLessonIds:active.sourceLessonIds,oldWordKey:active.oldWordKey,oldPhraseKey:active.oldPhraseKey,selectedOldKeys:active.selectedOldKeys,recommendedOldKeys:previous.recommendedOldKeys || [],mode:active.mode,roundKey:active.roundKey});
         this.entries.set(key, {key,draft,dirty:true,state:'pending'});
       }
     }
@@ -166,12 +228,13 @@
       }
       if (this.active && !this.context.targets.some(item => item.key === this.active.draft.targetKey)) {
         this.flush();
-        this.loadTarget(this.context.targets[0]?.key, safeSources);
+        this.loadTarget(this.lessonTargets()[0]?.key || this.context.targets[0]?.key, safeSources);
         this.context = this.makeContext(this.active?.draft.sourceLessonIds || safeSources);
       }
-      if (!this.active && this.context.targets.length) this.loadTarget(this.context.targets[0].key, safeSources, true);
+      if (!this.active && this.context.targets.length) this.loadTarget(this.lessonTargets()[0]?.key || this.context.targets[0].key, safeSources, true);
       this.syncOldSelection();
       this.remember();
+      this.ensureRecommendations();
     }
 
     ensureState() {
@@ -186,12 +249,14 @@
         this.result = null;
         this.temporarySources = [];
         this.adjustmentsOpen = false;
+        this.lessonTargetsExpanded = false;
         if (lesson) {
           const savedSelection = this.options.getDrafts?.()?.[this.selectionKey(lesson.id)];
           const previous = this.lessonSelections.get(lesson.id) || (savedSelection ? this.core().sanitizeDraft(savedSelection) : null);
+          if (previous) this.lessonSelections.set(lesson.id, {...previous,recommendationsReady:Array.isArray(previous.recommendedOldKeys) && previous.recommendedOldKeys.length > 0});
           const initial = this.makeContext(previous?.sourceLessonIds || []);
           this.context = initial;
-          const targetKey = initial.targets.some(item => item.key === previous?.targetKey) ? previous.targetKey : initial.targets[0]?.key;
+          const targetKey = initial.targets.some(item => item.key === previous?.targetKey) ? previous.targetKey : this.lessonTargets()[0]?.key || initial.targets[0]?.key;
           this.loadTarget(targetKey, previous?.sourceLessonIds || [],false,previous||{});
         }
       } else this.currentLesson = lesson;
@@ -243,7 +308,8 @@
       this.adjustmentsOpen = false;
       this.oldBank = [];
       this.wordSearch = '';
-      this.wordCategory = 'verb';
+      this.wordCategory = 'all';
+      this.lessonTargetsExpanded = false;
     }
 
     saveState() {
@@ -281,11 +347,11 @@
         dialog.addEventListener('close', () => { if (this.pickerDialog === dialog && !dialog.open) this.closeWordPicker(); });
         dialog.sentencePickerBound = true;
       }
-      this.setWordCategory(this.wordCategory);
+      this.setWordCategory('all');
       this.refreshOldSelection();
       try { dialog.showModal(); }
       catch (_) { this.pickerDialog = null;this.pickerTrigger = null;return false; }
-      input?.focus?.();
+      dialog.querySelector('[data-sentence-action="close-word-picker"]')?.focus?.({preventScroll:true});
       return true;
     }
 
@@ -333,7 +399,8 @@
     filteredOldItems() {
       const normalize = value => String(value || '').normalize('NFKC').replace(/[‘’]/g, "'").trim().toLowerCase();
       const query = normalize(this.wordSearch);
-      return this.wordBank().filter(item => item.category === this.wordCategory && (!query || normalize(`${item.label || item.word || item.phrase} ${item.meaning}`).includes(query)));
+      const selected = new Set(this.active?.draft.selectedOldKeys || []);
+      return this.wordBank().filter(item => (this.wordCategory === 'all' || this.wordCategory === 'selected' ? this.wordCategory !== 'selected' || selected.has(item.key) : item.category === this.wordCategory) && (!query || normalize(`${item.label || item.word || item.phrase} ${item.meaning}`).includes(query)));
     }
 
     pickerIcon(name, fallback) {
@@ -347,18 +414,40 @@
     }
 
     oldPickerEntryHTML() {
-      return `<div class="sentence-old-picker"><button type="button" class="sentence-old-trigger" data-sentence-action="open-word-picker" aria-haspopup="dialog" aria-controls="sentence-word-picker">${this.pickerIcon('book','▤')}<strong>选用旧词</strong><span class="sentence-old-trigger-hint">${this.selectedOldItems().length ? `已选 ${this.selectedOldItems().length} 项` : '选择之前学过的词汇'}</span><span aria-hidden="true">›</span></button><div class="sentence-selected-old" aria-label="已选旧词">${this.oldChipsHTML()}</div></div>`;
+      const recommendations = this.recommendationsHTML();
+      return `<div class="sentence-old-picker">${recommendations || this.oldPickerTriggerHTML()}<div class="sentence-old-selection"><div class="sentence-selected-old" aria-label="已选旧词">${this.oldChipsHTML()}</div></div></div>`;
+    }
+
+    oldPickerTriggerHTML() {
+      return `<button type="button" class="sentence-old-trigger" data-sentence-action="open-word-picker" aria-haspopup="dialog" aria-controls="sentence-word-picker">${this.pickerIcon('book','▤')}<strong>全部旧词</strong><span class="sentence-old-trigger-hint">${this.selectedOldItems().length ? `已选 ${this.selectedOldItems().length} 项` : '按需选用'}</span></button>`;
+    }
+
+    recommendationsHTML() {
+      const e = this.escape, items = this.recommendedOldItems(), selected = new Set(this.active?.draft.selectedOldKeys || []);
+      if (!items.length) return '';
+      return `<div class="sentence-recommendations"><div class="sentence-recommendation-heading"><span>旧知建议 · 可选</span><button type="button" class="sentence-recommendation-refresh" data-sentence-action="refresh-recommendations">换一组</button>${this.oldPickerTriggerHTML()}</div><div class="sentence-recommendation-items sentence-recommendation-chips">${items.map(item => `<button type="button" class="sentence-recommendation${item.category === 'phrase' ? ' is-phrase' : ''}${selected.has(item.key) ? ' is-selected' : ''}" data-sentence-action="toggle-recommended-old" data-sentence-old-key="${e(item.key)}" aria-pressed="${selected.has(item.key)}" aria-label="${e(item.label || item.word || item.phrase)}${item.meaning ? ' · ' + e(item.meaning) : ''}"${item.meaning ? ` title="${e(item.meaning)}"` : ''}><span class="sentence-recommendation-label" lang="en">${e(item.label || item.word || item.phrase)}</span>${item.meaning ? `<span class="sentence-recommendation-meaning">${e(this.shortOldMeaning(item))}</span>` : ''}</button>`).join('')}</div></div>`;
+    }
+
+    shortOldMeaning(item) {
+      const label = String(item.label || item.word || item.phrase || '');
+      let meaning = String(item.meaning || '').trim();
+      if (label && meaning.slice(0,label.length).toLowerCase() === label.toLowerCase() && /^[\s:：]/.test(meaning.slice(label.length))) meaning = meaning.slice(label.length).trim();
+      meaning = meaning.replace(/^(?:adj|adv|pron|prep|conj|interj|aux|art|num|vi|vt|n|v|a)\.\s*/i,'').replace(/^[:：]\s*/,'');
+      const senses = meaning.split(/[；;，,。\n]/).map(sense => sense.trim()).filter(Boolean);
+      const sense = senses.find(value => /[\u3400-\u9fff]/.test(value)) || senses[0] || meaning;
+      const characters = Array.from(sense);
+      return characters.slice(0,12).join('') + (characters.length > 12 ? '…' : '');
     }
 
     wordPickerListHTML() {
       const e = this.escape, items = this.filteredOldItems(), selected = new Set(this.active?.draft.selectedOldKeys || []);
       if (!items.length) return `<p class="sentence-word-empty">${!this.wordBank().length ? '前面课程暂无可用的重点词或习惯用法，仍可围绕当前目标写句子。' : this.wordSearch.trim() ? '没有找到匹配的表达，试试其他英文或中文。' : '前面课程暂无这一类表达，可以切换其他分类。'}</p>`;
-      return items.map(item => `<div class="sentence-word-row${selected.has(item.key) ? ' is-selected' : ''}"><label class="sentence-word-choice"><input type="checkbox" data-sentence-old-key="${e(item.key)}" value="${e(item.key)}"${selected.has(item.key) ? ' checked' : ''}><span class="sentence-word-expression" lang="en">${e(item.label || item.word || item.phrase)}</span><span class="sentence-word-meaning">${e(item.meaning)}</span></label><button type="button" class="sentence-word-speak" data-sentence-action="speak-old" data-sentence-old-key="${e(item.key)}" aria-label="朗读 ${e(item.label || item.word || item.phrase)}">${this.pickerIcon('volume','♪')}</button></div>`).join('');
+      return items.map(item => `<div class="sentence-word-row${item.category === 'phrase' ? ' is-phrase' : ''}${selected.has(item.key) ? ' is-selected' : ''}" data-category="${e(item.category)}"><label class="sentence-word-choice"><input type="checkbox" data-sentence-old-key="${e(item.key)}" value="${e(item.key)}"${selected.has(item.key) ? ' checked' : ''}><span class="sentence-word-copy"><span class="sentence-word-expression" lang="en">${e(item.label || item.word || item.phrase)}</span><span class="sentence-word-meaning">${e(item.meaning)}</span></span></label><button type="button" class="sentence-word-speak" data-sentence-action="speak-old" data-sentence-old-key="${e(item.key)}" aria-label="朗读 ${e(item.label || item.word || item.phrase)}">${this.pickerIcon('volume','♪')}</button></div>`).join('');
     }
 
     wordPickerFooterHTML() {
       const count = this.selectedOldItems().length;
-      return `<div class="sentence-word-selection-heading"><strong role="status" aria-live="polite">已选 ${count} 项</strong><button type="button" class="sentence-word-clear" data-sentence-action="clear-old"${count ? '' : ' disabled'}>清空</button></div><div class="sentence-word-chips" aria-label="词表已选表达">${this.oldChipsHTML()}</div><p class="sentence-word-footer-note">选好后回到句子里，自然运用</p><button type="button" class="sentence-word-done" data-sentence-action="close-word-picker">完成选择</button>`;
+      return `<div class="sentence-word-selection-heading"><strong class="sentence-word-selection-count" role="status" aria-live="polite">已选 ${count} 项</strong><button type="button" class="sentence-word-clear" data-sentence-action="clear-old"${count ? '' : ' disabled'}>清空</button></div><button type="button" class="sentence-word-done" data-sentence-action="close-word-picker">完成选择</button>`;
     }
 
     wordPickerHTML() {
@@ -378,7 +467,7 @@
       const chips = root?.querySelector('.sentence-selected-old');
       if (chips) chips.innerHTML = this.oldChipsHTML();
       const hint = root?.querySelector('.sentence-old-trigger-hint');
-      if (hint) hint.textContent = this.selectedOldItems().length ? `已选 ${this.selectedOldItems().length} 项` : '选择之前学过的词汇';
+      if (hint) hint.textContent = this.selectedOldItems().length ? `已选 ${this.selectedOldItems().length} 项` : '按需选用';
       const selected = new Set(this.active?.draft.selectedOldKeys || []);
       this.pickerDialog?.querySelectorAll?.('input[type="checkbox"][data-sentence-old-key]').forEach(input => {
         input.checked = selected.has(input.dataset.sentenceOldKey);
@@ -386,6 +475,11 @@
       });
       const footer = this.pickerDialog?.querySelector('.sentence-word-footer');
       if (footer) footer.innerHTML = this.wordPickerFooterHTML();
+      if (this.wordCategory === 'selected') this.refreshWordPickerList();
+      root?.querySelectorAll?.('[data-sentence-action="toggle-recommended-old"]').forEach(button => {
+        const pressed = selected.has(button.dataset.sentenceOldKey);
+        button.setAttribute('aria-pressed', String(pressed));button.classList?.toggle('is-selected', pressed);
+      });
       const feedback = root?.querySelector('.sentence-feedback');
       if (feedback) feedback.innerHTML = this.feedbackHTML();
     }
@@ -418,13 +512,22 @@
       if (action === 'open-word-picker') { this.openWordPicker(button);return; }
       if (action === 'close-word-picker') { this.closeWordPicker();return; }
       if (action === 'word-category') { this.setWordCategory(button.dataset.sentenceCategory);return; }
-      if (action === 'clear-old') { this.setOldSelection([]);this.pickerDialog?.querySelector('[data-sentence-input="word-search"]')?.focus?.();return; }
+      if (action === 'lesson-target') { this.chooseLessonTarget(button.dataset.sentenceTargetKey);return; }
+      if (action === 'next-unfinished') { this.nextUnfinished();return; }
+      if (action === 'expand-lesson-targets') { this.lessonTargetsExpanded = !this.lessonTargetsExpanded;this.redraw();return; }
+      if (action === 'refresh-recommendations') { this.ensureRecommendations(true);this.redraw();return; }
+      if (action === 'toggle-recommended-old') {
+        const key = button.dataset.sentenceOldKey, selected = this.active.draft.selectedOldKeys || [];
+        if (this.wordBank().some(item => item.key === key)) this.setOldSelection(selected.includes(key) ? selected.filter(item => item !== key) : [...selected,key]);
+        return;
+      }
+      if (action === 'clear-old') { this.setOldSelection([]);this.pickerDialog?.querySelector('[data-sentence-action="close-word-picker"]')?.focus?.({preventScroll:true});return; }
       if (action === 'remove-old') {
         const key = button.dataset.sentenceOldKey, selected = this.active.draft.selectedOldKeys || [];
         const fromPicker = Boolean(button.closest?.('.sentence-word-dialog'));
         this.setOldSelection(selected.filter(item => item !== key));
         const scope = fromPicker ? this.pickerDialog : document.querySelector('#sentence-practice-content');
-        (scope?.querySelector(fromPicker ? '[data-sentence-action="remove-old"]' : '.sentence-selected-old [data-sentence-action="remove-old"]') || scope?.querySelector(fromPicker ? '[data-sentence-input="word-search"]' : '[data-sentence-action="open-word-picker"]'))?.focus?.();
+        (scope?.querySelector(fromPicker ? '[data-sentence-action="remove-old"]' : '.sentence-selected-old [data-sentence-action="remove-old"]') || scope?.querySelector(fromPicker ? '[data-sentence-action="close-word-picker"]' : '[data-sentence-action="open-word-picker"]'))?.focus?.({preventScroll:true});
         return;
       }
       if (action === 'speak-old') {
@@ -442,6 +545,7 @@
       } else if (action === 'save') { this.flush();this.redraw(); }
       else if (action === 'check') {
         this.result = this.evaluate();
+        this.captureRecommendedItems();
         this.active.draft.checkedAt = Date.now();
         this.markChanged(false);const saved=this.flush();
         if(saved&&this.core().completion({answers:this.active.draft.answers,target:this.target()})){
@@ -546,16 +650,32 @@
       return `<details class="sentence-adjustments"${this.adjustmentsOpen ? ' open' : ''} data-sentence-adjustments><summary>调整练习目标与方式</summary>${this.controlsHTML()}</details>`;
     }
 
+    lessonQueueHTML() {
+      const e = this.escape, targets = this.lessonTargets(), progress = this.lessonProgress();
+      if (!targets.length) return '<section class="sentence-lesson-queue" aria-label="本课新词练习"><p class="sentence-note">本课没有新增单词，可在调整中选词复习。</p></section>';
+      const items = new Map(progress.items.map(item => [item.key,item]));
+      const visible = this.lessonTargetsExpanded ? targets : targets.slice(0,4);
+      if (!this.lessonTargetsExpanded && !visible.some(item => item.key === this.active?.draft.targetKey)) {
+        const active = targets.find(item => item.key === this.active?.draft.targetKey);
+        if (active) visible[visible.length - 1] = active;
+      }
+      return `<section class="sentence-lesson-queue" aria-label="本课新词练习"><div class="sentence-lesson-heading"><strong>本课新词 <span>${progress.done} / ${progress.total}</span></strong>${targets.length > 4 ? `<button type="button" class="sentence-lesson-expand" data-sentence-action="expand-lesson-targets" aria-expanded="${this.lessonTargetsExpanded}">${this.lessonTargetsExpanded ? '收起词表' : `全部 ${targets.length} 词`}</button>` : ''}<button type="button" class="sentence-next-target" data-sentence-action="next-unfinished"${progress.done === progress.total ? ' disabled' : ''}>下一个未练</button></div><div class="sentence-lesson-targets">${visible.map(target => {
+        const item = items.get(target.key) || {written:0,complete:false}, active = target.key === this.active?.draft.targetKey;
+        return `<button type="button" class="sentence-lesson-target${active ? ' active' : ''}${item.complete ? ' is-complete' : ''}" data-sentence-action="lesson-target" data-sentence-target-key="${e(target.key)}"${active ? ' aria-current="true"' : ''} aria-label="${e(target.word)}，${item.complete ? '已练五句' : `已写 ${item.written} / 5 句`}"><span class="sentence-target-label" lang="en">${e(target.word)}</span><span class="sentence-target-meaning">${e(target.meaning)}</span><span class="sentence-target-progress">${item.complete ? '已练' : `${item.written}/5`}</span></button>`;
+      }).join('')}</div><p class="sentence-lesson-note">每个新词写五句并检查；已练不代表掌握。</p></section>`;
+    }
+
     bodyHTML() {
       if (this.isBookWorkspace()) return this.workspaceHTML();
       const e = this.escape, target = this.target(), draft = this.active?.draft, flexible = draft?.mode === 'flexible';
       const status = this.saveState();
-      return `<div class="sentence-header"><h3>${flexible ? '一个目标，灵活写五句' : '句型变换练习'}</h3><p>${flexible ? '围绕一个单词或习惯用法变换语境，尝试补充信息、提问、回应和联系旧知。这五个提示是本站的训练安排，不是固定五种句型要求。' : '围绕同一原句练句型转换，再联系旧知写新句子。此模式保留独立草稿，可切回灵活五句。'}</p></div>${this.adjustmentsHTML()}${target && draft ? this.editorHTML() : '<p class="sentence-note">本课暂无可用单词或习惯用法。</p>'}<p class="sentence-save-status" data-save-state="${status.state}" role="status" aria-live="polite">${e(status.text)}</p>${draft?.assisted ? '<p class="sentence-note sentence-assisted">本轮已查看参考示例；关闭示例后仍保留参考标记。</p>' : ''}${this.referenceHTML()}${this.wordPickerHTML()}`;
+      return `${this.lessonQueueHTML()}<div class="sentence-header"><h3>${flexible ? '一个目标，灵活写五句' : '句型变换练习'}</h3><p>${flexible ? '围绕一个单词或习惯用法变换语境，尝试补充信息、提问、回应和联系旧知。这五个提示是本站的训练安排，不是固定五种句型要求。' : '围绕同一原句练句型转换，再联系旧知写新句子。此模式保留独立草稿，可切回灵活五句。'}</p></div>${target && draft ? this.editorHTML() : '<p class="sentence-note">本课暂无可用单词或习惯用法。</p>'}${this.adjustmentsHTML()}<p class="sentence-save-status" data-save-state="${status.state}" role="status" aria-live="polite">${e(status.text)}</p>${draft?.assisted ? '<p class="sentence-note sentence-assisted">本轮已查看参考示例；关闭示例后仍保留参考标记。</p>' : ''}${this.referenceHTML()}${this.wordPickerHTML()}`;
     }
 
     knowledgeHTML() {
       const e = this.escape, target = this.target();
       if (!target) return '';
+      if (this.isBookWorkspace() && this.lessonTargets().some(item => item.key === target.key)) return '';
       return `<div class="sentence-target"><span class="sentence-target-label">本次目标</span><p><strong lang="en">${e(target.word || target.phrase)}</strong>${target.meaning ? `<span> · ${e(target.meaning)}</span>` : ''}</p></div>`;
     }
 
@@ -564,12 +684,11 @@
       const adjustments = this.adjustmentsHTML();
       if (!target || !draft) return `<div class="sentence-header"><h3>五句练习</h3><p>本课暂无可用单词或习惯用法。</p></div>${adjustments}`;
       const list=this.stepList(),step = list[draft.step], flexible=draft.mode==='flexible',combined = draft.step === 4, status = this.saveState();
-      const titles = flexible?['换一个语境，写一句自己的话','给句子补充时间地点','模仿表达，换个说法','试着提问，或写一句回应','把旧知识，用进新句子']:['先写一句肯定句','把原句改成否定句','向原句提一个问题','试着用特殊疑问词提问','把旧知识，用进新句子'];
       const hints = flexible?['用目标单词或习惯用法，联系自己的生活。','换一个时间、地点或人物，不必改成否定句。','回忆课文表达，试着变化人物、动作或情境。','用目标表达提出问题，或写一句对话回应。','可联系旧知，也可换个语境写一句。']:['用目标词，写一句完整的英文。','沿用第 1 句的人物、时态和情境。','保留目标词，写一个可用 yes / no 回答的问题。','保留目标词，用 what / who / where 等提问。','选一个旧词和一个旧用法，写一句新句子。'];
       const navigation = list.map((item,index) => `<li><button type="button" class="sentence-step${index === draft.step ? ' active' : ''}${draft.answers[item.kind].trim() ? ' written' : ''}" data-sentence-action="step" data-sentence-step="${index}"${index === draft.step ? ' aria-current="step"' : ''} aria-label="第 ${index + 1} 步 ${e(item.label)}${draft.answers[item.kind].trim() ? '，已填写' : ''}"><span>${index + 1}</span></button></li>`).join('');
       const original = !flexible && draft.step > 0 && !combined ? `<div class="sentence-original"><strong>第 1 句 · 肯定原句</strong><p lang="en">${draft.answers.affirmative.trim() ? e(draft.answers.affirmative) : '还没有原句，请先回到第 1 步。'}</p></div>` : '';
       if (!this.result && draft.checkedAt) this.result = this.evaluate();
-      return `<div class="sentence-workspace${combined ? ' sentence-workspace-combined' : ''}"><div class="sentence-progress"><ol class="sentence-steps" aria-label="五句练习步骤">${navigation}</ol><p class="sentence-step-count">第 ${draft.step + 1} 句 / 共 5 句</p></div><div class="sentence-header"><h3 id="sentence-step-title">${e(titles[draft.step])}</h3><p id="sentence-step-hint">${e(hints[draft.step])}</p></div>${this.knowledgeHTML()}${this.oldPickerEntryHTML()}${adjustments}${original}<section class="sentence-editor" aria-labelledby="sentence-step-title"><label class="sentence-field" for="sentence-answer">${combined ? '我的综合句' : flexible ? '我的句子' : '我的' + e(step.label)}<textarea id="sentence-answer" class="sentence-textarea" data-sentence-input="answer" rows="${combined ? 3 : 5}" maxlength="400" lang="en" spellcheck="true" autocapitalize="sentences" aria-describedby="sentence-step-hint sentence-counter" placeholder="在这里写下这一句英文…">${e(draft.answers[step.kind])}</textarea></label><div class="sentence-draft-meta"><p class="sentence-save-status" data-save-state="${status.state}" role="status" aria-live="polite">${e(status.text)}</p><p id="sentence-counter" class="sentence-counter">${draft.answers[step.kind].length} / 400 字符</p></div><div class="sentence-actions"><button type="button" class="button primary" data-sentence-action="check">检查五句基本要求</button><div class="sentence-page-actions"><button type="button" class="button subtle" data-sentence-action="previous"${draft.step === 0 ? ' disabled' : ''}>上一句</button><button type="button" class="button subtle" data-sentence-action="next"${draft.step === 4 ? ' disabled' : ''}>下一句</button></div></div></section><section class="sentence-feedback" aria-live="polite">${this.feedbackHTML()}</section>${draft.assisted?'<p class="sentence-note sentence-assisted">本轮已查看参考示例；关闭示例后仍保留参考标记。</p>':''}${this.referenceHTML()}${this.wordPickerHTML()}</div>`;
+      return `<div class="sentence-workspace${combined ? ' sentence-workspace-combined' : ''}">${this.lessonQueueHTML()}<div class="sentence-progress"><ol class="sentence-steps" aria-label="五句练习步骤">${navigation}</ol><p class="sentence-step-count">第 ${draft.step + 1} 句 / 共 5 句</p></div><div class="sentence-header"><h3 id="sentence-step-title">${e(step.label)}</h3><p id="sentence-step-hint">${e(hints[draft.step])}</p></div>${this.knowledgeHTML()}${this.oldPickerEntryHTML()}${original}<section class="sentence-editor" aria-labelledby="sentence-step-title"><label class="sentence-field" for="sentence-answer">${combined ? '我的综合句' : flexible ? '我的句子' : '我的' + e(step.label)}<textarea id="sentence-answer" class="sentence-textarea" data-sentence-input="answer" rows="3" maxlength="400" lang="en" spellcheck="true" autocapitalize="sentences" aria-describedby="sentence-step-hint sentence-counter" placeholder="在这里写下这一句英文…">${e(draft.answers[step.kind])}</textarea></label><div class="sentence-draft-meta"><p class="sentence-save-status" data-save-state="${status.state}" role="status" aria-live="polite">${e(status.text)}</p><p id="sentence-counter" class="sentence-counter">${draft.answers[step.kind].length} / 400 字符</p></div><div class="sentence-actions"><button type="button" class="button primary" data-sentence-action="check">检查五句基本要求</button><div class="sentence-page-actions"><button type="button" class="button subtle" data-sentence-action="previous"${draft.step === 0 ? ' disabled' : ''}>上一句</button><button type="button" class="button subtle" data-sentence-action="next"${draft.step === 4 ? ' disabled' : ''}>下一句</button></div></div></section>${adjustments}<section class="sentence-feedback" aria-live="polite">${this.feedbackHTML()}</section>${draft.assisted?'<p class="sentence-note sentence-assisted">本轮已查看参考示例；关闭示例后仍保留参考标记。</p>':''}${this.referenceHTML()}${this.wordPickerHTML()}</div>`;
     }
 
     editorHTML() {

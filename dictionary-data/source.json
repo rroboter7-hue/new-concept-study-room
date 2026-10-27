@@ -16,13 +16,13 @@
   "counts": {
     "sourceRows": 770611,
     "validSingleWordRows": 400181,
-    "entries": 11888,
+    "entries": 11915,
     "coreSelected": 6076,
-    "bilingual": 11289,
-    "chinese": 11888,
-    "english": 11289,
+    "bilingual": 11312,
+    "chinese": 11915,
+    "english": 11312,
     "methods": {
-      "exact": 11886,
+      "exact": 11913,
       "explicit-lemma": 2,
       "explicit-reverse-exchange": 0
     },
@@ -39,7 +39,7 @@
     "inputs": [
       {
         "file": "index.html",
-        "sha256": "6e606b85df2998aa5eb7e3e76eab159088589f532e27f337e65a1daca9a2e2e5"
+        "sha256": "383e73818179fffcd4875843c2fd234b42def9e795cf855c81e2ac03fb862a13"
       },
       {
         "file": "curriculum.js",
@@ -86,12 +86,16 @@
         "sha256": "af600c559e55f15ebc1f1136d7aeffe9c86d7bb80aa5b80d433812e4e58e071b"
       },
       {
+        "file": "book2-additional-context-fixes.js",
+        "sha256": "fe4740b920d03e7035d30a7d0089c517bca1c52e3e505eee4e4463d882f114af"
+      },
+      {
         "file": "book2-quality-support.js",
         "sha256": "467b91c4e8feb3a26a3b40a89be1ed230a5e97cf1b4a63d052fcd02655aaa4ce"
       },
       {
         "file": "book2-practice-packs.js",
-        "sha256": "11902e674cebff5fbca0859e5a46eec38f62c32464019a0bdb62b08f594021d5"
+        "sha256": "187c8eabfa3b26a9f18a2169c4d6404480458bab4c8e53c4e9f3c1d7d57a918f"
       },
       {
         "file": "book2-reviewed-questions.js",
@@ -150,6 +154,10 @@
         "sha256": "7672f8bbfe8ba2648408f98cb9c0e1c508e26dbc8757fda4689b8e30ebc9c8ec"
       },
       {
+        "file": "book2-packs20-word-audio.js",
+        "sha256": "3d591291c1dcf2f6ea48b24ad9d72edf8342e3bf6335216ed940d1c3c3106e42"
+      },
+      {
         "file": "nativeears-advanced-catalogue.js",
         "sha256": "437287937102f415d1e418d0f322b04849e04ced10109250467b3fc8f1978afb"
       },
@@ -168,6 +176,10 @@
       {
         "file": "glossary.js",
         "sha256": "e1bd1e1181334e4e8fd68966305a296238b013fbdc763efda636f668559b0451"
+      },
+      {
+        "file": "source-files.js",
+        "sha256": "eee19eac79542543452930d0dc709cce7e8e264800cbd5fbbc49a6fa92da8119"
       },
       {
         "file": "library.js",
@@ -218,16 +230,20 @@
         "sha256": "bf733b3ad33131df66f4dc7d9a11e6d242a286c091cea23d45b58e34e60dc6e9"
       },
       {
+        "file": "lesson-word-targets.js",
+        "sha256": "658f5e10554bd7b435b9a416e72f653f7f9a53d42fa9e0e70fdc9bb88f480607"
+      },
+      {
         "file": "sentence-wordbank-data.js",
         "sha256": "38295c8cca336efda43c33ccf6b20f1d2abcd320652d9d3819baab3fa0389d1c"
       },
       {
         "file": "sentence-core.js",
-        "sha256": "e2ddebe80f81efae10012a5a91e10e0c6f95de4e414e635d95407dd37805e79a"
+        "sha256": "754b4bc35f4c0a3c21c71d42006888d76ee67d7c6f9048952fd17dd6bb9bdd17"
       },
       {
         "file": "sentence-practice.js",
-        "sha256": "e3c6b86b53c57bc6936ccc871829106396faf04d20d397517bc5bcf0c3e8d1c5"
+        "sha256": "4061eec3a42b11882a6a94870896ed6880f808089dc9d1c68904239ed45ade94"
       },
       {
         "file": "dictionary-service.js",
@@ -247,11 +263,11 @@
       },
       {
         "file": "phrase-practice.js",
-        "sha256": "19778a1de2ddd1de715815dfbc778ea833fa8f57ee24b34b002a7fb27eaf0d5d"
+        "sha256": "3f8dc63d1c954b5853ebe0d98a768894b143c0625402593ad04b8d82a9a51a24"
       },
       {
         "file": "text-reader.js",
-        "sha256": "c3b146b9b6b0e2839cdf0aafdfb7aacf18e735f2080eca323c2849449568aafa"
+        "sha256": "9c5905909f52a75e3c1b270fa13d4fa617c6d8694fb98a8d9b0512527791419a"
       },
       {
         "file": "mobile-learning-shell.js",
@@ -280,11 +296,11 @@
     ]
   },
   "coverage": {
-    "requested": 11524,
-    "recorded": 9922,
-    "bilingual": 9348,
-    "chinese": 9922,
-    "english": 9348,
+    "requested": 11573,
+    "recorded": 9966,
+    "bilingual": 9388,
+    "chinese": 9966,
+    "english": 9388,
     "unrecorded": [
       "able-camp-close-while-erupting",
       "able-tell-more",
@@ -296,6 +312,7 @@
       "absence-boats",
       "accidental-noble",
       "accounts-wrong",
+      "actor's",
       "actor-actress",
       "acuto",
       "admitted-searched",
@@ -526,6 +543,7 @@
       "challenger's",
       "chang-woo",
       "chaplin's",
+      "character's",
       "charlotte's",
       "cheap-cheaper-cheapest",
       "cheese-pocket-away",
@@ -796,6 +814,7 @@
       "frenchman's",
       "frendli",
       "frent",
+      "friday's",
       "friend's",
       "frinley",
       "frinley-possess-cursed",
@@ -1716,6 +1735,7 @@
       "tom's",
       "tom-his",
       "tommy's",
+      "tonight's",
       "too-always-prize-worst",
       "tools-looking",
       "tooth-teeth",
@@ -1746,6 +1766,7 @@
       "trousers-climbing",
       "tstep",
       "tunnel-channel",
+      "twelve-year-old",
       "twenty-already",
       "twenty-one-mile",
       "two-hour",
@@ -2023,6 +2044,7 @@
       "ek",
       "eleanor",
       "elizabethtown",
+      "ella",
       "ellesmere",
       "elsa",
       "emily",
@@ -2033,6 +2055,7 @@
       "espensive",
       "et",
       "etc",
+      "eva",
       "ever-increasing",
       "ex-girlfriend",
       "ex-wife",
@@ -2077,6 +2100,7 @@
       "hair-cut",
       "halliday",
       "hampden",
+      "hana",
       "haroun",
       "harriet",
       "he'd",
@@ -2252,6 +2276,7 @@
       "pamela",
       "parel",
       "parramatta",
+      "paula",
       "pdf",
       "perpignan",
       "petr",
@@ -2524,9 +2549,9 @@
     },
     {
       "file": "c.json",
-      "entries": 1129,
-      "bytes": 363594,
-      "sha256": "2a50a60684505bafc810945cea599f6fda9b1ddfcb999ce056114b320888797e"
+      "entries": 1130,
+      "bytes": 363811,
+      "sha256": "27de5ac23998a2b3982bd3a4b4b8a667a763308348ffea6f10364a1159cedf80"
     },
     {
       "file": "d.json",
@@ -2536,27 +2561,27 @@
     },
     {
       "file": "e.json",
-      "entries": 537,
-      "bytes": 144251,
-      "sha256": "759caaba0b249ad5d4ff833a799d926b6a3cf49f8f35530a35b04a2057720d3b"
+      "entries": 539,
+      "bytes": 144456,
+      "sha256": "8ce886b06fd46a1fa2632267291a5a0065d69d9c3434e14de69d96802f0a8f74"
     },
     {
       "file": "f.json",
-      "entries": 558,
-      "bytes": 177514,
-      "sha256": "ee3b09f1cebbe4991050a2372f22fddf50043d5227ef364b6c69d7617fd2827e"
+      "entries": 560,
+      "bytes": 179058,
+      "sha256": "80e823a945d1b8fea98efbf882b8e1c581529e583fa6648a852558f471c4aec2"
     },
     {
       "file": "g.json",
-      "entries": 338,
-      "bytes": 100458,
-      "sha256": "dfea77d7260011b0c7934d667586eb841647fa65aa25a5389406e379187293b2"
+      "entries": 339,
+      "bytes": 101090,
+      "sha256": "c3a0130444a9277424acf6acce47c97d195e7345c12e6ae1c2578b93724cd304"
     },
     {
       "file": "h.json",
-      "entries": 399,
-      "bytes": 122743,
-      "sha256": "b7a1a3cf26c72c5957b18386eb59056c022ebfc07394c2c1852026bd4d8ea729"
+      "entries": 401,
+      "bytes": 123032,
+      "sha256": "54471dfe2602a7cb162c54981e35d4fcf67ec6341b8aecb3c0212e82ff2787aa"
     },
     {
       "file": "i.json",
@@ -2584,27 +2609,27 @@
     },
     {
       "file": "m.json",
-      "entries": 578,
-      "bytes": 163047,
-      "sha256": "8422d1b0e80e911b1a3dc5f267562765438c85ac67281a788a3d1277c3eb9108"
+      "entries": 583,
+      "bytes": 164086,
+      "sha256": "30bc16a9440efee0a46d6be75dd9b5d099f1189a0a9cf03f07f6797dd98e45ef"
     },
     {
       "file": "n.json",
-      "entries": 237,
-      "bytes": 64260,
-      "sha256": "c263dac97c5c12b3bad376cf9b3fee63459c0061435de722bce783904bad0514"
+      "entries": 238,
+      "bytes": 64421,
+      "sha256": "cbb1a60fc4e6061fb83834a19016c573d039304e9749580427fea5e70f9340e2"
     },
     {
       "file": "o.json",
-      "entries": 286,
-      "bytes": 83639,
-      "sha256": "d0260b2a266e1ec6e822c885785f56e77cf8239457abed5c3f45dfab28e04ed1"
+      "entries": 287,
+      "bytes": 83802,
+      "sha256": "ee37044d2ec1a86c67066c09906b30cef47005107e75f66a3c4943939751f913"
     },
     {
       "file": "p.json",
-      "entries": 910,
-      "bytes": 295890,
-      "sha256": "e0068a51237d6b1dce13ac97aa09b624f6758982998a7b58ab784bf7150e388f"
+      "entries": 911,
+      "bytes": 295998,
+      "sha256": "1cf8b1ddbf8d156ad73af9f160aeaffadf5cf458a02437783de817bc3d6a1920"
     },
     {
       "file": "q.json",
@@ -2614,27 +2639,27 @@
     },
     {
       "file": "r.json",
-      "entries": 686,
-      "bytes": 222549,
-      "sha256": "9adf7fda04932365f39203115ad5f133f6ca5e1a1c7783880f466477709a8b04"
+      "entries": 690,
+      "bytes": 224409,
+      "sha256": "9503f01e0d555ef601035b2c8443082100888140c25ee9ab611ce4df4362187a"
     },
     {
       "file": "s.json",
-      "entries": 1443,
-      "bytes": 455721,
-      "sha256": "519242ec4bf845597d4746bfeb75decfd0f985c62f22fc2bd4c8559dcfe679d7"
+      "entries": 1446,
+      "bytes": 456988,
+      "sha256": "b376c3140296f79695a4fd3f6edd8991ef56b0306e5e81337f46b3ed00d15dfa"
     },
     {
       "file": "t.json",
-      "entries": 642,
-      "bytes": 197862,
-      "sha256": "1924948559930d06408d4fd4f8bcd15fc6a14e88813491dfa73bfe6ab94a1bfe"
+      "entries": 644,
+      "bytes": 198355,
+      "sha256": "6672a7d7a03a70a531e3e0a70ffab9a7d14507b0d3d504081874378e1b7b3876"
     },
     {
       "file": "u.json",
-      "entries": 223,
-      "bytes": 53639,
-      "sha256": "9664de528e3bc3f8b2946b0453f92c4ec9b86366b92c79131d61c33e8c135f7d"
+      "entries": 225,
+      "bytes": 53986,
+      "sha256": "bcedb879dafb1ca9beb4be7b08267f62798a40b43eb6e25738d8381e9e300271"
     },
     {
       "file": "v.json",

@@ -1,0 +1,3003 @@
+{
+  "version": 1,
+  "policy": "First exact spelling/form in learner-facing lesson.title followed by paragraphs[].en, in numeric book/lesson order. ASCII tokens [A-Za-z]+(?:[’'-][A-Za-z]+)*; lowercase and smart apostrophe normalization only. No stemming or omission of names/function words. Abbreviation-only dictionary glosses require a literal uppercase source acronym or an explicitly listed standard English contraction; otherwise retain the target with a missing meaning. Valid course glosses take precedence. Original vocabulary rows remain available; this is corpus novelty, not learner mastery.",
+  "status": {
+    "lessons": 276,
+    "newWords": 7448,
+    "missingMeaning": 261,
+    "byBook": {
+      "1": 1174,
+      "2": 1698,
+      "3": 2556,
+      "4": 2020
+    },
+    "lessonsByBook": {
+      "1": 72,
+      "2": 96,
+      "3": 60,
+      "4": 48
+    }
+  },
+  "inputs": [
+    {
+      "file": "curriculum.js",
+      "sha256": "ad4454ce67e117ae12483a1a880abdcd2471f4a44fac70b4966bf0818559635c"
+    },
+    {
+      "file": "textbook-lessons.js",
+      "sha256": "9c285b39fa9329dafe8cbbafacd914f029f8c8a4b1598e7482deca81e69761fb"
+    },
+    {
+      "file": "book1-first10-lessons.js",
+      "sha256": "2f2615cad74d264eeb9416302997954a3fbeb23210249f4b15add576ee45e194"
+    },
+    {
+      "file": "book1-first10-catalogue.js",
+      "sha256": "9c34cc3c4c909aba23fa81a17588ff395970033a1405671cd2955aa9faf192f3"
+    },
+    {
+      "file": "book1-complete-lessons.js",
+      "sha256": "ce15c0025372a62651de679c5f2e92a6b1cd5742ebd3baf037895f38b044b375"
+    },
+    {
+      "file": "book2-lessons.js",
+      "sha256": "ee8d0517b8107f64bb79887bfc2cebd3e5fe0a46d475a16479d27d383f8a5265"
+    },
+    {
+      "file": "book2-translations.js",
+      "sha256": "5395a0c38f76cf6a7f578ead13a5fe2b7fe3ea5177217e1e7a0ae48bb1a5350e"
+    },
+    {
+      "file": "book2-reading-alignment.js",
+      "sha256": "b26c439d32c4b13aaa4880ba73d28e16c942f744f7d26b72dc508ece6a5560c2"
+    },
+    {
+      "file": "phrase-library.js",
+      "sha256": "6fb1098faa72c7ecd21da4cae4baeb1c066474af18e9b8b43b79b26a39ddc8dc"
+    },
+    {
+      "file": "book2-learning-support.js",
+      "sha256": "604129f40e8ba968c8ce8297e10be59739bbede4d4f4cdeec5f9de362eb7b4dc"
+    },
+    {
+      "file": "book2-vocabulary.js",
+      "sha256": "af600c559e55f15ebc1f1136d7aeffe9c86d7bb80aa5b80d433812e4e58e071b"
+    },
+    {
+      "file": "book2-additional-context-fixes.js",
+      "sha256": "fe4740b920d03e7035d30a7d0089c517bca1c52e3e505eee4e4463d882f114af"
+    },
+    {
+      "file": "book2-quality-support.js",
+      "sha256": "467b91c4e8feb3a26a3b40a89be1ed230a5e97cf1b4a63d052fcd02655aaa4ce"
+    },
+    {
+      "file": "book2-practice-packs.js",
+      "sha256": "187c8eabfa3b26a9f18a2169c4d6404480458bab4c8e53c4e9f3c1d7d57a918f"
+    },
+    {
+      "file": "book2-reviewed-questions.js",
+      "sha256": "d30f71480ecb668d530050f2109dff91b9bf7fea498638f404737434d2d09cbd"
+    },
+    {
+      "file": "study-knowledge.js",
+      "sha256": "95187e024031d732c2d2f68534b288f285009a6e2137d0a448cdeb649505c0de"
+    },
+    {
+      "file": "pilot-question-expansion.js",
+      "sha256": "6c8090fe8bf52a97103d23969d5b7457043cd9205eadba15239f3c2f59d79227"
+    },
+    {
+      "file": "book2-later-question-expansion.js",
+      "sha256": "51cbe2c750e4aeef6c532f719df1a2c08a6def01163b4f4061d7100f10e35dbc"
+    },
+    {
+      "file": "knowledge-bootstrap.js",
+      "sha256": "343ef69682b9342c052db1ba47aa51d3eda2891d37b723a43d6e5328bad905ae"
+    },
+    {
+      "file": "practice-pack-core.js",
+      "sha256": "76bb72bd8f25976aa5d01ddda0f050d5dd7f3014d610b45174d91927fd084c8d"
+    },
+    {
+      "file": "practice-pack-bootstrap.js",
+      "sha256": "ba4e4aaec149a9a0f882f8c7eda6492cc0038d57ea4dd984d4e6fba7af8d1508"
+    },
+    {
+      "file": "recurrence.js",
+      "sha256": "7a96e4df805a29af01750c1687dc928cba1943a727957637839214aeb37ba62b"
+    },
+    {
+      "file": "generated-audio.js",
+      "sha256": "cfcff8c834dae15e81be68a7ee6c3f186a34b01c99f5c451845baa3f22c8e1d8"
+    },
+    {
+      "file": "practice-pack-word-audio.js",
+      "sha256": "0c48404fc3f67a875d9cd6c9ffba46f14dc923afcd3cb03cd4ceef6a077943af"
+    },
+    {
+      "file": "provided-audio.js",
+      "sha256": "2536db2590c744069dc900e6fecd48ca4924fe700287c6feb783f2f180f2bd40"
+    },
+    {
+      "file": "nativeears-audio.js",
+      "sha256": "c80279c9f095e7128f30097133c7dcd47170d320dae14ee5b629ac41e5905a57"
+    },
+    {
+      "file": "book1-first10-audio.js",
+      "sha256": "90ada0e3e52f2d29d129e972ff89b69d3cec3405033711d5625cc2e6e0b7e2fe"
+    },
+    {
+      "file": "book1-complete-audio.js",
+      "sha256": "7672f8bbfe8ba2648408f98cb9c0e1c508e26dbc8757fda4689b8e30ebc9c8ec"
+    },
+    {
+      "file": "book2-packs20-word-audio.js",
+      "sha256": "3d591291c1dcf2f6ea48b24ad9d72edf8342e3bf6335216ed940d1c3c3106e42"
+    },
+    {
+      "file": "nativeears-advanced-catalogue.js",
+      "sha256": "437287937102f415d1e418d0f322b04849e04ced10109250467b3fc8f1978afb"
+    },
+    {
+      "file": "nativeears-advanced-audio.js",
+      "sha256": "05ee7d30ca2d2b69be108a4ad8aadde9a787e612000f28e4ea6fdc4d8853260a"
+    },
+    {
+      "file": "book3-lessons.js",
+      "sha256": "f866e3a4a67c3aba6d16efdba396b0a714552cb9b3048efccc1d9e8581512c92"
+    },
+    {
+      "file": "book4-lessons.js",
+      "sha256": "c549181d40b2353d1baab2ff3cbe8e3f8871af4774aa2b005a29a747301f506f"
+    },
+    {
+      "file": "glossary.js",
+      "sha256": "e1bd1e1181334e4e8fd68966305a296238b013fbdc763efda636f668559b0451"
+    },
+    {
+      "file": "source-files.js",
+      "sha256": "eee19eac79542543452930d0dc709cce7e8e264800cbd5fbbc49a6fa92da8119"
+    },
+    {
+      "file": "library.js",
+      "sha256": "fd5b25fa99dcff3c2e0397f241d02bf1315d8c026e122ba02b8b6e6404c153f4"
+    },
+    {
+      "file": "text-library.js",
+      "sha256": "1228152c92e37d11eabfaee874b17b8c8f675c6f3d575953cbe34983021ea196"
+    },
+    {
+      "file": "core.js",
+      "sha256": "4cd7ddfd2e0f441319e110b6fc48ff49f76bcf1f2f96d6d0697716bf0969053c"
+    },
+    {
+      "file": "review-engine.js",
+      "sha256": "c73c6545d8bcf527bae03dfa1de6902190d4658975d1c935a47490dae64596bc"
+    },
+    {
+      "file": "review-practice.js",
+      "sha256": "1604bb70a15d9c53d59b8375de77a356112947b447e4bb2a67f1706c70edf4b6"
+    },
+    {
+      "file": "reading-layout.js",
+      "sha256": "2d9825b14bed10ec5b326a4b6cf7cc30e8ca6077bc99b38a9971ce4db59a2779"
+    },
+    {
+      "file": "book34-language-support.js",
+      "sha256": "d19c9c3067238e02beb77e3e24ca9049e3d98d1efa36a88ea7d08ffbd996765c"
+    },
+    {
+      "file": "audio.js",
+      "sha256": "e4e447b72560957537980a66e666d2765ff837bb499e410158ca80032259bad4"
+    },
+    {
+      "file": "pilot-grammar-followups.js",
+      "sha256": "811e74ae299f6717f166b5662f61af140d8b5ae042d520fa1b829fada7e79abe"
+    },
+    {
+      "file": "learning-remediation.js",
+      "sha256": "827d7bada794ba1393ba5cda23e7dc7664f04a22fa5b22f5a320240e5b2fb9e0"
+    },
+    {
+      "file": "game.js",
+      "sha256": "2448afeb173a8220309e48da9e609b04688c1829f13cefdc28b1411e011258f9"
+    },
+    {
+      "file": "grammar-check.js",
+      "sha256": "bf733b3ad33131df66f4dc7d9a11e6d242a286c091cea23d45b58e34e60dc6e9"
+    },
+    {
+      "file": "sentence-wordbank-data.js",
+      "sha256": "38295c8cca336efda43c33ccf6b20f1d2abcd320652d9d3819baab3fa0389d1c"
+    },
+    {
+      "file": "sentence-core.js",
+      "sha256": "754b4bc35f4c0a3c21c71d42006888d76ee67d7c6f9048952fd17dd6bb9bdd17"
+    },
+    {
+      "file": "sentence-practice.js",
+      "sha256": "4061eec3a42b11882a6a94870896ed6880f808089dc9d1c68904239ed45ade94"
+    },
+    {
+      "file": "dictionary-service.js",
+      "sha256": "9fa26d6dc795345cb4abde293d3a73883e2cb76c975d726e992086c8983c2350"
+    },
+    {
+      "file": "batch-sentence-core.js",
+      "sha256": "c837852e871d216b463a02a6bd0ea9e71dd04553999e098159e940a8cd748dcc"
+    },
+    {
+      "file": "batch-sentence-practice.js",
+      "sha256": "945e45724971a7c0f630e164e77b1c5aec40fa4cd47b16d7d81d59068d75039f"
+    },
+    {
+      "file": "output-practice.js",
+      "sha256": "417c4fcdfc8ad2bb91f0ae908a2cee4066d0ae21d4752a7124ad4a513024b1d7"
+    },
+    {
+      "file": "phrase-practice.js",
+      "sha256": "3f8dc63d1c954b5853ebe0d98a768894b143c0625402593ad04b8d82a9a51a24"
+    },
+    {
+      "file": "text-reader.js",
+      "sha256": "9c5905909f52a75e3c1b270fa13d4fa617c6d8694fb98a8d9b0512527791419a"
+    },
+    {
+      "file": "mobile-learning-shell.js",
+      "sha256": "305d8f75c84f33c0b475a08791198108de29d9a681ad72b59c5f6505ef1f6fe6"
+    },
+    {
+      "file": "learning-progress.js",
+      "sha256": "3ebcd5305bd27b293174b670fb225b598bbb09e4b69d50128505f1ed894e068f"
+    },
+    {
+      "file": "lesson-practice.js",
+      "sha256": "e2a364e10e1c1cb9c810c185b0ae5627c0431891f2500d141558de64f7e8f11e"
+    },
+    {
+      "file": "reading-view.js",
+      "sha256": "e97c33fb7c3090becfea75f03fe0789b4a17fb5eb497ca73b5d0f4e2c76a6427"
+    },
+    {
+      "file": "learning-coach-core.js",
+      "sha256": "4c81725088ce64d04980814951f2c6a9cec8fb22e613ac18a9a1c72cec29c790"
+    },
+    {
+      "file": "learning-coach.js",
+      "sha256": "6f1132a89cf7b6459cc0fd36f492c7eeeb1c410d543be40dfc74b8f11f78925e"
+    }
+  ],
+  "dictionary": {
+    "name": "ECDICT",
+    "commit": "ab22ad36302cafc6349a050e2b60894855208055",
+    "license": {
+      "name": "MIT",
+      "copyright": "Copyright (c) 2025 Linwei",
+      "file": "LICENSE",
+      "url": "https://raw.githubusercontent.com/skywind3000/ECDICT/ab22ad36302cafc6349a050e2b60894855208055/LICENSE",
+      "sha256": "f8552dd246f61a4e064569eae6194a01c6b3d63b03bf27c6ca863593c549ed0f"
+    },
+    "inputs": [
+      {
+        "file": "dictionary-data/a.json",
+        "sha256": "edd79b762087f3ed9cfd38432f1bc521fc37b48336e6ce1adedd61939f001a58"
+      },
+      {
+        "file": "dictionary-data/b.json",
+        "sha256": "5fb0675aad997913434369a565bf15f7295436e53d78a7d0732b1c4e397378ad"
+      },
+      {
+        "file": "dictionary-data/c.json",
+        "sha256": "27de5ac23998a2b3982bd3a4b4b8a667a763308348ffea6f10364a1159cedf80"
+      },
+      {
+        "file": "dictionary-data/d.json",
+        "sha256": "7d3bf316e4d85a13693f6cad0991a4606af2ade1f657f9b759f9ab6077840cfc"
+      },
+      {
+        "file": "dictionary-data/e.json",
+        "sha256": "8ce886b06fd46a1fa2632267291a5a0065d69d9c3434e14de69d96802f0a8f74"
+      },
+      {
+        "file": "dictionary-data/f.json",
+        "sha256": "80e823a945d1b8fea98efbf882b8e1c581529e583fa6648a852558f471c4aec2"
+      },
+      {
+        "file": "dictionary-data/g.json",
+        "sha256": "c3a0130444a9277424acf6acce47c97d195e7345c12e6ae1c2578b93724cd304"
+      },
+      {
+        "file": "dictionary-data/h.json",
+        "sha256": "54471dfe2602a7cb162c54981e35d4fcf67ec6341b8aecb3c0212e82ff2787aa"
+      },
+      {
+        "file": "dictionary-data/i.json",
+        "sha256": "f0c49fffc8aab5cbaa6679a7ad7feab5e5941984e8f84a2e89f68f3674f91d3f"
+      },
+      {
+        "file": "dictionary-data/j.json",
+        "sha256": "e6eb8bdc0fe0f041816d30a97e89bed652983994591a8b8ff16d2cfa333bf9c2"
+      },
+      {
+        "file": "dictionary-data/k.json",
+        "sha256": "d884104b4793ee96f35608dea4a0a731505d23ac0a8870d9f7090209d1e03978"
+      },
+      {
+        "file": "dictionary-data/l.json",
+        "sha256": "f115819d1c4206740bda972a1b3ceecd2c814a754a92414b6225286c991de441"
+      },
+      {
+        "file": "dictionary-data/m.json",
+        "sha256": "30bc16a9440efee0a46d6be75dd9b5d099f1189a0a9cf03f07f6797dd98e45ef"
+      },
+      {
+        "file": "dictionary-data/n.json",
+        "sha256": "cbb1a60fc4e6061fb83834a19016c573d039304e9749580427fea5e70f9340e2"
+      },
+      {
+        "file": "dictionary-data/o.json",
+        "sha256": "ee37044d2ec1a86c67066c09906b30cef47005107e75f66a3c4943939751f913"
+      },
+      {
+        "file": "dictionary-data/p.json",
+        "sha256": "1cf8b1ddbf8d156ad73af9f160aeaffadf5cf458a02437783de817bc3d6a1920"
+      },
+      {
+        "file": "dictionary-data/q.json",
+        "sha256": "b638ff2a57513f8cff8dd4ac7eadebb2fa2228c3216ea2b48086c4def838b45c"
+      },
+      {
+        "file": "dictionary-data/r.json",
+        "sha256": "9503f01e0d555ef601035b2c8443082100888140c25ee9ab611ce4df4362187a"
+      },
+      {
+        "file": "dictionary-data/s.json",
+        "sha256": "b376c3140296f79695a4fd3f6edd8991ef56b0306e5e81337f46b3ed00d15dfa"
+      },
+      {
+        "file": "dictionary-data/t.json",
+        "sha256": "6672a7d7a03a70a531e3e0a70ffab9a7d14507b0d3d504081874378e1b7b3876"
+      },
+      {
+        "file": "dictionary-data/u.json",
+        "sha256": "bcedb879dafb1ca9beb4be7b08267f62798a40b43eb6e25738d8381e9e300271"
+      },
+      {
+        "file": "dictionary-data/v.json",
+        "sha256": "2bac6d3cce0fb5be63916c97088d4a9fc052bbaefd4aa122bbb328f3d035ec50"
+      },
+      {
+        "file": "dictionary-data/w.json",
+        "sha256": "403b2080cada370aadf6a033c3c0b2960911110c8486f276f1c0fbac367fb958"
+      },
+      {
+        "file": "dictionary-data/x.json",
+        "sha256": "9e35b718c3fb0bafb4e0ecf373ba5f63d11451edfd6429932c6a710f0e222169"
+      },
+      {
+        "file": "dictionary-data/y.json",
+        "sha256": "e39d9e370a0d0660972a7957e1bb8766bb4c94bcba4b5ad50ebb0c3b1c31ee21"
+      },
+      {
+        "file": "dictionary-data/z.json",
+        "sha256": "22c319a661ea8258d79aa06cfd0b17e222d2d49a4591c2d8e78192f24396df6e"
+      }
+    ]
+  },
+  "lessons": [
+    {
+      "id": "nce-b1-4be758-l001",
+      "book": 1,
+      "number": 1,
+      "sourceSha256": "9fc85b6b0b2827feed42afb431bbe8579a18cca77b7da5f1814a4a8c387240c0",
+      "newWords": 13,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b1-4be758-l003",
+      "book": 1,
+      "number": 3,
+      "sourceSha256": "1729fef3dd3c2e379431152eb3f4ed47cfb064783877bbcdec8c79022a65c2cf",
+      "newWords": 15,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b1-4be758-l005",
+      "book": 1,
+      "number": 5,
+      "sourceSha256": "046c9c150b0734dc838ae5af14ef5af15632d79e0d9d5cb1005668415db7f8bb",
+      "newWords": 28,
+      "missingMeaning": [
+        "Chang-woo",
+        "Luming",
+        "Xiaohui"
+      ]
+    },
+    {
+      "id": "nce-b1-4be758-l007",
+      "book": 1,
+      "number": 7,
+      "sourceSha256": "ce7680f945e39a16c6ca1dde8073c2aa0886acadb5a25098ceedcad561a4e757",
+      "newWords": 16,
+      "missingMeaning": [
+        "name’s"
+      ]
+    },
+    {
+      "id": "nce-b1-4be758-l009",
+      "book": 1,
+      "number": 9,
+      "sourceSha256": "40bbc741bc61e7c91c60eef7185b02245761698d7073e577a99e85e4fa2be8e2",
+      "newWords": 14,
+      "missingMeaning": [
+        "How's"
+      ]
+    },
+    {
+      "id": "nce-b1-4be758-l011",
+      "book": 1,
+      "number": 11,
+      "sourceSha256": "9e24480e4b81f02250c1328d9920ebb0eb865b4d7c01695b2c5389e619d0b8ef",
+      "newWords": 12,
+      "missingMeaning": [
+        "shirt’s",
+        "Tim’s"
+      ]
+    },
+    {
+      "id": "nce-b1-4be758-l013",
+      "book": 1,
+      "number": 13,
+      "sourceSha256": "12d26eab2500503050082c9f3c4682313ab717aa152ec3a3df1e3ea7ba26b2d4",
+      "newWords": 14,
+      "missingMeaning": [
+        "colour’s",
+        "hat’s"
+      ]
+    },
+    {
+      "id": "nce-b1-4be758-l015",
+      "book": 1,
+      "number": 15,
+      "sourceSha256": "5460bb661bfd3792a3137832092957d85290e1ad71753e1e980aac5a6c333ab2",
+      "newWords": 13,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b1-4be758-l017",
+      "book": 1,
+      "number": 17,
+      "sourceSha256": "5ce9d237ce5ab48a7e6f7c72e5d2f862f0af4a7ecd3e8b1b9553140e3eb96390",
+      "newWords": 29,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b1-4be758-l019",
+      "book": 1,
+      "number": 19,
+      "sourceSha256": "ffdb5f3710a0ab03889ddf68f161932a0e6914f6bd04711658632676f6eae3f1",
+      "newWords": 16,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b1-4be758-l021",
+      "book": 1,
+      "number": 21,
+      "sourceSha256": "4b12f491ee3142e9784fc571da5891c2a6e60a00a506f13ff500044e6d468526",
+      "newWords": 6,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b1-4be758-l023",
+      "book": 1,
+      "number": 23,
+      "sourceSha256": "c3e4ae261c25833a1e06d810cf28cc6d8b10c9c0f5b1b1933af06d3dc28c2905",
+      "newWords": 5,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b1-4be758-l025",
+      "book": 1,
+      "number": 25,
+      "sourceSha256": "9560152ef7517dfe95bddf3275e4eb10eacd08e2361d25f89cb0134311f5ee06",
+      "newWords": 18,
+      "missingMeaning": [
+        "Smith’s"
+      ]
+    },
+    {
+      "id": "nce-b1-4be758-l027",
+      "book": 1,
+      "number": 27,
+      "sourceSha256": "a29a8098b3b2d66c4b26bfd051bc216a6155c96b005066250bcf46456229f481",
+      "newWords": 13,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b1-4be758-l029",
+      "book": 1,
+      "number": 29,
+      "sourceSha256": "419111e57f227c44af317abc05d03454453faed77ffb4e4794411951fdaa95d3",
+      "newWords": 18,
+      "missingMeaning": [
+        "bedroom’s"
+      ]
+    },
+    {
+      "id": "nce-b1-4be758-l031",
+      "book": 1,
+      "number": 31,
+      "sourceSha256": "aac8ec87ce37ffb7e0ef14d5784a26f500be79979afe47bc8c28b17fedf4c113",
+      "newWords": 20,
+      "missingMeaning": [
+        "Where’s",
+        "dog's"
+      ]
+    },
+    {
+      "id": "nce-b1-4be758-l033",
+      "book": 1,
+      "number": 33,
+      "sourceSha256": "5b603d599777de5f8e545a9ee131c0f8523e9efb839dca3dae7f93548b356636",
+      "newWords": 23,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b1-4be758-l035",
+      "book": 1,
+      "number": 35,
+      "sourceSha256": "f177447b21f9ee5e3610485dcb38cdee7d157359dd33b75f5848f7d08020a2a1",
+      "newWords": 18,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b1-4be758-l037",
+      "book": 1,
+      "number": 37,
+      "sourceSha256": "310c6ec800879ca3875af993cf1020d2ef5b91f52474843ed2b17f428ba71d4e",
+      "newWords": 16,
+      "missingMeaning": [
+        "Pink’s"
+      ]
+    },
+    {
+      "id": "nce-b1-4be758-l039",
+      "book": 1,
+      "number": 39,
+      "sourceSha256": "38c20df9724906d8d436cf33d561a7eec197b8b7ccf1343a28d0318febf13db2",
+      "newWords": 9,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b1-4be758-l041",
+      "book": 1,
+      "number": 41,
+      "sourceSha256": "793dc0c8704bbad901d4748e76981759008af9fc1ad33700ba645160aa5e4239",
+      "newWords": 21,
+      "missingMeaning": [
+        "Penny’s"
+      ]
+    },
+    {
+      "id": "nce-b1-4be758-l043",
+      "book": 1,
+      "number": 43,
+      "sourceSha256": "5f720f4eca00d6f360406d044fa86da24e0ec33ac97cc298fa6285bf6da70c52",
+      "newWords": 16,
+      "missingMeaning": [
+        "kettle’s"
+      ]
+    },
+    {
+      "id": "nce-b1-4be758-l045",
+      "book": 1,
+      "number": 45,
+      "sourceSha256": "db322746a3c490dbc613197375dc6f1245e9a6969f40344231e6b2c85719b520",
+      "newWords": 12,
+      "missingMeaning": [
+        "boss’s"
+      ]
+    },
+    {
+      "id": "nce-b1-4be758-l047",
+      "book": 1,
+      "number": 47,
+      "sourceSha256": "be272a685ba1d9d58c20b47ce62ad034623d59e7afe760b9a0ac5b37eec4a15c",
+      "newWords": 6,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b1-4be758-l049",
+      "book": 1,
+      "number": 49,
+      "sourceSha256": "76e4ecfaadbe1d0d216dfccb7bcb2518a84b573cca1877f186c997b79af5be22",
+      "newWords": 16,
+      "missingMeaning": [
+        "butcher’s",
+        "lamb’s"
+      ]
+    },
+    {
+      "id": "nce-b1-4be758-l051",
+      "book": 1,
+      "number": 51,
+      "sourceSha256": "c816766529af2236a580f9707d3bc4aefeec071eeec80be557a9793ab26288a9",
+      "newWords": 33,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b1-4be758-l053",
+      "book": 1,
+      "number": 53,
+      "sourceSha256": "b0c4a6687d1d286f312924bfe48fcbee5096aabd520c5f7ec88211d97ecf9acd",
+      "newWords": 20,
+      "missingMeaning": [
+        "weather's"
+      ]
+    },
+    {
+      "id": "nce-b1-4be758-l055",
+      "book": 1,
+      "number": 55,
+      "sourceSha256": "e3456b565859f7f785c8225f18821327a551bfb8591ef56ed10eb7115e270783",
+      "newWords": 31,
+      "missingMeaning": [
+        "eats",
+        "sees"
+      ]
+    },
+    {
+      "id": "nce-b1-4be758-l057",
+      "book": 1,
+      "number": 57,
+      "sourceSha256": "c3b955c5141c67384e3cec3b9daa946c4b3d4d6b9304ec9db8c53a0ab6e6eede",
+      "newWords": 17,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b1-4be758-l059",
+      "book": 1,
+      "number": 59,
+      "sourceSha256": "c514b44c17af155ddd7ef805213d7b001fc2a0f037bc21e1d1665d1bccad9bda",
+      "newWords": 14,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b1-4be758-l061",
+      "book": 1,
+      "number": 61,
+      "sourceSha256": "743182c54a80f075e6a7d0e3b7587c31c6e116285cd44045cff2a60a4c2a22ad",
+      "newWords": 23,
+      "missingMeaning": [
+        "doctor's"
+      ]
+    },
+    {
+      "id": "nce-b1-4be758-l063",
+      "book": 1,
+      "number": 63,
+      "sourceSha256": "04150b368ce8a0f4fa791c7abd1696e123edb47968d4f36a3f564b8847f0db59",
+      "newWords": 12,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b1-4be758-l065",
+      "book": 1,
+      "number": 65,
+      "sourceSha256": "e9c98d5d4cae59c4dec82a262f3716634fd8cde15b44dccd255570ccaa1d2801",
+      "newWords": 17,
+      "missingMeaning": [
+        "Jill's"
+      ]
+    },
+    {
+      "id": "nce-b1-4be758-l067",
+      "book": 1,
+      "number": 67,
+      "sourceSha256": "28cd32a0d323e963a418a7f928546dab7c2d5063af1f64ca5baa3973387bb68a",
+      "newWords": 19,
+      "missingMeaning": [
+        "greengrocer’s",
+        "mother’s"
+      ]
+    },
+    {
+      "id": "nce-b1-4be758-l069",
+      "book": 1,
+      "number": 69,
+      "sourceSha256": "a5542b8a64eccae5cf03c3c4083e520cb189a862ba2d61d80f9f50d5465d0c77",
+      "newWords": 25,
+      "missingMeaning": [
+        "cars"
+      ]
+    },
+    {
+      "id": "nce-b1-4be758-l071",
+      "book": 1,
+      "number": 71,
+      "sourceSha256": "c39acbec7e5632eafe1d1d30de66757ca668c7185157830ad65c8b7d774044d0",
+      "newWords": 20,
+      "missingMeaning": [
+        "Ron",
+        "Pauline’s"
+      ]
+    },
+    {
+      "id": "nce-b1-4be758-l073",
+      "book": 1,
+      "number": 73,
+      "sourceSha256": "9db76db6c82550ff2a96fd023e044e343985f162dda8a09c88f170b966fe89fe",
+      "newWords": 23,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b1-4be758-l075",
+      "book": 1,
+      "number": 75,
+      "sourceSha256": "6f7711804d6528350adce6494c0a71b16091ae865ae2750ebb1e1dc172011660",
+      "newWords": 14,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b1-4be758-l077",
+      "book": 1,
+      "number": 77,
+      "sourceSha256": "8b4c71e8976665a65ef12540f61aab8b2bcc6bb82d71bbc0c27744c9ef6b944c",
+      "newWords": 12,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b1-4be758-l079",
+      "book": 1,
+      "number": 79,
+      "sourceSha256": "8cf3da1614329352485ec04651f1dc8f236e503c0d7e26debafa0360dc4ebfc0",
+      "newWords": 21,
+      "missingMeaning": [
+        "Carol’s",
+        "grocer’s",
+        "haven’t"
+      ]
+    },
+    {
+      "id": "nce-b1-4be758-l081",
+      "book": 1,
+      "number": 81,
+      "sourceSha256": "002db0c46ea30f4321c0f7dd6cf624e960a5b9fadc4643b3600fe225d5a40709",
+      "newWords": 13,
+      "missingMeaning": [
+        "Sam’s"
+      ]
+    },
+    {
+      "id": "nce-b1-4be758-l083",
+      "book": 1,
+      "number": 83,
+      "sourceSha256": "a1c59c8e3cfe0b02ccec6ab9dee2ab3588edb970a82fcb2132ad24eb5822438e",
+      "newWords": 13,
+      "missingMeaning": [
+        "room’s"
+      ]
+    },
+    {
+      "id": "nce-b1-4be758-l085",
+      "book": 1,
+      "number": 85,
+      "sourceSha256": "9167c95f5193b884ee5ff67aa608d5917fc3e6c92d38fd312d34bfe722f87eed",
+      "newWords": 13,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b1-4be758-l087",
+      "book": 1,
+      "number": 87,
+      "sourceSha256": "0f2fb00c2708068178e5ee09f6e27cd2a15614c8415de2a74a5bd3e3a6657d5d",
+      "newWords": 13,
+      "missingMeaning": [
+        "LFZ"
+      ]
+    },
+    {
+      "id": "nce-b1-4be758-l089",
+      "book": 1,
+      "number": 89,
+      "sourceSha256": "5e7600e0ef15eb4e2d5437dfe5b3c5ccd322d74c41089ea471ccc5daf95e798b",
+      "newWords": 12,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b1-4be758-l091",
+      "book": 1,
+      "number": 91,
+      "sourceSha256": "f22c58d4015fcf64e4726a69fb2daf20cd82732a2e56c3a36acb854184618c94",
+      "newWords": 14,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b1-4be758-l093",
+      "book": 1,
+      "number": 93,
+      "sourceSha256": "9c49dfc8ae6dad75ac5f44df2f8a5242e973b97105f63479abb3a81369a279c6",
+      "newWords": 15,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b1-4be758-l095",
+      "book": 1,
+      "number": 95,
+      "sourceSha256": "ec35b2c47231948880800f4af488078c640cea6169aa411d6498558c8950f49e",
+      "newWords": 12,
+      "missingMeaning": [
+        "clock’s",
+        "When's"
+      ]
+    },
+    {
+      "id": "nce-b1-4be758-l097",
+      "book": 1,
+      "number": 97,
+      "sourceSha256": "e21371675e099e1f5e3d4c80f5e346dc553e36e22645699498448d97ab782142",
+      "newWords": 23,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b1-4be758-l099",
+      "book": 1,
+      "number": 99,
+      "sourceSha256": "0ba2cf43d7b511e68c0ed3d3fa1bd61c720a18147f00a1336c2c9f1a138a8bd6",
+      "newWords": 16,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b1-4be758-l101",
+      "book": 1,
+      "number": 101,
+      "sourceSha256": "cb3300f82d3c04f3f0691dec454a8c32b2f95d13385275ac0ecd75a642d00caa",
+      "newWords": 15,
+      "missingMeaning": [
+        "Jimmy's"
+      ]
+    },
+    {
+      "id": "nce-b1-4be758-l103",
+      "book": 1,
+      "number": 103,
+      "sourceSha256": "d0c9d1e55f0456b99dac94610f2708df0bbfa66ab023e4935f5596497b1ac398",
+      "newWords": 29,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b1-4be758-l105",
+      "book": 1,
+      "number": 105,
+      "sourceSha256": "b6cde6c65394ae0c12111e5e708094b142e69f5815a6a76b34fd72c39f5bc8bb",
+      "newWords": 13,
+      "missingMeaning": [
+        "I-N-T-E-L-L-I-G-E-N-T",
+        "letter’s"
+      ]
+    },
+    {
+      "id": "nce-b1-4be758-l107",
+      "book": 1,
+      "number": 107,
+      "sourceSha256": "9cf9aa35b5199eabb11c05b32fa2803b0a7abc532be479d8ca0ea9c43b2fbfa3",
+      "newWords": 11,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b1-4be758-l109",
+      "book": 1,
+      "number": 109,
+      "sourceSha256": "492bf46b66a62bc70ffe07f1db6071dea9327ed5efa990c79752e1c37514c115",
+      "newWords": 13,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b1-4be758-l111",
+      "book": 1,
+      "number": 111,
+      "sourceSha256": "62957f4372ce491fd2c2d80d94f2fb1f6893debf6443ad9c23c06b3bde2c0332",
+      "newWords": 16,
+      "missingMeaning": [
+        "model’s"
+      ]
+    },
+    {
+      "id": "nce-b1-4be758-l113",
+      "book": 1,
+      "number": 113,
+      "sourceSha256": "7967789448a6dc731eba46ff26f7771ff6b6619f4dcb4dba992892c43dbb2a18",
+      "newWords": 10,
+      "missingMeaning": [
+        "ten-pound"
+      ]
+    },
+    {
+      "id": "nce-b1-4be758-l115",
+      "book": 1,
+      "number": 115,
+      "sourceSha256": "d1198aea187bbf17e44743a1f682f537e444c4d7cafe480daa3b690d04492188",
+      "newWords": 15,
+      "missingMeaning": [
+        "Everything's",
+        "Everyone's"
+      ]
+    },
+    {
+      "id": "nce-b1-4be758-l117",
+      "book": 1,
+      "number": 117,
+      "sourceSha256": "3a23fcaccaf3525d9fb806bcc26f5dc67364e151a6cc54c65809958e2c3579b9",
+      "newWords": 15,
+      "missingMeaning": [
+        "Tommy’s"
+      ]
+    },
+    {
+      "id": "nce-b1-4be758-l119",
+      "book": 1,
+      "number": 119,
+      "sourceSha256": "90efe2cd84269bdce259fde2b276d3e969e339a1a5c8c0c11072da91730bb5ff",
+      "newWords": 25,
+      "missingMeaning": [
+        "George's"
+      ]
+    },
+    {
+      "id": "nce-b1-4be758-l121",
+      "book": 1,
+      "number": 121,
+      "sourceSha256": "934e142b0c4e9158affe1df6676ba113ba8031c70d4d2f0905933f6939ce2d36",
+      "newWords": 12,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b1-4be758-l123",
+      "book": 1,
+      "number": 123,
+      "sourceSha256": "27fac9ea5d60591421c65543dc795473107fd7f14c82258edf39a044e507f2c2",
+      "newWords": 14,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b1-4be758-l125",
+      "book": 1,
+      "number": 125,
+      "sourceSha256": "893edfe218e916746e7fc800dcd8a7c1292d2d8059a7140407d63e1acfd74a3a",
+      "newWords": 9,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b1-4be758-l127",
+      "book": 1,
+      "number": 127,
+      "sourceSha256": "355522596b67961b4630e2361835682952cf87279b0a391994557239bc65e593",
+      "newWords": 17,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b1-4be758-l129",
+      "book": 1,
+      "number": 129,
+      "sourceSha256": "b391e640a63235d524740670e520f382f872e4c473db2cb773ca5d9624bd34eb",
+      "newWords": 19,
+      "missingMeaning": [
+        "policeman’s"
+      ]
+    },
+    {
+      "id": "nce-b1-4be758-l131",
+      "book": 1,
+      "number": 131,
+      "sourceSha256": "f56d8af837774eed96fb853658d8525b9c68995f389013d458a12ce687b85bf3",
+      "newWords": 15,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b1-4be758-l133",
+      "book": 1,
+      "number": 133,
+      "sourceSha256": "10a8d592f3423a3a1f248db7b4ae103d16e137e1fb0328f7b7457992f659e394",
+      "newWords": 11,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b1-4be758-l135",
+      "book": 1,
+      "number": 135,
+      "sourceSha256": "584cb38899482ca80d5b9939d107e514104806970aebbfdaa99bc976f5f72a00",
+      "newWords": 11,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b1-4be758-l137",
+      "book": 1,
+      "number": 137,
+      "sourceSha256": "dcefa12c98cda606e0b11066d17662cc16149d4ebf25e9100a0b5fba8114ecc5",
+      "newWords": 10,
+      "missingMeaning": [
+        "What'll"
+      ]
+    },
+    {
+      "id": "nce-b1-4be758-l139",
+      "book": 1,
+      "number": 139,
+      "sourceSha256": "1b65cc6dc636d32b020e14610905fd408146e89a164f8e9168a1b1e563c0b1a3",
+      "newWords": 13,
+      "missingMeaning": [
+        "Hasn't"
+      ]
+    },
+    {
+      "id": "nce-b1-4be758-l141",
+      "book": 1,
+      "number": 141,
+      "sourceSha256": "c5ab0b68221ac9df3494e4729bfe998c480e6732624eabd074af9d84cead1570",
+      "newWords": 21,
+      "missingMeaning": [
+        "Sally’s",
+        "children’s"
+      ]
+    },
+    {
+      "id": "nce-b1-4be758-l143",
+      "book": 1,
+      "number": 143,
+      "sourceSha256": "0afd5fd0c8a578a8656599f3cbec3ec53e79027d4af3cdf45ecd13d54ee35f49",
+      "newWords": 28,
+      "missingMeaning": [
+        "tins"
+      ]
+    },
+    {
+      "id": "nce-b2-eef57c-l001",
+      "book": 2,
+      "number": 1,
+      "sourceSha256": "e9c2b18cf313aeb32d3ba6cbee98a5a6f8c31591d66a9553e168c7f4d5bf760a",
+      "newWords": 12,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b2-eef57c-l002",
+      "book": 2,
+      "number": 2,
+      "sourceSha256": "940664edd0ccc05265e1a0afb6b88fb3626b9b4641eb97fe0f9d6055afe40ca3",
+      "newWords": 6,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b2-eef57c-l003",
+      "book": 2,
+      "number": 3,
+      "sourceSha256": "f3182b80fcdcf97c2b6247b3daa99596c6043d7df46fa8d6404e46513381a330",
+      "newWords": 20,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b2-eef57c-l004",
+      "book": 2,
+      "number": 4,
+      "sourceSha256": "082c2c56974bfe986ddfb0b38a393f97b6ba89add98138203de2110244223c4b",
+      "newWords": 15,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b2-eef57c-l005",
+      "book": 2,
+      "number": 5,
+      "sourceSha256": "1696f5f542a961c47b43c2253f70d237af7587edff88ab64d96ae04b92b7b44a",
+      "newWords": 18,
+      "missingMeaning": [
+        "Silbury",
+        "Pinhurst"
+      ]
+    },
+    {
+      "id": "nce-b2-eef57c-l006",
+      "book": 2,
+      "number": 6,
+      "sourceSha256": "cf0b29a14c23459a4b3d71df857b9903461df5e570b5847162ea9910edc163ac",
+      "newWords": 15,
+      "missingMeaning": [
+        "asks"
+      ]
+    },
+    {
+      "id": "nce-b2-eef57c-l007",
+      "book": 2,
+      "number": 7,
+      "sourceSha256": "e4fb58f9fe679efcb6e756e4fc144ae51a65024eb12d5e75bb5f68536cec4e66",
+      "newWords": 21,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b2-eef57c-l008",
+      "book": 2,
+      "number": 8,
+      "sourceSha256": "7564c7a3b59354a40fddd543e8bffe6817c0e3201974d3f9d499c155ea0d91ba",
+      "newWords": 20,
+      "missingMeaning": [
+        "wins",
+        "Frith’s",
+        "Joe's"
+      ]
+    },
+    {
+      "id": "nce-b2-eef57c-l009",
+      "book": 2,
+      "number": 9,
+      "sourceSha256": "e7910050843d9b7ff92aa7d5a8e96a93e9688872215fbdb78aeab27734b9ec24",
+      "newWords": 10,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b2-eef57c-l010",
+      "book": 2,
+      "number": 10,
+      "sourceSha256": "6d3d65e7be9ba60061d748202f579ba165f06e4d25757427086960e607e0d4d4",
+      "newWords": 21,
+      "missingMeaning": [
+        "father’s"
+      ]
+    },
+    {
+      "id": "nce-b2-eef57c-l011",
+      "book": 2,
+      "number": 11,
+      "sourceSha256": "bc2212721ecfdccc68d0a45d238c73da2aebb7bcd0183baeffc1b38508703752",
+      "newWords": 14,
+      "missingMeaning": [
+        "lawyer's",
+        "gets"
+      ]
+    },
+    {
+      "id": "nce-b2-eef57c-l012",
+      "book": 2,
+      "number": 12,
+      "sourceSha256": "10d8352090228ddd6364853889e4388b5ba6b2a93f07266aa512d2c9a21dd7db",
+      "newWords": 15,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b2-eef57c-l013",
+      "book": 2,
+      "number": 13,
+      "sourceSha256": "1a6c9d487b4a7501fa654271c2424cde22e8f65590678fdcc9bc26f125f9182d",
+      "newWords": 15,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b2-eef57c-l014",
+      "book": 2,
+      "number": 14,
+      "sourceSha256": "0bda905ebf3ff7a06a926bee74820d042bebef32c9d27f2be5bc51a0c5ce8d79",
+      "newWords": 12,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b2-eef57c-l015",
+      "book": 2,
+      "number": 15,
+      "sourceSha256": "7331a7785861608777336eeceeee55d3f96eee705016ceee67df7fe384a7dab0",
+      "newWords": 11,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b2-eef57c-l016",
+      "book": 2,
+      "number": 16,
+      "sourceSha256": "d764303e8a0bd8ec8989b613002d55f29bfdb75d0b266244e10711b7474440eb",
+      "newWords": 16,
+      "missingMeaning": [
+        "lets"
+      ]
+    },
+    {
+      "id": "nce-b2-eef57c-l017",
+      "book": 2,
+      "number": 17,
+      "sourceSha256": "76d070ab2c3afb9072e7736fa525ad6206fe4b9074b0dad368dff15b7bbeaa1a",
+      "newWords": 13,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b2-eef57c-l018",
+      "book": 2,
+      "number": 18,
+      "sourceSha256": "7d7ac9990a07d83bc26574b23753f51212a309f65a96dd5a038a7f8c40e6751f",
+      "newWords": 4,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b2-eef57c-l019",
+      "book": 2,
+      "number": 19,
+      "sourceSha256": "a57dea01247d95b6f6ce9997888682b374ce7a5adc714997f500f771428cd658",
+      "newWords": 6,
+      "missingMeaning": [
+        "Wednesday's"
+      ]
+    },
+    {
+      "id": "nce-b2-eef57c-l020",
+      "book": 2,
+      "number": 20,
+      "sourceSha256": "3e759a5f628ad887fb579295a6c0f8df2e1ded0c7647a08d57847947e2ff522c",
+      "newWords": 14,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b2-eef57c-l021",
+      "book": 2,
+      "number": 21,
+      "sourceSha256": "6d87be3dfa249b53337ea299ed008b1f00179fbcb54d59b4d7c43fa8dbf096a4",
+      "newWords": 12,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b2-eef57c-l022",
+      "book": 2,
+      "number": 22,
+      "sourceSha256": "743eba12c5f0eb909a2c13e26c552c42d3cf4160c3135bc14702c0b6b77326d9",
+      "newWords": 12,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b2-eef57c-l023",
+      "book": 2,
+      "number": 23,
+      "sourceSha256": "b4eb35b20fc139c772c7f88783fbeccc704bbe64ffcc6ab522db2e971130fbf6",
+      "newWords": 7,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b2-eef57c-l024",
+      "book": 2,
+      "number": 24,
+      "sourceSha256": "52e9089ef57ab3e1695047a5944150709a8423c6b911123f1be5e7670bc24625",
+      "newWords": 13,
+      "missingMeaning": [
+        "manager’s",
+        "gentleman’s"
+      ]
+    },
+    {
+      "id": "nce-b2-eef57c-l025",
+      "book": 2,
+      "number": 25,
+      "sourceSha256": "74ce1553d8745cbc464912edee8c4557b30cb749fea72da69abfd8f4acdb7ce0",
+      "newWords": 11,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b2-eef57c-l026",
+      "book": 2,
+      "number": 26,
+      "sourceSha256": "6e6631cf15b00f281e1bb50237cae3b3fadeb1d73755e658a5febea71b2b2fe4",
+      "newWords": 15,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b2-eef57c-l027",
+      "book": 2,
+      "number": 27,
+      "sourceSha256": "b85fb8e3ca4eaee30f102403569386977c374007e8c0647574d9628fded3c682",
+      "newWords": 25,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b2-eef57c-l028",
+      "book": 2,
+      "number": 28,
+      "sourceSha256": "59fabdf736e8922a78729189ceabf347b99283062ea6dee3700426d0ca559ba5",
+      "newWords": 18,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b2-eef57c-l029",
+      "book": 2,
+      "number": 29,
+      "sourceSha256": "e2addcbf219a327cc0f8867ef320ab3f166bf3d2cd9cb0fc863a8dbeeee53058",
+      "newWords": 29,
+      "missingMeaning": [
+        "Fawcett’s"
+      ]
+    },
+    {
+      "id": "nce-b2-eef57c-l030",
+      "book": 2,
+      "number": 30,
+      "sourceSha256": "ddf36735bc7ae736b756fe24e56b44cbf1c61382cc5b3b72f795aebbbe55c055",
+      "newWords": 13,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b2-eef57c-l031",
+      "book": 2,
+      "number": 31,
+      "sourceSha256": "c8328bce70cc4f9d89df0f76a8066c491d687c354ac2e63372a2404c49adbb01",
+      "newWords": 18,
+      "missingMeaning": [
+        "grandson’s"
+      ]
+    },
+    {
+      "id": "nce-b2-eef57c-l032",
+      "book": 2,
+      "number": 32,
+      "sourceSha256": "46c4a5b06bff4d58833227690bfb20dae8c7d2988a486e1d01d2debec4c275f7",
+      "newWords": 21,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b2-eef57c-l033",
+      "book": 2,
+      "number": 33,
+      "sourceSha256": "31ce47651ef360a7e6b8d1732964be9225b2947f6c862fd4ceb499b3a5c08bb6",
+      "newWords": 16,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b2-eef57c-l034",
+      "book": 2,
+      "number": 34,
+      "sourceSha256": "c391ffaa10cb59917f7ba8694d1990bbc16f8b4f4895f8b016861c8cf2d26826",
+      "newWords": 9,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b2-eef57c-l035",
+      "book": 2,
+      "number": 35,
+      "sourceSha256": "5aa3964c943a7ab8aef2ff08e2f9d56d0f80b05ef35d1b65caac8d0a3d586c00",
+      "newWords": 17,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b2-eef57c-l036",
+      "book": 2,
+      "number": 36,
+      "sourceSha256": "573d6188632d9f5281ea33c0be75bd03641c4e97a2c0110a0a2e57fd1f578b3b",
+      "newWords": 15,
+      "missingMeaning": [
+        "Debbie's"
+      ]
+    },
+    {
+      "id": "nce-b2-eef57c-l037",
+      "book": 2,
+      "number": 37,
+      "sourceSha256": "a994ccd5e530e26fc423fd76b52dccb9e33595ac4d826f22ba4ad65ff63e1ea9",
+      "newWords": 16,
+      "missingMeaning": [
+        "Olympic-standard"
+      ]
+    },
+    {
+      "id": "nce-b2-eef57c-l038",
+      "book": 2,
+      "number": 38,
+      "sourceSha256": "077b42debc3c1d428f5455df34cbe0329f1e4c844f44fd8df0eb2ceaed12cc7f",
+      "newWords": 14,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b2-eef57c-l039",
+      "book": 2,
+      "number": 39,
+      "sourceSha256": "ea7452121244bebf9d44387c827146bd9416988099704ecd3fd8b61413960247",
+      "newWords": 16,
+      "missingMeaning": [
+        "Gilbert's",
+        "hosptial"
+      ]
+    },
+    {
+      "id": "nce-b2-eef57c-l040",
+      "book": 2,
+      "number": 40,
+      "sourceSha256": "63d90dbe1258a5faeb0f262672026bce4512ca01490b5229bcb73c1ea9e9f1a1",
+      "newWords": 13,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b2-eef57c-l041",
+      "book": 2,
+      "number": 41,
+      "sourceSha256": "8d45bceacda2414fe615da6dcba1e461e1d346fe0ff41a59b2f97878cda68fe7",
+      "newWords": 13,
+      "missingMeaning": [
+        "musn’t",
+        "hats"
+      ]
+    },
+    {
+      "id": "nce-b2-eef57c-l042",
+      "book": 2,
+      "number": 42,
+      "sourceSha256": "52ca8a98a46c6077e6736c5980665e05b9baf6f25709ec12821a05dd0358ce8b",
+      "newWords": 19,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b2-eef57c-l043",
+      "book": 2,
+      "number": 43,
+      "sourceSha256": "1de69471c6171847603ac24fff627be1aa1ca163f69be52526bba4f53c9219b4",
+      "newWords": 22,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b2-eef57c-l044",
+      "book": 2,
+      "number": 44,
+      "sourceSha256": "a2838c7e471d355969a7df88bfa3270fef3b2b13e650c525cf16584e922db228",
+      "newWords": 15,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b2-eef57c-l045",
+      "book": 2,
+      "number": 45,
+      "sourceSha256": "e5ef4d41176909a7273b7ffe0cde4a6cff5c2e504efbbc1ad1471c6f4b7c1493",
+      "newWords": 10,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b2-eef57c-l046",
+      "book": 2,
+      "number": 46,
+      "sourceSha256": "d6af8eb88397abbd98acfe507a12b3787a47d450aca8d78d4b87aefa977f81c5",
+      "newWords": 17,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b2-eef57c-l047",
+      "book": 2,
+      "number": 47,
+      "sourceSha256": "79bd89284daa31ab0e9beeb5daca17182946b47a2beac4945b99c7f183012949",
+      "newWords": 12,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b2-eef57c-l048",
+      "book": 2,
+      "number": 48,
+      "sourceSha256": "b3f6a9f7eb7df531eeadd880b643ddd09b1db836fe1efc73810441e3d22585cf",
+      "newWords": 17,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b2-eef57c-l049",
+      "book": 2,
+      "number": 49,
+      "sourceSha256": "ce0634a9230f455676eb8c53ff445ee74cebe3cb9b9de928d29969b245a51c30",
+      "newWords": 22,
+      "missingMeaning": [
+        "bits"
+      ]
+    },
+    {
+      "id": "nce-b2-eef57c-l050",
+      "book": 2,
+      "number": 50,
+      "sourceSha256": "8cc0ab007415c2e610305ec63dbfdf9a638025475603581d0b2551b69f999619",
+      "newWords": 7,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b2-eef57c-l051",
+      "book": 2,
+      "number": 51,
+      "sourceSha256": "c19c629425fe2eb9aabbc23390867eb9014c06cc052e9fc5e9538a853cc03b7f",
+      "newWords": 23,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b2-eef57c-l052",
+      "book": 2,
+      "number": 52,
+      "sourceSha256": "63a068baf6e33e47a0617c6e61e1e6078aa0039425baab8a1b59441eac689856",
+      "newWords": 14,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b2-eef57c-l053",
+      "book": 2,
+      "number": 53,
+      "sourceSha256": "275f5824e9f125fb0bc821bd02846a30b43a6bb610f2385205bda7b7334b942e",
+      "newWords": 21,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b2-eef57c-l054",
+      "book": 2,
+      "number": 54,
+      "sourceSha256": "624853991f6127a304013d55de852b8156b9ad84363e7ef77bf56c8624e34257",
+      "newWords": 22,
+      "missingMeaning": [
+        "pies"
+      ]
+    },
+    {
+      "id": "nce-b2-eef57c-l055",
+      "book": 2,
+      "number": 55,
+      "sourceSha256": "c9cbd2087790c8ce687566b0d493d30c88a34d46052eec69c416199bbf647971",
+      "newWords": 33,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b2-eef57c-l056",
+      "book": 2,
+      "number": 56,
+      "sourceSha256": "d25a3108f666cff8f30fc00e4f3d22e4124b1888b306a79fef97f56419681bad",
+      "newWords": 18,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b2-eef57c-l057",
+      "book": 2,
+      "number": 57,
+      "sourceSha256": "92fdc6032628f7e87da9a48e8bb29e1a15d2de0785a0bbc16d27e4a668e034ac",
+      "newWords": 10,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b2-eef57c-l058",
+      "book": 2,
+      "number": 58,
+      "sourceSha256": "e375b6debd5db66589bf565e97b3252d3b22339e858a0c3eeca3bf662c2ead28",
+      "newWords": 32,
+      "missingMeaning": [
+        "Frinley"
+      ]
+    },
+    {
+      "id": "nce-b2-eef57c-l059",
+      "book": 2,
+      "number": 59,
+      "sourceSha256": "6f61759e6a3fdf8d9a4e1d5d3001cd941ab4f1f7b54b5625f091b572c6a71be4",
+      "newWords": 20,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b2-eef57c-l060",
+      "book": 2,
+      "number": 60,
+      "sourceSha256": "4732a1174852df22b4e207180bf9268afafed3cd0589292495a3e50831f5a401",
+      "newWords": 8,
+      "missingMeaning": [
+        "Bellinsky"
+      ]
+    },
+    {
+      "id": "nce-b2-eef57c-l061",
+      "book": 2,
+      "number": 61,
+      "sourceSha256": "06e16c8bd182752f5ca4bf25481c1aea519916f3d5455c4ccd6e964a484c52b6",
+      "newWords": 29,
+      "missingMeaning": [
+        "earth’s",
+        "Hubble's"
+      ]
+    },
+    {
+      "id": "nce-b2-eef57c-l062",
+      "book": 2,
+      "number": 62,
+      "sourceSha256": "5ba8558a7f08655abc27b45d9fa6521a25bf1eafa9c0d6897134aa8455147095",
+      "newWords": 22,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b2-eef57c-l063",
+      "book": 2,
+      "number": 63,
+      "sourceSha256": "96b1bd585b4124e65cd3d8752efe650192c1fe60e7b03fcf35bda214126d7ad1",
+      "newWords": 18,
+      "missingMeaning": [
+        "six-year-old",
+        "Jeremy's"
+      ]
+    },
+    {
+      "id": "nce-b2-eef57c-l064",
+      "book": 2,
+      "number": 64,
+      "sourceSha256": "f20e3db7832602e4e4614fa6bf68b9d285843fc49abc8b77c603efb5e8dade67",
+      "newWords": 30,
+      "missingMeaning": [
+        "Gamond",
+        "twenty-one-mile",
+        "railway-tunnel"
+      ]
+    },
+    {
+      "id": "nce-b2-eef57c-l065",
+      "book": 2,
+      "number": 65,
+      "sourceSha256": "174bd000ecd471057844280c5893c1c453bef7f216f91839c0405411d26afe00",
+      "newWords": 21,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b2-eef57c-l066",
+      "book": 2,
+      "number": 66,
+      "sourceSha256": "233a94f4efc8a9958280f7a24d1763dec9b4cc42367431a0025899ffe52d44f1",
+      "newWords": 36,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b2-eef57c-l067",
+      "book": 2,
+      "number": 67,
+      "sourceSha256": "ce7168a44e09d4c214867a2bf4288ca3eea0c8ff346bb926062a3e62fe6ebd08",
+      "newWords": 31,
+      "missingMeaning": [
+        "Tazieff",
+        "Kituro"
+      ]
+    },
+    {
+      "id": "nce-b2-eef57c-l068",
+      "book": 2,
+      "number": 68,
+      "sourceSha256": "524a06f9945e8249ec0a072574451972d4a7a645a5db50088952811811233775",
+      "newWords": 11,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b2-eef57c-l069",
+      "book": 2,
+      "number": 69,
+      "sourceSha256": "b873833f6bf71a2707b571cd96f346c4fe0e9310ea8c88aad2d35dab7f8148c4",
+      "newWords": 22,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b2-eef57c-l070",
+      "book": 2,
+      "number": 70,
+      "sourceSha256": "6d20a9ee56f62a629a35442f7e552df391ad06f7d8c55b24ee9c7c25304fe08b",
+      "newWords": 23,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b2-eef57c-l071",
+      "book": 2,
+      "number": 71,
+      "sourceSha256": "15eea6d0435c19fa1048c87221f324832aab89b1163dd4b9be641e0db33d46b4",
+      "newWords": 23,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b2-eef57c-l072",
+      "book": 2,
+      "number": 72,
+      "sourceSha256": "7d93312dfce451ad90daf9008a821a1edce800974226764e608517d05ac76d90",
+      "newWords": 21,
+      "missingMeaning": [
+        "Malcolm's"
+      ]
+    },
+    {
+      "id": "nce-b2-eef57c-l073",
+      "book": 2,
+      "number": 73,
+      "sourceSha256": "caa41f744a05ee5f4650de23a0078d543e4b96d9d2d858830f1ee6ed3e3d062a",
+      "newWords": 17,
+      "missingMeaning": [
+        "day's",
+        "French-Spanish"
+      ]
+    },
+    {
+      "id": "nce-b2-eef57c-l074",
+      "book": 2,
+      "number": 74,
+      "sourceSha256": "ae99ae38a3c793f544b51592fb3cdf6d0178b564e0870ecb967e3dd06ac858a1",
+      "newWords": 20,
+      "missingMeaning": [
+        "Brinksley"
+      ]
+    },
+    {
+      "id": "nce-b2-eef57c-l075",
+      "book": 2,
+      "number": 75,
+      "sourceSha256": "4e2ec0008432666d6c557d887525e3fe7e5dba18d91e633c8f6ef08cc64d4221",
+      "newWords": 14,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b2-eef57c-l076",
+      "book": 2,
+      "number": 76,
+      "sourceSha256": "494027b9ae5a086872ca4e62a795fa07e0145d84cd9a986b2186ac73e95ceafe",
+      "newWords": 33,
+      "missingMeaning": [
+        "Brabante",
+        "year’s",
+        "Fratelli"
+      ]
+    },
+    {
+      "id": "nce-b2-eef57c-l077",
+      "book": 2,
+      "number": 77,
+      "sourceSha256": "d3b669602c32861d8d0a08ab1cd667dc3d9ce48bd7c1f660a0cb13a060b88484",
+      "newWords": 26,
+      "missingMeaning": [
+        "Shepenmut",
+        "Duamutef"
+      ]
+    },
+    {
+      "id": "nce-b2-eef57c-l078",
+      "book": 2,
+      "number": 78,
+      "sourceSha256": "884ce29519e9c76cec5e97dc7892572668000c9edaa7ff97231e1e8d040a9d2f",
+      "newWords": 29,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b2-eef57c-l079",
+      "book": 2,
+      "number": 79,
+      "sourceSha256": "c0d23fec894256580e478556ce749de1562ac55e8bd70d851532431e92686e18",
+      "newWords": 13,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b2-eef57c-l080",
+      "book": 2,
+      "number": 80,
+      "sourceSha256": "e4d2f1c88282a8afea46c3bde1d14564c8b6835499218a301c292ab3ac62506a",
+      "newWords": 18,
+      "missingMeaning": [
+        "Nasmyth’s"
+      ]
+    },
+    {
+      "id": "nce-b2-eef57c-l081",
+      "book": 2,
+      "number": 81,
+      "sourceSha256": "c9ca2d1687f43427c98e31f4b0bbca97889d563910de00810a1bcc37f785d65c",
+      "newWords": 20,
+      "missingMeaning": [
+        "man’s"
+      ]
+    },
+    {
+      "id": "nce-b2-eef57c-l082",
+      "book": 2,
+      "number": 82,
+      "sourceSha256": "845a6b266b4766fe76cccdf1e445624e829cc41b61e4bc947422dc3aa0b7333c",
+      "newWords": 21,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b2-eef57c-l083",
+      "book": 2,
+      "number": 83,
+      "sourceSha256": "1fba0ffff74b589f55a13f0a205412b5e382ab85dca7b95799e1454b8a8f0ef3",
+      "newWords": 19,
+      "missingMeaning": [
+        "Lane's",
+        "Minister's",
+        "ex-Prime"
+      ]
+    },
+    {
+      "id": "nce-b2-eef57c-l084",
+      "book": 2,
+      "number": 84,
+      "sourceSha256": "e6e361b01b74619f6144389558b51311c8f8e225f93680648d1be85081c9eb13",
+      "newWords": 21,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b2-eef57c-l085",
+      "book": 2,
+      "number": 85,
+      "sourceSha256": "8804658c6c69f8d3be2a87cca3d45fc2d4c85333e5ce29edb2ef9f1e2497aeb3",
+      "newWords": 23,
+      "missingMeaning": [
+        "headmaster’s"
+      ]
+    },
+    {
+      "id": "nce-b2-eef57c-l086",
+      "book": 2,
+      "number": 86,
+      "sourceSha256": "3598ea1ba45f0ca2a9a7d30ecc6037e2c7a464d179e3215c962569868aaa5f1e",
+      "newWords": 16,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b2-eef57c-l087",
+      "book": 2,
+      "number": 87,
+      "sourceSha256": "8158bfbd4361c1ee99f4194cf47d6688411c67ba56d08972a456c06748ee31ce",
+      "newWords": 7,
+      "missingMeaning": [
+        "Ferngreen"
+      ]
+    },
+    {
+      "id": "nce-b2-eef57c-l088",
+      "book": 2,
+      "number": 88,
+      "sourceSha256": "b315cde57b1c8f1037d8c93e461ae5cddaa8a918e1a15cc4323318b3942def5d",
+      "newWords": 23,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b2-eef57c-l089",
+      "book": 2,
+      "number": 89,
+      "sourceSha256": "cf5ba3335a8df75a635676c7e5522e6bc8a818524c6ffa76efbc36d921b938ed",
+      "newWords": 14,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b2-eef57c-l090",
+      "book": 2,
+      "number": 90,
+      "sourceSha256": "551100ba705ccf768dfae707a94d4986f307b87971fe1ee88aeeb2fa1ca1b54f",
+      "newWords": 32,
+      "missingMeaning": [
+        "cats"
+      ]
+    },
+    {
+      "id": "nce-b2-eef57c-l091",
+      "book": 2,
+      "number": 91,
+      "sourceSha256": "55c51f55fe2de19f2ae88fee557140e700fd62d4e557ab666ef07980157eaccc",
+      "newWords": 12,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b2-eef57c-l092",
+      "book": 2,
+      "number": 92,
+      "sourceSha256": "020b8a8dc1ee070c0ce64e4cb4b0500148b36aad329ebb94df34cf304ac5d791",
+      "newWords": 13,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b2-eef57c-l093",
+      "book": 2,
+      "number": 93,
+      "sourceSha256": "c46ecd67dddce45af1c117073c258df2d4a9477cd54b1d8a496b1b3c3de09ea9",
+      "newWords": 23,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b2-eef57c-l094",
+      "book": 2,
+      "number": 94,
+      "sourceSha256": "be6014f653cff61d1fb4241c083fcfd3503a5df163c650df971f953956a8bda5",
+      "newWords": 20,
+      "missingMeaning": [
+        "Los"
+      ]
+    },
+    {
+      "id": "nce-b2-eef57c-l095",
+      "book": 2,
+      "number": 95,
+      "sourceSha256": "5b5b46bab3ee30fa57c33c26782c90e978cdc54b5d05c4dbf8efeb731c4336d1",
+      "newWords": 21,
+      "missingMeaning": [
+        "Escalopia",
+        "Ambassador's",
+        "husband's"
+      ]
+    },
+    {
+      "id": "nce-b2-eef57c-l096",
+      "book": 2,
+      "number": 96,
+      "sourceSha256": "3359710ca1edd7989c9b34bbad78170843557a66b0a7dd844d8024317581913a",
+      "newWords": 13,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b3-fa4874-l001",
+      "book": 3,
+      "number": 1,
+      "sourceSha256": "583bbb4af90f7adc7b2a6408d69fe7384c9618ff0212af54fa3a0ad5487da98f",
+      "newWords": 40,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b3-fa4874-l002",
+      "book": 3,
+      "number": 2,
+      "sourceSha256": "0d3f99858af78052449c159a928ec8bf67dc4ef6a079664012daaf703d11490d",
+      "newWords": 10,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b3-fa4874-l003",
+      "book": 3,
+      "number": 3,
+      "sourceSha256": "a680b558861e9c41088d1ce7fb4ba27909fcf2ad2c4a16bf990bf490bb7ec933",
+      "newWords": 47,
+      "missingMeaning": [
+        "Ayia",
+        "Irini"
+      ]
+    },
+    {
+      "id": "nce-b3-fa4874-l004",
+      "book": 3,
+      "number": 4,
+      "sourceSha256": "42e144b0d0f07bd1292056aedc24584b0b1ba363666997eed09b978217a1eeed",
+      "newWords": 27,
+      "missingMeaning": [
+        "Bloggs",
+        "Alf’s"
+      ]
+    },
+    {
+      "id": "nce-b3-fa4874-l005",
+      "book": 3,
+      "number": 5,
+      "sourceSha256": "e6c8a1330d9839c08eee40d7185fac5f43bd4ddc73b2690d8a1d16939623d533",
+      "newWords": 33,
+      "missingMeaning": [
+        "facts",
+        "president’s",
+        "fifteen-foot"
+      ]
+    },
+    {
+      "id": "nce-b3-fa4874-l006",
+      "book": 3,
+      "number": 6,
+      "sourceSha256": "17367c84dccd8902d56254d81fa2cf0da3e93623514af3b27ccf99a55d66b599",
+      "newWords": 28,
+      "missingMeaning": [
+        "jeweller’s"
+      ]
+    },
+    {
+      "id": "nce-b3-fa4874-l007",
+      "book": 3,
+      "number": 7,
+      "sourceSha256": "3d8232ecbc1ae5363a46c0f567af03c86f38df939d8ea38b35e89c97d9deb8bd",
+      "newWords": 27,
+      "missingMeaning": [
+        "fianc",
+        "beautifully-cooked"
+      ]
+    },
+    {
+      "id": "nce-b3-fa4874-l008",
+      "book": 3,
+      "number": 8,
+      "sourceSha256": "bc8cb7b170abaf95db8a755bf779ff480fa15a0d1c1e7c958f612f12a358d165",
+      "newWords": 29,
+      "missingMeaning": [
+        "Bernard's"
+      ]
+    },
+    {
+      "id": "nce-b3-fa4874-l009",
+      "book": 3,
+      "number": 9,
+      "sourceSha256": "445489aeb8956d99d0539720ebd20871a2ec009eeacedd15a85ac5abed4bec66",
+      "newWords": 45,
+      "missingMeaning": [
+        "cat’s",
+        "air-resistance"
+      ]
+    },
+    {
+      "id": "nce-b3-fa4874-l010",
+      "book": 3,
+      "number": 10,
+      "sourceSha256": "89765fad8055442cf1fcccb119f98fcdab64706b3ec303c5f7e69fface6e0679",
+      "newWords": 34,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b3-fa4874-l011",
+      "book": 3,
+      "number": 11,
+      "sourceSha256": "1145edc210481416a0b5cc9b91eb994b9a052a1920a406591a931ca24415b101",
+      "newWords": 34,
+      "missingMeaning": [
+        "Officer's"
+      ]
+    },
+    {
+      "id": "nce-b3-fa4874-l012",
+      "book": 3,
+      "number": 12,
+      "sourceSha256": "0bba381e7135a7f114990233ab6a0d34ec98bf0da1cc730ce6dd6a1f749f102a",
+      "newWords": 31,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b3-fa4874-l013",
+      "book": 3,
+      "number": 13,
+      "sourceSha256": "eb021f5fb57a2fa49b4fd6a461d82ffa09dcbd30a82f8e8a65768530118e373f",
+      "newWords": 18,
+      "missingMeaning": [
+        "fancy-dress"
+      ]
+    },
+    {
+      "id": "nce-b3-fa4874-l014",
+      "book": 3,
+      "number": 14,
+      "sourceSha256": "74872371767c225aff940599c86ceec5ac14e4b791bcc7b9e146537c2a4e7cc1",
+      "newWords": 36,
+      "missingMeaning": [
+        "Hawkwood",
+        "Acuto",
+        "Haukodue"
+      ]
+    },
+    {
+      "id": "nce-b3-fa4874-l015",
+      "book": 3,
+      "number": 15,
+      "sourceSha256": "9d93208dff5513286a4943b92b0deccc73c5564c372652bd5572b94fcda8f13a",
+      "newWords": 32,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b3-fa4874-l016",
+      "book": 3,
+      "number": 16,
+      "sourceSha256": "03c17a7134b8b24c694128fe87cbc98a9502a8e1e6d87038454130762d046063",
+      "newWords": 19,
+      "missingMeaning": [
+        "Perachora",
+        "Mary's",
+        "Aleko",
+        "Aleko’s"
+      ]
+    },
+    {
+      "id": "nce-b3-fa4874-l017",
+      "book": 3,
+      "number": 17,
+      "sourceSha256": "59bd00e09fe511726e10cd5e36d24ca484ec62ca06da709531d2ebf29d576303",
+      "newWords": 39,
+      "missingMeaning": [
+        "Angoul",
+        "Othmar",
+        "designer’s"
+      ]
+    },
+    {
+      "id": "nce-b3-fa4874-l018",
+      "book": 3,
+      "number": 18,
+      "sourceSha256": "13ce6b5076d2c1932ed4f69b0a03a6cc140359d758c82b7ec579e23e426f5752",
+      "newWords": 35,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b3-fa4874-l019",
+      "book": 3,
+      "number": 19,
+      "sourceSha256": "160afa3f6e37a657e2ab3c89446f55a0aa2db75c4da9183b0ce6bc305cd8f6ce",
+      "newWords": 28,
+      "missingMeaning": [
+        "Ramsay’s",
+        "kidnapper’s"
+      ]
+    },
+    {
+      "id": "nce-b3-fa4874-l020",
+      "book": 3,
+      "number": 20,
+      "sourceSha256": "1274fec03a657a69deeebb05f3e4c80e9b1d51ea2772b55402696b4e8f2f1d66",
+      "newWords": 17,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b3-fa4874-l021",
+      "book": 3,
+      "number": 21,
+      "sourceSha256": "fe1799fcb2baa4803c41beecdd981d2e1d34dbaa60ad95a4dcbe7026cb0c28c2",
+      "newWords": 48,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b3-fa4874-l022",
+      "book": 3,
+      "number": 22,
+      "sourceSha256": "9da755e1cffff122c4be04e2f90bf7c390ae627729fc1fc506a581373b302d90",
+      "newWords": 31,
+      "missingMeaning": [
+        "aristocrat’s"
+      ]
+    },
+    {
+      "id": "nce-b3-fa4874-l023",
+      "book": 3,
+      "number": 23,
+      "sourceSha256": "1dfc13d4d508ed220609c8fc54b7786b808a1e90079c3289dc9886b800f1b762",
+      "newWords": 31,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b3-fa4874-l024",
+      "book": 3,
+      "number": 24,
+      "sourceSha256": "5b50a5632f179bbafcd2dfbd1e26ee1d300eb3b383c4b8e7308a256a7ea99b79",
+      "newWords": 48,
+      "missingMeaning": [
+        "reader’s"
+      ]
+    },
+    {
+      "id": "nce-b3-fa4874-l025",
+      "book": 3,
+      "number": 25,
+      "sourceSha256": "8253914e7d7d2543b61dc008b677b613b9666b108e5732684a57c1410bce75bb",
+      "newWords": 28,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b3-fa4874-l026",
+      "book": 3,
+      "number": 26,
+      "sourceSha256": "3d2b273336ddf19c3ece4d9c973001c59712364039c85fa54d4bad7ec1fedc4d",
+      "newWords": 39,
+      "missingMeaning": [
+        "trips"
+      ]
+    },
+    {
+      "id": "nce-b3-fa4874-l027",
+      "book": 3,
+      "number": 27,
+      "sourceSha256": "62242e409ad4f6caedf4a786b0652484bbc210ce891bdcf6d4c201ab26cf0356",
+      "newWords": 41,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b3-fa4874-l028",
+      "book": 3,
+      "number": 28,
+      "sourceSha256": "350a1c5bb5f7a389bc043f9a92c9f38781b703c4363185b073b26db1788c6f0c",
+      "newWords": 40,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b3-fa4874-l029",
+      "book": 3,
+      "number": 29,
+      "sourceSha256": "a0d372dea40ee708cbb14f84c96d7f044fc0bcc7551a79f525ce727df7e44f18",
+      "newWords": 43,
+      "missingMeaning": [
+        "Chaplin's",
+        "patient’s"
+      ]
+    },
+    {
+      "id": "nce-b3-fa4874-l030",
+      "book": 3,
+      "number": 30,
+      "sourceSha256": "ad0ec89b2b7c0897e0291f9cf55fc7fe32a1b9c00053cf344551549ff472284e",
+      "newWords": 27,
+      "missingMeaning": [
+        "Endley",
+        "Eric"
+      ]
+    },
+    {
+      "id": "nce-b3-fa4874-l031",
+      "book": 3,
+      "number": 31,
+      "sourceSha256": "fd9d8d1bcc478ead06992ce244798a7a36b3063ebb7692d6b1119dc2cd65c033",
+      "newWords": 35,
+      "missingMeaning": [
+        "assistant’s"
+      ]
+    },
+    {
+      "id": "nce-b3-fa4874-l032",
+      "book": 3,
+      "number": 32,
+      "sourceSha256": "e307b3b427ceeb4b0899bdf0ba21f400cd8ce3739c0015569dd382e25867bf1e",
+      "newWords": 33,
+      "missingMeaning": [
+        "Elkor",
+        "ship’s"
+      ]
+    },
+    {
+      "id": "nce-b3-fa4874-l033",
+      "book": 3,
+      "number": 33,
+      "sourceSha256": "8a72c80ff16a9bdf7b40d9948da2864797cdc8c6aff6c512f6876ca524a21c05",
+      "newWords": 39,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b3-fa4874-l034",
+      "book": 3,
+      "number": 34,
+      "sourceSha256": "cc17a3809ecfa501ed051d39443cf47e25bba930b2745ac16c9bcfebceba6b5c",
+      "newWords": 43,
+      "missingMeaning": [
+        "interesting-looking"
+      ]
+    },
+    {
+      "id": "nce-b3-fa4874-l035",
+      "book": 3,
+      "number": 35,
+      "sourceSha256": "dc6050a733c9cd957aeb19c256b4ef6696de615551b28f96c2048c0ba6220ca4",
+      "newWords": 41,
+      "missingMeaning": [
+        "acts"
+      ]
+    },
+    {
+      "id": "nce-b3-fa4874-l036",
+      "book": 3,
+      "number": 36,
+      "sourceSha256": "203bd8801d086e3d43d25a35d254a27691f90a0a35ee6ff54b38e9c69f11ba85",
+      "newWords": 42,
+      "missingMeaning": [
+        "hero’s",
+        "Bussman",
+        "workman's",
+        "Franz’s"
+      ]
+    },
+    {
+      "id": "nce-b3-fa4874-l037",
+      "book": 3,
+      "number": 37,
+      "sourceSha256": "62e946dcccaf38d1046216557d6bfb43608b321306549f8c76426a2c25f56414",
+      "newWords": 45,
+      "missingMeaning": [
+        "Westhaven",
+        "Widley",
+        "train’s"
+      ]
+    },
+    {
+      "id": "nce-b3-fa4874-l038",
+      "book": 3,
+      "number": 38,
+      "sourceSha256": "3cff4a2808030a31dd7217093e7935c4a9a13380d61314966eed6225b94ebdf2",
+      "newWords": 57,
+      "missingMeaning": [
+        "CDs",
+        "dots"
+      ]
+    },
+    {
+      "id": "nce-b3-fa4874-l039",
+      "book": 3,
+      "number": 39,
+      "sourceSha256": "aca7eaf34b0bfe408a31dcb5b14ec0721ee0cb1d7cb9fee0f6191a7460552809",
+      "newWords": 41,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b3-fa4874-l040",
+      "book": 3,
+      "number": 40,
+      "sourceSha256": "2a85971d43a46b7adf53402e261c2842088f580fe288f4c0654e95b2a595267a",
+      "newWords": 26,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b3-140ed4-l041",
+      "book": 3,
+      "number": 41,
+      "sourceSha256": "f82d7898f03d922d12c7a25be9c2e4f180bd634adc28e4bca97da694affacc36",
+      "newWords": 58,
+      "missingMeaning": [
+        "four-hour",
+        "evening’s"
+      ]
+    },
+    {
+      "id": "nce-b3-f4cefe-l042",
+      "book": 3,
+      "number": 42,
+      "sourceSha256": "1ac73f7f597d86da1005b9d2d68caabaf88fc903f18e655c214ce250a0221e70",
+      "newWords": 78,
+      "missingMeaning": [
+        "pot-holing",
+        "pot-holer’s",
+        "pot-holer",
+        "Gouffre",
+        "pot-holers"
+      ]
+    },
+    {
+      "id": "nce-b3-63de95-l043",
+      "book": 3,
+      "number": 43,
+      "sourceSha256": "44ae93d979ac83c78efffcfafae7958bc95383d336af7c06edcee7202ac5c348",
+      "newWords": 55,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-b3-8160be-l044",
+      "book": 3,
+      "number": 44,
+      "sourceSha256": "7d88dd0c2f7f5f1e0bdb7a331560ef1b13f146b80195f18a69e30b93f01447bc",
+      "newWords": 51,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-nativeears-b3-l045",
+      "book": 3,
+      "number": 45,
+      "sourceSha256": "3e8dd4cd1262e50a5d2d1c55cc9dbc3f4cb5db833442295e824cb579f985d1ff",
+      "newWords": 49,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-nativeears-b3-l046",
+      "book": 3,
+      "number": 46,
+      "sourceSha256": "c71b0eea957c2317e5add090de968d787f2eb5bd09f2b49b5400fce99709bb00",
+      "newWords": 73,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-nativeears-b3-l047",
+      "book": 3,
+      "number": 47,
+      "sourceSha256": "7ff0e1f47c0a4726dd4923e6539f765d10c6f0f0b3fe8f791ba0ede3ed5d5b4e",
+      "newWords": 92,
+      "missingMeaning": [
+        "over-industrialized",
+        "organically-grown",
+        "summer’s"
+      ]
+    },
+    {
+      "id": "nce-nativeears-b3-l048",
+      "book": 3,
+      "number": 48,
+      "sourceSha256": "fb5a3bbe61dd4eed87ab744d7cfee2b16bda1d3140a8fcb6eb63d7b4736989f1",
+      "newWords": 48,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-nativeears-b3-l049",
+      "book": 3,
+      "number": 49,
+      "sourceSha256": "bd1093b3afaadec0980c1708e0224e2138e1ede085b253bc36cb79dcc4108867",
+      "newWords": 52,
+      "missingMeaning": [
+        "uncle’s",
+        "aunt’s",
+        "Bessie’s"
+      ]
+    },
+    {
+      "id": "nce-nativeears-b3-l050",
+      "book": 3,
+      "number": 50,
+      "sourceSha256": "5e8d2153a8808447d6fd5cb11ba5269f558e4bac7e3d663be4ff8490f5cff71f",
+      "newWords": 63,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-nativeears-b3-l051",
+      "book": 3,
+      "number": 51,
+      "sourceSha256": "3f3bd3bc5c781a75937942a11937448347acdfd305beffe8977ff477f179c9d2",
+      "newWords": 64,
+      "missingMeaning": [
+        "people’s",
+        "specially-written",
+        "world’s",
+        "Bagrit",
+        "uses",
+        "Bagrit’s"
+      ]
+    },
+    {
+      "id": "nce-nativeears-b3-l052",
+      "book": 3,
+      "number": 52,
+      "sourceSha256": "10d03e2b7f5f81657f222a98c249dd8ee9c298ec08534f7335d356c59b6481f2",
+      "newWords": 68,
+      "missingMeaning": [
+        "curiously-shaped",
+        "Myrolite",
+        "Harry's",
+        "woman’s"
+      ]
+    },
+    {
+      "id": "nce-nativeears-b3-l053",
+      "book": 3,
+      "number": 53,
+      "sourceSha256": "651aaeaa36b7b2c0735f89656a472e447865d6dfa9cf10c0f62a7d38d30e17a6",
+      "newWords": 65,
+      "missingMeaning": [
+        "Ombudsman’s",
+        "citizen’s",
+        "foreigner’s"
+      ]
+    },
+    {
+      "id": "nce-nativeears-b3-l054",
+      "book": 3,
+      "number": 54,
+      "sourceSha256": "ed5bf5f8074383003f865c8599b89e51f286659f1991f7341d1492524a2ddcdd",
+      "newWords": 74,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-nativeears-b3-l055",
+      "book": 3,
+      "number": 55,
+      "sourceSha256": "155c11d9de0c240af0329d129ab5fd428aa47dc458719ae440cb6a403c48a848",
+      "newWords": 46,
+      "missingMeaning": [
+        "life-supporting",
+        "earth-based",
+        "Earth-dwellers"
+      ]
+    },
+    {
+      "id": "nce-nativeears-b3-l056",
+      "book": 3,
+      "number": 56,
+      "sourceSha256": "467290a205295f89be424938c348bcf4f4a582bd62e852f78a1777b0e82e6eb9",
+      "newWords": 60,
+      "missingMeaning": [
+        "Noah's",
+        "boathooks"
+      ]
+    },
+    {
+      "id": "nce-nativeears-b3-l057",
+      "book": 3,
+      "number": 57,
+      "sourceSha256": "e73126275b0b98d9712ccea23193ac3d9cfa7e1aca9de74e0a2adec1ee6d92a9",
+      "newWords": 44,
+      "missingMeaning": [
+        "maps"
+      ]
+    },
+    {
+      "id": "nce-nativeears-b3-l058",
+      "book": 3,
+      "number": 58,
+      "sourceSha256": "6a9fdb04f35bf925371edad5bc699494520111ccd5b64ae9139f89418c3f3928",
+      "newWords": 37,
+      "missingMeaning": [
+        "porter’s"
+      ]
+    },
+    {
+      "id": "nce-nativeears-b3-l059",
+      "book": 3,
+      "number": 59,
+      "sourceSha256": "5978cac677e52b1c6c8dea1e63ec2dfeb85f8724f5cca28a04c9dca6a726604a",
+      "newWords": 50,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-nativeears-b3-l060",
+      "book": 3,
+      "number": 60,
+      "sourceSha256": "5a217e525501d7fad1fb329021f568ba1c1b12fc672771b9fa1780ebfb3c8af5",
+      "newWords": 42,
+      "missingMeaning": [
+        "unpunctuality",
+        "guard’s"
+      ]
+    },
+    {
+      "id": "nce-textbook-b4-l001",
+      "book": 4,
+      "number": 1,
+      "sourceSha256": "ce65e1e40141d12c4d55e67b3c2f229a1eaba95e9e2b2367fb71a3f1aec93949",
+      "newWords": 17,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-nativeears-b4-l002",
+      "book": 4,
+      "number": 2,
+      "sourceSha256": "b7c6418929d037dcc74a998ce4e9a3cf343300fcb0474be5a6b7e09a259e0e79",
+      "newWords": 23,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-nativeears-b4-l003",
+      "book": 4,
+      "number": 3,
+      "sourceSha256": "16d6f946bc657160df7a0923c91f0e8466c145cb9369ff13f48564a13a7b5819",
+      "newWords": 38,
+      "missingMeaning": [
+        "inns"
+      ]
+    },
+    {
+      "id": "nce-nativeears-b4-l004",
+      "book": 4,
+      "number": 4,
+      "sourceSha256": "c6e3f8910de5adef8bc3b41b8fe9875df787779f63281ea1dba6e1488d730f46",
+      "newWords": 25,
+      "missingMeaning": [
+        "eleven-year-old",
+        "Vera",
+        "Vera's",
+        "child's"
+      ]
+    },
+    {
+      "id": "nce-nativeears-b4-l005",
+      "book": 4,
+      "number": 5,
+      "sourceSha256": "99edbe2196b7e157ea1b54d99da387595ccce4011fa56843640292b4b4ede189",
+      "newWords": 21,
+      "missingMeaning": [
+        "clich"
+      ]
+    },
+    {
+      "id": "nce-nativeears-b4-l006",
+      "book": 4,
+      "number": 6,
+      "sourceSha256": "a390de7bdabb8603a26c7edeb8c37d1df01e56725efb24de256206cba13c84e5",
+      "newWords": 39,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-nativeears-b4-l007",
+      "book": 4,
+      "number": 7,
+      "sourceSha256": "f01e2cf59d70d6172b66f143f8572d48faf1de67e8aed39ac273cf5f7dea26bf",
+      "newWords": 32,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-nativeears-b4-l008",
+      "book": 4,
+      "number": 8,
+      "sourceSha256": "e3395e60c98c3ac2310be9357e694e38e07b5f7a8c0f860e616372f075d6c592",
+      "newWords": 39,
+      "missingMeaning": [
+        "Union's",
+        "American-made",
+        "EU’s"
+      ]
+    },
+    {
+      "id": "nce-nativeears-b4-l009",
+      "book": 4,
+      "number": 9,
+      "sourceSha256": "520f944fde0ef01ca805628743b7014c2f03cd29fa91ee6d1bd11f9b0916af79",
+      "newWords": 54,
+      "missingMeaning": [
+        "Alfred’s",
+        "Guthrum",
+        "raids"
+      ]
+    },
+    {
+      "id": "nce-nativeears-b4-l010",
+      "book": 4,
+      "number": 10,
+      "sourceSha256": "89e2d60f3eeade293f6eeba1a88845f83d05f6c57d49f85dd6e387a33ebf8ed5",
+      "newWords": 65,
+      "missingMeaning": [
+        "California's",
+        "next-generation",
+        "Japan's",
+        "India-born",
+        "Reddy's"
+      ]
+    },
+    {
+      "id": "nce-nativeears-b4-l011",
+      "book": 4,
+      "number": 11,
+      "sourceSha256": "473bfbc57e6c1babaac0a768ef6e53445f2da3ff776a85bb235daf437126383f",
+      "newWords": 29,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-nativeears-b4-l012",
+      "book": 4,
+      "number": 12,
+      "sourceSha256": "328fe649e28ea38886d966773fbebf4cfc64f2596bc1f5cf47d00e8d6392b8fb",
+      "newWords": 29,
+      "missingMeaning": [
+        "banker-customer",
+        "customer's"
+      ]
+    },
+    {
+      "id": "nce-nativeears-b4-l013",
+      "book": 4,
+      "number": 13,
+      "sourceSha256": "1cc67f2164892306e35b70d50cda9a8b30fca102b7f21b7c14c71f989eaf7dd7",
+      "newWords": 24,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-nativeears-b4-l014",
+      "book": 4,
+      "number": 14,
+      "sourceSha256": "5516eaf9a8f1ac525831b1bd6738711fc00bb8b71f88dff452368c5ddc8f0d59",
+      "newWords": 44,
+      "missingMeaning": [
+        "continent-size",
+        "one-foot"
+      ]
+    },
+    {
+      "id": "nce-nativeears-b4-l015",
+      "book": 4,
+      "number": 15,
+      "sourceSha256": "5797b30d33f6b6e51b863d1f684850a4c7e47d6a459a1e6a3fa53bb4df9cea7f",
+      "newWords": 24,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-nativeears-b4-l016",
+      "book": 4,
+      "number": 16,
+      "sourceSha256": "b5cd419c4f601ff36bb7739ce2399c59a2c594e75baf5e013c28d8173ca7ec9f",
+      "newWords": 36,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-nativeears-b4-l017",
+      "book": 4,
+      "number": 17,
+      "sourceSha256": "e4f80e04bed58e7885934378752a75abf89940c3fd224f18511e27dfcc1b36a0",
+      "newWords": 42,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-nativeears-b4-l018",
+      "book": 4,
+      "number": 18,
+      "sourceSha256": "78a552d4b36d08ef9446e0184c3839e38a2b68bfc6bd1071b2f8f7f67b8826e8",
+      "newWords": 47,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-nativeears-b4-l019",
+      "book": 4,
+      "number": 19,
+      "sourceSha256": "4609075919454629579829e0a30eed5dbfe960e0cb56962d222f81681ebbfb3b",
+      "newWords": 43,
+      "missingMeaning": [
+        "body's",
+        "individual's"
+      ]
+    },
+    {
+      "id": "nce-nativeears-b4-l020",
+      "book": 4,
+      "number": 20,
+      "sourceSha256": "40d2085fa39ec3c3054646e31db7623d25f37f7355d10c34e5159811174ce6d0",
+      "newWords": 46,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-nativeears-b4-l021",
+      "book": 4,
+      "number": 21,
+      "sourceSha256": "8f8e066d306a79da9aa9e469ece7fb25a888986d5ef82ef2516d321e02be05e8",
+      "newWords": 57,
+      "missingMeaning": [
+        "good-bad",
+        "accidental-noble",
+        "honest-but-framed",
+        "Hart’s"
+      ]
+    },
+    {
+      "id": "nce-nativeears-b4-l022",
+      "book": 4,
+      "number": 22,
+      "sourceSha256": "c327e32997ae5ddd49ccff812ec2b77cc49670c7bce26de32e883e10fef7587e",
+      "newWords": 36,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-nativeears-b4-l023",
+      "book": 4,
+      "number": 23,
+      "sourceSha256": "4a5a41e487b10bdbc886f36733e3bcf877352caecefcab5a6f41849c4fce26d9",
+      "newWords": 53,
+      "missingMeaning": [
+        "steel-like",
+        "good-morning"
+      ]
+    },
+    {
+      "id": "nce-nativeears-b4-l024",
+      "book": 4,
+      "number": 24,
+      "sourceSha256": "626c201223325b4828975543e1010eeeaa76d89340f8c9b2d18afea13373dbbd",
+      "newWords": 43,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-nativeears-b4-l025",
+      "book": 4,
+      "number": 25,
+      "sourceSha256": "9996f6ef1adbbd7d9764f6ec9cd68db5d889814cdb80f1e8f4301dd6a02cabc1",
+      "newWords": 45,
+      "missingMeaning": [
+        "Anehin"
+      ]
+    },
+    {
+      "id": "nce-nativeears-b4-l026",
+      "book": 4,
+      "number": 26,
+      "sourceSha256": "0937e07ce0a33e372783ea8068a49239b8496ae5852c5e7ce4744ddff3071655",
+      "newWords": 32,
+      "missingMeaning": [
+        "Beresovka"
+      ]
+    },
+    {
+      "id": "nce-nativeears-b4-l027",
+      "book": 4,
+      "number": 27,
+      "sourceSha256": "a89c1d9c231e0cb551f538b06775573a2540b43cf246fca24332f1789087c2b7",
+      "newWords": 77,
+      "missingMeaning": [
+        "seventeenth-century",
+        "gun-decks",
+        "Skeppsbron",
+        "Stockholmers",
+        "gun-ports"
+      ]
+    },
+    {
+      "id": "nce-nativeears-b4-l028",
+      "book": 4,
+      "number": 28,
+      "sourceSha256": "cb67d2962b268636e8d0bbd7fded59df3db85c471f5575f4293dfd79ace914ef",
+      "newWords": 47,
+      "missingMeaning": [
+        "Carlyle’s",
+        "Taylor's"
+      ]
+    },
+    {
+      "id": "nce-nativeears-b4-l029",
+      "book": 4,
+      "number": 29,
+      "sourceSha256": "c99a46043faf7304337370e0b5eb4804d492221c1518939f6a2b4462461c5c20",
+      "newWords": 32,
+      "missingMeaning": [
+        "fruit-bowl"
+      ]
+    },
+    {
+      "id": "nce-nativeears-b4-l030",
+      "book": 4,
+      "number": 30,
+      "sourceSha256": "54ece5a56ae6fb1e63f3fc44f847efa82d4130cb310e4147ebb5a3becf8d54d5",
+      "newWords": 43,
+      "missingMeaning": [
+        "Challenger’s",
+        "bed’s"
+      ]
+    },
+    {
+      "id": "nce-nativeears-b4-l031",
+      "book": 4,
+      "number": 31,
+      "sourceSha256": "eb269f1dee64ffde252429d9ae4d3c3d429d0c120b664447da342fddf7f37390",
+      "newWords": 45,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-nativeears-b4-l032",
+      "book": 4,
+      "number": 32,
+      "sourceSha256": "14440d821da2179fd2f9d97943e1f29fe445eac076602475dea5430f42a7dbc7",
+      "newWords": 61,
+      "missingMeaning": [
+        "Galileo's",
+        "Rosse’s",
+        "eighteen-forties"
+      ]
+    },
+    {
+      "id": "nce-nativeears-b4-l033",
+      "book": 4,
+      "number": 33,
+      "sourceSha256": "fa3b199bdefb8961b0289a7c838adc1278745f04845d99f445f59a2a4885f9e8",
+      "newWords": 49,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-nativeears-b4-l034",
+      "book": 4,
+      "number": 34,
+      "sourceSha256": "a02e4d2925ebf8a536bebf82cd31347fd8175d66ca26306924edffa849d889f1",
+      "newWords": 39,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-nativeears-b4-l035",
+      "book": 4,
+      "number": 35,
+      "sourceSha256": "019144bf7570c6e449d826f83e88e304c770eec4aee8911ed96c2a97d1b1325a",
+      "newWords": 38,
+      "missingMeaning": [
+        "Earth-orbit",
+        "mile-journey",
+        "Moon's",
+        "Moon-dwellers"
+      ]
+    },
+    {
+      "id": "nce-nativeears-b4-l036",
+      "book": 4,
+      "number": 36,
+      "sourceSha256": "50fcbe6e0d07e9431ccfe10b6fd3a9b8c8a6e0021e904003d6543cc0ed4d82e4",
+      "newWords": 34,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-nativeears-b4-l037",
+      "book": 4,
+      "number": 37,
+      "sourceSha256": "5af8c780261088eead446e747be727f2bdb94a8ec7c28dcf07f81abe7162ef7e",
+      "newWords": 33,
+      "missingMeaning": [
+        "ages"
+      ]
+    },
+    {
+      "id": "nce-nativeears-b4-l038",
+      "book": 4,
+      "number": 38,
+      "sourceSha256": "3ce4583dc1aa6e32751a2ecb07f7876cc2fca99b1f928af5de61ec6002489700",
+      "newWords": 41,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-nativeears-b4-l039",
+      "book": 4,
+      "number": 39,
+      "sourceSha256": "a8f684065a2e1ebf82120e8a270e6eded7f8af55a1d53a24627418d0c4d79e1a",
+      "newWords": 43,
+      "missingMeaning": [
+        "adds",
+        "super-imposing"
+      ]
+    },
+    {
+      "id": "nce-nativeears-b4-l040",
+      "book": 4,
+      "number": 40,
+      "sourceSha256": "5a62cd8627a07989ec6fd4cc1b4bb0fea3e6806f4162535f8af2f1d46b179103",
+      "newWords": 30,
+      "missingMeaning": []
+    },
+    {
+      "id": "nce-nativeears-b4-l041",
+      "book": 4,
+      "number": 41,
+      "sourceSha256": "6809d836c82085da10dee5139b18e164fc50a67ab81ba6da64d94be0549eff87",
+      "newWords": 59,
+      "missingMeaning": [
+        "half-trained"
+      ]
+    },
+    {
+      "id": "nce-nativeears-b4-l042",
+      "book": 4,
+      "number": 42,
+      "sourceSha256": "b0cd0518cdce1b407bd257be93b8b4e44f20519559f5369d1427a21f41e7cae4",
+      "newWords": 29,
+      "missingMeaning": [
+        "seismometers"
+      ]
+    },
+    {
+      "id": "nce-nativeears-b4-l043",
+      "book": 4,
+      "number": 43,
+      "sourceSha256": "4fb91dab842e19d64e466fc56354db0bdf34955be36c8317136e44848812f7f0",
+      "newWords": 51,
+      "missingMeaning": [
+        "hydrogen-dominated",
+        "home-planet",
+        "megacycles"
+      ]
+    },
+    {
+      "id": "nce-nativeears-b4-l044",
+      "book": 4,
+      "number": 44,
+      "sourceSha256": "e686d27d4dcf87c46922ab65b0617b47e6aba797c8683aa4271ce6b52bb98b92",
+      "newWords": 59,
+      "missingMeaning": [
+        "neighbour’s"
+      ]
+    },
+    {
+      "id": "nce-nativeears-b4-l045",
+      "book": 4,
+      "number": 45,
+      "sourceSha256": "450c6516fb2ec09618880821a2e9c39d34e65659d329f5e1a57d0ba03d6e0824",
+      "newWords": 31,
+      "missingMeaning": [
+        "ideas"
+      ]
+    },
+    {
+      "id": "nce-nativeears-b4-l046",
+      "book": 4,
+      "number": 46,
+      "sourceSha256": "21d8e616c387f893bef60bf9452ef440cd28b08bfbeaa0068b272b8d7047d641",
+      "newWords": 62,
+      "missingMeaning": [
+        "topics",
+        "week's",
+        "Fortune's"
+      ]
+    },
+    {
+      "id": "nce-nativeears-b4-l047",
+      "book": 4,
+      "number": 47,
+      "sourceSha256": "1b06812bf98368d060d0f799c9151442e61e277bc748953cafb22d9ace3ffe33",
+      "newWords": 85,
+      "missingMeaning": [
+        "Europe’s",
+        "Splendide",
+        "Bellavista",
+        "tre",
+        "d’h",
+        "tel",
+        "Frenchman's",
+        "Englishman’s"
+      ]
+    },
+    {
+      "id": "nce-nativeears-b4-l048",
+      "book": 4,
+      "number": 48,
+      "sourceSha256": "4ae4f8c38f7d6052127703279279193d31bdd2f3b908c5b2817d5fe4b9bcb67c",
+      "newWords": 49,
+      "missingMeaning": [
+        "Las",
+        "well-planned"
+      ]
+    }
+  ],
+  "artifact": {
+    "file": "lesson-word-targets.js",
+    "sha256": "658f5e10554bd7b435b9a416e72f653f7f9a53d42fa9e0e70fdc9bb88f480607",
+    "bytes": 2617802
+  },
+  "rebuild": "node dev/build-lesson-word-targets.cjs (offline; existing dictionary-data shards only)"
+}
