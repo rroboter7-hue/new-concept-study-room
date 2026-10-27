@@ -15,3 +15,6 @@ tests/fixtures/book2-context-previous-release.json text eol=lf
 # Reproducible generated lesson-word data.
 lesson-word-targets.js text eol=lf
 lesson-word-targets-source.json -text
+
+# Frozen compatibility fixture uses a pinned raw-byte checksum.
+tests/fixtures/reviewed25-before-lessons30-baseline.json text eol=lf

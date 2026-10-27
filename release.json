@@ -1,6 +1,6 @@
 {
-  "build": "2026-10-27-lesson-batch",
-  "preparedAt": "2026-10-27T06:27:56.095Z",
+  "build": "2026-10-27-book2-reviewed30",
+  "preparedAt": "2026-10-27T07:11:00.422Z",
   "book2": {
     "book": 2,
     "total": 96,
@@ -85,9 +85,9 @@
     "simulatedRetestBoundariesVerified": true,
     "balancedPracticePacks": {
       "book": 2,
-      "lessons": 25,
-      "tasks": 300,
-      "followups": 300,
+      "lessons": 30,
+      "tasks": 360,
+      "followups": 360,
       "defaultForReviewedLessons": true,
       "distribution": {
         "vocabulary": 3,
@@ -97,7 +97,8 @@
         "production": 2
       },
       "preservedFirst10Revisions": true,
-      "preservedFirst20Revisions": true
+      "preservedFirst20Revisions": true,
+      "preservedFirst25Revisions": true
     },
     "wrongConceptsRejoinSpacedReview": true,
     "syntheticListeningWordAudioAdded": 6,
@@ -229,10 +230,38 @@
       "oldDraftKeysPreserved": true,
       "retiredGlobalAlias": "st→first"
     },
-    "unsubmittedLegacyDictationDraftPersistence": true
+    "unsubmittedLegacyDictationDraftPersistence": true,
+    "reviewedUsage21To25": {
+      "lessons": 5,
+      "originalItemsPreserved": 34,
+      "activeExpressions": 31,
+      "archivedFragments": 2,
+      "learnOnlyPattern": 1,
+      "grammarNotes": 9,
+      "originalGrammarReviewCards": 5,
+      "grammarAndQuizIdsPreserved": true,
+      "scoredReviewSharesApprovalGate": true
+    },
+    "phraseWritingCompleteness": {
+      "scope": "有限完整性规则；表达覆盖不等于完整语法正确",
+      "draftPreservedOnUnconfirmed": true
+    },
+    "contextPronunciationL27": {
+      "headword": "wind",
+      "headwordIPA": "/waɪnd/",
+      "sourceForm": "wound",
+      "sourceFormIPA": "/waʊnd/",
+      "files": 2,
+      "bytes": 91448,
+      "synthesized": true,
+      "enginePhonemesVerified": true,
+      "humanListeningClaimed": false,
+      "globalNounAudioPreserved": true
+    },
+    "activeBook2Usage": 440
   },
-  "staticFiles": 4230,
-  "staticBytes": 740480028,
+  "staticFiles": 4066,
+  "staticBytes": 735995539,
   "nativeearsAdvancedAudio": {
     "books": {
       "3": 60,

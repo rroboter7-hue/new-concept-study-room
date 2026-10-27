@@ -87,7 +87,7 @@
     add('word',v.word,cue.prompt,{...cue,phonetic:text(v.phonetic,100),pos:text(v.pos,30),example:text(v.example,1000),...provenance,...(v.conceptId?{conceptId:v.conceptId}:{})});
    }
    for(const p of (lesson.usage||[]).slice(0,100)){
-    if(!p?.phrase)continue;const cue=lexicalCue(p,'usage');if(!cue)continue;
+    if(!p?.phrase||p.practiceEligible===false)continue;if(p.usage21To25ReviewId&&(typeof global.StudyReviewedUsage21To25?.isUsageCurrent!=='function'||global.StudyReviewedUsage21To25.isUsageCurrent(p,lesson)!==true))continue;const cue=lexicalCue(p,'usage');if(!cue)continue;
     add('phrase',p.phrase,cue.prompt,{...cue,example:text(p.example,1000),explanation:text(p.note,1500),matchedForm:cue.matchedForm||text(p.matchedForm,200),variants:Array.isArray(p.variants)?p.variants.slice(0,20).map(v=>text(v,200)).filter(Boolean):[]});
    }
    for(const q of (registered?bank.quizForLesson(lesson.id):lesson.quiz||[]).slice(0,100)){

@@ -17,13 +17,13 @@ function load({skipFix=false,stopAtVocabulary=false,mutate}={}){
 const lesson=c=>c.LESSONS.find(l=>l.id==='nce-b2-eef57c-l041');
 function changedFields(c){const l=lesson(c);return plain({paragraphs:l.paragraphs,sourceNotes:l.textbook.sourceNotes,translation:l.translation,globalTranslation:c.BOOK2_TRANSLATIONS.lessons.find(t=>t.number===41),alignment:c.BOOK2_READING_ALIGNMENT.lessons.find(t=>t.number===41),remark:l.vocabulary.find(v=>v.word==='remark'),editorialCorrections:l.editorialCorrections||[]});}
 const before=load({skipFix:true}),after=load();
-test('published correction changes exactly one word in 276 passages while all Chinese, twenty-five packs and 877 expansion bindings survive',()=>{
+test('published correction changes exactly one word in 276 passages while all Chinese, thirty packs and 877 expansion bindings survive',()=>{
  assert.equal(before.LESSONS.length,276);assert.equal(after.LESSONS.length,276);assert.equal(lesson(before).paragraphs[3].en,original);
  let changes=0;for(const b of before.LESSONS){const a=after.LESSONS.find(l=>l.id===b.id);assert(a);assert.deepEqual(plain(a.paragraphs.map(p=>p.zh)),plain(b.paragraphs.map(p=>p.zh)),b.id);assert.equal(a.paragraphs.length,b.paragraphs.length);for(let i=0;i<b.paragraphs.length;i++){const want=b.id==='nce-b2-eef57c-l041'&&i===3?corrected:b.paragraphs[i].en;assert.equal(a.paragraphs[i].en,want,b.id+' paragraph '+i);if(a.paragraphs[i].en!==b.paragraphs[i].en)changes++;}}
  assert.equal(changes,1);assert.deepEqual(plain(after.BOOK2_VOCABULARY),plain(before.BOOK2_VOCABULARY));
  assert.deepEqual(plain(after.BOOK2_TRANSLATIONS.lessons.map(t=>t.paragraphs.map(p=>p.zh))),plain(before.BOOK2_TRANSLATIONS.lessons.map(t=>t.paragraphs.map(p=>p.zh))));
  assert.deepEqual(plain(after.BOOK2_READING_ALIGNMENT.lessons.map(t=>t.paragraphs.map(p=>p.rows.map(r=>r.zh)))),plain(before.BOOK2_READING_ALIGNMENT.lessons.map(t=>t.paragraphs.map(p=>p.rows.map(r=>r.zh)))));
- const oldPacks=before.StudyPracticePacks.registry,newPacks=after.StudyPracticePacks.registry;assert.equal(oldPacks.lessonIds().length,25);assert.deepEqual(plain(newPacks.lessonIds()),plain(oldPacks.lessonIds()));for(const id of oldPacks.lessonIds())assert.deepEqual(plain(newPacks.get(id)),plain(oldPacks.get(id)),id);
+ const oldPacks=before.StudyPracticePacks.registry,newPacks=after.StudyPracticePacks.registry;assert.equal(oldPacks.lessonIds().length,30);assert.deepEqual(plain(newPacks.lessonIds()),plain(oldPacks.lessonIds()));for(const id of oldPacks.lessonIds())assert.deepEqual(plain(newPacks.get(id)),plain(oldPacks.get(id)),id);
  assert.equal(after.StudyKnowledge.bank.audit.expansionQuestions.length,877);assert.deepEqual(plain(after.StudyKnowledge.bank.audit.expansionQuestions),plain(before.StudyKnowledge.bank.audit.expansionQuestions));assert.deepEqual(plain(after.StudyKnowledge.bank.audit.expansionIssues),[]);
 });
 test('published L41 aligned sentence, translation binding and canonical remark use corrected spelling with complete original provenance',()=>{

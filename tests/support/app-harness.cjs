@@ -1,0 +1,75 @@
+'use strict';
+// Runs the actual app bootstrap and delegated handlers in Node. DOM/audio/panel
+// boundaries are stubs; this is not browser, layout, or mobile keyboard QA.
+const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),test=require('node:test'),assert=require('node:assert/strict');
+const DIST=process.env.PILOT_APP_DIST?path.resolve(process.env.PILOT_APP_DIST):path.join(__dirname,'..','..');
+const read=name=>fs.readFileSync(path.join(DIST,name),'utf8');
+const decode=s=>String(s).replace(/&quot;/g,'"').replace(/&#39;/g,"'").replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&amp;/g,'&');
+const camel=s=>s.replace(/-([a-z])/g,(_,c)=>c.toUpperCase());
+class Element {
+ constructor(doc,tag='div',attrs=''){this.document=doc;this.tagName=tag.toUpperCase();this.nodeType=1;this.dataset={};this.attributes={};this.listeners={};this.nodes=[];this.value='';this.checked=false;this.disabled=false;this.isConnected=true;this.files=[];this.html='';this.style={setProperty(){},getPropertyValue(){return '';},removeProperty(){}};const names=new Set();this.classList={add:(...a)=>a.forEach(v=>names.add(v)),remove:(...a)=>a.forEach(v=>names.delete(v)),contains:v=>names.has(v),toggle:(v,on)=>{const result=on===undefined?!names.has(v):Boolean(on);if(result)names.add(v);else names.delete(v);return result;}};for(const m of attrs.matchAll(/([\w-]+)(?:="([^"]*)")?/g)){this.setAttribute(m[1],decode(m[2]??''));}}
+ setAttribute(k,v){v=String(v);this.attributes[k]=v;if(k==='id')this.id=v;if(k==='class')v.split(/\s+/).forEach(n=>this.classList.add(n));if(k==='value')this.value=v;if(k==='disabled')this.disabled=true;if(k==='checked')this.checked=true;if(k.startsWith('data-'))this.dataset[camel(k.slice(5))]=v;}
+ getAttribute(k){return this.attributes[k]??null;}removeAttribute(k){delete this.attributes[k];if(k.startsWith('data-'))delete this.dataset[camel(k.slice(5))];}
+ addEventListener(k,fn){(this.listeners[k]??=[]).push(fn);}removeEventListener(){}
+ matches(selector){return selector.split(',').some(raw=>{const s=raw.trim();if(s.includes(' '))return this.matches(s.split(/\s+/).at(-1));const tag=/^[a-z][\w-]*/i.exec(s);if(tag&&this.tagName!==tag[0].toUpperCase())return false;const id=/#([^.[\s]+)/.exec(s);if(id&&this.id!==id[1])return false;for(const m of s.matchAll(/\.([\w-]+)/g))if(!this.classList.contains(m[1]))return false;for(const m of s.matchAll(/\[([\w-]+)(?:=["']?([^\]"']*)["']?)?\]/g)){const v=this.getAttribute(m[1]);if(v===null||m[2]!==undefined&&v!==m[2])return false;}return true;});}
+ closest(s){return this.matches(s)?this:this.owner?.closest(s)||null;}
+ descendants(){return this.nodes.flatMap(n=>[n,...n.descendants()]);}
+ set innerHTML(value){for(const n of this.descendants())n.isConnected=false;this.html=String(value);this.nodes=[];const stack=[this],voidTags=new Set(['area','base','br','col','embed','hr','img','input','link','meta','param','source','track','wbr']);for(const m of this.html.matchAll(/<(\/?)([a-z][\w-]*)\b([^>]*)>/gi)){const tag=m[2].toLowerCase();if(m[1]){for(let i=stack.length-1;i>0;i--)if(stack[i].tagName.toLowerCase()===tag){for(const node of stack.slice(i)){node.html=this.html.slice(node.contentStart,m.index);if(node.tagName==='TEXTAREA')node.value=decode(node.html);}stack.length=i;break;}continue;}const node=new Element(this.document,tag,m[3]);node.contentStart=m.index+m[0].length;node.owner=stack.at(-1);node.owner.nodes.push(node);if(!voidTags.has(tag)&&!m[3].trimEnd().endsWith('/'))stack.push(node);}}
+ get innerHTML(){return this.html;}querySelectorAll(s){return this.descendants().filter(n=>n.isConnected&&n.matches(s));}querySelector(s){return this.querySelectorAll(s)[0]||null;}
+ insertAdjacentHTML(position,html){this.innerHTML=position==='afterbegin'?String(html)+this.html:this.html+String(html);}
+ focus(options){this.document.activeElement=this;this.focusOptions=options;}scrollIntoView(options){this.scrollOptions=options;}getBoundingClientRect(){return {top:0,left:0,width:320,height:48,right:320,bottom:48};}getClientRects(){return [this.getBoundingClientRect()];}append(n){return this.appendChild(n);}appendChild(n){n.owner=this;this.nodes.push(n);return n;}click(){this.document.downloadClick?.(this);}remove(){this.isConnected=false;}contains(n){return n===this||this.descendants().includes(n);}
+}
+class Document {
+ constructor(){this.listeners={};this.roots=new Map();this.body=new Element(this,'body');this.activeElement=this.body;this.documentElement={clientWidth:390};for(const m of read('index.html').matchAll(/<([\w-]+)\b([^>]*\bid="[^"]+"[^>]*)>/g)){const el=new Element(this,m[1],m[2]);this.roots.set('#'+el.id,el);}for(const cls of ['player','reader-tabs','reader-footer','reader-panel','app-main','course-panel','app-sidebar'])this.roots.set('.'+cls,new Element(this,'div','class="'+cls+'"'));for(const name of ['reading','usage','phrases','practice','output'])this.roots.set('[data-tab='+name+']',new Element(this,'button','data-tab="'+name+'"'));for(const name of ['study','daily-review','words','records','library','game'])this.roots.set('[data-view='+name+']',new Element(this,'button','data-view="'+name+'"'));}
+ addEventListener(k,fn){(this.listeners[k]??=[]).push(fn);}removeEventListener(){}
+ all(){return [...new Set([...this.roots.values(),...[...this.roots.values()].flatMap(r=>r.descendants()),this.body,...this.body.descendants()])].filter(n=>n.isConnected);}
+ querySelectorAll(s){return this.all().filter(n=>n.matches(s));}querySelector(s){return this.roots.get(s)||this.querySelectorAll(s)[0]||null;}getElementById(id){return this.all().find(n=>n.id===id)||null;}createElement(tag){return new Element(this,tag);}
+ async click(selectorOrNode){const node=typeof selectorOrNode==='string'?this.querySelector(selectorOrNode):selectorOrNode;assert(node,'click target exists: '+selectorOrNode);assert.equal(node.disabled,false,'click target is enabled');const event={target:node,preventDefault(){},stopPropagation(){}};for(const fn of [...(this.listeners.click||[])])await fn(event);await Promise.resolve();return node;}
+ async input(selectorOrNode,value){const node=typeof selectorOrNode==='string'?this.querySelector(selectorOrNode):selectorOrNode;assert(node,'input target exists: '+selectorOrNode);assert.equal(node.disabled,false,'input target is enabled');node.value=value;for(const fn of [...(this.listeners.input||[])])await fn({target:node});await Promise.resolve();return node;}
+}
+async function harness({pilot=true,loaded={},realFormalShell=false,realCoach=false,realOutput=false,withoutCoachContainer=false,now=Date.parse('2026-10-26T04:00:00Z')}={}){
+ const document=new Document(),frames=[],writes=[],shells=[],downloads=[],blobs=new Map();let stored=JSON.stringify(loaded),audioInstance,storageWritable=true,clockNow=now;
+ if(withoutCoachContainer)document.roots.delete('#learning-coach');
+ class ClockDate extends Date {constructor(...args){super(...(args.length?args:[clockNow]));}static now(){return clockNow;}}
+ class URLBoundary extends URL {static createObjectURL(blob){const key='blob:stub-'+blobs.size;blobs.set(key,blob);return key;}static revokeObjectURL(key){blobs.delete(key);}}
+ document.downloadClick=node=>{if(node.tagName==='A'&&node.download)downloads.push({name:node.download,blob:blobs.get(node.href)});};
+ class AudioBoundary {static splitSentences(l){return l.paragraphs.map(p=>p.en);}constructor(options={}){audioInstance=this;this.options=options;this.state={};this.lessonChanges=[];this.spoken=[];}setVoice(){}setRate(){}setLesson(l){this.lessonChanges.push(l.id);}pause(){}stop(){}speakWord(word){this.spoken.push(word);return Promise.resolve();}}
+ class PanelBoundary {constructor(options){this.options=options;}setLesson(){}render(){return '';}flush(){}reloadFromStorage(){}clearFilters(){}cards(){return [];}due(){return [];}setFilter(){}openTarget(value){this.openedTarget=value;return true;}startTask(value){this.startedTask=value;return true;}}
+ class MobileBoundary {constructor(options){this.options=options;this.enabled=pilot;this.updates=[];this.focusCalls=0;this.outputModes=[];shells.push(this);}update(state){this.updates.push(state);}focusReader(){this.focusCalls++;}setOutputMode(mode,state){this.outputModes.push({mode,state});}}
+ const c={console,document,URL:URLBoundary,Blob,URLSearchParams,Intl,Date:ClockDate,location:{search:pilot?'?pilot=1':'',href:'https://example.test/'+(pilot?'?pilot=1':'')},navigator:{},setTimeout:()=>0,clearTimeout(){},requestAnimationFrame:fn=>{frames.push(fn);return frames.length;},cancelAnimationFrame(){},localStorage:{getItem:()=>stored,setItem:(_k,v)=>{if(!storageWritable)throw new Error('simulated storage full');stored=v;writes.push(JSON.parse(v));}},StudyAudio:AudioBoundary,StudyFiles:{getAudio:async()=>null},ReviewPractice:PanelBoundary,SentencePractice:PanelBoundary,OutputPractice:PanelBoundary,PhrasePractice:PanelBoundary,TextStudyLibrary:PanelBoundary,MobileLearningShell:MobileBoundary,StudySentences:{sanitizeDraft:x=>x},addEventListener(){},removeEventListener(){}};c.window=c;vm.createContext(c);
+ c.innerHeight=800;c.innerWidth=390;c.scrollBy=()=>{};
+ // Style/geometry remains a Node boundary: only visibility required by the
+ // production redraw contract is modeled, with no CSS/layout assertion.
+ c.getComputedStyle=node=>({display:node.classList?.contains('hidden')?'none':'block',visibility:'visible',position:'static'});
+ const real=new Set(['curriculum.js','textbook-lessons.js','book1-first10-lessons.js','book1-first10-catalogue.js','book2-lessons.js','book2-translations.js','book2-reading-alignment.js','phrase-library.js','book2-learning-support.js','book2-vocabulary.js','book2-quality-support.js','book2-practice-packs.js','book2-reviewed-questions.js','study-knowledge.js','pilot-question-expansion.js','book2-later-question-expansion.js','knowledge-bootstrap.js','practice-pack-core.js','practice-pack-bootstrap.js','nativeears-advanced-catalogue.js','book3-lessons.js','book4-lessons.js','core.js','review-engine.js','reading-layout.js','pilot-grammar-followups.js','learning-remediation.js','game.js','batch-sentence-core.js','batch-sentence-practice.js','learning-progress.js','lesson-practice.js']);
+ real.add('reading-view.js');real.add('nativeears-advanced-audio.js');real.add('book34-language-support.js');real.add('phrase-practice.js');
+ ['book1-complete-lessons.js','book1-first10-audio.js','book1-complete-audio.js'].forEach(file=>real.add(file));
+ real.add('recurrence.js');
+ real.add('book2-additional-context-fixes.js');
+ real.add('book2-reviewed-context-vocabulary.js');
+ ['book2-source-spelling-fixes.js','book2-complete-word-audio.js','book2-reviewed-usage.js'].forEach(file=>real.add(file));
+ ['lexical-word-tokens.js','book2-pack-supplements.js','lesson-word-targets.js'].forEach(file=>real.add(file));
+ real.add('dictionary-context.js');
+ ['book2-reviewed-example-corrections.js','book2-reviewed-usage-21-25.js','book2-lexical-source-corrections-26-27.js','ordinal-audio-alias-correction.js'].forEach(file=>real.add(file));
+ real.add('source-files.js');
+ if(realOutput)real.add('output-practice.js');
+ if(realCoach)['learning-coach-core.js','learning-coach.js','sentence-core.js'].forEach(file=>real.add(file));
+ const scripts=Array.from(read('index.html').matchAll(/<script\b([^>]*)\bsrc="([^"]+)"[^>]*>/g),m=>m[2].split('?')[0]);for(const script of scripts)if(real.has(script))vm.runInContext(read(script),c,{filename:script});
+ assert.equal(typeof c.StudyReading?.render,'function','the real reading renderer must load before app bootstrap');assert(Array.isArray(c.BOOK2_READING_ALIGNMENT?.lessons),'the real sentence alignment data must load before app bootstrap');
+ assert.equal(typeof c.ReadingView,'function','the real reading playback controller must load before app bootstrap');
+ assert.equal(c.BOOK34_LANGUAGE_STATUS?.applied,108,'the full catalog loads its real advanced translations and usage overlay');
+ assert.equal(c.BOOK1_COMPLETE_TEXT_STATUS?.verifiedReadingLessons,72,'the actual index loads all reviewed Book 1 passages before app bootstrap');
+ assert.equal(c.LESSONS.filter(l=>l.book===1).reduce((n,l)=>n+l.paragraphs.length,0),759,'Book 1 app data contains every reviewed English/Chinese paragraph');
+ for(const lesson of c.LESSONS.filter(l=>l.book===1))assert.equal(c.PROVIDED_AUDIO_SOURCES?.[lesson.id]?.bodySha256,lesson.textbook.bodySha256,'Book 1 app audio mapping is bound to the current body: '+lesson.id);
+ if(realFormalShell)vm.runInContext(read('mobile-learning-shell.js'),c,{filename:'mobile-learning-shell.js'});
+ // Add a test-only closure export after all real app statements, without
+ // replacing or changing any production initialization/handler logic.
+ const app=read('app.js'),tail=app.lastIndexOf('})();');assert(tail>=0,'recognizable app IIFE');
+ const expose='\nwindow.__pilotApp={questions,renderPractice,renderUsage,filteredLessons,openKnowledge,setTab,selectLesson,getScore,submitQuiz,startRetest,canRetestPack,lessonProgress,saveUnitPracticeResult,saveUnitPracticeState,saveOutputRecord,restoreBackup,coachCandidates:typeof coachCandidates==="function"?coachCandidates:null,openCoachTask:typeof openCoachTask==="function"?openCoachTask:null,get coach(){return typeof coach==="undefined"?null:coach},get output(){return output},get sentencePractice(){return sentencePractice},get batchPractice(){return batchPractice},get unitPractice(){return unitPractice},get practice(){return practice},get current(){return current},get data(){return data},get game(){return game},get mobileShell(){return mobileShell},get activeTab(){return activeTab},get view(){return view}};\n';
+ vm.runInContext(app.slice(0,tail)+expose+app.slice(tail),c,{filename:'app.js'});await Promise.resolve();
+ const flush=async()=>{let rounds=0;while(frames.length&&rounds++<10){const rows=frames.splice(0);for(const fn of rows)fn();await Promise.resolve();}assert(!frames.length);};await flush();
+ return {c,api:c.__pilotApp,document,shells,writes,downloads,get stored(){return JSON.parse(stored);},get audio(){return audioInstance;},get now(){return clockNow;},setNow:value=>clockNow=value,setStorageWritable:value=>storageWritable=value,flush,click:async target=>{await document.click(target);await flush();},input:async(target,value)=>{await document.input(target,value);await flush();},html:()=>document.querySelector('#reader-content').innerHTML};
+}
+async function submitWithWrong(h,wrongIndices=[0]){h.api.setTab('practice');if(h.api.practice.mode==='unit')await h.click('[data-quiz-mode="mixed"]');const qs=h.api.questions();qs.forEach((q,i)=>h.api.practice.answers[i]=wrongIndices.includes(i)?(q.answer+1)%q.options.length:q.answer);await h.click('#submit-quiz');return qs;}
+
+module.exports={harness,submitWithWrong};

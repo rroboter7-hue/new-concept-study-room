@@ -7,11 +7,11 @@ const FIX='book2-reviewed-usage.js',plain=x=>JSON.parse(JSON.stringify(x));
 const E=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const fix=fs.readFileSync(path.join(DIST,FIX),'utf8');
 function apply(c){vm.runInContext(fix,c,{filename:FIX});}
-function load({reviewed=true,stopBeforeUsage=false,mutate}={}){
+function load({reviewed=true,stopBeforeUsage=false,mutate,skipLater=false}={}){
  const files=Array.from(fs.readFileSync(path.join(DIST,'index.html'),'utf8').matchAll(/<script\b[^>]*\bsrc\s*=\s*["']([^"']+)["'][^>]*>/gi),m=>m[1].split(/[?#]/)[0]);
  const wired=files.includes(FIX);if(process.env.USAGE_EXPECT_WIRED==='1')assert(wired,'reviewed usage is wired in actual index');
  const c={document:{addEventListener(){}},setTimeout(){},clearTimeout(){}};c.window=c;vm.createContext(c);let inserted=false;
- for(const f of files){if(f==='app.js')break;
+ for(const f of files){if(f==='app.js')break;if(skipLater&&f==='book2-reviewed-usage-21-25.js')continue;
   if(f===FIX||!wired&&!inserted&&f==='book2-practice-packs.js'){inserted=true;if(mutate)mutate(c);if(stopBeforeUsage)return c;if(reviewed)apply(c);if(f===FIX)continue;}
   vm.runInContext(fs.readFileSync(path.join(DIST,f),'utf8'),c,{filename:f});
  }
@@ -21,7 +21,8 @@ const l=(c,n)=>c.LESSONS.find(x=>x.book===2&&x.number===n),phrase=(c,n,p)=>l(c,n
 const before=load({reviewed:false}),after=load();
 const invalid=[[3,'Do you have to make this decision'],[6,'have done'],[8,'Do you enter for the garden competition'],[10,'for a long time. Has it belonged to'],[17,'At least, they will be giving five'],[19,'at once immediately']];
 function practice(c,lesson){return new c.PhrasePractice({getLesson:()=>lesson,escapeHTML:E,wordHTML:E});}
-test('independent: every original usage object is recoverable and all102 legal first20 notes items remain separate from the six archived fragments',()=>{
+test('independent: original first20 overlay retains its complete96-course history before the separately tested L21–25 review',()=>{
+ const before=load({reviewed:false,skipLater:true}),after=load({skipLater:true});
  assert.equal(after.BOOK2_REVIEWED_USAGE_STATUS.appliedLessons,96);
  const first20=after.LESSONS.filter(l=>l.book===2&&l.number<=20);assert.equal(first20.reduce((n,l)=>n+l.usageSourceAudit.originalUsage.length,0),182);assert.equal(first20.reduce((n,l)=>n+l.usage.length,0),177);assert.equal(first20.flatMap(l=>l.usage).filter(p=>p.sourceType==='lesson-notes').length,102);
  for(const a of after.LESSONS.filter(x=>x.book===2)){
@@ -59,10 +60,10 @@ test('independent: actual phrase renderer escapes source, raw and edited example
  const lesson={id:'escape-probe',usage:[item,{phrase:'in the end',meaning:'最后',example:'In the end I went home.'}],notesUsageGrammarReview:[{title:payload,note:payload,...meta}]},pp=practice(after,lesson);pp.setLesson(lesson);
  for(const mode of ['learn','fill','match','order','write']){pp.mode=mode;pp.submitted=true;pp.answers={};const html=pp.render();assert.doesNotMatch(html,/<img\b|<svg\b|onerror="attack\(\)"|onload="attack\(\)"/i,mode);assert(html.includes('&lt;img'),mode+' payload remains literal visible text');}
 });
-test('independent: all276 bodies, translations, vocabulary and grammar, twenty-five packs and all877 expansion bindings survive this usage-only batch',()=>{
+test('independent: all276 bodies, translations, vocabulary and grammar, thirty packs and all877 expansion bindings survive this usage-only batch',()=>{
  assert.equal(before.LESSONS.length,276);assert.equal(after.LESSONS.length,276);
  for(const a of after.LESSONS){const b=before.LESSONS.find(l=>l.id===a.id);for(const key of ['paragraphs','textbook','translation','vocabulary','grammar','quiz','lines','title'])assert.deepEqual(plain(a[key]??null),plain(b[key]??null),a.id+' '+key);if(a.book!==2)assert.deepEqual(plain(a),plain(b));}
- assert.equal(after.StudyPracticePacks.registry.lessonIds().length,25);assert.deepEqual(plain(after.StudyPracticePacks.registry.lessonIds()),plain(before.StudyPracticePacks.registry.lessonIds()));for(const id of before.StudyPracticePacks.registry.lessonIds())assert.deepEqual(plain(after.StudyPracticePacks.registry.get(id)),plain(before.StudyPracticePacks.registry.get(id)),id);
+ assert.equal(after.StudyPracticePacks.registry.lessonIds().length,30);assert.deepEqual(plain(after.StudyPracticePacks.registry.lessonIds()),plain(before.StudyPracticePacks.registry.lessonIds()));for(const id of before.StudyPracticePacks.registry.lessonIds())assert.deepEqual(plain(after.StudyPracticePacks.registry.get(id)),plain(before.StudyPracticePacks.registry.get(id)),id);
  assert.equal(after.StudyKnowledge.bank.audit.expansionQuestions.length,877);assert.deepEqual(plain(after.StudyKnowledge.bank.audit.expansionQuestions),plain(before.StudyKnowledge.bank.audit.expansionQuestions));assert.deepEqual(plain(after.StudyKnowledge.bank.audit.expansionIssues),[]);assert.deepEqual(plain(after.STUDY_WORD_AUDIO),plain(before.STUDY_WORD_AUDIO));
 });
 module.exports={DIST,FIX,load,apply,l,phrase,practice,plain,E,before,after};
