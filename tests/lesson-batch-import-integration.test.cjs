@@ -97,9 +97,9 @@ test('real app four-form and native phrase editors both reach batch import with 
   assert.equal(sentencePractice.active.draft.mode,'four','new app defaults to four forms');
   const fourTarget = sentencePractice.active.draft.targetKey;
   const forms = ['The room is quiet.','The room is not quiet.','Is the room quiet?','Where is it quiet?'];
+  const formKinds = ['affirmative','negative','yesno','wh'];
   for (let index=0;index<forms.length;index++) {
-    if (index) await h.click(`[data-sentence-action="step"][data-sentence-step="${index}"]`);
-    await h.input('[data-sentence-input="answer"]',forms[index]);
+    await h.input(`[data-sentence-input="answer"][data-sentence-kind="${formKinds[index]}"]`,forms[index]);
   }
   await h.click('[data-sentence-action="writing-mode"][data-sentence-mode="phrase"]');
   assert.equal(sentencePractice.active.draft.mode,'phrase');

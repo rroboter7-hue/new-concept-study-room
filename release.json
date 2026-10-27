@@ -1,6 +1,6 @@
 {
-  "build": "2026-10-27-lesson-batch",
-  "preparedAt": "2026-10-27T06:27:56.095Z",
+  "build": "2026-10-27-four-forms-inline",
+  "preparedAt": "2026-10-27T06:44:15.499Z",
   "book2": {
     "book": 2,
     "total": 96,
@@ -231,8 +231,8 @@
     },
     "unsubmittedLegacyDictationDraftPersistence": true
   },
-  "staticFiles": 4230,
-  "staticBytes": 740480028,
+  "staticFiles": 4235,
+  "staticBytes": 740544381,
   "nativeearsAdvancedAudio": {
     "books": {
       "3": 60,
@@ -611,11 +611,21 @@
       "includesCheckingInstructions": true,
       "manualPaste": true,
       "automaticExternalSend": false,
-      "selectableFailureFallback": true
+      "selectableFailureFallback": true,
+      "allFourFormsTogether": true,
+      "explicitEmptyForms": true
     },
     "drafts": {
       "separateModes": true,
       "legacyFivePreserved": true
+    },
+    "fourFormLayout": {
+      "simultaneousFields": 4,
+      "mobileColumns": 1,
+      "desktopColumns": 2,
+      "namedFieldAutosave": true,
+      "existingDraftsPreserved": true,
+      "perFieldInsertionAndReuse": true
     }
   }
 }

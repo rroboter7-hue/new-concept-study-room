@@ -59,7 +59,8 @@ function setup({clipboard,past=[]}={}){
 
 test('quick editor shows four named forms, original reuse and explicit copy action',()=>{
   const h=setup(),html=h.render();
-  assert.equal((html.match(/data-sentence-action="step"/g)||[]).length,4);
+  assert.equal((html.match(/<textarea\b/g)||[]).length,4);
+  assert.equal((html.match(/data-sentence-action="step"/g)||[]).length,0);
   for(const name of ['肯定句','否定句','一般疑问句','特殊疑问句'])assert.ok(html.includes(name));
   assert.match(html,/data-sentence-action="copy-review"/);assert.match(html,/复制到豆包检查/);
   Object.assign(h.ui.active.draft.answers,answers);h.ui.active.draft.step=1;
