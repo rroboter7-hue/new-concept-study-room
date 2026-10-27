@@ -122,6 +122,19 @@ test('actual vocabulary bootstrap limits the worksheet to current new words and 
  assert.equal(eligible.some(item=>item.word.toLowerCase()==='handbag'),false,'a prior lesson word is not repeated as this lesson target');
 });
 
+test('new daily sentence candidates share the current-new-word and person-title exclusions',async()=>{
+ const h=await harness({pilot:false,realOutput:true});
+ for(const file of ['lesson-word-targets.js','person-name-targets.js'])vm.runInContext(fs.readFileSync(path.join(__dirname,'..',file),'utf8'),h.c,{filename:file});
+ await h.api.selectLesson('nce-b2-eef57c-l006');await h.flush();
+ const lesson=h.api.current,rows=h.api.coachCandidates(lesson).targets,words=rows.filter(item=>item.kind==='word');
+ const newWords=new Set(h.c.StudyLessonWordTargets.newWordsForLesson(lesson).map(item=>item.word.toLowerCase()));
+ assert.equal(h.c.StudyLessonWordTargets.statusForLesson(lesson).bound,true);
+ assert(words.some(item=>item.target==='beggar'));
+ for(const word of ['Percy','Buttons','house'])assert.equal(words.some(item=>item.target.toLowerCase()===word.toLowerCase()),false,word+' cannot be scheduled as a new-word writing target');
+ assert(words.every(item=>newWords.has(item.target.toLowerCase())));
+ assert(rows.some(item=>item.kind==='phrase'),'real phrase-writing tasks remain available');
+});
+
 
 test('a reader imported lesson keeps its declared vocabulary and phrase worksheet despite lacking canonical novelty bindings',async()=>{
  const h=await harness({pilot:false,realOutput:true});

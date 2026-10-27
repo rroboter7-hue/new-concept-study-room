@@ -26,7 +26,7 @@ Actual Book1 lesson5 selector was inspected in the browser: current new words su
 
 Existing imported lessons retain their authored vocabulary and optional phrase, guarded by imported source plus stored membership; canonical same-id collisions cannot bypass source novelty. Existing daily/native phrase/legacy drafts, task evidence and all backups remain separate. Storage, context-meaning and learned-range fixes from concurrent main were retained.
 
-Merged local regression:1078 tests,1064 pass,13 failures caused by omitted original media in sparse checkout,1 Windows symlink skip. Full source/media CI is required before deployment. Browser plugin absent; validation used the available in-app CUA browser/Playwright. Physical iOS/Android keyboards and native clipboard dialogs were not device-tested.
+Earlier full local regression after main merge:1078 tests,1064 pass,13 failures caused by omitted original media in sparse checkout,1 Windows symlink skip. Daily sentence candidate generation also uses the same current-new-word/name/title policy; its added regression and related daily-flow checks pass23/23. Full source/media CI is required before deployment. Browser plugin absent; validation used the available in-app CUA browser/Playwright. Physical iOS/Android keyboards and native clipboard dialogs were not device-tested.
 
 Checklist: reference compared; P2s fixed and recaptured; mobile/desktop checked; primary flow and failure reminders checked; new-word/name policy verified; concurrent source behavior preserved. Publication is tracked by the deployment pipeline.
 
