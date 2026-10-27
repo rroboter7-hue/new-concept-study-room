@@ -1,15 +1,17 @@
 @charset "UTF-8";
-.mls-mode-nav,.mls-page-title,.mls-inline-player,.mls-read-next{display:none}
+.mls-mode-nav,.mls-quick-nav,.mls-page-title,.mls-inline-player,.mls-read-next{display:none}
 .mls-book-scroll{scroll-behavior:auto!important}
 @media(max-width:760px){
  body.mls-book-workspace.mls-mobile{--paper:#fbf9f3;--ink:#17342e;--teal:#265b50;--teal-dark:#173f35;--teal-soft:#e9efe5;--line:#dce1d7;background:#fbf9f3;color:#17342e;font-family:Arial,"Microsoft YaHei",sans-serif}
  .mls-book-workspace.mls-mobile .app-main{padding:18px 23px max(30px,env(safe-area-inset-bottom));background:inherit}
- .mls-book-workspace.mls-mobile .mls-header{margin:0 0 24px;min-height:44px;gap:12px}
+ .mls-book-workspace.mls-mobile .mls-header{margin:0 0 16px;min-height:44px;gap:8px}
  .mls-book-workspace.mls-mobile .mls-brand{display:block}
  .mls-book-workspace .mls-learning-menu{position:relative;font-size:16px}
- .mls-book-workspace .mls-learning-menu summary{display:flex;align-items:center;gap:12px;min-height:44px;cursor:pointer;list-style:none}
+ .mls-book-workspace .mls-learning-menu summary{display:flex;align-items:center;gap:8px;min-height:44px;cursor:pointer;list-style:none}
  .mls-book-workspace .mls-learning-menu summary::-webkit-details-marker{display:none}
- .mls-book-workspace .mls-menu-mark{font-family:Georgia,"SimSun",serif;font-size:20px;font-weight:700;color:var(--teal)}
+ .mls-book-workspace.mls-mobile .mls-brand .mls-menu-mark{display:inline-flex;align-items:center;gap:5px;min-height:44px;padding:7px 9px;border:1px solid #bdcfc1;border-radius:8px;background:#eef3e9;font-family:Arial,"Microsoft YaHei",sans-serif;font-size:14px;font-weight:700;color:var(--teal)}
+ .mls-book-workspace .mls-menu-mark svg{width:17px;height:17px;flex-shrink:0}
+ .mls-book-workspace .mls-learning-menu[open] .mls-menu-mark{background:#dfe9d7;border-color:#9eb597}
  .mls-book-workspace .mls-header-lesson{font-family:Arial,"Microsoft YaHei",sans-serif!important;font-size:17px!important;line-height:1.3;white-space:nowrap;color:inherit!important}
  .mls-book-workspace .mls-menu-items{position:absolute;z-index:1200;top:50px;left:0;width:min(285px,calc(100vw - 46px));padding:8px;border:1px solid var(--line);border-radius:10px;background:var(--paper);box-shadow:0 10px 32px #15352d21}
  .mls-book-workspace .mls-menu-items button{display:block;width:100%;min-height:44px;padding:10px 14px;text-align:left;font-size:15px;color:var(--ink);border-radius:5px}
@@ -18,11 +20,17 @@
  .mls-book-workspace.mls-mobile #learning-coach{display:none}
  .mls-book-workspace.mls-mobile.mls-coach-open #learning-coach{display:block;margin-bottom:24px}
  .mls-book-workspace.mls-mobile .mls-course-button{border:0;background:transparent;padding:8px 0 8px 10px;font-size:17px;color:var(--ink)}
+ .mls-book-workspace.mls-mobile .mls-book-select{flex-basis:90px;max-width:94px;font-size:14px}
  .mls-book-workspace.mls-mobile .mls-learning-home,.mls-book-workspace.mls-mobile .reader-tabs{display:none!important}
- .mls-book-workspace.mls-mobile .mls-mode-nav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:0 0 28px;border-bottom:1px solid var(--line)}
+ .mls-book-workspace.mls-mobile .mls-mode-nav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;margin:0 0 10px;border-bottom:1px solid var(--line)}
  .mls-book-workspace.mls-mobile:not([data-mls-view=study]) .mls-mode-nav{display:none}
- .mls-book-workspace .mls-mode-nav button{position:relative;min-height:48px;padding:12px 5px;font-size:17px;color:#72796f;border:0;border-bottom:3px solid transparent;background:transparent}
+ .mls-book-workspace .mls-mode-nav button{position:relative;min-height:48px;padding:12px 2px;font-size:15px;line-height:1.45;color:#72796f;border:0;border-bottom:3px solid transparent;background:transparent}
  .mls-book-workspace .mls-mode-nav button[aria-selected=true]{border-bottom-color:#49623b;color:#304c2b;font-weight:700}
+ .mls-book-workspace.mls-mobile .mls-quick-nav{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px;margin:0 0 22px}
+ .mls-book-workspace .mls-quick-nav button{display:flex;align-items:center;justify-content:center;gap:5px;min-width:0;min-height:44px;padding:8px 4px;border:1px solid #d2ddce;border-radius:7px;background:#f4f6ee;color:#3a5840;font-size:13px;line-height:1.4}
+ .mls-book-workspace .mls-quick-nav svg{width:17px;height:17px;flex-shrink:0}
+ .mls-book-workspace .mls-quick-nav button[aria-pressed=true]{background:#e0ead7;border-color:#a6bc98;font-weight:700}
+ .mls-book-workspace.mls-mobile:not([data-mls-view=study]) .mls-quick-nav,.mls-book-workspace.mls-mobile.mls-keyboard-open .mls-quick-nav{display:none}
  .mls-book-workspace.mls-mobile .reader-panel{padding:0;background:transparent;border:0;border-radius:0;min-height:0;scroll-margin-top:12px}
  .mls-book-workspace.mls-mobile .reader-meta,.mls-book-workspace.mls-mobile #lesson-title,.mls-book-workspace.mls-mobile #lesson-subtitle{display:none}
  .mls-book-workspace.mls-mobile .mls-page-title{display:block;margin:0 0 10px;font-family:Georgia,"Times New Roman",serif;font-size:32px;line-height:1.2;font-weight:600;color:#172b22;overflow-wrap:anywhere}
@@ -75,7 +83,8 @@
  .mls-book-workspace.mls-mobile[data-mls-tab=output] .output-tabs{margin-bottom:6px}
  .mls-book-workspace.mls-mobile .mls-output-more{margin:0 0 20px;color:#68756c}
  .mls-book-workspace.mls-mobile .mls-output-more summary{cursor:pointer;font-size:13px;min-height:32px;line-height:32px}
- .mls-book-workspace.mls-mobile .mls-output-more .output-tabs{grid-template-columns:repeat(3,minmax(0,1fr));margin-top:8px}
+ .mls-book-workspace.mls-mobile .mls-output-more .output-tabs{grid-template-columns:repeat(2,minmax(0,1fr));margin-top:8px}
+ .mls-book-workspace.mls-mobile.mls-focused-study #output-content>.output-tabs{display:none}
  .mls-book-workspace.mls-mobile .recurrence-section{margin-top:32px;padding-top:24px;border-top:1px solid var(--line)}
  .mls-book-workspace.mls-mobile .recurrence-heading{display:block}
  .mls-book-workspace.mls-mobile .recurrence-heading h3{font-size:20px}
@@ -89,4 +98,4 @@
  .mls-book-workspace.mls-mobile .word-popover .meaning,.mls-book-workspace.mls-mobile .word-popover .word-online-result,.mls-book-workspace.mls-mobile .word-popover .word-online-sense{font-size:16px;line-height:1.65}
  .mls-book-workspace.mls-mobile .word-popover .word-source-label{font-size:13px}
 }
-@media(max-width:360px){.mls-book-workspace.mls-mobile .app-main{padding-left:17px;padding-right:17px}.mls-book-workspace.mls-mobile .mls-page-title{font-size:28px}.mls-book-workspace.mls-mobile .paragraph .english{font-size:22px}.mls-book-workspace .mls-header-lesson{font-size:15px!important}}
+@media(max-width:360px){.mls-book-workspace.mls-mobile .app-main{padding-left:17px;padding-right:17px}.mls-book-workspace.mls-mobile .mls-page-title{font-size:28px}.mls-book-workspace.mls-mobile .paragraph .english{font-size:22px}.mls-book-workspace .mls-header-lesson{font-size:15px!important}.mls-book-workspace.mls-mobile .mls-header{gap:6px}.mls-book-workspace.mls-mobile .mls-book-select{flex-basis:82px;max-width:82px;padding-right:20px;font-size:13px}.mls-book-workspace.mls-mobile .mls-course-button{font-size:15px;gap:4px;padding-left:0}.mls-book-workspace.mls-mobile .mls-course-button svg{width:18px;height:18px}.mls-book-workspace .mls-mode-nav button{font-size:14px}.mls-book-workspace .mls-quick-nav button{font-size:12px;gap:4px}}

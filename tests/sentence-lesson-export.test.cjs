@@ -60,6 +60,34 @@ test('lesson export retains the latest pending draft even when saving fails',()=
   assert.equal(h.drafts[key].answers.affirmative,'Previously saved.');
 });
 
+test('lesson export preserves four-form and phrase modes in both v3 and round namespaces',()=>{
+  const h=setup({drafts:{
+    'v3:four:now:word%3Anow%3Abook':{mode:'transform',answers:{affirmative:'I read a book.',negative:'I do not read a book.',yesno:'Do I read a book?',wh:'When do I read a book?'}},
+    'v3:phrase:now:phrase%3Anow%3Aread%2520about':{mode:'flexible',answers:{affirmative:'We read about birds.'}},
+    'round:v1:now:word%3Anow%3Apen:quick-1:four':{mode:'phrase',answers:{negative:'I do not use this pen.'}},
+    'round:v1:now:phrase%3Aold%3Alook%2520at:quick-2:phrase':{mode:'four',sourceLessonIds:['old'],answers:{affirmative:'Look at this tree.',combined:'Keep this previously stored answer.'}},
+    'v3:four:later:word%3Alater%3Aletter':{answers:{affirmative:'Other lesson quick writing.'}},
+    'v3:flexible:now:word%3Anow%3Abook':{answers:{affirmative:'Invalid v3 namespace.'}},
+    'round:v1:now:word%3Anow%3Abook:quick-3:unknown':{answers:{affirmative:'Invalid round mode.'}}
+  }});
+  const bundles=copy(h.ui.exportLessonDrafts());
+  assert.deepEqual(bundles.map(item=>[item.mode,item.roundKey]),[['four',''],['phrase',''],['four','quick-1'],['phrase','quick-2']]);
+  assert.equal(bundles[0].answers.wh,'When do I read a book?');assert.equal(bundles[0].answers.combined,'');
+  assert.equal(bundles[1].answers.affirmative,'We read about birds.');assert.equal(bundles[1].answers.negative,'');
+  assert.equal(bundles[2].answers.negative,'I do not use this pen.');assert.equal(bundles[2].answers.affirmative,'');
+  assert.equal(bundles[3].target.label,'look at');assert.equal(bundles[3].answers.combined,'Keep this previously stored answer.');
+});
+
+test('lesson export keeps unsaved native phrase-mode input when persistence fails',()=>{
+  const sourceKey='v3:phrase:now:phrase%3Anow%3Aread%2520about';
+  const h=setup({drafts:{[sourceKey]:{targetKey:'phrase:now:read%20about',mode:'phrase',answers:{affirmative:'Previously saved phrase writing.'}}},failSave:true});
+  h.ui.ensureState();h.ui.switchMode('phrase');h.answer('We read about our city today.');h.ui.flush();
+  const bundle=h.ui.exportLessonDrafts().find(item=>item.sourceKey===sourceKey);
+  assert.ok(bundle,'the actual phrase editor draft is exported');
+  assert.equal(bundle.mode,'phrase');assert.equal(bundle.answers.affirmative,'We read about our city today.');
+  assert.equal(h.drafts[sourceKey].answers.affirmative,'Previously saved phrase writing.');
+});
+
 test('lesson export resolves an older target and all selected old-word aliases for the current practice lesson',()=>{
   const key='v2:flexible:now:word%3Aold-again%3Asend';
   const h=setup({drafts:{[key]:{targetKey:'word:old-again:send',sourceLessonIds:['old-again'],selectedOldKeys:['word:old-again:send','word:old:send','word:old-again:warm','phrase:old-again:look%20at'],answers:{affirmative:'I send a warm note.'}}}});

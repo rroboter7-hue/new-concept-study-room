@@ -24,15 +24,16 @@ function setup() {
   return {ui, calls, records, evidence, action, changeLesson() {lesson = {...lesson,id:'next'}; ui.setLesson(lesson);}};
 }
 
-test('mobile primary modes announce state before rendering and keep other practices below their content', () => {
+test('mobile output always exposes writing, dictation and retell while keeping bulk tools secondary', () => {
   const h = setup(); h.ui.render();
   for (const [mode, id, renderer] of [['sentences','mobile-guided','sentence:render'], ['batch','mobile-batch','batch:render']]) {
     h.ui.mode = mode; h.calls.length = 0;
     const html = h.ui.render();
     assert.equal(h.calls[0], `mode:${mode}`); assert.equal(h.calls[1], renderer);
     const mainTabs = html.slice(0, html.indexOf(`id="${id}"`));
-    assert.match(mainTabs, /data-output-mode="sentences"/); assert.match(mainTabs, /data-output-mode="batch"/);
-    assert.doesNotMatch(mainTabs, /data-output-mode="write"|class="mls-output-more"/);
+    assert.match(mainTabs, /data-output-mode="sentences"/);
+    assert.match(mainTabs, /data-output-mode="write"/); assert.match(mainTabs, /data-output-mode="retell"/);
+    assert.doesNotMatch(mainTabs, /data-output-mode="batch"|class="mls-output-more"/);
     assert.ok(html.indexOf(`id="${id}"`) < html.indexOf('class="mls-output-more"'));
     assert.match(html, /data-output-mode="retell"/);
   }
@@ -43,7 +44,8 @@ test('daily task overrides the mobile default while preserving assistance until 
   assert.equal(h.ui.startTask({lessonId:'now', mode:'retell', roundKey:'today-retell'}), true);
   assert.equal(h.ui.mode, 'retell'); assert.equal(h.ui.assisted, false); assert.equal(h.ui.pendingEvidence, null);
   const html = h.ui.render();
-  assert.ok(html.indexOf('class="mls-output-more" open') < html.indexOf('class="output-intro"'));
+  assert.match(html.slice(0,html.indexOf('class="output-intro"')),/data-output-mode="retell" aria-pressed="true"/);
+  assert.doesNotMatch(html, /class="mls-output-more" open/);
   h.action('original'); h.action('original'); h.ui.answer = 'We read beside the quiet theatre.';
   assert.equal(h.ui.startTask({lessonId:'now', mode:'retell', roundKey:'today-retell'}), true);
   assert.equal(h.ui.answer, 'We read beside the quiet theatre.'); assert.equal(h.ui.assisted, true);

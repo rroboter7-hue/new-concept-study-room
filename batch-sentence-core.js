@@ -62,7 +62,7 @@
         var answer = string(answers[kind]);
         if (!answer.trim()) return;
         var answerLines = answer.split(/\r\n|\r|\n/);
-        lines.push((bundle.mode === 'flexible' ? '自由句' : labels[index]) + '：' + answerLines[0]);
+        lines.push((bundle.mode === 'flexible' || bundle.mode === 'phrase' ? '自由句' : labels[index]) + '：' + answerLines[0]);
         answerLines.slice(1).forEach(function (line) { lines.push('    ' + line); });
         rowCount += 1;
       });

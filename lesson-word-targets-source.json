@@ -212,7 +212,7 @@
     },
     {
       "file": "review-practice.js",
-      "sha256": "1073aafa11f34cc777bdb386f7815f4a4ec2072c2d2745b63c7dcc15af4dc05d"
+      "sha256": "bb7465c9da229df6b0c78f70b4a0fd685ded64adf7756c29925488754d20e710"
     },
     {
       "file": "reading-layout.js",
@@ -264,11 +264,11 @@
     },
     {
       "file": "sentence-core.js",
-      "sha256": "73eda95ec75a8d9ca2935bcc01c9cc58b74fe46ed410f936f6f928451a8f5cad"
+      "sha256": "9b97c5441800b428bb19f3f9f3eb4c5f8661891ee213a455a0da597c9a65bb7e"
     },
     {
       "file": "sentence-practice.js",
-      "sha256": "3dd36d45de1e9d3f80edf253ae9959f908da2e563a111c7552c1e91a2c1ac6d5"
+      "sha256": "eef8526b251c50580aeeff112ccf8f6809bc6cb6a7f927e35799199916b3b264"
     },
     {
       "file": "dictionary-service.js",
@@ -284,7 +284,7 @@
     },
     {
       "file": "output-practice.js",
-      "sha256": "1be97a78d68f3c640b17ef5ab755cde06e7833b624a93d7d79edaf3d61da3c0f"
+      "sha256": "3b19b115e2c9673ad7c86335973b4eb874c1f5fce04ce4025cad3ff29643d33f"
     },
     {
       "file": "phrase-practice.js",
@@ -296,7 +296,7 @@
     },
     {
       "file": "mobile-learning-shell.js",
-      "sha256": "e6dbb42e794f39b77349c9e79f2cfc0ebaae53747ca7f4a02430e29d2042fc6c"
+      "sha256": "11ee2fb04409d754ce12c432a2d8be4d12ef366530791bacfdf912f3b74000cc"
     },
     {
       "file": "learning-progress.js",
@@ -312,11 +312,11 @@
     },
     {
       "file": "learning-coach-core.js",
-      "sha256": "d3ac8d862a7f2342590bc0e0b097d33cf213c76d3cb38a675ddc8b8d83376b7d"
+      "sha256": "d4096edd183e6e26cbe33e1d60fcf73f55f42e8a3e62abaa5fd925f34a434ba1"
     },
     {
       "file": "learning-coach.js",
-      "sha256": "5b751042899e0e6a2c9e7fdecda3293bc133333c66934dffbf5b5cdbd3db10ed"
+      "sha256": "c87ea44f340552aeebe51c255577c67c75f670d6ad2c5cfdda26eee95297801d"
     },
     {
       "file": "lesson-recall-core.js",
@@ -324,11 +324,11 @@
     },
     {
       "file": "lesson-recall-catalogue.js",
-      "sha256": "f789de74c2dcae71ba4839ee1450283d3036ef8e98889969ddc086c5be7ccf90"
+      "sha256": "acca2b541e35ef24d18190913ed4689074f7fd963dbbe39951b74bf28e906ce1"
     },
     {
       "file": "lesson-recall.js",
-      "sha256": "4389a5ed1bfbdbbd13935a9ffe2c6398ddd0d6a038448d5ff267d664ecb5d676"
+      "sha256": "56e1e5993c169e8c253b3aa4bd2a1b33734cfbaee817625e984a7725fcfb98bb"
     },
     {
       "file": "dictionary-context.js",
@@ -352,19 +352,19 @@
     "inputs": [
       {
         "file": "dictionary-data/a.json",
-        "sha256": "edd79b762087f3ed9cfd38432f1bc521fc37b48336e6ce1adedd61939f001a58"
+        "sha256": "0bbc970eb7bf60c971eb35099fe8c2f3c8d34f73a04120563c175a775d4a8379"
       },
       {
         "file": "dictionary-data/b.json",
-        "sha256": "5fb0675aad997913434369a565bf15f7295436e53d78a7d0732b1c4e397378ad"
+        "sha256": "f92b08db3e0e5db43d950b99c47470508b749f7aef9b58c699294d48cd9d75ac"
       },
       {
         "file": "dictionary-data/c.json",
-        "sha256": "27de5ac23998a2b3982bd3a4b4b8a667a763308348ffea6f10364a1159cedf80"
+        "sha256": "88862907388c755eb37ba54ff346887af1fe2f4e88a093937d9c375e4ac14a20"
       },
       {
         "file": "dictionary-data/d.json",
-        "sha256": "7d3bf316e4d85a13693f6cad0991a4606af2ade1f657f9b759f9ab6077840cfc"
+        "sha256": "c061eaee47673769dd70dcca1caec2dba8ba256535e062dc6861f3765bff69eb"
       },
       {
         "file": "dictionary-data/e.json",
@@ -372,7 +372,7 @@
       },
       {
         "file": "dictionary-data/f.json",
-        "sha256": "80e823a945d1b8fea98efbf882b8e1c581529e583fa6648a852558f471c4aec2"
+        "sha256": "9af175a961073da1d036886a5db0d08c07eb014611354b7a122d26c936833fa8"
       },
       {
         "file": "dictionary-data/g.json",
@@ -384,7 +384,7 @@
       },
       {
         "file": "dictionary-data/i.json",
-        "sha256": "f0c49fffc8aab5cbaa6679a7ad7feab5e5941984e8f84a2e89f68f3674f91d3f"
+        "sha256": "0c14cba51c3ab65ec79e3ee5e731ff3199029fbc52fd60da849f34ba099315ac"
       },
       {
         "file": "dictionary-data/j.json",
@@ -392,19 +392,19 @@
       },
       {
         "file": "dictionary-data/k.json",
-        "sha256": "d884104b4793ee96f35608dea4a0a731505d23ac0a8870d9f7090209d1e03978"
+        "sha256": "587ada14f5af467031a5a3955907aa52eed64c7f1af6e37056ec79d2b9bbc352"
       },
       {
         "file": "dictionary-data/l.json",
-        "sha256": "f115819d1c4206740bda972a1b3ceecd2c814a754a92414b6225286c991de441"
+        "sha256": "90395a6bd80b250eaa4a4c51c9771428f8da9918a0ae0ab466b61516a0e036a2"
       },
       {
         "file": "dictionary-data/m.json",
-        "sha256": "30bc16a9440efee0a46d6be75dd9b5d099f1189a0a9cf03f07f6797dd98e45ef"
+        "sha256": "432613cea6e67ecfca1773cca3946cdfef6b30cf35b9c8163618ebc20af99427"
       },
       {
         "file": "dictionary-data/n.json",
-        "sha256": "cbb1a60fc4e6061fb83834a19016c573d039304e9749580427fea5e70f9340e2"
+        "sha256": "118c6f102e4f59559f87338bbe814273804082290ca60aa3cb44cab0c29b1767"
       },
       {
         "file": "dictionary-data/o.json",
@@ -412,7 +412,7 @@
       },
       {
         "file": "dictionary-data/p.json",
-        "sha256": "1cf8b1ddbf8d156ad73af9f160aeaffadf5cf458a02437783de817bc3d6a1920"
+        "sha256": "c6daef35af70664716ba3b65e794507b5bf92a0379808e8d94f701ee1b620d7b"
       },
       {
         "file": "dictionary-data/q.json",
@@ -420,11 +420,11 @@
       },
       {
         "file": "dictionary-data/r.json",
-        "sha256": "9503f01e0d555ef601035b2c8443082100888140c25ee9ab611ce4df4362187a"
+        "sha256": "6a949e34c9ba655ebab9366383cd13cbe38d3293f19201155d8a48b76aecbd82"
       },
       {
         "file": "dictionary-data/s.json",
-        "sha256": "b376c3140296f79695a4fd3f6edd8991ef56b0306e5e81337f46b3ed00d15dfa"
+        "sha256": "ab4071cf79fb3eb5a663f565533066e7ca834c2fde9fb1c5a49b2227c272112f"
       },
       {
         "file": "dictionary-data/t.json",
@@ -4142,7 +4142,7 @@
   ],
   "artifact": {
     "file": "lesson-word-targets.js",
-    "sha256": "0886fd4f95fd1d913e72c38657cf09b75e37f0eb7496eba33ca4d64a484ba417",
+    "sha256": "fae02b458fb4295f0a003206b25f5dd5af84a1d0d493aac766e448063c557cd1",
     "bytes": 2645672,
     "hashEncoding": "utf8-lf"
   },

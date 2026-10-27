@@ -40,6 +40,28 @@ test('lesson import keeps mixed modes, all selected context and nonblank learner
   assert.equal(parsed.notices.filter(note=>note.includes('重复句型')).length,0,'several free rows are deliberate');
 });
 
+test('all four source modes retain their meaning, including phrase practice and four conversions', () => {
+  const blocks=core.lessonImportBlocks([
+    bundle({sourceKey:'transform',mode:'transform'}),
+    bundle({sourceKey:'flexible',mode:'flexible'}),
+    bundle({sourceKey:'four',mode:'four',answers:{affirmative:'I read.',negative:'I do not read.',yesno:'Do I read?',wh:'What do I read?',combined:''}}),
+    bundle({sourceKey:'phrase',mode:'phrase',target:{phrase:'look at',kind:'phrase'},answers:{affirmative:'I look at the clock.',negative:'We look at the flowers.',yesno:'',wh:'',combined:''}})
+  ]);
+  assert.deepEqual(blocks.map(block=>block.rowCount),[5,5,4,2]);
+  assert.equal((blocks[3].text.match(/^自由句：/gm)||[]).length,2);
+  assert.doesNotMatch(blocks[3].text,/^(?:原句|否定句|一般疑问句|特殊疑问句|旧知综合句)：/m);
+  const parsed=core.parse(blocks.map(block=>block.text).join('\n\n'),'conversion');
+  assert.deepEqual(parsed.groups.map(group=>group.rows.map(row=>row.kind)),[
+    ['affirmative','negative','yesno','wh','combined'],
+    ['free','free','free','free','free'],
+    ['affirmative','negative','yesno','wh'],
+    ['free','free']
+  ]);
+  assert.deepEqual(parsed.notices,[]);
+  const value=decoded(core.promptAll(parsed));
+  assert.ok(value.rows.slice(-2).every(row=>row.kind==='free'&&row.sourceOriginal===''));
+});
+
 test('multiline learner text and metadata safely round trip without manufacturing rows or groups', () => {
   const source='She says:\n原句：this is quoted text\n\n  indentation stays.\n目标词：not metadata';
   const target='two\n目标词：quoted target';
