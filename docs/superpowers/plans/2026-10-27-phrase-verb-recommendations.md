@@ -46,11 +46,13 @@ Files: sentence-practice.js; targeted UI tests.
 Files: index.html; release.json; generated source manifests; this plan.
 
 - [x] Refresh source manifests, run full regression and inspect current-source recommendation samples.
-- [ ] Preserve latest main updates, publish normally and verify the live mobile build.
-- [ ] Report the source coverage audit separately from the completed recommendation change.
+- [x] Preserve latest main updates, publish normally and verify the live mobile build.
+- [x] Report the source coverage audit separately from the completed recommendation change.
 
 Verification before final remote sync: core19 new tests plus old rotation/progress/wordbank56/56 pass; UI73/73 pass. Independent reviews found and resolved five verified name homographs and v1 alias cache canonicalization. Full regression852 tests:851 pass,0 fail,1 OS symlink skip (outputs/phrase-verb-recommendations/full-tests-final.log). Current-source manifests validate89 raw dictionary inputs and77 UTF8-LF lesson inputs. CUA390px real old-cache migration replaced noun/basic suggestions, retained the puma answer and manual on-the-right selection; target switches/reload kept the group stable, explicit refresh replaced the group without editing the answer. At320px the header controls do not overlap and there is no horizontal overflow.
 
 Final sync preserved main00c2218 Chinese grammar instructions and source categorization. Rebuilt manifests validate with their declared encodings. The105 focused merged checks all pass (merged-focused-tests.log); GitHub Pages runs the complete merged suite before deployment. No unreviewed usage rows or placeholder glosses were promoted. The usage coverage audit remains a separate incomplete-content finding.
 
 Final mobile integration preserved main db0d5b0, including four-form and single-phrase writing and review groups. Mode-aware recommendation consumption and bounded history now use requiredKinds(mode); hidden legacy answers cannot consume or crowd out active-mode expressions. Core70/70 and UI/quick/mobile96/96 pass; root affected merged checks pass (mobile-merged-tests.log). Full merged suite is also required by the Pages deployment workflow.
+
+Published0a0ca1c89e72fb070f0bf6a299e681a62f5fefdf with a normal atomic main/feature push. Pages workflow40459786951 passed the complete merged tests, built and deployed successfully. Public390x844 UI reports the new build with3 phrase cards (with great difficulty, might as well, make a decision) and1 verb (detect), no console errors or horizontal overflow. Screenshot03-live-focused-recommendations.jpg is in task outputs. Local actual phrase-mode practice used none of your business in a checked at-large sentence; the next lesson excluded that expression. No fictional answers or scores were written on the public site. Full usage collection remains incomplete; placeholder/fragment filters remain active.
