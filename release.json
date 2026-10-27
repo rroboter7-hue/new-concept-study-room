@@ -1,6 +1,6 @@
 {
-  "build": "2026-10-27-book1-complete-readings",
-  "preparedAt": "2026-10-27T01:20:04.731Z",
+  "build": "2026-10-27-word-picker-2",
+  "preparedAt": "2026-10-27T01:58:49.087Z",
   "book2": {
     "book": 2,
     "total": 96,
@@ -106,8 +106,8 @@
     ],
     "notesOriginsExplicit": true
   },
-  "staticFiles": 2680,
-  "staticBytes": 929031569,
+  "staticFiles": 2686,
+  "staticBytes": 929104057,
   "nativeearsAdvancedAudio": {
     "books": {
       "3": 60,
@@ -275,7 +275,7 @@
     "palette": "cream-and-forest-green",
     "threePrimaryModes": true,
     "inlineOriginalAudioPlayer": true,
-    "guidedKnowledgeTimeline": true,
+    "guidedKnowledgeTimeline": false,
     "focusedBulkEditor": true,
     "manualDoubaoCopy": true,
     "responsiveBrowserWidths": [
@@ -290,5 +290,24 @@
     "dailyTasksMenu": true,
     "defaultPublic": true,
     "fourBookSelector": true
+  },
+  "sentenceWordPicker": {
+    "design": "selected-option-2",
+    "categories": [
+      "verb",
+      "adjective",
+      "phrase"
+    ],
+    "priorCourseRange": true,
+    "freeMultiSelect": true,
+    "deduplicatedExpressions": true,
+    "sharedSearch": true,
+    "pronunciation": true,
+    "legacyDraftMigration": true,
+    "persistentSelections": true,
+    "sourceLabelsHidden": true,
+    "nativeModal": true,
+    "grammarChecksRemainFinite": true,
+    "reviewedSourceCorrections": 7
   }
 }

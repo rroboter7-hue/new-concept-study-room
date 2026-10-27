@@ -61,3 +61,40 @@ Scope: the user's selected concepts 2, 4 and 5, followed by the explicit request
 - [x] Design comparison after density fixes and remote integration.
 - [x] Responsive browser interactions, console and full regression suite.
 - [ ] Verify published build and save public screenshot after deployment.
+
+
+## 2026-10-27 — selected sentence word-picker design
+
+- Source visual truth: `C:/Users/Admin/.codex/generated_images/01a176c9-71c3-7c81-bb64-3be9d41fbb0d/exec-903cced7-88a5-4897-8f88-f73fca16c813.png` (the second displayed mock, selected by the user).
+- Implementation: `http://127.0.0.1:4178/`, build `2026-10-27-word-picker-2`.
+- Screenshots: `outputs/sentence-picker-mobile.png` (390×844), `outputs/sentence-picker-320.png` (320×568), `outputs/sentence-picker-desktop.png` (1280×720), relative to the enclosing task directory.
+- Full comparison: `outputs/sentence-picker-comparison.png`; focused list comparison: `outputs/sentence-picker-comparison-list.png`. Both put source and actual capture in the same image and were opened for inspection.
+- Density normalization: source 853×1844 scaled to 390×844; implementation native CSS screenshot 390×844 at density 1. No device frame or browser chrome in comparisons.
+- State: Book 2 lesson 9, sentence writing, open verb picker, receive/friendly/make a decision selected. Real prior-course rows include Book 1 content; receive may be below the list scroll position.
+
+### Fidelity surfaces
+
+- Typography: existing Chinese sans and English serif retained; 14–16 px controls and 24 px title are readable at mobile CSS size. Footer chips use 14 px so three selected sample expressions fit one row at 390 px.
+- Spacing/layout: one bottom sheet, shared search, three tabs, flat scrollable rows and fixed confirmation area match the selected interaction. Sheet uses up to 86dvh with larger touch targets than the illustrative mock; this intentionally gives the actual app sufficient space for its longer verified meanings. Existing app navigation is retained behind the sheet.
+- Colors/tokens: forest green #23594f, muted sage selections, warm white surface, gray dividers and dim native backdrop follow the reference.
+- Assets: existing app icon callback supplies search, audio and close icons; native checkboxes/dialog are real controls, no rasterized UI or invented illustration.
+- Copy/content: main list and selected chips omit per-item lesson labels. Source provenance stays internal. Six dirty Book 1 definitions and the exact Book 2 used-to definition were corrected for this picker; pure placeholder meanings are excluded.
+
+### Comparison and repair history
+
+1. Initial normal-mobile comparison preserved the desired hierarchy and free selection flow. Desktop uses a compact centered 520 px dialog; mobile uses a bottom sheet.
+2. [P2, fixed] At 320×568, the confirmation button initially extended to y=592.22, below the viewport. Compact styles now apply below 640 px height. Post-fix screenshot `sentence-picker-320.png` shows the complete button; measured button bottom=558, viewport bottom=568, with a 211 px list. At 390×460 the button bottom=450 and list height=183.8. Very short mobile viewports omit secondary description/chips while preserving count, search, selectable rows and confirmation.
+3. [P2, fixed] Search-input Escape initially cleared the query without closing. An explicit modal key handler now closes on the first Escape and restores trigger focus; verified in browser with a nonempty query.
+4. Independent review found placeholder meanings and transform-mode first-chip bias. Exact source corrections/filtering and any-used-selection checks now pass regression cases, including a selected word identical to the target.
+
+### Browser and behavior verification
+
+- Page identity, meaningful content, no error overlay, no relevant error/warn console entries.
+- Open/close/confirm, native `:modal` true, English/Chinese search and empty-result message, cross-category multi-selection, pronunciation button activation, clear without losing the written sentence.
+- Arrow-key category switching and Escape focus return.
+- Refresh restores three selections, fifth-sentence step and the exact draft `Our friendly neighbours gave us a warm welcome.`
+- 320/390 px widths have no horizontal overflow; desktop centered dialog also captured.
+- Full node suite after final code changes: 551 tests, 551 passed, 0 failed. Includes local HTTP/range tests run in the authorized local environment.
+- Physical phone keyboard and sound output on a physical phone were not tested; the shortened viewport and audio callback/activation were tested.
+
+No remaining actionable P0/P1/P2 findings. Final result: passed.
