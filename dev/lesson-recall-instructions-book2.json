@@ -1,0 +1,1831 @@
+{
+  "version": 1,
+  "book": 2,
+  "language": "zh-CN",
+  "lessons": [
+    {
+      "lessonId": "nce-b2-eef57c-l001",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Past continuous): In the theatre last week, they ___ talking loudly.",
+          "sourceGrammarPoint": "Past continuous",
+          "instructionZh": "选择正确的形式填空：In the theatre last week, they ___ talking loudly.",
+          "grammarPointZh": "过去进行时"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Change to a negative sentence in the past simple: I enjoyed the play. Answer in English.",
+          "sourceGrammarPoint": "Past simple negatives",
+          "instructionZh": "把下面的句子改为一般过去时的否定句：I enjoyed the play.",
+          "grammarPointZh": "一般过去时：否定句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l002",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Present simple habits): For a regular habit: I never ___ up early on Sundays.",
+          "sourceGrammarPoint": "Present simple habits",
+          "instructionZh": "根据经常性的习惯，选择正确的动词形式填空：I never ___ up early on Sundays.",
+          "grammarPointZh": "一般现在时：习惯动作"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Change to a yes/no question in the present continuous, keeping the subject I: I am having breakfast. Answer in English.",
+          "sourceGrammarPoint": "Present continuous questions",
+          "instructionZh": "把下面的句子改为现在进行时的一般疑问句，主语仍用 I：I am having breakfast.",
+          "grammarPointZh": "现在进行时：一般疑问句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l003",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Past simple after did not): Last summer, I did not ___ a word.",
+          "sourceGrammarPoint": "Past simple after did not",
+          "instructionZh": "选择正确的形式填空：Last summer, I did not ___ a word.",
+          "grammarPointZh": "一般过去时：did not 后的动词形式"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Change to a yes/no question in the past simple, keeping the subject I: I bought thirty-seven cards. Answer in English.",
+          "sourceGrammarPoint": "Past simple questions",
+          "instructionZh": "把下面的句子改为一般过去时的一般疑问句，主语仍用 I：I bought thirty-seven cards.",
+          "grammarPointZh": "一般过去时：一般疑问句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l004",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Present perfect with for): He has been there ___ six months.",
+          "sourceGrammarPoint": "Present perfect with for",
+          "instructionZh": "选择正确的形式填空：He has been there ___ six months.",
+          "grammarPointZh": "现在完成时：持续时间的介词"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Change to a yes/no question in the present perfect, keeping the subject I: I have just received a letter. Answer in English.",
+          "sourceGrammarPoint": "Present perfect questions",
+          "instructionZh": "把下面的句子改为现在完成时的一般疑问句，主语仍用 I：I have just received a letter.",
+          "grammarPointZh": "现在完成时：一般疑问句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l005",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Present perfect): Up to now, Mr. Scott ___ a great many requests.",
+          "sourceGrammarPoint": "Present perfect",
+          "instructionZh": "选择正确的形式填空：Up to now, Mr. Scott ___ a great many requests.",
+          "grammarPointZh": "现在完成时"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Change to a negative sentence in the past simple: A pigeon carried the first message. Answer in English.",
+          "sourceGrammarPoint": "Past simple negatives",
+          "instructionZh": "把下面的句子改为一般过去时的否定句：A pigeon carried the first message.",
+          "grammarPointZh": "一般过去时：否定句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l006",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Third-person singular): For a fact in the present: Everybody ___ him.",
+          "sourceGrammarPoint": "Third-person singular",
+          "instructionZh": "描述现在的事实，选择正确的动词形式填空：Everybody ___ him.",
+          "grammarPointZh": "一般现在时：第三人称单数"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Change to a yes/no question in the present simple: He calls at every house once a month. Answer in English.",
+          "sourceGrammarPoint": "Present simple questions",
+          "instructionZh": "把下面的句子改为一般现在时的一般疑问句：He calls at every house once a month.",
+          "grammarPointZh": "一般现在时：一般疑问句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l007",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Past continuous): Describe the ongoing background action: Detectives ___ at the airport all morning when the plane arrived.",
+          "sourceGrammarPoint": "Past continuous",
+          "instructionZh": "用过去进行时描述当时正在发生的背景动作，选择正确形式填空：Detectives ___ at the airport all morning when the plane arrived.",
+          "grammarPointZh": "过去进行时"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Keep Someone as the subject and make the verb phrase negative in the past perfect: Someone had told the police. Answer in English.",
+          "sourceGrammarPoint": "Past perfect negatives",
+          "instructionZh": "主语保留 Someone，把动词部分改为过去完成时的否定形式：Someone had told the police.",
+          "grammarPointZh": "过去完成时：否定句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l008",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Comparative adverbs): Bill works ___ than Joe.",
+          "sourceGrammarPoint": "Comparative adverbs",
+          "instructionZh": "选择正确的形式填空：Bill works ___ than Joe.",
+          "grammarPointZh": "副词比较级"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Complete the sentence with the superlative of beautiful. Write exactly 3 words: Joe has ___ garden in our town. Answer in English.",
+          "sourceGrammarPoint": "Superlative adjectives",
+          "instructionZh": "用 beautiful 的最高级补全句子，空格中恰好填写 3 个英文单词：Joe has ___ garden in our town.",
+          "grammarPointZh": "形容词最高级"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l009",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Past simple negatives): The big minute hand did not ___ .",
+          "sourceGrammarPoint": "Past simple negatives",
+          "instructionZh": "选择正确的形式填空：The big minute hand did not ___ .",
+          "grammarPointZh": "一般过去时：否定句"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Change to a yes/no question, keeping the past tense: It was the last day of the year. Answer in English.",
+          "sourceGrammarPoint": "Past simple be questions",
+          "instructionZh": "把下面的句子改为一般疑问句，保持一般过去时：It was the last day of the year.",
+          "grammarPointZh": "be 动词的一般过去时：一般疑问句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l010",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Past simple passive): The instrument ___ in Germany in 1681.",
+          "sourceGrammarPoint": "Past simple passive",
+          "instructionZh": "选择正确的形式填空：The instrument ___ in Germany in 1681.",
+          "grammarPointZh": "一般过去时的被动语态"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Rewrite in the present continuous passive. Begin with The instrument and keep the agent: A friend is repairing the instrument. Answer in English.",
+          "sourceGrammarPoint": "Present continuous passive",
+          "instructionZh": "把下面的句子改为现在进行时的被动语态，以 The instrument 开头，并保留动作的执行者：A friend is repairing the instrument.",
+          "grammarPointZh": "现在进行时的被动语态"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l011",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Past continuous with when): I ___ dinner when Tony came in.",
+          "sourceGrammarPoint": "Past continuous with when",
+          "instructionZh": "选择正确的形式填空：I ___ dinner when Tony came in.",
+          "grammarPointZh": "过去进行时与 when 从句"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Correct the verb form and rewrite the whole sentence: You can to pay for my dinner. Answer in English.",
+          "sourceGrammarPoint": "Modal verbs followed by base form",
+          "instructionZh": "改正动词形式，并写出完整的正确句子：You can to pay for my dinner.",
+          "grammarPointZh": "情态动词后的动词形式"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l012",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Future simple): He will ___ away for two months.",
+          "sourceGrammarPoint": "Future simple",
+          "instructionZh": "选择正确的形式填空：He will ___ away for two months.",
+          "grammarPointZh": "一般将来时"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Change to a yes/no question in the future simple: He will take part in an important race. Answer in English.",
+          "sourceGrammarPoint": "Future simple questions",
+          "instructionZh": "把下面的句子改为一般将来时的一般疑问句：He will take part in an important race.",
+          "grammarPointZh": "一般将来时：一般疑问句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l013",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Future continuous): Use the future continuous: They will ___ here tomorrow.",
+          "sourceGrammarPoint": "Future continuous",
+          "instructionZh": "使用将来进行时，选择正确形式填空：They will ___ here tomorrow.",
+          "grammarPointZh": "将来进行时"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Change to a yes/no question in the future continuous: They will be singing tomorrow evening. Answer in English.",
+          "sourceGrammarPoint": "Future continuous questions",
+          "instructionZh": "把下面的句子改为将来进行时的一般疑问句：They will be singing tomorrow evening.",
+          "grammarPointZh": "将来进行时：一般疑问句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l014",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Past perfect): Use the past perfect for the earlier action: After I ___ the village, I drove to the next town.",
+          "sourceGrammarPoint": "Past perfect",
+          "instructionZh": "使用过去完成时表示先发生的动作，选择正确形式填空：After I ___ the village, I drove to the next town.",
+          "grammarPointZh": "过去完成时"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Change to a yes/no question in the past perfect, keeping the subject I: I had nearly reached the town. Answer in English.",
+          "sourceGrammarPoint": "Past perfect questions",
+          "instructionZh": "把下面的句子改为过去完成时的一般疑问句，主语仍用 I：I had nearly reached the town.",
+          "grammarPointZh": "过去完成时：一般疑问句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l015",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Reported future): In a report of a past conversation: The secretary told me that Mr. Harmsworth ___ me.",
+          "sourceGrammarPoint": "Reported future",
+          "instructionZh": "把过去的对话转述为间接引语，选择正确形式填空：The secretary told me that Mr. Harmsworth ___ me.",
+          "grammarPointZh": "间接引语：过去将来时"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Report the command. Begin with He told me: He said to me, \"Do not interrupt.\" Answer in English.",
+          "sourceGrammarPoint": "Reported commands",
+          "instructionZh": "把下面的命令改为间接引语，以 He told me 开头：He said to me, \"Do not interrupt.\"",
+          "grammarPointZh": "间接引语：转述命令"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l016",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (First conditional): For a real future possibility: If you ___ in the wrong place, a policeman will find your car.",
+          "sourceGrammarPoint": "First conditional",
+          "instructionZh": "表示真实的将来可能，选择正确形式补全第一条件句：If you ___ in the wrong place, a policeman will find your car.",
+          "grammarPointZh": "第一条件句：真实的将来可能"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Put the words in order. Begin with If: you pay attention / you will enjoy your stay / if Answer in English.",
+          "sourceGrammarPoint": "First conditional word order",
+          "instructionZh": "把词组排成正确的句子，以 If 开头：you pay attention / you will enjoy your stay / if",
+          "grammarPointZh": "第一条件句的语序"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l017",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Past obligation): Last year, she ___ wear short socks.",
+          "sourceGrammarPoint": "Past obligation",
+          "instructionZh": "选择正确的形式填空：Last year, she ___ wear short socks.",
+          "grammarPointZh": "过去必须做的事"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Change to a yes/no question: Jennifer will have to take part in a new play soon. Answer in English.",
+          "sourceGrammarPoint": "Future obligation questions",
+          "instructionZh": "把下面的句子改为一般疑问句：Jennifer will have to take part in a new play soon.",
+          "grammarPointZh": "将来需要做某事：一般疑问句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l018",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Past perfect): Use the past perfect for the earlier action: I ___ my bag on a chair before I looked for it.",
+          "sourceGrammarPoint": "Past perfect",
+          "instructionZh": "使用过去完成时表示先发生的动作，选择正确形式填空：I ___ my bag on a chair before I looked for it.",
+          "grammarPointZh": "过去完成时"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Change to an affirmative sentence: I cannot pay the bill. Answer in English.",
+          "sourceGrammarPoint": "Modal negatives",
+          "instructionZh": "把下面的否定句改为肯定句：I cannot pay the bill.",
+          "grammarPointZh": "情态动词的否定形式"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l019",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Modal perfect): Use may to express a possible earlier action: The play may ___ already.",
+          "sourceGrammarPoint": "Modal perfect",
+          "instructionZh": "用 may 表示过去可能已经发生的动作，选择正确形式填空：The play may ___ already.",
+          "grammarPointZh": "情态动词与完成形式"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Put the words in order to make a polite request. Begin with Could: I / have / those two tickets / could / please Answer in English.",
+          "sourceGrammarPoint": "Polite requests with could",
+          "instructionZh": "把词组排成礼貌请求的问句，以 Could 开头：I / have / those two tickets / could / please",
+          "grammarPointZh": "could：礼貌请求"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l020",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Gerunds after prepositions): I often fish for hours without ___ anything.",
+          "sourceGrammarPoint": "Gerunds after prepositions",
+          "instructionZh": "选择正确的形式填空：I often fish for hours without ___ anything.",
+          "grammarPointZh": "介词后的动名词"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Correct the verb form and rewrite the whole sentence: You must give up to fish. Answer in English.",
+          "sourceGrammarPoint": "Gerunds after give up",
+          "instructionZh": "改正动词形式，并写出完整的正确句子：You must give up to fish.",
+          "grammarPointZh": "give up 后的动名词"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l021",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Modal passive): Passing planes can ___ night and day.",
+          "sourceGrammarPoint": "Modal passive",
+          "instructionZh": "选择正确的形式填空：Passing planes can ___ night and day.",
+          "grammarPointZh": "情态动词的被动语态"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Rewrite in the present perfect passive. Begin with I and omit the agent: Someone has offered me a large sum of money. Answer in English.",
+          "sourceGrammarPoint": "Present perfect passive",
+          "instructionZh": "把下面的句子改为现在完成时的被动语态，以 I 开头，省略动作的执行者：Someone has offered me a large sum of money.",
+          "grammarPointZh": "现在完成时的被动语态"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l022",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Gerunds after prepositions): Jane never dreamed of ___ a letter.",
+          "sourceGrammarPoint": "Gerunds after prepositions",
+          "instructionZh": "选择正确的形式填空：Jane never dreamed of ___ a letter.",
+          "grammarPointZh": "介词后的动名词"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Correct the comparative form and rewrite the whole sentence: Letters will travel more faster. Answer in English.",
+          "sourceGrammarPoint": "Future comparative adverbs",
+          "instructionZh": "改正比较级的形式，并写出完整的正确句子：Letters will travel more faster.",
+          "grammarPointZh": "将来时中的副词比较级"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l023",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Reported future): In a report of a past statement: She said that she ___ to England the following year.",
+          "sourceGrammarPoint": "Reported future",
+          "instructionZh": "把过去的话语转述为间接引语，选择正确形式填空：She said that she ___ to England the following year.",
+          "grammarPointZh": "间接引语：过去将来时"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Rewrite in the past simple passive. Begin with The house and omit the agent: The builders completed the house five months ago. Answer in English.",
+          "sourceGrammarPoint": "Past simple passive",
+          "instructionZh": "把下面的句子改为一般过去时的被动语态，以 The house 开头，省略动作的执行者：The builders completed the house five months ago.",
+          "grammarPointZh": "一般过去时的被动语态"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l024",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Past perfect): Use the past perfect for the earlier loss: I ___ fifty pounds before I entered the office.",
+          "sourceGrammarPoint": "Past perfect",
+          "instructionZh": "使用过去完成时表示进入办公室之前已经丢钱，选择正确形式填空：I ___ fifty pounds before I entered the office.",
+          "grammarPointZh": "过去完成时"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Correct the verb form and rewrite the whole sentence: He could did nothing. Answer in English.",
+          "sourceGrammarPoint": "Could followed by a base form",
+          "instructionZh": "改正动词形式，并写出完整的正确句子：He could did nothing.",
+          "grammarPointZh": "could 后的动词形式"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l025",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Parallel correlative conjunctions): He spoke neither slowly ___ clearly.",
+          "sourceGrammarPoint": "Parallel correlative conjunctions",
+          "instructionZh": "选择正确的形式填空：He spoke neither slowly ___ clearly.",
+          "grammarPointZh": "并列关联词的搭配"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Change to a yes/no question in the present simple: Each person speaks a different language. Answer in English.",
+          "sourceGrammarPoint": "Present simple questions",
+          "instructionZh": "把下面的句子改为一般现在时的一般疑问句：Each person speaks a different language.",
+          "grammarPointZh": "一般现在时：一般疑问句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l026",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Embedded questions): She tells me whether my pictures ___ good or not.",
+          "sourceGrammarPoint": "Embedded questions",
+          "instructionZh": "选择正确的形式填空：She tells me whether my pictures ___ good or not.",
+          "grammarPointZh": "间接疑问句"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Change to a yes/no question in the present continuous, keeping the subject I: I am hanging this picture on the wall. Answer in English.",
+          "sourceGrammarPoint": "Present continuous questions",
+          "instructionZh": "把下面的句子改为现在进行时的一般疑问句，主语仍用 I：I am hanging this picture on the wall.",
+          "grammarPointZh": "现在进行时：一般疑问句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l027",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form. Use smell as a linking verb: The food smelled ___ .",
+          "sourceGrammarPoint": "Linking verbs with adjectives",
+          "instructionZh": "这里的 smell 用作系动词，选择正确形式填空：The food smelled ___ .",
+          "grammarPointZh": "系动词与形容词"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Change to a negative sentence in the past continuous: It was raining heavily. Answer in English.",
+          "sourceGrammarPoint": "Past continuous negatives",
+          "instructionZh": "把下面的句子改为过去进行时的否定句：It was raining heavily.",
+          "grammarPointZh": "过去进行时：否定句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l028",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Superlatives with the present perfect): It is one of ___ faces I have ever seen.",
+          "sourceGrammarPoint": "Superlatives with the present perfect",
+          "instructionZh": "选择正确的形式填空：It is one of ___ faces I have ever seen.",
+          "grammarPointZh": "最高级与现在完成时"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Change to a negative sentence in the present perfect passive: It has been turned to stone. Answer in English.",
+          "sourceGrammarPoint": "Present perfect passive negatives",
+          "instructionZh": "把下面的句子改为现在完成时被动语态的否定句：It has been turned to stone.",
+          "grammarPointZh": "现在完成时的被动语态：否定句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l029",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Defining relative clauses): Choose the relative pronoun for a person: His first passenger was a doctor ___ flew from Birmingham.",
+          "sourceGrammarPoint": "Defining relative clauses",
+          "instructionZh": "选择指代人的关系代词填空：His first passenger was a doctor ___ flew from Birmingham.",
+          "grammarPointZh": "限制性定语从句"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Change to a yes/no question: This plane can carry seven passengers. Answer in English.",
+          "sourceGrammarPoint": "Modal questions",
+          "instructionZh": "把下面的句子改为一般疑问句：This plane can carry seven passengers.",
+          "grammarPointZh": "情态动词：一般疑问句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l030",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Use there were + people + an -ing participle to describe people actively rowing: There were some people ___ on the river.",
+          "sourceGrammarPoint": "Participles after there be",
+          "instructionZh": "使用 there were + people + 现在分词（-ing 形式），描述人们正在划船；选择正确形式填空：There were some people ___ on the river.",
+          "grammarPointZh": "there be 句型中的分词"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Join the sentences with so ... that. Keep the word hard: The ball struck him hard. He nearly fell into the water. Answer in English.",
+          "sourceGrammarPoint": "So that result clauses",
+          "instructionZh": "用 so ... that 合并两个句子，保留单词 hard：The ball struck him hard. He nearly fell into the water.",
+          "grammarPointZh": "so ... that：如此……以至于……"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l031",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Used to for past habits): For a past habit: He used to ___ fourteen hours a day.",
+          "sourceGrammarPoint": "Used to for past habits",
+          "instructionZh": "描述过去的习惯，选择正确形式填空：He used to ___ fourteen hours a day.",
+          "grammarPointZh": "used to：过去的习惯"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Change to a yes/no question using Did ... use to: Frank used to make spare parts. Answer in English.",
+          "sourceGrammarPoint": "Used to questions",
+          "instructionZh": "把下面的句子改为一般疑问句，使用 Did ... use to 结构：Frank used to make spare parts.",
+          "grammarPointZh": "used to：一般疑问句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l032",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Fewer with countable nouns): There were ___ people in the shop than usual.",
+          "sourceGrammarPoint": "Fewer with countable nouns",
+          "instructionZh": "选择正确的形式填空：There were ___ people in the shop than usual.",
+          "grammarPointZh": "可数名词的比较表达"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Correct the verb form and rewrite the whole sentence: She walked out without to pay. Answer in English.",
+          "sourceGrammarPoint": "Gerunds after without",
+          "instructionZh": "改正动词形式，并写出完整的正确句子：She walked out without to pay.",
+          "grammarPointZh": "without 后的动名词"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l033",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Past simple passive): The girl ___ in a storm that afternoon.",
+          "sourceGrammarPoint": "Past simple passive",
+          "instructionZh": "选择正确的形式填空：The girl ___ in a storm that afternoon.",
+          "grammarPointZh": "一般过去时的被动语态"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Correct the verb form and rewrite the whole sentence: On arrive at the shore, the girl struggled up the cliff. Answer in English.",
+          "sourceGrammarPoint": "Gerunds after on",
+          "instructionZh": "改正动词形式，并写出完整的正确句子：On arrive at the shore, the girl struggled up the cliff.",
+          "grammarPointZh": "介词 on 后的动名词"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l034",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Present continuous passive): Use the present continuous passive: The bicycle is now ___ to his home.",
+          "sourceGrammarPoint": "Present continuous passive",
+          "instructionZh": "使用现在进行时的被动语态，选择正确形式填空：The bicycle is now ___ to his home.",
+          "grammarPointZh": "现在进行时的被动语态"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Change to a yes/no question in the past simple passive: The bicycle was stolen twenty years ago. Answer in English.",
+          "sourceGrammarPoint": "Past simple passive questions",
+          "instructionZh": "把下面的句子改为一般过去时被动语态的一般疑问句：The bicycle was stolen twenty years ago.",
+          "grammarPointZh": "一般过去时的被动语态：一般疑问句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l035",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Such a with singular nouns): He got ___ fright that he dropped the bag.",
+          "sourceGrammarPoint": "Such a with singular nouns",
+          "instructionZh": "选择正确的形式填空：He got ___ fright that he dropped the bag.",
+          "grammarPointZh": "程度表达与单数名词"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Make a negative sentence using did not use to: Roy used to drive a taxi. Answer in English.",
+          "sourceGrammarPoint": "Used to negatives",
+          "instructionZh": "把下面的句子改为否定句，使用 did not use to 结构：Roy used to drive a taxi.",
+          "grammarPointZh": "used to：否定句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l036",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Future continuous): Use the future continuous: Tomorrow he will ___ her anxiously.",
+          "sourceGrammarPoint": "Future continuous",
+          "instructionZh": "使用将来进行时，选择正确形式填空：Tomorrow he will ___ her anxiously.",
+          "grammarPointZh": "将来进行时"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Change to a yes/no question: Debbie is going to swim across the Channel tomorrow. Answer in English.",
+          "sourceGrammarPoint": "Be going to questions",
+          "instructionZh": "把下面的句子改为一般疑问句：Debbie is going to swim across the Channel tomorrow.",
+          "grammarPointZh": "be going to：一般疑问句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l037",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Future perfect): Use the future perfect: Workers will ___ the roads by the end of this year.",
+          "sourceGrammarPoint": "Future perfect",
+          "instructionZh": "使用将来完成时，选择正确形式填空：Workers will ___ the roads by the end of this year.",
+          "grammarPointZh": "将来完成时"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Rewrite in the future simple passive. Begin with The Games and omit the agent: They will hold the Games outside the capital. Answer in English.",
+          "sourceGrammarPoint": "Future simple passive",
+          "instructionZh": "把下面的句子改为一般将来时的被动语态，以 The Games 开头，省略动作的执行者：They will hold the Games outside the capital.",
+          "grammarPointZh": "一般将来时的被动语态"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l038",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (No sooner than): He had no sooner returned ___ he bought a house.",
+          "sourceGrammarPoint": "No sooner than",
+          "instructionZh": "选择正确的形式填空：He had no sooner returned ___ he bought a house.",
+          "grammarPointZh": "表示紧接发生的时间结构"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Change to a yes/no question in the past perfect: Harrison had thought of everything except the weather. Answer in English.",
+          "sourceGrammarPoint": "Past perfect questions",
+          "instructionZh": "把下面的句子改为过去完成时的一般疑问句：Harrison had thought of everything except the weather.",
+          "grammarPointZh": "过去完成时：一般疑问句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l039",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Reported question word order): He asked if the operation ___ successful.",
+          "sourceGrammarPoint": "Reported question word order",
+          "instructionZh": "选择正确的形式填空：He asked if the operation ___ successful.",
+          "grammarPointZh": "间接引语中的疑问句语序"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Report the question in the past. Begin with He asked: He asked, \"When will Mr. Gilbert be allowed to go home?\" Answer in English.",
+          "sourceGrammarPoint": "Reported questions with will",
+          "instructionZh": "把下面的问句改为过去时态的间接引语，以 He asked 开头：He asked, \"When will Mr. Gilbert be allowed to go home?\"",
+          "grammarPointZh": "间接引语中的疑问句：will 的时态变化"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l040",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Second conditional): For an unreal present situation: If you ___ more and talked less, we would both enjoy dinner.",
+          "sourceGrammarPoint": "Second conditional",
+          "instructionZh": "表示与现在事实不符的假设，选择正确形式补全第二条件句：If you ___ more and talked less, we would both enjoy dinner.",
+          "grammarPointZh": "第二条件句：与现在事实不符的假设"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Change to a yes/no question in the future continuous: You will be staying in England. Answer in English.",
+          "sourceGrammarPoint": "Future continuous questions",
+          "instructionZh": "把下面的句子改为将来进行时的一般疑问句：You will be staying in England.",
+          "grammarPointZh": "将来进行时：一般疑问句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l041",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Need not have done): Use need not to say that a completed action was unnecessary: You need not ___ that.",
+          "sourceGrammarPoint": "Need not have done",
+          "instructionZh": "用 need not 表示过去已经做了、但本来没有必要做的事，选择正确形式填空：You need not ___ that.",
+          "grammarPointZh": "need not have done：本已做但无必要"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Correct the verb form and rewrite the whole sentence: You need not to be so rude. Answer in English.",
+          "sourceGrammarPoint": "Need not followed by a base form",
+          "instructionZh": "改正动词形式，并写出完整的正确句子：You need not to be so rude.",
+          "grammarPointZh": "need not 后的动词形式"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l042",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Past perfect of have): Use the past perfect: As we ___ a long walk, we stopped to rest.",
+          "sourceGrammarPoint": "Past perfect of have",
+          "instructionZh": "使用过去完成时，选择正确形式填空：As we ___ a long walk, we stopped to rest.",
+          "grammarPointZh": "have 的过去完成时"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Join the sentences with which. Begin with He picked up: He picked up a long pipe. The pipe was covered with coins. Answer in English.",
+          "sourceGrammarPoint": "Defining relative clauses",
+          "instructionZh": "用 which 引导的定语从句合并两个句子，以 He picked up 开头：He picked up a long pipe. The pipe was covered with coins.",
+          "grammarPointZh": "限制性定语从句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l043",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Be able to): The plane was then able ___ .",
+          "sourceGrammarPoint": "Be able to",
+          "instructionZh": "选择正确的形式填空：The plane was then able ___ .",
+          "grammarPointZh": "be able to：能够做某事"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Report this order using ordered. Begin with Byrd ordered: Byrd said to his men, \"Throw out two heavy food sacks.\" Answer in English.",
+          "sourceGrammarPoint": "Reported orders",
+          "instructionZh": "用 ordered 转述下面的命令，以 Byrd ordered 开头：Byrd said to his men, \"Throw out two heavy food sacks.\"",
+          "grammarPointZh": "间接引语：转述命令"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l044",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Need followed by a gerund): The strap needs ___ .",
+          "sourceGrammarPoint": "Need followed by a gerund",
+          "instructionZh": "选择正确的形式填空：The strap needs ___ .",
+          "grammarPointZh": "need 后的动名词"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Join the sentences using such ... that: The men got a fright. They dropped the bag. Answer in English.",
+          "sourceGrammarPoint": "Such that result clauses",
+          "instructionZh": "用 such ... that 合并两个句子：The men got a fright. They dropped the bag.",
+          "grammarPointZh": "such ... that：如此……以至于……"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l045",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Perfect modal passive): Express a deduction about the past: The wallet must ___ by a villager.",
+          "sourceGrammarPoint": "Perfect modal passive",
+          "instructionZh": "表示对过去情况的推测，选择正确形式填空：The wallet must ___ by a villager.",
+          "grammarPointZh": "情态动词与完成式被动语态"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Rewrite in the past perfect passive. Begin with The wallet and omit the agent: Someone had wrapped up the wallet in newspaper. Answer in English.",
+          "sourceGrammarPoint": "Past perfect passive",
+          "instructionZh": "把下面的句子改为过去完成时的被动语态，以 The wallet 开头，省略动作的执行者：Someone had wrapped up the wallet in newspaper.",
+          "grammarPointZh": "过去完成时的被动语态"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l046",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Admit followed by a gerund): The man admitted ___ in the box.",
+          "sourceGrammarPoint": "Admit followed by a gerund",
+          "instructionZh": "选择正确的形式填空：The man admitted ___ in the box.",
+          "grammarPointZh": "admit 后的动名词"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Correct the word order and rewrite the whole sentence: He was astonished at what did he find. Answer in English.",
+          "sourceGrammarPoint": "Embedded question word order",
+          "instructionZh": "改正语序，并写出完整的正确句子：He was astonished at what did he find.",
+          "grammarPointZh": "间接疑问句的语序"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l047",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Past perfect passive): Use the past perfect passive: The doors ___ by chairs before he found them.",
+          "sourceGrammarPoint": "Past perfect passive",
+          "instructionZh": "使用过去完成时的被动语态，选择正确形式填空：The doors ___ by chairs before he found them.",
+          "grammarPointZh": "过去完成时的被动语态"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Correct the verb in the even if clause and rewrite the whole sentence: They will not accept the pub even if he will give it away. Answer in English.",
+          "sourceGrammarPoint": "Even if clauses about the future",
+          "instructionZh": "改正 even if 从句中的动词形式，并写出完整的正确句子：They will not accept the pub even if he will give it away.",
+          "grammarPointZh": "even if 从句中的时态"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l048",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Reported question word order): He asked me how ___ .",
+          "sourceGrammarPoint": "Reported question word order",
+          "instructionZh": "选择正确的形式填空：He asked me how ___ .",
+          "grammarPointZh": "间接引语中的疑问句语序"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Correct the verb form and rewrite the whole sentence: He had pull out the wrong tooth. Answer in English.",
+          "sourceGrammarPoint": "Past perfect verb forms",
+          "instructionZh": "改正动词形式，并写出完整的正确句子：He had pull out the wrong tooth.",
+          "grammarPointZh": "过去完成时中的动词形式"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l049",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Object and present participle): A gust of wind sent the bed ___ into the courtyard.",
+          "sourceGrammarPoint": "Object and present participle",
+          "instructionZh": "选择正确的形式填空：A gust of wind sent the bed ___ into the courtyard.",
+          "grammarPointZh": "宾语与现在分词"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Change to a yes/no question in the past perfect: He had put the mattress on the floor. Answer in English.",
+          "sourceGrammarPoint": "Past perfect questions",
+          "instructionZh": "把下面的句子改为过去完成时的一般疑问句：He had put the mattress on the floor.",
+          "grammarPointZh": "过去完成时：一般疑问句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l050",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Embedded question word order): I do not know where ___ .",
+          "sourceGrammarPoint": "Embedded question word order",
+          "instructionZh": "选择正确的形式填空：I do not know where ___ .",
+          "grammarPointZh": "间接疑问句的语序"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Correct the structure using where + to-infinitive. Rewrite the whole sentence: I will tell you where get off. Answer in English.",
+          "sourceGrammarPoint": "Question word with infinitive",
+          "instructionZh": "用 where + to 不定式结构改正下面的句子，写出完整句子：I will tell you where get off.",
+          "grammarPointZh": "疑问词与不定式"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l051",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (So that result clauses): His diet was ___ strict that he had to reward himself.",
+          "sourceGrammarPoint": "So that result clauses",
+          "instructionZh": "选择正确的形式填空：His diet was ___ strict that he had to reward himself.",
+          "grammarPointZh": "程度与结果从句"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Report the question in the past. Begin with I asked him: I asked him, \"What are you doing?\" Answer in English.",
+          "sourceGrammarPoint": "Reported wh-questions",
+          "instructionZh": "把下面的问句改为过去时态的间接引语，以 I asked him 开头：I asked him, \"What are you doing?\"",
+          "grammarPointZh": "间接引语：转述特殊疑问句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l052",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Present perfect continuous): Use the present perfect continuous: I ___ hard all morning.",
+          "sourceGrammarPoint": "Present perfect continuous",
+          "instructionZh": "使用现在完成进行时，选择正确形式填空：I ___ hard all morning.",
+          "grammarPointZh": "现在完成进行时"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Complete the sentence with the superlative of pretty. Write exactly 2 words: This is ___ carpet I have ever seen. Answer in English.",
+          "sourceGrammarPoint": "Superlative adjectives",
+          "instructionZh": "用 pretty 的最高级补全句子，空格中恰好填写 2 个英文单词：This is ___ carpet I have ever seen.",
+          "grammarPointZh": "形容词最高级"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l053",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Present simple passive): Forest fires ___ by broken glass.",
+          "sourceGrammarPoint": "Present simple passive",
+          "instructionZh": "选择正确的形式填空：Forest fires ___ by broken glass.",
+          "grammarPointZh": "一般现在时的被动语态"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Change to a yes/no question: He was able to solve the mystery. Answer in English.",
+          "sourceGrammarPoint": "Past ability questions",
+          "instructionZh": "把下面的句子改为一般疑问句：He was able to solve the mystery.",
+          "grammarPointZh": "过去的能力：一般疑问句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l054",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Busy followed by a gerund): I was busy ___ butter and flour.",
+          "sourceGrammarPoint": "Busy followed by a gerund",
+          "instructionZh": "选择正确的形式填空：I was busy ___ butter and flour.",
+          "grammarPointZh": "be busy 后的动名词"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Put the words in order. Begin with It: me / took / ten minutes / it / to persuade her Answer in English.",
+          "sourceGrammarPoint": "It takes somebody time to do something",
+          "instructionZh": "把词组排成正确的句子，以 It 开头：me / took / ten minutes / it / to persuade her",
+          "grammarPointZh": "It takes sb. time to do：花时间做某事"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l055",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Present perfect passive): Use the present perfect passive: A new machine ___ .",
+          "sourceGrammarPoint": "Present perfect passive",
+          "instructionZh": "使用现在完成时的被动语态，选择正确形式填空：A new machine ___ .",
+          "grammarPointZh": "现在完成时的被动语态"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Combine the sentences. Begin with Armed with: A search party was armed with the new machine. It went into the cave. Answer in English.",
+          "sourceGrammarPoint": "Past participle clauses",
+          "instructionZh": "合并两个句子，使用分词短语，以 Armed with 开头：A search party was armed with the new machine. It went into the cave.",
+          "grammarPointZh": "过去分词短语"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l056",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Have trouble doing something): The driver had a lot of trouble ___ to stop it.",
+          "sourceGrammarPoint": "Have trouble doing something",
+          "instructionZh": "选择正确的形式填空：The driver had a lot of trouble ___ to stop it.",
+          "grammarPointZh": "have trouble doing：做某事有困难"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Rewrite using a past participle clause. Begin with Built in 1885: It was built in 1885, and it was the oldest car taking part. Answer in English.",
+          "sourceGrammarPoint": "Past participle clauses",
+          "instructionZh": "用过去分词短语改写下面的句子，以 Built in 1885 开头：It was built in 1885, and it was the oldest car taking part.",
+          "grammarPointZh": "过去分词短语"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l057",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Make somebody do something): She made the assistant ___ almost everything in the window.",
+          "sourceGrammarPoint": "Make somebody do something",
+          "instructionZh": "选择正确的形式填空：She made the assistant ___ almost everything in the window.",
+          "grammarPointZh": "make sb. do：使某人做某事"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Combine the sentences. Begin with Not realizing: The assistant did not realize who she was. He was eager to serve her. Answer in English.",
+          "sourceGrammarPoint": "Negative participle clauses",
+          "instructionZh": "合并两个句子，以 Not realizing 开头：The assistant did not realize who she was. He was eager to serve her.",
+          "grammarPointZh": "否定形式的分词短语"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l058",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Reporting passive with infinitive): The village is said ___ a cursed tree.",
+          "sourceGrammarPoint": "Reporting passive with infinitive",
+          "instructionZh": "选择正确的形式填空：The village is said ___ a cursed tree.",
+          "grammarPointZh": "转述中的被动语态与不定式"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Correct the verb form and rewrite the whole sentence: The vicar will have the tree cutting down. Answer in English.",
+          "sourceGrammarPoint": "Have something done",
+          "instructionZh": "改正动词形式，并写出完整的正确句子：The vicar will have the tree cutting down.",
+          "grammarPointZh": "have sth. done：请别人做某事"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l059",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Gerunds after prepositions): Rex became an expert at ___ the gate.",
+          "sourceGrammarPoint": "Gerunds after prepositions",
+          "instructionZh": "选择正确的形式填空：Rex became an expert at ___ the gate.",
+          "grammarPointZh": "介词后的动名词"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Use the present simple after until and rewrite the whole sentence: He will bark until someone will open the gate. Answer in English.",
+          "sourceGrammarPoint": "Until clauses about the future",
+          "instructionZh": "把 until 从句中的动词改为一般现在时，写出完整的正确句子：He will bark until someone will open the gate.",
+          "grammarPointZh": "表达将来的 until 从句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l060",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Time clauses about the future): The moment you ___ this tent, you will get a surprise.",
+          "sourceGrammarPoint": "Time clauses about the future",
+          "instructionZh": "选择正确的形式填空：The moment you ___ this tent, you will get a surprise.",
+          "grammarPointZh": "表达将来的时间状语从句"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Put the words in order. Begin with We: at the station / must / we / be / to meet her Answer in English.",
+          "sourceGrammarPoint": "Must followed by a base form",
+          "instructionZh": "把词组排成正确的句子，以 We 开头：at the station / must / we / be / to meet her",
+          "grammarPointZh": "must 后的动词形式"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l061",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Future perfect): Use the future perfect: By that time, the telescope will ___ us many pictures.",
+          "sourceGrammarPoint": "Future perfect",
+          "instructionZh": "使用将来完成时，选择正确形式填空：By that time, the telescope will ___ us many pictures.",
+          "grammarPointZh": "将来完成时"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Change to a yes/no question in the future continuous: The shuttle will be taking the astronauts to the Hubble. Answer in English.",
+          "sourceGrammarPoint": "Future continuous questions",
+          "instructionZh": "把下面的句子改为将来进行时的一般疑问句：The shuttle will be taking the astronauts to the Hubble.",
+          "grammarPointZh": "将来进行时：一般疑问句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l062",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Past perfect continuous): Use the past perfect continuous: Firemen ___ the fire for nearly three weeks before they controlled it.",
+          "sourceGrammarPoint": "Past perfect continuous",
+          "instructionZh": "使用过去完成进行时，选择正确形式填空：Firemen ___ the fire for nearly three weeks before they controlled it.",
+          "grammarPointZh": "过去完成进行时"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Rewrite in the past simple passive. Begin with The seed and keep the agent: Aeroplanes sprayed the seed over the ground. Answer in English.",
+          "sourceGrammarPoint": "Past simple passive",
+          "instructionZh": "把下面的句子改为一般过去时的被动语态，以 The seed 开头，并保留动作的执行者：Aeroplanes sprayed the seed over the ground.",
+          "grammarPointZh": "一般过去时的被动语态"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l063",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Reported questions with past perfect): In a past report of an earlier experience: He asked Jenny if she ___ the speech.",
+          "sourceGrammarPoint": "Reported questions with past perfect",
+          "instructionZh": "在过去的叙述中，转述更早的一次经历，选择正确形式填空：He asked Jenny if she ___ the speech.",
+          "grammarPointZh": "间接引语中的疑问句：过去完成时"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Correct the structure and rewrite the whole sentence: His friend asked him make a speech. Answer in English.",
+          "sourceGrammarPoint": "Ask somebody to do something",
+          "instructionZh": "改正句子结构，并写出完整的正确句子：His friend asked him make a speech.",
+          "grammarPointZh": "ask sb. to do：请求某人做某事"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l064",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Third conditional): For an unreal past situation: If they ___ invasion, the tunnel would have been completed.",
+          "sourceGrammarPoint": "Third conditional",
+          "instructionZh": "表示与过去事实不符的假设，选择正确形式补全第三条件句：If they ___ invasion, the tunnel would have been completed.",
+          "grammarPointZh": "第三条件句：与过去事实不符的假设"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Use the second conditional and rewrite the whole sentence: If a train entered this tunnel, it will draw in fresh air. Answer in English.",
+          "sourceGrammarPoint": "Second conditional",
+          "instructionZh": "使用第二条件句，改正下面的句子，并写出完整句子：If a train entered this tunnel, it will draw in fresh air.",
+          "grammarPointZh": "第二条件句：与现在事实不符的假设"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l065",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Should have done): He should ___ that the police would not allow it.",
+          "sourceGrammarPoint": "Should have done",
+          "instructionZh": "选择正确的形式填空：He should ___ that the police would not allow it.",
+          "grammarPointZh": "should have done：过去本应该做"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Correct the verb form and rewrite the whole sentence: He ought to have went along a side street. Answer in English.",
+          "sourceGrammarPoint": "Ought to have done",
+          "instructionZh": "改正动词形式，并写出完整的正确句子：He ought to have went along a side street.",
+          "grammarPointZh": "ought to have done：过去本应该做"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l066",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Have something done): The authorities had the plane ___ and moved back to France.",
+          "sourceGrammarPoint": "Have something done",
+          "instructionZh": "选择正确的形式填空：The authorities had the plane ___ and moved back to France.",
+          "grammarPointZh": "have sth. done：请别人做某事"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Rewrite using have ... restored. Begin with The group is going to: Experts are going to restore the plane for the group. Answer in English.",
+          "sourceGrammarPoint": "Have something done",
+          "instructionZh": "用 have ... restored 结构改写，以 The group is going to 开头：Experts are going to restore the plane for the group.",
+          "grammarPointZh": "have sth. done：请别人做某事"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l067",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Manage to do something): Tazieff managed ___ just in time.",
+          "sourceGrammarPoint": "Manage to do something",
+          "instructionZh": "选择正确的形式填空：Tazieff managed ___ just in time.",
+          "grammarPointZh": "manage to do：设法做成某事"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Change to a yes/no question in the present perfect: He has been able to tell us more about volcanoes. Answer in English.",
+          "sourceGrammarPoint": "Present perfect ability questions",
+          "instructionZh": "把下面的句子改为现在完成时的一般疑问句：He has been able to tell us more about volcanoes.",
+          "grammarPointZh": "现在完成时中的能力表达：一般疑问句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l068",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Avoid followed by a gerund): I crossed the street to avoid ___ him.",
+          "sourceGrammarPoint": "Avoid followed by a gerund",
+          "instructionZh": "选择正确的形式填空：I crossed the street to avoid ___ him.",
+          "grammarPointZh": "avoid 后的动名词"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Correct the verb form and rewrite the whole sentence: Would you mind my to come with you? Answer in English.",
+          "sourceGrammarPoint": "Mind followed by a gerund",
+          "instructionZh": "改正动词形式，并写出完整的正确句子：Would you mind my to come with you?",
+          "grammarPointZh": "mind 后的动名词"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l069",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Past continuous passive): Use the past continuous passive: I ___ for a driving licence.",
+          "sourceGrammarPoint": "Past continuous passive",
+          "instructionZh": "使用过去进行时的被动语态，选择正确形式填空：I ___ for a driving licence.",
+          "grammarPointZh": "过去进行时的被动语态"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Correct the verb form and rewrite the whole sentence: The examiner must have be pleased. Answer in English.",
+          "sourceGrammarPoint": "Must have been",
+          "instructionZh": "改正动词形式，并写出完整的正确句子：The examiner must have be pleased.",
+          "grammarPointZh": "must have been：对过去的推测"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l070",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Let somebody do something): He stepped aside to let the bull ___ .",
+          "sourceGrammarPoint": "Let somebody do something",
+          "instructionZh": "选择正确的形式填空：He stepped aside to let the bull ___ .",
+          "grammarPointZh": "let sb. do：让某人做某事"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Join the sentences with who. Begin with The drunk and keep was waving a red cap as the main predicate: The drunk was shouting rude remarks. He was waving a red cap. Answer in English.",
+          "sourceGrammarPoint": "Defining relative clauses",
+          "instructionZh": "用 who 引导的定语从句合并两个句子；以 The drunk 开头，主句保留 was waving a red cap：The drunk was shouting rude remarks. He was waving a red cap.",
+          "grammarPointZh": "限制性定语从句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l071",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Third conditional passive): For an unreal past result: The clock would never ___ .",
+          "sourceGrammarPoint": "Third conditional passive",
+          "instructionZh": "表示与过去事实不符的假设结果，选择正确形式填空：The clock would never ___ .",
+          "grammarPointZh": "第三条件句中的被动语态"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Rewrite using have ... checked. Begin with The officials: Someone checks the clock for the officials twice a day. Answer in English.",
+          "sourceGrammarPoint": "Have something done",
+          "instructionZh": "用 have ... checked 结构改写，以 The officials 开头：Someone checks the clock for the officials twice a day.",
+          "grammarPointZh": "have sth. done：请别人做某事"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l072",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Difficulty followed by a gerund): He had great difficulty in ___ the car.",
+          "sourceGrammarPoint": "Difficulty followed by a gerund",
+          "instructionZh": "选择正确的形式填空：He had great difficulty in ___ the car.",
+          "grammarPointZh": "difficulty 后的动名词"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Rewrite in the past perfect passive. Begin with A mistake and omit the agent: Someone had made a mistake. Answer in English.",
+          "sourceGrammarPoint": "Past perfect passive",
+          "instructionZh": "把下面的句子改为过去完成时的被动语态，以 A mistake 开头，省略动作的执行者：Someone had made a mistake.",
+          "grammarPointZh": "过去完成时的被动语态"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l073",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Defining relative clauses): Choose the relative pronoun for people: Children ___ play truant are unimaginative.",
+          "sourceGrammarPoint": "Defining relative clauses",
+          "instructionZh": "选择指代人的关系代词填空：Children ___ play truant are unimaginative.",
+          "grammarPointZh": "限制性定语从句"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Rewrite in the present perfect passive. Begin with They and keep the agent: The boy has put them to shame. Answer in English.",
+          "sourceGrammarPoint": "Present perfect passive",
+          "instructionZh": "把下面的句子改为现在完成时的被动语态，以 They 开头，并保留动作的执行者：The boy has put them to shame.",
+          "grammarPointZh": "现在完成时的被动语态"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l074",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Describe clothes already being worn. Use a past participle clause: ___ in dark glasses and old clothes, they tried to avoid recognition.",
+          "sourceGrammarPoint": "Past participle clauses",
+          "instructionZh": "描述当时已经穿戴着衣物的状态，使用过去分词短语，选择正确形式填空：___ in dark glasses and old clothes, they tried to avoid recognition.",
+          "grammarPointZh": "过去分词短语"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Correct the verb form and rewrite the whole sentence: Do not are too hard on us. Answer in English.",
+          "sourceGrammarPoint": "Negative imperatives",
+          "instructionZh": "改正动词形式，并写出完整的正确句子：Do not are too hard on us.",
+          "grammarPointZh": "否定祈使句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l075",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Use hear + object + an -ing participle to describe an ongoing sound: She heard planes ___ overhead.",
+          "sourceGrammarPoint": "Perception verbs with participles",
+          "instructionZh": "使用 hear + 宾语 + 现在分词（-ing 形式），描述当时持续听到的声音；选择正确形式填空：She heard planes ___ overhead.",
+          "grammarPointZh": "感官动词与分词"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Join the sentences using too ... for her to. Begin with The case: The case was very small. She could not get into it. Answer in English.",
+          "sourceGrammarPoint": "Too with infinitives",
+          "instructionZh": "用 too ... for her to 合并两个句子，以 The case 开头：The case was very small. She could not get into it.",
+          "grammarPointZh": "too ... to：太……而不能……"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l076",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Present perfect continuous): Use the present perfect continuous: She ___ her husband for thirty years now.",
+          "sourceGrammarPoint": "Present perfect continuous",
+          "instructionZh": "使用现在完成进行时，选择正确形式填空：She ___ her husband for thirty years now.",
+          "grammarPointZh": "现在完成进行时"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Change to a yes/no question in the present perfect passive: Macaroni has been grown in this area for years. Answer in English.",
+          "sourceGrammarPoint": "Present perfect passive questions",
+          "instructionZh": "把下面的句子改为现在完成时被动语态的一般疑问句：Macaroni has been grown in this area for years.",
+          "grammarPointZh": "现在完成时的被动语态：一般疑问句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l077",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Non-defining relative clauses): The operation, ___ lasted for over four hours, was difficult.",
+          "sourceGrammarPoint": "Non-defining relative clauses",
+          "instructionZh": "选择正确的形式填空：The operation, ___ lasted for over four hours, was difficult.",
+          "grammarPointZh": "非限制性定语从句"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Join with a non-defining which clause. Begin with The operation and keep proved to be very difficult in the main clause: The operation lasted for over four hours. It proved to be very difficult. Answer in English.",
+          "sourceGrammarPoint": "Non-defining relative clauses",
+          "instructionZh": "用 which 引导的非限制性定语从句合并两个句子；以 The operation 开头，主句保留 proved to be very difficult：The operation lasted for over four hours. It proved to be very difficult.",
+          "grammarPointZh": "非限制性定语从句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l078",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Keep on followed by a gerund): My friends kept on ___ me cigarettes.",
+          "sourceGrammarPoint": "Keep on followed by a gerund",
+          "instructionZh": "选择正确的形式填空：My friends kept on ___ me cigarettes.",
+          "grammarPointZh": "keep on 后的动名词"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Correct the verb form and rewrite the whole sentence: It is easy to give up to smoke. Answer in English.",
+          "sourceGrammarPoint": "Give up followed by a gerund",
+          "instructionZh": "改正动词形式，并写出完整的正确句子：It is easy to give up to smoke.",
+          "grammarPointZh": "give up 后的动名词"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l079",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Inversion after only): Only on one occasion ___ ever felt frightened.",
+          "sourceGrammarPoint": "Inversion after only",
+          "instructionZh": "选择正确的形式填空：Only on one occasion ___ ever felt frightened.",
+          "grammarPointZh": "only 位于句首时的倒装"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Correct the verb form and rewrite the whole sentence: I am used to travel by air. Answer in English.",
+          "sourceGrammarPoint": "Be used to followed by a gerund",
+          "instructionZh": "改正动词形式，并写出完整的正确句子：I am used to travel by air.",
+          "grammarPointZh": "be used to 后的动名词"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l080",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Past simple passive agreement): A great many goods ___ to the exhibition.",
+          "sourceGrammarPoint": "Past simple passive agreement",
+          "instructionZh": "选择正确的形式填空：A great many goods ___ to the exhibition.",
+          "grammarPointZh": "一般过去时的被动语态：主谓一致"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Change to a yes/no question in the past simple passive: The Crystal Palace was moved to South London. Answer in English.",
+          "sourceGrammarPoint": "Past simple passive questions",
+          "instructionZh": "把下面的句子改为一般过去时被动语态的一般疑问句：The Crystal Palace was moved to South London.",
+          "grammarPointZh": "一般过去时的被动语态：一般疑问句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l081",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Past perfect): Use the past perfect for the earlier event: They discovered that a prisoner ___ .",
+          "sourceGrammarPoint": "Past perfect",
+          "instructionZh": "使用过去完成时表示先发生的事，选择正确形式填空：They discovered that a prisoner ___ .",
+          "grammarPointZh": "过去完成时"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Change to a yes/no question: He could hear shouting in the camp. Answer in English.",
+          "sourceGrammarPoint": "Could questions",
+          "instructionZh": "把下面的句子改为一般疑问句：He could hear shouting in the camp.",
+          "grammarPointZh": "could：一般疑问句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l082",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Perfect infinitives): For a sighting before the claim: They claim ___ monsters.",
+          "sourceGrammarPoint": "Perfect infinitives",
+          "instructionZh": "表示“看见”发生在“声称”之前，选择正确形式填空：They claim ___ monsters.",
+          "grammarPointZh": "不定式的完成形式"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Change to a negative sentence in the present continuous passive: It is being examined by a scientist. Answer in English.",
+          "sourceGrammarPoint": "Present continuous passive negatives",
+          "instructionZh": "把下面的句子改为现在进行时被动语态的否定句：It is being examined by a scientist.",
+          "grammarPointZh": "现在进行时的被动语态：否定句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l083",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Present perfect with has): Use the present perfect: He ___ from political life.",
+          "sourceGrammarPoint": "Present perfect with has",
+          "instructionZh": "使用现在完成时，选择正确形式填空：He ___ from political life.",
+          "grammarPointZh": "现在完成时：单数主语"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Report the question in the past. Change here to there. Begin with Patrick asked the policeman if: Patrick asked the policeman, \"Does Mr. Lane live here?\" Answer in English.",
+          "sourceGrammarPoint": "Reported yes-no questions",
+          "instructionZh": "把下面的问句改为过去时态的间接引语，把 here 改为 there；以 Patrick asked the policeman if 开头：Patrick asked the policeman, \"Does Mr. Lane live here?\"",
+          "grammarPointZh": "间接引语：转述一般疑问句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l084",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Until clauses about the future): The strike will continue until an agreement ___ .",
+          "sourceGrammarPoint": "Until clauses about the future",
+          "instructionZh": "选择正确的形式填空：The strike will continue until an agreement ___ .",
+          "grammarPointZh": "表达将来的 until 从句"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Change to a yes/no question: They will have to pass a special test. Answer in English.",
+          "sourceGrammarPoint": "Future obligation questions",
+          "instructionZh": "把下面的句子改为一般疑问句：They will have to pass a special test.",
+          "grammarPointZh": "将来需要做某事：一般疑问句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l085",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Future perfect continuous): Use the future perfect continuous: By his retirement, Mr. Page will ___ for forty years.",
+          "sourceGrammarPoint": "Future perfect continuous",
+          "instructionZh": "使用将来完成进行时，选择正确形式填空：By his retirement, Mr. Page will ___ for forty years.",
+          "grammarPointZh": "将来完成进行时"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Join with who. Begin with Those pupils and keep will sign their names in the main clause: Those pupils have contributed towards the gift. They will sign their names. Answer in English.",
+          "sourceGrammarPoint": "Defining relative clauses",
+          "instructionZh": "用 who 引导的定语从句合并两个句子；以 Those pupils 开头，主句保留 will sign their names：Those pupils have contributed towards the gift. They will sign their names.",
+          "grammarPointZh": "限制性定语从句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l086",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Hardly when): They had hardly had time to react ___ they were thrown into the sea.",
+          "sourceGrammarPoint": "Hardly when",
+          "instructionZh": "选择正确的形式填空：They had hardly had time to react ___ they were thrown into the sea.",
+          "grammarPointZh": "表示紧接发生的时间结构"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Change to a yes/no question in the past perfect passive: The petrol had been used up. Answer in English.",
+          "sourceGrammarPoint": "Past perfect passive questions",
+          "instructionZh": "把下面的句子改为过去完成时被动语态的一般疑问句：The petrol had been used up.",
+          "grammarPointZh": "过去完成时的被动语态：一般疑问句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l087",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Hypothetical questions with would): ___ a later train get you to work on time?",
+          "sourceGrammarPoint": "Hypothetical questions with would",
+          "instructionZh": "选择正确的形式填空：___ a later train get you to work on time?",
+          "grammarPointZh": "would：假设情景中的问句"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Change to a yes/no question in the past continuous, keeping the subject I: I was travelling on the train to London. Answer in English.",
+          "sourceGrammarPoint": "Past continuous questions",
+          "instructionZh": "把下面的句子改为过去进行时的一般疑问句，主语仍用 I：I was travelling on the train to London.",
+          "grammarPointZh": "过去进行时：一般疑问句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l088",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Third conditional): For an unreal past situation: If there ___ a hard layer of rock, they would have completed the job.",
+          "sourceGrammarPoint": "Third conditional",
+          "instructionZh": "表示与过去事实不符的假设，选择正确形式补全第三条件句：If there ___ a hard layer of rock, they would have completed the job.",
+          "grammarPointZh": "第三条件句：与过去事实不符的假设"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Use the second conditional and rewrite the whole sentence: If they knew how difficult it was, they will lose heart. Answer in English.",
+          "sourceGrammarPoint": "Second conditional",
+          "instructionZh": "使用第二条件句，改正下面的句子，并写出完整句子：If they knew how difficult it was, they will lose heart.",
+          "grammarPointZh": "第二条件句：与现在事实不符的假设"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l089",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Need not have done): Use need not for an unnecessary feeling about the past: They need not ___ disappointed.",
+          "sourceGrammarPoint": "Need not have done",
+          "instructionZh": "用 need not 表示过去本来不必产生的感受，选择正确形式填空：They need not ___ disappointed.",
+          "grammarPointZh": "need not have done：本已做但无必要"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Correct the verb form and rewrite the whole sentence: He should have say something different. Answer in English.",
+          "sourceGrammarPoint": "Should have done",
+          "instructionZh": "改正动词形式，并写出完整的正确句子：He should have say something different.",
+          "grammarPointZh": "should have done：过去本应该做"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l090",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Have something done): They have had special cages ___ to protect them.",
+          "sourceGrammarPoint": "Have something done",
+          "instructionZh": "选择正确的形式填空：They have had special cages ___ to protect them.",
+          "grammarPointZh": "have sth. done：请别人做某事"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Change to a yes/no question in the present simple: Oil rigs have to be repaired frequently. Answer in English.",
+          "sourceGrammarPoint": "Have to in passive questions",
+          "instructionZh": "把下面的句子改为一般现在时的一般疑问句：Oil rigs have to be repaired frequently.",
+          "grammarPointZh": "have to 与被动语态：一般疑问句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l091",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Modal continuous): Someone might ___ on the station.",
+          "sourceGrammarPoint": "Modal continuous",
+          "instructionZh": "选择正确的形式填空：Someone might ___ on the station.",
+          "grammarPointZh": "情态动词与进行形式"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Join the sentences using saw ... taking. Begin with The pilot: One of the men was taking photographs. The pilot saw him. Answer in English.",
+          "sourceGrammarPoint": "Perception verbs with participles",
+          "instructionZh": "用 saw ... taking 合并两个句子，以 The pilot 开头：One of the men was taking photographs. The pilot saw him.",
+          "grammarPointZh": "感官动词与分词"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l092",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (So auxiliary subject): Complete the short agreement with I enjoy cleaning windows: So ___ .",
+          "sourceGrammarPoint": "So auxiliary subject",
+          "instructionZh": "用简短附和句表达“我也喜欢擦窗户”，回应 I enjoy cleaning windows；选择正确形式填空：So ___ .",
+          "grammarPointZh": "So + 助动词 + 主语：肯定附和"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Correct the verb form and rewrite the whole sentence: Would you mind to come with me to the station? Answer in English.",
+          "sourceGrammarPoint": "Mind followed by a gerund",
+          "instructionZh": "改正动词形式，并写出完整的正确句子：Would you mind to come with me to the station?",
+          "grammarPointZh": "mind 后的动名词"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l093",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Have to with passive infinitives): A pedestal had to ___ .",
+          "sourceGrammarPoint": "Have to with passive infinitives",
+          "instructionZh": "选择正确的形式填空：A pedestal had to ___ .",
+          "grammarPointZh": "have to 后的被动不定式"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Join with a non-defining which clause. Begin with The statue and keep took ten years to complete in the main clause: The statue was designed by Bartholdi. It took ten years to complete. Answer in English.",
+          "sourceGrammarPoint": "Non-defining relative clauses",
+          "instructionZh": "用 which 引导的非限制性定语从句合并两个句子；以 The statue 开头，主句保留 took ten years to complete：The statue was designed by Bartholdi. It took ten years to complete.",
+          "grammarPointZh": "非限制性定语从句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l094",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Accustomed to with a gerund): They are accustomed to ___ .",
+          "sourceGrammarPoint": "Accustomed to with a gerund",
+          "instructionZh": "选择正确的形式填空：They are accustomed to ___ .",
+          "grammarPointZh": "be accustomed to 后的动名词"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Rewrite in the passive. Begin with Children and omit the agent: People can instruct children in swimming at a very early age. Answer in English.",
+          "sourceGrammarPoint": "Modal passive",
+          "instructionZh": "把下面的句子改为被动语态，以 Children 开头，省略动作的执行者：People can instruct children in swimming at a very early age.",
+          "grammarPointZh": "情态动词的被动语态"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l095",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Third conditional with ability): For an unreal past result: I would not ___ to get home for lunch.",
+          "sourceGrammarPoint": "Third conditional with ability",
+          "instructionZh": "表示与过去事实不符的假设结果，选择正确形式填空：I would not ___ to get home for lunch.",
+          "grammarPointZh": "第三条件句中的能力表达"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Change to a negative sentence in the past continuous: I was wearing it at the time. Answer in English.",
+          "sourceGrammarPoint": "Past continuous negatives",
+          "instructionZh": "把下面的句子改为过去进行时的否定句：I was wearing it at the time.",
+          "grammarPointZh": "过去进行时：否定句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b2-eef57c-l096",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form (Reporting passive with infinitive): The dead are said ___ to their homes.",
+          "sourceGrammarPoint": "Reporting passive with infinitive",
+          "instructionZh": "选择正确的形式填空：The dead are said ___ to their homes.",
+          "grammarPointZh": "转述中的被动语态与不定式"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Change to a yes/no question in the past perfect passive: The lanterns had been hung in the streets. Answer in English.",
+          "sourceGrammarPoint": "Past perfect passive questions",
+          "instructionZh": "把下面的句子改为过去完成时被动语态的一般疑问句：The lanterns had been hung in the streets.",
+          "grammarPointZh": "过去完成时的被动语态：一般疑问句"
+        }
+      ]
+    }
+  ]
+}

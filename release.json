@@ -1,6 +1,6 @@
 {
   "build": "2026-10-27-mobile-writing10",
-  "preparedAt": "2026-10-27T05:59:33.538Z",
+  "preparedAt": "2026-10-27T06:02:53.781Z",
   "book2": {
     "book": 2,
     "total": 96,
@@ -231,8 +231,8 @@
     },
     "unsubmittedLegacyDictationDraftPersistence": true
   },
-  "staticFiles": 4222,
-  "staticBytes": 740046834,
+  "staticFiles": 4227,
+  "staticBytes": 740416422,
   "nativeearsAdvancedAudio": {
     "books": {
       "3": 60,
@@ -479,7 +479,7 @@
     "unmatchedParaphrases": "needs-check",
     "savedIndependently": true,
     "scope": "grammar",
-    "questionLanguage": "en",
+    "questionLanguage": "Chinese instructions with English exercise text",
     "answerLanguage": "en",
     "formats": [
       "gap-fill",
@@ -489,7 +489,11 @@
       "form-choice"
     ],
     "chineseSupport": "post-answer-rule-explanations",
-    "storyComprehensionRemoved": true
+    "storyComprehensionRemoved": true,
+    "instructionLanguage": "zh-CN",
+    "grammarLabelLanguage": "zh-CN",
+    "exerciseLanguage": "en",
+    "assessmentRevisionsPreserved": true
   },
   "performance": {
     "lazyTextLibrary": true,

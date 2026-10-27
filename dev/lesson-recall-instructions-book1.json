@@ -1,0 +1,1375 @@
+{
+  "version": 1,
+  "book": 1,
+  "language": "zh-CN",
+  "lessons": [
+    {
+      "lessonId": "nce-b1-4be758-l001",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Complete the question: \"___ this your handbag?\"",
+          "sourceGrammarPoint": "Be: yes/no questions",
+          "instructionZh": "选择合适的 be 动词，补全这个一般疑问句：\"___ this your handbag?\"",
+          "grammarPointZh": "be 动词：一般疑问句"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Change \"Yes, it is.\" to a negative short answer. Write the complete answer.",
+          "sourceGrammarPoint": "Be: negative short answers",
+          "instructionZh": "把 \"Yes, it is.\" 改为否定简短回答。请写出完整的英文回答。",
+          "grammarPointZh": "be 动词：否定简短回答"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l003",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Complete the negative sentence: \"This ___ not my umbrella.\"",
+          "sourceGrammarPoint": "Be: negative statements",
+          "instructionZh": "选择正确形式，补全否定句：\"This ___ not my umbrella.\"",
+          "grammarPointZh": "be 动词：否定句"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Make a yes/no question: \"This is your umbrella.\" Keep this as the subject.",
+          "sourceGrammarPoint": "Be: question word order",
+          "instructionZh": "把 \"This is your umbrella.\" 改为一般疑问句，仍用 this 作主语。请写完整英文句子。",
+          "grammarPointZh": "be 动词：疑问句语序"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l005",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Complete the sentence: \"Sophie is ___ new student.\"",
+          "sourceGrammarPoint": "Articles: a before a consonant sound",
+          "instructionZh": "选择合适的冠词，补全句子：\"Sophie is ___ new student.\"",
+          "grammarPointZh": "冠词与名词"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Replace Sophie with ONE subject pronoun: \"Sophie is French.\" Write only the pronoun.",
+          "sourceGrammarPoint": "Subject pronouns: she",
+          "instructionZh": "把 \"Sophie is French.\" 中的 Sophie 换成一个合适的主语人称代词。只写这个英文代词。",
+          "grammarPointZh": "主语人称代词"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l007",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct form: \"I ___ a keyboard operator.\"",
+          "sourceGrammarPoint": "Be: am with I",
+          "instructionZh": "选择正确的 be 动词形式：\"I ___ a keyboard operator.\"",
+          "grammarPointZh": "be 动词：第一人称单数"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Put these words in order to make a question: your / is / job / what.",
+          "sourceGrammarPoint": "Wh-questions with be",
+          "instructionZh": "把下列词语排列成一个特殊疑问句：your / is / job / what。",
+          "grammarPointZh": "be 动词：特殊疑问句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l009",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Complete the question: \"How ___ you today?\"",
+          "sourceGrammarPoint": "Be: agreement in wh-questions",
+          "instructionZh": "选择合适的 be 动词，补全问句：\"How ___ you today?\"",
+          "grammarPointZh": "be 动词：主谓一致"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Write \"He's fine, thanks.\" without a contraction.",
+          "sourceGrammarPoint": "Contractions: he is",
+          "instructionZh": "把 \"He's fine, thanks.\" 中的缩写展开，写出不含缩写的完整英文句子。",
+          "grammarPointZh": "缩写形式的展开"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l011",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the word that asks about the owner: \"___ shirt is that?\"",
+          "sourceGrammarPoint": "Whose: asking about possession",
+          "instructionZh": "选择用于询问物品属于谁的疑问词：\"___ shirt is that?\"",
+          "grammarPointZh": "询问物品的主人"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Complete the possessive form: \"This is ___ shirt.\" Use Tim and show that the shirt belongs to him. Write only the missing form.",
+          "sourceGrammarPoint": "Possessive nouns: apostrophe s",
+          "instructionZh": "用 Tim 的正确所有格形式填空，表示衬衫属于他。只填空缺形式：\"This is ___ shirt.\"",
+          "grammarPointZh": "名词所有格"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l013",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Complete the question: \"What colour ___ your new dress?\"",
+          "sourceGrammarPoint": "Be in colour questions",
+          "instructionZh": "选择合适的 be 动词，补全问句：\"What colour ___ your new dress?\"",
+          "grammarPointZh": "询问颜色时的 be 动词"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Write \"That's a nice dress.\" without a contraction.",
+          "sourceGrammarPoint": "Contractions: that is",
+          "instructionZh": "把 \"That's a nice dress.\" 中的缩写展开，写出不含缩写的完整英文句子。",
+          "grammarPointZh": "缩写形式的展开"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l015",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Complete the question: \"___ these your cases?\"",
+          "sourceGrammarPoint": "Be: plural subjects",
+          "instructionZh": "选择合适的 be 动词，补全问句：\"___ these your cases?\"",
+          "grammarPointZh": "be 动词与复数主语"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Change \"Our case is brown.\" to the plural. Change both case and is.",
+          "sourceGrammarPoint": "Plural statements: nouns and be",
+          "instructionZh": "把 \"Our case is brown.\" 改为复数句。case 和 is 都要作相应变化，写出完整英文句子。",
+          "grammarPointZh": "名词和 be 动词的复数变化"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l017",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Complete the plural phrase: \"Those ___ are very hard-working.\" Use the plural of woman.",
+          "sourceGrammarPoint": "Irregular plurals: woman",
+          "instructionZh": "用 woman 的复数形式补全句子：\"Those ___ are very hard-working.\"",
+          "grammarPointZh": "名词的不规则复数"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Correct ONE word in this sentence: \"They is keyboard operators.\" Write the complete sentence.",
+          "sourceGrammarPoint": "Be: agreement with they",
+          "instructionZh": "改正 \"They is keyboard operators.\" 中的一个单词，写出正确的完整英文句子。",
+          "grammarPointZh": "be 动词：主谓一致"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l019",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Complete the statement: \"We ___ tired.\"",
+          "sourceGrammarPoint": "Be with we",
+          "instructionZh": "选择正确形式，补全陈述句：\"We ___ tired.\"",
+          "grammarPointZh": "be 动词与 we 的搭配"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Correct the noun: \"These ice cream are nice.\" Write the complete sentence.",
+          "sourceGrammarPoint": "Plural nouns after these",
+          "instructionZh": "改正 \"These ice cream are nice.\" 中的名词形式，写出完整英文句子。",
+          "grammarPointZh": "these 后的名词复数"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l021",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Complete the command: \"Give ___ a book, please.\" Choose the object form of I.",
+          "sourceGrammarPoint": "Object pronouns after give",
+          "instructionZh": "选择 I 对应的宾格形式，补全祈使句：\"Give ___ a book, please.\"",
+          "grammarPointZh": "动词后的宾格代词"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Make the command negative: \"Give me a book.\" Write the complete sentence.",
+          "sourceGrammarPoint": "Negative imperatives",
+          "instructionZh": "把 \"Give me a book.\" 改为否定祈使句，写出完整英文句子。",
+          "grammarPointZh": "否定祈使句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l023",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Complete the request: \"Give me some ___, please.\" Use the plural of glass.",
+          "sourceGrammarPoint": "Some with plural countable nouns",
+          "instructionZh": "用 glass 的复数形式补全请求：\"Give me some ___, please.\"",
+          "grammarPointZh": "some 与可数名词复数"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Avoid repeating glasses: \"Which glasses? The ___ on the shelf.\" Write ONE word.",
+          "sourceGrammarPoint": "Ones replacing a plural noun",
+          "instructionZh": "避免重复使用 glasses，用一个英文单词填空：\"Which glasses? The ___ on the shelf.\"",
+          "grammarPointZh": "代替复数名词的代词"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l025",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Complete the sentence: \"There ___ a refrigerator in the kitchen.\"",
+          "sourceGrammarPoint": "There is with a singular noun",
+          "instructionZh": "选择正确形式，补全句子：\"There ___ a refrigerator in the kitchen.\"",
+          "grammarPointZh": "there be 与单数名词"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Ask about the place in \"The refrigerator is on the right.\" Start with Where.",
+          "sourceGrammarPoint": "Where-questions with be",
+          "instructionZh": "针对 \"The refrigerator is on the right.\" 中的地点提问。以 Where 开头，写出完整英文问句。",
+          "grammarPointZh": "用 where 询问地点"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l027",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Complete the sentence: \"There ___ some magazines on the television.\"",
+          "sourceGrammarPoint": "There are with plural nouns",
+          "instructionZh": "选择正确形式，补全句子：\"There ___ some magazines on the television.\"",
+          "grammarPointZh": "there be 与复数名词"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Make a yes/no question: \"There is a table in the room.\"",
+          "sourceGrammarPoint": "There be: yes/no questions",
+          "instructionZh": "把 \"There is a table in the room.\" 改为一般疑问句，写出完整英文句子。",
+          "grammarPointZh": "there be 的一般疑问句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l029",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Complete the command: \"___ the window and air the room.\"",
+          "sourceGrammarPoint": "Imperatives: base form",
+          "instructionZh": "选择正确的动词形式，补全祈使句：\"___ the window and air the room.\"",
+          "grammarPointZh": "祈使句中的动词形式"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Make this command negative: \"Shut the door, please.\"",
+          "sourceGrammarPoint": "Negative imperatives",
+          "instructionZh": "把 \"Shut the door, please.\" 改为否定祈使句，写出完整英文句子。",
+          "grammarPointZh": "否定祈使句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l031",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Complete the present continuous: \"She is ___ under the tree.\" Use sit.",
+          "sourceGrammarPoint": "Present continuous: double the final consonant",
+          "instructionZh": "用 sit 的正确形式补全现在进行时句子：\"She is ___ under the tree.\"",
+          "grammarPointZh": "现在进行时：动词 -ing 的拼写"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Put these words in order: she / doing / what / is. Write a question.",
+          "sourceGrammarPoint": "Present continuous: wh-question order",
+          "instructionZh": "把下列词语排列成一个特殊疑问句：she / doing / what / is。",
+          "grammarPointZh": "现在进行时：特殊疑问句语序"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l033",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the present continuous form: \"They ___ over the bridge now.\"",
+          "sourceGrammarPoint": "Present continuous with they",
+          "instructionZh": "选择现在进行时的正确形式：\"They ___ over the bridge now.\"",
+          "grammarPointZh": "现在进行时与复数主语"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Make a yes/no question: \"The sun is shining.\"",
+          "sourceGrammarPoint": "Present continuous: yes/no questions",
+          "instructionZh": "把 \"The sun is shining.\" 改为一般疑问句，写出完整英文句子。",
+          "grammarPointZh": "现在进行时：一般疑问句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l035",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the preposition used with two hills: \"The village is ___ two hills.\"",
+          "sourceGrammarPoint": "Prepositions: between two places",
+          "instructionZh": "选择合适的介词，表达村庄与两座山之间的位置关系：\"The village is ___ two hills.\"",
+          "grammarPointZh": "方位介词：两个地点之间"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Make a yes/no question: \"He is swimming across the river.\"",
+          "sourceGrammarPoint": "Present continuous: question formation",
+          "instructionZh": "把 \"He is swimming across the river.\" 改为一般疑问句，写出完整英文句子。",
+          "grammarPointZh": "现在进行时：疑问句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l037",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Complete the future plan: \"I am going ___ paint it pink.\"",
+          "sourceGrammarPoint": "Be going to: future plans",
+          "instructionZh": "选择正确形式，补全表示计划的句子：\"I am going ___ paint it pink.\"",
+          "grammarPointZh": "be going to：将来的计划"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Make this present continuous sentence negative: \"I am making a bookcase.\"",
+          "sourceGrammarPoint": "Present continuous: negatives",
+          "instructionZh": "把 \"I am making a bookcase.\" 改为现在进行时的否定句，写出完整英文句子。",
+          "grammarPointZh": "现在进行时：否定句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l039",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Complete the warning: \"Don't ___ it!\"",
+          "sourceGrammarPoint": "Negative imperatives: do not + base form",
+          "instructionZh": "选择正确的动词形式，补全警告：\"Don't ___ it!\"",
+          "grammarPointZh": "否定祈使句中的动词形式"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Make a yes/no question: \"You are going to put it on this table.\"",
+          "sourceGrammarPoint": "Be going to: questions",
+          "instructionZh": "把 \"You are going to put it on this table.\" 改为一般疑问句，写出完整英文句子。",
+          "grammarPointZh": "be going to：一般疑问句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l041",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Complete the phrase: \"a piece ___ cheese\"",
+          "sourceGrammarPoint": "Measure phrases with uncountable nouns",
+          "instructionZh": "选择合适的词，补全短语：\"a piece ___ cheese\"。",
+          "grammarPointZh": "不可数名词的量词短语"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Rewrite \"a bottle of milk\" for TWO bottles. Write the whole phrase.",
+          "sourceGrammarPoint": "Plural measure phrases",
+          "instructionZh": "把 \"a bottle of milk\" 改为表示两瓶牛奶的短语，写出完整英文短语。",
+          "grammarPointZh": "量词短语的复数"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l043",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Complete the question: \"Can you ___ the tea?\"",
+          "sourceGrammarPoint": "Can followed by a base verb",
+          "instructionZh": "选择正确的动词形式，补全问句：\"Can you ___ the tea?\"",
+          "grammarPointZh": "情态动词 can 后的动词形式"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Change this question to an affirmative statement: \"Is there any water in this kettle?\" Use some instead of any.",
+          "sourceGrammarPoint": "There be: some in affirmative statements",
+          "instructionZh": "把 \"Is there any water in this kettle?\" 改为肯定陈述句，同时将 any 换成 some。写出完整英文句子。",
+          "grammarPointZh": "there be：肯定句中的 some"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l045",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correctly formed question.",
+          "sourceGrammarPoint": "Can: question word order",
+          "instructionZh": "选择语序和动词形式都正确的一般疑问句。",
+          "grammarPointZh": "情态动词 can：疑问句语序"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Make this sentence negative: \"I can read it.\"",
+          "sourceGrammarPoint": "Can: negative statements",
+          "instructionZh": "把 \"I can read it.\" 改为否定句，写出完整英文句子。",
+          "grammarPointZh": "情态动词 can：否定句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l047",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Complete the question: \"___ you like coffee?\"",
+          "sourceGrammarPoint": "Present simple: do with you",
+          "instructionZh": "选择合适的助动词，补全问句：\"___ you like coffee?\"",
+          "grammarPointZh": "一般现在时：一般疑问句"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Change this sentence to the affirmative: \"I don't like milk in my coffee.\"",
+          "sourceGrammarPoint": "Present simple: affirmative statements",
+          "instructionZh": "把 \"I don't like milk in my coffee.\" 改为肯定句，写出完整英文句子。",
+          "grammarPointZh": "一般现在时：肯定句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l049",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Complete the sentence: \"My husband ___ steak.\" Use like.",
+          "sourceGrammarPoint": "Present simple: third-person singular",
+          "instructionZh": "用 like 的正确形式补全句子：\"My husband ___ steak.\"",
+          "grammarPointZh": "一般现在时：第三人称单数"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Make a yes/no question from \"He doesn't like chicken.\" Ask whether he likes chicken.",
+          "sourceGrammarPoint": "Present simple: does questions",
+          "instructionZh": "根据 \"He doesn't like chicken.\" 提出一个一般疑问句，询问他是否喜欢鸡肉。写出完整英文问句。",
+          "grammarPointZh": "一般现在时：第三人称单数疑问句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l051",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the adjective: \"It is often ___ in March.\"",
+          "sourceGrammarPoint": "Adjectives after be",
+          "instructionZh": "选择合适的形容词，补全句子：\"It is often ___ in March.\"",
+          "grammarPointZh": "be 动词后的形容词"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Make this sentence negative: \"The sun shines every day.\"",
+          "sourceGrammarPoint": "Present simple: third-person negatives",
+          "instructionZh": "把 \"The sun shines every day.\" 改为否定句，写出完整英文句子。",
+          "grammarPointZh": "一般现在时：第三人称单数否定句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l053",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Expand \"It's mild\": \"It ___ mild.\"",
+          "sourceGrammarPoint": "Contractions before adjectives",
+          "instructionZh": "展开 \"It's mild\" 中的缩写，选择正确形式填空：\"It ___ mild.\"",
+          "grammarPointZh": "缩写形式的展开"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Put all the words in order to make a question: seasons / you / best / do / which / like.",
+          "sourceGrammarPoint": "Present simple: wh-questions",
+          "instructionZh": "用下面所有词语排列成一个特殊疑问句：seasons / you / best / do / which / like。",
+          "grammarPointZh": "一般现在时：特殊疑问句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l055",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Complete the sentence: \"She ___ the housework every day.\" Use do.",
+          "sourceGrammarPoint": "Present simple: does",
+          "instructionZh": "用 do 的正确形式补全句子：\"She ___ the housework every day.\"",
+          "grammarPointZh": "一般现在时：do 的第三人称单数"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Change the subject from the children to he: \"The children come home from school.\" Write the complete sentence.",
+          "sourceGrammarPoint": "Present simple: changing the subject",
+          "instructionZh": "把 \"The children come home from school.\" 的主语从 the children 改成 he，动词也要相应变化。写出完整英文句子。",
+          "grammarPointZh": "一般现在时：主语变化"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l057",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the forms for a habit and an action happening now: \"They usually ___ by car, but today they ___ on foot.\"",
+          "sourceGrammarPoint": "Present simple and present continuous",
+          "instructionZh": "选择合适的两组动词形式，分别表达习惯动作和现在正在发生的动作：\"They usually ___ by car, but today they ___ on foot.\"",
+          "grammarPointZh": "一般现在时与现在进行时"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Make the sentence negative: \"They are playing in the garden.\"",
+          "sourceGrammarPoint": "Present continuous: negatives",
+          "instructionZh": "把 \"They are playing in the garden.\" 改为否定句，写出完整英文句子。",
+          "grammarPointZh": "现在进行时：否定句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l059",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Complete the usual negative form: \"I don't have ___ small pads.\"",
+          "sourceGrammarPoint": "Any in negative sentences",
+          "instructionZh": "选择合适的词，补全通常使用的否定形式：\"I don't have ___ small pads.\"",
+          "grammarPointZh": "否定句：数量词选择"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Make a yes/no question with do: \"You have some writing paper.\" Change some to any.",
+          "sourceGrammarPoint": "Have as a main verb: do questions",
+          "instructionZh": "把 \"You have some writing paper.\" 改为用 do 提问的一般疑问句，同时将 some 换成 any。写出完整英文问句。",
+          "grammarPointZh": "实义动词 have 的疑问句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l061",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Complete the sentence: \"We must ___ the doctor.\"",
+          "sourceGrammarPoint": "Must followed by a base verb",
+          "instructionZh": "选择正确的动词形式，补全句子：\"We must ___ the doctor.\"",
+          "grammarPointZh": "情态动词 must 后的动词形式"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Make a yes/no question: \"He feels ill.\"",
+          "sourceGrammarPoint": "Present simple: feel in questions",
+          "instructionZh": "把 \"He feels ill.\" 改为一般疑问句，写出完整英文句子。",
+          "grammarPointZh": "一般现在时：feel 的疑问句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l063",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Complete the rule meaning that getting up is not allowed yet: \"You ___ get up yet.\"",
+          "sourceGrammarPoint": "Must not: prohibition",
+          "instructionZh": "选择合适的否定形式，表达“还不允许起床”的意思：\"You ___ get up yet.\"",
+          "grammarPointZh": "情态动词：表示禁止"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Make a yes/no question: \"He must stay in bed.\"",
+          "sourceGrammarPoint": "Must: yes/no questions",
+          "instructionZh": "把 \"He must stay in bed.\" 改为一般疑问句，写出完整英文句子。",
+          "grammarPointZh": "情态动词 must：一般疑问句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l065",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Complete the sentence: \"We always enjoy ___.\"",
+          "sourceGrammarPoint": "Reflexive pronouns with we",
+          "instructionZh": "选择合适的反身代词，补全句子：\"We always enjoy ___.\"",
+          "grammarPointZh": "反身代词与 we 的搭配"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Make a yes/no question: \"She always comes home early.\"",
+          "sourceGrammarPoint": "Present simple: questions with always",
+          "instructionZh": "把 \"She always comes home early.\" 改为一般疑问句，写出完整英文句子。",
+          "grammarPointZh": "一般现在时：带 always 的疑问句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l067",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Complete the question about last week: \"___ you at the butcher's?\"",
+          "sourceGrammarPoint": "Past be: were with you",
+          "instructionZh": "选择合适的 be 动词，询问上周的情况：\"___ you at the butcher's?\"",
+          "grammarPointZh": "be 动词的一般过去时"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Make this past-tense sentence negative: \"He was absent from school last week.\"",
+          "sourceGrammarPoint": "Past be: negative statements",
+          "instructionZh": "把 \"He was absent from school last week.\" 改为过去时的否定句，写出完整英文句子。",
+          "grammarPointZh": "be 动词过去式：否定句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l069",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Complete the past-tense sentence: \"There ___ twenty cars in the race.\"",
+          "sourceGrammarPoint": "There were with plural past subjects",
+          "instructionZh": "选择正确的过去时形式：\"There ___ twenty cars in the race.\"",
+          "grammarPointZh": "there be 的一般过去时"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Make a yes/no question: \"There was a very big race in 1995.\"",
+          "sourceGrammarPoint": "There was: yes/no questions",
+          "instructionZh": "把 \"There was a very big race in 1995.\" 改为一般疑问句，写出完整英文句子。",
+          "grammarPointZh": "there be 过去时：一般疑问句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l071",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Complete the past-tense question: \"Did he ___ again last night?\"",
+          "sourceGrammarPoint": "Past simple: did + base form",
+          "instructionZh": "选择正确的动词形式，补全过去时问句：\"Did he ___ again last night?\"",
+          "grammarPointZh": "一般过去时：did 后的动词形式"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Make the sentence negative: \"He telephoned at nine o'clock.\"",
+          "sourceGrammarPoint": "Past simple: negatives",
+          "instructionZh": "把 \"He telephoned at nine o'clock.\" 改为否定句，写出完整英文句子。",
+          "grammarPointZh": "一般过去时：否定句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l073",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Complete the past-tense sentence: \"Last week Mrs. Mills ___ to London.\" Use go.",
+          "sourceGrammarPoint": "Past simple: irregular went",
+          "instructionZh": "用 go 的正确过去式补全句子：\"Last week Mrs. Mills ___ to London.\"",
+          "grammarPointZh": "一般过去时：不规则动词"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Make a yes/no question: \"The man spoke German.\"",
+          "sourceGrammarPoint": "Past simple: questions with speak",
+          "instructionZh": "把 \"The man spoke German.\" 改为一般疑问句，写出完整英文句子。",
+          "grammarPointZh": "一般过去时：speak 的疑问句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l075",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Complete the question: \"Did she ___ them here?\"",
+          "sourceGrammarPoint": "Past simple: buy after did",
+          "instructionZh": "选择正确的动词形式，补全问句：\"Did she ___ them here?\"",
+          "grammarPointZh": "一般过去时：buy 的疑问句"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Make the sentence negative: \"We had some shoes like those a month ago.\" Change some to any.",
+          "sourceGrammarPoint": "Past simple: negatives and any",
+          "instructionZh": "把 \"We had some shoes like those a month ago.\" 改为否定句，同时将 some 换成 any。写出完整英文句子。",
+          "grammarPointZh": "一般过去时：否定句与 any"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l077",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correctly formed question.",
+          "sourceGrammarPoint": "Modal questions: can + subject + base verb",
+          "instructionZh": "选择语序和动词形式都正确的一般疑问句。",
+          "grammarPointZh": "情态动词：一般疑问句"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Make a yes/no question: \"You can come at 2 p.m.\"",
+          "sourceGrammarPoint": "Can: question transformation",
+          "instructionZh": "把 \"You can come at 2 p.m.\" 改为一般疑问句，写出完整英文句子。",
+          "grammarPointZh": "情态动词 can：疑问句转换"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l079",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the forms for uncountable tea and countable tomatoes: \"not ___ tea; not ___ tomatoes\"",
+          "sourceGrammarPoint": "Much and many",
+          "instructionZh": "tea 是不可数名词，tomatoes 是可数名词复数。选择合适的两项填空：\"not ___ tea; not ___ tomatoes\"。",
+          "grammarPointZh": "much 和 many 的用法"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Change this sentence to the affirmative: \"We haven't got any meat.\" Change any to some.",
+          "sourceGrammarPoint": "Have got: affirmative statements",
+          "instructionZh": "把 \"We haven't got any meat.\" 改为肯定句，同时将 any 换成 some。写出完整英文句子。",
+          "grammarPointZh": "have got：肯定句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l081",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Complete the action happening now: \"He ___ a bath.\"",
+          "sourceGrammarPoint": "Present continuous with have",
+          "instructionZh": "选择合适的动词形式，表达现在正在发生的动作：\"He ___ a bath.\"",
+          "grammarPointZh": "现在进行时中的 have"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Make a yes/no question: \"We had roast beef and potatoes.\" Keep we as the subject.",
+          "sourceGrammarPoint": "Past simple: had in questions",
+          "instructionZh": "把 \"We had roast beef and potatoes.\" 改为一般疑问句，仍用 we 作主语。写出完整英文问句。",
+          "grammarPointZh": "一般过去时：have 的疑问句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l083",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the present perfect form: \"I ___ already ___ lunch.\"",
+          "sourceGrammarPoint": "Present perfect: have + past participle",
+          "instructionZh": "选择现在完成时的正确形式，依次填入两处空格：\"I ___ already ___ lunch.\"",
+          "grammarPointZh": "现在完成时的结构"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Make a yes/no question: \"We are packing our suitcases.\" Keep we as the subject.",
+          "sourceGrammarPoint": "Present continuous: questions",
+          "instructionZh": "把 \"We are packing our suitcases.\" 改为一般疑问句，仍用 we 作主语。写出完整英文问句。",
+          "grammarPointZh": "现在进行时：一般疑问句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l085",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Complete the question about a visit to Paris at any time before now: \"Have you ever ___ there?\"",
+          "sourceGrammarPoint": "Present perfect: been to for experience",
+          "instructionZh": "选择合适的动词形式，询问到现在为止是否曾去过巴黎：\"Have you ever ___ there?\"",
+          "grammarPointZh": "现在完成时：询问经历"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Make the sentence negative: \"I saw it on television last year.\"",
+          "sourceGrammarPoint": "Past simple with a finished time",
+          "instructionZh": "把 \"I saw it on television last year.\" 改为否定句，写出完整英文句子。",
+          "grammarPointZh": "带明确过去时间的一般过去时"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l087",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Complete the past-tense sentence: \"I ___ it here three days ago.\" Use bring.",
+          "sourceGrammarPoint": "Past simple: irregular brought",
+          "instructionZh": "用 bring 的正确过去式补全句子：\"I ___ it here three days ago.\"",
+          "grammarPointZh": "一般过去时：不规则动词"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Make \"Your mechanics have finished.\" negative. Add yet at the end.",
+          "sourceGrammarPoint": "Present perfect: negatives with yet",
+          "instructionZh": "把 \"Your mechanics have finished.\" 改为否定句，并在句末加上 yet。写出完整英文句子。",
+          "grammarPointZh": "现在完成时：否定句与 yet"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l089",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct prepositions: \"I have lived here ___ twenty years, ___ 1976.\"",
+          "sourceGrammarPoint": "Present perfect: for and since",
+          "instructionZh": "选择合适的两个介词，依次填空：\"I have lived here ___ twenty years, ___ 1976.\"",
+          "grammarPointZh": "现在完成时中的 for 和 since"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Put all the words in order: have / here / long / you / lived / how. Write a question.",
+          "sourceGrammarPoint": "Present perfect: how long questions",
+          "instructionZh": "用下面所有词语排列成一个问句：have / here / long / you / lived / how。",
+          "grammarPointZh": "现在完成时：询问持续时间"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l091",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Complete the question: \"___ Ian sold his house yet?\"",
+          "sourceGrammarPoint": "Present perfect with a singular subject",
+          "instructionZh": "选择合适的助动词，补全问句：\"___ Ian sold his house yet?\"",
+          "grammarPointZh": "现在完成时：主谓一致"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Make a yes/no question: \"You will see Ian today.\"",
+          "sourceGrammarPoint": "Future with will: questions",
+          "instructionZh": "把 \"You will see Ian today.\" 改为一般疑问句，写出完整英文句子。",
+          "grammarPointZh": "will 将来时：一般疑问句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l093",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Complete the future sentence: \"He will ___ to New York next month.\"",
+          "sourceGrammarPoint": "Future with will: base form",
+          "instructionZh": "选择正确的动词形式，补全将来时句子：\"He will ___ to New York next month.\"",
+          "grammarPointZh": "will 将来时中的动词形式"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Make the sentence negative: \"He flew to Spain a week ago.\"",
+          "sourceGrammarPoint": "Past simple: irregular verbs in negatives",
+          "instructionZh": "把 \"He flew to Spain a week ago.\" 改为否定句，写出完整英文句子。",
+          "grammarPointZh": "一般过去时：不规则动词的否定句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l095",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Complete the advice: \"We had better ___ back to the station now.\"",
+          "sourceGrammarPoint": "Had better followed by a base verb",
+          "instructionZh": "选择正确的动词形式，补全建议：\"We had better ___ back to the station now.\"",
+          "grammarPointZh": "had better 后的动词形式"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Put all the words in order: the next train / will / leave / what time.",
+          "sourceGrammarPoint": "Future questions: word order",
+          "instructionZh": "用下面所有词语排列成一个问句：the next train / will / leave / what time。",
+          "grammarPointZh": "将来时：特殊疑问句语序"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l097",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Complete the question without adding a noun after the missing word: \"Is this case ___?\"",
+          "sourceGrammarPoint": "Possessive pronouns: yours",
+          "instructionZh": "空缺后面不再添加名词，选择合适的代词补全问句：\"Is this case ___?\"",
+          "grammarPointZh": "名词性物主代词"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Make a yes/no question from \"This case doesn't belong to me.\" Ask whether the case belongs to me.",
+          "sourceGrammarPoint": "Present simple: belong to in questions",
+          "instructionZh": "根据 \"This case doesn't belong to me.\" 提出一个一般疑问句，询问箱子是否属于我。写出完整英文问句。",
+          "grammarPointZh": "一般现在时：belong to 的疑问句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l099",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct clause after I think.",
+          "sourceGrammarPoint": "Object clauses: statement word order",
+          "instructionZh": "选择 I think 后语序正确的宾语从句。",
+          "grammarPointZh": "宾语从句中的陈述语序"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Remove the unnecessary word in \"Let me to help you.\" Write the complete sentence.",
+          "sourceGrammarPoint": "Let followed by object and base verb",
+          "instructionZh": "删去 \"Let me to help you.\" 中多余的一个词，写出正确的完整英文句子。",
+          "grammarPointZh": "let 后的宾语和动词形式"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l101",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Report the words using says: \"He says he ___ just arrived in Scotland.\"",
+          "sourceGrammarPoint": "Reported speech after a present reporting verb",
+          "instructionZh": "用 says 引述，选择合适的动词形式补全句子：\"He says he ___ just arrived in Scotland.\"",
+          "grammarPointZh": "现在时引述动词后的间接引语"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Jimmy says, \"I will write a letter soon.\" Report this starting with He says. Keep will.",
+          "sourceGrammarPoint": "Reported speech: pronouns with says",
+          "instructionZh": "Jimmy says, \"I will write a letter soon.\" 请把引号中的话改为间接引语，以 He says 开头，并保留 will。写出完整英文句子。",
+          "grammarPointZh": "间接引语中的人称变化"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l103",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct order.",
+          "sourceGrammarPoint": "Enough after adjectives",
+          "instructionZh": "选择语序正确的句子。",
+          "grammarPointZh": "形容词与 enough 的位置"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Make the sentence negative: \"I could answer the rest.\"",
+          "sourceGrammarPoint": "Could: negative past ability",
+          "instructionZh": "把 \"I could answer the rest.\" 改为否定句，写出完整英文句子。",
+          "grammarPointZh": "could：过去能力的否定表达"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l105",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Complete the sentence: \"I want her ___ come to my office.\"",
+          "sourceGrammarPoint": "Want + object + to-infinitive",
+          "instructionZh": "选择合适的词，补全句子：\"I want her ___ come to my office.\"",
+          "grammarPointZh": "want 后的宾语和不定式"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Correct the missing word in \"Tell her come at once.\" Write the complete sentence.",
+          "sourceGrammarPoint": "Tell + object + to-infinitive",
+          "instructionZh": "在 \"Tell her come at once.\" 中补上缺少的一个词，写出正确的完整英文句子。",
+          "grammarPointZh": "tell 后的宾语和不定式"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l107",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Complete the comparison: \"It is ___ than the blue one.\" Use small.",
+          "sourceGrammarPoint": "Comparatives before than",
+          "instructionZh": "用 small 的正确形式补全比较：\"It is ___ than the blue one.\"",
+          "grammarPointZh": "形容词比较级"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Complete the superlative: \"This is the ___ dress in the shop.\" Use large. Write ONE word.",
+          "sourceGrammarPoint": "Superlatives with the",
+          "instructionZh": "用 large 的正确最高级填空，只写一个英文单词：\"This is the ___ dress in the shop.\"",
+          "grammarPointZh": "形容词最高级"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l109",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the phrase for a small number of countable cigarettes: \"There are ___ in that box.\"",
+          "sourceGrammarPoint": "A few and a little",
+          "instructionZh": "选择合适的短语，表示少量可数的香烟：\"There are ___ in that box.\"",
+          "grammarPointZh": "a few 和 a little 的用法"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Complete the advice with the comparative form of much: \"Eat ___ and smoke less!\" Write ONE word.",
+          "sourceGrammarPoint": "Irregular comparatives: much to more",
+          "instructionZh": "用 much 的比较级补全建议，只写一个英文单词：\"Eat ___ and smoke less!\"",
+          "grammarPointZh": "数量词的不规则比较级"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l111",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Complete the comparison: \"It is not as ___ as the expensive one.\" Use good.",
+          "sourceGrammarPoint": "Equality comparisons: as + adjective + as",
+          "instructionZh": "用 good 的正确形式补全比较：\"It is not as ___ as the expensive one.\"",
+          "grammarPointZh": "同级比较的形容词形式"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Complete the superlative: \"It is the ___ model in the shop.\" Use expensive. Write the TWO missing words.",
+          "sourceGrammarPoint": "Superlatives: multi-syllable adjectives",
+          "instructionZh": "用 expensive 的正确最高级填空，只写空缺的两个英文单词：\"It is the ___ model in the shop.\"",
+          "grammarPointZh": "多音节形容词的最高级"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l113",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Someone says, \"I can't change this note.\" Choose the matching negative agreement.",
+          "sourceGrammarPoint": "Negative agreement: neither + modal + subject",
+          "instructionZh": "有人说：\"I can't change this note.\" 请选择表示“我也不能”的正确附和句。",
+          "grammarPointZh": "否定附和的倒装语序"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Someone says, \"I have got some small change.\" Put these words in order to agree: have / I / so.",
+          "sourceGrammarPoint": "Positive agreement: so + auxiliary + subject",
+          "instructionZh": "有人说：\"I have got some small change.\" 把下列词语排序，表示“我也有”：have / I / so。",
+          "grammarPointZh": "肯定附和的倒装语序"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l115",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Complete the present simple: \"Everybody ___ to have lunch in the garden.\" Use want.",
+          "sourceGrammarPoint": "Indefinite pronouns: singular agreement",
+          "instructionZh": "用 want 的正确形式补全一般现在时句子：\"Everybody ___ to have lunch in the garden.\"",
+          "grammarPointZh": "不定代词与主谓一致"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Make the suggestion negative: \"Let's try the back door.\"",
+          "sourceGrammarPoint": "Let us: negative suggestions",
+          "instructionZh": "把 \"Let's try the back door.\" 改为否定建议，写出完整英文句子。",
+          "grammarPointZh": "let's 的否定建议"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l117",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the past continuous form: \"When my husband ___ into the dining room, he dropped some coins.\"",
+          "sourceGrammarPoint": "Past continuous: was + -ing",
+          "instructionZh": "选择过去进行时的正确形式：\"When my husband ___ into the dining room, he dropped some coins.\"",
+          "grammarPointZh": "过去进行时的结构"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Complete the past perfect: \"Tommy had already ___ the coins.\" Use swallow. Write ONE word.",
+          "sourceGrammarPoint": "Past perfect: had + past participle",
+          "instructionZh": "用 swallow 的正确形式补全过去完成时，只写一个英文单词：\"Tommy had already ___ the coins.\"",
+          "grammarPointZh": "过去完成时中的过去分词"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l119",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Complete the earlier action: \"When George came downstairs, the thieves ___ already gone.\"",
+          "sourceGrammarPoint": "Past perfect before a past event",
+          "instructionZh": "选择正确形式，表达在 George 下楼之前已经完成的动作：\"When George came downstairs, the thieves ___ already gone.\"",
+          "grammarPointZh": "过去完成时：过去之前的动作"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Make the clause negative: \"They had entered the house.\"",
+          "sourceGrammarPoint": "Past perfect: negative form",
+          "instructionZh": "把 \"They had entered the house.\" 改为否定形式，写出完整英文句子。",
+          "grammarPointZh": "过去完成时：否定形式"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l121",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the relative word for a person as subject: \"The lady ___ is standing behind the counter.\"",
+          "sourceGrammarPoint": "Relative clauses: who as a subject",
+          "instructionZh": "选择指人并在从句中作主语的关系词：\"The lady ___ is standing behind the counter.\"",
+          "grammarPointZh": "定语从句：指人的关系代词"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Join the sentences using which: \"These are the books. They are on the counter.\" Write ONE sentence.",
+          "sourceGrammarPoint": "Relative clauses: which for things",
+          "instructionZh": "用 which 把 \"These are the books. They are on the counter.\" 合并成一个英文句子。",
+          "grammarPointZh": "定语从句：指物的关系代词"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l123",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct clause: \"This is a photograph ___ during my trip.\"",
+          "sourceGrammarPoint": "Relative clauses with an omitted object pronoun",
+          "instructionZh": "选择正确的从句，补全句子：\"This is a photograph ___ during my trip.\"",
+          "grammarPointZh": "省略宾语关系代词的定语从句"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Join using which: \"That is the ship. We travelled on it.\" Keep on at the end.",
+          "sourceGrammarPoint": "Relative clauses: prepositions at the end",
+          "instructionZh": "用 which 把 \"That is the ship. We travelled on it.\" 合并成一个英文句子，并把 on 保留在从句末尾。",
+          "grammarPointZh": "定语从句：句末的介词"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l125",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the past form of have to: \"Last summer I ___ water the garden every day.\"",
+          "sourceGrammarPoint": "Past necessity: had to",
+          "instructionZh": "选择 have to 的正确过去时形式：\"Last summer I ___ water the garden every day.\"",
+          "grammarPointZh": "have to：过去的必要性"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Rewrite \"You don't need to water the garden.\" using need not. Keep the meaning.",
+          "sourceGrammarPoint": "No necessity: need not + base verb",
+          "instructionZh": "用 need not 改写 \"You don't need to water the garden.\"，保持原意。写出完整英文句子。",
+          "grammarPointZh": "表示“不必”的情态表达"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l127",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Use must to complete a confident guess: \"It ___ be Karen Marsh.\"",
+          "sourceGrammarPoint": "Must for a confident deduction",
+          "instructionZh": "用 must 表达有把握的推测，选择正确形式：\"It ___ be Karen Marsh.\"",
+          "grammarPointZh": "must：有把握的推测"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Correct the deduction: \"It can't to be.\" Remove the unnecessary word. Write the complete sentence.",
+          "sourceGrammarPoint": "Cannot for a negative deduction",
+          "instructionZh": "删去 \"It can't to be.\" 中多余的词，改正这个否定推测句。请写出完整英文句子。",
+          "grammarPointZh": "表示否定推测的情态动词"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l129",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Complete the deduction about the past: \"I must ___ been dreaming.\"",
+          "sourceGrammarPoint": "Past deduction: must have + past participle",
+          "instructionZh": "选择合适的词，补全对过去的推测：\"I must ___ been dreaming.\"",
+          "grammarPointZh": "情态动词对过去的推测"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Correct the word order: \"You had better do not do it again.\" Write the complete sentence.",
+          "sourceGrammarPoint": "Had better: negative word order",
+          "instructionZh": "改正 \"You had better do not do it again.\" 的语序，写出完整英文句子。",
+          "grammarPointZh": "had better：否定语序"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l131",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Complete the possibility: \"We may ___ abroad.\"",
+          "sourceGrammarPoint": "May followed by a base verb",
+          "instructionZh": "选择正确的动词形式，补全表示可能性的句子：\"We may ___ abroad.\"",
+          "grammarPointZh": "情态动词 may 后的动词形式"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Make this sentence negative: \"We might go anywhere.\" Keep anywhere.",
+          "sourceGrammarPoint": "Might: negative possibility",
+          "instructionZh": "把 \"We might go anywhere.\" 改为否定句，并保留 anywhere。写出完整英文句子。",
+          "grammarPointZh": "情态动词 might：否定可能性"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l133",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Backshift the tense after told: \"She told me she ___ just made a new film.\"",
+          "sourceGrammarPoint": "Reported speech: present perfect to past perfect",
+          "instructionZh": "在 told 后按间接引语要求后移时态，选择正确形式：\"She told me she ___ just made a new film.\"",
+          "grammarPointZh": "间接引语：时态后移"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Karen said, \"I am going to retire.\" Report this starting with She said. Backshift the tense.",
+          "sourceGrammarPoint": "Reported speech: be going to backshift",
+          "instructionZh": "Karen said, \"I am going to retire.\" 请把引号中的话改为间接引语，以 She said 开头，并把时态作相应后移。写出完整英文句子。",
+          "grammarPointZh": "间接引语：be going to 的时态后移"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l135",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Backshift may in reported speech: \"Miss Marsh told reporters she ___ retire.\"",
+          "sourceGrammarPoint": "Reported speech: may to might",
+          "instructionZh": "把间接引语中的 may 作相应后移，选择正确形式：\"Miss Marsh told reporters she ___ retire.\"",
+          "grammarPointZh": "间接引语：情态动词后移"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "She said, \"I will have to ask my future husband.\" Report this starting with She said. Backshift will.",
+          "sourceGrammarPoint": "Reported speech: will to would",
+          "instructionZh": "She said, \"I will have to ask my future husband.\" 请把引号中的话改为间接引语，以 She said 开头，并将 will 作相应后移。写出完整英文句子。",
+          "grammarPointZh": "间接引语：will 的后移"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l137",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Complete the first conditional: \"If I ___ a lot of money, I will buy you a coat.\"",
+          "sourceGrammarPoint": "First conditional: present simple after if",
+          "instructionZh": "选择正确的动词形式，补全第一条件句：\"If I ___ a lot of money, I will buy you a coat.\"",
+          "grammarPointZh": "第一条件句（真实、可能发生的条件）"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Complete the result clause: \"If we spend all that money, we ___ poor again.\" Use will and be.",
+          "sourceGrammarPoint": "First conditional: will + base form",
+          "instructionZh": "用 will 和 be 补全结果主句，只写缺少的英文词语：\"If we spend all that money, we ___ poor again.\"",
+          "grammarPointZh": "第一条件句：可能情况的结果主句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l139",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the correct embedded question.",
+          "sourceGrammarPoint": "Embedded questions: statement word order",
+          "instructionZh": "选择语序正确的间接疑问句。",
+          "grammarPointZh": "间接疑问句中的陈述语序"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Complete the question tag: \"You work for the Overseas Engineering Company, ___?\" Write only the tag.",
+          "sourceGrammarPoint": "Question tags after present simple statements",
+          "instructionZh": "补全反意疑问部分，只写空缺的英文问句短语：\"You work for the Overseas Engineering Company, ___?\"",
+          "grammarPointZh": "一般现在时后的反意疑问句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l141",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Choose the passive form: \"Last week Sally ___ to a children's party.\"",
+          "sourceGrammarPoint": "Past simple passive: was + past participle",
+          "instructionZh": "选择正确的过去时被动形式：\"Last week Sally ___ to a children's party.\"",
+          "grammarPointZh": "一般过去时的被动语态"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Complete the past perfect: \"Before that journey, Sally ___ never travelled on a train.\" Write ONE word.",
+          "sourceGrammarPoint": "Past perfect: never before a past event",
+          "instructionZh": "补全过去完成时，只写一个英文单词：\"Before that journey, Sally ___ never travelled on a train.\"",
+          "grammarPointZh": "过去完成时：过去之前从未发生"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b1-4be758-l143",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Complete the passive form: \"Visitors have ___ asked to keep the woods clean.\"",
+          "sourceGrammarPoint": "Present perfect passive: have been + past participle",
+          "instructionZh": "选择正确形式，补全现在完成时被动句：\"Visitors have ___ asked to keep the woods clean.\"",
+          "grammarPointZh": "现在完成时的被动语态"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Complete the future passive: \"Anyone who leaves litter will ___ prosecuted.\" Write ONE word.",
+          "sourceGrammarPoint": "Future passive: will be + past participle",
+          "instructionZh": "补全一般将来时被动句，只写一个英文单词：\"Anyone who leaves litter will ___ prosecuted.\"",
+          "grammarPointZh": "一般将来时的被动语态"
+        }
+      ]
+    }
+  ]
+}
