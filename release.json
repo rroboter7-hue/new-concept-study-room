@@ -1,6 +1,6 @@
 {
-  "build": "2026-10-27-book2-packs-through20",
-  "preparedAt": "2026-10-27T02:11:55.351Z",
+  "build": "2026-10-27-pdf-archive",
+  "preparedAt": "2026-10-27T02:30:53.626Z",
   "book2": {
     "book": 2,
     "total": 96,
@@ -131,8 +131,8 @@
       "notTextbookOriginal": true
     }
   },
-  "staticFiles": 2739,
-  "staticBytes": 933835513,
+  "staticFiles": 2729,
+  "staticBytes": 810121512,
   "nativeearsAdvancedAudio": {
     "books": {
       "3": 60,
@@ -356,5 +356,17 @@
     "nativeModal": true,
     "grammarChecksRemainFinite": true,
     "reviewedSourceCorrections": 7
+  },
+  "originalPdfArchive": {
+    "removedPublishedFiles": 14,
+    "removedBytes": 123736322,
+    "removedMiB": 118.00415229797363,
+    "retainedPublishedPdfs": [
+      "resources/cebcdf4e922d21aa.pdf"
+    ],
+    "localBackupVerified": true,
+    "provenanceMetadataPreserved": true,
+    "convertedTextPreserved": true,
+    "gitHistoryRewritten": false
   }
 }
