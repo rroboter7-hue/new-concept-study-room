@@ -1,1 +1,16 @@
 .recurrence-section{margin-top:34px;padding-top:24px;border-top:1px solid #d9e3da}.recurrence-heading{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:12px}.recurrence-heading h3{font-size:19px;margin:0 0 5px}.recurrence-heading p{font-size:13px;line-height:1.7;color:#6d7972;margin:0}.recurrence-row{padding:13px 0;border-bottom:1px solid #e2e8e2}.recurrence-row summary{cursor:pointer;line-height:1.8;display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline}.recurrence-row summary strong{color:#26564b;font:18px Georgia,serif}.recurrence-row summary span{font-size:14px}.recurrence-row summary small{font-size:12px;color:#6e7b72;margin-left:auto}.recurrence-row p{margin:10px 0}.recurrence-row .english{font-size:18px;line-height:1.8}.recurrence-origins{display:flex;flex-wrap:wrap;gap:10px;margin:12px 0}.recurrence-origins button{font-size:12px;text-align:left}@media(max-width:600px){.recurrence-heading{align-items:flex-start;flex-direction:column}.recurrence-row summary small{margin-left:0;width:100%}.reader-footer{flex-wrap:wrap}}
+.lesson-recall-section,.lesson-phrases-section{margin-top:28px;padding-top:24px;border-top:1px solid #d9e3da}
+.lesson-recall-section h3,.lesson-phrases-section h3{font-size:19px;line-height:1.5;margin:6px 0 8px}
+.lesson-step{display:block;font-size:12px;font-weight:600;letter-spacing:.04em;color:#547168}
+.lesson-recall-prompts{padding-left:23px;line-height:1.85;margin:14px 0 18px}
+.lesson-recall-prompts li{margin:5px 0;padding-left:3px}
+.lesson-step-actions{display:flex;flex-wrap:wrap;gap:10px;margin:16px 0 4px}
+.lesson-step-actions .button{min-height:44px;white-space:normal;text-align:center}
+.recurrence-list>summary,.lesson-phrase-row>summary{cursor:pointer;line-height:1.7;padding:12px 0;color:#26564b;overflow-wrap:anywhere}
+.recurrence-list>summary{font-size:14px;font-weight:600}
+.recurrence-list[open]>summary{border-bottom:1px solid #e2e8e2}
+.lesson-phrase-row{border-bottom:1px solid #e2e8e2}
+.lesson-phrase-row summary span{font:18px Georgia,serif}
+.lesson-phrase-row p{font-size:14px;line-height:1.8;margin:0 0 14px;overflow-wrap:anywhere}
+.lesson-recall-section .small-note,.recurrence-section .small-note,.lesson-phrases-section .small-note{font-size:13px;line-height:1.8;text-align:left;color:#667569;overflow-wrap:anywhere}
+@media(max-width:600px){.lesson-step-actions>.button{flex:1 1 135px}.lesson-recall-section,.lesson-phrases-section{margin-top:24px;padding-top:20px}.recurrence-section{margin-top:24px;padding-top:20px}}

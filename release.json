@@ -1,6 +1,6 @@
 {
-  "build": "2026-10-27-source-bound-retelling",
-  "preparedAt": "2026-10-27T01:49:26.405Z",
+  "build": "2026-10-27-recall-source-retelling",
+  "preparedAt": "2026-10-27T01:52:31.906Z",
   "book2": {
     "book": 2,
     "total": 96,
@@ -111,8 +111,8 @@
     "retellLegacyNotesOutlinesLabelled": true,
     "unsubmittedLegacyRetellDraftPersistence": false
   },
-  "staticFiles": 2681,
-  "staticBytes": 929044845,
+  "staticFiles": 2683,
+  "staticBytes": 929061496,
   "nativeearsAdvancedAudio": {
     "books": {
       "3": 60,
@@ -295,5 +295,15 @@
     "dailyTasksMenu": true,
     "defaultPublic": true,
     "fourBookSelector": true
+  },
+  "postReadingFlow": {
+    "order": [
+      "current-lesson-recall",
+      "knowledge-recurrence",
+      "current-lesson-phrases"
+    ],
+    "inlineOldWordList": false,
+    "knowledgeDefault": "collapsed",
+    "recallUsesExistingRetell": true
   }
 }
