@@ -4,7 +4,7 @@ const fs = require('node:fs');
 const path = require('node:path');
 const vm = require('node:vm');
 const root = path.resolve(__dirname, '..');
-const sources = ['curriculum.js', 'textbook-lessons.js', 'book2-lessons.js', 'book2-translations.js', 'phrase-library.js', 'book2-learning-support.js', 'book2-vocabulary.js', 'book2-quality-support.js', 'book2-reviewed-questions.js', 'study-knowledge.js'];
+const sources = ['curriculum.js', 'textbook-lessons.js', 'book2-lessons.js', 'book2-translations.js', 'book2-reading-alignment.js', 'phrase-library.js', 'book2-learning-support.js', 'book2-vocabulary.js', 'book2-additional-context-fixes.js', 'book2-quality-support.js', 'book2-reviewed-questions.js', 'study-knowledge.js'];
 const plain = value => JSON.parse(JSON.stringify(value));
 function load() {
   const window = {}, scope = vm.createContext({ window });
@@ -155,7 +155,7 @@ test('all authored answer choices grade through the existing remediation flow us
   }
 });
 
-test('all 96 expanded lessons and ten balanced packs register together without creating alias word records', () => {
+test('all 96 expanded lessons and twenty balanced packs register together without creating alias word records', () => {
   const {window,scope} = load();
   for (const file of ['book2-practice-packs.js','pilot-question-expansion.js','practice-pack-core.js']) vm.runInContext(fs.readFileSync(path.join(root,file),'utf8'),scope,{filename:file});
   const manifests = [window.BOOK2_QUESTION_EXPANSION,window.BOOK2_LATER_QUESTION_EXPANSION];
@@ -164,7 +164,7 @@ test('all 96 expanded lessons and ten balanced packs register together without c
   assert.deepEqual(plain(bank.audit.expansionIssues),[]);
   for (const lesson of window.LESSONS.filter(l=>l.book===2)) assert.equal(bank.quizForLesson(lesson.id).length,12,lesson.id);
   const registry = window.StudyPracticePacks.create(window.BOOK2_PRACTICE_PACKS,window.LESSONS,bank);
-  assert.deepEqual(plain(registry.issues),[]);assert.equal(registry.lessonIds().length,10);
+  assert.deepEqual(plain(registry.issues),[]);assert.equal(registry.lessonIds().length,20);
   for (const raw of manifests.flatMap(m=>m.entries).filter(q=>q.type==='vocabulary')) {
     const canonical=bank.wordForLesson(raw.sourceLessonId,raw.word),alias=bank.get(raw.conceptId);
     assert.equal(alias.id,canonical.conceptId,raw.id);

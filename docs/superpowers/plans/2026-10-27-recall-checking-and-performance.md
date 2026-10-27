@@ -24,3 +24,11 @@
 ## Baseline
 
 At e461bd4 the Git tree is 932,810,009 bytes: audio 792,865,651; PDF 124,023,162; dictionary 3,639,967. Sixty bootstrap scripts total 9,931,828 bytes (gzip sum 2,275,805). WAV accounts for 163,858,690 bytes in 2,255 files. Text library alone is 2,654,682 bytes. These are measured sizes, not guaranteed network transfer times.
+
+## Completed implementation and review
+
+- All 276 lessons have 552 authored questions. Different reviewers independently read every Book 1, Book 2 and Book 3/4 passage/question pair, correcting factual wording, unsupported details, answer leakage, aliases and temporal bounds.
+- Two technical findings were reproduced with failing tests and fixed: retry double requests and full-store persistence on every keystroke. Text drafts now persist in a 250 ms batch and flush on navigation, submission, backup and page lifecycle; restore cancels old saves.
+- Preserved concurrent main through 3bdb516: additional Book 2 source correction, practice packs through lesson 20, bilingual dictionary/picker and original-PDF archive. Recall Book 2 lesson 16 hash/evidence was explicitly reviewed against the punctuation-only removal of the spurious period in “this. note”.
+- Added lazy document metadata and exact-byte JSON, preserving all 384 original sections. Updated the archive test to check those real lazy documents instead of expecting inline sections.
+- Source originals of audio remain in the repository. A feature-branch CI build validates actual media and transcodes before production deployment; main deployment uses only a validated runtime artifact.
