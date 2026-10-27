@@ -1,6 +1,6 @@
 {
-  "build": "2026-10-27-four-forms-inline",
-  "preparedAt": "2026-10-27T06:44:15.499Z",
+  "build": "2026-10-27-swiping-word-groups",
+  "preparedAt": "2026-10-27T06:47:23.904065+00:00",
   "book2": {
     "book": 2,
     "total": 96,
@@ -556,7 +556,16 @@
     "recommendedVerbs": 1,
     "introductoryExpressionsExcluded": true,
     "manualWordBankPreserved": true,
-    "recommendationCacheMigrated": true
+    "recommendationCacheMigrated": true,
+    "wordGroups": {
+      "pageSize": 4,
+      "nativeHorizontalScroll": true,
+      "previousAndNext": true,
+      "browseChangesTarget": false,
+      "perWordDraftsPreserved": true,
+      "reloadShowsSelectedTargetGroup": true,
+      "physicalPhoneTouchVerified": false
+    }
   },
   "learningReliability": {
     "contextBoundDictionary": true,
