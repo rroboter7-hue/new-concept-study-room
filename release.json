@@ -1,6 +1,6 @@
 {
-  "build": "2026-10-27-bilingual-v2",
-  "preparedAt": "2026-10-27T02:04:48.200660+00:00",
+  "build": "2026-10-27-pdf-archive",
+  "preparedAt": "2026-10-27T02:30:53.626Z",
   "book2": {
     "book": 2,
     "total": 96,
@@ -9,7 +9,18 @@
     "corrections": 203,
     "sourceSha256": "30f1219bd738cfbfea00e8bc8e1b51f752a3eb1d47c87090f0120ded0a203633",
     "sourceUrl": "resources/30f1219bd738cfbf.pdf",
-    "candidateSha256": "6dab6504246da5dd35451b93f34ca4e102ac936468b2d4d8400018bb647e3ae3"
+    "candidateSha256": "6dab6504246da5dd35451b93f34ca4e102ac936468b2d4d8400018bb647e3ae3",
+    "additionalTextCorrections": 1,
+    "additionalTextCorrectionLessons": [
+      16
+    ],
+    "additionalSourceBoundGlossCorrections": [
+      {
+        "lesson": 17,
+        "word": "bright",
+        "meaning": "鲜艳的"
+      }
+    ]
   },
   "learning": {
     "canonicalAnswers": true,
@@ -51,14 +62,15 @@
     "earlierRetrievalStartsAtLesson": 2,
     "contextCorrections": [
       "l011-turn",
-      "l096-spectacle"
+      "l096-spectacle",
+      "l017-bright"
     ],
     "simulatedRetestBoundariesVerified": true,
     "balancedPracticePacks": {
       "book": 2,
-      "lessons": 10,
-      "tasks": 120,
-      "followups": 120,
+      "lessons": 20,
+      "tasks": 240,
+      "followups": 240,
       "defaultForReviewedLessons": true,
       "distribution": {
         "vocabulary": 3,
@@ -66,7 +78,8 @@
         "listening": 2,
         "comprehension": 2,
         "production": 2
-      }
+      },
+      "preservedFirst10Revisions": true
     },
     "wrongConceptsRejoinSpacedReview": true,
     "syntheticListeningWordAudioAdded": 6,
@@ -109,10 +122,17 @@
     "retellObservedInflections": true,
     "retellCoverageIsLexicalOnly": true,
     "retellLegacyNotesOutlinesLabelled": true,
-    "unsubmittedLegacyRetellDraftPersistence": false
+    "unsubmittedLegacyRetellDraftPersistence": false,
+    "unresolvedExistingContextReviewItems": 22,
+    "newContextReviewIssuesThisBatch": 0,
+    "additionalPackWordAudio": {
+      "files": 14,
+      "synthetic": true,
+      "notTextbookOriginal": true
+    }
   },
-  "staticFiles": 2721,
-  "staticBytes": 932839730,
+  "staticFiles": 2729,
+  "staticBytes": 810121512,
   "nativeearsAdvancedAudio": {
     "books": {
       "3": 60,
@@ -296,6 +316,16 @@
     "defaultPublic": true,
     "fourBookSelector": true
   },
+  "postReadingFlow": {
+    "order": [
+      "current-lesson-recall",
+      "knowledge-recurrence",
+      "current-lesson-phrases"
+    ],
+    "inlineOldWordList": false,
+    "knowledgeDefault": "collapsed",
+    "recallUsesExistingRetell": true
+  },
   "wordLookup": {
     "automaticBilingualPopup": true,
     "localSource": "ECDICT",
@@ -307,16 +337,6 @@
     "sourceLink": "https://github.com/skywind3000/ECDICT",
     "unknownWordsLabelled": true,
     "independentMeaningProvenance": true
-  },
-  "postReadingFlow": {
-    "order": [
-      "current-lesson-recall",
-      "knowledge-recurrence",
-      "current-lesson-phrases"
-    ],
-    "inlineOldWordList": false,
-    "knowledgeDefault": "collapsed",
-    "recallUsesExistingRetell": true
   },
   "sentenceWordPicker": {
     "design": "selected-option-2",
@@ -336,5 +356,17 @@
     "nativeModal": true,
     "grammarChecksRemainFinite": true,
     "reviewedSourceCorrections": 7
+  },
+  "originalPdfArchive": {
+    "removedPublishedFiles": 14,
+    "removedBytes": 123736322,
+    "removedMiB": 118.00415229797363,
+    "retainedPublishedPdfs": [
+      "resources/cebcdf4e922d21aa.pdf"
+    ],
+    "localBackupVerified": true,
+    "provenanceMetadataPreserved": true,
+    "convertedTextPreserved": true,
+    "gitHistoryRewritten": false
   }
 }

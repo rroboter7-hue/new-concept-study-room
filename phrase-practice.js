@@ -38,8 +38,8 @@
    if(textbook){
     const paragraph=Number.isSafeInteger(p.sourceParagraphIndex)&&p.sourceParagraphIndex>=0?' · 第 '+(p.sourceParagraphIndex+1)+' 段':'';
     const page=Number.isSafeInteger(p.sourcePage)&&p.sourcePage>0?' · 本课PDF第 '+p.sourcePage+' 页起':'';
-    const label='课文原句'+paragraph+page;
-    provenance='<small class="phrase-source">'+(page&&/^resources\/[a-z0-9_-]+\.pdf$/i.test(p.sourceUrl||'')?'<a href="'+e(p.sourceUrl)+'#page='+p.sourcePage+'" target="_blank" rel="noopener">'+e(label)+'</a>':e(label))+'</small>';
+    const archived=global.StudySourceFiles?.isArchived?.(p.sourceUrl),label='课文原句'+paragraph+page+(archived?' · 原PDF已归档':'');
+    provenance='<small class="phrase-source">'+(page&&!archived&&/^resources\/[a-z0-9_-]+\.pdf$/i.test(p.sourceUrl||'')?'<a href="'+e(p.sourceUrl)+'#page='+p.sourcePage+'" target="_blank" rel="noopener">'+e(label)+'</a>':e(label))+'</small>';
    }else if(p.sourcePage)provenance='<small class="phrase-source">来源笔记第 '+e(p.sourcePage)+' 页</small>';
    return form+example+translation+provenance;
   }
