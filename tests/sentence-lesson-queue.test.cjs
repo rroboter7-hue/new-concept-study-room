@@ -10,7 +10,7 @@ const lessons = [
   {id:'later',book:1,number:3,vocabulary:[{word:'letter',meaning:'信',isLessonNew:true}],usage:[]}
 ];
 
-function setup({drafts={},getVocabulary,getUsage,random=()=>0.3,lessonSet=lessons}={}) {
+function setup({drafts={},getVocabulary,getUsage,random=()=>0.3,lessonSet=lessons,defaultMode='flexible'}={}) {
   let current=lessons[1],markup='';const handlers={},focus=[],saves=[];
   const fields={};const field=selector=>fields[selector]||=( {innerHTML:'',textContent:'',focus(){focus.push(selector);},setAttribute(){},querySelector:field} );
   const trigger={focus(){focus.push('trigger');}};
@@ -19,7 +19,7 @@ function setup({drafts={},getVocabulary,getUsage,random=()=>0.3,lessonSet=lesson
   const document={activeElement:trigger,body:{classList:{contains:()=>true}},addEventListener:(type,fn)=>handlers[type]=fn,querySelector:selector=>selector==='#sentence-practice-content'?content:null};
   const sandbox={document,console,setTimeout:()=>1,clearTimeout(){}};sandbox.window=sandbox;vm.createContext(sandbox);
   for(const file of ['sentence-core.js','sentence-practice.js'])vm.runInContext(fs.readFileSync(path.join(__dirname,'..',file),'utf8'),sandbox);
-  const ui=new sandbox.SentencePractice({getLesson:()=>current,getLessons:()=>lessonSet,getRecords:()=>({}),getDrafts:()=>drafts,getVocabulary,getUsage,random,saveDraft:(key,value)=>{saves.push(key);drafts[key]=JSON.parse(JSON.stringify(value));return true;}});
+  const ui=new sandbox.SentencePractice({defaultMode,getLesson:()=>current,getLessons:()=>lessonSet,getRecords:()=>({}),getDrafts:()=>drafts,getVocabulary,getUsage,random,saveDraft:(key,value)=>{saves.push(key);drafts[key]=JSON.parse(JSON.stringify(value));return true;}});
   const render=()=>content.innerHTML=ui.render();
   function event(type,dataset,value='',extra={}){const node={dataset,value,...extra,closest:selector=>selector==='#sentence-practice-content'?content:selector==='[data-sentence-action]'&&dataset.sentenceAction?node:null};handlers[type]?.({target:node,preventDefault(){},key:extra.key});}
   const action=(name,key)=>event('click',{sentenceAction:name,sentenceTargetKey:key,sentenceOldKey:key});
@@ -75,6 +75,38 @@ test('an eligible alias-key cache normalizes once without randomizing its expres
   assert.equal(h.saves.filter(key=>key==='selection:v1:now').length,1);const writes=h.saves.length;h.render();assert.equal(h.saves.length,writes);
   const restored=setup({drafts:JSON.parse(JSON.stringify(h.drafts)),lessonSet,random:()=>{throw Error('valid alias migration must not randomize on reload');}});restored.setLesson(current);restored.render();
   assert.deepEqual(recommendationKeys(restored),valuableKeys);assert.equal(restored.ui.recommendedOldItems().length,4);assert.equal(restored.saves.length,0);
+});
+
+for(const entry of [
+  {mode:'four',targetKey:'word:now:book',key:'v3:four:now:word%3Anow%3Abook',step:1,first:'I accomplish the task in this book.',next:'We do not read this book.'},
+  {mode:'phrase',targetKey:'phrase:now:read%20about',key:'v3:phrase:now:phrase%3Anow%3Aread%2520about',step:0,first:'We read about a book.',next:'We read about the book after dinner.'}
+])test(`${entry.mode} quick writing migrates recommendation policy and restores its own saved answers`,()=>{
+  const oldKeys=['word:old:book','word:old:warm','word:old:send','phrase:old:look%20at'];
+  const drafts={
+    'selection:v1:now':{targetKey:entry.targetKey,mode:entry.mode,recommendedOldKeys:oldKeys},
+    [entry.key]:{targetKey:entry.targetKey,mode:entry.mode,step:entry.step,selectedOldKeys:['word:old:warm'],recommendedOldKeys:['word:old:investigate'],answers:{affirmative:entry.first}}
+  };
+  const h=setup({drafts,defaultMode:'four'});const html=h.render(),keys=recommendationKeys(h);
+  assert.match(html,new RegExp(`data-writing-mode="${entry.mode}"`));assert.equal(h.ui.active.key,entry.key);assert.equal(h.ui.active.draft.mode,entry.mode);
+  assert.equal(h.ui.active.draft.answers.affirmative,entry.first);assert.equal(h.ui.active.draft.step,entry.step);assert.equal(h.ui.lessonProgress().done,0);
+  assert.deepEqual(Array.from(h.ui.active.draft.selectedOldKeys),['word:old:warm']);assert.ok(['word:old:investigate',...oldKeys].every(key=>h.ui.active.draft.recommendedOldKeys.includes(key)));
+  assert.equal(h.drafts['selection:v1:now'].recommendationProfile,'phrases-verbs-v1');assert.equal(h.ui.recommendedOldItems().filter(item=>item.category==='phrase').length,3);
+  h.answer(entry.next);h.ui.flush();
+  const restored=setup({drafts:JSON.parse(JSON.stringify(h.drafts)),defaultMode:'four',random:()=>0.9});restored.render();
+  assert.equal(restored.ui.active.key,entry.key);assert.equal(restored.ui.active.draft.answers[entry.mode==='four'?'negative':'affirmative'],entry.next);
+  assert.deepEqual(recommendationKeys(restored),keys);assert.equal(restored.ui.lessonSelections.get('now').recommendationProfile,'phrases-verbs-v1');assert.equal(restored.saves.length,0);
+});
+
+test('hidden fifth-sentence text cannot displace a used quick-mode recommendation at the history cap',()=>{
+  const historyWords=Array.from({length:20},(_,index)=>'unused'+String.fromCharCode(97+index)),history=historyWords.map(word=>'word:old:'+word);
+  const drafts={
+    'selection:v1:now':{targetKey:'word:now:book',mode:'four',recommendationProfile:'phrases-verbs-v1',recommendedOldKeys:valuableKeys},
+    'v3:four:now:word%3Anow%3Abook':{targetKey:'word:now:book',mode:'four',recommendedOldKeys:history,answers:{affirmative:'I accomplish the task in this book.',negative:'We do not read this book.',yesno:'Do we need this book?',wh:'Why do you read this book?',combined:historyWords.join(' ')}}
+  };
+  const h=setup({drafts,defaultMode:'four',getVocabulary:lesson=>lesson.id==='old'?lesson.vocabulary.concat(historyWords.map(word=>({word,pos:'n.',meaning:'未用词'}))):lesson.vocabulary});h.render();h.action('check');
+  const saved=h.drafts[h.ui.active.key];assert.equal(saved.recommendedOldKeys.length,20);assert.ok(saved.recommendedOldKeys.includes('word:old:accomplish'));
+  const eligible=h.core.recommendOldWords({profile:'phrases-verbs',items:h.ui.wordBank().filter(item=>['accomplish','put up with'].includes(item.label)),drafts:h.drafts,lessonId:'later',count:4,random:()=>0});
+  assert.deepEqual(Array.from(eligible,item=>item.label),['put up with']);assert.equal(saved.answers.combined,historyWords.join(' '));
 });
 
 test('an eligible old-policy one-phrase three-verb cache migrates once to the phrase-first profile',()=>{

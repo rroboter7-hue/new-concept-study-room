@@ -39,7 +39,7 @@
     "inputs": [
       {
         "file": "index.html",
-        "sha256": "5381b5a51da03ca70fb5724cf223ead74defb83c9676706730981f9f68460f39"
+        "sha256": "dbd134931f0da1aa23e987d173c37a6b4755d15133b4abf6bbc382eaf3cc0411"
       },
       {
         "file": "lexical-word-tokens.js",
@@ -223,7 +223,7 @@
       },
       {
         "file": "review-practice.js",
-        "sha256": "704830098f5052b7c0e2e3cd07b90f1031f7a2993daa290d8bea0ac3a0ca66ab"
+        "sha256": "33792c8a27e336e6aafe7269bb9719a070aa69c257de3777d99eda960e5ada1f"
       },
       {
         "file": "reading-layout.js",
@@ -271,7 +271,7 @@
       },
       {
         "file": "lesson-word-targets.js",
-        "sha256": "47003d794ddf17bcff5d505e10004a8ad8f0c663e2ca70ed5a9edfe4ff11e7da"
+        "sha256": "fae02b458fb4295f0a003206b25f5dd5af84a1d0d493aac766e448063c557cd1"
       },
       {
         "file": "sentence-wordbank-data.js",
@@ -279,11 +279,11 @@
       },
       {
         "file": "sentence-core.js",
-        "sha256": "f4cf4c14657a5587267fdf9315720606bf1a17483d6f42fc9a6a4867b7447fd5"
+        "sha256": "619118709e4498cf6e77aadd4edbc5c3386bd68ee6b4e54b66c11238e0f81433"
       },
       {
         "file": "sentence-practice.js",
-        "sha256": "e7c4e2f77f258c609ba35b3d576f0791aaa13d8811c9782fe22edc2291e32325"
+        "sha256": "7f4276541f87f919dc01e09dd283dc4bc65c78e24596da4220cb4503721d7404"
       },
       {
         "file": "dictionary-service.js",
@@ -299,7 +299,7 @@
       },
       {
         "file": "output-practice.js",
-        "sha256": "4a8a83a377cb0d88fb8b61b66a4178ecc84806386223c22f687287afb469a043"
+        "sha256": "f17412458b2b245c18ed61ad776ab963ec37f8e10cb437dacef07b272fdd685d"
       },
       {
         "file": "phrase-practice.js",
@@ -311,7 +311,7 @@
       },
       {
         "file": "mobile-learning-shell.js",
-        "sha256": "305d8f75c84f33c0b475a08791198108de29d9a681ad72b59c5f6505ef1f6fe6"
+        "sha256": "c8e9d794ff1dcdd482d8d12951f00e006dca64c4b8f2ac78c506db8b830ecf7c"
       },
       {
         "file": "learning-progress.js",
@@ -327,11 +327,11 @@
       },
       {
         "file": "learning-coach-core.js",
-        "sha256": "c37098bd3da1a030c49da356991ded0d8f8ff955de5409796a5a23b8ccce2c2b"
+        "sha256": "445760f1661322fdaeb90484502d6c022073152e39c16ee999584096c50c7f41"
       },
       {
         "file": "learning-coach.js",
-        "sha256": "9c4b97dd672b5baa25e687c689e84e24afd5ce36e4345dc997f33eb691432185"
+        "sha256": "f16ee66df98b9205db27fb9e5412f33acc08eaa6fa5ed12f961e358e7b086f0d"
       },
       {
         "file": "lesson-recall-core.js",

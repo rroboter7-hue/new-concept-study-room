@@ -212,7 +212,7 @@
     },
     {
       "file": "review-practice.js",
-      "sha256": "1073aafa11f34cc777bdb386f7815f4a4ec2072c2d2745b63c7dcc15af4dc05d"
+      "sha256": "bb7465c9da229df6b0c78f70b4a0fd685ded64adf7756c29925488754d20e710"
     },
     {
       "file": "reading-layout.js",
@@ -264,11 +264,11 @@
     },
     {
       "file": "sentence-core.js",
-      "sha256": "84c5a87000f72cc24c817b07bc5f6d7a58c62a28f48e22a9786ec6ece0d7fffd"
+      "sha256": "9b97c5441800b428bb19f3f9f3eb4c5f8661891ee213a455a0da597c9a65bb7e"
     },
     {
       "file": "sentence-practice.js",
-      "sha256": "fba84e0aa2f36fd5a8dca04328451bb47e78b695aa23c606280cf8f752bc6bc2"
+      "sha256": "eef8526b251c50580aeeff112ccf8f6809bc6cb6a7f927e35799199916b3b264"
     },
     {
       "file": "dictionary-service.js",
@@ -284,7 +284,7 @@
     },
     {
       "file": "output-practice.js",
-      "sha256": "1be97a78d68f3c640b17ef5ab755cde06e7833b624a93d7d79edaf3d61da3c0f"
+      "sha256": "3b19b115e2c9673ad7c86335973b4eb874c1f5fce04ce4025cad3ff29643d33f"
     },
     {
       "file": "phrase-practice.js",
@@ -296,7 +296,7 @@
     },
     {
       "file": "mobile-learning-shell.js",
-      "sha256": "e6dbb42e794f39b77349c9e79f2cfc0ebaae53747ca7f4a02430e29d2042fc6c"
+      "sha256": "11ee2fb04409d754ce12c432a2d8be4d12ef366530791bacfdf912f3b74000cc"
     },
     {
       "file": "learning-progress.js",
@@ -312,11 +312,11 @@
     },
     {
       "file": "learning-coach-core.js",
-      "sha256": "d3ac8d862a7f2342590bc0e0b097d33cf213c76d3cb38a675ddc8b8d83376b7d"
+      "sha256": "d4096edd183e6e26cbe33e1d60fcf73f55f42e8a3e62abaa5fd925f34a434ba1"
     },
     {
       "file": "learning-coach.js",
-      "sha256": "5b751042899e0e6a2c9e7fdecda3293bc133333c66934dffbf5b5cdbd3db10ed"
+      "sha256": "c87ea44f340552aeebe51c255577c67c75f670d6ad2c5cfdda26eee95297801d"
     },
     {
       "file": "lesson-recall-core.js",
@@ -4142,7 +4142,7 @@
   ],
   "artifact": {
     "file": "lesson-word-targets.js",
-    "sha256": "47003d794ddf17bcff5d505e10004a8ad8f0c663e2ca70ed5a9edfe4ff11e7da",
+    "sha256": "fae02b458fb4295f0a003206b25f5dd5af84a1d0d493aac766e448063c557cd1",
     "bytes": 2645672,
     "hashEncoding": "utf8-lf"
   },

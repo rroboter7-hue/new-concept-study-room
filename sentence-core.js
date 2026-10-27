@@ -8,6 +8,8 @@
   'use strict';
 
   var KINDS = Object.freeze(['affirmative', 'negative', 'yesno', 'wh', 'combined']);
+  var MODES = Object.freeze(['transform','flexible','four','phrase']);
+  function requiredKinds(mode) { return mode === 'phrase' ? KINDS.slice(0, 1) : mode === 'four' ? KINDS.slice(0, 4) : KINDS.slice(); }
   var LABELS = ['肯定句', '否定句', '一般疑问句', '特殊疑问句', '旧知综合造句'];
   var LIMITATION = '这里只做有限的本地规则检查；语义、自然度和完整语法仍需人工复核。';
   var ID = /^[A-Za-z0-9][A-Za-z0-9._:-]{0,159}$/;
@@ -134,7 +136,7 @@
       var record = own(records, lesson.id) ? object(records[lesson.id]) : {};
       return selected.has(lesson.id) || record.completed === true || typeof record.attempts === 'number' && Number.isFinite(record.attempts) && record.attempts > 0;
     });
-    var getVocabulary = ownValue(options, 'getVocabulary');
+    var getVocabulary = ownValue(options, 'getVocabulary'), getUsage = ownValue(options, 'getUsage');
     function items(list, field, label) {
       var result = [];
       list.forEach(function (lesson) {
@@ -142,6 +144,9 @@
         var rows = lesson[field];
         if (field === 'vocabulary' && typeof getVocabulary === 'function') {
           try { var provided = getVocabulary(lesson); if (Array.isArray(provided)) rows = provided; } catch (_) { /* An unavailable expansion keeps the original vocabulary. */ }
+        }
+        if (field === 'usage' && typeof getUsage === 'function') {
+          try { var providedUsage = getUsage(lesson); if (Array.isArray(providedUsage)) rows = providedUsage; } catch (_) { /* Keep source usage when a reviewed provider is unavailable. */ }
         }
         (Array.isArray(rows) ? rows : []).forEach(function (item) {
           item = object(item);
@@ -184,15 +189,16 @@
     var selectedOldKeys = Array.from(new Set((Array.isArray(selected) ? selected : []).map(function (key) { return text(key, 600).trim(); }).filter(Boolean))).slice(0, 100);
     var recommended = ownValue(value, 'recommendedOldKeys');
     var recommendedOldKeys = Array.from(new Set((Array.isArray(recommended) ? recommended : []).map(function (key) { return text(key, 600).trim(); }).filter(Boolean))).slice(0, 20);
-    return { step: Number.isFinite(value.step) ? Math.max(0, Math.min(4, Math.floor(value.step))) : 0,
+    var mode = MODES.includes(value.mode) ? value.mode : 'transform';
+    return { step: Number.isFinite(value.step) ? Math.max(0, Math.min(requiredKinds(mode).length - 1, Math.floor(value.step))) : 0,
       targetKey: text(value.targetKey, 600), sourceLessonIds: Array.from(new Set(ids)).slice(0, 200), oldWordKey: text(value.oldWordKey, 600), oldPhraseKey: text(value.oldPhraseKey, 600), selectedOldKeys: selectedOldKeys, recommendedOldKeys: recommendedOldKeys, recommendationProfile: value.recommendationProfile === 'phrases-verbs-v1' ? 'phrases-verbs-v1' : '', answers: result,
-      mode:value.mode==='flexible'?'flexible':'transform',roundKey:validRoundKey(value.roundKey)?value.roundKey:'',assisted:value.assisted===true,evidenceTargetKey:text(value.evidenceTargetKey,600),
+      mode:mode,roundKey:validRoundKey(value.roundKey)?value.roundKey:'',assisted:value.assisted===true,evidenceTargetKey:text(value.evidenceTargetKey,600),
       checkedAt: !answersChanged && typeof value.checkedAt === 'number' && Number.isFinite(value.checkedAt) && value.checkedAt >= 0 && value.checkedAt <= 8640000000000000 ? Math.floor(value.checkedAt) : 0 };
   }
   function draftKey(lessonId, targetKey) { return 'v1:' + encoded(text(lessonId, 160)) + ':' + encoded(text(targetKey, 600)); }
   function validRoundKey(value){return typeof value==='string'&&/^[A-Za-z0-9][A-Za-z0-9._:-]{0,79}$/.test(value);}
-  function modeDraftKey(lessonId,targetKey,mode){return mode==='transform'?draftKey(lessonId,targetKey):'v2:flexible:'+encoded(text(lessonId,160))+':'+encoded(text(targetKey,600));}
-  function roundDraftKey(lessonId,targetKey,roundKey,mode){if(!validRoundKey(roundKey))throw new TypeError('Invalid sentence round');return 'round:v1:'+encoded(text(lessonId,160))+':'+encoded(text(targetKey,600))+':'+encoded(roundKey)+':'+(mode==='transform'?'transform':'flexible');}
+  function modeDraftKey(lessonId,targetKey,mode){return mode==='transform'?draftKey(lessonId,targetKey):(mode==='four'||mode==='phrase'?'v3:'+mode+':':'v2:flexible:')+encoded(text(lessonId,160))+':'+encoded(text(targetKey,600));}
+  function roundDraftKey(lessonId,targetKey,roundKey,mode){if(!validRoundKey(roundKey))throw new TypeError('Invalid sentence round');return 'round:v1:'+encoded(text(lessonId,160))+':'+encoded(text(targetKey,600))+':'+encoded(roundKey)+':'+(MODES.includes(mode)?mode:'flexible');}
 
   // Explicit irregulars plus normal spelling rules; no unconstrained stemming.
   var IRREGULAR = {
@@ -339,7 +345,7 @@
   }
   function expression(value, field) { return typeof value === 'string' ? value.trim() : text(object(value)[field]||(field==='word'?(object(value).phrase||object(value).label):''), 160).trim(); }
   function duplicateKey(value) { return expand(value).replace(/[^\p{L}\p{N}\s]/gu, '').replace(/\s+/g, ' ').trim(); }
-  function completion(options){options=object(options);var answers=object(options.answers),target=expression(options.target,'word'),keys=KINDS.map(function(k){return duplicateKey(answers[k]);});return Boolean(target&&keys.every(Boolean)&&new Set(keys).size===5&&KINDS.every(function(k){return typeof answers[k]==='string'&&answers[k].length<=400&&matchesExpression(answers[k],target);}));}
+  function completion(options){options=object(options);var answers=object(options.answers),target=expression(options.target,'word'),kinds=requiredKinds(options.mode),keys=kinds.map(function(k){return duplicateKey(answers[k]);});return Boolean(target&&keys.every(Boolean)&&new Set(keys).size===kinds.length&&kinds.every(function(k){return typeof answers[k]==='string'&&answers[k].length<=400&&matchesExpression(answers[k],target);}));}
   // Persisted progress and rotation read only own data fields. Do not sanitize
   // answers here: truncating an imported overlong answer could fabricate completion.
   function draftValues(drafts) {
@@ -380,7 +386,7 @@
         written = Math.max(written, KINDS.filter(function (kind) { return typeof answers[kind] === 'string' && answers[kind].length <= 400 && answers[kind].trim(); }).length);
         if (at) {
           checked = true;
-          if (completion({ target: word, answers: answers })) complete = true;
+          if (completion({ mode:ownValue(draft,'mode'),target: word, answers: answers })) complete = true;
         }
       });
       return { key: key, written: written, checked: checked, complete: complete };
@@ -546,13 +552,13 @@
     draftValues(ownValue(options, 'drafts')).forEach(function (draft) {
       var at = checkedTime(draft), target = decodedTarget(ownValue(draft, 'targetKey'));
       if (!at || !target) return;
-      var answers = draftAnswers(draft);
-      if (!completion({ target: target, answers: answers })) return;
+      var answers = draftAnswers(draft), kinds = requiredKinds(ownValue(draft, 'mode'));
+      if (!completion({ mode:ownValue(draft,'mode'),target: target, answers: answers })) return;
       var selected = own(draft, 'selectedOldKeys') ? ownValue(draft, 'selectedOldKeys') : [ownValue(draft, 'oldWordKey'), ownValue(draft, 'oldPhraseKey')];
       var recommended = ownValue(draft, 'recommendedOldKeys');
       var keys = new Set((Array.isArray(selected) ? selected : []).concat(Array.isArray(recommended) ? recommended : []).filter(function (key) { return boundedKey(key); }));
       candidates.forEach(function (candidate) {
-        if (candidate.keys.some(function (key) { return keys.has(key); }) && KINDS.some(function (kind) { return matchesExpression(answers[kind], candidate.value); })) candidate.lastUsed = Math.max(candidate.lastUsed, at);
+        if (candidate.keys.some(function (key) { return keys.has(key); }) && kinds.some(function (kind) { return matchesExpression(answers[kind], candidate.value); })) candidate.lastUsed = Math.max(candidate.lastUsed, at);
       });
     });
     var unused = candidates.filter(function (candidate) { return !candidate.lastUsed; });
@@ -587,20 +593,23 @@
   }
   function flexibleCheck(options){
     var answers=object(options.answers),target=expression(options.target,'word'),labels=['换一个语境','补充时间地点','模仿并改写','提问或回应','结合旧知'],written=0;
-    var rows=KINDS.map(function(kind,index){var sentence=text(answers[kind],10000).trim(),issues=[],notes=[LIMITATION];if(!sentence)return {kind:kind,label:labels[index],status:'empty',issues:[],notes:notes};written++;
+    var kinds=requiredKinds(options.mode);
+    if(options.mode==='phrase')labels=['习惯用法造句'];
+    var rows=kinds.map(function(kind,index){var sentence=text(answers[kind],10000).trim(),issues=[],notes=[LIMITATION];if(!sentence)return {kind:kind,label:labels[index],status:'empty',issues:[],notes:notes};written++;
       if(!target||!matchesExpression(sentence,target))issues.push('尚未识别到目标单词或习惯用法，以及已支持的常见词形。');
       if(sentence.length>400)issues.push('每句最多400字符。');
-      if(KINDS.some(function(other){return other!==kind&&duplicateKey(answers[other])===duplicateKey(sentence);}))issues.push('五句应有变化，不能只重复同一句。');
+      if(kinds.some(function(other){return other!==kind&&duplicateKey(answers[other])===duplicateKey(sentence);}))issues.push('句子应有变化，不能只重复同一句。');
       if(typeof options.grammarCheck==='function')try{var feedback=options.grammarCheck(sentence.slice(0,400));if(!Array.isArray(feedback))throw Error();feedback.slice(0,20).forEach(function(x){var message=text(object(x).message,600);if(message)notes.push('有限规则建议：'+message);});}catch(_){notes.push('附加规则暂时不可用，请自行或请老师核对。');}
       notes.push('提示方向可灵活选择；本地不判断是否真正换了语境、表达是否自然或语法完整正确。');return {kind:kind,label:labels[index],status:issues.length?'needs-work':'review',issues:issues,notes:notes};});
-    return {rows:rows,writtenCount:written,readyForReview:completion(options),complete:completion(options),rulesOnly:true,mode:'flexible'};
+    return {rows:rows,writtenCount:written,requiredCount:kinds.length,readyForReview:completion(options),complete:completion(options),rulesOnly:true,mode:options.mode};
   }
   function check(options) {
     options = object(options);
-    if(options.mode==='flexible')return flexibleCheck(options);
+    if(options.mode==='flexible'||options.mode==='phrase')return flexibleCheck(options);
     var answers = object(options.answers), target = expression(options.target, 'word'), oldWord = expression(options.oldWord, 'word'), oldPhrase = expression(options.oldPhrase, 'phrase');
     var writtenCount = 0;
-    var rows = KINDS.map(function (kind, index) {
+    var kinds=requiredKinds(options.mode);
+    var rows = kinds.map(function (kind, index) {
       var sentence = text(answers[kind], 10000).trim(), issues = [], notes = [LIMITATION], review = false;
       if (index > 0 && index < 4) notes.push('请保持第一句原句的主语、时态和基本情境；本地规则无法确认情境是否一致。');
       if (!sentence) return { kind: kind, label: LABELS[index], status: 'empty', issues: [], notes: notes };
@@ -633,8 +642,8 @@
       if (!issues.length && !review) notes.push('已完成词项覆盖和已支持的基本句型检查，请继续人工复核。');
       return { kind: kind, label: LABELS[index], status: issues.length ? 'needs-work' : review ? 'review' : 'ready', issues: Array.from(new Set(issues)), notes: Array.from(new Set(notes)) };
     });
-    return { rows: rows, writtenCount: writtenCount, readyForReview: writtenCount === 5 && rows.every(function (row) { return row.status !== 'needs-work'; }), rulesOnly: true };
+    return { rows: rows, writtenCount: writtenCount, requiredCount:kinds.length, readyForReview: writtenCount === kinds.length && rows.every(function (row) { return row.status !== 'needs-work'; }), rulesOnly: true };
   }
 
-  return Object.freeze({ KINDS: KINDS, context: context, wordBank: wordBank, sanitizeDraft: sanitizeDraft, lessonProgress: lessonProgress, recommendationEligible: recommendationEligible, recommendOldWords: recommendOldWords, draftKey: draftKey, modeDraftKey:modeDraftKey,roundDraftKey:roundDraftKey,validRoundKey:validRoundKey,completion:completion,matchesExpression: matchesExpression, check: check });
+  return Object.freeze({ KINDS: KINDS, MODES:MODES, requiredKinds:requiredKinds,context: context, wordBank: wordBank, sanitizeDraft: sanitizeDraft, lessonProgress: lessonProgress, recommendationEligible: recommendationEligible, recommendOldWords: recommendOldWords, draftKey: draftKey, modeDraftKey:modeDraftKey,roundDraftKey:roundDraftKey,validRoundKey:validRoundKey,completion:completion,matchesExpression: matchesExpression, check: check });
 });

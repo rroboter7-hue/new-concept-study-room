@@ -1,6 +1,6 @@
 {
   "build": "2026-10-27-phrase-verb-recommendations",
-  "preparedAt": "2026-10-27T06:03:01.334043+00:00",
+  "preparedAt": "2026-10-27T06:09:59.786932+00:00",
   "book2": {
     "book": 2,
     "total": 96,
@@ -103,9 +103,9 @@
     "syntheticListeningWordAudioAdded": 6,
     "dailyOutputCoach": {
       "dailySmallBatches": true,
-      "reviewCardsMaximum": 3,
+      "reviewCardsMaximum": 10,
       "productiveTargetPerDay": 1,
-      "wordAndPhraseFiveSentences": true,
+      "wordAndPhraseFiveSentences": false,
       "selfExplanation": true,
       "textRetelling": true,
       "assistanceEvidence": true,
@@ -113,7 +113,11 @@
       "browserLocal": true,
       "automaticSemanticOrSpeakingScore": false,
       "intervalsAreProductSchedule": true,
-      "sourceTargetQualityGate": true
+      "sourceTargetQualityGate": true,
+      "fourSentenceForms": 4,
+      "phraseSentences": 1,
+      "legacyPlansPreserved": true,
+      "targetBoundEvidence": true
     },
     "defaultMobileNavigation": true,
     "defaultMobileBookSelection": [
@@ -227,8 +231,8 @@
     },
     "unsubmittedLegacyDictationDraftPersistence": true
   },
-  "staticFiles": 4061,
-  "staticBytes": 735287852,
+  "staticFiles": 4227,
+  "staticBytes": 740416422,
   "nativeearsAdvancedAudio": {
     "books": {
       "3": 60,
@@ -530,7 +534,7 @@
     "includesNewForms": true,
     "sourceTitleAndBody": true,
     "allTargetsReachable": true,
-    "fiveSentencesPerTarget": true,
+    "fiveSentencesPerTarget": false,
     "practiceIsNotMastery": true,
     "separateTargetDrafts": true,
     "optionalEarlierWordsAndPhrases": true,
@@ -544,6 +548,9 @@
     "pendingMeanings": 260,
     "lazyWordPickerRows": true,
     "initialPickerRows": 80,
+    "fourSentenceFormsPerWord": 4,
+    "phraseSentences": 1,
+    "legacyDraftsPreserved": true,
     "recommendationProfile": "phrases-verbs-v1",
     "recommendedPhrases": 3,
     "recommendedVerbs": 1,
@@ -583,5 +590,31 @@
     "persistsLocally": true,
     "backupRestore": true,
     "passageOnly": true
+  },
+  "mobileWriting": {
+    "visibleMenu": true,
+    "directDictationAndRetell": true,
+    "readingContinuesToWriting": true,
+    "primary": [
+      "four-forms",
+      "phrase-writing"
+    ],
+    "reviewGroupMaximum": 10,
+    "explicitNextGroup": true,
+    "reviewScheduleUnchanged": true,
+    "reuseOwnOriginal": true,
+    "insertTargetAtCaret": true,
+    "optionalOldWordBank": true,
+    "doubaoCopy": {
+      "includesLearnerInputs": true,
+      "includesCheckingInstructions": true,
+      "manualPaste": true,
+      "automaticExternalSend": false,
+      "selectableFailureFallback": true
+    },
+    "drafts": {
+      "separateModes": true,
+      "legacyFivePreserved": true
+    }
   }
 }

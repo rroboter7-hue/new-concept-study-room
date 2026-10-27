@@ -158,3 +158,47 @@ test('recommendation profile marker sanitizes independently without changing exi
   const trap = Object.defineProperty({ ...input }, 'recommendationProfile', { get() { throw Error('Do not read imported profile getter'); } });
   assert.equal(core.sanitizeDraft(trap).recommendationProfile, '');
 });
+
+test('checked single-sentence and four-form rounds rotate only the expressions actually practised in that mode', () => {
+  const items = [phrases[0], phrases[1], verbs[0]];
+  const single = { ...draft([phrases[0].key], ''), mode: 'phrase', answers: { affirmative: 'I use newword and take into account the risks.' } };
+  assert.deepEqual(labels(recommend({ items, drafts: [single] })), ['put up with', 'investigate']);
+  const four = { ...draft([phrases[0].key, verbs[0].key], ''), mode: 'four', answers: { ...answers(''), affirmative: 'I use newword to investigate what to take into account.' } };
+  delete four.answers.combined;
+  assert.deepEqual(labels(recommend({ items, drafts: [four] })), ['put up with']);
+  const legacy = { ...four }; delete legacy.mode;
+  assert.deepEqual(labels(recommend({ items, drafts: [legacy] })), labels(items));
+});
+
+test('partial, unchecked, malformed or target-missing quick rounds cannot consume old recommendations', () => {
+  const items = [phrases[0], phrases[1], verbs[0]];
+  const single = { ...draft([phrases[0].key], ''), mode: 'phrase', answers: { affirmative: 'I use newword and take into account the risks.' } };
+  const four = { ...draft([phrases[0].key], ''), mode: 'four', answers: { ...answers(''), affirmative: single.answers.affirmative } };
+  delete four.answers.combined; delete four.answers.wh;
+  const inheritedMode = Object.assign(Object.create({ mode: 'phrase' }), { ...single }); delete inheritedMode.mode;
+  const accessorMode = Object.defineProperty({ ...single }, 'mode', { get() { throw Error('Do not invoke mode getter'); } });
+  for (const invalid of [{ ...single, checkedAt: 0 }, { ...single, checkedAt: '10' }, { ...single, checkedAt: Infinity }, { ...single, answers: {} }, { ...single, answers: { affirmative: 'We take into account the risks.' } }, { ...single, answers: { affirmative: 'newword ' + 'take into account '.repeat(30) } }, four, inheritedMode, accessorMode]) {
+    assert.deepEqual(labels(recommend({ items, drafts: [invalid] })), labels(items));
+  }
+});
+
+test('hidden legacy sentences cannot consume recommendations in checked quick writing modes', () => {
+  const items = [phrases[0], phrases[1], verbs[0]];
+  const hidden = 'We use newword to investigate what to take into account.';
+  const single = { ...draft([phrases[0].key, verbs[0].key], ''), mode: 'phrase', answers: { affirmative: 'I use newword today.', negative: hidden, combined: hidden } };
+  assert.deepEqual(labels(recommend({ items, drafts: [single] })), labels(items));
+  const four = { ...draft([phrases[0].key, verbs[0].key], ''), mode: 'four', answers: { ...answers(''), combined: hidden } };
+  assert.deepEqual(labels(recommend({ items, drafts: [four] })), labels(items));
+});
+
+test('profile marker coexists with quick-mode draft bounds without deleting separate legacy answers', () => {
+  for (const [mode, step] of [['phrase', 0], ['four', 3], ['flexible', 4], ['transform', 4]]) {
+    const input = { ...draft([phrases[0].key], 'and take into account the risks'), mode, step: 4, recommendationProfile: 'phrases-verbs-v1' };
+    const clean = core.sanitizeDraft(input);
+    assert.equal(clean.mode, mode);
+    assert.equal(clean.step, step);
+    assert.equal(clean.recommendationProfile, 'phrases-verbs-v1');
+    assert.equal(clean.checkedAt, input.checkedAt);
+    assert.deepEqual(clean.answers, input.answers);
+  }
+});
