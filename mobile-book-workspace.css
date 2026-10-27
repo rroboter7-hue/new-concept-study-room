@@ -86,5 +86,7 @@
  .mls-book-workspace.mls-mobile .question-card h3{font-size:18px;line-height:1.65}
  .mls-book-workspace.mls-mobile .answer-option{min-height:48px;font-size:16px;line-height:1.6;padding:12px}
  .mls-book-workspace.mls-mobile .word-popover{max-width:calc(100vw - 24px)}
+ .mls-book-workspace.mls-mobile .word-popover .meaning,.mls-book-workspace.mls-mobile .word-popover .word-online-result,.mls-book-workspace.mls-mobile .word-popover .word-online-sense{font-size:16px;line-height:1.65}
+ .mls-book-workspace.mls-mobile .word-popover .word-source-label{font-size:13px}
 }
 @media(max-width:360px){.mls-book-workspace.mls-mobile .app-main{padding-left:17px;padding-right:17px}.mls-book-workspace.mls-mobile .mls-page-title{font-size:28px}.mls-book-workspace.mls-mobile .paragraph .english{font-size:22px}.mls-book-workspace .mls-header-lesson{font-size:15px!important}}

@@ -1,6 +1,6 @@
 {
-  "build": "2026-10-26-mobile245",
-  "preparedAt": "2026-10-26T09:55:53.287226+00:00",
+  "build": "2026-10-27-bilingual",
+  "preparedAt": "2026-10-27T01:51:50.359502+00:00",
   "book2": {
     "book": 2,
     "total": 96,
@@ -106,8 +106,8 @@
     ],
     "notesOriginsExplicit": true
   },
-  "staticFiles": 1995,
-  "staticBytes": 812488374,
+  "staticFiles": 2680,
+  "staticBytes": 929031569,
   "nativeearsAdvancedAudio": {
     "books": {
       "3": 60,
@@ -146,7 +146,14 @@
     "book3": 60,
     "book4": 48,
     "originalWorkbookExercises": false,
-    "newFullTranslations": true
+    "newFullTranslations": true,
+    "book1": 72,
+    "translatedLessonsByBook": {
+      "1": 72,
+      "2": 96,
+      "3": 60,
+      "4": 48
+    }
   },
   "sentenceBatch": {
     "localBasicChecks": true,
@@ -205,16 +212,36 @@
     "book3SentenceAlignedLessons": 60,
     "book3SentencePairs": 1301,
     "book4SentenceAlignedLessons": 48,
-    "book4SentencePairs": 754
+    "book4SentencePairs": 754,
+    "book1ParagraphTranslationLessons": 72,
+    "book1SentenceAligned": false
   },
   "book1": {
-    "readingUnits": 10,
+    "readingUnits": 72,
     "totalReadingUnits": 72,
-    "scope": "odd-numbered reading lessons1–19",
+    "scope": "72 odd-numbered reading lessons1–143; original even-numbered workbook exercises omitted",
     "sourcePdfSha256": "df385269f6502f201fc5689683f9163205202e8b0b735fd9a388b2c7982ba2b3",
-    "syntheticLessonAudio": 10,
-    "syntheticWordAudioAdded": 93,
-    "translationStatus": "not-reviewed"
+    "syntheticLessonAudio": 72,
+    "syntheticWordAudioAdded": 706,
+    "translationStatus": "independently-reviewed-self-authored",
+    "remainingReadingUnits": 0,
+    "paragraphs": 759,
+    "syntheticWordAudioNewInThisBatch": 613,
+    "syntheticAudioBytesNewInThisBatch": 115892650,
+    "translationLabel": "自编中文译文（非教材官方译文）",
+    "independentReviewSha256": "7df900e081d4f916c2f46c733d59b680bb57c5546c0fe8252a39989c3d1d7d21",
+    "independentVisualNewSampleLessons": [
+      21,
+      39,
+      59,
+      61,
+      81,
+      101,
+      103,
+      123,
+      143
+    ],
+    "independentlyVisuallyReviewedAllLessons": false
   },
   "advancedLanguage": {
     "books": {
@@ -263,5 +290,16 @@
     "dailyTasksMenu": true,
     "defaultPublic": true,
     "fourBookSelector": true
+  },
+  "wordLookup": {
+    "automaticBilingualPopup": true,
+    "localSource": "ECDICT",
+    "lazyLetterShards": true,
+    "courseChinesePriority": true,
+    "onlineEnglishFallback": true,
+    "independentLanguageFields": true,
+    "notebookBilingual": true,
+    "sourceLink": "https://github.com/skywind3000/ECDICT",
+    "unknownWordsLabelled": true
   }
 }

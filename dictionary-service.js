@@ -23,6 +23,7 @@
     return word.length <= 64 && /^[a-z]+(?:[-'][a-z]+)*$/.test(word) ? word : '';
   }
   const encoded = word => encodeURIComponent(word).replace(/'/g, '%27');
+  const localShards = new Map();
   function text(value, limit) {
     return typeof value === 'string' ? value
       .replace(/<(script|style)\b[^>]*>[\s\S]*?<\/\1\s*>/gi, '')
@@ -69,7 +70,7 @@
       timer = setTimeout(() => cancel('timeout'), delay);
       const request = (async () => {
         const response = await fetcher.call(root, 'https://api.dictionaryapi.dev/api/v2/entries/en/' + encoded(word), {
-          signal: controller.signal, credentials: 'omit'
+          signal: controller.signal, credentials: 'omit', referrerPolicy: 'no-referrer'
         });
         if (!response?.ok) throw failure(response?.status === 404 ? 'not-found' : response?.status === 429 ? 'rate-limit' : 'unavailable');
         return parse(await response.json(), word);
@@ -84,9 +85,66 @@
       signal?.removeEventListener('abort', onAbort);
     }
   }
+  function parseLocal(entries, word) {
+    if (!Object.hasOwn(entries, word)) return null;
+    const raw = entries[word];
+    if (!raw || typeof raw !== 'object' || Array.isArray(raw)) return null;
+    const translated = text(raw.translation, 1200);
+    const translation = /[\u3400-\u9fff]/.test(translated) ? translated : '';
+    const definitions = (typeof raw.definition === 'string' ? raw.definition.split(/\\n|\r?\n/) : [])
+      .slice(0, 8).map(definition => ({definition: text(definition, 600), example: ''}))
+      .filter(item => item.definition).slice(0, 4);
+    if (!translation && !definitions.length) return null;
+    const pos = text(raw.pos, 40);
+    return {word, headword: wordOf(raw.headword) || word, translation,
+      definition: definitions[0]?.definition || '', example: '', phonetic: text(raw.phonetic, 120), pos,
+      meanings: definitions.length ? [{partOfSpeech: pos, definitions}] : [],
+      sourceName: 'ECDICT', sourceUrl: 'https://github.com/skywind3000/ECDICT', language: 'en-zh'};
+  }
+  async function lookupLocal(input, {signal, timeoutMs = 5000, fetch: providedFetch} = {}) {
+    const word = wordOf(input);
+    if (!word) throw failure('invalid-word');
+    if (signal?.aborted) throw failure('aborted');
+    const letter = word[0];
+    if (localShards.has(letter)) return parseLocal(localShards.get(letter), word);
+    const fetcher = providedFetch || root.fetch;
+    if (typeof fetcher !== 'function') throw failure('unavailable');
+    const controller = new AbortController();
+    const delay = Number.isFinite(timeoutMs) && timeoutMs > 0 ? Math.min(timeoutMs, 30000) : 5000;
+    let timer, reason, rejectCancelled;
+    const cancelled = new Promise((_resolve, reject) => { rejectCancelled = reject; });
+    const cancel = code => {
+      if (reason) return;
+      reason = code; rejectCancelled(failure(code)); controller.abort();
+    };
+    const onAbort = () => cancel('aborted');
+    try {
+      signal?.addEventListener('abort', onAbort, {once:true});
+      timer = setTimeout(() => cancel('timeout'), delay);
+      const request = (async () => {
+        const response = await fetcher.call(root, 'dictionary-data/' + letter + '.json?build=2026-10-27-bilingual-v1', {
+          signal: controller.signal, credentials:'omit', referrerPolicy:'no-referrer', cache:'force-cache'
+        });
+        if (response?.status === 404) return null;
+        if (!response?.ok) throw failure('unavailable');
+        const data = await response.json();
+        if (data?.version !== 1 || !data.entries || typeof data.entries !== 'object' || Array.isArray(data.entries)) throw failure('unavailable');
+        if (reason || signal?.aborted) throw failure(reason || 'aborted');
+        localShards.set(letter, data.entries);
+        return parseLocal(data.entries, word);
+      })();
+      return await Promise.race([request, cancelled]);
+    } catch (error) {
+      if (reason) throw failure(reason);
+      if (Object.hasOwn(messages, error?.code)) throw error;
+      throw failure('unavailable');
+    } finally {
+      clearTimeout(timer); signal?.removeEventListener('abort', onAbort);
+    }
+  }
   function links(input) {
     const word = wordOf(input);
     return word ? [{name: '有道词典（中英）', url: 'https://www.youdao.com/result?word=' + encoded(word) + '&lang=en', language: 'zh-CN'}] : [];
   }
-  return {lookup, links};
+  return {lookup, lookupLocal, links};
 });
