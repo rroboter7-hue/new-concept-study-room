@@ -3,6 +3,7 @@
 
   const escapeText = value => String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
   const wordCategories = [{key:'all',label:'全部'},{key:'verb',label:'动词'},{key:'adjective',label:'形容词'},{key:'phrase',label:'习惯用法'},{key:'selected',label:'已选'}];
+  const recommendationProfile = 'phrases-verbs-v1';
   const steps = [
     {kind:'affirmative',label:'肯定句',hint:'用目标词写一个完整的肯定原句。后面三句都沿用这句的人物、时态和情境。'},
     {kind:'negative',label:'否定句',hint:'把第 1 句改为否定句，保留目标词和原来的情境。注意 be、助动词与动词形式。'},
@@ -156,13 +157,13 @@
     recommendedOldItems() {
       const keys = this.lessonSelections.get(this.currentLesson?.id)?.recommendedOldKeys || [];
       const bank = new Map(this.wordBank().map(item => [item.key, item]));
-      return keys.map(key => bank.get(key)).filter(Boolean);
+      return keys.map(key => bank.get(key)).filter(item => this.core().recommendationEligible?.(item) === true);
     }
 
-    captureRecommendedItems() {
+    captureRecommendedItems(currentKeys) {
       if (!this.active) return;
       const previous = this.active.draft.recommendedOldKeys || [];
-      const current = this.recommendedOldItems().map(item => item.key), candidates = [...new Set([...previous,...current])];
+      const current = Array.isArray(currentKeys) ? this.normalizeOldKeys(currentKeys) : this.recommendedOldItems().map(item => item.key), candidates = [...new Set([...previous,...current])];
       const bank = new Map();
       for (const item of this.wordBank()) {
         bank.set(item.key,item);
@@ -179,13 +180,23 @@
     }
 
     ensureRecommendations(refresh = false) {
-      if (!this.active || typeof this.core().recommendOldWords !== 'function') return;
-      if (refresh) this.captureRecommendedItems();
+      if (!this.active || typeof this.core().recommendOldWords !== 'function' || typeof this.core().recommendationEligible !== 'function') return;
       const previous = this.lessonSelections.get(this.currentLesson.id) || {};
-      const keys = this.normalizeOldKeys(previous.recommendedOldKeys);
-      if (!refresh && (keys.length || previous.recommendationsReady && !this.wordBank().length)) return;
-      const items = this.core().recommendOldWords({items:this.wordBank(),drafts:this.allDrafts(),lessonId:this.currentLesson.id,previousKeys:refresh ? keys : [],count:4,random:this.options.random});
-      this.lessonSelections.set(this.currentLesson.id, {...previous,recommendedOldKeys:items.map(item => item.key),recommendationsReady:true});
+      const stored = Array.isArray(previous.recommendedOldKeys) ? previous.recommendedOldKeys : [], keys = this.normalizeOldKeys(stored);
+      const bank = new Map(this.wordBank().map(item => [item.key,item]));
+      const valid = previous.recommendationProfile === recommendationProfile && stored.length === keys.length && keys.every(key => this.core().recommendationEligible(bank.get(key)));
+      const hasEligible = this.wordBank().some(item => this.core().recommendationEligible(item));
+      if (!refresh && valid && (keys.length || previous.recommendationsReady && !hasEligible)) {
+        if (JSON.stringify(stored) !== JSON.stringify(keys)) {
+          this.captureRecommendedItems(stored);
+          this.lessonSelections.set(this.currentLesson.id, {...previous,recommendedOldKeys:keys});
+          this.remember(true);this.flush();
+        }
+        return;
+      }
+      if (refresh || stored.length) this.captureRecommendedItems(keys);
+      const items = this.core().recommendOldWords({profile:'phrases-verbs',items:this.wordBank(),drafts:this.allDrafts(),lessonId:this.currentLesson.id,previousKeys:refresh ? keys : [],count:4,random:this.options.random});
+      this.lessonSelections.set(this.currentLesson.id, {...previous,recommendedOldKeys:items.map(item => item.key),recommendationProfile,recommendationsReady:true});
       this.remember(true);this.flush();
     }
 
@@ -198,7 +209,7 @@
       this.lessonSelections.set(this.currentLesson.id, {...previous,targetKey:active.targetKey,sourceLessonIds:[...active.sourceLessonIds],mode:active.mode,roundKey:active.roundKey});
       if (persist) {
         const key = this.selectionKey(this.currentLesson.id);
-        const draft = this.core().sanitizeDraft({targetKey:active.targetKey,step:active.step,sourceLessonIds:active.sourceLessonIds,oldWordKey:active.oldWordKey,oldPhraseKey:active.oldPhraseKey,selectedOldKeys:active.selectedOldKeys,recommendedOldKeys:previous.recommendedOldKeys || [],mode:active.mode,roundKey:active.roundKey});
+        const draft = this.core().sanitizeDraft({targetKey:active.targetKey,step:active.step,sourceLessonIds:active.sourceLessonIds,oldWordKey:active.oldWordKey,oldPhraseKey:active.oldPhraseKey,selectedOldKeys:active.selectedOldKeys,recommendedOldKeys:previous.recommendedOldKeys || [],recommendationProfile:previous.recommendationProfile,mode:active.mode,roundKey:active.roundKey});
         this.entries.set(key, {key,draft,dirty:true,state:'pending'});
       }
     }
@@ -264,7 +275,7 @@
         if (lesson) {
           const savedSelection = this.options.getDrafts?.()?.[this.selectionKey(lesson.id)];
           const previous = this.lessonSelections.get(lesson.id) || (savedSelection ? this.core().sanitizeDraft(savedSelection) : null);
-          if (previous) this.lessonSelections.set(lesson.id, {...previous,recommendationsReady:Array.isArray(previous.recommendedOldKeys) && previous.recommendedOldKeys.length > 0});
+          if (previous) this.lessonSelections.set(lesson.id, {...previous,recommendationsReady:Array.isArray(previous.recommendedOldKeys)});
           const initial = this.makeContext(previous?.sourceLessonIds || []);
           this.context = initial;
           const targetKey = initial.targets.some(item => item.key === previous?.targetKey) ? previous.targetKey : this.lessonTargets()[0]?.key || initial.targets[0]?.key;
@@ -440,7 +451,7 @@
     recommendationsHTML() {
       const e = this.escape, items = this.recommendedOldItems(), selected = new Set(this.active?.draft.selectedOldKeys || []);
       if (!items.length) return '';
-      return `<div class="sentence-recommendations"><div class="sentence-recommendation-heading"><span>旧知建议 · 可选</span><button type="button" class="sentence-recommendation-refresh" data-sentence-action="refresh-recommendations">换一组</button>${this.oldPickerTriggerHTML()}</div><div class="sentence-recommendation-items sentence-recommendation-chips">${items.map(item => `<button type="button" class="sentence-recommendation${item.category === 'phrase' ? ' is-phrase' : ''}${selected.has(item.key) ? ' is-selected' : ''}" data-sentence-action="toggle-recommended-old" data-sentence-old-key="${e(item.key)}" aria-pressed="${selected.has(item.key)}" aria-label="${e(item.label || item.word || item.phrase)}${item.meaning ? ' · ' + e(item.meaning) : ''}"${item.meaning ? ` title="${e(item.meaning)}"` : ''}><span class="sentence-recommendation-label" lang="en">${e(item.label || item.word || item.phrase)}</span>${item.meaning ? `<span class="sentence-recommendation-meaning">${e(this.shortOldMeaning(item))}</span>` : ''}</button>`).join('')}</div></div>`;
+      return `<div class="sentence-recommendations"><div class="sentence-recommendation-heading"><span title="习惯用法为主、动词为辅，按需选用">用法与动词</span><button type="button" class="sentence-recommendation-refresh" data-sentence-action="refresh-recommendations">换一组</button>${this.oldPickerTriggerHTML()}</div><div class="sentence-recommendation-items sentence-recommendation-chips">${items.map(item => `<button type="button" class="sentence-recommendation${item.category === 'phrase' ? ' is-phrase' : ''}${selected.has(item.key) ? ' is-selected' : ''}" data-sentence-action="toggle-recommended-old" data-sentence-old-key="${e(item.key)}" aria-pressed="${selected.has(item.key)}" aria-label="${e(item.label || item.word || item.phrase)}${item.meaning ? ' · ' + e(item.meaning) : ''}"${item.meaning ? ` title="${e(item.meaning)}"` : ''}><span class="sentence-recommendation-label" lang="en">${e(item.label || item.word || item.phrase)}</span>${item.meaning ? `<span class="sentence-recommendation-meaning">${e(this.shortOldMeaning(item))}</span>` : ''}</button>`).join('')}</div></div>`;
     }
 
     shortOldMeaning(item) {

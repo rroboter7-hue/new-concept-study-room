@@ -170,7 +170,7 @@
   function sanitizeDraft(value) {
     var supplied = object(value);
     value = {};
-    ['answers', 'step', 'targetKey', 'sourceLessonIds', 'oldWordKey', 'oldPhraseKey', 'selectedOldKeys', 'recommendedOldKeys', 'mode', 'roundKey', 'assisted', 'evidenceTargetKey', 'checkedAt'].forEach(function (field) {
+    ['answers', 'step', 'targetKey', 'sourceLessonIds', 'oldWordKey', 'oldPhraseKey', 'selectedOldKeys', 'recommendedOldKeys', 'recommendationProfile', 'mode', 'roundKey', 'assisted', 'evidenceTargetKey', 'checkedAt'].forEach(function (field) {
       if (own(supplied, field)) value[field] = ownValue(supplied, field);
     });
     var answers = object(value.answers), result = {}, answersChanged = own(value, 'answers') && answers !== value.answers;
@@ -185,7 +185,7 @@
     var recommended = ownValue(value, 'recommendedOldKeys');
     var recommendedOldKeys = Array.from(new Set((Array.isArray(recommended) ? recommended : []).map(function (key) { return text(key, 600).trim(); }).filter(Boolean))).slice(0, 20);
     return { step: Number.isFinite(value.step) ? Math.max(0, Math.min(4, Math.floor(value.step))) : 0,
-      targetKey: text(value.targetKey, 600), sourceLessonIds: Array.from(new Set(ids)).slice(0, 200), oldWordKey: text(value.oldWordKey, 600), oldPhraseKey: text(value.oldPhraseKey, 600), selectedOldKeys: selectedOldKeys, recommendedOldKeys: recommendedOldKeys, answers: result,
+      targetKey: text(value.targetKey, 600), sourceLessonIds: Array.from(new Set(ids)).slice(0, 200), oldWordKey: text(value.oldWordKey, 600), oldPhraseKey: text(value.oldPhraseKey, 600), selectedOldKeys: selectedOldKeys, recommendedOldKeys: recommendedOldKeys, recommendationProfile: value.recommendationProfile === 'phrases-verbs-v1' ? 'phrases-verbs-v1' : '', answers: result,
       mode:value.mode==='flexible'?'flexible':'transform',roundKey:validRoundKey(value.roundKey)?value.roundKey:'',assisted:value.assisted===true,evidenceTargetKey:text(value.evidenceTargetKey,600),
       checkedAt: !answersChanged && typeof value.checkedAt === 'number' && Number.isFinite(value.checkedAt) && value.checkedAt >= 0 && value.checkedAt <= 8640000000000000 ? Math.floor(value.checkedAt) : 0 };
   }
@@ -396,12 +396,133 @@
       return ID.test(id) && value.length <= 160 && value.trim() ? value.trim() : '';
     } catch (_) { return ''; }
   }
+  // A finite practice preference, not a proficiency-level classifier. Basic
+  // words remain in the manual bank and in current-lesson mandatory practice.
+  var introductoryVerbGroups = [
+    "be am is are was were been being isn't aren't wasn't weren't", "have has had having haven't hasn't hadn't", "do does did done doing don't doesn't didn't",
+    "can could cannot can't couldn't", "may might mayn't mightn't", "must mustn't", "shall should shan't shouldn't", "will would won't wouldn't",
+    'go goes went gone going', 'come comes came coming', 'get gets got gotten getting',
+    'make makes made making', 'read reads reading', 'write writes wrote written writing',
+    'say says said saying', 'tell tells told telling', 'look looks looked looking',
+    'see sees saw seen seeing', 'watch watches watched watching', 'listen listens listened listening',
+    'eat eats ate eaten eating', 'drink drinks drank drunk drinking', 'sleep sleeps slept sleeping',
+    'wake wakes woke woken waking', 'walk walks walked walking', 'run runs ran running',
+    'sit sits sat sitting', 'stand stands stood standing', 'open opens opened opening',
+    'close closes closed closing', 'give gives gave given giving', 'take takes took taken taking',
+    'put puts putting', 'bring brings brought bringing', 'buy buys bought buying',
+    'sell sells sold selling', 'play plays played playing', 'work works worked working',
+    'study studies studied studying', 'learn learns learned learnt learning', 'teach teaches taught teaching',
+    'speak speaks spoke spoken speaking', 'talk talks talked talking', 'know knows knew known knowing',
+    'think thinks thought thinking', 'want wants wanted wanting', 'like likes liked liking',
+    'love loves loved loving', 'live lives lived living', "need needs needed needing needn't",
+    'help helps helped helping', 'ask asks asked asking', 'answer answers answered answering',
+    'use uses used using', 'find finds found finding', 'call calls called calling',
+    'try tries tried trying', 'start starts started starting', 'stop stops stopped stopping',
+    'wait waits waited waiting', 'meet meets met meeting', 'feel feels felt feeling',
+    'hear hears heard hearing', 'let lets letting', 'leave leaves left leaving',
+    'keep keeps kept keeping', 'hold holds held holding', 'wear wears wore worn wearing',
+    'drive drives drove driven driving', 'ride rides rode ridden riding', 'swim swims swam swum swimming',
+    'cook cooks cooked cooking', 'clean cleans cleaned cleaning', 'wash washes washed washing',
+    'draw draws drew drawn drawing', 'sing sings sang sung singing', 'dance dances danced dancing',
+    'win wins won winning', 'lose loses lost losing', 'send sends sent sending', 'pay pays paid paying',
+    'fly flies flew flown flying', 'begin begins began begun beginning', 'turn turns turned turning',
+    'arrive arrives arrived arriving', 'show shows showed shown showing',
+    'catch catches caught catching', 'shut shuts shutting', 'dust dusts dusted dusting',
+    'sweep sweeps swept sweeping', 'climb climbs climbed climbing', 'type types typed typing',
+    'paint paints painted painting', 'drop drops dropped dropping', 'shine shines shone shined shining',
+    'rise rises rose risen rising', 'remember remembers remembered remembering', 'enjoy enjoys enjoyed enjoying',
+    'spend spends spent spending', 'phone phones phoned phoning', 'telephone telephones telephoned telephoning',
+    'understand understands understood understanding', 'stay stays stayed staying', 'believe believes believed believing',
+    'decide decides decided deciding', 'move moves moved moving', 'miss misses missed missing',
+    'fall falls fell fallen falling', 'hope hopes hoped hoping', 'hate hates hated hating',
+    'knock knocks knocked knocking', 'invite invites invited inviting', 'throw throws threw thrown throwing',
+    'count counts counted counting', 'ring rings rang rung ringing', 'repeat repeats repeated repeating',
+    'visit visits visited visiting', 'grow grows grew grown growing', 'laugh laughs laughed laughing',
+    'smile smiles smiled smiling', 'jump jumps jumped jumping', 'die dies died dying',
+    'bark barks barked barking', 'rest rests rested resting', 'slow slows slowed slowing',
+    'check checks checked checking', 'post posts posted posting', 'plan plans planned planning',
+    'finish finishes finished finishing', 'forget forgets forgot forgotten forgetting', 'choose chooses chose chosen choosing',
+    'break breaks broke broken breaking', 'cut cuts cutting', 'push pushes pushed pushing',
+    'carry carries carried carrying', 'change changes changed changing'
+  ];
+  var introductoryVerbForms = new Map();
+  introductoryVerbGroups.forEach(function (group) { var forms = group.split(' '); forms.forEach(function (form) { introductoryVerbForms.set(form, forms[0]); }); });
+  var introductoryPhrases = new Set([
+    'hello', 'hi', 'good morning', 'good afternoon', 'good evening', 'good night', 'goodbye', 'good bye',
+    'bye bye', 'see you', 'see you later', 'thank you', 'thank you very much', 'thanks a lot',
+    'you are welcome', "you're welcome", 'excuse me', 'pardon me', 'i am sorry', "i'm sorry", 'how are you',
+    'nice to meet you', 'how do you do', 'my name is', 'what is your name', "what's your name",
+    'at home', 'at school', 'at work', 'in class', 'in the classroom', 'in the morning',
+    'in the afternoon', 'in the evening', 'at night', 'every day', 'go home', 'go to school',
+    'go to work', 'go to bed', 'go to sleep', 'go shopping', 'go out', 'come in', 'come here',
+    'come on', 'get up', 'wake up', 'sit down', 'stand up', 'look at', 'look for', 'listen to',
+    'wait for', 'turn on', 'turn off', 'put on', 'take off', 'have breakfast', 'have lunch',
+    'have dinner', 'have a meal', 'have a look', 'have a good time', 'have fun', 'do homework',
+    'play football', 'play basketball', 'play games', 'watch tv', 'read a book', 'write a letter',
+    'be able to', 'be able to do', 'be going to', 'be going to do', 'want to', 'want to do',
+    'can do', 'could do', 'may do', 'might do', 'must do', 'shall do', 'should do', 'will do', 'would do',
+    'would like', 'would like to', 'would like to do', 'like to do', 'like doing',
+    'there is', 'there are', 'a lot of', 'lots of', 'very much', 'of course', 'in english',
+    'on the right', 'on the left', 'all right', 'make the bed', 'in front of',
+    'a bar of', 'a bottle of', 'a piece of', 'a cup of', 'come from', 'have a conversation',
+    'at noon', 'on foot', 'by car', 'in bed', 'have a headache', 'have a cold', 'take some medicine',
+    'a quarter to', 'a quarter past', 'half past', 'in the country', 'the day before yesterday',
+    'be careful', 'at first', 'at the door', 'all day', 'have been to', 'have gone to', 'have been gone to',
+    'on holiday', 'be on holiday', 'be in bed', 'be at home', 'be at school', 'be at work',
+    'try to', 'what about', 'for sale', 'have done', 'move to', 'the day after tomorrow',
+    'fly to', 'leave for', 'hurry up', 'hurried up', 'at once', 'for a long time', 'write to',
+    'think about', 'a little', 'get off', 'get on', 'get out of', 'get off on out of',
+    'knock at the door', 'at the station', 'go back', 'last summer', 'work for', 'have to', 'have to do',
+    'take a taxi', 'look out of', 'a long time ago', 'wave to', 'waved to', 'go abroad', 'live abroad',
+    'look after', 'begin to', 'began to', 'begun to', 'swimming pool', 'be late for',
+    'decide to', 'decided to', 'go for a walk', 'for a walk',
+    'come again', 'at the moment', 'come back', 'go to the theatre', 'turn round', 'in the end',
+    'have a good seat', 'get angry', 'take a seat', 'just then', 'until lunchtime', 'on the last day',
+    'once a month', 'ask for', 'pocket money', 'win a prize', 'make a path', 'build a bridge',
+    'be made in', 'play jazz', 'get a good salary', 'send a postcard', 'musical instruments',
+    'have plenty of time', 'be away', 'sail from', 'at present', 'as usual', 'on the way',
+    'pay for', 'in a few minutes', 'say goodbye to', 'pay the bill', 'have a letter from',
+    'all the time', 'know the way to', 'be interested in', 'have a good meal', 'plan to',
+    'look like', 'for a while', 'for a moment', 'go to church', 'at the entrance of'
+  ]);
+  ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'].forEach(function (day) {
+    introductoryPhrases.add('on ' + day); introductoryPhrases.add('on ' + day + 's');
+  });
+  introductoryPhrases = new Set(Array.from(introductoryPhrases).map(introductoryPhraseKey));
+  function recommendationExpression(item) {
+    var category = ownValue(item, 'category'), field = category === 'phrase' ? 'phrase' : category === 'verb' ? 'word' : '';
+    if (!field) return '';
+    var value = ownValue(item, field);
+    if (value === undefined) value = ownValue(item, 'label');
+    return typeof value === 'string' && value.length <= 160 ? value.trim() : '';
+  }
+  function introductoryPhraseKey(value) {
+    var key = normalize(value).replace(/\b(?:sb|sth|somebody|someone|something|somewhere|oneself)\b\.?/g, ' ')
+      .replace(/[.!?,;:()/…]/g, ' ').replace(/\s+/g, ' ').trim();
+    var tokens = key.split(' ');
+    if (introductoryVerbForms.has(tokens[0])) tokens[0] = introductoryVerbForms.get(tokens[0]);
+    return tokens.join(' ');
+  }
+  // Confirmed personal names in B1 L45/123/125, B3 L52 and B4 L19 have
+  // dictionary verb homographs. Keep genuine lower-case verbs and other
+  // sentence-initial/title verbs eligible; this is not a capitalization rule.
+  var sourceNameLabels = new Set(['Bob', 'Mike', 'Peter', 'Harry', 'Dement']);
+  function recommendationEligible(item) {
+    var category = ownValue(item, 'category'), value = recommendationExpression(item), normalized = normalize(value);
+    if (!normalized || !/[a-z]/.test(normalized)) return false;
+    var label = ownValue(item, 'label');
+    if (sourceNameLabels.has(value) || typeof label === 'string' && sourceNameLabels.has(label.trim())) return false;
+    if (category === 'verb') return /^[a-z]+(?:['-][a-z]+)*$/.test(normalized) && !introductoryVerbForms.has(normalized);
+    var phraseKey = introductoryPhraseKey(value);
+    return category === 'phrase' && !introductoryVerbForms.has(normalized) && !introductoryPhrases.has(phraseKey)
+      && !/^(?:next|last|this|every) (?:day|week|weekend|month|year)$/.test(phraseKey);
+  }
   function recommendOldWords(options) {
     var supplied = ownValue(options, 'items'), count = ownValue(options, 'count');
     if (count === undefined) count = 4;
     if (!Array.isArray(supplied) || typeof count !== 'number' || !Number.isFinite(count) || count <= 0) return [];
     count = Math.min(20, Math.floor(count));
-    var random = ownValue(options, 'random'), previous = ownValue(options, 'previousKeys');
+    var random = ownValue(options, 'random'), previous = ownValue(options, 'previousKeys'), focused = ownValue(options, 'profile') === 'phrases-verbs';
     if (typeof random !== 'function') random = Math.random;
     var previousKeys = new Set((Array.isArray(previous) ? previous : []).filter(function (key) { return boundedKey(key); }));
     var seen = new Map(), candidates = [];
@@ -415,11 +536,13 @@
       if (candidate) {
         candidate.keys = Array.from(new Set(candidate.keys.concat(keys)));
         candidate.previous = candidate.previous || keys.some(function (alias) { return previousKeys.has(alias); });
+        if (focused && recommendationEligible(item) && !recommendationEligible(candidate.item)) candidate.item = item;
       } else {
         candidate = { item: item, keys: keys, value: value, phrase: phrase, lastUsed: 0, previous: keys.some(function (alias) { return previousKeys.has(alias); }) };
         seen.set(identity, candidate); candidates.push(candidate);
       }
     });
+    if (focused) candidates = candidates.filter(function (candidate) { return recommendationEligible(candidate.item); });
     draftValues(ownValue(options, 'drafts')).forEach(function (draft) {
       var at = checkedTime(draft), target = decodedTarget(ownValue(draft, 'targetKey'));
       if (!at || !target) return;
@@ -444,10 +567,22 @@
       var held = pool[index]; pool[index] = pool[other]; pool[other] = held;
     }
     pool.sort(function (a, b) { return Number(a.previous) - Number(b.previous) || a.lastUsed - b.lastUsed; });
-    var result = [], phrase = pool.find(function (candidate) { return candidate.phrase; });
-    if (phrase && count > 1) result.push(phrase);
-    pool.filter(function (candidate) { return !candidate.phrase; }).slice(0, count - result.length).forEach(function (candidate) { result.push(candidate); });
-    pool.forEach(function (candidate) { if (result.length < count && !result.includes(candidate)) result.push(candidate); });
+    var result = [];
+    if (focused) {
+      function choose(list, limit) {
+        var selected = list.filter(function (candidate) { return candidate.phrase; }).slice(0, limit > 1 ? limit - 1 : limit);
+        list.filter(function (candidate) { return !candidate.phrase; }).slice(0, limit - selected.length).forEach(function (candidate) { selected.push(candidate); });
+        list.forEach(function (candidate) { if (selected.length < limit && !selected.includes(candidate)) selected.push(candidate); });
+        return selected;
+      }
+      result = choose(pool.filter(function (candidate) { return !candidate.previous; }), count);
+      if (result.length < count) result = result.concat(choose(pool.filter(function (candidate) { return candidate.previous; }), count - result.length));
+    } else {
+      var phrase = pool.find(function (candidate) { return candidate.phrase; });
+      if (phrase && count > 1) result.push(phrase);
+      pool.filter(function (candidate) { return !candidate.phrase; }).slice(0, count - result.length).forEach(function (candidate) { result.push(candidate); });
+      pool.forEach(function (candidate) { if (result.length < count && !result.includes(candidate)) result.push(candidate); });
+    }
     return result.map(function (candidate) { return candidate.item; });
   }
   function flexibleCheck(options){
@@ -501,5 +636,5 @@
     return { rows: rows, writtenCount: writtenCount, readyForReview: writtenCount === 5 && rows.every(function (row) { return row.status !== 'needs-work'; }), rulesOnly: true };
   }
 
-  return Object.freeze({ KINDS: KINDS, context: context, wordBank: wordBank, sanitizeDraft: sanitizeDraft, lessonProgress: lessonProgress, recommendOldWords: recommendOldWords, draftKey: draftKey, modeDraftKey:modeDraftKey,roundDraftKey:roundDraftKey,validRoundKey:validRoundKey,completion:completion,matchesExpression: matchesExpression, check: check });
+  return Object.freeze({ KINDS: KINDS, context: context, wordBank: wordBank, sanitizeDraft: sanitizeDraft, lessonProgress: lessonProgress, recommendationEligible: recommendationEligible, recommendOldWords: recommendOldWords, draftKey: draftKey, modeDraftKey:modeDraftKey,roundDraftKey:roundDraftKey,validRoundKey:validRoundKey,completion:completion,matchesExpression: matchesExpression, check: check });
 });
