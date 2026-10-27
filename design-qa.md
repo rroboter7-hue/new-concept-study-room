@@ -60,8 +60,13 @@ Scope: the user's selected concepts 2, 4 and 5, followed by the explicit request
 - [x] Real source provenance, existing drafts and original player preserved.
 - [x] Design comparison after density fixes and remote integration.
 - [x] Responsive browser interactions, console and full regression suite.
-- [ ] Verify published build and save public screenshot after deployment.
+- [x] Verify published build and save public screenshot after deployment.
 
+## Publication verification
+
+Published main commit `1a4855f` through an atomic, non-forced push after preserving the remote review-status refresh. The original site `https://rroboter7-hue.github.io/new-concept-study-room/?build=20261026-mobile245` returned meta build `2026-10-26-mobile245` in the browser. At390x844 it rendered the workspace by default, paper background `rgb(251,249,243)`, four-book selector, one original player and no horizontal overflow. Reading -> practice -> writing -> explicit five-sentence -> bulk modes were verified; all three main surfaces share the same paper background, and browser console errors were empty. No test sentences were entered or submitted on the public origin. Public visual evidence: `C:/Users/Admin/Documents/Codex/2026-10-13/w-s-m/outputs/mobile245-release/18-live-reading.jpg`. Temporary viewport override was reset and the public tab retained as the deliverable.
+
+Final exact-tree regression evidence:517/517 passed, no skips/cancellations, in parent workspace `outputs/mobile245-release/published-tests.log`. The initial automatic approval rejection concerned selecting local conflict files wholesale; the successful resolution rebuilt HTML from the remote stage, verified all57 script dependencies were preserved, retained remote metadata and added only the requested presentation. No rejected action was forced or bypassed.
 
 ## 2026-10-27 — selected sentence word-picker design
 
