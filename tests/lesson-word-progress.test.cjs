@@ -112,3 +112,23 @@ test('invalid own answers and accessor or inherited fields cannot retain fabrica
   assert.equal(inherited.targetKey, '');
   assert.deepEqual(inherited.answers, { affirmative: '', negative: '', yesno: '', wh: '', combined: '' });
 });
+
+test('optional old knowledge permits checked practice without choices while the default stays strict', () => {
+  const options = { target: 'book', answers: answers('book') };
+  const strict = core.check(options);
+  assert.equal(strict.readyForReview, false);
+  assert.equal(strict.rows.find(item => item.kind === 'combined').issues.length, 2);
+  const optional = core.check({ ...options, requireOldKnowledge: false });
+  assert.equal(optional.readyForReview, true);
+  assert.deepEqual(optional.rows.find(item => item.kind === 'combined').issues, []);
+});
+
+test('optional old knowledge still checks selected expressions and target or sentence requirements', () => {
+  const options = { target: 'book', answers: answers('book'), requireOldKnowledge: false };
+  for (const selection of [{ oldWord: 'chair' }, { oldPhrase: 'look at' }, { oldWord: 'books' }]) {
+    assert.equal(core.check({ ...options, ...selection }).rows.find(item => item.kind === 'combined').status, 'needs-work');
+  }
+  for (const combined of ['The target is absent.', options.answers.affirmative, 'book ' + 'x'.repeat(400)]) {
+    assert.equal(core.check({ ...options, answers: { ...options.answers, combined } }).rows.find(item => item.kind === 'combined').status, 'needs-work');
+  }
+});

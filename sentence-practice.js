@@ -8,7 +8,7 @@
     {kind:'negative',label:'否定句',hint:'把第 1 句改为否定句，保留目标词和原来的情境。注意 be、助动词与动词形式。'},
     {kind:'yesno',label:'一般疑问句',hint:'把第 1 句改为可用 yes / no 回答的问题，保留目标词，检查助动词和问号。'},
     {kind:'wh',label:'特殊疑问句',hint:'围绕第 1 句用 what / who / where / when / why / how 等提问，并保留目标词。who 作主语时不一定需要 do。'},
-    {kind:'combined',label:'旧知综合造句',hint:'另写一个新句子，同时用目标词、一个不同的旧词和一个旧用法。不能逐字重复前四句。'}
+    {kind:'combined',label:'旧知综合造句',hint:'用目标词另写一个新句子，可按需结合旧词或旧用法。不能逐字重复前四句。'}
   ];
   const flexibleSteps = [
     {kind:'affirmative',label:'换一个语境',hint:'用目标单词或习惯用法写一句自己的话，可以联系今天的生活。'},
@@ -34,6 +34,7 @@
       this.adjustmentsOpen = false;
       this.oldBank = [];
       this.wordCategory = 'all';
+      this.wordLimit = 80;
       this.lessonTargetsExpanded = false;
       this.wordSearch = '';
       this.pickerDialog = null;
@@ -161,7 +162,17 @@
     captureRecommendedItems() {
       if (!this.active) return;
       const previous = this.active.draft.recommendedOldKeys || [];
-      const keys = [...new Set([...previous,...this.recommendedOldItems().map(item => item.key)])].slice(0,20);
+      const current = this.recommendedOldItems().map(item => item.key), candidates = [...new Set([...previous,...current])];
+      const bank = new Map();
+      for (const item of this.wordBank()) {
+        bank.set(item.key,item);
+        for (const alias of item.aliases || []) bank.set(alias,item);
+      }
+      const used = candidates.filter(key => {
+        const item = bank.get(key), expression = item?.label || item?.word || item?.phrase;
+        return expression && this.core().KINDS.some(kind => this.core().matchesExpression(this.active.draft.answers[kind],expression));
+      });
+      const keys = [...new Set([...used,...current,...previous])].slice(0,20);
       if (JSON.stringify(keys) === JSON.stringify(previous)) return;
       this.active.draft.recommendedOldKeys = keys;
       this.active.dirty = true;this.active.state = 'pending';
@@ -309,6 +320,7 @@
       this.oldBank = [];
       this.wordSearch = '';
       this.wordCategory = 'all';
+      this.wordLimit = 80;
       this.lessonTargetsExpanded = false;
     }
 
@@ -350,7 +362,7 @@
       this.setWordCategory('all');
       this.refreshOldSelection();
       try { dialog.showModal(); }
-      catch (_) { this.pickerDialog = null;this.pickerTrigger = null;return false; }
+      catch (_) { this.closeWordPicker(false);return false; }
       dialog.querySelector('[data-sentence-action="close-word-picker"]')?.focus?.({preventScroll:true});
       return true;
     }
@@ -359,6 +371,8 @@
       const dialog = this.pickerDialog, trigger = this.pickerTrigger;
       this.pickerDialog = null;
       this.pickerTrigger = null;
+      const list = dialog?.querySelector('.sentence-word-list');
+      if (list) list.innerHTML = '';
       if (dialog?.open) dialog.close();
       if (restoreFocus && dialog && trigger?.isConnected !== false) trigger?.focus?.({preventScroll:true});
     }
@@ -383,6 +397,7 @@
     setWordCategory(category, focusTab = false) {
       if (!wordCategories.some(item => item.key === category)) return false;
       this.wordCategory = category;
+      this.wordLimit = 80;
       this.pickerDialog?.querySelectorAll?.('[data-sentence-category]').forEach(tab => {
         const selected = tab.dataset.sentenceCategory === category;
         tab.setAttribute('aria-selected', String(selected));
@@ -442,7 +457,8 @@
     wordPickerListHTML() {
       const e = this.escape, items = this.filteredOldItems(), selected = new Set(this.active?.draft.selectedOldKeys || []);
       if (!items.length) return `<p class="sentence-word-empty">${!this.wordBank().length ? '前面课程暂无可用的重点词或习惯用法，仍可围绕当前目标写句子。' : this.wordSearch.trim() ? '没有找到匹配的表达，试试其他英文或中文。' : '前面课程暂无这一类表达，可以切换其他分类。'}</p>`;
-      return items.map(item => `<div class="sentence-word-row${item.category === 'phrase' ? ' is-phrase' : ''}${selected.has(item.key) ? ' is-selected' : ''}" data-category="${e(item.category)}"><label class="sentence-word-choice"><input type="checkbox" data-sentence-old-key="${e(item.key)}" value="${e(item.key)}"${selected.has(item.key) ? ' checked' : ''}><span class="sentence-word-copy"><span class="sentence-word-expression" lang="en">${e(item.label || item.word || item.phrase)}</span><span class="sentence-word-meaning">${e(item.meaning)}</span></span></label><button type="button" class="sentence-word-speak" data-sentence-action="speak-old" data-sentence-old-key="${e(item.key)}" aria-label="朗读 ${e(item.label || item.word || item.phrase)}">${this.pickerIcon('volume','♪')}</button></div>`).join('');
+      const visible = items.slice(0,this.wordLimit);
+      return visible.map(item => `<div class="sentence-word-row${item.category === 'phrase' ? ' is-phrase' : ''}${selected.has(item.key) ? ' is-selected' : ''}" data-category="${e(item.category)}"><label class="sentence-word-choice"><input type="checkbox" data-sentence-old-key="${e(item.key)}" value="${e(item.key)}"${selected.has(item.key) ? ' checked' : ''}><span class="sentence-word-copy"><span class="sentence-word-expression" lang="en">${e(item.label || item.word || item.phrase)}</span><span class="sentence-word-meaning">${e(item.meaning)}</span></span></label><button type="button" class="sentence-word-speak" data-sentence-action="speak-old" data-sentence-old-key="${e(item.key)}" aria-label="朗读 ${e(item.label || item.word || item.phrase)}">${this.pickerIcon('volume','♪')}</button></div>`).join('') + (visible.length < items.length ? `<button type="button" class="sentence-word-more" data-sentence-action="more-words">显示更多（已显示 ${visible.length} / 总 ${items.length}）</button>` : '');
     }
 
     wordPickerFooterHTML() {
@@ -452,7 +468,7 @@
 
     wordPickerHTML() {
       const e = this.escape;
-      return `<dialog id="sentence-word-picker" class="sentence-word-dialog" aria-labelledby="sentence-word-title" aria-describedby="sentence-word-description"><div class="sentence-word-handle" aria-hidden="true"></div><header class="sentence-word-header"><div><h3 id="sentence-word-title">已学重点词表</h3><p id="sentence-word-description">汇总前面课程的重点，按需选用</p></div><button type="button" class="sentence-word-close" data-sentence-action="close-word-picker" aria-label="关闭词表">${this.pickerIcon('close','×')}</button></header><label class="sentence-word-search">${this.pickerIcon('search','⌕')}<span class="sentence-sr-only">搜索英文或中文</span><input type="search" data-sentence-input="word-search" maxlength="160" placeholder="搜索英文或中文" value="${e(this.wordSearch)}" autocomplete="off" autocapitalize="none" spellcheck="false"></label><div class="sentence-word-tabs" role="tablist" aria-label="旧知分类">${wordCategories.map(item => `<button type="button" id="sentence-word-tab-${item.key}" role="tab" data-sentence-action="word-category" data-sentence-category="${item.key}" aria-selected="${this.wordCategory === item.key}" aria-controls="sentence-word-list" tabindex="${this.wordCategory === item.key ? 0 : -1}">${item.label}</button>`).join('')}</div><p class="sentence-sr-only sentence-word-results" role="status" aria-live="polite"></p><div id="sentence-word-list" class="sentence-word-list" role="tabpanel" aria-labelledby="sentence-word-tab-${this.wordCategory}" tabindex="0">${this.wordPickerListHTML()}</div><footer class="sentence-word-footer">${this.wordPickerFooterHTML()}</footer></dialog>`;
+      return `<dialog id="sentence-word-picker" class="sentence-word-dialog" aria-labelledby="sentence-word-title" aria-describedby="sentence-word-description"><div class="sentence-word-handle" aria-hidden="true"></div><header class="sentence-word-header"><div><h3 id="sentence-word-title">已学重点词表</h3><p id="sentence-word-description">汇总前面课程的重点，按需选用</p></div><button type="button" class="sentence-word-close" data-sentence-action="close-word-picker" aria-label="关闭词表">${this.pickerIcon('close','×')}</button></header><label class="sentence-word-search">${this.pickerIcon('search','⌕')}<span class="sentence-sr-only">搜索英文或中文</span><input type="search" data-sentence-input="word-search" maxlength="160" placeholder="搜索英文或中文" value="${e(this.wordSearch)}" autocomplete="off" autocapitalize="none" spellcheck="false"></label><div class="sentence-word-tabs" role="tablist" aria-label="旧知分类">${wordCategories.map(item => `<button type="button" id="sentence-word-tab-${item.key}" role="tab" data-sentence-action="word-category" data-sentence-category="${item.key}" aria-selected="${this.wordCategory === item.key}" aria-controls="sentence-word-list" tabindex="${this.wordCategory === item.key ? 0 : -1}">${item.label}</button>`).join('')}</div><p class="sentence-sr-only sentence-word-results" role="status" aria-live="polite"></p><div id="sentence-word-list" class="sentence-word-list" role="tabpanel" aria-labelledby="sentence-word-tab-${this.wordCategory}" tabindex="0"></div><footer class="sentence-word-footer">${this.wordPickerFooterHTML()}</footer></dialog>`;
     }
 
     refreshWordPickerList() {
@@ -488,6 +504,7 @@
       const input = event.target;
       if (this.inside(input) && input.dataset.sentenceInput === 'word-search' && this.active) {
         this.wordSearch = String(input.value || '').slice(0, 160);
+        this.wordLimit = 80;
         this.refreshWordPickerList();
         return;
       }
@@ -512,6 +529,13 @@
       if (action === 'open-word-picker') { this.openWordPicker(button);return; }
       if (action === 'close-word-picker') { this.closeWordPicker();return; }
       if (action === 'word-category') { this.setWordCategory(button.dataset.sentenceCategory);return; }
+      if (action === 'more-words' && this.pickerDialog?.open) {
+        const list = this.pickerDialog.querySelector('.sentence-word-list'), scrollTop = list?.scrollTop || 0;
+        this.wordLimit += 80;this.refreshWordPickerList();
+        if (list) list.scrollTop = scrollTop;
+        (list?.querySelector?.('[data-sentence-action="more-words"]') || list)?.focus?.({preventScroll:true});
+        return;
+      }
       if (action === 'lesson-target') { this.chooseLessonTarget(button.dataset.sentenceTargetKey);return; }
       if (action === 'next-unfinished') { this.nextUnfinished();return; }
       if (action === 'expand-lesson-targets') { this.lessonTargetsExpanded = !this.lessonTargetsExpanded;this.redraw();return; }
@@ -604,7 +628,7 @@
         const combined=this.active.draft.answers.combined,selected=this.selectedOldItems(),target=this.target()?.word;
         const oldWord=selected.find(item=>item.category!=='phrase'&&!this.core().matchesExpression(item.word,target)&&!this.core().matchesExpression(target,item.word)&&this.core().matchesExpression(combined,item.word))||this.oldWord();
         const oldPhrase=selected.find(item=>item.category==='phrase'&&this.core().matchesExpression(combined,item.phrase))||this.oldPhrase();
-        return this.core().check({mode:this.active.draft.mode,answers:this.active.draft.answers,target:this.target(),oldWord,oldPhrase,grammarCheck:this.options.grammarCheck});
+        return this.core().check({mode:this.active.draft.mode,answers:this.active.draft.answers,target:this.target(),oldWord,oldPhrase,requireOldKnowledge:false,grammarCheck:this.options.grammarCheck});
       } catch (_) {
         return {rows:[],writtenCount:0,rulesOnly:true,error:'本次检查暂时无法完成；草稿已保留，请自行核对句型、时态和句意后重试。'};
       }
@@ -684,7 +708,7 @@
       const adjustments = this.adjustmentsHTML();
       if (!target || !draft) return `<div class="sentence-header"><h3>五句练习</h3><p>本课暂无可用单词或习惯用法。</p></div>${adjustments}`;
       const list=this.stepList(),step = list[draft.step], flexible=draft.mode==='flexible',combined = draft.step === 4, status = this.saveState();
-      const hints = flexible?['用目标单词或习惯用法，联系自己的生活。','换一个时间、地点或人物，不必改成否定句。','回忆课文表达，试着变化人物、动作或情境。','用目标表达提出问题，或写一句对话回应。','可联系旧知，也可换个语境写一句。']:['用目标词，写一句完整的英文。','沿用第 1 句的人物、时态和情境。','保留目标词，写一个可用 yes / no 回答的问题。','保留目标词，用 what / who / where 等提问。','选一个旧词和一个旧用法，写一句新句子。'];
+      const hints = flexible?['用目标单词或习惯用法，联系自己的生活。','换一个时间、地点或人物，不必改成否定句。','回忆课文表达，试着变化人物、动作或情境。','用目标表达提出问题，或写一句对话回应。','可联系旧知，也可换个语境写一句。']:['用目标词，写一句完整的英文。','沿用第 1 句的人物、时态和情境。','保留目标词，写一个可用 yes / no 回答的问题。','保留目标词，用 what / who / where 等提问。','用目标词另写新句子，可按需结合旧知。'];
       const navigation = list.map((item,index) => `<li><button type="button" class="sentence-step${index === draft.step ? ' active' : ''}${draft.answers[item.kind].trim() ? ' written' : ''}" data-sentence-action="step" data-sentence-step="${index}"${index === draft.step ? ' aria-current="step"' : ''} aria-label="第 ${index + 1} 步 ${e(item.label)}${draft.answers[item.kind].trim() ? '，已填写' : ''}"><span>${index + 1}</span></button></li>`).join('');
       const original = !flexible && draft.step > 0 && !combined ? `<div class="sentence-original"><strong>第 1 句 · 肯定原句</strong><p lang="en">${draft.answers.affirmative.trim() ? e(draft.answers.affirmative) : '还没有原句，请先回到第 1 步。'}</p></div>` : '';
       if (!this.result && draft.checkedAt) this.result = this.evaluate();

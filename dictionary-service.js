@@ -23,7 +23,13 @@
     return word.length <= 64 && /^[a-z]+(?:[-'][a-z]+)*$/.test(word) ? word : '';
   }
   const encoded = word => encodeURIComponent(word).replace(/'/g, '%27');
+  const localShardLimit = 4;
   const localShards = new Map();
+  function rememberLocalShard(letter, entries) {
+    localShards.delete(letter);
+    localShards.set(letter, entries);
+    if (localShards.size > localShardLimit) localShards.delete(localShards.keys().next().value);
+  }
   function text(value, limit) {
     return typeof value === 'string' ? value
       .replace(/<(script|style)\b[^>]*>[\s\S]*?<\/\1\s*>/gi, '')
@@ -106,7 +112,11 @@
     if (!word) throw failure('invalid-word');
     if (signal?.aborted) throw failure('aborted');
     const letter = word[0];
-    if (localShards.has(letter)) return parseLocal(localShards.get(letter), word);
+    if (localShards.has(letter)) {
+      const entries = localShards.get(letter);
+      rememberLocalShard(letter, entries);
+      return parseLocal(entries, word);
+    }
     const fetcher = providedFetch || root.fetch;
     if (typeof fetcher !== 'function') throw failure('unavailable');
     const controller = new AbortController();
@@ -130,7 +140,7 @@
         const data = await response.json();
         if (data?.version !== 1 || !data.entries || typeof data.entries !== 'object' || Array.isArray(data.entries)) throw failure('unavailable');
         if (reason || signal?.aborted) throw failure(reason || 'aborted');
-        localShards.set(letter, data.entries);
+        rememberLocalShard(letter, data.entries);
         return parseLocal(data.entries, word);
       })();
       return await Promise.race([request, cancelled]);

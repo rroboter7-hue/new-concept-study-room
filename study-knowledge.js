@@ -59,7 +59,9 @@
    for(const other of allWords){const key=norm(other.meaning);if(excluded.has(key)||seen.has(key))continue;seen.add(key);wrong.push(other.meaning);if(wrong.length===3)break;}
    if(!wrong.length)continue;
    const options=wrong.slice(),answer=slotFor(record.id,options.length+1);options.splice(answer,0,record.meaning);
-   const q={type:'vocabulary',question:'“'+record.word+'” 在本课中的意思是？',options,answer,explanation:record.word+'：'+record.meaning+'。释义以本课词表为准。',conceptId:record.id,knowledgeId:record.id,sourceWord:record.word,sourceLessonId:record.lessonId,sourceType:'self-authored-knowledge-practice',sourceLabel:'自编配套训练 · 按本课词义校对（非教材原配练习）',graded:true};
+   const word=record.source.vocabulary,lesson=byLesson.get(record.lessonId),title=word.exampleSourceType==='lesson-title'&&word.example===lesson?.textbook?.title?word.example:'';
+   const context=title?{...(word.contextEvidence||{}),sourceType:'lesson-title',sourceTitle:title}:word.contextEvidence;
+   const q={type:'vocabulary',question:'“'+record.word+'” 在本课'+(title?'标题“'+title+'”':'')+'中的意思是？',options,answer,explanation:record.word+'：'+record.meaning+'。'+(title?'来源为本课标题“'+title+'”（非正文例句），按这一标题语境理解。':'释义以本课词表为准。'),conceptId:record.id,knowledgeId:record.id,sourceWord:record.word,sourceLessonId:record.lessonId,sourceType:'self-authored-knowledge-practice',sourceLabel:'自编配套训练 · 按本课词义校对（非教材原配练习）',...(context?{contextEvidence:clone(context),exampleSourceType:word.exampleSourceType,exampleSourceLabel:word.exampleSourceLabel,sourceExample:word.example}:{}),graded:true};
    wordQuestions.set(record.id,q);pools.get(record.lessonId).push(q);
   }
   for(const lesson of lessons){

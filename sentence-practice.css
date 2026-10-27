@@ -274,6 +274,7 @@ html:has(.sentence-word-dialog[open]) { overflow: hidden; }
 .sentence-recommendation-meaning { display: block; min-width: 0; max-width: 100%; color: #607566; font-size: 12px; line-height: 1.4; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 .sentence-recommendation-chips .sentence-recommendation,
 .sentence-recommendation-items .sentence-recommendation { flex: 1 1 calc(50% - 6px); min-width: 0; padding: 6px 8px; text-align: left; }
+.sentence-word-more { grid-column: 1 / -1; min-height: 44px; margin: 5px 0; padding: 8px 12px; border: 1px solid #d5e1d0; border-radius: 7px; background: #eef3e9; color: #265b50; font: inherit; font-size: 14px; cursor: pointer; }
 
 @media (max-width: 760px) {
   .mls-book-workspace.mls-mobile .sentence-progress { gap: 8px; margin: 4px 0 8px; }
@@ -300,6 +301,11 @@ html:has(.sentence-word-dialog[open]) { overflow: hidden; }
   .mls-book-workspace.mls-mobile .sentence-old-selection { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; }
   .mls-book-workspace.mls-mobile .sentence-old-trigger { display: inline-flex; flex: 0 0 auto; width: auto; gap: 7px; }
   .mls-book-workspace.mls-mobile .sentence-old-trigger > span:last-child { font-size: 12px; }
+  .mls-book-workspace.mls-mobile .sentence-recommendation-heading { display: grid; grid-template-columns: minmax(0, 1fr) auto auto; gap: 6px; }
+  .mls-book-workspace.mls-mobile .sentence-recommendation-heading > span, .mls-book-workspace.mls-mobile .sentence-recommendation-refresh { white-space: nowrap; }
+  .mls-book-workspace.mls-mobile .sentence-recommendation-heading .sentence-old-trigger { padding: 5px 6px; gap: 5px; }
+  .mls-book-workspace.mls-mobile .sentence-recommendation-heading .sentence-old-trigger strong { font-size: 14px; }
+  .mls-book-workspace.mls-mobile .sentence-recommendation-heading .sentence-old-trigger-hint { display: none; }
   .mls-book-workspace.mls-mobile .sentence-old-selection .sentence-selected-old { display: flex; flex-wrap: wrap; flex: 1 1 auto; margin: 0; }
   .mls-book-workspace.mls-mobile .sentence-selected-old { gap: 5px; margin-top: 5px; }
   .mls-book-workspace.mls-mobile .sentence-old-chip { padding: 5px 9px; font-size: 13px; }

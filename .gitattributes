@@ -4,6 +4,14 @@ book34-language-support.js text eol=lf
 dictionary-data/*.json -text
 dictionary-data/LICENSE -text
 
+# Keep lazy document checksums and generated recall data stable.
+text-data/*.json -text
+recall-data/*.json -text
+lesson-recall-catalogue.js text eol=lf
+text-library.js text eol=lf
+# This historical vocabulary fixture has a pinned raw-byte checksum.
+tests/fixtures/book2-context-previous-release.json text eol=lf
+
 # Reproducible generated lesson-word data.
 lesson-word-targets.js text eol=lf
 lesson-word-targets-source.json -text

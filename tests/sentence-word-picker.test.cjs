@@ -88,7 +88,7 @@ test('switching course and target keeps choices separate and source labels escap
 });
 
 test('new picker assets retain native dialog semantics, safe text and no external dependency',()=>{
-  const h=setup();h.render();h.ui.openWordPicker(h.trigger);const html=h.render();
+  const h=setup();h.render();h.ui.openWordPicker(h.trigger);const html=h.ui.wordPickerHTML()+h.ui.wordPickerListHTML();
   assert.match(html,/aria-labelledby=/);assert.match(html,/type="search"/);assert.match(html,/type="checkbox"/);assert.match(html,/role="tablist"/);assert.match(html,/aria-selected=/);
   assert.doesNotMatch(html,/https?:\/\/|<script\b/);
 });

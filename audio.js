@@ -483,7 +483,7 @@
       return this;
     }
 
-    speakWord(word) {
+    speakWord(word, options) {
       if (this._destroyed) return Promise.reject(this._report(makeError('播放器已关闭，请刷新页面后重试。')));
       word = String(word || '').trim();
       if (!word) return Promise.reject(this._report(makeError('请选择要朗读的单词。')));
@@ -495,7 +495,10 @@
         this._baseTime = this._cursor >= this._sentences.length ? this._baseDuration : (this._starts[this._cursor] || 0);
         this._emitProgress();
       }
-      var recordedPath = global.STUDY_WORD_AUDIO && global.STUDY_WORD_AUDIO[word.toLowerCase()];
+      var lessonId = options && Object.prototype.hasOwnProperty.call(options, 'lessonId') ? options.lessonId : this._lesson?.id;
+      var scoped = lessonId && global.STUDY_CONTEXT_WORD_AUDIO && global.STUDY_CONTEXT_WORD_AUDIO[lessonId];
+      var contextualPath = scoped && Object.prototype.hasOwnProperty.call(scoped, word.toLowerCase()) ? scoped[word.toLowerCase()] : null;
+      var recordedPath = typeof contextualPath === 'string' && contextualPath ? contextualPath : global.STUDY_WORD_AUDIO && global.STUDY_WORD_AUDIO[word.toLowerCase()];
       if (typeof recordedPath === 'string' && recordedPath) return this._speakRecordedWord(recordedPath);
       var utterance;
       try { utterance = this._newUtterance(word); }

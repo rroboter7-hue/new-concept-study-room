@@ -474,10 +474,10 @@
       if (!target) { if (options.requireTarget !== false) issues.push('请先选择本轮目标词。'); }
       else if (!matchesExpression(sentence, target)) issues.push('还未识别到目标词“' + target + '”或已支持的常见词形。');
       if (kind === 'combined') {
-        if (!oldWord) issues.push('请先选择一个来自已学早期课程的旧词。');
+        if (!oldWord) { if (options.requireOldKnowledge !== false) issues.push('请先选择一个来自已学早期课程的旧词。'); }
         else if (target && (matchesExpression(oldWord, target) || matchesExpression(target, oldWord))) issues.push('旧词需要与目标词不同，不能使用同一词的其他词形。');
         else if (!matchesExpression(sentence, oldWord)) issues.push('还未识别到已选旧词“' + oldWord + '”或已支持的词形。');
-        if (!oldPhrase) issues.push('请先选择一个来自已学早期课程的旧用法或短语。');
+        if (!oldPhrase) { if (options.requireOldKnowledge !== false) issues.push('请先选择一个来自已学早期课程的旧用法或短语。'); }
         else if (!matchesExpression(sentence, oldPhrase)) issues.push('还未识别到已选旧用法“' + oldPhrase + '”或已支持的词形；请保留搭配。');
         var key = duplicateKey(sentence);
         if (KINDS.slice(0, 4).some(function (other) { return text(answers[other], 10000).trim() && duplicateKey(answers[other]) === key; })) issues.push('第五句需要另写一个新句子，不能逐字重复前四句。');

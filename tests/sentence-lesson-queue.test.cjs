@@ -12,7 +12,7 @@ const lessons = [
 
 function setup({drafts={},getVocabulary,random=()=>0.3}={}) {
   let current=lessons[1],markup='';const handlers={},focus=[];
-  const fields={};const field=selector=>fields[selector]||=( {innerHTML:'',textContent:'',focus(){focus.push(selector);},setAttribute(){}} );
+  const fields={};const field=selector=>fields[selector]||=( {innerHTML:'',textContent:'',focus(){focus.push(selector);},setAttribute(){},querySelector:field} );
   const trigger={focus(){focus.push('trigger');}};
   const dialog={open:false,showModal(){this.open=true;},close(){this.open=false;},querySelector:field,querySelectorAll:()=>[],addEventListener(){}};
   const content={get innerHTML(){return markup;},set innerHTML(value){markup=value;},querySelector:selector=>selector==='.sentence-word-dialog'?dialog:field(selector)};
@@ -75,6 +75,16 @@ test('typing five unchecked answers and changing old selections never manufactur
   const h=setup();h.render();Object.assign(h.ui.active.draft.answers,{affirmative:'I keep a book.',negative:'We read a book.',yesno:'She likes this book.',wh:'Do you have a book?',combined:'They open a book.'});
   h.ui.setOldSelection([h.ui.wordBank()[0].key]);h.ui.flush();
   assert.match(queue(h.render()),/0\s*\/\s*8/);assert.match(queue(h.render()),/5\/5/);
+});
+
+test('transform practice keeps old knowledge optional while completion still needs five checked target sentences',()=>{
+  const h=setup();h.render();h.event('change',{sentenceSelect:'mode'},'transform');
+  ['We read a book.','We do not read a book.','Do we read a book?','Why do we read a book?','She keeps a book in her bag.'].forEach((answer,index)=>{h.event('click',{sentenceAction:'step',sentenceStep:String(index)});h.answer(answer);});
+  assert.deepEqual(Array.from(h.ui.active.draft.selectedOldKeys),[]);
+  const result=h.ui.evaluate(),combined=result.rows.find(row=>row.kind==='combined');
+  assert.doesNotMatch(combined.issues.join(' '),/旧词|旧用法|先选择/);assert.equal(result.rulesOnly,true);
+  const html=h.render();assert.match(html,/sentence-step-hint[^>]*>[^<]*可[^<]*旧知/);assert.doesNotMatch(html,/选一个旧词和一个旧用法/);
+  assert.equal(h.ui.lessonProgress().done,0);h.action('check');assert.equal(h.ui.lessonProgress().done,1);
 });
 
 test('an imported checked oversized answer cannot become completed when its text is bounded for the editor',()=>{
@@ -140,8 +150,27 @@ for(const checkedBeforeRefresh of [true,false])test(checkedBeforeRefresh?'checki
   h.action('refresh-recommendations');
   assert.ok(!recommendationKeys(h).includes('word:old:send'),'the new group must replace the originally shown send suggestion');
   h.action('check');
-  assert.deepEqual(Array.from(h.drafts[h.ui.active.key].recommendedOldKeys).slice(0,4),keys);
+  assert.ok(keys.every(key=>h.drafts[h.ui.active.key].recommendedOldKeys.includes(key)));
   assert.equal(JSON.stringify(h.ui.active.draft.answers),answers);assert.deepEqual(Array.from(h.ui.active.draft.selectedOldKeys),[]);
+  const eligible=h.core.recommendOldWords({items:h.ui.wordBank().filter(item=>['send','receive'].includes(item.label)),drafts:h.drafts,lessonId:'later',count:4,random:()=>0});
+  assert.deepEqual(Array.from(eligible,item=>item.label),['receive']);
+  h.setLesson(lessons[2]);h.render();assert.ok(!recommendationKeys(h).includes('word:old:send'));
+});
+
+test('a used current recommendation survives a full history of unused suggestions',()=>{
+  const historyWords=Array.from({length:20},(_,index)=>'unused'+String.fromCharCode(97+index));
+  const history=historyWords.map(word=>'word:old:'+word);
+  const shown=['word:old:send','word:old:receive','word:old:warm','phrase:old:look%20at'];
+  const drafts={
+    'selection:v1:now':{targetKey:'word:now:book',mode:'flexible',recommendedOldKeys:shown},
+    'v2:flexible:now:word%3Anow%3Abook':{targetKey:'word:now:book',mode:'flexible',recommendedOldKeys:history}
+  };
+  const h=setup({drafts,getVocabulary:lesson=>lesson.id==='old'?lesson.vocabulary.concat(historyWords.map(word=>({word,pos:'n.',meaning:'未用词'}))):lesson.vocabulary});h.render();
+  ['I keep a book.','We read a book.','She likes this book.','Do we read a book?','I send a book to my friend.'].forEach((answer,index)=>{h.event('click',{sentenceAction:'step',sentenceStep:String(index)});h.answer(answer);});
+  h.action('check');
+  const saved=h.drafts[h.ui.active.key];assert.equal(saved.recommendedOldKeys.length,20);
+  assert.ok(saved.recommendedOldKeys.includes('word:old:send'));assert.ok(shown.every(key=>saved.recommendedOldKeys.includes(key)));
+  assert.deepEqual(Array.from(saved.selectedOldKeys),[]);
   const eligible=h.core.recommendOldWords({items:h.ui.wordBank().filter(item=>['send','receive'].includes(item.label)),drafts:h.drafts,lessonId:'later',count:4,random:()=>0});
   assert.deepEqual(Array.from(eligible,item=>item.label),['receive']);
   h.setLesson(lessons[2]);h.render();assert.ok(!recommendationKeys(h).includes('word:old:send'));
@@ -154,7 +183,7 @@ test('picker defaults to all categories and opening, clearing and removing the l
   h.ui.setOldSelection([h.ui.wordBank()[0].key]);h.action('clear-old');
   h.ui.setOldSelection([h.ui.wordBank()[0].key]);h.action('remove-old',h.ui.wordBank()[0].key);
   assert.ok(!h.focus.includes('[data-sentence-input="word-search"]'));
-  const html=h.ui.wordPickerHTML();assert.match(html,/data-sentence-category="all"/);assert.match(html,/data-sentence-category="selected"/);assert.match(html,/data-category="phrase"/);assert.match(html,/sentence-word-copy/);
+  const html=h.ui.wordPickerHTML()+h.ui.wordPickerListHTML();assert.match(html,/data-sentence-category="all"/);assert.match(html,/data-sentence-category="selected"/);assert.match(html,/data-category="phrase"/);assert.match(html,/sentence-word-copy/);
   assert.doesNotMatch(h.ui.wordPickerFooterHTML(),/sentence-word-chips|sentence-word-footer-note/);
 });
 
@@ -167,4 +196,25 @@ test('old-word access shares the recommendations heading and retains one accessi
   assert.doesNotMatch(html,/class="sentence-recommendation-heading"/);
   assert.equal((html.match(/data-sentence-action="open-word-picker"/g)||[]).length,1);
   assert.match(html,/<button[^>]*data-sentence-action="open-word-picker"[^>]*aria-haspopup="dialog"[^>]*aria-controls="sentence-word-picker"[\s\S]*?全部旧词/);
+});
+
+function largePickerSetup(){return setup({getVocabulary:lesson=>lesson.id==='old'?Array.from({length:200},(_,index)=>({word:'term'+String(index).padStart(3,'0'),pos:'v.',meaning:'词语释义'})):lesson.vocabulary});}
+const pickerRows=html=>(html.match(/class="sentence-word-row(?:\s|")/g)||[]).length;
+
+test('a closed large old-word picker renders no word rows and releases them again on close',()=>{
+  const h=largePickerSetup();const html=h.render();assert.equal(h.ui.wordBank().length,202);assert.equal(pickerRows(html),0);
+  h.ui.openWordPicker(h.trigger);const list=h.dialog.querySelector('.sentence-word-list');assert.equal(pickerRows(list.innerHTML),80);
+  h.ui.closeWordPicker();assert.equal(list.innerHTML,'');assert.equal(h.dialog.open,false);assert.equal(h.focus.at(-1),'trigger');
+});
+
+test('large picker pages explicitly while searches reach later words and preserve writing and selections',()=>{
+  const h=largePickerSetup();h.render();h.answer('I keep this book.');h.ui.setOldSelection(['word:old:term150']);h.ui.openWordPicker(h.trigger);
+  const list=h.dialog.querySelector('.sentence-word-list');assert.equal(pickerRows(list.innerHTML),80);assert.match(list.innerHTML,/显示更多[^<]*80\s*\/\s*总\s*202/);
+  list.scrollTop=231;h.action('more-words');assert.equal(pickerRows(list.innerHTML),160);assert.equal(list.scrollTop,231);assert.equal(h.focus.at(-1),'[data-sentence-action="more-words"]');
+  assert.equal(h.ui.active.draft.answers.affirmative,'I keep this book.');assert.deepEqual(Array.from(h.ui.active.draft.selectedOldKeys),['word:old:term150']);
+  h.event('input',{sentenceInput:'word-search'},'term199');assert.equal(pickerRows(list.innerHTML),1);assert.match(list.innerHTML,/>term199<\/span>/);
+  h.event('input',{sentenceInput:'word-search'},'');assert.equal(pickerRows(list.innerHTML),80);h.action('more-words');assert.equal(pickerRows(list.innerHTML),160);
+  h.ui.setWordCategory('verb');assert.equal(pickerRows(list.innerHTML),80);h.action('more-words');h.action('more-words');assert.equal(pickerRows(list.innerHTML),200);assert.doesNotMatch(list.innerHTML,/data-sentence-action="more-words"/);
+  h.ui.closeWordPicker();h.ui.openWordPicker(h.trigger);assert.equal(pickerRows(list.innerHTML),80);
+  assert.equal(h.ui.active.draft.answers.affirmative,'I keep this book.');assert.deepEqual(Array.from(h.ui.active.draft.selectedOldKeys),['word:old:term150']);
 });

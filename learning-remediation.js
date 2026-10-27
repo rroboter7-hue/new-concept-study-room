@@ -46,10 +46,14 @@
  }
  function examplesForWord(record,lesson){
   if(!lesson||lesson.id!==record.lessonId)return [];
+  const item=record.source?.vocabulary||{},context=item.contextEvidence;
+  if(item.exampleSourceType==='lesson-title'&&text(item.example)&&item.example===lesson.textbook?.title)return [{en:item.example,sourceType:'lesson-title',sourceLabel:'本课标题（非正文例句）',sourceLessonId:lesson.id,sourcePdfPage:lesson.textbook.sourcePdfPage,headword:record.word}];
+  const sourceParagraph=Number.isInteger(context?.sourceParagraphIndex)?list(lesson.paragraphs)[context.sourceParagraphIndex]:null;
+  if(item.exampleSourceType==='lesson-passage'&&context?.sourceType==='textbook-passage'&&text(item.example)&&item.example===context.sourceText&&typeof sourceParagraph?.en==='string'&&sourceParagraph.en.includes(item.example))return [{en:item.example,sourceType:'lesson-passage',sourceLabel:'本课课文原句',sourceLessonId:lesson.id,sourcePdfPage:lesson.textbook?.sourcePdfPage,headword:record.word}];
   const reviewed=pilotPassageForms[lesson.number+'|'+norm(record.word)],forms=[record.word,...(reviewed&&norm(reviewed.meaning)===norm(record.meaning)?reviewed.forms:[])];
   const escaped=forms.map(form=>norm(form).replace(/[.*+?^${}()|[\]\\]/g,'\\$&').replace(/ +/g,'\\s+')).join('|');
   const match=new RegExp('(^|[^a-z])('+escaped+')(?=$|[^a-z])','i'),examples=[];
-  for(const p of list(lesson.paragraphs))for(const sentence of sentences(text(p.en))){
+  for(const p of list(lesson.paragraphs))for(const sentence of sentences(text(p?.en))){
    if(!match.test(norm(sentence))||examples.some(x=>x.en===sentence))continue;
    examples.push({en:sentence,sourceType:'lesson-passage',sourceLabel:'本课课文原句',sourceLessonId:lesson.id,sourcePdfPage:lesson.textbook?.sourcePdfPage,headword:record.word,matchedForm:match.exec(norm(sentence))[2]});if(examples.length===2)return examples;
   }
