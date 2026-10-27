@@ -18,6 +18,37 @@
     {kind:'combined',label:'结合旧知',hint:'尝试联系一个已学词或用法，另写新句子。暂时没有合适旧知时也可以换一个语境。'}
   ];
 
+  const ownData = (value, field) => {
+    if (!value || typeof value !== 'object' || Array.isArray(value)) return undefined;
+    const descriptor = Object.getOwnPropertyDescriptor(value, field);
+    return descriptor && Object.prototype.hasOwnProperty.call(descriptor, 'value') ? descriptor.value : undefined;
+  };
+
+  function sentenceDraftIdentity(key, core) {
+    const parts = key.split(':');
+    let lesson, target, round = '', mode;
+    if (parts.length === 3 && parts[0] === 'v1') { [, lesson, target] = parts; mode = 'transform'; }
+    else if (parts.length === 4 && parts[0] === 'v2' && parts[1] === 'flexible') { [, , lesson, target] = parts; mode = 'flexible'; }
+    else if (parts.length === 6 && parts[0] === 'round' && parts[1] === 'v1' && ['transform','flexible'].includes(parts[5])) [, , lesson, target, round, mode] = parts;
+    else return null;
+    try { lesson = decodeURIComponent(lesson); target = decodeURIComponent(target); round = decodeURIComponent(round); }
+    catch (_) { return null; }
+    if (!/^[A-Za-z0-9][A-Za-z0-9._:-]{0,159}$/.test(lesson) || !target || target.length > 600 || parts[0] === 'round' && !core.validRoundKey(round)) return null;
+    return {lessonId:lesson,targetKey:target,roundKey:round,mode};
+  }
+
+  function expressionSnapshot(key, item) {
+    const phrase = item?.category === 'phrase' || item?.kind === 'phrase' || key.startsWith('phrase:');
+    let label = item?.label || item?.phrase || item?.word;
+    if (typeof label !== 'string' || !label.trim()) {
+      const parts = key.split(':');
+      try { label = parts.length === 3 && ['word','phrase'].includes(parts[0]) && parts[1] !== 'long' ? decodeURIComponent(parts[2]) : ''; }
+      catch (_) { label = ''; }
+      if (!label.trim()) label = key;
+    }
+    return {key,label,category:phrase ? 'phrase' : item?.category || 'word', [phrase ? 'phrase' : 'word']:label};
+  }
+
   class SentencePractice {
     constructor(options) {
       this.options = options || {};
@@ -123,6 +154,53 @@
       const drafts = {...(this.options.getDrafts?.() || {})};
       for (const entry of this.entries.values()) drafts[entry.key] = entry.draft;
       return drafts;
+    }
+
+    exportLessonDrafts(lesson = this.options.getLesson?.()) {
+      const core = this.core(), lessonId = ownData(lesson, 'id');
+      if (!core || typeof lessonId !== 'string') return [];
+      // Resolve each saved context without loading targets or changing the current
+      // editor. In-memory entries win even if their last save failed.
+      const lessons = (this.options.getLessons?.() || []).map(item => {
+        if (typeof this.options.getUsage !== 'function') return item;
+        try { const usage = this.options.getUsage(item); return Array.isArray(usage) ? {...item,usage} : item; }
+        catch (_) { return item; }
+      });
+      const bank = core.wordBank({lessons,currentLesson:lesson,getVocabulary:this.options.getVocabulary,getUsage:this.options.getUsage});
+      const byKey = new Map();
+      for (const item of bank) {
+        byKey.set(item.key,item);
+        for (const alias of item.aliases || []) byKey.set(alias,item);
+      }
+      const drafts = this.allDrafts(), bundles = [], contexts = new Map();
+      for (const sourceKey of Object.keys(drafts)) {
+        const identity = sentenceDraftIdentity(sourceKey, core);
+        if (!identity || identity.lessonId !== lessonId) continue;
+        const draft = ownData(drafts,sourceKey), supplied = ownData(draft,'answers'), answers = {};
+        for (const kind of core.KINDS) {
+          const value = ownData(supplied,kind);
+          answers[kind] = typeof value === 'string' ? value : '';
+        }
+        if (!Object.values(answers).some(value => value.trim())) continue;
+        const savedSources = ownData(draft,'sourceLessonIds');
+        const sourceLessonIds = Array.isArray(savedSources) ? savedSources.filter(id => typeof id === 'string') : [];
+        const contextKey = JSON.stringify(sourceLessonIds);
+        if (!contexts.has(contextKey)) contexts.set(contextKey,core.context({lessons,currentLesson:lesson,records:this.options.getRecords?.() || {},getVocabulary:this.options.getVocabulary,sourceLessonIds,includePhrases:true}));
+        const item = contexts.get(contextKey).targets.find(value => value.key === identity.targetKey) || byKey.get(identity.targetKey);
+        const target = {...expressionSnapshot(identity.targetKey,item),kind:item?.kind || (identity.targetKey.startsWith('phrase:') ? 'phrase' : 'word')};
+        target.word = target.label;
+        if (item?.source) target.source = {id:item.source.id,book:item.source.book,number:item.source.number,title:item.source.title};
+        const selected = Object.prototype.hasOwnProperty.call(draft,'selectedOldKeys') ? ownData(draft,'selectedOldKeys') : [ownData(draft,'oldWordKey'),ownData(draft,'oldPhraseKey')];
+        const selectedOldItems = [], seen = new Set();
+        for (const key of Array.isArray(selected) ? selected : []) {
+          if (typeof key !== 'string' || !key.trim()) continue;
+          const old = byKey.get(key), canonical = old?.key || key;
+          if (seen.has(canonical)) continue;
+          seen.add(canonical); selectedOldItems.push(expressionSnapshot(canonical,old));
+        }
+        bundles.push({sourceKey,...identity,target,selectedOldItems,answers});
+      }
+      return bundles;
     }
 
     lessonTargets() {

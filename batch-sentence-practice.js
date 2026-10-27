@@ -188,6 +188,7 @@
         case 'save': this.flush();break;
         case 'more': this.visibleResults += 50;this.updatePanels();break;
         case 'template': this.appendText(template);break;
+        case 'lesson': this.importLessonDrafts();break;
         case 'guided': {
           let text = '';
           try { text = this.options.getGuidedText?.() || ''; } catch (_) { text = ''; }
@@ -196,6 +197,7 @@
           break;
         }
         case 'copy': await this.copyCurrent();break;
+        case 'copy-all': await this.copyCurrent(true);break;
         case 'prompt-previous': this.movePrompt(-1);break;
         case 'prompt-next': this.movePrompt(1);break;
         case 'export': this.exportAll();break;
@@ -207,6 +209,29 @@
       draft.rawText += (draft.rawText ? '\n\n' : '') + text;
       draft.mode = 'conversion';
       this.markChanged();
+      this.redraw();
+    }
+
+    importLessonDrafts() {
+      let bundles;
+      try { bundles = this.options.getLessonDrafts?.(this.lesson) || []; }
+      catch (_) { this.notify('暂时无法读取本课造句草稿，请重试。');return; }
+      const blocks = this.core().lessonImportBlocks(Array.isArray(bundles) ? bundles.filter(bundle => bundle?.lessonId === this.lessonId) : []);
+      if (!blocks.length) { this.notify('本课还没有可导入的造句草稿。');return; }
+      const normalize = text => String(text).replace(/\r\n?/g, '\n');
+      let existing = normalize(this.active.draft.rawText), rowCount = 0;
+      const additions = [];
+      for (const block of blocks) {
+        const text = normalize(block.text);
+        if ((`\n\n${existing}\n\n`).includes(`\n\n${text}\n\n`)) continue;
+        additions.push(block.text);
+        rowCount += block.rowCount;
+        existing += (existing ? '\n\n' : '') + text;
+      }
+      if (!additions.length) { this.notify('本课这些句子已在框中，无需重复导入。');return; }
+      this.appendText(additions.join('\n\n'));
+      this.progress = `已导入本课 ${additions.length} 组、${rowCount} 句；原有文字和笔记已保留，可一键复制全部给豆包。`;
+      this.flush();
       this.redraw();
     }
 
@@ -253,22 +278,23 @@
       this.updatePanels();
     }
 
-    async copyCurrent() {
-      const part = this.preparePrompts();
-      if (!part) { this.progress = '请先输入句子，再复制给豆包。';this.updatePanels();return; }
+    async copyCurrent(all = false) {
+      const parsed = this.parseCurrent();
+      const text = all ? this.core().promptAll(parsed, {lessonTitle:this.lesson?.title || ''}) : this.preparePrompts()?.text;
+      if (!text) { this.progress = '请先输入句子，再复制给豆包。';this.updatePanels();return; }
       this.flush();
       const token = ++this.copyGeneration, generation = this.generation, entry = this.active, lessonId = this.lessonId;
       const stillCurrent = () => token === this.copyGeneration && generation === this.generation && entry === this.active && this.options.getLesson?.()?.id === lessonId;
       try {
         if (typeof this.options.copyText !== 'function') throw new Error('Copy unavailable');
-        await this.options.copyText(part.text);
+        await this.options.copyText(text);
         if (!stillCurrent()) return;
         this.manualText = '';
-        this.progress = `已复制第 ${this.promptIndex + 1} / ${this.promptChunks.length} 段。打开豆包后自行粘贴发送。`;
+        this.progress = all ? `已复制全部 ${parsed.rows.length} 句和核查要求。打开豆包后粘贴核查。` : `已复制第 ${this.promptIndex + 1} / ${this.promptChunks.length} 段。打开豆包后自行粘贴发送。`;
       } catch (_) {
         if (!stillCurrent()) return;
-        this.manualText = part.text;
-        this.progress = '自动复制未成功，请在下方文本框中手动复制当前完整分段。';
+        this.manualText = text;
+        this.progress = all ? '自动复制未成功，请在下方文本框中手动复制全部内容。' : '自动复制未成功，请在下方文本框中手动复制当前完整分段。';
       }
       this.updatePanels();
       if (this.manualText) {
@@ -327,7 +353,7 @@
     bodyHTML() {
       if (this.focusedMobile()) return this.mobileBodyHTML();
       const e = this.escape, draft = this.active.draft, status = this.saveStatus();
-      return `<div class="batch-heading"><h3>批量造句检查</h3><p>一起写下多句英文，先做本地初检，再复制给豆包完整复核。</p></div><div class="batch-controls"><label class="batch-field" for="batch-mode">输入模式<select id="batch-mode" data-batch-select="mode"><option value="free"${draft.mode === 'free' ? ' selected' : ''}>自由造句 · 一行一句</option><option value="conversion"${draft.mode === 'conversion' ? ' selected' : ''}>四句型转换 · 标明原句和句型</option></select></label><div class="batch-actions"><button type="button" class="button subtle" data-batch-action="template">追加转换模板</button><button type="button" class="button subtle" data-batch-action="guided">追加当前五句草稿</button></div></div><p id="batch-input-hint" class="batch-note">${draft.mode === 'conversion' ? '每组用“原句：”或“肯定句：”开始，再标明否定句、一般疑问句、特殊疑问句；可加旧知综合句。目标词、旧词、旧用法也可按模板标明。未标明的行仍会保留。' : '每个非空行作为一句独立检查。需要核对句型转换时，请选择四句型转换并标明每组原句。'}</p><label class="batch-field" for="batch-text">英文句子<textarea id="batch-text" class="batch-textarea" data-batch-input="text" rows="10" lang="en" spellcheck="true" aria-describedby="batch-input-hint batch-count">${e(draft.rawText)}</textarea></label><p id="batch-count" class="batch-count">${e(this.countText())}</p><div class="batch-actions"><button type="button" class="button primary" data-batch-action="check">本地初检全部</button><button type="button" class="button" data-batch-action="export">导出全部文字和反馈</button><button type="button" class="button subtle" data-batch-action="save">重试保存</button></div><p class="batch-save-status" data-save-state="${status.state}" role="status">${e(status.text)}</p><section class="batch-feedback" aria-live="polite">${this.feedbackHTML()}</section><section class="batch-prompt-panel" aria-label="复制给豆包">${this.promptHTML()}</section><label class="batch-field batch-notes" for="batch-notes">批改结果笔记（可选）<textarea id="batch-notes" class="batch-textarea" data-batch-input="notes" rows="5" placeholder="把豆包的批改结果粘贴到这里，作为本课笔记保存。">${e(draft.notes)}</textarea></label><p class="batch-note">笔记按原文本保存，不会自动评分或改变课程学习记录。</p>`;
+      return `<div class="batch-heading"><h3>批量造句检查</h3><p>一起写下多句英文，先做本地初检，再复制给豆包完整复核。</p></div><div class="batch-controls"><label class="batch-field" for="batch-mode">输入模式<select id="batch-mode" data-batch-select="mode"><option value="free"${draft.mode === 'free' ? ' selected' : ''}>自由造句 · 一行一句</option><option value="conversion"${draft.mode === 'conversion' ? ' selected' : ''}>四句型转换 · 标明原句和句型</option></select></label><div class="batch-actions"><button type="button" class="button" data-batch-action="lesson">导入本课已造句子</button><button type="button" class="button subtle" data-batch-action="template">追加转换模板</button><button type="button" class="button subtle" data-batch-action="guided">追加当前五句草稿</button></div></div><p id="batch-input-hint" class="batch-note">${draft.mode === 'conversion' ? '每组用“原句：”或“肯定句：”开始，再标明否定句、一般疑问句、特殊疑问句；可加旧知综合句。目标词、旧词、旧用法也可按模板标明。未标明的行仍会保留。' : '每个非空行作为一句独立检查。需要核对句型转换时，请选择四句型转换并标明每组原句。'}</p><label class="batch-field" for="batch-text">英文句子<textarea id="batch-text" class="batch-textarea" data-batch-input="text" rows="10" lang="en" spellcheck="true" aria-describedby="batch-input-hint batch-count">${e(draft.rawText)}</textarea></label><p id="batch-count" class="batch-count">${e(this.countText())}</p><div class="batch-actions"><button type="button" class="button primary" data-batch-action="check">本地初检全部</button><button type="button" class="button" data-batch-action="export">导出全部文字和反馈</button><button type="button" class="button subtle" data-batch-action="save">重试保存</button></div><p class="batch-save-status" data-save-state="${status.state}" role="status">${e(status.text)}</p><section class="batch-feedback" aria-live="polite">${this.feedbackHTML()}</section><section class="batch-prompt-panel" aria-label="复制给豆包">${this.promptHTML()}</section><label class="batch-field batch-notes" for="batch-notes">批改结果笔记（可选）<textarea id="batch-notes" class="batch-textarea" data-batch-input="notes" rows="5" placeholder="把豆包的批改结果粘贴到这里，作为本课笔记保存。">${e(draft.notes)}</textarea></label><p class="batch-note">笔记按原文本保存，不会自动评分或改变课程学习记录。</p>`;
     }
 
     mobileBodyHTML() {
@@ -335,6 +361,7 @@
       return `<div class="batch-heading batch-focus-heading"><p>批量造句</p><h3>把想说的，写下来。</h3></div>
         <fieldset class="batch-mode-choice"><legend class="batch-accessible-label">输入模式</legend><label><input type="radio" name="batch-mode" data-batch-select="mode" value="free"${draft.mode === 'free' ? ' checked' : ''}><span>自由造句</span></label><label><input type="radio" name="batch-mode" data-batch-select="mode" value="conversion"${draft.mode === 'conversion' ? ' checked' : ''}><span>四句型转换</span></label></fieldset>
         <p id="batch-input-hint" class="batch-note batch-input-hint">${draft.mode === 'conversion' ? '每组保留原句，标明句型，空行分组。' : '一行一句，自由写下你的英文。'}</p>
+        <div class="batch-actions"><button type="button" class="button" data-batch-action="lesson">导入本课已造句子</button></div>
         <div class="batch-writing-pad"><label class="batch-field" for="batch-text"><span class="batch-accessible-label">英文句子</span><textarea id="batch-text" class="batch-textarea" data-batch-input="text" rows="10" lang="en" spellcheck="true" aria-describedby="batch-input-hint batch-count" placeholder="写一句，或者粘贴一组句子……">${e(draft.rawText)}</textarea></label><div class="batch-editor-meta"><p id="batch-count" class="batch-count">${e(this.countText())}</p><p class="batch-save-status" data-save-state="${status.state}" title="${e(status.text)}" role="status">${e(this.saveStatusText(status))}</p></div></div>
         <div class="batch-actions batch-check-action"><button type="button" class="button primary" data-batch-action="check">检查全部句子</button></div>
         <section class="batch-prompt-panel" aria-label="复制给豆包">${this.promptHTML()}</section>
@@ -358,8 +385,10 @@
 
     promptHTML() {
       const e = this.escape, total = this.promptChunks.length;
-      if (this.focusedMobile()) return `<button type="button" class="button batch-copy-button" data-batch-action="copy"><span>复制${total > 1 ? `第 ${this.promptIndex + 1} / ${total} 段到` : '到'}豆包批改</span><small>复制后自行粘贴发送</small></button><details class="batch-prompt-details"${total > 1 || this.manualText ? ' open' : ''}><summary>分段与豆包入口${total ? ` · ${this.promptIndex + 1} / ${total}` : ''}</summary><div class="batch-disclosure-content"><p class="batch-note">句子和对应要求一起复制。长内容自动分段，每次复制一段；豆包自身的上下文长度和免费额度仍适用。</p><div class="batch-actions"><button type="button" class="button" data-batch-action="prompt-previous"${!total || this.promptIndex === 0 ? ' disabled' : ''}>上一段</button><button type="button" class="button" data-batch-action="prompt-next"${!total || this.promptIndex >= total - 1 ? ' disabled' : ''}>下一段</button><a class="button" href="https://www.doubao.com/chat/" target="_blank" rel="noopener noreferrer">打开豆包</a></div>${this.manualText ? `<label class="batch-field batch-copy-fallback" for="batch-copy-text">手动复制文本<textarea id="batch-copy-text" class="batch-textarea" data-batch-copy-text rows="8" readonly>${e(this.manualText)}</textarea></label>` : ''}</div></details>`;
-      return `<h4>复制给豆包完整复核</h4><p class="batch-note">句子和原句对应关系会连同要求一起复制。长内容自动分段，每次复制一段；豆包自身的上下文长度和免费额度仍适用。</p>${total ? `<p class="batch-note">当前第 ${this.promptIndex + 1} / ${total} 段</p>` : ''}<div class="batch-actions"><button type="button" class="button primary" data-batch-action="copy">复制${total ? '当前' : '第 1'}段给豆包</button><button type="button" class="button" data-batch-action="prompt-previous"${!total || this.promptIndex === 0 ? ' disabled' : ''}>上一段</button><button type="button" class="button" data-batch-action="prompt-next"${!total || this.promptIndex >= total - 1 ? ' disabled' : ''}>下一段</button><a class="button" href="https://www.doubao.com/chat/" target="_blank" rel="noopener noreferrer">打开豆包</a></div>${this.manualText ? `<label class="batch-field batch-copy-fallback" for="batch-copy-text">手动复制文本<textarea id="batch-copy-text" class="batch-textarea" data-batch-copy-text rows="8" readonly>${e(this.manualText)}</textarea></label>` : ''}`;
+      const fallback = this.manualText ? `<label class="batch-field batch-copy-fallback" for="batch-copy-text">手动复制文本<textarea id="batch-copy-text" class="batch-textarea" data-batch-copy-text rows="8" readonly>${e(this.manualText)}</textarea></label>` : '';
+      const segments = `<p class="batch-note">全部复制会带上所有句子、目标词和核查要求。豆包如提示内容过长，可改用分段复制，每次粘贴一段。</p><div class="batch-actions"><button type="button" class="button" data-batch-action="copy">复制${total ? '当前' : '第 1'}段给豆包</button><button type="button" class="button" data-batch-action="prompt-previous"${!total || this.promptIndex === 0 ? ' disabled' : ''}>上一段</button><button type="button" class="button" data-batch-action="prompt-next"${!total || this.promptIndex >= total - 1 ? ' disabled' : ''}>下一段</button><a class="button" href="https://www.doubao.com/chat/" target="_blank" rel="noopener noreferrer">打开豆包</a></div>`;
+      if (this.focusedMobile()) return `<button type="button" class="button batch-copy-button" data-batch-action="copy-all"><span>一键复制全部给豆包</span><small>带上句子和要求，复制后粘贴核查</small></button><details class="batch-prompt-details"${total > 1 || this.manualText ? ' open' : ''}><summary>分段与豆包入口${total ? ` · ${this.promptIndex + 1} / ${total}` : ''}</summary><div class="batch-disclosure-content">${segments}${fallback}</div></details>`;
+      return `<h4>复制给豆包完整复核</h4><p class="batch-note">原句、句型和目标词会连同核查要求一起复制。</p><div class="batch-actions"><button type="button" class="button primary" data-batch-action="copy-all">一键复制全部给豆包</button></div><details class="batch-prompt-details"${total > 1 || this.manualText ? ' open' : ''}><summary>需要时分段复制${total ? ` · ${this.promptIndex + 1} / ${total}` : ''}</summary><div class="batch-disclosure-content">${segments}${fallback}</div></details>`;
     }
   }
 
