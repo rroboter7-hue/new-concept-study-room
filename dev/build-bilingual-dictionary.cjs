@@ -77,6 +77,18 @@ function collectProjectWords(projectRoot=path.resolve(__dirname,'..')){
     vm.runInContext(data.toString('utf8'),scope,{filename:file,timeout:15_000});
     inputs.push({file,sha256:sha(data)});
   }
+  // Runtime loads note documents on demand. Offline corpus extraction must still
+  // inspect every original section and record its exact source checksum.
+  for(const descriptor of scope.TEXT_LIBRARY||[]){
+    if(Array.isArray(descriptor.sections)||!descriptor.dataUrl)continue;
+    const file=String(descriptor.dataUrl).split(/[?#]/)[0];
+    if(!/^text-data\/[a-z0-9-]+\.json$/.test(file))throw new Error('Invalid lazy text-library source: '+file);
+    const bytes=fs.readFileSync(path.join(root,file));
+    if(!/^[a-f0-9]{64}$/.test(descriptor.contentSha256||'')||sha(bytes)!==descriptor.contentSha256)throw new Error('Text-library checksum mismatch: '+file);
+    const loaded=JSON.parse(bytes);
+    if(loaded.id!==descriptor.id||!Array.isArray(loaded.sections))throw new Error('Invalid text-library document: '+file);
+    descriptor.sections=loaded.sections;inputs.push({file,sha256:sha(bytes)});
+  }
   const words=new Set(),seen=new WeakSet();
   const textFields=new Set(['word','phrase','en','zh','lines','english','title','subtitle','topic','meaning','example','examples','question','options','answer','explanation','rule','note','sentence','sourceSentence','contrastExamples','keyPoints','prompt','text','content','matchedForm']);
   const metadata=new Set(['origin','source','sourceUrl','url','audio','phonetic','pos','id','conceptId','sourceDocId','sourceSectionIndex','sourcePages','sourcePage','sha256','sourceName']);

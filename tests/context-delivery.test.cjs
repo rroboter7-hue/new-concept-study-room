@@ -1,0 +1,32 @@
+'use strict';
+const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),os=require('node:os'),vm=require('node:vm');
+const {buildPages,mapperSource,inspectAudioReferences}=require('../dev/build-pages-site.cjs');
+function fixture(t){
+ const dir=fs.mkdtempSync(path.join(os.tmpdir(),'study-context-delivery-'));t.after(()=>{const resolved=path.resolve(dir);assert.equal(path.dirname(resolved),path.resolve(os.tmpdir()));assert.match(path.basename(resolved),/^study-context-delivery-/);fs.rmSync(resolved,{recursive:true,force:true});});
+ const source=path.join(dir,'source');fs.mkdirSync(source);const write=(name,bytes)=>{const file=path.join(source,name);fs.mkdirSync(path.dirname(file),{recursive:true});fs.writeFileSync(file,bytes);};
+ const noun=Buffer.from('RIFF-noun-WAVE fixture desert noun'),verb=Buffer.from('RIFF-verb-WAVE fixture desert verb with different bytes');
+ write('audio/words/desert.wav',noun);write('audio/words/desert-verb-b2-l029.wav',verb);write('audio/original.mp3','ID3 existing MP3');
+ write('global-audio.js','window.STUDY_WORD_AUDIO={desert:"audio/words/desert.wav"};window.STUDY_LESSON_AUDIO={other:"audio/original.mp3"};window.STUDY_LESSON_AUDIO_FALLBACKS={other:["audio/words/desert.wav","audio/original.mp3"]};');
+ const context=value=>write('context-audio.js','window.STUDY_CONTEXT_WORD_AUDIO={"nce-b2-eef57c-l029":'+JSON.stringify(value)+'};');context({desert:'audio/words/desert-verb-b2-l029.wav',alternatives:['audio/words/desert-verb-b2-l029.wav','audio/original.mp3']});
+ write('index.html','<script defer src="global-audio.js"></script><script defer src="context-audio.js"></script><script defer src="delivery-audio.js"></script><script defer src="audio.js"></script><script defer src="app.js"></script>');write('delivery-audio.js','/* source checkout uses its original files */');write('audio.js','window.contextWhenEngineLoaded=JSON.parse(JSON.stringify(window.STUDY_CONTEXT_WORD_AUDIO));');write('app.js','throw Error("never initialize app in delivery tests");');
+ const encoder=async({input,output})=>fs.writeFileSync(output,Buffer.concat([Buffer.from('ID3-mock-'),fs.readFileSync(input)])),probe=async()=>({codec:'mp3',channels:1,sampleRate:22050,duration:1});
+ return {source,write,context,noun,verb,out:n=>path.join(dir,n),build:n=>buildPages({sourceRoot:source,outputRoot:path.join(dir,n),encoder,probe})};
+}
+test('actual delivery keeps noun and nested lesson-verb routes distinct, recursively maps fallback arrays and omits original WAVs',async t=>{
+ const f=fixture(t),out=f.out('site'),report=await f.build('site');assert.equal(report.conversions.count,2);assert.equal(report.audioReferences.total,7);assert.equal(report.audioReferences.unique,3);
+ for(const name of ['audio/words/desert.wav','audio/words/desert-verb-b2-l029.wav'])assert.equal(fs.existsSync(path.join(out,name)),false,name+' original must not be duplicated');
+ for(const name of ['audio/optimized/words/desert.mp3','audio/optimized/words/desert-verb-b2-l029.mp3'])assert(fs.statSync(path.join(out,name)).size>0,name);
+ const c={};c.window=c;vm.createContext(c);for(const name of ['global-audio.js','context-audio.js','delivery-audio.js','audio.js'])vm.runInContext(fs.readFileSync(path.join(out,name),'utf8'),c,{filename:name});assert.equal(c.STUDY_WORD_AUDIO.desert,'audio/optimized/words/desert.mp3');assert.equal(c.STUDY_CONTEXT_WORD_AUDIO['nce-b2-eef57c-l029'].desert,'audio/optimized/words/desert-verb-b2-l029.mp3');assert.equal(c.contextWhenEngineLoaded['nce-b2-eef57c-l029'].desert,'audio/optimized/words/desert-verb-b2-l029.mp3');assert.deepEqual(Array.from(c.STUDY_LESSON_AUDIO_FALLBACKS.other),['audio/optimized/words/desert.mp3','audio/original.mp3']);assert.deepEqual(Array.from(c.STUDY_CONTEXT_WORD_AUDIO['nce-b2-eef57c-l029'].alternatives),['audio/optimized/words/desert-verb-b2-l029.mp3','audio/original.mp3']);assert.deepEqual(inspectAudioReferences(out),{total:7,unique:3});assert.deepEqual(fs.readFileSync(path.join(f.source,'audio/words/desert.wav')),f.noun);assert.deepEqual(fs.readFileSync(path.join(f.source,'audio/words/desert-verb-b2-l029.wav')),f.verb);
+});
+test('the runtime mapper recursively clones contextual objects without mutating the original source maps or unrelated values',()=>{
+ const original={lesson:{desert:'audio/words/verb.wav',alternatives:['audio/words/noun.wav','audio/original.mp3']}},c={STUDY_CONTEXT_WORD_AUDIO:original,STUDY_WORD_AUDIO:{desert:'audio/words/noun.wav'},unrelated:{file:'audio/words/noun.wav'}};c.window=c;vm.runInNewContext(mapperSource({'audio/words/noun.wav':'audio/optimized/words/noun.mp3','audio/words/verb.wav':'audio/optimized/words/verb.mp3'}),c);assert.equal(c.STUDY_CONTEXT_WORD_AUDIO.lesson.desert,'audio/optimized/words/verb.mp3');assert.deepEqual(Array.from(c.STUDY_CONTEXT_WORD_AUDIO.lesson.alternatives),['audio/optimized/words/noun.mp3','audio/original.mp3']);assert.equal(original.lesson.desert,'audio/words/verb.wav');assert.equal(original.lesson.alternatives[0],'audio/words/noun.wav');assert.equal(c.unrelated.file,'audio/words/noun.wav');
+});
+test('a missing nested context recording blocks delivery instead of escaping completed-bootstrap verification',async t=>{
+ const f=fixture(t);f.context({desert:'audio/words/missing.mp3'});await assert.rejects(f.build('missing'),/Missing runtime audio file.*missing.*STUDY_CONTEXT_WORD_AUDIO/);assert.equal(fs.existsSync(path.join(f.out('missing'),'delivery-report.json')),false);
+});
+test('unsafe or external paths remain rejected inside nested contextual audio maps',async t=>{
+ const f=fixture(t);for(const [i,value]of ['https://outside.example/desert.mp3','../outside.mp3','audio/../outside.mp3','audio\\words\\desert.mp3','//outside.example/desert.mp3'].entries()){f.context({desert:value});await assert.rejects(f.build('unsafe-'+i),/Unsafe.*(?:asset|escaping|audio).*path/i,value);}
+});
+test('a context map loaded after the mapper is rejected because its original WAV is absent from the artifact',async t=>{
+ const f=fixture(t);f.write('index.html','<script defer src="global-audio.js"></script><script defer src="delivery-audio.js"></script><script defer src="context-audio.js"></script><script defer src="audio.js"></script><script defer src="app.js"></script>');await assert.rejects(f.build('late-context'),/Missing runtime audio file.*desert-verb.*STUDY_CONTEXT_WORD_AUDIO/);
+});

@@ -1,0 +1,3369 @@
+{
+  "version": 1,
+  "book": 3,
+  "lessons": [
+    {
+      "lessonId": "nce-b3-fa4874-l001",
+      "book": 3,
+      "number": 1,
+      "title": "第1课 · A puma at large",
+      "bodySha256": "b7b6224e346ef547413f076250cbf44464bbe9ba53c12fcf724ee9d29f3fdfd0",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "动物园专家为什么后来决定调查美洲狮的报告？",
+          "options": [
+            "动物园已确认自己丢失了一只美洲狮",
+            "村民已经把美洲狮关进了笼子",
+            "证据不断增加，目击描述又十分相似"
+          ],
+          "answer": 2,
+          "explanation": "调查的原因是证据累积且目击描述相似；当时并未确认它来自哪家动物园。",
+          "wrongReasons": [
+            "“动物园已确认自己丢失了一只美洲狮”与本课内容不符。调查的原因是证据累积且目击描述相似；当时并未确认它来自哪家动物园。",
+            "“村民已经把美洲狮关进了笼子”与本课内容不符。调查的原因是证据累积且目击描述相似；当时并未确认它来自哪家动物园。",
+            ""
+          ],
+          "evidence": {
+            "paragraphIndex": 0,
+            "quote": "However, as the evidence began to accumulate, experts from the Zoo felt obliged to investigate, for the descriptions given by people who claimed to have seen the puma were extraordinarily similar."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "村庄里目击美洲狮的那位女子当时在采什么？请写水果名（中文或英文）。",
+          "answers": [
+            "blackberries",
+            "blackberry",
+            "黑莓"
+          ],
+          "explanation": "原文写的是 blackberries（黑莓），不是草莓。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "strawberries",
+                "草莓"
+              ],
+              "feedback": "原文写的是 blackberries（黑莓），不是草莓。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "The hunt for the puma began in a small village where a woman picking blackberries saw ‘a large cat’ only five yards away from her."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l002",
+      "book": 3,
+      "number": 2,
+      "title": "第2课 · Thirteen equals one",
+      "bodySha256": "172d2412f8821d6859990517b6dbcd8699040744cab07ac08519c72d6c57a845",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "牧师得知钟在一点敲十三下后，最终是什么态度？",
+          "options": [
+            "认为钟已经完全修好，不再有任何问题",
+            "认为能重新报时总比完全不响好",
+            "要求修钟者立刻赔偿所有村民"
+          ],
+          "answer": 1,
+          "explanation": "牧师知道报时仍有毛病，但认为十三下也好过钟一直不响。",
+          "wrongReasons": [
+            "“认为钟已经完全修好，不再有任何问题”与本课内容不符。牧师知道报时仍有毛病，但认为十三下也好过钟一直不响。",
+            "",
+            "“要求修钟者立刻赔偿所有村民”与本课内容不符。牧师知道报时仍有毛病，但认为十三下也好过钟一直不响。"
+          ],
+          "evidence": {
+            "paragraphIndex": 6,
+            "quote": "‘Thirteen is not as good as one, but it's better than nothing."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "半夜修钟的当地杂货商叫什么？请写英文姓名。",
+          "answers": [
+            "Bill Wilkins",
+            "Bill",
+            "Wilkins"
+          ],
+          "explanation": "修钟的人是当地杂货商 Bill Wilkins，不是其他课文的人物。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "Alfred Bloggs",
+                "Alfred"
+              ],
+              "feedback": "修钟的人是当地杂货商 Bill Wilkins，不是其他课文的人物。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "In the torchlight, he caught sight of a figure whom he immediately recognized as Bill Wilkins, our local grocer."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l003",
+      "book": 3,
+      "number": 3,
+      "title": "第3课 · An unknown goddess",
+      "bodySha256": "cf030f68d5a3a2594d1dd83a350364279e3b90f15de8e4bb9ae9748951ac3233",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "考古学家拼好女神像后，最惊讶的发现是什么？",
+          "options": [
+            "她的外貌竟像一位现代女性",
+            "她原来是一位罗马皇帝",
+            "她的身份和姓名都已得到证实"
+          ],
+          "answer": 0,
+          "explanation": "重建后的女神像看起来非常现代；考古学家仍未查明她的身份。",
+          "wrongReasons": [
+            "",
+            "“她原来是一位罗马皇帝”与本课内容不符。重建后的女神像看起来非常现代；考古学家仍未查明她的身份。",
+            "“她的身份和姓名都已得到证实”与本课内容不符。重建后的女神像看起来非常现代；考古学家仍未查明她的身份。"
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "When the archaeologists reconstructed the fragments, they were amazed to find that the goddess turned out to be a very modern-looking woman."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "这次考古发现位于哪座爱琴海岛屿？请写岛名（中文或英文）。",
+          "answers": [
+            "Kea",
+            "凯阿岛",
+            "基亚岛",
+            "基阿岛",
+            "凯阿",
+            "基亚"
+          ],
+          "explanation": "地点是 Kea，不是克里特岛。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "Crete",
+                "克里特岛"
+              ],
+              "feedback": "地点是 Kea，不是克里特岛。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 0,
+            "quote": "Some time ago, an interesting discovery was made by archaeologists on the Aegean island of Kea."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l004",
+      "book": 3,
+      "number": 4,
+      "title": "第4课 · The double life of Alfred Bloggs",
+      "bodySha256": "553b4e2d1c8568b9dfb2e0956b2dfd1fb4d2cfb30cdd5f86e667494c061f0b33",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "阿尔弗为什么接受收入只有原来一半的办公室工作？",
+          "options": [
+            "他认为办公室工作的收入会立刻翻倍",
+            "他的妻子已经公开揭穿了他的工作",
+            "他认为社会地位的提高值得牺牲收入"
+          ],
+          "answer": 2,
+          "explanation": "阿尔弗看重白领身份和地位，愿意为此少挣钱；妻子并未发现真相。",
+          "wrongReasons": [
+            "“他认为办公室工作的收入会立刻翻倍”与本课内容不符。阿尔弗看重白领身份和地位，愿意为此少挣钱；妻子并未发现真相。",
+            "“他的妻子已经公开揭穿了他的工作”与本课内容不符。阿尔弗看重白领身份和地位，愿意为此少挣钱；妻子并未发现真相。",
+            ""
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "He will be earning only half as much as he used to, but he feels that his rise in status is well worth the loss of money."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "阿尔弗一直向妻子隐瞒的实际职业是什么？请写职业（中文或英文）。",
+          "answers": [
+            "dustman",
+            "a dustman",
+            "垃圾清运工",
+            "清洁工",
+            "垃圾工",
+            "清洁员"
+          ],
+          "explanation": "他当时实际是一名 dustman（垃圾清运工），办公室工作是后来才找到的。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "grocer",
+                "杂货商",
+                "office worker",
+                "办公室职员"
+              ],
+              "feedback": "他当时实际是一名 dustman（垃圾清运工），办公室工作是后来才找到的。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 0,
+            "quote": "This can give rise to curious situations, as it did in the case of Alfred Bloggs who worked as a dustman for the Ellesmere Corporation."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l005",
+      "book": 3,
+      "number": 5,
+      "title": "第5课 · The facts",
+      "bodySha256": "ffd24c1995a5d7128c7b0cac09dde572465627620747bbe59f812926d4c8d50a",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "记者为什么迟迟不能回复编辑的催促？",
+          "options": [
+            "他一直在国外度假没有开展采访",
+            "他数宫殿台阶时被捕并被关进监狱",
+            "他拒绝核实台阶数和围墙高度"
+          ],
+          "answer": 1,
+          "explanation": "记者执行核查任务时被捕，直到获准发传真才解释失联原因。",
+          "wrongReasons": [
+            "“他一直在国外度假没有开展采访”与本课内容不符。记者执行核查任务时被捕，直到获准发传真才解释失联原因。",
+            "",
+            "“他拒绝核实台阶数和围墙高度”与本课内容不符。记者执行核查任务时被捕，直到获准发传真才解释失联原因。"
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "However, he had at last been allowed to send a fax in which he informed the editor that he had been arrested while counting the 1,084 steps leading to the fifteen-foot wall which surrounded the president’s palace."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "通往总统府围墙的台阶共有多少级？请写数字或英文数词。",
+          "answers": [
+            "1084",
+            "1,084",
+            "one thousand and eighty-four",
+            "one thousand eighty-four",
+            "1084级",
+            "一千零八十四级",
+            "一千零八十四"
+          ],
+          "explanation": "核实后的精确数字是 1,084 级，不能用约一千级代替。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "1000",
+                "一千"
+              ],
+              "feedback": "核实后的精确数字是 1,084 级，不能用约一千级代替。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "However, he had at last been allowed to send a fax in which he informed the editor that he had been arrested while counting the 1,084 steps leading to the fifteen-foot wall which surrounded the president’s palace."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l006",
+      "book": 3,
+      "number": 6,
+      "title": "第6课 · Smash-and-grab",
+      "bodySha256": "472eb3387378006c8c578af799c77cffa3d0095af5b088a5c91f8143dec41d5c",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "泰勒先生和店员怎样试图阻止珠宝抢劫？",
+          "options": [
+            "从楼上向歹徒扔家具，随后又追出去",
+            "把橱窗全部锁上后静静等待",
+            "开车堵住拱廊并当场抓住全部歹徒"
+          ],
+          "answer": 0,
+          "explanation": "他们从楼上扔家具反击，但最终没能阻止歹徒逃走。",
+          "wrongReasons": [
+            "",
+            "“把橱窗全部锁上后静静等待”与本课内容不符。他们从楼上扔家具反击，但最终没能阻止歹徒逃走。",
+            "“开车堵住拱廊并当场抓住全部歹徒”与本课内容不符。他们从楼上扔家具反击，但最终没能阻止歹徒逃走。"
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "He and his staff began throwing furniture out of the window."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "抢劫从开始到结束大约用了几分钟？请写数字或英文数词。",
+          "answers": [
+            "3",
+            "three",
+            "three minutes",
+            "3分钟",
+            "三分钟",
+            "三"
+          ],
+          "explanation": "原文是 three minutes（三分钟），不是三十分钟。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "30",
+                "thirty",
+                "三十分钟"
+              ],
+              "feedback": "原文是 three minutes（三分钟），不是三十分钟。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "The raid was all over in three minutes, for the men scrambled back into the car and it moved off at a fantastic speed."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l007",
+      "book": 3,
+      "number": 7,
+      "title": "第7课 · Mutilated ladies",
+      "bodySha256": "1a04f1b161917789051dab441a64d4577fd76482b8dfb7782d2dd5f985a3719d",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "英格兰银行为什么能把约翰烧毁的钱兑换回来？",
+          "options": [
+            "只要口头声称丢钱就会全额赔偿",
+            "银行接受了他自行印制新钞票的计划",
+            "残存的钞票仍有可供识别的部分"
+          ],
+          "answer": 2,
+          "explanation": "银行说明，只要残片仍能识别，就可以退还相应的钱。",
+          "wrongReasons": [
+            "“只要口头声称丢钱就会全额赔偿”与本课内容不符。银行说明，只要残片仍能识别，就可以退还相应的钱。",
+            "“银行接受了他自行印制新钞票的计划”与本课内容不符。银行说明，只要残片仍能识别，就可以退还相应的钱。",
+            ""
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "‘So long as there’s something to identify, we will give people their money back,’ said a spokeswoman for the Bank."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "约翰把钱包放进什么电器里保管，后来被误加热？请写电器名（中文或英文）。",
+          "answers": [
+            "microwave oven",
+            "microwave",
+            "a microwave oven",
+            "微波炉"
+          ],
+          "explanation": "开头提到洗衣机的常见事故，但约翰这个具体案例发生在微波炉里。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "washing machine",
+                "洗衣机"
+              ],
+              "feedback": "开头提到洗衣机的常见事故，但约翰这个具体案例发生在微波炉里。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "John had a very good day and put his wallet containing £ 3,000 into the microwave oven for safekeeping."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l008",
+      "book": 3,
+      "number": 8,
+      "title": "第8课 · A famous monastery",
+      "bodySha256": "db049f5cf37c5b11923d3f0a1371eec966113d02f9a7f92fc5c0b185618c432e",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "修道士为什么更喜欢冬天而不是夏天？",
+          "options": [
+            "冬季天气温暖，所有人都能轻松步行过山口",
+            "冬季游客少，他们能有更多清静和独处",
+            "冬季有更多驾车游客带来收入"
+          ],
+          "answer": 1,
+          "explanation": "冬天通行的人很少，修道士因此有更多私密和清静的生活。",
+          "wrongReasons": [
+            "“冬季天气温暖，所有人都能轻松步行过山口”与本课内容不符。冬天通行的人很少，修道士因此有更多私密和清静的生活。",
+            "",
+            "“冬季有更多驾车游客带来收入”与本课内容不符。冬天通行的人很少，修道士因此有更多私密和清静的生活。"
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "The monks prefer winter to summer for they have more privacy."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "圣伯纳德大山口连接瑞士和哪个国家？请写国名（中文或英文）。",
+          "answers": [
+            "Italy",
+            "意大利"
+          ],
+          "explanation": "文中明确说山口连接 Switzerland 和 Italy，不是法国。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "France",
+                "法国"
+              ],
+              "feedback": "文中明确说山口连接 Switzerland 和 Italy，不是法国。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 0,
+            "quote": "Bernard Pass connects Switzerland to Italy."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l009",
+      "book": 3,
+      "number": 9,
+      "title": "第9课 · Flying cats",
+      "bodySha256": "4c5a873e04ecb23fdb134e2b01b414a0f4f4d663a6caaa4c05d50eb983a785aa",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "猫从高处坠落时，张开四肢有什么作用？",
+          "options": [
+            "增大空气阻力，减轻落地冲击",
+            "让身体更紧缩，从而增加撞击力",
+            "确保每只猫都不会受伤或死亡"
+          ],
+          "answer": 0,
+          "explanation": "张开四肢会增加空气阻力并减少落地冲击，但并不意味着所有猫都安全。",
+          "wrongReasons": [
+            "",
+            "“让身体更紧缩，从而增加撞击力”与本课内容不符。张开四肢会增加空气阻力并减少落地冲击，但并不意味着所有猫都安全。",
+            "“确保每只猫都不会受伤或死亡”与本课内容不符。张开四肢会增加空气阻力并减少落地冲击，但并不意味着所有猫都安全。"
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "This increases their air-resistance and reduces the shock of impact when they hit the ground."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "研究中坠落三十二层楼的猫叫什么？请写英文名字。",
+          "answers": [
+            "Sabrina"
+          ],
+          "explanation": "Sabrina 是高楼坠落案例中的猫；Rastus 是另一课被绑架的猫。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "Rastus"
+              ],
+              "feedback": "Sabrina 是高楼坠落案例中的猫；Rastus 是另一课被绑架的猫。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "One cat, Sabrina, fell 32 storeys, yet only suffered from a broken tooth."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l010",
+      "book": 3,
+      "number": 10,
+      "title": "第10课 · The loss of the Titanic",
+      "bodySha256": "effd832b75c428f27c6b55b8ab59939d280d6f021a422b0aef48c9a98c6f5acd",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "泰坦尼克号为什么最终迅速下沉？",
+          "options": [
+            "它原本完全没有水密舱",
+            "船员只因听到轻微声响便主动把船凿沉",
+            "十六个水密舱中已有五个进水"
+          ],
+          "answer": 2,
+          "explanation": "原设计可在两个舱进水时仍漂浮，但实际有五个舱进水，超过了这一条件。",
+          "wrongReasons": [
+            "“它原本完全没有水密舱”与本课内容不符。原设计可在两个舱进水时仍漂浮，但实际有五个舱进水，超过了这一条件。",
+            "“船员只因听到轻微声响便主动把船凿沉”与本课内容不符。原设计可在两个舱进水时仍漂浮，但实际有五个舱进水，超过了这一条件。",
+            ""
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "Below, the captain realized to his horror that the Titanic was sinking rapidly, for five of her sixteen watertight compartments had already been flooded!"
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "泰坦尼克号这次航行的目的地是哪座城市？请写城市名（中文或英文）。",
+          "answers": [
+            "New York",
+            "纽约",
+            "纽约市"
+          ],
+          "explanation": "Southampton 是出发港，New York 才是目的地。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "Southampton",
+                "南安普敦"
+              ],
+              "feedback": "Southampton 是出发港，New York 才是目的地。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 0,
+            "quote": "The great ship, Titanic, sailed for New York from Southampton on April 10th, 1912."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l011",
+      "book": 3,
+      "number": 11,
+      "title": "第11课 · Not guilty",
+      "bodySha256": "979e5236e3e8d16a7b1a3ae2646eb44ed6717c6d0ff8f5540eebe88fd2900912",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "海关官员最后为什么相信瓶子里不是香水？",
+          "options": [
+            "瓶子里根本没有任何东西",
+            "闻到瓶内难闻的气味，确认了叙述者的解释",
+            "叙述者拿出了香水免税证明"
+          ],
+          "answer": 1,
+          "explanation": "官员闻到不愉快的味道，才相信叙述者关于自制发胶的解释。",
+          "wrongReasons": [
+            "“瓶子里根本没有任何东西”与本课内容不符。官员闻到不愉快的味道，才相信叙述者关于自制发胶的解释。",
+            "",
+            "“叙述者拿出了香水免税证明”与本课内容不符。官员闻到不愉快的味道，才相信叙述者关于自制发胶的解释。"
+          ],
+          "evidence": {
+            "paragraphIndex": 10,
+            "quote": "He was greeted by an unpleasant smell which convinced him that I was telling the truth."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "小瓶里实际装的是什么？请写物品名（中文或英文）。",
+          "answers": [
+            "hair gel",
+            "发胶",
+            "自制发胶"
+          ],
+          "explanation": "官员起初以为是香水，但叙述者说并证实那是 hair gel。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "perfume",
+                "香水"
+              ],
+              "feedback": "官员起初以为是香水，但叙述者说并证实那是 hair gel。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 7,
+            "quote": "‘It’s hair gel.’ Then I added with a smile, ‘It’s a strange mixture I make myself.’"
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l012",
+      "book": 3,
+      "number": 12,
+      "title": "第12课 · Life on a desert island",
+      "bodySha256": "1e8dbfaa09ce7734e3785b4d0a749087f3f1af109a36b1841dfda4d871448b62",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "两名男子为什么离开珊瑚岛时还感到遗憾？",
+          "options": [
+            "他们能收集雨水并捕到海鲜，生活得很好",
+            "岛上有豪华旅馆和固定的啤酒供应",
+            "他们一直饥饿，急于等待更大的救援船"
+          ],
+          "answer": 0,
+          "explanation": "他们利用小艇收雨水，用鱼枪捕龙虾和鱼，因此并没有经历想象中的悲惨荒岛生活。",
+          "wrongReasons": [
+            "",
+            "“岛上有豪华旅馆和固定的啤酒供应”与本课内容不符。他们利用小艇收雨水，用鱼枪捕龙虾和鱼，因此并没有经历想象中的悲惨荒岛生活。",
+            "“他们一直饥饿，急于等待更大的救援船”与本课内容不符。他们利用小艇收雨水，用鱼枪捕龙虾和鱼，因此并没有经历想象中的悲惨荒岛生活。"
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "They caught lobster and fish every day, and, as one of them put it ‘ate like kings’."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "两人最后被哪一种船救起？请写船只类型（中文或英文）。",
+          "answers": [
+            "tanker",
+            "a tanker",
+            "passing tanker",
+            "油轮",
+            "路过的油轮"
+          ],
+          "explanation": "救他们的是路过的 tanker（油轮），不是渔船。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "fishing boat",
+                "渔船"
+              ],
+              "feedback": "救他们的是路过的 tanker（油轮），不是渔船。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "When a passing tanker rescued them five days later, both men were genuinely sorry that they had to leave."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l013",
+      "book": 3,
+      "number": 13,
+      "title": "第13课 · ‘It’s only me’",
+      "bodySha256": "a386f46503de48a764b0f1e1f3b2cdf6bc08d3e03297f51e534090dcbac72d52",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "理查兹太太为什么躲进楼梯下的小储藏室？",
+          "options": [
+            "她听见陌生的脚步声，想故意恶作剧",
+            "她听见丈夫回来，想把面包藏起来",
+            "她以为来的是面包师，不想用鬼装吓到他"
+          ],
+          "answer": 2,
+          "explanation": "她以为敲门的是面包师，为避免吓人而躲起来，却碰上了抄表员。",
+          "wrongReasons": [
+            "“她听见陌生的脚步声，想故意恶作剧”与本课内容不符。她以为敲门的是面包师，为避免吓人而躲起来，却碰上了抄表员。",
+            "“她听见丈夫回来，想把面包藏起来”与本课内容不符。她以为敲门的是面包师，为避免吓人而躲起来，却碰上了抄表员。",
+            ""
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "Not wanting to frighten the poor man, Mrs. Richards quickly hid in the small storeroom under the stairs."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "实际打开储藏室门的人是来做什么的？请写工作内容（中文或英文）。",
+          "answers": [
+            "read the meter",
+            "reading the meter",
+            "read meter",
+            "抄表",
+            "抄电表",
+            "查电表"
+          ],
+          "explanation": "她起初以为是送面包的人，但进来的是电力公司的抄表员。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "deliver bread",
+                "送面包"
+              ],
+              "feedback": "她起初以为是送面包的人，但进来的是电力公司的抄表员。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "Mrs. Richards realized that it must be the man from the Electricity Board who had come to read the meter."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l014",
+      "book": 3,
+      "number": 14,
+      "title": "第14课 · A noble gangster",
+      "bodySha256": "c6362c6df57d3992395679a10498067e5985aef6469701fdeafcbf0552446be0",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "霍克伍德在和平时期主要怎样赚钱？",
+          "options": [
+            "只在公共市场出售普通农产品",
+            "先破坏农场，再索要离开的保护费",
+            "免费帮助各城邦修复农场"
+          ],
+          "answer": 1,
+          "explanation": "和平时他用破坏和威胁索取保护费，这正是文章带有讽刺意味的地方。",
+          "wrongReasons": [
+            "“只在公共市场出售普通农产品”与本课内容不符。和平时他用破坏和威胁索取保护费，这正是文章带有讽刺意味的地方。",
+            "",
+            "“免费帮助各城邦修复农场”与本课内容不符。和平时他用破坏和威胁索取保护费，这正是文章带有讽刺意味的地方。"
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "In times of peace, when business was bad, Hawkwood and his men would march into a city-state and, after burning down a few farms, would offer to go away if protection money was paid to them."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "霍克伍德去世时多少岁？请写数字或英文数词。",
+          "answers": [
+            "80",
+            "eighty",
+            "80岁",
+            "八十",
+            "八十岁"
+          ],
+          "explanation": "他约六百年前到意大利，但去世年龄是 eighty（八十岁）。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "60",
+                "sixty",
+                "六十岁"
+              ],
+              "feedback": "他约六百年前到意大利，但去世年龄是 eighty（八十岁）。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "When he died at the age of eighty, the Florentines gave him a state funeral and had a picture painted which was dedicated to the memory of ‘the most valiant soldier and most notable leader, Signor Giovanni Haukodue’."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l015",
+      "book": 3,
+      "number": 15,
+      "title": "第15课 · Fifty pence worth of trouble",
+      "bodySha256": "6c7947960c9deaab0bba7c7420cc682d2657e48bcfae720ad076adfb83e4a7bb",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "乔治的胳膊为什么会卡在排水沟盖里？",
+          "options": [
+            "他伸手去捡掉进排水沟的五十便士",
+            "他想从排水沟里找一大盒巧克力",
+            "他想把整个排水沟盖从地上搬走"
+          ],
+          "answer": 0,
+          "explanation": "硬币掉进排水沟后，乔治伸胳膊去捡，结果硬币没找到，胳膊也拔不出来。",
+          "wrongReasons": [
+            "",
+            "“他想从排水沟里找一大盒巧克力”与本课内容不符。硬币掉进排水沟后，乔治伸胳膊去捡，结果硬币没找到，胳膊也拔不出来。",
+            "“他想把整个排水沟盖从地上搬走”与本课内容不符。硬币掉进排水沟后，乔治伸胳膊去捡，结果硬币没找到，胳膊也拔不出来。"
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "George took off his jacket, rolled up his sleeves and pushed his right arm through the drain cover."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "最后是谁用特殊油脂救出了乔治？请写职业（中文或英文）。",
+          "answers": [
+            "fire fighters",
+            "firefighters",
+            "two fire fighters",
+            "消防员",
+            "两名消防员"
+          ],
+          "explanation": "肥皂和黄油没有奏效，最后是两名消防员用特殊油脂把他救出。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "police",
+                "警察"
+              ],
+              "feedback": "肥皂和黄油没有奏效，最后是两名消防员用特殊油脂把他救出。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "The fire brigade was called and two fire fighters freed George using a special type of grease."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l016",
+      "book": 3,
+      "number": 16,
+      "title": "第16课 · Mary had a little lamb",
+      "bodySha256": "aaa6d6f2f723cedd9e365f53971738e3049c27ce9174c1271e926d30036cfded",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "大雨怎样揭穿了阿列科对小羊的说法？",
+          "options": [
+            "雨水把一只原本白羊变成了纯黑色",
+            "小羊在雨中跑回玛丽的家并开口作证",
+            "黑色染料被雨水冲掉，小羊变得几乎全白"
+          ],
+          "answer": 2,
+          "explanation": "小羊的黑色是染上去的，雨水洗掉染料后露出了白色羊毛。",
+          "wrongReasons": [
+            "“雨水把一只原本白羊变成了纯黑色”与本课内容不符。小羊的黑色是染上去的，雨水洗掉染料后露出了白色羊毛。",
+            "“小羊在雨中跑回玛丽的家并开口作证”与本课内容不符。小羊的黑色是染上去的，雨水洗掉染料后露出了白色羊毛。",
+            ""
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "Its wool, which had been dyed black, had been washed clean by the rain!"
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "迪米特里在阿列科家避雨多久后，才出门发现小羊变白？请写时长。",
+          "answers": [
+            "half an hour",
+            "a half hour",
+            "30 minutes",
+            "thirty minutes",
+            "半小时",
+            "三十分钟",
+            "30分钟",
+            "半个小时",
+            "半个钟头"
+          ],
+          "explanation": "原文说半小时后出门，不是两小时后。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "two hours",
+                "两小时"
+              ],
+              "feedback": "原文说半小时后出门，不是两小时后。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "When he went outside half an hour later, he was astonished to find that the little black lamb was almost white."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l017",
+      "book": 3,
+      "number": 17,
+      "title": "第17课 · The longest suspension bridge in the world",
+      "bodySha256": "7ed68c63e1184d83785a8834420c53d3638d95c3271bab8385328e814737cdae",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "为什么设计者必须考虑地球的形状？",
+          "options": [
+            "桥只需要承载三辆汽车",
+            "大桥的跨度非常长",
+            "桥要建在完全没有海水的平地上"
+          ],
+          "answer": 1,
+          "explanation": "文章将考虑地球形状直接归因于大桥非常长，而非车辆数量或平地条件。",
+          "wrongReasons": [
+            "“桥只需要承载三辆汽车”与本课内容不符。文章将考虑地球形状直接归因于大桥非常长，而非车辆数量或平地条件。",
+            "",
+            "“桥要建在完全没有海水的平地上”与本课内容不符。文章将考虑地球形状直接归因于大桥非常长，而非车辆数量或平地条件。"
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "The bridge is so long that the shape of the earth had to be taken into account by its designer."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "这座韦拉扎诺大桥的设计者叫什么？请写英文姓名。",
+          "answers": [
+            "Othmar Ammann",
+            "Ammann"
+          ],
+          "explanation": "Verrazano 是大桥纪念的探险者，设计者是 Othmar Ammann。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "Verrazano"
+              ],
+              "feedback": "Verrazano 是大桥纪念的探险者，设计者是 Othmar Ammann。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "The Verrazano Bridge, which was designed by Othmar Ammann, joins Brooklyn to Staten Island."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l018",
+      "book": 3,
+      "number": 18,
+      "title": "第18课 · Electric currents in modern art",
+      "bodySha256": "88d4ee30f8fc3bab84aba2603810bfa911ec0fb0f2e5e81b2ac63fbf236b89b5",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "这次雕塑展为什么连叙述者也感到惊讶？",
+          "options": [
+            "展品会运动并带有闪光、电火花等电气效果",
+            "展品全部是传统大理石人像",
+            "所有展品都只靠一阵风才能活动"
+          ],
+          "answer": 0,
+          "explanation": "这批动态雕塑有磁化球体、闪烁彩灯和电火花，并非普通静态雕像。",
+          "wrongReasons": [
+            "",
+            "“展品全部是传统大理石人像”与本课内容不符。这批动态雕塑有磁化球体、闪烁彩灯和电火花，并非普通静态雕像。",
+            "“所有展品都只靠一阵风才能活动”与本课内容不符。这批动态雕塑有磁化球体、闪烁彩灯和电火花，并非普通静态雕像。"
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "Some of them are dangerous!’ The objects on display were pieces of moving sculpture."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "展厅中央高架中的彩灯被比作什么？请写比较对象（中文或英文）。",
+          "answers": [
+            "traffic lights",
+            "交通信号灯",
+            "红绿灯"
+          ],
+          "explanation": "彩灯不断闪烁，被比作失常的交通信号灯。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "candles",
+                "蜡烛"
+              ],
+              "feedback": "彩灯不断闪烁，被比作失常的交通信号灯。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "These lights flickered continuously like traffic lights which have gone mad."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l019",
+      "book": 3,
+      "number": 19,
+      "title": "第19课 · A very dear cat",
+      "bodySha256": "38e47744c279a353f4be9742e4947b1cfa7aa614f75999128d735bde7f623c22",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "拉姆齐太太为什么没有报警，而是付了赎金？",
+          "options": [
+            "她认为绑架动物完全合法",
+            "警方事先要求她必须付款",
+            "她担心报警后就再也见不到猫"
+          ],
+          "answer": 2,
+          "explanation": "匿名信让她害怕失去拉斯特斯，因此改变了报警的主意。",
+          "wrongReasons": [
+            "“她认为绑架动物完全合法”与本课内容不符。匿名信让她害怕失去拉斯特斯，因此改变了报警的主意。",
+            "“警方事先要求她必须付款”与本课内容不符。匿名信让她害怕失去拉斯特斯，因此改变了报警的主意。",
+            ""
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "At first, she decided to go to the police, but fearing that she would never see Rastus again—the letter had made that quite clear—she changed her mind."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "绑匪要求的赎金是多少英镑？请写金额。",
+          "answers": [
+            "1000",
+            "1,000",
+            "£1000",
+            "£1,000",
+            "1000 pounds",
+            "one thousand pounds",
+            "一千英镑",
+            "1000英镑"
+          ],
+          "explanation": "赎金是 £1,000，不是 £100。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "100",
+                "£100",
+                "一百英镑"
+              ],
+              "feedback": "赎金是 £1,000，不是 £100。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "Ramsay paid a ransom of £1,000."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l020",
+      "book": 3,
+      "number": 20,
+      "title": "第20课 · Pioneer pilots",
+      "bodySha256": "d482e8925b4991d2f13ea0ee15d4f1244062bc0e5ed448353b44f008727635ea",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "布莱里奥在七月二十五日抢先成功飞越海峡，一个直接原因是什么？",
+          "options": [
+            "布莱里奥的试飞持续了整整一周",
+            "拉瑟姆没能早起按时起飞",
+            "拉瑟姆的飞机事先已经飞到了多佛"
+          ],
+          "answer": 1,
+          "explanation": "两人本计划当天起飞，但拉瑟姆没能早起；布莱里奥试飞后先行出发。",
+          "wrongReasons": [
+            "“布莱里奥的试飞持续了整整一周”与本课内容不符。两人本计划当天起飞，但拉瑟姆没能早起；布莱里奥试飞后先行出发。",
+            "",
+            "“拉瑟姆的飞机事先已经飞到了多佛”与本课内容不符。两人本计划当天起飞，但拉瑟姆没能早起；布莱里奥试飞后先行出发。"
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "Both planes were going to take off on July 25th, but Latham failed to get up early enough."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "布莱里奥飞越海峡用了多少分钟？请写数字或英文数词。",
+          "answers": [
+            "37",
+            "thirty-seven",
+            "thirty seven",
+            "37分钟",
+            "三十七分钟",
+            "三十七"
+          ],
+          "explanation": "twenty-six 是此前陆上试飞的英里数；跨海飞行耗时三十七分钟。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "26",
+                "twenty-six",
+                "二十六分钟"
+              ],
+              "feedback": "twenty-six 是此前陆上试飞的英里数；跨海飞行耗时三十七分钟。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "His great flight lasted thirty-seven minutes."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l021",
+      "book": 3,
+      "number": 21,
+      "title": "第21课 · Daniel Mendoza",
+      "bodySha256": "e4beba0c077125ed2e2763cd4cff6f44ab0c2087b9009ea6020d987ff6b40ba3",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "门多萨收入很高，为什么后来仍负债并入狱？",
+          "options": [
+            "他花钱挥霍，最终无力偿还债务",
+            "他从未收到过任何比赛报酬",
+            "他因拒绝戴拳击手套被判入狱"
+          ],
+          "answer": 0,
+          "explanation": "高收入并未使他免于贫困，因为他非常挥霍，后来因欠债不还入狱。",
+          "wrongReasons": [
+            "",
+            "“他从未收到过任何比赛报酬”与本课内容不符。高收入并未使他免于贫困，因为他非常挥霍，后来因欠债不还入狱。",
+            "“他因拒绝戴拳击手套被判入狱”与本课内容不符。高收入并未使他免于贫困，因为他非常挥霍，后来因欠债不还入狱。"
+          ],
+          "evidence": {
+            "paragraphIndex": 2,
+            "quote": "Despite this, he was so extravagant that he was always in debt."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "门多萨在第几次与汉弗莱斯交手时获胜？请写次数（中文或英文）。",
+          "answers": [
+            "third",
+            "the third",
+            "3",
+            "third match",
+            "第三次",
+            "第三",
+            "三"
+          ],
+          "explanation": "他前两次都输了，到第三次交手才获胜。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "first",
+                "第一次",
+                "1"
+              ],
+              "feedback": "他前两次都输了，到第三次交手才获胜。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 2,
+            "quote": "It was not until his third match in 1790 that he finally beat Humphries and became Champion of England."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l022",
+      "book": 3,
+      "number": 22,
+      "title": "第22课 · By heart",
+      "bodySha256": "091bee79341286804bd07fe073c019942d2aa6ab2d234b7da39df9bf81f3e6ec",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "扮演贵族的演员如何化解空白信纸的恶作剧？",
+          "options": [
+            "立即当众承认自己完全忘记台词",
+            "撕掉信纸并结束整场演出",
+            "借口光线昏暗，让狱卒替他读信"
+          ],
+          "answer": 2,
+          "explanation": "贵族把空白信纸交还给狱卒，要求对方朗读，把难题推了回去。",
+          "wrongReasons": [
+            "“立即当众承认自己完全忘记台词”与本课内容不符。贵族把空白信纸交还给狱卒，要求对方朗读，把难题推了回去。",
+            "“撕掉信纸并结束整场演出”与本课内容不符。贵族把空白信纸交还给狱卒，要求对方朗读，把难题推了回去。",
+            ""
+          ],
+          "evidence": {
+            "paragraphIndex": 2,
+            "quote": "Read the letter to me.’ And he promptly handed the sheet of paper to the gaoler."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "狱卒借口回后台取什么物品，才拿回正常的信？请写物品（中文或英文）。",
+          "answers": [
+            "glasses",
+            "a pair of glasses",
+            "眼镜",
+            "一副眼镜"
+          ],
+          "explanation": "狱卒说要取眼镜，回来时带了眼镜和写有台词的信。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "torch",
+                "手电筒"
+              ],
+              "feedback": "狱卒说要取眼镜，回来时带了眼镜和写有台词的信。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 2,
+            "quote": "I must get my glasses.’ With this, he hurried off the stage."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l023",
+      "book": 3,
+      "number": 23,
+      "title": "第23课 · One man’s meat is another man’s poison",
+      "bodySha256": "76d095f7ed69f4eacabf940e9700d3a78ce6da50b263d736415d5b086d81fe29",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "罗伯特邀请叙述者吃晚饭时，两人为什么大吃一惊？",
+          "options": [
+            "罗伯特发现送来的其实是龙虾",
+            "蜗牛逃出纸袋，爬满了门厅",
+            "叙述者已经提前吃光了所有蜗牛"
+          ],
+          "answer": 1,
+          "explanation": "晚饭原本要吃蜗牛，但它们已从纸袋逃出，爬满了门厅。",
+          "wrongReasons": [
+            "“罗伯特发现送来的其实是龙虾”与本课内容不符。晚饭原本要吃蜗牛，但它们已从纸袋逃出，爬满了门厅。",
+            "",
+            "“叙述者已经提前吃光了所有蜗牛”与本课内容不符。晚饭原本要吃蜗牛，但它们已从纸袋逃出，爬满了门厅。"
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "To our dismay, we saw that there were snails everywhere: they had escaped from the paper bag and had taken complete possession of the hall!"
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "送给罗伯特的蜗牛，是叙述者从自家什么地方收集的？请写地点类型。",
+          "answers": [
+            "garden",
+            "my garden",
+            "his garden",
+            "the garden",
+            "花园",
+            "自家花园"
+          ],
+          "explanation": "蜗牛是从叙述者自家花园收集来的，并不是在商店买的。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "shop",
+                "market",
+                "商店",
+                "市场"
+              ],
+              "feedback": "蜗牛是从叙述者自家花园收集来的，并不是在商店买的。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "For years he has been asking me to collect snails from my garden and take them to him."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l024",
+      "book": 3,
+      "number": 24,
+      "title": "第24课 · A skeleton in the cupboard",
+      "bodySha256": "f3b78027e3cef0f632f37979f2cfbe4ab29a60a6f3db1ce191a9751c6d280af9",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "乔治对衣柜里的骷髅不以为意，原因是什么？",
+          "options": [
+            "他年轻时学过医，确实保存着一副骷髅",
+            "他以为朋友看到的只是画中的图案",
+            "那具骷髅是为了掩盖谋杀案而藏起来的"
+          ],
+          "answer": 0,
+          "explanation": "这是乔治医学生时期留下的真实骷髅，并非小说中比喻的家族丑闻。",
+          "wrongReasons": [
+            "",
+            "“他以为朋友看到的只是画中的图案”与本课内容不符。这是乔治医学生时期留下的真实骷髅，并非小说中比喻的家族丑闻。",
+            "“那具骷髅是为了掩盖谋杀案而藏起来的”与本课内容不符。这是乔治医学生时期留下的真实骷髅，并非小说中比喻的家族丑闻。"
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "You forget that I was a medical student once upon a time.’"
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "乔治后来从事什么写作？请写作品类型（中文或英文）。",
+          "answers": [
+            "detective stories",
+            "detective story",
+            "侦探小说",
+            "推理小说"
+          ],
+          "explanation": "乔治没有成为医生，后来成为成功的侦探小说作家。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "medical textbooks",
+                "医学教材"
+              ],
+              "feedback": "乔治没有成为医生，后来成为成功的侦探小说作家。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "Instead of becoming a doctor, however, he became a successful writer of detective stories."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l025",
+      "book": 3,
+      "number": 25,
+      "title": "第25课 · The Cutty Sark",
+      "bodySha256": "9872aca7a5c7dc288e610497ccf34f6552817149ee2726c979f8547be0967ad3",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "卡蒂萨克号为什么在比赛中失去领先优势？",
+          "options": [
+            "船长一开始就决定放弃比赛",
+            "对手把它拖回了上海港",
+            "暴风雨损坏船舵，临时船舵限制了速度"
+          ],
+          "answer": 2,
+          "explanation": "失去船舵后只能装临时船舵并减速，后来又停港换新舵，因此耽误了航程。",
+          "wrongReasons": [
+            "“船长一开始就决定放弃比赛”与本课内容不符。失去船舵后只能装临时船舵并减速，后来又停港换新舵，因此耽误了航程。",
+            "“对手把它拖回了上海港”与本课内容不符。失去船舵后只能装临时船舵并减速，后来又停港换新舵，因此耽误了航程。",
+            ""
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "In August, she was struck by a very heavy storm during which her rudder was torn away."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "卡蒂萨克号现在可以在哪个地方参观？请写地名（中文或英文）。",
+          "answers": [
+            "Greenwich",
+            "格林尼治"
+          ],
+          "explanation": "上海是当年比赛的出发地；文中说船现在陈列在 Greenwich。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "Shanghai",
+                "上海"
+              ],
+              "feedback": "上海是当年比赛的出发地；文中说船现在陈列在 Greenwich。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 0,
+            "quote": "One of the most famous sailing ships of the nineteenth century, the Cutty Sark, can still be seen at Greenwich."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l026",
+      "book": 3,
+      "number": 26,
+      "title": "第26课 · Wanted: a large biscuit tin",
+      "bodySha256": "a2912e4da1472589ab06917a8dd0a44bc692e768690447fd473c8fa0337334c8",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "饼干制造商为什么最终支付了超出预期的奖金？",
+          "options": [
+            "厂家最后把每磅奖金改为了一百美元",
+            "有人烤出了重达二千四百磅的巨型饼干",
+            "所有参赛者的饼干都不到一磅"
+          ],
+          "answer": 1,
+          "explanation": "比赛按每磅十美元收购最大饼干；巨型饼干重达2,400磅，因此花费远超预期。",
+          "wrongReasons": [
+            "“厂家最后把每磅奖金改为了一百美元”与本课内容不符。比赛按每磅十美元收购最大饼干；巨型饼干重达2,400磅，因此花费远超预期。",
+            "",
+            "“所有参赛者的饼干都不到一磅”与本课内容不符。比赛按每磅十美元收购最大饼干；巨型饼干重达2,400磅，因此花费远超预期。"
+          ],
+          "evidence": {
+            "paragraphIndex": 2,
+            "quote": "But just before the competition closed, a lorry arrived at the factory with a truly colossal biscuit which weighed 2,400 pounds."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "最后的大饼干由什么身份的人烤制？请写身份（中文或英文）。",
+          "answers": [
+            "college student",
+            "a college student",
+            "university student",
+            "大学生",
+            "一名大学生"
+          ],
+          "explanation": "参赛大饼干出自大学生，并不是厂家自己制作的。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "biscuit manufacturer",
+                "饼干厂商"
+              ],
+              "feedback": "参赛大饼干出自大学生，并不是厂家自己制作的。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 2,
+            "quote": "It had been baked by a college student who had used over 1,000 pounds of flour, 800 pounds of sugar, 200 pounds of fat, and 400 pounds of various other ingredients."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l027",
+      "book": 3,
+      "number": 27,
+      "title": "第27课 · Nothing to sell and nothing to buy",
+      "bodySha256": "434aa49c50768a479926b36797e13c4ecb0947439da3093b9be2cce687f70814",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "作者认为真正的流浪汉与乞丐有什么重要区别？",
+          "options": [
+            "流浪汉选择独立生活，不要求别人怜悯自己",
+            "流浪汉拥有稳定高薪，因此从不需要食物",
+            "流浪汉必须通过固定商店出售货物才能生存"
+          ],
+          "answer": 0,
+          "explanation": "文中的流浪汉珍视独立和尊严，即使请求一点钱也不要求对方怜悯。",
+          "wrongReasons": [
+            "",
+            "“流浪汉拥有稳定高薪，因此从不需要食物”与本课内容不符。文中的流浪汉珍视独立和尊严，即使请求一点钱也不要求对方怜悯。",
+            "“流浪汉必须通过固定商店出售货物才能生存”与本课内容不符。文中的流浪汉珍视独立和尊严，即使请求一点钱也不要求对方怜悯。"
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "A tramp may ask you for money, but he will never ask you to feel sorry for him."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "文中说教师靠出售什么为生？请写名词（中文或英文）。",
+          "answers": [
+            "knowledge",
+            "知识"
+          ],
+          "explanation": "knowledge 对应教师；wisdom 在文中对应哲学家。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "wisdom",
+                "智慧"
+              ],
+              "feedback": "knowledge 对应教师；wisdom 在文中对应哲学家。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 0,
+            "quote": "In the light of this statement, teachers live by selling knowledge, philosophers by selling wisdom and priests by selling spiritual comfort."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l028",
+      "book": 3,
+      "number": 28,
+      "title": "第28课 · Five pounds too dear",
+      "bodySha256": "3dc94df43cf461751d64bde1928f2a006aeba0b4782ab5dfa05a9b6970450929",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "叙述者为什么发现五英镑买来的钢笔仍然太贵？",
+          "options": [
+            "钢笔只是包装盒太小，笔本身完全正常",
+            "他回船后发现卖者忘了给钢笔配包装盒",
+            "钢笔无法装墨水，从来写不出一个字"
+          ],
+          "answer": 2,
+          "explanation": "看似便宜的钢笔不能装墨水，也从未写过字，因此没有实用价值。",
+          "wrongReasons": [
+            "“钢笔只是包装盒太小，笔本身完全正常”与本课内容不符。看似便宜的钢笔不能装墨水，也从未写过字，因此没有实用价值。",
+            "“他回船后发现卖者忘了给钢笔配包装盒”与本课内容不符。看似便宜的钢笔不能装墨水，也从未写过字，因此没有实用价值。",
+            ""
+          ],
+          "evidence": {
+            "paragraphIndex": 2,
+            "quote": "No matter how hard I tried, it was impossible to fill this beautiful pen with ink and to this day it has never written a single word!"
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "卖者最初声称这支钢笔价值多少英镑？请写金额。",
+          "answers": [
+            "50",
+            "£50",
+            "fifty pounds",
+            "50 pounds",
+            "五十英镑",
+            "50英镑"
+          ],
+          "explanation": "卖者声称价值五十英镑，特别报价三十英镑，最后成交价才是五英镑。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "5",
+                "£5",
+                "五英镑",
+                "30",
+                "£30",
+                "三十英镑"
+              ],
+              "feedback": "卖者声称价值五十英镑，特别报价三十英镑，最后成交价才是五英镑。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 2,
+            "quote": "The man said that the pen was worth £50, but as a special favour, he would let me have it for £30."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l029",
+      "book": 3,
+      "number": 29,
+      "title": "第29课 · Funny or not?",
+      "bodySha256": "e0c56a2d8683224d79596e2a3f113fcc9a9fd4e5b534be891fc1b875287ab380",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "故事结尾为什么体现了带有残酷意味的幽默？",
+          "options": [
+            "医生和病人其实从来没有去过医院",
+            "刚庆祝出院的人又滑倒，摔断了另一条腿",
+            "病人终于在圣诞节前完全康复"
+          ],
+          "answer": 1,
+          "explanation": "他原本右腿受伤，好不容易出院参加聚会，却又摔断左腿，悲剧性反转构成所谓病态幽默。",
+          "wrongReasons": [
+            "“医生和病人其实从来没有去过医院”与本课内容不符。他原本右腿受伤，好不容易出院参加聚会，却又摔断左腿，悲剧性反转构成所谓病态幽默。",
+            "",
+            "“病人终于在圣诞节前完全康复”与本课内容不符。他原本右腿受伤，好不容易出院参加聚会，却又摔断左腿，悲剧性反转构成所谓病态幽默。"
+          ],
+          "evidence": {
+            "paragraphIndex": 2,
+            "quote": "He was still mumbling something about hospitals at the end of the party when he slipped on a piece of ice and broke his left leg."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "故事开始时，病人摔断的是哪一条腿？请写左右（中文或英文）。",
+          "answers": [
+            "right",
+            "right leg",
+            "右腿",
+            "右"
+          ],
+          "explanation": "开始是右腿骨折，左腿是结尾再次滑倒时摔断的。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "left",
+                "left leg",
+                "左腿"
+              ],
+              "feedback": "开始是右腿骨折，左腿是结尾再次滑倒时摔断的。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 2,
+            "quote": "A man who had broken his right leg was taken to hospital a few weeks before Christmas."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l030",
+      "book": 3,
+      "number": 30,
+      "title": "第30课 · The death of a ghost",
+      "bodySha256": "94a2e3c1feb6a9f4d8264878e00bd5b32305c439ea961085d0f21eb170271436",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "村民以为农场闹鬼，实际发生了什么？",
+          "options": [
+            "一名隐藏多年的男子白天睡觉、夜里劳动",
+            "农场主雇了演员在月下制造幻觉",
+            "夜间工作全由相邻农场的机器人完成"
+          ],
+          "answer": 0,
+          "explanation": "埃里克长期藏在农场，白天睡觉晚上干活，旁人不知他的存在才以为有鬼。",
+          "wrongReasons": [
+            "",
+            "“农场主雇了演员在月下制造幻觉”与本课内容不符。埃里克长期藏在农场，白天睡觉晚上干活，旁人不知他的存在才以为有鬼。",
+            "“夜间工作全由相邻农场的机器人完成”与本课内容不符。埃里克长期藏在农场，白天睡觉晚上干活，旁人不知他的存在才以为有鬼。"
+          ],
+          "evidence": {
+            "paragraphIndex": 2,
+            "quote": "He used to sleep during the day and work at night, quite unaware of the fact that he had become the ghost of Endley."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "被误认为鬼魂的第三兄弟叫什么？请写英文姓名。",
+          "answers": [
+            "Eric Cox",
+            "Eric"
+          ],
+          "explanation": "Joe和Bob是公开经营农场的兄弟；藏起来的是Eric Cox。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "Joe Cox",
+                "Bob Cox",
+                "Joe",
+                "Bob"
+              ],
+              "feedback": "Joe和Bob是公开经营农场的兄弟；藏起来的是Eric Cox。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "Everyone went to the funeral, for the ‘ghost’ was none other than Eric Cox, a third brother who was supposed to have died as a young man."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l031",
+      "book": 3,
+      "number": 31,
+      "title": "第31课 · A lovable eccentric",
+      "bodySha256": "5332576afb398defe7c1f7f44464a869e14fef1d632b6de3a6a0ee72249f44a6",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "迪基为什么要求店员数三万枚便士？",
+          "options": [
+            "他不知道手表的价格只有三英镑",
+            "店员主动要求只收便士作为纪念",
+            "用这笔付款教训以衣着取人的店员"
+          ],
+          "answer": 2,
+          "explanation": "店员因迪基被雨淋得狼狈而拒绝服务，迪基随后用三百英镑便士付款来反击这种势利。",
+          "wrongReasons": [
+            "“他不知道手表的价格只有三英镑”与本课内容不符。店员因迪基被雨淋得狼狈而拒绝服务，迪基随后用三百英镑便士付款来反击这种势利。",
+            "“店员主动要求只收便士作为纪念”与本课内容不符。店员因迪基被雨淋得狼狈而拒绝服务，迪基随后用三百英镑便士付款来反击这种势利。",
+            ""
+          ],
+          "evidence": {
+            "paragraphIndex": 2,
+            "quote": "It contained £300 in pennies."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "迪基用了几年策划那场把自己作品当名家作品展示的玩笑？请写年数。",
+          "answers": [
+            "4",
+            "four",
+            "four years",
+            "4年",
+            "四年",
+            "四"
+          ],
+          "explanation": "假名家画展的玩笑花了他四年时间。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "3",
+                "three",
+                "三年"
+              ],
+              "feedback": "假名家画展的玩笑花了他四年时间。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 2,
+            "quote": "It took him four years to stage this elaborate joke simply to prove that critics do not always know what they are talking about."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l032",
+      "book": 3,
+      "number": 32,
+      "title": "第32课 · A lost ship",
+      "bodySha256": "8c87a70fbc8c8c97250e69f44e18483bad839d173f949afd547de6b3fb6cd9c0",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "打捞出的箱子为什么让船员意识到找错了沉船？",
+          "options": [
+            "箱里装着目标船长刚发出的电报",
+            "箱内是旧日海员的私人物品，并非目标黄金货物",
+            "箱子是空的，无法证明任何船只存在"
+          ],
+          "answer": 1,
+          "explanation": "箱里是海员Alan Fielding的书、衣服、照片和旧信，说明打捞到的是另一艘早年沉船。",
+          "wrongReasons": [
+            "“箱里装着目标船长刚发出的电报”与本课内容不符。箱里是海员Alan Fielding的书、衣服、照片和旧信，说明打捞到的是另一艘早年沉船。",
+            "",
+            "“箱子是空的，无法证明任何船只存在”与本课内容不符。箱里是海员Alan Fielding的书、衣服、照片和旧信，说明打捞到的是另一艘早年沉船。"
+          ],
+          "evidence": {
+            "paragraphIndex": 2,
+            "quote": "The chest contained the personal belongings of a seaman, Alan Fielding."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "后来查明，这艘意外发现的沉船叫什么？请写英文船名。",
+          "answers": [
+            "Karen",
+            "the Karen"
+          ],
+          "explanation": "Elkor是正在打捞的船，意外发现的沉船叫Karen。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "Elkor",
+                "the Elkor"
+              ],
+              "feedback": "Elkor是正在打捞的船，意外发现的沉船叫Karen。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 2,
+            "quote": "The captain learnt from the letter that the name of the lost ship was the Karen."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l033",
+      "book": 3,
+      "number": 33,
+      "title": "第33课 · A day to remember",
+      "bodySha256": "9545579ec67639905d8324ed8c1cf15c568f917480b5beec8e45a0906a350e28",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "混乱的交通事故中，谁反而得到了好处？",
+          "options": [
+            "两只流浪狗吃掉了散落的蛋糕",
+            "卡车司机得到了额外一车新啤酒",
+            "所有司机因此提前到家"
+          ],
+          "answer": 0,
+          "explanation": "只有两只流浪狗吃到了剩下的蛋糕，其他人都遭遇了损失或堵车。",
+          "wrongReasons": [
+            "",
+            "“卡车司机得到了额外一车新啤酒”与本课内容不符。只有两只流浪狗吃到了剩下的蛋糕，其他人都遭遇了损失或堵车。",
+            "“所有司机因此提前到家”与本课内容不符。只有两只流浪狗吃到了剩下的蛋糕，其他人都遭遇了损失或堵车。"
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "Only two stray dogs benefited from all this confusion, for they greedily devoured what was left of the cake."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "文中卡车装载的是什么？请写货物（中文或英文）。",
+          "answers": [
+            "empty beer bottles",
+            "beer bottles",
+            "空啤酒瓶",
+            "啤酒空瓶"
+          ],
+          "explanation": "卡车上载的是空啤酒瓶，急刹车后许多瓶子掉到路上。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "full beer bottles",
+                "满啤酒瓶"
+              ],
+              "feedback": "卡车上载的是空啤酒瓶，急刹车后许多瓶子掉到路上。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "The lorry was loaded with empty beer bottles and hundreds of them slid off the back of the vehicle and on to the road."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l034",
+      "book": 3,
+      "number": 34,
+      "title": "第34课 · A happy discovery",
+      "bodySha256": "2876c77a55cc2918f774aa9fe695821f62d602d6351280e48ccf35c041354800",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "弗兰克为什么敢买下箱底的小画？",
+          "options": [
+            "古董商已把它鉴定为价值数十万英镑的真迹",
+            "他只因为画框里藏着黄金才付款",
+            "画的构图和线条让他认出了潜在的艺术价值"
+          ],
+          "answer": 2,
+          "explanation": "弗兰克凭自己的鉴赏知识看出画的价值；古董商只随便看了一眼，未识别其真正价值。",
+          "wrongReasons": [
+            "“古董商已把它鉴定为价值数十万英镑的真迹”与本课内容不符。弗兰克凭自己的鉴赏知识看出画的价值；古董商只随便看了一眼，未识别其真正价值。",
+            "“他只因为画框里藏着黄金才付款”与本课内容不符。弗兰克凭自己的鉴赏知识看出画的价值；古董商只随便看了一眼，未识别其真正价值。",
+            ""
+          ],
+          "evidence": {
+            "paragraphIndex": 2,
+            "quote": "As its composition and line reminded him of an Italian painting he knew well, he decided to buy it."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "后来确认，这幅小画是哪位画家的作品？请写英文姓名或中文译名。",
+          "answers": [
+            "Correggio",
+            "科雷乔",
+            "柯雷乔"
+          ],
+          "explanation": "被发现的未知杰作出自Correggio，不是米开朗琪罗。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "Michelangelo",
+                "米开朗琪罗"
+              ],
+              "feedback": "被发现的未知杰作出自Correggio，不是米开朗琪罗。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 2,
+            "quote": "The tiny painting proved to be an unknown masterpiece by Correggio and was worth hundreds of thousands of pounds."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l035",
+      "book": 3,
+      "number": 35,
+      "title": "第35课 · Justice was done",
+      "bodySha256": "f2ad81451b09370e3304a3b7027c374f1bab1927d7dbd818902c5df49eb6639c",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "作者为什么说小偷还没交给警方，正义就已伸张？",
+          "options": [
+            "小偷在进入珠宝店前已主动赔偿全部损失",
+            "小偷困在狭窄烟囱里近十小时，已经自食苦果",
+            "店员已经自行审判并判他入狱"
+          ],
+          "answer": 1,
+          "explanation": "小偷试图入室盗窃却被困烟囱，长时间的困境本身就是对其行为的惩罚。",
+          "wrongReasons": [
+            "“小偷在进入珠宝店前已主动赔偿全部损失”与本课内容不符。小偷试图入室盗窃却被困烟囱，长时间的困境本身就是对其行为的惩罚。",
+            "",
+            "“店员已经自行审判并判他入狱”与本课内容不符。小偷试图入室盗窃却被困烟囱，长时间的困境本身就是对其行为的惩罚。"
+          ],
+          "evidence": {
+            "paragraphIndex": 2,
+            "quote": "He had been there for nearly ten hours."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "消防员凿开的那堵墙厚多少英寸？请写数字或英文数词。",
+          "answers": [
+            "18",
+            "eighteen",
+            "eighteen inches",
+            "18英寸",
+            "十八英寸",
+            "十八"
+          ],
+          "explanation": "墙厚十八英寸；近十小时是小偷被困的时间，不能把两个量混淆。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "10",
+                "ten",
+                "十英寸"
+              ],
+              "feedback": "墙厚十八英寸；近十小时是小偷被困的时间，不能把两个量混淆。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 2,
+            "quote": "After chipping through a wall which was eighteen inches thick, they found that a man had been trapped in the chimney."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l036",
+      "book": 3,
+      "number": 36,
+      "title": "第36课 · A chance in a million",
+      "bodySha256": "2e7c0d3ec28f5a85f0e029ec8cf1afe1e5f618069708d0c708947e34f5cf4c07",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "弗朗茨为什么起初不相信工人可能是自己的兄弟？",
+          "options": [
+            "他一直以为兄弟已在战争中阵亡",
+            "他确信兄弟从未离开过自己家",
+            "他认定兄弟比自己年长一百岁"
+          ],
+          "answer": 0,
+          "explanation": "弗朗茨以为兄弟战争期间已经阵亡；妻子则因相貌相似而坚持追查。",
+          "wrongReasons": [
+            "",
+            "“他确信兄弟从未离开过自己家”与本课内容不符。弗朗茨以为兄弟战争期间已经阵亡；妻子则因相貌相似而坚持追查。",
+            "“他认定兄弟比自己年长一百岁”与本课内容不符。弗朗茨以为兄弟战争期间已经阵亡；妻子则因相貌相似而坚持追查。"
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "Franz poured scorn on the idea, pointing out that his brother had been killed in action during the war."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "最终找到的失散兄弟叫什么？请写英文姓名。",
+          "answers": [
+            "Hans Bussman",
+            "Hans"
+          ],
+          "explanation": "Franz是寻找兄弟的人，失散后找到的是Hans。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "Franz Bussman",
+                "Franz"
+              ],
+              "feedback": "Franz是寻找兄弟的人，失散后找到的是Hans。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "Needless to say, the man’s name was Hans Bussman and he really was Franz’s long-lost brother."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l037",
+      "book": 3,
+      "number": 37,
+      "title": "第37课 · The Westhaven Express",
+      "bodySha256": "8a19f07e6b31a4b630dd414472171d8903f0dacbcf8f0c435847bfd6e2e19a4c",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "叙述者对所谓快车的误会是怎样造成的？",
+          "options": [
+            "车站临时把一列正在运营的快车改成了货车",
+            "乘客故意把所有车站名称改掉",
+            "他没注意时刻表脚注写着这项服务已停开"
+          ],
+          "answer": 2,
+          "explanation": "他只看到时刻表正文，没有查看星号引向的停开说明，因此误认为慢车应当是快车。",
+          "wrongReasons": [
+            "“车站临时把一列正在运营的快车改成了货车”与本课内容不符。他只看到时刻表正文，没有查看星号引向的停开说明，因此误认为慢车应当是快车。",
+            "“乘客故意把所有车站名称改掉”与本课内容不符。他只看到时刻表正文，没有查看星号引向的停开说明，因此误认为慢车应当是快车。",
+            ""
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "It said: ‘This service has been suspended.’"
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "按时刻表，原来那班快车的行程应是多少小时多少分钟？请写时长。",
+          "answers": [
+            "1 hour 17 minutes",
+            "one hour and seventeen minutes",
+            "one hour seventeen minutes",
+            "1小时17分钟",
+            "一小时十七分钟",
+            "77 minutes",
+            "77分钟"
+          ],
+          "explanation": "时刻表标的是一小时十七分钟，而实际乘坐慢车耗时更久。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "2 hours",
+                "two hours",
+                "两小时"
+              ],
+              "feedback": "时刻表标的是一小时十七分钟，而实际乘坐慢车耗时更久。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "It went direct from my local station and the journey lasted a mere hour and seventeen minutes."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l038",
+      "book": 3,
+      "number": 38,
+      "title": "第38课 · The first calendar",
+      "bodySha256": "1533a8cd4a56431482d230141f837e3513c95f40b431f392aa58c14c95797772",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "新证据为什么动摇了历法起源于农业的看法？",
+          "options": [
+            "研究者发现农业比人类出现得还早",
+            "冰河时代猎人的符号已记录天数和月相",
+            "所有古代符号都已证明只是没有意义的装饰"
+          ],
+          "answer": 1,
+          "explanation": "这些早于农业的符号与天数、月相有关，说明人类更早就试图理解季节。",
+          "wrongReasons": [
+            "“研究者发现农业比人类出现得还早”与本课内容不符。这些早于农业的符号与天数、月相有关，说明人类更早就试图理解季节。",
+            "",
+            "“所有古代符号都已证明只是没有意义的装饰”与本课内容不符。这些早于农业的符号与天数、月相有关，说明人类更早就试图理解季节。"
+          ],
+          "evidence": {
+            "paragraphIndex": 2,
+            "quote": "They have found that it is connected with the passage of days and the phases of the moon."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "这些游牧者在最后一个冰河时代主要靠狩猎和哪项活动生活？请写活动（中文或英文）。",
+          "answers": [
+            "fishing",
+            "捕鱼",
+            "钓鱼"
+          ],
+          "explanation": "原文明确是hunting and fishing，当时并非靠农业生活。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "farming",
+                "耕种",
+                "农业"
+              ],
+              "feedback": "原文明确是hunting and fishing，当时并非靠农业生活。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 2,
+            "quote": "The nomads who made these markings lived by hunting and fishing during the last Ice Age which began about 35,000 B.C."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l039",
+      "book": 3,
+      "number": 39,
+      "title": "第39课 · Nothing to worry about",
+      "bodySha256": "44d9deeb971c5522e05869e635d262dea09073da1b02adc2b79fbf0b0a2e1424",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "汽车在浅水池中停下时，布鲁斯宣布了什么问题？",
+          "options": [
+            "发动机里已经没有机油",
+            "汽车没有安装方向盘",
+            "水池忽然变成了深海"
+          ],
+          "answer": 0,
+          "explanation": "仪表黄灯亮起后，他说发动机没有机油，印证了同行者之前对路况损害汽车的担心。",
+          "wrongReasons": [
+            "",
+            "“汽车没有安装方向盘”与本课内容不符。仪表黄灯亮起后，他说发动机没有机油，印证了同行者之前对路况损害汽车的担心。",
+            "“水池忽然变成了深海”与本课内容不符。仪表黄灯亮起后，他说发动机没有机油，印证了同行者之前对路况损害汽车的担心。"
+          ],
+          "evidence": {
+            "paragraphIndex": 2,
+            "quote": "A yellow light on the dashboard flashed angrily and Bruce cheerfully announced that there was no oil in the engine!"
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "布鲁斯起初说下一个村庄还有多少英里？请写数字或英文数词。",
+          "answers": [
+            "20",
+            "twenty",
+            "twenty miles",
+            "20英里",
+            "二十英里",
+            "二十"
+          ],
+          "explanation": "起初是二十英里；越过裂缝后他才说剩下十五英里。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "15",
+                "fifteen",
+                "十五英里"
+              ],
+              "feedback": "起初是二十英里；越过裂缝后他才说剩下十五英里。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 0,
+            "quote": "Glancing at his map, he informed us that the next village was a mere twenty miles away."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-fa4874-l040",
+      "book": 3,
+      "number": 40,
+      "title": "第40课 · Who’s who",
+      "bodySha256": "8efe77bf01739df8116d338964adeedd10c35bda2d37b5bc68490c426ad7350f",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "学生的恶作剧为什么会引起警察与工人的冲突？",
+          "options": [
+            "他真的拆除了大学门口的消防设备",
+            "他要求两方共同修好电话亭",
+            "他分别谎称对方是乔装恶作剧的学生"
+          ],
+          "answer": 2,
+          "explanation": "学生先骗警察说工人是假冒的，再骗工人说警察是假冒的，使双方都误判了对方。",
+          "wrongReasons": [
+            "“他真的拆除了大学门口的消防设备”与本课内容不符。学生先骗警察说工人是假冒的，再骗工人说警察是假冒的，使双方都误判了对方。",
+            "“他要求两方共同修好电话亭”与本课内容不符。学生先骗警察说工人是假冒的，再骗工人说警察是假冒的，使双方都误判了对方。",
+            ""
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "He added that a student had dressed up as a policeman and was playing all sorts of silly jokes on people."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "工人当时使用的道路施工工具是什么？请写工具（中文或英文）。",
+          "answers": [
+            "pneumatic drill",
+            "a pneumatic drill",
+            "风钻",
+            "气钻",
+            "气动钻"
+          ],
+          "explanation": "施工工具是pneumatic drill（风钻），不是普通铲子。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "spade",
+                "铲子"
+              ],
+              "feedback": "施工工具是pneumatic drill（风钻），不是普通铲子。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "When a student recently saw two workmen using a pneumatic drill outside his university, he immediately telephoned the police and informed them that two students dressed up as workmen were tearing up the road with a pneumatic drill."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-140ed4-l041",
+      "book": 3,
+      "number": 41,
+      "title": "第41课 · Illusions of pastoral peace",
+      "bodySha256": "8413daf678331f2c63b943738c467ab15d5d2256ebc66f0a9ce483d47d47e35a",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "叙述者反对理想化乡村生活时，指出了哪项现实负担？",
+          "options": [
+            "所有乡村居民都能步行几分钟到剧院",
+            "漫长通勤和冬夜缺少娱乐",
+            "乡村商店总比城市选择更多"
+          ],
+          "answer": 1,
+          "explanation": "叙述者指出每天通勤可达四小时，乡村的便利程度并不像朋友称赞的那样理想。",
+          "wrongReasons": [
+            "“所有乡村居民都能步行几分钟到剧院”与本课内容不符。叙述者指出每天通勤可达四小时，乡村的便利程度并不像朋友称赞的那样理想。",
+            "",
+            "“乡村商店总比城市选择更多”与本课内容不符。叙述者指出每天通勤可达四小时，乡村的便利程度并不像朋友称赞的那样理想。"
+          ],
+          "evidence": {
+            "paragraphIndex": 0,
+            "quote": "Why people are prepared to tolerate a four-hour journey each day for the dubious privilege of living in the country is beyond me."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "那位真正搬去乡下的朋友，在几个月内就回到了城里？请写月数（中文或英文）。",
+          "answers": [
+            "6",
+            "six",
+            "six months",
+            "6 months",
+            "within six months",
+            "六个月",
+            "6个月",
+            "六个月内",
+            "6个月内",
+            "半年内",
+            "半年"
+          ],
+          "explanation": "原文说他在六个月内（within six months）回到了城里，并未说恰好住满六个月。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "six years",
+                "六年"
+              ],
+              "feedback": "原文是六个月之内回城，不是六年。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 0,
+            "quote": "Though they extol the virtues of the peaceful life, only one of them has ever gone to live in the country and he was back in town within six months."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-f4cefe-l042",
+      "book": 3,
+      "number": 42,
+      "title": "第42课 · Modern cavemen",
+      "bodySha256": "7536a9d8b6add4cbaa409ad11988629f4e0cd308cb94abaf00401fbf7e05c9e9",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "深入大型洞穴探险为什么需要像军事行动那样精密筹划？",
+          "options": [
+            "无法事先准确预知全部困难，必须准备绳梯和补给",
+            "洞穴里已经铺好了安全观光铁路",
+            "只要挑一个星期天下午就能轻松完成"
+          ],
+          "answer": 0,
+          "explanation": "深洞探险无法预知具体困难，因此要事先布置绳梯和补给基地，绝非随意散步。",
+          "wrongReasons": [
+            "",
+            "“洞穴里已经铺好了安全观光铁路”与本课内容不符。深洞探险无法预知具体困难，因此要事先布置绳梯和补给基地，绝非随意散步。",
+            "“只要挑一个星期天下午就能轻松完成”与本课内容不符。深洞探险无法预知具体困难，因此要事先布置绳梯和补给基地，绝非随意散步。"
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "Precautions of this sort are necessary, for it is impossible to foretell the exact nature of the difficulties which will confront the pot-holer."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "探险队为抵御冰冷湖水，穿了什么特殊服装？请写服装（中文或英文）。",
+          "answers": [
+            "rubber suits",
+            "special rubber suits",
+            "rubber suit",
+            "橡胶衣",
+            "橡胶服",
+            "特制橡胶服"
+          ],
+          "explanation": "他们穿特制橡胶服隔绝冰水，而不是普通棉衬衫。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "cotton shirts",
+                "棉衬衫"
+              ],
+              "feedback": "他们穿特制橡胶服隔绝冰水，而不是普通棉衬衫。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 2,
+            "quote": "To protect themselves from the icy water, they had to wear special rubber suits."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-63de95-l043",
+      "book": 3,
+      "number": 43,
+      "title": "第43课 · Fully insured",
+      "bodySha256": "01bde80e444426a4898d418fcfa1d6757f6b275b83d464c711bfb666b4e83557",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "巨型馅饼盘为什么在运河中翻沉？",
+          "options": [
+            "委员会故意用它测试海底深度",
+            "运输卡车直接撞碎了整个盘子",
+            "一群青少年登上盘子跳舞，超过了它的承受能力"
+          ],
+          "answer": 2,
+          "explanation": "青少年在盘子上聚会跳舞，使其承受不住而倾覆，并非专门进行的沉水试验。",
+          "wrongReasons": [
+            "“委员会故意用它测试海底深度”与本课内容不符。青少年在盘子上聚会跳舞，使其承受不住而倾覆，并非专门进行的沉水试验。",
+            "“运输卡车直接撞碎了整个盘子”与本课内容不符。青少年在盘子上聚会跳舞，使其承受不住而倾覆，并非专门进行的沉水试验。",
+            ""
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "Dancing proved to be more than the dish could bear, for during the party it capsized and sank in seven feet of water."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "这个巨型馅饼盘长多少英尺？请写数字或英文数词。",
+          "answers": [
+            "18",
+            "eighteen",
+            "eighteen feet",
+            "18英尺",
+            "十八英尺",
+            "十八"
+          ],
+          "explanation": "盘子长十八英尺、宽六英尺，题目问的是长度。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "6",
+                "six",
+                "六英尺"
+              ],
+              "feedback": "盘子长十八英尺、宽六英尺，题目问的是长度。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "Admittedly it was an unusual pie dish, for it was eighteen feet long and six feet wide."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-b3-8160be-l044",
+      "book": 3,
+      "number": 44,
+      "title": "第44课 · Speed and comfort",
+      "bodySha256": "d69cd4605462f83fb6f50606d04575901983026b72f38b8d7497bd27fc20d267",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "作者为什么认为飞机最能兼顾长途旅行的速度与舒适？",
+          "options": [
+            "乘客坐飞机完全看不到山谷或云层",
+            "到达快，途中平稳，旅客抵达时仍精神饱满",
+            "飞机总是比所有其他交通工具更便宜"
+          ],
+          "answer": 1,
+          "explanation": "作者承认机票贵、有人怕飞行，但强调飞机速度快、平稳，抵达后不必长时间恢复疲劳。",
+          "wrongReasons": [
+            "“乘客坐飞机完全看不到山谷或云层”与本课内容不符。作者承认机票贵、有人怕飞行，但强调飞机速度快、平稳，抵达后不必长时间恢复疲劳。",
+            "",
+            "“飞机总是比所有其他交通工具更便宜”与本课内容不符。作者承认机票贵、有人怕飞行，但强调飞机速度快、平稳，抵达后不必长时间恢复疲劳。"
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "But nothing can match them for speed and comfort."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "文章举例说飞机可在多少英尺的高度飞行？请写数字或英文数词。",
+          "answers": [
+            "30000",
+            "30,000",
+            "thirty thousand",
+            "30000 feet",
+            "30,000 feet",
+            "三万英尺",
+            "30000英尺"
+          ],
+          "explanation": "例子中的高度是30,000英尺，不是3,000英尺。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "3000",
+                "three thousand",
+                "三千英尺"
+              ],
+              "feedback": "例子中的高度是30,000英尺，不是3,000英尺。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "Travelling at a height of 30,000 feet, far above the clouds, and at over 500 miles an hour is an exhilarating experience."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b3-l045",
+      "book": 3,
+      "number": 45,
+      "title": "第45课 · The power of the press",
+      "bodySha256": "54ab42fadd44e26a6419a001b7eb1e26d58b01e0d8e1e1acb853e98ec98f5e66",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "五胞胎的出生为什么让这个家庭再也难以过正常生活？",
+          "options": [
+            "媒体和商家把他们的姓名、故事变成了有市场价值的商品",
+            "家人立即拒绝了所有报道并彻底隐居",
+            "父母的经济状况始终完全没有变化"
+          ],
+          "answer": 0,
+          "explanation": "报道带来财富和声名，也使家庭被商业化，无法继续原来的普通生活。",
+          "wrongReasons": [
+            "",
+            "“家人立即拒绝了所有报道并彻底隐居”与本课内容不符。报道带来财富和声名，也使家庭被商业化，无法继续原来的普通生活。",
+            "“父母的经济状况始终完全没有变化”与本课内容不符。报道带来财富和声名，也使家庭被商业化，无法继续原来的普通生活。"
+          ],
+          "evidence": {
+            "paragraphIndex": 2,
+            "quote": "They had become the victims of commercialization, for their names had acquired a market value."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "这次出生的五胞胎中有几个男孩？请写数量（中文或英文）。",
+          "answers": [
+            "1",
+            "one",
+            "one boy",
+            "一个男孩",
+            "一名男孩",
+            "一"
+          ],
+          "explanation": "五胞胎是四个女孩和一个男孩，不能把女孩数当成男孩数。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "4",
+                "four",
+                "四个男孩"
+              ],
+              "feedback": "五胞胎是四个女孩和一个男孩，不能把女孩数当成男孩数。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "But they suddenly became the parents of quintuplets, four girls and a boy, an event which radically changed their lives."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b3-l046",
+      "book": 3,
+      "number": 46,
+      "title": "第46课 · Do it yourself",
+      "bodySha256": "bdeebc1942f04d23f6eeac5551d0a05b54cb83e61b0ea0921a9593337b64f715",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "叙述者修好割草机的计划为什么最终失败？",
+          "options": [
+            "他从一开始就把全部维修交给了专家",
+            "他找到故障后立刻把新割草机买回家",
+            "拆散后装回去还剩一些零件，机器依旧不工作"
+          ],
+          "answer": 2,
+          "explanation": "他虽然找到了链条故障，但重新组装后多出零件，机器仍无法工作，表现了逞强DIY的局限。",
+          "wrongReasons": [
+            "“他从一开始就把全部维修交给了专家”与本课内容不符。他虽然找到了链条故障，但重新组装后多出零件，机器仍无法工作，表现了逞强DIY的局限。",
+            "“他找到故障后立刻把新割草机买回家”与本课内容不符。他虽然找到了链条故障，但重新组装后多出零件，机器仍无法工作，表现了逞强DIY的局限。",
+            ""
+          ],
+          "evidence": {
+            "paragraphIndex": 2,
+            "quote": "I was not surprised to find that the machine still refused to work after I had reassembled it, for the simple reason that I was left with several curiously shaped bits of metal which did not seem to fit anywhere."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "被发现断裂的是驱动车轮的什么部件？请写部件（中文或英文）。",
+          "answers": [
+            "chain",
+            "a chain",
+            "the chain",
+            "链条",
+            "传动链条"
+          ],
+          "explanation": "原文故障是链条的一节断了，不是皮带故障。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "belt",
+                "皮带"
+              ],
+              "feedback": "原文故障是链条的一节断了，不是皮带故障。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 2,
+            "quote": "One of the links in the chain that drives the wheels had snapped."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b3-l047",
+      "book": 3,
+      "number": 47,
+      "title": "第47课 · Too high a price?",
+      "bodySha256": "b6f3e684d5bb1b4c94ed3161c72e906a9a0cbee3298d4b50cdce4e4298c91116",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "文章为什么说便宜食品也可能有高昂代价？",
+          "options": [
+            "作者认为所有有机蔬菜都免费供应",
+            "工业化生产可能带来疾病、农药等污染问题",
+            "便宜食品必定完全没有任何营养"
+          ],
+          "answer": 1,
+          "explanation": "作者用疾病、农药和化肥的影响说明低价格之外还可能有健康与污染代价，并未说所有便宜食品必无营养。",
+          "wrongReasons": [
+            "“作者认为所有有机蔬菜都免费供应”与本课内容不符。作者用疾病、农药和化肥的影响说明低价格之外还可能有健康与污染代价，并未说所有便宜食品必无营养。",
+            "",
+            "“便宜食品必定完全没有任何营养”与本课内容不符。作者用疾病、农药和化肥的影响说明低价格之外还可能有健康与污染代价，并未说所有便宜食品必无营养。"
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "The price we pay for cheap food may be already too high: Mad Cow Disease (BSE) in cattle, salmonella in chicken and eggs, and listeria in dairy products."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "调查中，哪种动物夜间不停地叫被评为最严重的噪声污染？请写动物（中文或英文）。",
+          "answers": [
+            "dogs",
+            "dog",
+            "狗",
+            "犬"
+          ],
+          "explanation": "调查列出的最高噪声干扰是夜间不停的狗叫。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "cats",
+                "cat",
+                "猫"
+              ],
+              "feedback": "调查列出的最高噪声干扰是夜间不停的狗叫。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 2,
+            "quote": "A recent survey of the effects of noise revealed (surprisingly?) that dogs barking incessantly in the night rated the highest form of noise pollution on a scale ranging from 1 to 7."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b3-l048",
+      "book": 3,
+      "number": 48,
+      "title": "第48课 · The silent village",
+      "bodySha256": "8d33143a598fe1505d19931ef0675d5d5e251ca66cba12676df59081610f34c6",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "这次偏远村庄之行为什么推翻了夫妻俩的预想？",
+          "options": [
+            "村民沉默地盯视他们，明显不欢迎外来者",
+            "村民热情举办了公开欢迎宴会",
+            "他们从头到尾都没有见到任何居民"
+          ],
+          "answer": 0,
+          "explanation": "村庄看似无人，后来孩子、男人和老妇都出现并沉默注视他们，让两人意识到自己不受欢迎。",
+          "wrongReasons": [
+            "",
+            "“村民热情举办了公开欢迎宴会”与本课内容不符。村庄看似无人，后来孩子、男人和老妇都出现并沉默注视他们，让两人意识到自己不受欢迎。",
+            "“他们从头到尾都没有见到任何居民”与本课内容不符。村庄看似无人，后来孩子、男人和老妇都出现并沉默注视他们，让两人意识到自己不受欢迎。"
+          ],
+          "evidence": {
+            "paragraphIndex": 2,
+            "quote": "There was no doubt that we were unwelcome visitors."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "夫妻俩午餐打开了哪种鱼的罐头？请写鱼名（中文或英文）。",
+          "answers": [
+            "sardines",
+            "sardine",
+            "沙丁鱼"
+          ],
+          "explanation": "野餐吃的是沙丁鱼罐头，不是金枪鱼罐头。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "tuna",
+                "金枪鱼"
+              ],
+              "feedback": "野餐吃的是沙丁鱼罐头，不是金枪鱼罐头。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 2,
+            "quote": "Sitting down on a dilapidated wooden fence near the field, we opened a couple of tins of sardines and had a picnic lunch."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b3-l049",
+      "book": 3,
+      "number": 49,
+      "title": "第49课 · The ideal servant",
+      "bodySha256": "8cc89d78ff82e0c4d62b9979c578fceed63dc1b731bf30eb45852adb81b38b1a",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "哈丽特姑妈为什么解雇了贝茜？",
+          "options": [
+            "贝茜从来不会做饭，也从未得到信任",
+            "贝茜要求每天工作超过八小时",
+            "她发现贝茜醉酒，并在上菜时出了大乱子"
+          ],
+          "answer": 2,
+          "explanation": "贝茜曾连续三年表现出色，但突然暴露醉酒问题；事后还发现她衣柜里堆着空酒瓶。",
+          "wrongReasons": [
+            "“贝茜从来不会做饭，也从未得到信任”与本课内容不符。贝茜曾连续三年表现出色，但突然暴露醉酒问题；事后还发现她衣柜里堆着空酒瓶。",
+            "“贝茜要求每天工作超过八小时”与本课内容不符。贝茜曾连续三年表现出色，但突然暴露醉酒问题；事后还发现她衣柜里堆着空酒瓶。",
+            ""
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "She reluctantly came to the conclusion that Bessie was drunk."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "姑妈的乡间大宅叫什么？请写英文名称。",
+          "answers": [
+            "The Gables",
+            "Gables"
+          ],
+          "explanation": "The Gables是姑妈的住宅，Endley Farm属于另一篇故事。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "Endley Farm",
+                "Endley"
+              ],
+              "feedback": "The Gables是姑妈的住宅，Endley Farm属于另一篇故事。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 0,
+            "quote": "She had a huge, rambling country house called ‘The Gables’."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b3-l050",
+      "book": 3,
+      "number": 50,
+      "title": "第50课 · New Year resolutions",
+      "bodySha256": "3372c16d50efba4e311aef581641697b3b525091b2e9e82cee936ce3b22e21b0",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "叙述者为什么又恢复了在电视前打瞌睡的老习惯？",
+          "options": [
+            "全家从第一天起就禁止他做任何阅读",
+            "他觉得独自在房间读书又冷又孤单，转去电视前假装读书",
+            "他已按计划读完了每分钟一千词的训练书"
+          ],
+          "answer": 1,
+          "explanation": "独自读书时的寒冷和孤独使他回到电视前，随后再次打瞌睡，新年计划又落空。",
+          "wrongReasons": [
+            "“全家从第一天起就禁止他做任何阅读”与本课内容不符。独自读书时的寒冷和孤独使他回到电视前，随后再次打瞌睡，新年计划又落空。",
+            "",
+            "“他已按计划读完了每分钟一千词的训练书”与本课内容不符。独自读书时的寒冷和孤独使他回到电视前，随后再次打瞌睡，新年计划又落空。"
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "One night, however, feeling cold and lonely, I went downstairs and sat in front of the television pretending to read."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "年初每天计划的体操最初持续几分钟？请写数字或英文数词。",
+          "answers": [
+            "11",
+            "eleven",
+            "eleven minutes",
+            "11分钟",
+            "十一分钟",
+            "十一"
+          ],
+          "explanation": "最初的运动时长是十一分钟；一月十日是后来计划彻底落空的日期。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "10",
+                "ten",
+                "十分钟"
+              ],
+              "feedback": "最初的运动时长是十一分钟；一月十日是后来计划彻底落空的日期。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "The daily exercises lasted only eleven minutes and I proposed to do them early in the morning before anyone had got up."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b3-l051",
+      "book": 3,
+      "number": 51,
+      "title": "第51课 · Predicting the future",
+      "bodySha256": "7e903b7ca27b6e088b3c4faf93400ef712d1636ea60f8df0bd659fb2247e91f9",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "文章为什么认为巴格里特的电脑预测格外令人惊讶？",
+          "options": [
+            "他在电脑尚不普及时就预见了多种后来常见的用途",
+            "他准确预言了互联网的全部细节和名称",
+            "他坚信电脑会自行思考并统治世界"
+          ],
+          "answer": 0,
+          "explanation": "巴格里特早在二十世纪六十年代就预测了小型电脑、导航和辅助诊断等用途，但没有预见互联网。",
+          "wrongReasons": [
+            "",
+            "“他准确预言了互联网的全部细节和名称”与本课内容不符。巴格里特早在二十世纪六十年代就预测了小型电脑、导航和辅助诊断等用途，但没有预见互联网。",
+            "“他坚信电脑会自行思考并统治世界”与本课内容不符。巴格里特早在二十世纪六十年代就预测了小型电脑、导航和辅助诊断等用途，但没有预见互联网。"
+          ],
+          "evidence": {
+            "paragraphIndex": 2,
+            "quote": "Considering how recent these developments are, it is even more remarkable that as long ago as the 1960s, an Englishman, Leon Bagrit, was able to predict some of the uses of computers which we know today."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "文中把一九七五年推出的哪台机器称为第一台家用电脑？请写英文名称。",
+          "answers": [
+            "Altair",
+            "the Altair"
+          ],
+          "explanation": "按文中的历史叙述，一九七五年的Altair首先指向家用电脑的未来，Apple和IBM产品随后出现。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "Apple",
+                "IBM"
+              ],
+              "feedback": "按文中的历史叙述，一九七五年的Altair首先指向家用电脑的未来，Apple和IBM产品随后出现。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "In 1975, a primitive machine called the Altair, was launched in the USA."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b3-l052",
+      "book": 3,
+      "number": 52,
+      "title": "第52课 · Mud is mud",
+      "bodySha256": "a082f5c15720571b64b8dc2c408532dff058a1ce0a10bbd99ec047b6c1ba28ee",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "哈里为什么停止了编造化妆品名称捉弄店员的游戏？",
+          "options": [
+            "店员每次都立刻识破骗局并赶他出去",
+            "他买的第一瓶香泥经证实只是普通清水",
+            "店员真的拿出香泥，他只好花钱买下而自认失败"
+          ],
+          "answer": 2,
+          "explanation": "哈里以为香泥不存在，没想到店里真有，最后不得不买下，意识到这种玩笑可能很花钱。",
+          "wrongReasons": [
+            "“店员每次都立刻识破骗局并赶他出去”与本课内容不符。哈里以为香泥不存在，没想到店里真有，最后不得不买下，意识到这种玩笑可能很花钱。",
+            "“他买的第一瓶香泥经证实只是普通清水”与本课内容不符。哈里以为香泥不存在，没想到店里真有，最后不得不买下，意识到这种玩笑可能很花钱。",
+            ""
+          ],
+          "evidence": {
+            "paragraphIndex": 2,
+            "quote": "From then on, Harry decided that this little game he had invented might prove to be expensive."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "哈里最后为那瓶香泥付了多少英镑？请写金额。",
+          "answers": [
+            "20",
+            "£20",
+            "twenty pounds",
+            "20 pounds",
+            "二十英镑",
+            "20英镑"
+          ],
+          "explanation": "他最后付了twenty pounds（二十英镑），不是二百。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "200",
+                "£200",
+                "二百英镑"
+              ],
+              "feedback": "他最后付了twenty pounds（二十英镑），不是二百。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 2,
+            "quote": "He was glad to get away with a mere twenty pounds and he beat a hasty retreat, clutching the precious bottle under his arm."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b3-l053",
+      "book": 3,
+      "number": 53,
+      "title": "第53课 · In the public interest",
+      "bodySha256": "4e60869e095ef6917be50c9c81a4714696ac7c947221fd6dbaa417c1d8f7be7b",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "监察专员怎样查明了警察粗暴对待外国人的事实？",
+          "options": [
+            "未经调查便立即修改了全国法律",
+            "收到第二次类似投诉后，派律师实地调查",
+            "只凭最初档案的否认就永久结案"
+          ],
+          "answer": 1,
+          "explanation": "最初官方档案未显示问题，第二起相似投诉促使专员派人核查，才发现档案外的偏见和粗暴行为。",
+          "wrongReasons": [
+            "“未经调查便立即修改了全国法律”与本课内容不符。最初官方档案未显示问题，第二起相似投诉促使专员派人核查，才发现档案外的偏见和粗暴行为。",
+            "",
+            "“只凭最初档案的否认就永久结案”与本课内容不符。最初官方档案未显示问题，第二起相似投诉促使专员派人核查，才发现档案外的偏见和粗暴行为。"
+          ],
+          "evidence": {
+            "paragraphIndex": 2,
+            "quote": "It was impossible for the Ombudsman to take action, but when he received a similar complaint from another foreigner in the same village, he immediately sent one of his lawyers to investigate the matter."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "公民必须用什么形式向监察专员提出投诉？请写形式（中文或英文）。",
+          "answers": [
+            "in writing",
+            "writing",
+            "written",
+            "书面",
+            "书面形式",
+            "书面投诉"
+          ],
+          "explanation": "文中要求投诉必须以书面形式提出，而不是只打电话。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "by telephone",
+                "telephone",
+                "电话"
+              ],
+              "feedback": "文中要求投诉必须以书面形式提出，而不是只打电话。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "As complaints must be made in writing, the Ombudsman receives an average of 1,200 letters a year."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b3-l054",
+      "book": 3,
+      "number": 54,
+      "title": "第54课 · Instinct or cleverness?",
+      "bodySha256": "b609ec0cd06e77d3fc36ca43c188b91a5d9535a04edd9fc91cdb1abdcbc9e16d",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "蚂蚁最后怎样绕过树干上的黏胶带？",
+          "options": [
+            "沿房屋墙壁爬到树叶上",
+            "把整棵桃树搬离了花园",
+            "停止爬树，全部离开了院子"
+          ],
+          "answer": 0,
+          "explanation": "蚂蚁找到经房屋墙壁到树叶的新路线，使叙述者的胶带封锁失败。",
+          "wrongReasons": [
+            "",
+            "“把整棵桃树搬离了花园”与本课内容不符。蚂蚁找到经房屋墙壁到树叶的新路线，使叙述者的胶带封锁失败。",
+            "“停止爬树，全部离开了院子”与本课内容不符。蚂蚁找到经房屋墙壁到树叶的新路线，使叙述者的胶带封锁失败。"
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "They were climbing up the wall of the house and then on to the leaves of the tree."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "蚂蚁爬树是为了从哪种小虫身上获取甜汁？请写虫名（中文或英文）。",
+          "answers": [
+            "aphids",
+            "aphid",
+            "蚜虫"
+          ],
+          "explanation": "树叶下聚集的是蚜虫，蚂蚁从它们那里获取甜汁，并非向蜜蜂取蜜。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "bees",
+                "bee",
+                "蜜蜂"
+              ],
+              "feedback": "树叶下聚集的是蚜虫，蚂蚁从它们那里获取甜汁，并非向蜜蜂取蜜。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "Clusters of tiny insects called aphids were to be found on the underside of the leaves."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b3-l055",
+      "book": 3,
+      "number": 55,
+      "title": "第55课 · From the earth: Greetings",
+      "bodySha256": "3316251ee345878b65c888d0b42af123579a283a29ed82a09ce9a2253a03abb5",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "按文章的解释，寻找外星生命的望远镜为什么需要远离地球？",
+          "options": [
+            "越靠近地球，任何望远镜都完全无法看见月球",
+            "望远镜只能在行星表面使用",
+            "地球热量和太阳系尘埃会干扰探测"
+          ],
+          "answer": 2,
+          "explanation": "文章说明地面热量会妨碍探测，近地空间又受尘埃影响，更远处尘埃才会变稀薄。",
+          "wrongReasons": [
+            "“越靠近地球，任何望远镜都完全无法看见月球”与本课内容不符。文章说明地面热量会妨碍探测，近地空间又受尘埃影响，更远处尘埃才会变稀薄。",
+            "“望远镜只能在行星表面使用”与本课内容不符。文章说明地面热量会妨碍探测，近地空间又受尘埃影响，更远处尘埃才会变稀薄。",
+            ""
+          ],
+          "evidence": {
+            "paragraphIndex": 2,
+            "quote": "A telescope would have to be as far away as the planet Jupiter to look for life in outer space, because the dust becomes thinner the further we travel towards the outer edges of our own solar system."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "文中认为其他行星上最可能先发现哪种微小生命？请写生命形式（中文或英文）。",
+          "answers": [
+            "bacteria",
+            "bacterium",
+            "细菌"
+          ],
+          "explanation": "文章把细菌作为更可能发现的低等生命形式，而小绿人仍属于科幻想象。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "little green men",
+                "小绿人"
+              ],
+              "feedback": "文章把细菌作为更可能发现的低等生命形式，而小绿人仍属于科幻想象。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 2,
+            "quote": "The life forms most likely to develop on a planet would be bacteria."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b3-l056",
+      "book": 3,
+      "number": 56,
+      "title": "第56课 · Our neighbour, the river",
+      "bodySha256": "1456d37f501525eb8a1c2188a5847d33f650775cc5f2bc3825c034698dd6f2dc",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "洪水中，叙述者一家为什么担心新搬来的邻居？",
+          "options": [
+            "叙述者自家所有牲畜已经冲入邻居房子",
+            "邻居农场地势低，电话又因洪水中断",
+            "邻居住在山顶并明确拒绝任何联系"
+          ],
+          "answer": 1,
+          "explanation": "新邻居的农场地势较低，洪水还切断电话，使叙述者无法了解他们的情况。",
+          "wrongReasons": [
+            "“叙述者自家所有牲畜已经冲入邻居房子”与本课内容不符。新邻居的农场地势较低，洪水还切断电话，使叙述者无法了解他们的情况。",
+            "",
+            "“邻居住在山顶并明确拒绝任何联系”与本课内容不符。新邻居的农场地势较低，洪水还切断电话，使叙述者无法了解他们的情况。"
+          ],
+          "evidence": {
+            "paragraphIndex": 3,
+            "quote": "We were, however, worried about our nearest neighbours, whose farm was low lying and who were newcomers to the district."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "邻居一家及动物乘什么漂在洪水中？请写载具（中文或英文）。",
+          "answers": [
+            "raft",
+            "a raft",
+            "木筏",
+            "筏子"
+          ],
+          "explanation": "出现的是载着全家和动物的木筏，并不是油轮。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "tanker",
+                "油轮"
+              ],
+              "feedback": "出现的是载着全家和动物的木筏，并不是油轮。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 3,
+            "quote": "Suddenly a raft appeared, looking rather like Noah's ark, carrying the whole family, a few hens, the dogs, a cat, and a bird in a cage."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b3-l057",
+      "book": 3,
+      "number": 57,
+      "title": "第57课 · Back in the old country",
+      "bodySha256": "b2e6e3a0138c29d138298dfea6f6207802ea37570873082215dad5a02f62c6fe",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "叙述者为什么两次沿地图路线前行，却始终找不到老村庄？",
+          "options": [
+            "村庄和山谷已被人工水库淹没",
+            "父亲从来没有在那个地区住过",
+            "村庄只是临时关闭了所有道路"
+          ],
+          "answer": 0,
+          "explanation": "路线没有把他带到记忆中的村庄，因为村庄已被人工水库淹没；旧地图也没有标出湖。",
+          "wrongReasons": [
+            "",
+            "“父亲从来没有在那个地区住过”与本课内容不符。路线没有把他带到记忆中的村庄，因为村庄已被人工水库淹没；旧地图也没有标出湖。",
+            "“村庄只是临时关闭了所有道路”与本课内容不符。路线没有把他带到记忆中的村庄，因为村庄已被人工水库淹没；旧地图也没有标出湖。"
+          ],
+          "evidence": {
+            "paragraphIndex": 2,
+            "quote": "The lake was not a natural one, but a man-made reservoir."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "父亲带叙述者移居国外时，叙述者几岁？请写年龄（中文或英文）。",
+          "answers": [
+            "5",
+            "five",
+            "five years old",
+            "5岁",
+            "五岁",
+            "五"
+          ],
+          "explanation": "移居时只有五岁；十八年是离乡至此次回访所经过的时间。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "18",
+                "eighteen",
+                "十八岁"
+              ],
+              "feedback": "移居时只有五岁；十八年是离乡至此次回访所经过的时间。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 0,
+            "quote": "I was only five when my father had taken me abroad, and that was eighteen years ago."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b3-l058",
+      "book": 3,
+      "number": 58,
+      "title": "第58课 · A spot of bother",
+      "bodySha256": "1eb5722d9ba6b42eab967daf12c5e9e5b4dd2a69ec8e9498455ac6104daa4680",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "警察为什么推测盗贼当天还抢过别的地方？",
+          "options": [
+            "门口有一张盗贼留下的全部行程表",
+            "老太太已经亲眼看见他们进入另一间公寓",
+            "发现的红色包裹中装着并不属于老太太的珠宝"
+          ],
+          "answer": 2,
+          "explanation": "包裹里的珠宝并非老太太所有，暗示盗贼在进入她家前已做过别的案子。",
+          "wrongReasons": [
+            "“门口有一张盗贼留下的全部行程表”与本课内容不符。包裹里的珠宝并非老太太所有，暗示盗贼在进入她家前已做过别的案子。",
+            "“老太太已经亲眼看见他们进入另一间公寓”与本课内容不符。包裹里的珠宝并非老太太所有，暗示盗贼在进入她家前已做过别的案子。",
+            ""
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "There was no trace of fingerprints, but the inspector found a dirty red bundle that contained jewellery which the old lady said was not hers."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "老太太发现被盗后，先请谁陪她检查公寓？请写人员身份（中文或英文）。",
+          "answers": [
+            "porter",
+            "the porter",
+            "门房",
+            "门卫",
+            "看门人"
+          ],
+          "explanation": "她先去找门房陪同查看，后来才打电话向女儿求助。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "daughter",
+                "女儿"
+              ],
+              "feedback": "她先去找门房陪同查看，后来才打电话向女儿求助。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 0,
+            "quote": "Her first impulse was to go round all the rooms looking for the thieves, but then she decided that at her age it might be more prudent to have someone with her, so she went to fetch the porter from his basement."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b3-l059",
+      "book": 3,
+      "number": 59,
+      "title": "第59课 · Collecting",
+      "bodySha256": "c6da95c164282d27788e10643603c3c5ad207e6291f430c5a701bc4214f84226",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "作者认为有意识的收藏爱好与随意囤积杂物有何不同？",
+          "options": [
+            "收藏的唯一价值是完全不占任何空间",
+            "收藏能带来学习、交友和逐渐增长的自信",
+            "收藏只会让人永远足不出户而不学习"
+          ],
+          "answer": 1,
+          "explanation": "认真收藏会促使人查资料、结交同好、交流和演讲，从而增长知识与自信，不能等同于无选择地囤杂物。",
+          "wrongReasons": [
+            "“收藏的唯一价值是完全不占任何空间”与本课内容不符。认真收藏会促使人查资料、结交同好、交流和演讲，从而增长知识与自信，不能等同于无选择地囤杂物。",
+            "",
+            "“收藏只会让人永远足不出户而不学习”与本课内容不符。认真收藏会促使人查资料、结交同好、交流和演讲，从而增长知识与自信，不能等同于无选择地囤杂物。"
+          ],
+          "evidence": {
+            "paragraphIndex": 2,
+            "quote": "This hobby educates one not only in the chosen subject, but also in general matters which have some bearing on it."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "节俭的人拆包裹后会保留细绳和哪种包装纸？请写纸张（中文或英文）。",
+          "answers": [
+            "brown paper",
+            "牛皮纸",
+            "棕色包装纸"
+          ],
+          "explanation": "为再次包装而保存的是细绳和brown paper（牛皮纸），不是文中另一位收集服装剪报的人所用的报纸。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "newspaper",
+                "报纸"
+              ],
+              "feedback": "为再次包装而保存的是细绳和brown paper（牛皮纸），不是文中另一位收集服装剪报的人所用的报纸。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 1,
+            "quote": "Among these I would list string and brown paper, kept by thrifty people when a parcel has been opened, to save buying these two requisites."
+          }
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b3-l060",
+      "book": 3,
+      "number": 60,
+      "title": "第60课 · Too early and too late",
+      "bodySha256": "ed99c9916168992f97f252e8607b2777abdef5d3ed4212cc7ab451c9e7ca193f",
+      "questions": [
+        {
+          "id": "content-1",
+          "type": "choice",
+          "prompt": "女孩已经提前到站，为什么仍眼看着火车离开？",
+          "options": [
+            "这趟车在该站只收邮件，不接乘客",
+            "她到站时其实比时刻表晚了两小时",
+            "站长误以为火车今天全部停运"
+          ],
+          "answer": 0,
+          "explanation": "父亲未注意时刻表的小标记，这列车在该站只停下来装邮件，因此女孩不能上车。",
+          "wrongReasons": [
+            "",
+            "“她到站时其实比时刻表晚了两小时”与本课内容不符。父亲未注意时刻表的小标记，这列车在该站只停下来装邮件，因此女孩不能上车。",
+            "“站长误以为火车今天全部停运”与本课内容不符。父亲未注意时刻表的小标记，这列车在该站只停下来装邮件，因此女孩不能上车。"
+          ],
+          "evidence": {
+            "paragraphIndex": 2,
+            "quote": "He agreed that a train did come into the station at the time on the paper and that it did stop, but only to take on mail, not passengers."
+          }
+        },
+        {
+          "id": "content-2",
+          "type": "short",
+          "prompt": "时刻表旁边表示只办理邮件业务的小字母是什么？请写字母。",
+          "answers": [
+            "o",
+            "O"
+          ],
+          "explanation": "站长指出的是一个很小的字母o，不是x。",
+          "commonMistakes": [
+            {
+              "answers": [
+                "x",
+                "X"
+              ],
+              "feedback": "站长指出的是一个很小的字母o，不是x。"
+            }
+          ],
+          "evidence": {
+            "paragraphIndex": 2,
+            "quote": "The porter went to fetch one and arrived back with the station master, who produced it with a flourish and pointed out a microscopic ‘o’ beside the time of the arrival of the train at his station; this little ‘o’ indicated that the train only stopped for mail."
+          }
+        }
+      ]
+    }
+  ]
+}

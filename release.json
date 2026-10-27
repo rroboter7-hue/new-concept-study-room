@@ -1,6 +1,6 @@
 {
-  "build": "2026-10-27-context-vocabulary",
-  "preparedAt": "2026-10-27T02:58:17.420Z",
+  "build": "2026-10-27-context-vocabulary-recall",
+  "preparedAt": "2026-10-27T03:05:15.242Z",
   "book2": {
     "book": 2,
     "total": 96,
@@ -151,8 +151,8 @@
       "notTextbookOriginal": true
     }
   },
-  "staticFiles": 2753,
-  "staticBytes": 812129819,
+  "staticFiles": 2787,
+  "staticBytes": 813293459,
   "nativeearsAdvancedAudio": {
     "books": {
       "3": 60,
@@ -388,5 +388,23 @@
     "provenanceMetadataPreserved": true,
     "convertedTextPreserved": true,
     "gitHistoryRewritten": false
+  },
+  "lessonRecall": {
+    "lessons": 276,
+    "questions": 552,
+    "choice": 276,
+    "short": 276,
+    "source": "self-authored-with-exact-passage-evidence",
+    "grading": "exact-closed-fact-aliases-and-specific-misconceptions",
+    "unmatchedParaphrases": "needs-check",
+    "savedIndependently": true
+  },
+  "performance": {
+    "lazyTextLibrary": true,
+    "startupScriptBytesBefore": 9931828,
+    "textLibraryBytesBefore": 2654682,
+    "audioDelivery": "build-time-mp3-derivatives",
+    "repositoryOriginalAudioPreserved": true,
+    "sizeReport": "delivery-report.json"
   }
 }
