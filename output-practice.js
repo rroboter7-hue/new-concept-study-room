@@ -245,15 +245,16 @@
       if(!sentenceAvailable&&this.mode==='sentences'){
         this.options.sentencePractice?.flush();this.mode='write';this.result=null;this.showOriginal=false;
       }
-      const modes=[['write','分段默写'],['spell','单词拼写'],['retell','英文复述']];
-      if(sentenceAvailable)modes.push(['sentences','五句造句']);
+      const modes=[];
+      if(sentenceAvailable)modes.push(['sentences','四句型与造句']);
+      modes.push(['write','课文默写'],['retell','英文复述'],['spell','单词拼写']);
       if(this.options.batchPractice)modes.push(['batch','批量检查']);
       this.options.onModeChange?.(this.mode);
       const mobile=this.options.isMobileWorkspace?.()===true;
       const modeHTML=([mode,label])=>'<button type="button" class="output-tab '+(this.mode===mode?'active':'')+'" data-output-action="mode" data-output-mode="'+mode+'" aria-pressed="'+(this.mode===mode)+'">'+label+'</button>';
-      const primary=['sentences','batch'].includes(this.mode);
-      const tabs='<div class="output-tabs" aria-label="输出练习模式">'+(mobile?modes.filter(([mode])=>['sentences','batch'].includes(mode)):modes).map(modeHTML).join('')+'</div>';
-      const more=mobile?'<details class="mls-output-more"'+(!primary?' open':'')+'><summary>其他练习</summary><div class="output-tabs">'+modes.filter(([mode])=>!['sentences','batch'].includes(mode)).map(modeHTML).join('')+'</div></details>':'';
+      const primary=['sentences','batch'].includes(this.mode),visibleModes=['sentences','write','retell'];
+      const tabs='<div class="output-tabs" aria-label="输出练习模式">'+(mobile?modes.filter(([mode])=>visibleModes.includes(mode)):modes).map(modeHTML).join('')+'</div>';
+      const more=mobile?'<details class="mls-output-more"'+(!visibleModes.includes(this.mode)?' open':'')+'><summary>拼写与批量检查</summary><div class="output-tabs">'+modes.filter(([mode])=>!visibleModes.includes(mode)).map(modeHTML).join('')+'</div></details>':'';
       const content=this.mode==='sentences'&&sentenceAvailable?this.options.sentencePractice.render():this.mode==='batch'&&this.options.batchPractice?this.options.batchPractice.render():(this.mode==='spell'?this.renderSpell():this.mode==='retell'?this.renderRetell():this.renderWrite())+(this.mode!=='spell'?this.grammarHTML():'');
       return tabs+(!primary?more:'')+content+(!primary?this.draftStatusHTML():'')+(primary?more:'');
     }

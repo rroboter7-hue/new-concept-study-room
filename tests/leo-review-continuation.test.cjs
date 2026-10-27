@@ -6,7 +6,7 @@ const boot=loaded=>harness({pilot:false,realCoach:true,realReview:true,realOutpu
 const status=(h,t)=>h.c.StudyCoach.taskStatus(h.api.data.coach,t);
 async function reviewClick(h,selector){const node=h.document.querySelector(selector);assert(node,'review control exists: '+selector);assert.equal(node.disabled,false);for(const fn of h.document.querySelector('#daily-review-view').listeners.click||[])await fn({target:node});await h.flush();}
 
-test('three blank revealed and forgotten daily cards are processed without claiming independent recall, then continue advances',async()=>{
+test('ten blank revealed and forgotten daily cards are processed without claiming independent recall, then continue advances',async()=>{
  const h=await boot(),task=h.api.coach.plan.tasks.find(t=>t.type==='review');
  await h.api.coach.begin(task.id);
  for(const cardId of task.cardIds){
@@ -17,15 +17,15 @@ test('three blank revealed and forgotten daily cards are processed without claim
   assert.equal(card.lastRating,'again');assert.equal(card.dueAt,h.now+600000);assert.equal(card.stage,0);
  }
  const result=status(h,task);
- assert.equal(result.done,true,'the three genuine forgotten ratings finish processing the daily review step');
- assert.equal(result.completedCards,3);assert.equal(result.independent,false);assert.equal(result.assisted,true);
+ assert.equal(result.done,true,'the ten genuine forgotten ratings finish processing the daily review step');
+ assert.equal(result.completedCards,task.cardIds.length);assert.equal(result.independent,false);assert.equal(result.assisted,true);
  assert.match(result.label,/已处理.*需再复习/);
  assert(result.evidence.every(e=>e.answer===''&&e.correct===false&&e.assisted===true&&e.processed===true));
  assert.equal(h.api.dailyReview.active,null);
  await reviewClick(h,'[data-review-action="continue-task"]');
  assert.equal(h.api.coach.activeTask.type,'sentences');assert.equal(h.api.activeTab,'output');
  const restored=await boot(h.stored),saved=restored.api.coach.plan.tasks.find(t=>t.id===task.id);
- assert.equal(status(restored,saved).completedCards,3);
+ assert.equal(status(restored,saved).completedCards,task.cardIds.length);
  await restored.api.coach.action('continue');assert.equal(restored.api.coach.activeTask.type,'sentences');
 });
 

@@ -115,3 +115,28 @@ test('mixed books retain visible source labels and source navigation as cards ad
 test('imported prompt, title, answer and grammar strings remain escaped in generated HTML',()=>{
  const h=harness([lesson(2,{title:'<img src=x onerror=alert(1)>',vocabulary:[{word:'<script>x</script>',meaning:'<b>meaning</b>'}]})]);h.container.type('</textarea><img src=x>');h.container.click('check');assert.doesNotMatch(h.container.innerHTML,/<img|<script|<b>meaning/);assert.match(h.container.innerHTML,/&lt;img/);assert.match(h.container.innerHTML,/&lt;script/);
 });
+
+const manyWords=()=>[lesson(2,{vocabulary:Array.from({length:23},(_,i)=>({word:'word'+String.fromCharCode(97+i),meaning:'词义'+i}))})];
+function finishReviewCard(h,rating='good'){h.container.type(h.ui.active.target);h.container.click('check');h.container.click('rate',rating);}
+test('ordinary review stops after ten saved ratings and starts a distinct next group on request',()=>{
+ const h=harness(manyWords());assert.equal(h.ui.due().length,10);assert.match(h.container.innerHTML,/本组已处理/);
+ const first=[];for(let i=0;i<10;i++){first.push(h.ui.active.id);finishReviewCard(h);}
+ assert.equal(h.ui.active,null);assert.equal(h.saved,10);assert.match(h.container.innerHTML,/本组已完成/);assert.ok(h.container.button('next-batch'));
+ h.container.click('next-batch');assert.equal(h.ui.due().length,10);assert(!first.includes(h.ui.active.id));
+ for(let i=0;i<10;i++)finishReviewCard(h);h.container.click('next-batch');assert.equal(h.ui.due().length,3);
+});
+test('forgotten cards keep their actual SRS date and do not reenter another group in the same session',()=>{
+ const h=harness(manyWords()),first=h.ui.active.id;h.container.click('reveal');h.container.click('rate','again');
+ for(let i=1;i<10;i++)finishReviewCard(h);h.clock.now+=600001;
+ assert(h.R.queue(h.state,h.ui.cards()).some(c=>c.id===first));assert.equal(h.state.cards[first].stage,0);
+ h.container.click('next-batch');assert(!h.ui.due().some(c=>c.id===first));assert.equal(h.ui.due().length,10);
+});
+test('ending a partly completed review group keeps unprocessed cards due and permits explicit continuation',()=>{
+ const h=harness(manyWords());finishReviewCard(h);assert.ok(h.container.button('end-session'));h.container.click('end-session');assert.equal(h.ui.active,null);
+ assert.equal(h.saved,1);assert.equal(h.R.queue(h.state,h.ui.cards()).length,22);assert.match(h.container.innerHTML,/本轮复习已结束/);
+ h.container.click('next-batch');assert(h.ui.active);assert.equal(h.ui.due().length,10);
+});
+test('failed storage does not advance bounded group progress',()=>{
+ const h=harness(manyWords(),{saveMode:'fail'}),first=h.ui.active.id;finishReviewCard(h);assert.equal(h.ui.active.id,first);assert.equal(h.ui.batchDone.size,0);assert.equal(h.ui.sessionDone.size,0);
+ h.setSaveMode('ok');h.container.click('rate','good');assert.equal(h.ui.batchDone.size,1);assert.equal(h.ui.sessionDone.size,1);
+});
