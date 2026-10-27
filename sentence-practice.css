@@ -306,6 +306,30 @@ html:has(.sentence-word-dialog[open]) { overflow: hidden; }
 .sentence-recommendation-items .sentence-recommendation { flex: 1 1 calc(50% - 6px); min-width: 0; padding: 6px 8px; text-align: left; }
 .sentence-word-more { grid-column: 1 / -1; min-height: 44px; margin: 5px 0; padding: 8px 12px; border: 1px solid #d5e1d0; border-radius: 7px; background: #eef3e9; color: #265b50; font: inherit; font-size: 14px; cursor: pointer; }
 
+/* Browse native four-word pages without replacing the current editor. */
+.sentence-lesson-carousel { display: flex; width: 100%; max-width: 100%; min-width: 0; overflow-x: auto; overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scrollbar-width: thin; scrollbar-color: #afc4b6 #f1f4ee; }
+.sentence-lesson-carousel::-webkit-scrollbar { height: 5px; }
+.sentence-lesson-carousel::-webkit-scrollbar-thumb { border-radius: 5px; background: #afc4b6; }
+.sentence-lesson-carousel::-webkit-scrollbar-track { background: #f1f4ee; }
+.sentence-lesson-group { flex: 0 0 100%; min-width: 0; box-sizing: border-box; padding: 3px 2px 6px; scroll-snap-align: start; scroll-snap-stop: always; }
+.sentence-lesson-group .sentence-lesson-targets { grid-template-columns: repeat(4, minmax(0, 1fr)); align-content: start; }
+.sentence-lesson-group-controls { display: grid; grid-template-columns: minmax(64px, 1fr) auto minmax(64px, 1fr); align-items: center; gap: 8px; margin-top: 4px; }
+.sentence-lesson-group-controls button { min-height: 44px; min-width: 72px; max-width: 100%; padding: 6px 10px; border: 1px solid #d5e1d0; border-radius: 7px; background: #f2f5ed; color: #265b50; font: inherit; font-size: 13px; cursor: pointer; }
+.sentence-lesson-group-controls button:first-child { justify-self: start; }
+.sentence-lesson-group-controls button:last-child { justify-self: end; }
+.sentence-lesson-group-controls button:disabled { opacity: .4; cursor: default; }
+.sentence-lesson-page-indicator { color: #607566; font-size: 12px; text-align: center; white-space: nowrap; }
+.sentence-group-current { margin: 4px 0 0; color: #607566; font-size: 12px; line-height: 1.5; overflow-wrap: anywhere; }
+.sentence-group-current [lang=en] { color: #265b50; font-weight: 600; }
+.sentence-lesson-carousel:focus-visible, .sentence-lesson-group-controls button:focus-visible { outline: 3px solid #91b8a8; outline-offset: -3px; }
+.sentence-lesson-carousel .sentence-lesson-target:focus-visible { outline-offset: -3px; }
+@media (max-width: 759px) {
+  .sentence-lesson-group .sentence-lesson-targets { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .sentence-lesson-carousel { scroll-behavior: auto !important; }
+}
+
 @media (max-width: 760px) {
   .mls-book-workspace.mls-mobile .sentence-progress { gap: 8px; margin: 4px 0 8px; }
   .mls-book-workspace.mls-mobile .sentence-header,
@@ -397,3 +421,18 @@ html:has(.sentence-word-dialog[open]) { overflow: hidden; }
 #sentence-practice-content .sentence-quick-workspace .sentence-quick-actions { display: grid; grid-template-columns: 1fr 1.5fr; gap: 8px; }
 #sentence-practice-content .sentence-quick-workspace .sentence-quick-actions .button { width: 100%; min-width: 0; min-height: 46px; padding: 9px 6px; border-radius: 8px; font-size: 13px; line-height: 1.5; order: 0; }
 @media (max-width: 380px) { #sentence-practice-content .sentence-quick-workspace .sentence-quick-actions { grid-template-columns: 1fr; } }
+
+#sentence-practice-content .sentence-inline-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 12px; margin: 14px 0; }
+#sentence-practice-content .sentence-inline-field { min-width: 0; padding: 12px; border: 1px solid #d4dfd5; border-radius: 8px; background: #fbfcf8; }
+#sentence-practice-content .sentence-inline-label { display: flex; align-items: center; gap: 7px; margin-bottom: 8px; color: #244f43; font-weight: 650; }
+#sentence-practice-content .sentence-inline-label>span { display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; color: #fff; background: #386b59; font-size: 12px; }
+#sentence-practice-content .sentence-quick-workspace .sentence-inline-field .sentence-textarea { min-height: 92px; width: 100%; margin: 0; padding: 10px; resize: vertical; }
+#sentence-practice-content .sentence-inline-field .sentence-writing-tools { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; margin-top: 4px; }
+#sentence-practice-content .sentence-inline-field .sentence-writing-tools button { min-height: 44px; padding: 4px 0; font-size: 13px; }
+#sentence-practice-content .sentence-inline-field .sentence-counter { margin: 0 0 0 auto; font-size: 11px; white-space: nowrap; }
+@media (max-width: 760px) {
+  #sentence-practice-content .sentence-inline-grid { grid-template-columns: minmax(0,1fr); gap: 10px; }
+  #sentence-practice-content .sentence-quick-workspace[data-writing-mode="four"] .sentence-editor { padding: 12px; }
+  #sentence-practice-content .sentence-inline-field { padding: 10px; }
+  #sentence-practice-content .sentence-quick-workspace .sentence-inline-field .sentence-textarea { min-height: 78px; font-size: 17px; line-height: 1.55; }
+}

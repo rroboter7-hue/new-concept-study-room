@@ -280,7 +280,7 @@
     },
     {
       "file": "sentence-practice.js",
-      "sha256": "290930702be5dfcf717815740365fc26d7b0f2b08d57f4586608fc891d81a36c"
+      "sha256": "4fc7789db2c4bf9cc46a02b92ee178e1587f5d7958ca7a95e792c6c760c35075"
     },
     {
       "file": "dictionary-service.js",
@@ -4154,7 +4154,7 @@
   ],
   "artifact": {
     "file": "lesson-word-targets.js",
-    "sha256": "26a64cbf120f917cd3c26d8ead1fee4778fb647a426e42c1e2abddfe8906b8f9",
+    "sha256": "1e18af0c13544eb26252030a2f676dec136fa851f2d0941db9ae5efe9b4944a2",
     "bytes": 2646042,
     "hashEncoding": "utf8-lf"
   },

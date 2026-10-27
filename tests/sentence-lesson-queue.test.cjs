@@ -11,22 +11,42 @@ const lessons = [
 ];
 
 function setup({drafts={},getVocabulary,getUsage,random=()=>0.3,lessonSet=lessons,defaultMode='flexible'}={}) {
-  let current=lessons[1],markup='';const handlers={},focus=[],saves=[];
+  let current=lessons[1],markup='',carousel=null,writes=0;const handlers={},focus=[],saves=[],frames=[],windowHandlers={},observers=[];
+  const attributes=html=>Object.fromEntries(Array.from(html.matchAll(/([\w-]+)="([^"]*)"/g),match=>[match[1],match[2]]));
+  function node(attrs={}) {return {attrs,tabIndex:Number(attrs.tabindex||0),dataset:Object.fromEntries(Object.entries(attrs).filter(([key])=>key.startsWith('data-')).map(([key,value])=>[key.slice(5).replace(/-([a-z])/g,(_,letter)=>letter.toUpperCase()),value])),setAttribute(key,value){this.attrs[key]=String(value);},getAttribute(key){return this.attrs[key]??null;},classList:{toggle(){}},focus(){document.activeElement=this;focus.push('carousel');},closest(selector){return selector==='#sentence-practice-content'?content:selector==='[data-sentence-lesson-carousel]'?carousel:null;}};}
   const fields={};const field=selector=>fields[selector]||=( {innerHTML:'',textContent:'',focus(){focus.push(selector);},setAttribute(){},querySelector:field} );
   const trigger={focus(){focus.push('trigger');}};
   const dialog={open:false,showModal(){this.open=true;},close(){this.open=false;},querySelector:field,querySelectorAll:()=>[],addEventListener(){}};
-  const content={get innerHTML(){return markup;},set innerHTML(value){markup=value;},querySelector:selector=>selector==='.sentence-word-dialog'?dialog:field(selector)};
+  const content={get innerHTML(){return markup;},set innerHTML(value){
+    markup=value;writes++;if(carousel)carousel.isConnected=false;
+    const region=value.match(/<div\b([^>]*class="sentence-lesson-carousel"[^>]*)>/);
+    carousel=region?node(attributes(region[1])):null;
+    if(carousel){
+      carousel.isConnected=true;carousel.clientWidth=320;carousel.scrollLeft=0;carousel.listeners={};carousel.scrolls=[];
+      carousel.addEventListener=(type,fn)=>carousel.listeners[type]=fn;
+      carousel.scrollTo=options=>{carousel.scrolls.push(options);carousel.scrollLeft=options.left;};
+      carousel.groups=Array.from(value.matchAll(/<div\b([^>]*class="sentence-lesson-group"[^>]*)><div class="sentence-lesson-targets">([\s\S]*?)<\/div><\/div>/g),match=>{
+        const group=node(attributes(match[1]));group.cards=Array.from(match[2].matchAll(/<button\b([^>]*)>/g),card=>node(attributes(card[1])));group.querySelectorAll=()=>group.cards;return group;
+      });
+      carousel.querySelectorAll=()=>carousel.groups;
+    }
+    for(const [selector,pattern] of [['.sentence-lesson-page-indicator',/<span\b([^>]*class="sentence-lesson-page-indicator"[^>]*)>([^<]*)<\/span>/],['.sentence-group-current',/<p\b([^>]*class="sentence-group-current"[^>]*)>([^<]*)<\/p>/],['[data-sentence-action="prev-lesson-group"]',/<button\b([^>]*data-sentence-action="prev-lesson-group"[^>]*)>/],['[data-sentence-action="next-lesson-group"]',/<button\b([^>]*data-sentence-action="next-lesson-group"[^>]*)>/]]){
+      const match=value.match(pattern);fields[selector]=match?Object.assign(node(attributes(match[1])),{textContent:match[2]||'',disabled:/\bdisabled\b/.test(match[1]),hidden:/\bhidden\b/.test(match[1])}):null;
+    }
+  },querySelector:selector=>selector==='.sentence-word-dialog'?dialog:selector==='.sentence-lesson-carousel'?carousel:selector in fields?fields[selector]:field(selector)};
   const document={activeElement:trigger,body:{classList:{contains:()=>true}},addEventListener:(type,fn)=>handlers[type]=fn,querySelector:selector=>selector==='#sentence-practice-content'?content:null};
-  const sandbox={document,console,setTimeout:()=>1,clearTimeout(){}};sandbox.window=sandbox;vm.createContext(sandbox);
+  const sandbox={document,console,setTimeout:()=>1,clearTimeout(){},requestAnimationFrame:fn=>{frames.push(fn);return frames.length;},addEventListener:(type,fn)=>windowHandlers[type]=fn,matchMedia:()=>({matches:true})};sandbox.window=sandbox;vm.createContext(sandbox);
+  sandbox.ResizeObserver=class {constructor(callback){this.callback=callback;observers.push(this);}observe(target){this.target=target;}disconnect(){this.disconnected=true;}};
   for(const file of ['sentence-core.js','sentence-practice.js'])vm.runInContext(fs.readFileSync(path.join(__dirname,'..',file),'utf8'),sandbox);
   const ui=new sandbox.SentencePractice({defaultMode,getLesson:()=>current,getLessons:()=>lessonSet,getRecords:()=>({}),getDrafts:()=>drafts,getVocabulary,getUsage,random,saveDraft:(key,value)=>{saves.push(key);drafts[key]=JSON.parse(JSON.stringify(value));return true;}});
   const render=()=>content.innerHTML=ui.render();
   function event(type,dataset,value='',extra={}){const node={dataset,value,...extra,closest:selector=>selector==='#sentence-practice-content'?content:selector==='[data-sentence-action]'&&dataset.sentenceAction?node:null};handlers[type]?.({target:node,preventDefault(){},key:extra.key});}
   const action=(name,key)=>event('click',{sentenceAction:name,sentenceTargetKey:key,sentenceOldKey:key});
   const answer=value=>event('input',{sentenceInput:'answer'},value);
-  return {ui,render,drafts,focus,saves,trigger,dialog,action,answer,event,setLesson:value=>{current=value;},core:sandbox.StudySentences};
+  return {ui,render,drafts,focus,saves,trigger,dialog,action,answer,event,content,document,fields,observers,get carousel(){return carousel;},get writes(){return writes;},mount(){while(frames.length)frames.shift()();},resize:()=>windowHandlers.resize?.(),setLesson:value=>{current=value;},core:sandbox.StudySentences};
 }
 const queue=html=>html.match(/<section class="sentence-lesson-queue"[\s\S]*?<\/section>/)?.[0]||'';
+const activeGroup=html=>html.match(/<div class="sentence-lesson-group"[^>]*aria-hidden="false"[^>]*>[\s\S]*?<\/div><\/div>/)?.[0]||'';
 const recommendationKeys=h=>Array.from(h.ui.lessonSelections.get(h.ui.currentLesson.id).recommendedOldKeys||[]);
 function complete(h,word){['I keep a','We read a','She likes this','Do you have a','They open a'].forEach((text,index)=>{h.event('click',{sentenceAction:'step',sentenceStep:String(index)});h.answer(`${text} ${word}.`);});h.action('check');}
 
@@ -35,6 +55,88 @@ const valuablePhrases=[{phrase:'take into account',meaning:'考虑到'},{phrase:
 const valuableKeys=['word:old:accomplish','phrase:old:take%20into%20account','phrase:old:put%20up%20with','phrase:old:make%20a%20decision'];
 const recommendationVocabulary=lesson=>lesson.id==='old'?valuableWords.concat([{word:'book',pos:'n.',meaning:'书'},{word:'warm',pos:'adj.',meaning:'温暖的'},{word:'send',pos:'v.',meaning:'寄送'}]):lesson.vocabulary;
 const recommendationUsage=lesson=>lesson.id==='old'?valuablePhrases.concat([{phrase:'look at',meaning:'看'}]):lesson.usage;
+
+test('lesson groups keep course order and a partial final group reachable without changing writing or recommendations',()=>{
+  const h=setup({getVocabulary:lesson=>lesson.id==='now'?lesson.vocabulary.concat([{word:'chapter',meaning:'章',isLessonNew:true}]):lesson.vocabulary});
+  h.render();h.mount();h.answer('I keep this book.');const entry=h.ui.active,keys=recommendationKeys(h),writes=h.writes,saves=h.saves.length;
+  assert.ok(h.carousel,'word cards should render in a browsable region');assert.equal(h.carousel.groups.length,3);assert.deepEqual(h.carousel.groups.map(group=>group.cards.length),[4,4,1]);
+  assert.deepEqual(h.carousel.groups.map(group=>group.cards.map(card=>card.dataset.sentenceTargetKey)),[['word:now:book','word:now:pen','word:now:shelf','word:now:desk'],['word:now:page','word:now:cover','word:now:story','word:now:library'],['word:now:chapter']]);
+  assert.equal(h.fields['[data-sentence-action="prev-lesson-group"]'].disabled,true);
+  h.action('next-lesson-group');h.action('next-lesson-group');h.action('next-lesson-group');
+  assert.match(h.fields['.sentence-lesson-page-indicator'].textContent,/3\s*\/\s*3/);assert.equal(h.carousel.scrollLeft,640);
+  assert.equal(h.fields['[data-sentence-action="next-lesson-group"]'].disabled,true);assert.equal(h.fields['.sentence-group-current'].hidden,false);assert.match(h.fields['.sentence-group-current'].textContent,/book/);
+  assert.equal(h.ui.active,entry);assert.equal(entry.draft.answers.affirmative,'I keep this book.');assert.deepEqual(recommendationKeys(h),keys);assert.equal(h.writes,writes);assert.equal(h.saves.length,saves);
+  assert.equal(h.ui.lessonProgress().done,0);h.action('prev-lesson-group');h.action('prev-lesson-group');h.action('prev-lesson-group');
+  assert.match(h.fields['.sentence-lesson-page-indicator'].textContent,/1\s*\/\s*3/);assert.equal(h.fields['.sentence-group-current'].hidden,true);
+});
+
+test('selecting a later group and returning restores each checked draft, step and old selections',()=>{
+  const h=setup();h.render();h.mount();complete(h,'book');h.ui.markAssisted();h.ui.setOldSelection(['word:old:accomplish']);h.event('click',{sentenceAction:'step',sentenceStep:'2'});h.action('check');
+  const first=h.ui.active,checked=first.draft.checkedAt;h.action('next-lesson-group');h.action('lesson-target','word:now:story');h.mount();
+  h.answer('I read a story.');h.event('click',{sentenceAction:'step',sentenceStep:'3'});h.answer('Where is this story?');const later=h.ui.active;
+  h.action('prev-lesson-group');h.action('lesson-target','word:now:book');h.mount();
+  assert.equal(h.ui.active,first);assert.equal(first.draft.step,2);assert.equal(first.draft.answers.yesno,'She likes this book.');assert.equal(first.draft.checkedAt,checked);assert.equal(first.draft.assisted,true);assert.deepEqual(Array.from(first.draft.selectedOldKeys),['word:old:accomplish']);
+  assert.equal(h.carousel.scrollLeft,0);h.action('next-lesson-group');h.action('lesson-target','word:now:story');h.mount();
+  assert.equal(h.ui.active,later);assert.equal(later.draft.step,3);assert.equal(later.draft.answers.affirmative,'I read a story.');assert.equal(later.draft.answers.wh,'Where is this story?');assert.equal(h.carousel.scrollLeft,320);
+});
+
+test('all words, shortcuts and reload reveal the selected target while session browsing stays separate',()=>{
+  const h=setup();h.render();h.mount();h.action('next-lesson-group');h.setLesson(lessons[2]);h.render();h.mount();h.setLesson(lessons[1]);h.render();h.mount();
+  assert.equal(h.ui.target().word,'book');assert.equal(h.carousel.scrollLeft,320,'revisiting a lesson retains its browsed page');
+  h.action('expand-lesson-targets');h.mount();assert.equal(h.carousel,null);assert.equal((queue(h.content.innerHTML).match(/data-sentence-action="lesson-target"/g)||[]).length,8);
+  h.action('expand-lesson-targets');h.mount();assert.equal(h.carousel.scrollLeft,0,'collapsing shows the active target');
+  h.event('change',{sentenceSelect:'target'},'word:now:desk');h.mount();h.action('next-unfinished');h.mount();assert.equal(h.ui.target().word,'page');assert.equal(h.carousel.scrollLeft,320);
+  h.action('prev-lesson-group');h.ui.flush();const restored=setup({drafts:JSON.parse(JSON.stringify(h.drafts))});restored.render();restored.mount();
+  assert.equal(restored.ui.target().word,'page');assert.equal(restored.carousel.scrollLeft,320,'reload starts at the selected target instead of transient browsing');
+  h.ui.reloadFromStorage();h.render();h.mount();assert.equal(h.carousel.scrollLeft,320);
+});
+
+test('native scrolling updates accessible groups without replacing the editor and keyboard arrows remain scoped',()=>{
+  const h=setup();h.render();h.mount();h.answer('An unfinished book sentence');const writes=h.writes,carousel=h.carousel;
+  assert.equal(carousel.getAttribute('role'),'region');assert.equal(carousel.tabIndex,0);
+  assert.deepEqual(carousel.groups.map(group=>group.getAttribute('aria-hidden')),['false','true']);assert.ok(carousel.groups[1].cards.every(card=>card.tabIndex===-1));
+  carousel.scrollLeft=320;carousel.listeners.scroll({target:carousel});
+  assert.equal(h.document.activeElement,h.trigger,'a scroll must not steal focus from outside the carousel');
+  assert.match(h.fields['.sentence-lesson-page-indicator'].textContent,/2\s*\/\s*2/);assert.deepEqual(carousel.groups.map(group=>group.getAttribute('aria-hidden')),['true','false']);assert.ok(carousel.groups[0].cards.every(card=>card.tabIndex===-1));assert.ok(carousel.groups[1].cards.every(card=>card.tabIndex===0));
+  h.document.activeElement=carousel.groups[1].cards[0];
+  let prevented=0;h.ui.handleKeydown({key:'ArrowLeft',target:carousel.groups[1].cards[0],preventDefault(){prevented++;}});assert.equal(carousel.scrollLeft,0);assert.equal(prevented,1);assert.equal(h.document.activeElement,carousel,'focus must leave a newly hidden card');
+  h.ui.handleKeydown({key:'ArrowRight',target:{closest:()=>null},preventDefault(){prevented++;}});assert.equal(carousel.scrollLeft,0);assert.equal(prevented,1);
+  assert.equal(h.writes,writes);assert.equal(h.ui.active.draft.answers.affirmative,'An unfinished book sentence');assert.equal(h.ui.target().word,'book');
+});
+
+test('each legacy mode remembers its own browsing page without affecting the bounded quick editor',()=>{
+  const h=setup();h.render();h.mount();h.answer('My flexible book.');h.action('next-lesson-group');
+  h.event('change',{sentenceSelect:'mode'},'transform');h.mount();assert.equal(h.carousel.scrollLeft,0);h.answer('My transform book.');
+  h.event('change',{sentenceSelect:'mode'},'flexible');h.mount();assert.equal(h.carousel.scrollLeft,320);assert.equal(h.ui.active.draft.answers.affirmative,'My flexible book.');
+  h.event('change',{sentenceSelect:'mode'},'transform');h.mount();assert.equal(h.carousel.scrollLeft,0);assert.equal(h.ui.active.draft.answers.affirmative,'My transform book.');
+  h.ui.switchMode('four');h.mount();assert.equal(h.carousel,null);assert.match(h.content.innerHTML,/data-writing-mode="four"/);assert.doesNotMatch(h.content.innerHTML,/sentence-lesson-group-controls/);
+  h.ui.switchMode('flexible');h.mount();assert.equal(h.carousel.scrollLeft,320);assert.equal(h.ui.active.draft.answers.affirmative,'My flexible book.');
+});
+
+test('modified arrow shortcuts keep their browser behavior instead of browsing word groups',()=>{
+  const h=setup();h.render();h.mount();let prevented=0;
+  for(const modifier of ['altKey','ctrlKey','metaKey','shiftKey'])h.ui.handleKeydown({key:'ArrowRight',[modifier]:true,target:h.carousel,preventDefault(){prevented++;}});
+  assert.equal(prevented,0);assert.equal(h.carousel.scrollLeft,0);assert.match(h.fields['.sentence-lesson-page-indicator'].textContent,/1\s*\/\s*2/);
+});
+
+test('mount restoration and resize ignore detached scroll events and stale lesson frames',()=>{
+  const h=setup();h.render();h.mount();h.action('next-lesson-group');const detached=h.carousel,oldObserver=h.observers.at(-1);h.event('click',{sentenceAction:'step',sentenceStep:'1'});h.mount();
+  assert.equal(oldObserver.disconnected,true);h.carousel.clientWidth=500;h.observers.at(-1).callback();assert.equal(h.carousel.scrollLeft,500);
+  h.carousel.clientWidth=320;h.observers.at(-1).callback();oldObserver.callback();
+  assert.equal(h.carousel.scrollLeft,320);detached.scrollLeft=0;detached.listeners.scroll({target:detached});assert.match(h.fields['.sentence-lesson-page-indicator'].textContent,/2\s*\/\s*2/);
+  h.carousel.clientWidth=390;h.resize();assert.equal(h.carousel.scrollLeft,390);h.carousel.clientWidth=0;h.resize();h.carousel.clientWidth=320;h.resize();assert.equal(h.carousel.scrollLeft,320);
+  h.render();h.setLesson(lessons[2]);h.render();h.mount();assert.match(h.fields['.sentence-lesson-page-indicator'].textContent,/1\s*\/\s*1/);
+  detached.listeners.scroll({target:detached});h.setLesson(lessons[1]);h.render();h.mount();assert.equal(h.carousel.scrollLeft,320);
+});
+
+test('zero, one and four-word lessons keep safe bounded group controls',()=>{
+  for(const [count,pages] of [[0,0],[1,1],[4,1]]){
+    const h=setup({getVocabulary:lesson=>lesson.id==='now'?Array.from({length:count},(_,index)=>({word:['window','glass','door','wall'][index],isLessonNew:true})):lesson.vocabulary,getUsage:lesson=>lesson.id==='now'?[]:lesson.usage});
+    const html=h.render();h.mount();h.action('next-lesson-group');h.action('prev-lesson-group');
+    if(!count){assert.equal(h.carousel,null);assert.match(h.ui.lessonQueueHTML(),/没有新增单词/);continue;}
+    assert.equal(h.carousel.groups.length,pages);assert.equal(h.carousel.groups[0].cards.length,count);assert.equal(h.fields['[data-sentence-action="prev-lesson-group"]'].disabled,true);assert.equal(h.fields['[data-sentence-action="next-lesson-group"]'].disabled,true);
+  }
+});
 
 test('old recommendation caches migrate away from nouns and basic terms without losing writing or manual history',()=>{
   const oldKeys=['word:old:book','word:old:warm','word:old:send','phrase:old:look%20at'];
@@ -130,7 +232,7 @@ test('an empty eligible pool stays quiet while manual selection retains basic wo
 test('current queue reaches every new text word and keeps previously learned terms optional',()=>{
   const h=setup();let html=h.render(),list=queue(html);
   assert.match(list,/本课新词/);assert.match(list,/0\s*\/\s*8/);
-  assert.equal((list.match(/data-sentence-action="lesson-target"/g)||[]).length,4);
+  assert.equal((activeGroup(list).match(/data-sentence-action="lesson-target"/g)||[]).length,4);
   assert.match(list.match(/<div class="sentence-lesson-heading">[\s\S]*?<\/div>/)?.[0]||'',/data-sentence-action="expand-lesson-targets"/);
   h.answer('I keep this book.');
   h.action('expand-lesson-targets');list=queue(h.render());
@@ -140,7 +242,7 @@ test('current queue reaches every new text word and keeps previously learned ter
   assert.match(list,/0\/5/);assert.match(list,/下一个未练/);assert.match(list,/已练[^<]*不代表掌握/);
   assert.ok(html.indexOf('<textarea')<html.indexOf('class="sentence-adjustments"'),'writing precedes advanced controls');
   assert.equal(h.ui.active.draft.answers.affirmative,'I keep this book.');
-  h.action('expand-lesson-targets');assert.equal((queue(h.render()).match(/data-sentence-action="lesson-target"/g)||[]).length,4);
+  h.action('expand-lesson-targets');assert.equal((activeGroup(queue(h.render())).match(/data-sentence-action="lesson-target"/g)||[]).length,4);
   assert.equal(h.ui.active.draft.answers.affirmative,'I keep this book.');
 });
 

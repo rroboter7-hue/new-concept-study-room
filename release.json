@@ -1,6 +1,6 @@
 {
   "build": "2026-10-27-book2-reviewed30",
-  "preparedAt": "2026-10-27T07:11:00.422Z",
+  "preparedAt": "2026-10-27T07:16:59.035Z",
   "book2": {
     "book": 2,
     "total": 96,
@@ -261,7 +261,7 @@
     "activeBook2Usage": 440
   },
   "staticFiles": 4066,
-  "staticBytes": 735995539,
+  "staticBytes": 736009218,
   "nativeearsAdvancedAudio": {
     "books": {
       "3": 60,
@@ -585,7 +585,16 @@
     "recommendedVerbs": 1,
     "introductoryExpressionsExcluded": true,
     "manualWordBankPreserved": true,
-    "recommendationCacheMigrated": true
+    "recommendationCacheMigrated": true,
+    "wordGroups": {
+      "pageSize": 4,
+      "nativeHorizontalScroll": true,
+      "previousAndNext": true,
+      "browseChangesTarget": false,
+      "perWordDraftsPreserved": true,
+      "reloadShowsSelectedTargetGroup": true,
+      "physicalPhoneTouchVerified": false
+    }
   },
   "learningReliability": {
     "contextBoundDictionary": true,
@@ -640,11 +649,21 @@
       "includesCheckingInstructions": true,
       "manualPaste": true,
       "automaticExternalSend": false,
-      "selectableFailureFallback": true
+      "selectableFailureFallback": true,
+      "allFourFormsTogether": true,
+      "explicitEmptyForms": true
     },
     "drafts": {
       "separateModes": true,
       "legacyFivePreserved": true
+    },
+    "fourFormLayout": {
+      "simultaneousFields": 4,
+      "mobileColumns": 1,
+      "desktopColumns": 2,
+      "namedFieldAutosave": true,
+      "existingDraftsPreserved": true,
+      "perFieldInsertionAndReuse": true
     }
   }
 }
