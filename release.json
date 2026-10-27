@@ -1,6 +1,6 @@
 {
-  "build": "2026-10-27-book2-word-audio-quality",
-  "preparedAt": "2026-10-27T03:44:48.223Z",
+  "build": "2026-10-27-learning-reliability",
+  "preparedAt": "2026-10-27T04:24:54.690Z",
   "book2": {
     "book": 2,
     "total": 96,
@@ -173,8 +173,8 @@
     },
     "genericDictionarySensesClearlySeparated": true
   },
-  "staticFiles": 4052,
-  "staticBytes": 731029694,
+  "staticFiles": 4207,
+  "staticBytes": 738356597,
   "nativeearsAdvancedAudio": {
     "books": {
       "3": 60,
@@ -417,9 +417,21 @@
     "choice": 276,
     "short": 276,
     "source": "self-authored-with-exact-passage-evidence",
-    "grading": "exact-closed-fact-aliases-and-specific-misconceptions",
+    "grading": "explicit-grammar-form-aliases-and-specific-misconceptions",
     "unmatchedParaphrases": "needs-check",
-    "savedIndependently": true
+    "savedIndependently": true,
+    "scope": "grammar",
+    "questionLanguage": "en",
+    "answerLanguage": "en",
+    "formats": [
+      "gap-fill",
+      "transformation",
+      "correction",
+      "word-order",
+      "form-choice"
+    ],
+    "chineseSupport": "post-answer-rule-explanations",
+    "storyComprehensionRemoved": true
   },
   "performance": {
     "lazyTextLibrary": true,
@@ -453,5 +465,59 @@
     "contextWordMappings": 1,
     "gitHistoryRewritten": false
   },
-  "staticByteScope": "Runtime source files, excluding release.json and dev/tests/Git/build caches; source WAVs are converted for delivery. Use delivery-report.json publishedBytes for deployed capacity."
+  "staticByteScope": "Source tree excluding release.json, Git metadata, build output and caches. Use delivery-report.json publishedBytes for deployed site capacity.",
+  "lessonWordPractice": {
+    "sourceBoundAllReadings": 276,
+    "firstAppearanceSpellings": 7447,
+    "includesNewForms": true,
+    "sourceTitleAndBody": true,
+    "allTargetsReachable": true,
+    "fiveSentencesPerTarget": true,
+    "practiceIsNotMastery": true,
+    "separateTargetDrafts": true,
+    "optionalEarlierWordsAndPhrases": true,
+    "stablePerLessonRecommendations": true,
+    "actualCheckedUseRotates": true,
+    "recommendationsWithoutSelectionAlsoCountWhenUsed": true,
+    "unusedFirstThenLeastRecent": true,
+    "twoColumnMobilePicker": true,
+    "searchKeyboardOnTapOnly": true,
+    "compactSingleRowPickerFooter": true,
+    "pendingMeanings": 260,
+    "lazyWordPickerRows": true,
+    "initialPickerRows": 80
+  },
+  "learningReliability": {
+    "contextBoundDictionary": true,
+    "invalidLegacyGlossRepair": true,
+    "manualSavedMeaningsPreserved": true,
+    "outputDrafts": {
+      "version": 1,
+      "perLesson": true,
+      "perMode": true,
+      "perParagraph": true,
+      "reload": true,
+      "backupRestore": true,
+      "honestSaveFailures": true,
+      "assistanceHistoryPreserved": true
+    },
+    "review": {
+      "processedForgottenCards": true,
+      "emptyScopeCanContinue": true,
+      "unavailableTasksDeferred": true,
+      "explicitRoundBinding": true,
+      "atomicSaveAndRollback": true,
+      "masteryRulesPreserved": true
+    }
+  },
+  "readingFont": {
+    "minimumPercent": 80,
+    "maximumPercent": 160,
+    "stepPercent": 10,
+    "defaultPercent": 100,
+    "englishAndChinese": true,
+    "persistsLocally": true,
+    "backupRestore": true,
+    "passageOnly": true
+  }
 }

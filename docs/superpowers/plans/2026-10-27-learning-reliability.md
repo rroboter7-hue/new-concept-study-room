@@ -10,8 +10,8 @@
 - [x] Reproduce lost retell/dictation drafts and save/reload/assistance regressions.
 - [x] Reproduce empty-answer review completion failures and stale-round/empty-scope cases.
 - [x] Add bounded 80–160 percent reading controls with saved preferences.
-- [ ] Integrate the shared learner store, backup/restore, runtime dependency order and review transaction.
-- [ ] Run scoped regressions, independent review, and all nonserver tests.
+- [x] Integrate the shared learner store, backup/restore, runtime dependency order and review transaction.
+- [x] Run scoped regressions, independent review, and all nonserver tests: 768 pass, 3 Windows link-capability skips, no failures after merging the latest grammar and vocabulary updates.
 - [ ] Publish through GitHub Actions and verify the three repaired flows and font controls online.
 
 Review focus: corrupted/imported saved meanings; references exposed before switching modes; quota failures and emergency backup; old or unavailable review rounds; small-screen wrapping and preserved reading position.

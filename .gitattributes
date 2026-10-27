@@ -11,3 +11,7 @@ lesson-recall-catalogue.js text eol=lf
 text-library.js text eol=lf
 # This historical vocabulary fixture has a pinned raw-byte checksum.
 tests/fixtures/book2-context-previous-release.json text eol=lf
+
+# Reproducible generated lesson-word data.
+lesson-word-targets.js text eol=lf
+lesson-word-targets-source.json -text

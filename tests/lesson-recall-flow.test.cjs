@@ -20,7 +20,7 @@ test('reading puts current-lesson self recall before knowledge recurrence and cu
  const {h,lesson}=await lessonFlow(),html=h.html(),recall=h.document.querySelector('.lesson-recall-section'),recurrence=h.document.querySelector('.recurrence-section'),phrases=h.document.querySelector('.lesson-phrases-section');
  assert(recall,'self recall appears after the reading');assert(recurrence,'knowledge recurrence remains available');assert(phrases,'current expressions follow recurrence');
  assert(html.indexOf('lesson-recall-section')<html.indexOf('recurrence-section'));assert(html.indexOf('recurrence-section')<html.indexOf('lesson-phrases-section'));
- assert.match(recall.innerHTML,/本课自主回顾/);assert(recall.innerHTML.includes(lesson.title));assert.equal(recall.querySelectorAll('.lesson-recall-prompts').length,0,'generic repeated recall prompts are removed');
+ assert.match(recall.innerHTML,/本课语法回顾/);assert(recall.innerHTML.includes(lesson.title));assert.equal(recall.querySelectorAll('.lesson-recall-prompts').length,0,'generic repeated recall prompts are removed');
  assert.match(recurrence.innerHTML,/知识点复现/);assert.match(phrases.innerHTML,/习惯用法/);
 });
 

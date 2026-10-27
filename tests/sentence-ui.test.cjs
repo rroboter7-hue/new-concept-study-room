@@ -86,9 +86,9 @@ test('keeps different targets and lessons isolated while preserving the current 
 
 test('debounces draft input, enforces 400 characters, and escapes stored HTML when rendering',()=>{
   const h=setup();h.render();h.input('<img src=x onerror=alert(1)>'.repeat(25));
-  assert.equal(Object.keys(h.drafts).length,0);
+  assert.equal(h.drafts[h.ui.active.key],undefined);
   h.runTimers();
-  assert.equal(Object.values(h.drafts)[0].answers.affirmative.length,400);
+  assert.equal(h.drafts[h.ui.active.key].answers.affirmative.length,400);
   assert.match(h.render(),/&lt;img src=x/);
   assert.doesNotMatch(h.render(),/<img src=x/);
 });
@@ -132,7 +132,7 @@ test('checks local requirements without grading mastery and escapes rule feedbac
 
 test('ignores delegated events that originate outside its own root',()=>{
   const h=setup();h.render();h.event('input',{sentenceInput:'answer'},'Outside input',false);h.ui.flush();
-  assert.equal(Object.keys(h.drafts).length,0);
+  assert.equal(h.drafts[h.ui.active.key],undefined);
   assert.doesNotMatch(h.render(),/Outside input/);
 });
 

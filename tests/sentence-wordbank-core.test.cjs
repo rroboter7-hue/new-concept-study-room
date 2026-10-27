@@ -85,8 +85,30 @@ test('part of speech is explicit and supports multiple POS without treating n. o
     word('wrong', 'adverb', '错误地'), word('unknown', 'unclassified', '未分类')
   ]);
   assert.deepEqual(bank({ lessons: [earlier], currentLesson: current }).map(item => [item.label, item.category]), [
-    ['play', 'verb'], ['change', 'verb'], ['come', 'verb'], ['ready', 'adjective'], ['open', 'verb'], ['gentle', 'adjective'], ['move', 'verb']
+    ['play', 'verb'], ['change', 'verb'], ['come', 'verb'], ['ready', 'adjective'], ['open', 'verb'], ['gentle', 'adjective'], ['move', 'verb'],
+    ['outside', 'adverb'], ['chair', 'noun'], ['private', 'word'], ['wrong', 'adverb'], ['unknown', 'word']
   ]);
+});
+
+test('all-word categories retain adjective precedence and accept valid words with omitted POS', () => {
+  const earlier = lesson('b2-l1', 2, 1, [
+    word('light', 'n.', '光'), word('light', 'adj.', '轻的'),
+    word('here', 'adv.', '这里'), { word: 'the', meaning: '这个；定冠词' }, word('at', 'prep.', '在')
+  ]);
+  assert.deepEqual(bank({ lessons: [earlier], currentLesson: current }).map(item => [item.label, item.category]), [
+    ['light', 'adjective'], ['here', 'adverb'], ['the', 'word'], ['at', 'word']
+  ]);
+});
+
+test('dictionary a. adjectives stay available in the adjective filter across mixed POS rows', () => {
+  const earlier = lesson('b2-l1', 2, 1, [
+    word('lovely', 'a.', '可爱的'), word('busy', 'adv./a.', '忙碌的'),
+    word('young', 'n./a.', '年轻的'), word('open', 'a./v.', '打开；开放的'),
+    word('light', 'n.', '光'), word('light', 'a.', '轻的')
+  ]);
+  const result = bank({ lessons: [earlier], currentLesson: current });
+  assert.deepEqual(result.filter(item => item.category === 'adjective').map(item => item.label), ['lovely', 'busy', 'young', 'light']);
+  assert.equal(result.find(item => item.label === 'open').category, 'verb');
 });
 
 test('word bank excludes empty, placeholder, unreviewed and non-Chinese meanings', () => {

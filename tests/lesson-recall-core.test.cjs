@@ -25,3 +25,24 @@ test('answer changes invalidate submission and retain other lessons without trus
 test('saved recall state bounds untrusted data and never restores supplied grading claims',()=>{
  assert.equal(typeof core.sanitize,'function');const raw=JSON.parse('{"lessons":{"__proto__":{"revision":"bad"},"lesson-1":{"revision":"abc123","answers":{"content-1":0,"content-2":"three days"},"submitted":true,"score":100}}}');const saved=core.sanitize(raw);assert.equal(Object.hasOwn(saved.lessons,'__proto__'),false);assert.equal(saved.lessons['lesson-1'].score,undefined);assert.equal(saved.lessons['lesson-1'].answers['content-1'],0);assert.equal(core.grade(entry().questions[1],core.answersFor(saved,entry())['content-2']).status,'correct');
 });
+
+test('English practice asks for English before accepting Chinese aliases or mixed-language answers',()=>{
+ const q={...entry().questions[1],answerLanguage:'en',answers:['three days','3 days','She stayed for three days.','三天']};
+ for(const value of ['三天','three days（三天）']){const result=core.grade(q,value);assert.equal(result.status,'english-required');assert.equal(result.correct,null);assert.match(result.explanation,/英文/);}
+ for(const value of ['three days','3 days','She stayed for three days.'])assert.equal(core.grade(q,value).status,'correct');
+ assert.equal(core.grade({...q,answers:['3']},'3').status,'correct');
+ assert.equal(core.grade(q,'not three days').status,'unmatched');
+});
+
+test('grammar grading preserves possessive and contraction apostrophes instead of accepting spaces',()=>{
+ const q={...entry().questions[1],focus:'grammar',answerLanguage:'en',answers:["Tim's"]};
+ assert.equal(core.grade(q,'Tim’s').status,'correct');
+ assert.equal(core.grade(q,'Tim s').status,'incorrect');for(const wrong of ['Tim s','Tims'])assert.notEqual(core.grade(q,wrong).status,'correct',wrong);
+ const negative={...q,answers:["I didn't enjoy it."]};assert.equal(core.grade(negative,'I didn’t enjoy it!').status,'correct');assert.notEqual(core.grade(negative,'I didn t enjoy it.').status,'correct');
+});
+
+test('non-defining clause grammar requires both commas while allowing whitespace and final punctuation variation',()=>{
+ const q={...entry().questions[1],focus:'grammar',punctuation:'commas',answers:['The operation, which lasted for four hours, was difficult.']};
+ for(const correct of ['The operation,which lasted for four hours,was difficult','The operation , which lasted for four hours , was difficult!'])assert.equal(core.grade(q,correct).status,'correct');
+ for(const wrong of ['The operation which lasted for four hours was difficult.','The operation, which lasted for four hours was difficult.'])assert.equal(core.grade(q,wrong).status,'incorrect');
+});
