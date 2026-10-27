@@ -1,6 +1,6 @@
 {
   "build": "2026-10-27-learning-reliability",
-  "preparedAt": "2026-10-27T04:24:54.690Z",
+  "preparedAt": "2026-10-27T04:25:57.930Z",
   "book2": {
     "book": 2,
     "total": 96,
@@ -171,10 +171,27 @@
       "deviceSpeechVoiceRequired": false,
       "heteronymsAllContextReviewed": false
     },
-    "genericDictionarySensesClearlySeparated": true
+    "genericDictionarySensesClearlySeparated": true,
+    "reviewedUsageSources": {
+      "book": 2,
+      "totalSourceEntries": 448,
+      "activeEntries": 443,
+      "archivedFieldErrors": 6,
+      "first20SourceEntriesTextuallyReviewed": 182,
+      "first20ActiveEntries": 177,
+      "legalFirst20NotesEntriesPreserved": 102,
+      "independentlyVisuallyReviewedFieldRepairs": 6,
+      "independentClassificationSamples": 11,
+      "other76Lessons": "metadata-only-not-individually-reviewed",
+      "allExamplesIndependentlyVisuallyReviewed": false,
+      "expressionAndExampleProvenanceSeparate": true,
+      "sourceAndValueDriftRejectApproval": true,
+      "editedContentPreservedOnRevocation": true,
+      "editorialNoticeAcrossAllPracticeModes": true
+    }
   },
-  "staticFiles": 4207,
-  "staticBytes": 738356597,
+  "staticFiles": 4209,
+  "staticBytes": 739637354,
   "nativeearsAdvancedAudio": {
     "books": {
       "3": 60,
