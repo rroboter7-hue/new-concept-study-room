@@ -155,16 +155,14 @@ test('all authored answer choices grade through the existing remediation flow us
   }
 });
 
-test('all 96 expanded lessons and twenty balanced packs register together without creating alias word records', () => {
-  const {window,scope} = load();
-  for (const file of ['book2-practice-packs.js','pilot-question-expansion.js','practice-pack-core.js']) vm.runInContext(fs.readFileSync(path.join(root,file),'utf8'),scope,{filename:file});
-  const manifests = [window.BOOK2_QUESTION_EXPANSION,window.BOOK2_LATER_QUESTION_EXPANSION];
-  const bank = window.StudyKnowledge.install(window.LESSONS,{grammarAudit:window.BOOK2_QUESTION_REVIEWS,extraQuestions:manifests});
+test('all 96 expanded lessons and twenty-five balanced packs register through the shipped bootstrap without alias word records', () => {
+  const c={document:{addEventListener(){}},URLSearchParams,location:{search:''}};c.window=c;vm.createContext(c);for(const m of fs.readFileSync(path.join(root,'index.html'),'utf8').matchAll(/<script defer src="([^"]+)"/g)){const f=m[1].split('?')[0];if(f==='app.js')break;vm.runInContext(fs.readFileSync(path.join(root,f),'utf8'),c,{filename:f});}
+  const window=c, manifests=[c.BOOK2_QUESTION_EXPANSION,c.BOOK2_LATER_QUESTION_EXPANSION],bank=c.StudyKnowledge.bank;
   assert.equal(bank.audit.expansionQuestions.length,877);
   assert.deepEqual(plain(bank.audit.expansionIssues),[]);
   for (const lesson of window.LESSONS.filter(l=>l.book===2)) assert.equal(bank.quizForLesson(lesson.id).length,12,lesson.id);
   const registry = window.StudyPracticePacks.create(window.BOOK2_PRACTICE_PACKS,window.LESSONS,bank);
-  assert.deepEqual(plain(registry.issues),[]);assert.equal(registry.lessonIds().length,20);
+  assert.deepEqual(plain(registry.issues),[]);assert.equal(registry.lessonIds().length,25);
   for (const raw of manifests.flatMap(m=>m.entries).filter(q=>q.type==='vocabulary')) {
     const canonical=bank.wordForLesson(raw.sourceLessonId,raw.word),alias=bank.get(raw.conceptId);
     assert.equal(alias.id,canonical.conceptId,raw.id);

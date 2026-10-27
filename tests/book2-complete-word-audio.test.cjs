@@ -6,8 +6,8 @@ const c=load(),before=load(true);
 test('all printed Book 2 word forms and declared lesson vocabulary have local audio without device TTS',()=>{
  const keys=new Set(),add=w=>{if(typeof w==='string'&&w)keys.add(w.toLowerCase());};
  const lessons=c.LESSONS.filter(l=>l.book===2);assert.equal(lessons.length,96);
- for(const l of lessons){const forms=new Set((l.vocabulary||[]).flatMap(v=>v.sourceForms||[]).map(w=>w.toLowerCase()));for(const p of l.paragraphs)for(const m of p.en.matchAll(/[A-Za-z]+(?:[’'-][A-Za-z]+)*/g)){let w=m[0],tail=p.en.slice(m.index+w.length,m.index+w.length+1);if(/s$/i.test(w)&&/[’']/.test(tail)&&forms.has((w+tail).toLowerCase()))w+=tail;add(w);}for(const v of [...l.vocabulary||[],...l.notesVocabularyExtensions||[]]){add(v.word);for(const f of v.sourceForms||[])add(f);}}
- assert(keys.size>=2599);assert.deepEqual([...keys].filter(w=>!c.STUDY_WORD_AUDIO[w]),[]);
+ for(const l of lessons){const forms=new Set((l.vocabulary||[]).flatMap(v=>v.sourceForms||[]).map(w=>w.toLowerCase()));for(const p of l.paragraphs)for(const m of c.StudyLexicalWords.scan(p.en).filter(t=>t.kind==='word'&&!c.StudyLexicalWords.isDottedSt(p.en,t))){let w=m.surface,tail=p.en.slice(m.end,m.end+1);if(/s$/i.test(w)&&/[’']/.test(tail)&&forms.has((w+tail).toLowerCase()))w+=tail;add(w);}for(const v of [...l.vocabulary||[],...l.notesVocabularyExtensions||[]]){add(v.word);for(const f of v.sourceForms||[])add(f);}}
+ assert.equal(keys.size,2599);assert.equal(c.STUDY_WORD_AUDIO.st,undefined);assert.deepEqual([...keys].filter(w=>!c.STUDY_WORD_AUDIO[w]),[]);
  for(const w of keys){const p=c.STUDY_WORD_AUDIO[w];assert.match(p,/^audio\/words\/[^/\\]+\.wav$/);assert(!p.includes('..'));assert(fs.statSync(path.join(dir,p)).size>1000,w);}
  assert(c.STUDY_WORD_AUDIO.deserted);assert(c.STUDY_WORD_AUDIO.critics);assert(c.STUDY_WORD_AUDIO['fools’']);assert.equal(c.STUDY_WORD_AUDIO['fools’'],c.STUDY_WORD_AUDIO["fools'"]);assert.equal(c.STUDY_WORD_AUDIO['musn’t'],undefined);
 });
@@ -18,7 +18,7 @@ test('new static word files have intact hashes, real mono PCM samples and disclo
  assert.equal(bytes,67034948);
 });
 test('the word supplement preserves every existing mapping and contextual desert pronunciation, and is idempotent',()=>{
- assert.equal(Object.keys(before.STUDY_WORD_AUDIO).length,2269);for(const [key,value] of Object.entries(before.STUDY_WORD_AUDIO))assert.equal(c.STUDY_WORD_AUDIO[key],value,key);assert.deepEqual(plain(c.STUDY_CONTEXT_WORD_AUDIO),plain(before.STUDY_CONTEXT_WORD_AUDIO));assert.notEqual(c.STUDY_CONTEXT_WORD_AUDIO['nce-b2-eef57c-l029'].desert,c.STUDY_WORD_AUDIO.desert);assert.equal(Object.keys(c.STUDY_WORD_AUDIO).length,3725);
- const state=JSON.stringify([c.STUDY_WORD_AUDIO,c.BOOK2_COMPLETE_WORD_AUDIO_SOURCES,c.BOOK2_COMPLETE_WORD_AUDIO_STATUS]);vm.runInContext(fs.readFileSync(path.join(dir,file),'utf8'),c);assert.equal(JSON.stringify([c.STUDY_WORD_AUDIO,c.BOOK2_COMPLETE_WORD_AUDIO_SOURCES,c.BOOK2_COMPLETE_WORD_AUDIO_STATUS]),state);
+ assert.equal(Object.keys(before.STUDY_WORD_AUDIO).length,2269);for(const [key,value] of Object.entries(before.STUDY_WORD_AUDIO))assert.equal(c.STUDY_WORD_AUDIO[key],value,key);assert.deepEqual(plain(c.STUDY_CONTEXT_WORD_AUDIO),plain(before.STUDY_CONTEXT_WORD_AUDIO));assert.notEqual(c.STUDY_CONTEXT_WORD_AUDIO['nce-b2-eef57c-l029'].desert,c.STUDY_WORD_AUDIO.desert);assert.equal(Object.keys(c.STUDY_WORD_AUDIO).length,3724);
+ const state=JSON.stringify([c.STUDY_WORD_AUDIO,c.BOOK2_COMPLETE_WORD_AUDIO_SOURCES,c.BOOK2_COMPLETE_WORD_AUDIO_STATUS]);vm.runInContext(fs.readFileSync(path.join(dir,file),'utf8'),c);vm.runInContext(fs.readFileSync(path.join(dir,'ordinal-audio-alias-correction.js'),'utf8'),c);assert.equal(JSON.stringify([c.STUDY_WORD_AUDIO,c.BOOK2_COMPLETE_WORD_AUDIO_SOURCES,c.BOOK2_COMPLETE_WORD_AUDIO_STATUS]),state);
  const html=fs.readFileSync(path.join(dir,'index.html'),'utf8');assert(html.indexOf(file)<html.indexOf('delivery-audio.js'));assert(html.indexOf('delivery-audio.js')<html.indexOf('src="audio.js'));
 });

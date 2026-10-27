@@ -1,6 +1,6 @@
 {
   "build": "2026-10-27-grammar-cn",
-  "preparedAt": "2026-10-27T04:25:57.930Z",
+  "preparedAt": "2026-10-27T05:37:28.244Z",
   "book2": {
     "book": 2,
     "total": 96,
@@ -85,9 +85,9 @@
     "simulatedRetestBoundariesVerified": true,
     "balancedPracticePacks": {
       "book": 2,
-      "lessons": 20,
-      "tasks": 240,
-      "followups": 240,
+      "lessons": 25,
+      "tasks": 300,
+      "followups": 300,
       "defaultForReviewedLessons": true,
       "distribution": {
         "vocabulary": 3,
@@ -96,7 +96,8 @@
         "comprehension": 2,
         "production": 2
       },
-      "preservedFirst10Revisions": true
+      "preservedFirst10Revisions": true,
+      "preservedFirst20Revisions": true
     },
     "wrongConceptsRejoinSpacedReview": true,
     "syntheticListeningWordAudioAdded": 6,
@@ -139,7 +140,7 @@
     "retellObservedInflections": true,
     "retellCoverageIsLexicalOnly": true,
     "retellLegacyNotesOutlinesLabelled": true,
-    "unsubmittedLegacyRetellDraftPersistence": false,
+    "unsubmittedLegacyRetellDraftPersistence": true,
     "unresolvedExistingContextReviewItems": 0,
     "newContextReviewIssuesThisBatch": 0,
     "additionalPackWordAudio": {
@@ -161,7 +162,7 @@
     },
     "completeBook2WordAudio": {
       "lessons": 96,
-      "sourceWordForms": 2600,
+      "sourceWordForms": 2599,
       "apostropheAliases": 48,
       "newWaveFiles": 1427,
       "sourceBytes": 67034948,
@@ -169,7 +170,10 @@
       "voice": "Microsoft Zira Desktop · en-US",
       "notTextbookOriginalRecording": true,
       "deviceSpeechVoiceRequired": false,
-      "heteronymsAllContextReviewed": false
+      "heteronymsAllContextReviewed": false,
+      "historicalAsciiExtractedKeys": 2600,
+      "tokenPolicy": "shared-lexical-scanner-v1",
+      "numericOrdinalSuffixExcluded": true
     },
     "genericDictionarySensesClearlySeparated": true,
     "reviewedUsageSources": {
@@ -188,10 +192,43 @@
       "sourceAndValueDriftRejectApproval": true,
       "editedContentPreservedOnRevocation": true,
       "editorialNoticeAcrossAllPracticeModes": true
-    }
+    },
+    "lateCanonicalSupplements": {
+      "lessons": [
+        21,
+        23,
+        25
+      ],
+      "words": [
+        "airport",
+        "garden",
+        "language"
+      ],
+      "oldExpansionBindingsPreserved": 877,
+      "oldCompletedPacksPreserved": 20
+    },
+    "explicitExampleCorrections": {
+      "book": 2,
+      "entries": 7,
+      "vocabularyExamples": 3,
+      "usageExamples": 4,
+      "originalObjectsPreserved": true,
+      "editedPracticeAcrossModes": true,
+      "revokedExamplesExcludedFromGradedPools": true
+    },
+    "activeGlobalWordAudioMappings": 3724,
+    "ordinalSourceRepair": {
+      "retiredFalseFirstAppearances": 2,
+      "excludedNumericOrdinals": 11,
+      "properAbbreviationOccurrencesPreservedInQuarantine": 5,
+      "properAbbreviationActiveTargets": 0,
+      "oldDraftKeysPreserved": true,
+      "retiredGlobalAlias": "st→first"
+    },
+    "unsubmittedLegacyDictationDraftPersistence": true
   },
-  "staticFiles": 4209,
-  "staticBytes": 739637354,
+  "staticFiles": 4061,
+  "staticBytes": 735287852,
   "nativeearsAdvancedAudio": {
     "books": {
       "3": 60,
@@ -482,14 +519,14 @@
     "removedAudioBackedUp": true,
     "primaryLessonMappingsPreserved": 276,
     "previousWordMappingsPreserved": 2250,
-    "currentWordMappings": 3725,
+    "currentWordMappings": 3724,
     "contextWordMappings": 1,
     "gitHistoryRewritten": false
   },
   "staticByteScope": "Source tree excluding release.json, Git metadata, build output and caches. Use delivery-report.json publishedBytes for deployed site capacity.",
   "lessonWordPractice": {
     "sourceBoundAllReadings": 276,
-    "firstAppearanceSpellings": 7447,
+    "firstAppearanceSpellings": 7445,
     "includesNewForms": true,
     "sourceTitleAndBody": true,
     "allTargetsReachable": true,

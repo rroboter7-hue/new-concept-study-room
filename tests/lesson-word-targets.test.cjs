@@ -148,7 +148,8 @@ test('offline builds are reproducible and reject modified dictionary source befo
   const temp=fs.mkdtempSync(path.join(os.tmpdir(),'lesson-word-targets-build-'));
   try{
     fs.mkdirSync(path.join(temp,'dictionary-data'));
-    fs.writeFileSync(path.join(temp,'index.html'),'<script defer src="data.js"></script><script defer src="lesson-word-targets.js"></script><script defer src="app.js"></script>');
+    fs.copyFileSync(path.join(root,'lexical-word-tokens.js'),path.join(temp,'lexical-word-tokens.js'));
+    fs.writeFileSync(path.join(temp,'index.html'),'<script defer src="lexical-word-tokens.js"></script><script defer src="data.js"></script><script defer src="lesson-word-targets.js"></script><script defer src="app.js"></script>');
     fs.writeFileSync(path.join(temp,'data.js'),`window.LESSONS=[{id:'fixture',book:1,number:1,title:'A',paragraphs:[{en:'A cat.'}],vocabulary:[]}];`);
     const shard=JSON.stringify({version:1,entries:{cat:{translation:'n. 猫',phonetic:'kæt',headword:'cat'}}}),license='MIT fixture license';
     fs.writeFileSync(path.join(temp,'dictionary-data','c.json'),shard);fs.writeFileSync(path.join(temp,'dictionary-data','LICENSE'),license);
@@ -175,14 +176,18 @@ test('shipped data covers every first spelling in all 276 final title and body t
   builder();const c=shipped(),before=JSON.stringify(c.LESSONS);
   assert.ok(fs.existsSync(path.join(root,'lesson-word-targets.js')),'the generated browser module must ship');
   vm.runInContext(fs.readFileSync(path.join(root,'lesson-word-targets.js'),'utf8'),c,{filename:'lesson-word-targets.js'});
-  const api=c.StudyLessonWordTargets,lessons=Array.from(c.LESSONS).sort((a,b)=>a.book-b.book||a.number-b.number),seen=new Set();
+  const lexer=require(path.join(root,'lexical-word-tokens.js')),api=c.StudyLessonWordTargets,lessons=Array.from(c.LESSONS).sort((a,b)=>a.book-b.book||a.number-b.number),seen=new Set(),activeSeen=new Set();
   assert.deepEqual([1,2,3,4].map(book=>lessons.filter(l=>l.book===book).length),[72,96,60,48]);
   for(const lesson of lessons){
-    const expected=[];for(const text of [lesson.title,...lesson.paragraphs.map(p=>p.en)])for(const m of text.matchAll(/[A-Za-z]+(?:[’'-][A-Za-z]+)*/g)){
-      const key=m[0].toLowerCase().replace(/’/g,"'");if(!seen.has(key)){expected.push(key);seen.add(key);}
+    const expected=[];for(const text of [lesson.title,...lesson.paragraphs.map(p=>p.en)])for(const token of lexer.scan(text)){
+      if(token.kind==='ordinal')continue;
+      const key=token.surface.toLowerCase().replace(/’/g,"'");if(seen.has(key))continue;seen.add(key);
+      if(lexer.isDottedSt(text,token))continue; // First literal St. consumes novelty in nonactive quarantine.
+      expected.push(key);activeSeen.add(key);
     }
     const rows=Array.from(api.newWordsForLesson(lesson)),actual=[...new Set(rows.map(row=>row.word.trim().toLowerCase().replace(/’/g,"'")))];
     assert.deepEqual([...actual].sort(),[...expected].sort(),lesson.id);
+    assert.equal(rows.length,actual.length,lesson.id+' new-word rows stay unique');
     for(const row of rows){assert.ok(row.meaning&&typeof row.pos==='string',lesson.id+' '+row.word);assert.equal(row.isLessonNew,true);
       assert.ok(row.sourceSentence&&(row.sourceLocation==='title'?lesson.title.includes(row.sourceSentence):lesson.paragraphs.some(p=>p.en.includes(row.sourceSentence))),lesson.id+' source '+row.word);
     }
@@ -194,6 +199,7 @@ test('shipped data covers every first spelling in all 276 final title and body t
   const tony=api.newWordsForLesson(lessons.find(l=>l.book===1&&l.number===9)).find(row=>row.word==='Tony');
   assert.equal(tony.meaning,'人名（Tony）');assert.equal(tony.pos,'n.');assert.equal(tony.sourceSentence,'How is Tony?');
   assert.equal(JSON.stringify(c.LESSONS),before,'the browser module must not patch LESSONS');
-  assert.equal(api.status.lessons,276);assert.equal(api.status.newWords,seen.size);
-  const common=require(path.join(root,'lesson-word-targets.js'));assert.equal(common.status.newWords,seen.size);
+  assert.equal(api.status.lessons,276);assert.equal(api.status.newWords,activeSeen.size);
+  assert.equal(api.status.quarantinedFirstOccurrences,seen.size-activeSeen.size);
+  const common=require(path.join(root,'lesson-word-targets.js'));assert.equal(common.status.newWords,activeSeen.size);
 });
