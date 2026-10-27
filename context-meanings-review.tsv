@@ -1,0 +1,533 @@
+# Self-authored Chinese senses, reviewed against shipped English lesson title/body on 2026-10-27.
+# Not quotations of ECDICT or official textbook Chinese. context-meanings.js binds these to the complete literal source.
+# book:lesson<TAB>exact source word<TAB>Chinese meaning<TAB>part of speech
+1:5	Chang-woo	昌宇（人名）	n.
+1:5	Luming	鲁明（人名）	n.
+1:5	Xiaohui	小惠（人名）	n.
+1:7	name’s	名字是（name is 的缩写）	n. + v.
+1:9	How's	……怎么样（how is 的缩写）	adv. + v.
+1:11	shirt’s	衬衫是（shirt is 的缩写）	n. + v.
+1:11	Tim’s	蒂姆的（人名所有格）	n.
+1:13	colour’s	颜色是（colour is 的缩写）	n. + v.
+1:13	hat’s	帽子是（hat is 的缩写）	n. + v.
+1:25	Smith’s	史密斯的（姓氏所有格）	n.
+1:29	bedroom’s	卧室是（bedroom is 的缩写）	n. + v.
+1:31	Where’s	……在哪里（where is 的缩写）	adv. + v.
+1:31	dog's	狗在……（dog is 的缩写）	n. + v.
+1:37	Pink’s	粉色是（pink is 的缩写）	n. + v.
+1:41	Penny’s	彭妮的（人名所有格）	n.
+1:43	kettle’s	水壶正在……（kettle is 的缩写）	n. + v.
+1:45	boss’s	老板的（所有格）	n.
+1:49	butcher’s	肉店（butcher 的所有格，省略 shop）	n.
+1:49	lamb’s	羊肉是（lamb is 的缩写）	n. + v.
+1:53	weather's	天气是（weather is 的缩写）	n. + v.
+1:55	eats	吃（eat 的第三人称单数）	v.
+1:55	sees	见；看望（see 的第三人称单数）	v.
+1:61	doctor's	医生的（所有格）	n.
+1:65	Jill's	吉尔是（Jill is 的缩写）	n. + v.
+1:67	greengrocer’s	蔬菜水果店（greengrocer 的所有格，省略 shop）	n.
+1:67	mother’s	母亲家（mother 的所有格，省略 home）	n.
+1:69	cars	汽车（car 的复数）	n.
+1:71	Ron	罗恩（人名）	n.
+1:71	Pauline’s	波琳的（人名所有格）	n.
+1:79	Carol’s	卡罗尔的（人名所有格）	n.
+1:79	grocer’s	杂货店（grocer 的所有格，省略 shop）	n.
+1:79	haven’t	没有（have not 的缩写）	aux.
+1:81	Sam’s	萨姆在……（Sam is 的缩写）	n. + v.
+1:83	room’s	房间是（room is 的缩写）	n. + v.
+1:87	LFZ	车牌号码中的字母组合 LFZ	n.
+1:95	clock’s	钟是（clock is 的缩写）	n. + v.
+1:95	When's	……在什么时候（when is 的缩写）	adv. + v.
+1:101	Jimmy's	吉米的（人名所有格）	n.
+1:105	I-N-T-E-L-L-I-G-E-N-T	intelligent 的逐字母拼写，意为“聪明的”	adj.
+1:105	letter’s	信是（letter is 的缩写）	n. + v.
+1:111	model’s	型号是（model is 的缩写）	n. + v.
+1:113	ten-pound	面值十英镑的	adj.
+1:115	Everything's	一切都……（everything is 的缩写）	pron. + v.
+1:115	Everyone's	每个人都在……（everyone is 的缩写）	pron. + v.
+1:117	Tommy’s	汤米的（人名所有格）	n.
+1:119	George's	乔治的（人名所有格）	n.
+1:129	policeman’s	警察正在……（policeman is 的缩写）	n. + v.
+1:137	What'll	将会做什么（what will 的缩写）	pron. + aux.
+1:139	Hasn't	没有……吗（has not 的缩写）	aux.
+1:141	Sally’s	萨莉的（人名所有格）	n.
+1:141	children’s	孩子们的（所有格）	n.
+1:143	tins	金属罐（tin 的复数）	n.
+2:5	Silbury	锡尔伯里（本课地名）	n.
+2:5	Pinhurst	平赫斯特（本课地名）	n.
+2:6	asks	请求；要求（ask 的第三人称单数）	v.
+2:8	wins	赢；获胜（win 的第三人称单数）	v.
+2:8	Frith’s	弗里斯的（姓氏所有格）	n.
+2:8	Joe's	乔的（人名所有格）	n.
+2:10	father’s	父亲的（所有格）	n.
+2:11	lawyer's	律师的（所有格）	n.
+2:11	gets	得到；领取（get 的第三人称单数）	v.
+2:16	lets	让；允许（let 的第三人称单数）	v.
+2:19	Wednesday's	星期三的（所有格）	n.
+2:24	manager’s	经理的（所有格）	n.
+2:24	gentleman’s	先生的（所有格）	n.
+2:29	Fawcett’s	福西特的（姓氏所有格）	n.
+2:31	grandson’s	孙子的（所有格）	n.
+2:36	Debbie's	黛比的（人名所有格）	n.
+2:37	Olympic-standard	符合奥林匹克运动会标准的	adj.
+2:39	Gilbert's	吉尔伯特的（人名所有格）	n.
+2:39	hosptial	医院（本课原文将 hospital 误拼为 hosptial）	n.
+2:41	hats	帽子（hat 的复数）	n.
+2:49	bits	碎片；小块（bit 的复数）	n.
+2:54	pies	馅饼（pie 的复数）	n.
+2:58	Frinley	弗林利（本课村庄名）	n.
+2:60	Bellinsky	别林斯基（本课算命人的姓氏）	n.
+2:61	earth’s	地球的（所有格）	n.
+2:61	Hubble's	哈勃太空望远镜的（所有格）	n.
+2:63	six-year-old	六岁的	adj.
+2:63	Jeremy's	杰里米的（人名所有格）	n.
+2:64	Gamond	加蒙（Aimé Thomé de Gamond 姓名的一部分）	n.
+2:64	twenty-one-mile	二十一英里长的	adj.
+2:64	railway-tunnel	铁路隧道	n.
+2:67	Tazieff	塔齐耶夫（姓氏）	n.
+2:67	Kituro	基图罗（本课火山名）	n.
+2:72	Malcolm's	马尔科姆的（人名所有格）	n.
+2:73	day's	一天的（所有格）	n.
+2:73	French-Spanish	法国与西班牙之间的	adj.
+2:74	Brinksley	布林克斯利（本课人名）	n.
+2:76	Brabante	布拉班特（本课播音员的姓氏）	n.
+2:76	year’s	一年的（所有格）	n.
+2:76	Fratelli	弗拉泰利（本课农民的姓氏）	n.
+2:77	Shepenmut	谢彭穆特（本课古埃及女性的名字）	n.
+2:77	Duamutef	杜阿穆特夫（本课神名）	n.
+2:80	Nasmyth’s	内史密斯的（姓氏所有格）	n.
+2:81	man’s	人的（所有格）	n.
+2:83	Lane's	莱恩的（姓氏所有格）	n.
+2:83	Minister's	首相的（Prime Minister's 的一部分）	n.
+2:83	ex-Prime	前任首相的称呼片段（ex-Prime Minister 中的 ex-Prime）	adj.
+2:85	headmaster’s	校长的（所有格）	n.
+2:87	Ferngreen	芬格林（本课车站名）	n.
+2:90	cats	猫（cat 的复数；此处在 have nine lives“有九条命”中）	n.
+2:94	Los	洛杉矶地名 Los Angeles 的前半部分	n.
+2:95	Escalopia	艾斯卡罗比亚（本课虚构国名）	n.
+2:95	Ambassador's	大使的（所有格）	n.
+2:95	husband's	丈夫的（所有格）	n.
+3:3	Ayia	阿伊亚（地名 Ayia Irini 的一部分）	n.
+3:3	Irini	伊里尼（地名 Ayia Irini 的一部分）	n.
+3:4	Bloggs	布洛格斯（姓氏）	n.
+3:4	Alf’s	阿尔弗的（人名所有格）	n.
+3:5	facts	事实（fact 的复数）	n.
+3:5	president’s	总统的（所有格）	n.
+3:5	fifteen-foot	十五英尺高的	adj.
+3:6	jeweller’s	珠宝店（jeweller 的所有格，省略 shop）	n.
+3:7	fianc	fiancé（未婚夫）被现有分词器截出的 ASCII 片段	n.
+3:7	beautifully-cooked	烤得很漂亮的（本课讽刺地形容烤坏的钱包）	adj.
+3:8	Bernard's	伯纳德的（人名所有格；St. Bernard's 中指圣伯纳德的）	n.
+3:9	air-resistance	空气阻力	n.
+3:9	cat’s	猫的（所有格）	n.
+3:11	Officer's	海关官员的（所有格）	n.
+3:13	fancy-dress	化装的（fancy-dress party：化装舞会）	adj.
+3:14	Hawkwood	霍克伍德（姓氏）	n.
+3:14	Acuto	阿库托（Giovanni Acuto 姓名的一部分）	n.
+3:14	Haukodue	霍库杜（本课对 Hawkwood 的意大利式称呼的一部分）	n.
+3:16	Perachora	佩拉乔拉（本课希腊村庄名）	n.
+3:16	Mary's	玛丽的（人名所有格）	n.
+3:16	Aleko	阿列科（本课人名）	n.
+3:16	Aleko’s	阿列科的（人名所有格）	n.
+3:17	Angoul	Angoulême（昂古莱姆）被现有分词器截出的 ASCII 片段	n.
+3:17	Othmar	奥特马尔（人名）	n.
+3:17	designer’s	设计者的（所有格）	n.
+3:19	Ramsay’s	拉姆齐的（姓氏所有格）	n.
+3:19	kidnapper’s	绑架者的（所有格）	n.
+3:22	aristocrat’s	贵族的（所有格）	n.
+3:24	reader’s	读者的（所有格）	n.
+3:26	trips	旅行（trip 的复数）	n.
+3:29	Chaplin's	卓别林的（姓氏所有格）	n.
+3:29	patient’s	病人的（所有格）	n.
+3:30	Endley	恩德利（Endley Farm 农场名的一部分）	n.
+3:30	Eric	埃里克（人名）	n.
+3:31	assistant’s	店员的（所有格）	n.
+3:32	Elkor	埃尔科（本课船名）	n.
+3:32	ship’s	船的（所有格）	n.
+3:34	interesting-looking	看起来很有趣的	adj.
+3:35	acts	起作用；行动（act 的第三人称单数）	v.
+3:36	hero’s	男主人公的（所有格）	n.
+3:36	Bussman	巴斯曼（姓氏）	n.
+3:36	workman's	工人的（所有格）	n.
+3:36	Franz’s	弗朗茨的（人名所有格）	n.
+3:37	Westhaven	威斯特海文（本课地名，特快列车名称的一部分）	n.
+3:37	Widley	威德利（本课车站名）	n.
+3:37	train’s	列车的（所有格）	n.
+3:38	CDs	激光唱片；光盘（CD 的复数）	n.
+3:38	dots	点；圆点（dot 的复数）	n.
+3:41	four-hour	四小时的	adj.
+3:41	evening’s	一个晚上的（所有格）	n.
+3:42	pot-holing	洞穴探险	n.
+3:42	pot-holer	洞穴探险者	n.
+3:42	pot-holer’s	洞穴探险者的（所有格）	n.
+3:42	Gouffre	法语“深洞”；本课洞名 Gouffre Berger 的一部分	n.
+3:42	pot-holers	洞穴探险者们（pot-holer 的复数）	n.
+3:47	over-industrialized	工业化过度的	adj.
+3:47	organically-grown	有机种植的	adj.
+3:47	summer’s	夏日的（所有格）	n.
+3:49	uncle’s	叔父的（所有格）	n.
+3:49	aunt’s	姑母的（所有格）	n.
+3:49	Bessie’s	贝茜的（人名所有格）	n.
+3:51	people’s	人们的（所有格）	n.
+3:51	specially-written	专门编写的	adj.
+3:51	world’s	世界的（所有格）	n.
+3:51	Bagrit	巴格里特（姓氏）	n.
+3:51	uses	用途（use 的复数）	n.
+3:51	Bagrit’s	巴格里特的（姓氏所有格）	n.
+3:52	curiously-shaped	形状奇特的	adj.
+3:52	Myrolite	“迈罗莱特”（本课哈里编造的去雀斑用品名称）	n.
+3:52	Harry's	哈里的（人名所有格）	n.
+3:52	woman’s	女人的（所有格）	n.
+3:53	Ombudsman’s	司法监察专员的（所有格）	n.
+3:53	citizen’s	公民的（所有格）	n.
+3:53	foreigner’s	外国人的（所有格）	n.
+3:55	life-supporting	可维持生命的	adj.
+3:55	earth-based	设在地球上的	adj.
+3:55	Earth-dwellers	地球居民（复数）	n.
+3:56	Noah's	诺亚的（人名所有格；Noah's ark：诺亚方舟）	n.
+3:56	boathooks	船钩（boathook 的复数）	n.
+3:57	maps	地图（map 的复数）	n.
+3:58	porter’s	看门人的（所有格）	n.
+3:60	unpunctuality	不守时	n.
+3:60	guard’s	列车乘务员的（所有格）	n.
+4:3	inns	小旅馆；客栈（inn 的复数）	n.
+4:4	eleven-year-old	十一岁的	adj.
+4:4	Vera	薇拉（人名）	n.
+4:4	Vera's	薇拉的（人名所有格）	n.
+4:4	child's	儿童的（所有格）	n.
+4:5	clich	clichés（陈词滥调）被现有分词器截出的 ASCII 片段	n.
+4:8	Union's	欧盟的（European Union's 的一部分）	n.
+4:8	American-made	美国制造的	adj.
+4:8	EU’s	欧盟的（European Union 的缩写所有格）	n.
+4:9	Alfred’s	阿尔弗雷德的（人名所有格）	n.
+4:9	Guthrum	古思伦（本课丹麦军队统帅的名字）	n.
+4:9	raids	突袭；劫掠（raid 的复数）	n.
+4:10	California's	加利福尼亚的（地名所有格）	n.
+4:10	next-generation	下一代的	adj.
+4:10	Japan's	日本的（地名所有格）	n.
+4:10	India-born	出生于印度的	adj.
+4:10	Reddy's	雷迪的（姓氏所有格）	n.
+4:12	banker-customer	银行与客户之间的	adj.
+4:12	customer's	客户的（所有格）	n.
+4:14	continent-size	大陆般大小的	adj.
+4:14	one-foot	一英尺的	adj.
+4:19	body's	身体的（所有格）	n.
+4:19	individual's	个人的（所有格）	n.
+4:21	good-bad	亦正亦邪的（本课西部片角色类型）	adj.
+4:21	accidental-noble	机缘之下显出高尚品格的（本课角色描述）	adj.
+4:21	honest-but-framed	诚实却遭陷害的	adj.
+4:21	Hart’s	哈特的（姓氏所有格）	n.
+4:23	steel-like	钢铁般强健的	adj.
+4:23	good-morning	早上好（问候语）	interj.
+4:25	Anehin	Anehin（本课研究项目的名称）	n.
+4:26	Beresovka	别列佐夫卡（本课猛犸象发现地的名称）	n.
+4:27	seventeenth-century	十七世纪的	adj.
+4:27	gun-decks	炮甲板（gun-deck 的复数）	n.
+4:27	Skeppsbron	斯开普斯布隆（本课斯德哥尔摩地名）	n.
+4:27	Stockholmers	斯德哥尔摩居民（复数）	n.
+4:27	gun-ports	炮门（gun-port 的复数）	n.
+4:28	Carlyle’s	卡莱尔的（姓氏所有格）	n.
+4:28	Taylor's	泰勒的（姓氏所有格）	n.
+4:29	fruit-bowl	果盘（flying fruit-bowl 比喻运输水果的气垫船）	n.
+4:30	Challenger’s	“挑战者”号的（船名所有格）	n.
+4:30	bed’s	海床的（sea bed's 的一部分）	n.
+4:32	Galileo's	伽利略的（人名所有格）	n.
+4:32	Rosse’s	罗斯的（人名所有格）	n.
+4:32	eighteen-forties	十九世纪四十年代	n.
+4:35	Earth-orbit	绕地轨道	n.
+4:35	mile-journey	以英里计的旅程（200 mile-journey 中指二百英里旅程）	n.
+4:35	Moon's	月球的（所有格）	n.
+4:35	Moon-dwellers	月球居民（复数）	n.
+4:37	ages	年龄（age 的复数）	n.
+4:39	adds	添加（add 的第三人称单数）	v.
+4:39	super-imposing	叠加；附加（super-impose 的现在分词）	v.
+4:41	half-trained	训练不充分的	adj.
+4:42	seismometers	地震仪（seismometer 的复数）	n.
+4:43	hydrogen-dominated	以氢为主的	adj.
+4:43	home-planet	母星；自己的星球	n.
+4:43	megacycles	兆周（频率单位；本课 megacycles per second 即兆赫）	n.
+4:44	neighbour’s	邻居的（所有格）	n.
+4:45	ideas	思想；观念（idea 的复数）	n.
+4:46	topics	话题；主题（topic 的复数）	n.
+4:46	week's	一星期的（所有格）	n.
+4:46	Fortune's	命运的；幸运女神的（拟人化所有格）	n.
+4:47	Europe’s	欧洲的（地名所有格）	n.
+4:47	Splendide	斯普伦迪德（本课酒店名）	n.
+4:47	Bellavista	贝拉维斯塔（本课酒店名）	n.
+4:47	tre	maître（此处指酒店领班）被现有分词器截出的 ASCII 片段	n.
+4:47	d’h	d’hôtel（“酒店的”）被现有分词器截出的 ASCII 片段；maître d’hôtel 指酒店领班	n.
+4:47	tel	d’hôtel（“酒店的”）被现有分词器截出的 ASCII 片段；maître d’hôtel 指酒店领班	n.
+4:47	Frenchman's	法国人的（所有格）	n.
+4:47	Englishman’s	英国人的（所有格）	n.
+4:48	Las	拉斯维加斯地名 Las Vegas 的前半部分	n.
+4:48	well-planned	精心规划的	adj.
+# Confirmed misleading dictionary senses and technical-only/name rows inspected in their literal lesson context.
+1:7	Robert	罗伯特（人名）	n.
+1:39	Sam	萨姆（人名）	n.
+1:39	flowers	花（flower 的复数）	n.
+2:7	diamonds	钻石（diamond 的复数）	n.
+3:1	Pumas	美洲狮（puma 的复数）	n.
+3:1	forty-five	四十五	num.
+3:1	cornered	被逼入困境；走投无路	v.
+4:48	aims	目标；目的（aim 的复数）	n.
+1:3	Here's	这是……；这里有……（here is 的缩写）	adv. + v.
+1:5	She's	她是（she is 的缩写）	pron. + v.
+1:7	I'm	我是（I am 的缩写）	pron. + v.
+1:15	aren’t	不是（are not 的缩写）	v.
+1:17	They're	他们是（they are 的缩写）	pron. + v.
+1:31	Who's	谁正在……（who is 的缩写）	pron. + v.
+1:37	You're	你是（you are 的缩写）	pron. + v.
+1:71	didn’t	没有（did not 的缩写）	aux.
+1:75	S	U.S.（美国）缩写中的字母 S	n.
+1:75	U	U.S.（美国）缩写中的字母 U	n.
+1:77	m	a.m. / p.m.（上午／下午）时间缩写中的字母 m	n.
+1:79	you've	你已经……（you have 的缩写）	pron. + aux.
+1:83	Let's	让我们……（let us 的缩写）	v.
+1:87	G	车牌号码中的字母 G	n.
+1:91	they'll	他们将……（they will 的缩写）	pron. + aux.
+1:93	R	R.A.F.（英国皇家空军）缩写中的字母 R	n.
+1:93	F	R.A.F.（英国皇家空军）缩写中的字母 F	n.
+1:97	D	本课姓名缩写中的字母 D	n.
+1:97	N	本课姓名缩写中的字母 N	n.
+1:101	Y	Y.H.A.（青年旅舍协会）缩写中的字母 Y	n.
+1:101	H	Y.H.A.（青年旅舍协会）缩写中的字母 H	n.
+1:109	I'd	我想要……（I would 的缩写）	pron. + aux.
+1:125	raining	下雨（rain 的现在分词）	v.
+1:129	you’d	你最好……（you had 的缩写，用于 had better）	pron. + aux.
+1:131	you'll	你将……（you will 的缩写）	pron. + aux.
+1:141	four-year-old	四岁的	adj.
+2:3	thirty-seven	三十七	num.
+2:4	Alice	艾利斯（本课地名 Alice Springs 的一部分）	n.
+2:8	Sanders	桑德斯（姓氏）	n.
+2:22	receiving	收到（receive 的现在分词）	v.
+2:22	faster	更快地（fast 的比较级）	adv.
+2:32	greater	更大的（great 的比较级）	adj.
+2:35	carrying	载着（carry 的现在分词）	v.
+2:43	E	本课探险者 R.E. Byrd 姓名缩写中的字母 E	n.
+2:55	examining	检查（examine 的现在分词）	v.
+2:56	drivers	司机（driver 的复数）	n.
+2:57	seeking	寻找（seek 的现在分词）	v.
+2:57	buying	购买（buy 的现在分词）	v.
+2:59	barking	吠叫（bark 的现在分词）	v.
+2:63	hadn’t	没有（had not 的缩写）	aux.
+2:64	de	德（Aimé Thomé de Gamond 姓名的一部分）	n.
+2:64	connecting	连接（connect 的现在分词）	v.
+2:68	Dykes	戴克斯（姓氏）	n.
+2:71	B	B.B.C.（英国广播公司）缩写中的字母 B	n.
+2:71	C	B.B.C.（英国广播公司）缩写中的字母 C	n.
+2:71	Benjamin	本杰明（人名）	n.
+2:72	controlling	控制（control 的现在分词）	v.
+2:73	evading	逃避；躲开（evade 的现在分词）	v.
+2:88	proving	结果是；显得（prove 的现在分词）	v.
+2:90	bumping	撞到；碰到（bump 的现在分词）	v.
+2:91	spying	暗中监视（spy 的现在分词）	v.
+2:92	answering	回答（answer 的现在分词）	v.
+2:92	interrupting	打断（interrupt 的现在分词）	v.
+2:96	guiding	引导（guide 的现在分词）	v.
+2:96	drifting	漂流（drift 的现在分词）	v.
+3:2	raising	筹集（raise 的现在分词）	v.
+3:3	dating	始于……时期（date from 的现在分词）	v.
+3:3	hips	臀部；髋部（hip 的复数）	n.
+3:4	higher	更高的（high 的比较级）	adj.
+3:6	smash-and-grab	砸橱窗抢劫	n.
+3:8	highest	最高的（high 的最高级）	adj.
+3:13	entering	进入（enter 的现在分词）	v.
+3:14	Obtaining	获取；得到（obtain 的现在分词）	v.
+3:15	using	使用（use 的现在分词）	v.
+3:20	IV	四号（罗马数字；Antoinette IV 飞机名称的一部分）	num.
+3:24	dangling	悬挂；悬荡（dangle 的现在分词）	v.
+3:28	pots	壶（pot 的复数；coffee pots 指咖啡壶）	n.
+3:35	circumstances	情形；情况（circumstance 的复数）	n.
+3:36	pointing	指出（point out 的现在分词）	v.
+3:42	Squeezing	挤着通过（squeeze 的现在分词）	v.
+3:42	switching	打开（switch on 的现在分词）	v.
+3:43	salvaging	打捞（salvage 的现在分词）	v.
+3:45	commercialization	商业化	n.
+3:46	laying	规划；布置（lay out 的现在分词）	v.
+3:46	tightening	拧紧（tighten 的动名词）	n.
+3:47	BSE	牛海绵状脑病；疯牛病（Bovine Spongiform Encephalopathy 的缩写）	n.
+3:47	listeria	李斯特菌	n.
+3:47	rated	被评为（rate 的过去式）	v.
+3:48	straggling	散乱延伸的	adj.
+3:49	shifting	不断更替的；流动的	adj.
+3:50	twisting	扭转（twist 的现在分词）	v.
+3:50	Resisting	抵制；抗拒（resist 的现在分词）	v.
+3:51	Predicting	预测（predict 的动名词）	n.
+3:51	PCs	个人计算机（PC 的复数）	n.
+3:51	Internet	互联网	n.
+3:54	crops	庄稼；农作物（crop 的复数）	n.
+3:54	crawling	爬行（crawl 的现在分词）	v.
+3:54	swarming	成群聚集（swarm 的现在分词）	v.
+3:55	detecting	发现；探测到（detect 的现在分词）	v.
+3:55	blotting	遮住；遮蔽（blot out 的现在分词）	v.
+3:58	sorting	整理；分类（sort out 的动名词）	n.
+3:59	verifying	核实；查证（verify 的动名词）	n.
+3:60	greatest	最大的（great 的最高级）	adj.
+3:60	streaming	流淌（stream 的现在分词）	v.
+4:8	Trading	贸易的（trading standards 指贸易标准）	adj.
+4:8	EU	欧洲联盟；欧盟（European Union 的缩写）	n.
+4:10	Macintosh	麦金塔计算机（苹果公司产品名称）	n.
+4:10	Alex	亚历克斯（人名）	n.
+4:10	Au	奥（本课人名 Alex Au 的姓氏）	n.
+4:10	T	AT&T（美国电话电报公司）名称中的字母 T	n.
+4:12	depending	取决于（depend on 的现在分词）	v.
+4:13	borings	钻孔（boring 的复数）	n.
+4:13	coring	取岩芯的（coring bit：岩芯钻头）	adj.
+4:13	gusher	自喷油井	n.
+4:14	cascading	逐层扩大（cascade 的现在分词）	v.
+4:16	lowest	最低的（low 的最高级）	adj.
+4:17	letting	放任；让（let 的现在分词）	v.
+4:18	drowning	溺水的（drown 的现在分词）	adj.
+4:18	butted	被顶撞（butt 的过去分词）	v.
+4:18	pulling	缩回（pull 的现在分词）	v.
+4:19	self-repairing	能自我修复的	adj.
+4:19	attaching	贴上；连接（attach 的现在分词）	v.
+4:20	non-poisonous	无毒的	adj.
+4:20	strychnine	士的宁；马钱子碱	n.
+4:23	nesting	筑巢的（nest 的现在分词）	adj.
+4:23	slipping	轻快地穿行（slip 的现在分词）	v.
+4:26	la	地名 Rancho la Brea 中的西班牙语冠词（相当于 the）	art.
+4:27	sixty-four	六十四	num.
+4:27	listing	（船）倾斜（list 的现在分词）	v.
+4:29	deciding	决定；判定（decide 的动名词）	n.
+4:30	dividing	分隔的（dividing line：分界线）	adj.
+4:34	retreating	退缩；躲到……后面（retreat 的动名词）	n.
+4:36	comparing	比较（compare 的动名词）	n.
+4:36	administering	管理（administer 的动名词）	n.
+4:36	foremen	工头；领班（foreman 的复数）	n.
+4:37	sixty-five	六十五	num.
+4:38	tap-water	自来水	n.
+4:38	untreated	未经处理的	adj.
+4:38	rims	瓶口边缘（rim 的复数）	n.
+4:38	treating	处理（treat 的动名词）	n.
+4:38	brushing	刷（brush 的动名词；brushing teeth：刷牙）	n.
+4:38	adding	加入（add 的动名词）	n.
+4:39	breaking	打散；拆开（break 的动名词，此处比喻写作修改）	n.
+4:40	advancing	向前推进的（advance 的现在分词）	adj.
+4:43	cm	厘米（centimetre 的缩写）	n.
+4:43	wave-length	波长	n.
+4:44	Dewey	杜威（姓氏）	n.
+4:46	stronger	更强的（strong 的比较级）	adj.
+4:46	fruits	成果（fruit 的复数，此处为比喻义）	n.
+4:47	hiring	租用（hire 的动名词）	n.
+4:47	drying	晾干（dry 的动名词）	n.
+# Additional misleading proper-name / title-component senses found during the same audit.
+1:17	Grey	格雷（姓氏）	n.
+1:17	Baker	贝克（姓氏）	n.
+1:17	Short	肖特（姓氏）	n.
+1:31	Sally	萨莉（人名）	n.
+1:31	Jack	杰克（人名）	n.
+1:31	Jean	琼（人名）	n.
+1:37	Dan	丹（人名）	n.
+1:39	Penny	彭妮（人名）	n.
+1:45	Bob	鲍勃（人名）	n.
+1:55	Sawyer	索耶（姓氏）	n.
+1:55	Sawyers	索耶一家（the Sawyers，姓氏复数）	n.
+1:55	King	国王街 King Street 地名的一部分	n.
+1:61	Jimmy	吉米（人名）	n.
+1:65	Tom	汤姆（人名）	n.
+1:69	Billy	比利（人名）	n.
+1:71	Pauline	波琳（人名）	n.
+1:79	Carol	卡罗尔（人名）	n.
+1:85	Ken	肯（人名）	n.
+1:91	Jenny	珍妮（人名）	n.
+1:93	York	约克（New York“纽约”地名的一部分）	n.
+1:97	Hall	霍尔（姓氏）	n.
+1:105	L	字母 L（本课 intelligent 的拼写组成部分）	n.
+1:109	Charlotte	夏洛特（人名）	n.
+1:117	Tommy	汤米（人名）	n.
+1:123	Mike	迈克（人名）	n.
+1:125	Peter	彼得（人名）	n.
+1:127	Marsh	马什（姓氏）	n.
+1:139	John	约翰（人名）	n.
+1:139	Smith	史密斯（本课 Smith Engineering Company 公司名的一部分）	n.
+2:4	Springs	斯普林斯（澳大利亚地名 Alice Springs 的一部分）	n.
+2:6	Buttons	巴顿斯（本课人名 Percy Buttons 的姓氏）	n.
+2:12	Topsail	“托普赛尔”号（本课船名）	n.
+2:13	Greenwood	格林伍德（本课演唱组合名称的一部分）	n.
+2:28	Medusa	美杜莎（本课停车场装饰的蛇发女妖头像）	n.
+2:29	Ben	本（人名）	n.
+2:29	Rockall	罗科尔岛（北大西洋的小岛）	n.
+2:31	Frank	弗兰克（人名）	n.
+2:35	Trenton	特伦顿（本课囚犯的姓氏）	n.
+2:36	Hart	哈特（姓氏）	n.
+2:37	Gunter	冈特（本课人名）	n.
+2:44	Sterling	斯特林（姓氏）	n.
+2:50	Woodford	伍德福德（本课地名）	n.
+2:56	Silver	“银魂”Silver Ghost 车型名的一部分	n.
+2:59	Rex	雷克斯（本课狗的名字）	n.
+2:61	Endeavour	“奋进”号（本课航天飞机名）	n.
+2:64	Aim	Aimé（艾梅）被现有分词器截出的 ASCII 片段（人名）	n.
+2:64	Thom	Thomé（托梅）被现有分词器截出的 ASCII 片段（人名）	n.
+2:64	Low	洛（本课人名 William Low 的姓氏）	n.
+2:65	Jumbo	江波（本课小象的名字）	n.
+2:65	Gates	盖茨（姓氏）	n.
+2:66	Lancaster	兰开斯特轰炸机（机型名称）	n.
+2:66	Merlin	梅林（本课飞机发动机型号）	n.
+2:71	Houses	议会大厦（Houses of Parliament 的一部分）	n.
+2:72	Bluebird	“蓝鸟”号（本课赛车名）	n.
+2:72	Bonneville	邦纳维尔（Bonneville Salt Flats 盐滩地名的一部分）	n.
+2:74	Gloria	格洛丽亚（本课人名）	n.
+2:74	Gleam	格利姆（姓氏）	n.
+2:74	Rockwall	罗克沃尔（本课人名）	n.
+2:74	Slinger	斯林格（姓氏）	n.
+2:74	Merlin	默林（本课人名）	n.
+2:77	Thebes	底比斯（本课指古埃及城市）	n.
+2:83	Lane	莱恩（姓氏）	n.
+2:85	Page	佩奇（姓氏）	n.
+2:89	Poo	报幕人把公司名首字母 P 说错形成的声音（口误）	n.
+2:89	Ee	报幕人把公司名首字母 U 说错形成的声音（口误）	n.
+2:93	Auguste	奥古斯特（人名）	n.
+2:94	Angeles	洛杉矶地名 Los Angeles 的后半部分	n.
+2:95	Horst	霍斯特（人名）	n.
+3:3	Kea	凯阿（本课希腊岛名）	n.
+3:4	Ellesmere	埃尔斯米尔（本课 Ellesmere Corporation 公司名的一部分）	n.
+3:10	Titanic	“泰坦尼克”号（船名）	n.
+3:12	Crusoe	克鲁索（Robinson Crusoe“鲁滨逊·克鲁索”姓名的一部分）	n.
+3:12	Virgin	维尔京群岛 Virgin Islands 地名的一部分	n.
+3:21	Mendoza	门多萨（本课拳击手的姓氏）	n.
+3:21	Stilton	斯蒂尔顿（本课拳击比赛举办地）	n.
+3:25	Cutty	“卡蒂萨克”号 Cutty Sark 船名的一部分	n.
+3:25	Sark	“卡蒂萨克”号 Cutty Sark 船名的一部分	n.
+3:25	Thermopylae	“塞莫皮莱”号（本课船名）	n.
+3:29	Charlie	查理（人名）	n.
+3:29	Eve	除夕（New Year's Eve 的一部分）	n.
+3:30	Cox	考克斯（姓氏）	n.
+3:31	Dickie	迪基（人名）	n.
+3:32	Fielding	菲尔丁（姓氏）	n.
+3:33	Parramatta	帕拉马塔（本课澳大利亚地名）	n.
+3:38	CD-ROMs	只读光盘（CD-ROM 的复数）	n.
+3:42	Dauphin	多芬（本课洞名的一部分）	n.
+3:45	Dakota	达科他（本课飞机型号）	n.
+3:49	Gables	“山墙庄园”（The Gables，本课宅邸名称）	n.
+3:51	Altair	Altair（本课早期个人计算机的名称）	n.
+3:51	Apple	苹果牌计算机（本课计算机名称）	n.
+3:52	Harry	哈里（人名）	n.
+3:52	Shadow	“香影”Scented Shadow 香水名的一部分	n.
+3:53	Swedes	瑞典人（Swede 的复数）	n.
+3:55	Milky	银河 Milky Way 名称的一部分	n.
+4:7	Bats	蝙蝠（bat 的复数）	n.
+4:10	Mead	米德（姓氏）	n.
+4:10	Ph	博士学位缩写 Ph.D. 中的 Ph	n.
+4:10	Hong	香港 Hong Kong 地名的一部分	n.
+4:10	Kong	香港 Hong Kong 地名的一部分	n.
+4:14	Jersey	新泽西（New Jersey 地名的一部分）	n.
+4:19	Dement	德门特（本课研究者的姓氏）	n.
+4:21	Cooper	库珀（姓氏）	n.
+4:21	Indians	美洲原住民（Indian 的复数；本课西部片语境）	n.
+4:27	Vasa	“瓦萨”号（本课战船名）	n.
+4:28	Thomas	托马斯（人名）	n.
+4:29	Broads	布罗兹（本课 Norfolk Broads 水乡地区名的一部分）	n.
+4:30	Ross	罗斯（本课 James Clark Ross 姓名的一部分）	n.
+4:35	Apollo	阿波罗计划（本课登月计划名）	n.
+4:43	Mercury	水星	n.
+4:47	Escort	护卫者（Ford Escort 福特汽车车型名）	n.
+4:47	Germans	德国人（German 的复数）	n.
+4:47	ma	maître（此处指酒店领班）被现有分词器截出的 ASCII 片段	n.
+4:48	Periwigs	佩里维格斯（本课虚构的公司名）	n.
+1:9	Tony	人名（Tony）	n.
+# Confirmed verb senses in Book 3 Lesson 1, replacing unsuitable adjective-only dictionary glosses.
+3:1	spotted	被发现；被看见（spot 的过去分词）	v.
+3:1	confirmed	证实；确认（confirm 的过去式）	v.
+3:1	observed	被看见；被观察到（observe 的过去分词）	v.
+3:1	clinging	附着；挂着（cling 的现在分词）	v.

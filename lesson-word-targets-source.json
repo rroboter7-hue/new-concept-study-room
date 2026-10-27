@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "policy": "First exact lexical spelling/form in learner-facing lesson.title then paragraphs[].en, in numeric book/lesson order. Shared lexical-word-tokens v1: complete numeric ordinal spans are preserved as text and excluded before lexical seen tracking; 21st-century contributes century, never st-century. Dotted St. is retained in source-bound quarantine until its Saint context is reviewed, never supplied a technical ST gloss. No stemming or global short-word blacklist. Other dictionary/course precedence and original vocabulary rows are preserved. This is corpus novelty, not learner mastery.",
+  "policy": "First exact lexical spelling/form in learner-facing lesson.title then paragraphs[].en, in numeric book/lesson order. Shared lexical-word-tokens v1: complete numeric ordinal spans are preserved as text and excluded before lexical seen tracking; 21st-century contributes century, never st-century. Dotted St. is retained in source-bound quarantine until its Saint context is reviewed, never supplied a technical ST gloss. No stemming or global short-word blacklist. Valid original vocabulary takes precedence, then explicit self-authored source-bound context corrections, then ECDICT generic senses (not reviewed for lesson context). Original vocabulary rows are preserved. This is corpus novelty, not learner mastery.",
   "hashEncoding": {
     "scriptInputs": "utf8-lf",
     "tokenizer": "utf8-lf",
@@ -12,7 +12,7 @@
   "status": {
     "lessons": 276,
     "newWords": 7445,
-    "missingMeaning": 260,
+    "missingMeaning": 0,
     "quarantinedFirstOccurrences": 1,
     "quarantinedOccurrences": 5,
     "excludedOrdinalOccurrences": 11,
@@ -228,7 +228,7 @@
     },
     {
       "file": "review-engine.js",
-      "sha256": "ea6537f43a083c9f3d128df3b2ddd9b020768f49f642e777cdd14fa5efd7c22b"
+      "sha256": "ad39d91c5265dd624fec349aecea0e3b9a53e93cc556ad2770459052ef833b7c"
     },
     {
       "file": "review-practice.js",
@@ -283,16 +283,20 @@
       "sha256": "244dcf0f97d0d12fe2787e11f2c573ca3b2cca82ee69a82a202df86b7569f28e"
     },
     {
+      "file": "context-meanings.js",
+      "sha256": "62524756b32605e395f9dfabfc691b1a83b230950384ebc191d5da6ce2bdc17d"
+    },
+    {
       "file": "sentence-wordbank-data.js",
       "sha256": "6afa670ba0c0dca66fd26a7f757a9cec597ff086377cbcd7f521992b96a549d4"
     },
     {
       "file": "sentence-core.js",
-      "sha256": "9b97c5441800b428bb19f3f9f3eb4c5f8661891ee213a455a0da597c9a65bb7e"
+      "sha256": "ddbc462422373cbcaa09f1a2c2e6c5622f5c80584a5d220dcbf63a2f2f8918ee"
     },
     {
       "file": "sentence-practice.js",
-      "sha256": "4fc7789db2c4bf9cc46a02b92ee178e1587f5d7958ca7a95e792c6c760c35075"
+      "sha256": "f7705acc3bf59eef1fdb7c33eca8b337927734996e0ec71a183d34b4a823cfbf"
     },
     {
       "file": "dictionary-service.js",
@@ -300,7 +304,7 @@
     },
     {
       "file": "batch-sentence-core.js",
-      "sha256": "f9d8fe8a338c7cfac03c3048baf4b5f6467ce8dc144a606859f6a43c1849ace5"
+      "sha256": "d4f5d4f2218ccafc13dae8e879180409789ae0743cf8404bd5d230cfb57e373e"
     },
     {
       "file": "batch-sentence-practice.js",
@@ -328,7 +332,7 @@
     },
     {
       "file": "lesson-practice.js",
-      "sha256": "c6118c8bdec128e8605ef46f2ec293e623a8dd5349ca36f69607622ece174d10"
+      "sha256": "c2bca6ae701d07d13651a8fe5e89e7fd5ef118b3712268268b4394decc0b940c"
     },
     {
       "file": "reading-view.js",
@@ -356,11 +360,19 @@
     },
     {
       "file": "dictionary-context.js",
-      "sha256": "bb85408e216b561a7bc21719838894f626f23ae35618e9161172fe5df93bcdbe"
+      "sha256": "f95d2fb82a3bb5afbd251e8c758406fff74974af7cfbb6eff908cf0d234c19e4"
     },
     {
       "file": "reading-font.js",
       "sha256": "11a6139864b845293514d2b7ed10bea1704f741eeb3d958cd8ced70e8784cf15"
+    },
+    {
+      "file": "mistake-history.js",
+      "sha256": "0338e92dccd9c7b58ffe6dc70c402d10d36168e3aca1c7207bfe59e7bf8ee89e"
+    },
+    {
+      "file": "study-storage.js",
+      "sha256": "6ba52f22a0b52023603f46403db15ef0f5ce998fd00c69d04d63c050ec970a71"
     }
   ],
   "dictionary": {
@@ -376,27 +388,27 @@
     "inputs": [
       {
         "file": "dictionary-data/a.json",
-        "sha256": "0bbc970eb7bf60c971eb35099fe8c2f3c8d34f73a04120563c175a775d4a8379"
+        "sha256": "714eca68da565ffda13746595aa21c62a8ef3dd7ba8cdb4e13aa76659109a3b9"
       },
       {
         "file": "dictionary-data/b.json",
-        "sha256": "f92b08db3e0e5db43d950b99c47470508b749f7aef9b58c699294d48cd9d75ac"
+        "sha256": "aeab33827395f630a8e3c4b30ce8a447a764f4c1d8b3618399008370be415bec"
       },
       {
         "file": "dictionary-data/c.json",
-        "sha256": "88862907388c755eb37ba54ff346887af1fe2f4e88a093937d9c375e4ac14a20"
+        "sha256": "e0f115c93014c0398ac966614b6f64c9b16178862e4b86a2eae9b28c87f98ffa"
       },
       {
         "file": "dictionary-data/d.json",
-        "sha256": "c061eaee47673769dd70dcca1caec2dba8ba256535e062dc6861f3765bff69eb"
+        "sha256": "32aa12f5da1a7339ae70ed0bcff5d8ad10e4716eaee1f1f8d10b886ad07fb07b"
       },
       {
         "file": "dictionary-data/e.json",
-        "sha256": "8ce886b06fd46a1fa2632267291a5a0065d69d9c3434e14de69d96802f0a8f74"
+        "sha256": "bb8756bceaf297b831be46f44b70e600bf401efed7cd61d33da1854caf2d1493"
       },
       {
         "file": "dictionary-data/f.json",
-        "sha256": "9af175a961073da1d036886a5db0d08c07eb014611354b7a122d26c936833fa8"
+        "sha256": "6a8d57fa1dd5eebf0a3d01d2de49c0927ff34a9861571a5409c38662263844b0"
       },
       {
         "file": "dictionary-data/g.json",
@@ -404,7 +416,7 @@
       },
       {
         "file": "dictionary-data/h.json",
-        "sha256": "54471dfe2602a7cb162c54981e35d4fcf67ec6341b8aecb3c0212e82ff2787aa"
+        "sha256": "d1ba7d21be77ae3e3b4c14d82785105a06cabab200842f0c352c94a201f54ee9"
       },
       {
         "file": "dictionary-data/i.json",
@@ -424,7 +436,7 @@
       },
       {
         "file": "dictionary-data/m.json",
-        "sha256": "432613cea6e67ecfca1773cca3946cdfef6b30cf35b9c8163618ebc20af99427"
+        "sha256": "b0a2fdac3a9b15296422c08b5c00c5420d6315170301438038dcc745ff1de0fc"
       },
       {
         "file": "dictionary-data/n.json",
@@ -436,7 +448,7 @@
       },
       {
         "file": "dictionary-data/p.json",
-        "sha256": "c6daef35af70664716ba3b65e794507b5bf92a0379808e8d94f701ee1b620d7b"
+        "sha256": "ea681e3ab7bd8f99d0a1ce39f7846764918d61746cb5cb6b3a716fd94cacf074"
       },
       {
         "file": "dictionary-data/q.json",
@@ -444,11 +456,11 @@
       },
       {
         "file": "dictionary-data/r.json",
-        "sha256": "6a949e34c9ba655ebab9366383cd13cbe38d3293f19201155d8a48b76aecbd82"
+        "sha256": "6078d5466b3d937078009ccacef92d17643bd9a788fd5f07b6b2b9545d598592"
       },
       {
         "file": "dictionary-data/s.json",
-        "sha256": "ab4071cf79fb3eb5a663f565533066e7ca834c2fde9fb1c5a49b2227c272112f"
+        "sha256": "b5e54ab4898ec8b9f565e4f18efe714868fbb17509e11e42c746157c450b6916"
       },
       {
         "file": "dictionary-data/t.json",
@@ -456,7 +468,7 @@
       },
       {
         "file": "dictionary-data/u.json",
-        "sha256": "bcedb879dafb1ca9beb4be7b08267f62798a40b43eb6e25738d8381e9e300271"
+        "sha256": "bf84cdeda33712de40f47dcf2d5940cf4d9e6acfc22d79fbd40f2dce54bfab40"
       },
       {
         "file": "dictionary-data/v.json",
@@ -464,7 +476,7 @@
       },
       {
         "file": "dictionary-data/w.json",
-        "sha256": "403b2080cada370aadf6a033c3c0b2960911110c8486f276f1c0fbac367fb958"
+        "sha256": "acc4fb863e22747c2cfc275b42821d4aa58a1a53bd70b44875bb02c053a0b834"
       },
       {
         "file": "dictionary-data/x.json",
@@ -515,11 +527,7 @@
       "number": 5,
       "sourceSha256": "046c9c150b0734dc838ae5af14ef5af15632d79e0d9d5cb1005668415db7f8bb",
       "newWords": 28,
-      "missingMeaning": [
-        "Chang-woo",
-        "Luming",
-        "Xiaohui"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -530,9 +538,7 @@
       "number": 7,
       "sourceSha256": "ce7680f945e39a16c6ca1dde8073c2aa0886acadb5a25098ceedcad561a4e757",
       "newWords": 16,
-      "missingMeaning": [
-        "name’s"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -543,9 +549,7 @@
       "number": 9,
       "sourceSha256": "40bbc741bc61e7c91c60eef7185b02245761698d7073e577a99e85e4fa2be8e2",
       "newWords": 14,
-      "missingMeaning": [
-        "How's"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -556,10 +560,7 @@
       "number": 11,
       "sourceSha256": "9e24480e4b81f02250c1328d9920ebb0eb865b4d7c01695b2c5389e619d0b8ef",
       "newWords": 12,
-      "missingMeaning": [
-        "shirt’s",
-        "Tim’s"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -570,10 +571,7 @@
       "number": 13,
       "sourceSha256": "12d26eab2500503050082c9f3c4682313ab717aa152ec3a3df1e3ea7ba26b2d4",
       "newWords": 14,
-      "missingMeaning": [
-        "colour’s",
-        "hat’s"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -639,9 +637,7 @@
       "number": 25,
       "sourceSha256": "9560152ef7517dfe95bddf3275e4eb10eacd08e2361d25f89cb0134311f5ee06",
       "newWords": 18,
-      "missingMeaning": [
-        "Smith’s"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -663,9 +659,7 @@
       "number": 29,
       "sourceSha256": "419111e57f227c44af317abc05d03454453faed77ffb4e4794411951fdaa95d3",
       "newWords": 18,
-      "missingMeaning": [
-        "bedroom’s"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -676,10 +670,7 @@
       "number": 31,
       "sourceSha256": "aac8ec87ce37ffb7e0ef14d5784a26f500be79979afe47bc8c28b17fedf4c113",
       "newWords": 20,
-      "missingMeaning": [
-        "Where’s",
-        "dog's"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -712,9 +703,7 @@
       "number": 37,
       "sourceSha256": "310c6ec800879ca3875af993cf1020d2ef5b91f52474843ed2b17f428ba71d4e",
       "newWords": 16,
-      "missingMeaning": [
-        "Pink’s"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -736,9 +725,7 @@
       "number": 41,
       "sourceSha256": "793dc0c8704bbad901d4748e76981759008af9fc1ad33700ba645160aa5e4239",
       "newWords": 21,
-      "missingMeaning": [
-        "Penny’s"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -749,9 +736,7 @@
       "number": 43,
       "sourceSha256": "5f720f4eca00d6f360406d044fa86da24e0ec33ac97cc298fa6285bf6da70c52",
       "newWords": 16,
-      "missingMeaning": [
-        "kettle’s"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -762,9 +747,7 @@
       "number": 45,
       "sourceSha256": "db322746a3c490dbc613197375dc6f1245e9a6969f40344231e6b2c85719b520",
       "newWords": 12,
-      "missingMeaning": [
-        "boss’s"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -786,10 +769,7 @@
       "number": 49,
       "sourceSha256": "76e4ecfaadbe1d0d216dfccb7bcb2518a84b573cca1877f186c997b79af5be22",
       "newWords": 16,
-      "missingMeaning": [
-        "butcher’s",
-        "lamb’s"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -811,9 +791,7 @@
       "number": 53,
       "sourceSha256": "b0c4a6687d1d286f312924bfe48fcbee5096aabd520c5f7ec88211d97ecf9acd",
       "newWords": 20,
-      "missingMeaning": [
-        "weather's"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -824,10 +802,7 @@
       "number": 55,
       "sourceSha256": "e3456b565859f7f785c8225f18821327a551bfb8591ef56ed10eb7115e270783",
       "newWords": 31,
-      "missingMeaning": [
-        "eats",
-        "sees"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -860,9 +835,7 @@
       "number": 61,
       "sourceSha256": "743182c54a80f075e6a7d0e3b7587c31c6e116285cd44045cff2a60a4c2a22ad",
       "newWords": 23,
-      "missingMeaning": [
-        "doctor's"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -884,9 +857,7 @@
       "number": 65,
       "sourceSha256": "e9c98d5d4cae59c4dec82a262f3716634fd8cde15b44dccd255570ccaa1d2801",
       "newWords": 17,
-      "missingMeaning": [
-        "Jill's"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -897,10 +868,7 @@
       "number": 67,
       "sourceSha256": "28cd32a0d323e963a418a7f928546dab7c2d5063af1f64ca5baa3973387bb68a",
       "newWords": 19,
-      "missingMeaning": [
-        "greengrocer’s",
-        "mother’s"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -911,9 +879,7 @@
       "number": 69,
       "sourceSha256": "a5542b8a64eccae5cf03c3c4083e520cb189a862ba2d61d80f9f50d5465d0c77",
       "newWords": 25,
-      "missingMeaning": [
-        "cars"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -924,10 +890,7 @@
       "number": 71,
       "sourceSha256": "c39acbec7e5632eafe1d1d30de66757ca668c7185157830ad65c8b7d774044d0",
       "newWords": 20,
-      "missingMeaning": [
-        "Ron",
-        "Pauline’s"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -981,11 +944,7 @@
       "number": 79,
       "sourceSha256": "8cf3da1614329352485ec04651f1dc8f236e503c0d7e26debafa0360dc4ebfc0",
       "newWords": 21,
-      "missingMeaning": [
-        "Carol’s",
-        "grocer’s",
-        "haven’t"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -996,9 +955,7 @@
       "number": 81,
       "sourceSha256": "002db0c46ea30f4321c0f7dd6cf624e960a5b9fadc4643b3600fe225d5a40709",
       "newWords": 13,
-      "missingMeaning": [
-        "Sam’s"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -1009,9 +966,7 @@
       "number": 83,
       "sourceSha256": "a1c59c8e3cfe0b02ccec6ab9dee2ab3588edb970a82fcb2132ad24eb5822438e",
       "newWords": 13,
-      "missingMeaning": [
-        "room’s"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -1033,9 +988,7 @@
       "number": 87,
       "sourceSha256": "0f2fb00c2708068178e5ee09f6e27cd2a15614c8415de2a74a5bd3e3a6657d5d",
       "newWords": 13,
-      "missingMeaning": [
-        "LFZ"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -1079,10 +1032,7 @@
       "number": 95,
       "sourceSha256": "ec35b2c47231948880800f4af488078c640cea6169aa411d6498558c8950f49e",
       "newWords": 12,
-      "missingMeaning": [
-        "clock’s",
-        "When's"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -1115,9 +1065,7 @@
       "number": 101,
       "sourceSha256": "cb3300f82d3c04f3f0691dec454a8c32b2f95d13385275ac0ecd75a642d00caa",
       "newWords": 15,
-      "missingMeaning": [
-        "Jimmy's"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -1139,10 +1087,7 @@
       "number": 105,
       "sourceSha256": "b6cde6c65394ae0c12111e5e708094b142e69f5815a6a76b34fd72c39f5bc8bb",
       "newWords": 13,
-      "missingMeaning": [
-        "I-N-T-E-L-L-I-G-E-N-T",
-        "letter’s"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -1175,9 +1120,7 @@
       "number": 111,
       "sourceSha256": "62957f4372ce491fd2c2d80d94f2fb1f6893debf6443ad9c23c06b3bde2c0332",
       "newWords": 16,
-      "missingMeaning": [
-        "model’s"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -1188,9 +1131,7 @@
       "number": 113,
       "sourceSha256": "7967789448a6dc731eba46ff26f7771ff6b6619f4dcb4dba992892c43dbb2a18",
       "newWords": 10,
-      "missingMeaning": [
-        "ten-pound"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -1201,10 +1142,7 @@
       "number": 115,
       "sourceSha256": "d1198aea187bbf17e44743a1f682f537e444c4d7cafe480daa3b690d04492188",
       "newWords": 15,
-      "missingMeaning": [
-        "Everything's",
-        "Everyone's"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -1215,9 +1153,7 @@
       "number": 117,
       "sourceSha256": "3a23fcaccaf3525d9fb806bcc26f5dc67364e151a6cc54c65809958e2c3579b9",
       "newWords": 15,
-      "missingMeaning": [
-        "Tommy’s"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -1228,9 +1164,7 @@
       "number": 119,
       "sourceSha256": "90efe2cd84269bdce259fde2b276d3e969e339a1a5c8c0c11072da91730bb5ff",
       "newWords": 25,
-      "missingMeaning": [
-        "George's"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -1285,9 +1219,7 @@
       "number": 129,
       "sourceSha256": "b391e640a63235d524740670e520f382f872e4c473db2cb773ca5d9624bd34eb",
       "newWords": 19,
-      "missingMeaning": [
-        "policeman’s"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -1331,9 +1263,7 @@
       "number": 137,
       "sourceSha256": "dcefa12c98cda606e0b11066d17662cc16149d4ebf25e9100a0b5fba8114ecc5",
       "newWords": 10,
-      "missingMeaning": [
-        "What'll"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -1344,9 +1274,7 @@
       "number": 139,
       "sourceSha256": "1b65cc6dc636d32b020e14610905fd408146e89a164f8e9168a1b1e563c0b1a3",
       "newWords": 13,
-      "missingMeaning": [
-        "Hasn't"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -1357,10 +1285,7 @@
       "number": 141,
       "sourceSha256": "c5ab0b68221ac9df3494e4729bfe998c480e6732624eabd074af9d84cead1570",
       "newWords": 21,
-      "missingMeaning": [
-        "Sally’s",
-        "children’s"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -1371,9 +1296,7 @@
       "number": 143,
       "sourceSha256": "0afd5fd0c8a578a8656599f3cbec3ec53e79027d4af3cdf45ecd13d54ee35f49",
       "newWords": 28,
-      "missingMeaning": [
-        "tins"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -1428,10 +1351,7 @@
       "number": 5,
       "sourceSha256": "1696f5f542a961c47b43c2253f70d237af7587edff88ab64d96ae04b92b7b44a",
       "newWords": 18,
-      "missingMeaning": [
-        "Silbury",
-        "Pinhurst"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -1442,9 +1362,7 @@
       "number": 6,
       "sourceSha256": "cf0b29a14c23459a4b3d71df857b9903461df5e570b5847162ea9910edc163ac",
       "newWords": 15,
-      "missingMeaning": [
-        "asks"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -1466,11 +1384,7 @@
       "number": 8,
       "sourceSha256": "7564c7a3b59354a40fddd543e8bffe6817c0e3201974d3f9d499c155ea0d91ba",
       "newWords": 20,
-      "missingMeaning": [
-        "wins",
-        "Frith’s",
-        "Joe's"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -1492,9 +1406,7 @@
       "number": 10,
       "sourceSha256": "6d3d65e7be9ba60061d748202f579ba165f06e4d25757427086960e607e0d4d4",
       "newWords": 21,
-      "missingMeaning": [
-        "father’s"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -1505,10 +1417,7 @@
       "number": 11,
       "sourceSha256": "bc2212721ecfdccc68d0a45d238c73da2aebb7bcd0183baeffc1b38508703752",
       "newWords": 14,
-      "missingMeaning": [
-        "lawyer's",
-        "gets"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -1563,9 +1472,7 @@
       "number": 16,
       "sourceSha256": "d764303e8a0bd8ec8989b613002d55f29bfdb75d0b266244e10711b7474440eb",
       "newWords": 16,
-      "missingMeaning": [
-        "lets"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -1598,9 +1505,7 @@
       "number": 19,
       "sourceSha256": "a57dea01247d95b6f6ce9997888682b374ce7a5adc714997f500f771428cd658",
       "newWords": 6,
-      "missingMeaning": [
-        "Wednesday's"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -1655,10 +1560,7 @@
       "number": 24,
       "sourceSha256": "52e9089ef57ab3e1695047a5944150709a8423c6b911123f1be5e7670bc24625",
       "newWords": 13,
-      "missingMeaning": [
-        "manager’s",
-        "gentleman’s"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -1713,9 +1615,7 @@
       "number": 29,
       "sourceSha256": "e2addcbf219a327cc0f8867ef320ab3f166bf3d2cd9cb0fc863a8dbeeee53058",
       "newWords": 29,
-      "missingMeaning": [
-        "Fawcett’s"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -1737,9 +1637,7 @@
       "number": 31,
       "sourceSha256": "c8328bce70cc4f9d89df0f76a8066c491d687c354ac2e63372a2404c49adbb01",
       "newWords": 18,
-      "missingMeaning": [
-        "grandson’s"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -1794,9 +1692,7 @@
       "number": 36,
       "sourceSha256": "573d6188632d9f5281ea33c0be75bd03641c4e97a2c0110a0a2e57fd1f578b3b",
       "newWords": 15,
-      "missingMeaning": [
-        "Debbie's"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -1807,9 +1703,7 @@
       "number": 37,
       "sourceSha256": "a994ccd5e530e26fc423fd76b52dccb9e33595ac4d826f22ba4ad65ff63e1ea9",
       "newWords": 16,
-      "missingMeaning": [
-        "Olympic-standard"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -1831,10 +1725,7 @@
       "number": 39,
       "sourceSha256": "ea7452121244bebf9d44387c827146bd9416988099704ecd3fd8b61413960247",
       "newWords": 16,
-      "missingMeaning": [
-        "Gilbert's",
-        "hosptial"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -1856,9 +1747,7 @@
       "number": 41,
       "sourceSha256": "55279ac8c4a35425bff5a074dcad860ff3e177e34ba91408f0bec5c645932e6d",
       "newWords": 12,
-      "missingMeaning": [
-        "hats"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -1946,9 +1835,7 @@
       "number": 49,
       "sourceSha256": "ce0634a9230f455676eb8c53ff445ee74cebe3cb9b9de928d29969b245a51c30",
       "newWords": 22,
-      "missingMeaning": [
-        "bits"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -2003,9 +1890,7 @@
       "number": 54,
       "sourceSha256": "624853991f6127a304013d55de852b8156b9ad84363e7ef77bf56c8624e34257",
       "newWords": 22,
-      "missingMeaning": [
-        "pies"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -2049,9 +1934,7 @@
       "number": 58,
       "sourceSha256": "e375b6debd5db66589bf565e97b3252d3b22339e858a0c3eeca3bf662c2ead28",
       "newWords": 32,
-      "missingMeaning": [
-        "Frinley"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -2073,9 +1956,7 @@
       "number": 60,
       "sourceSha256": "4732a1174852df22b4e207180bf9268afafed3cd0589292495a3e50831f5a401",
       "newWords": 8,
-      "missingMeaning": [
-        "Bellinsky"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -2086,10 +1967,7 @@
       "number": 61,
       "sourceSha256": "06e16c8bd182752f5ca4bf25481c1aea519916f3d5455c4ccd6e964a484c52b6",
       "newWords": 29,
-      "missingMeaning": [
-        "earth’s",
-        "Hubble's"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -2111,10 +1989,7 @@
       "number": 63,
       "sourceSha256": "96b1bd585b4124e65cd3d8752efe650192c1fe60e7b03fcf35bda214126d7ad1",
       "newWords": 18,
-      "missingMeaning": [
-        "six-year-old",
-        "Jeremy's"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -2125,11 +2000,7 @@
       "number": 64,
       "sourceSha256": "f20e3db7832602e4e4614fa6bf68b9d285843fc49abc8b77c603efb5e8dade67",
       "newWords": 30,
-      "missingMeaning": [
-        "Gamond",
-        "twenty-one-mile",
-        "railway-tunnel"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -2162,10 +2033,7 @@
       "number": 67,
       "sourceSha256": "ce7168a44e09d4c214867a2bf4288ca3eea0c8ff346bb926062a3e62fe6ebd08",
       "newWords": 31,
-      "missingMeaning": [
-        "Tazieff",
-        "Kituro"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -2220,9 +2088,7 @@
       "number": 72,
       "sourceSha256": "7d93312dfce451ad90daf9008a821a1edce800974226764e608517d05ac76d90",
       "newWords": 21,
-      "missingMeaning": [
-        "Malcolm's"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -2233,10 +2099,7 @@
       "number": 73,
       "sourceSha256": "caa41f744a05ee5f4650de23a0078d543e4b96d9d2d858830f1ee6ed3e3d062a",
       "newWords": 17,
-      "missingMeaning": [
-        "day's",
-        "French-Spanish"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -2247,9 +2110,7 @@
       "number": 74,
       "sourceSha256": "ae99ae38a3c793f544b51592fb3cdf6d0178b564e0870ecb967e3dd06ac858a1",
       "newWords": 20,
-      "missingMeaning": [
-        "Brinksley"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -2271,11 +2132,7 @@
       "number": 76,
       "sourceSha256": "494027b9ae5a086872ca4e62a795fa07e0145d84cd9a986b2186ac73e95ceafe",
       "newWords": 32,
-      "missingMeaning": [
-        "Brabante",
-        "year’s",
-        "Fratelli"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": [
@@ -2296,10 +2153,7 @@
       "number": 77,
       "sourceSha256": "d3b669602c32861d8d0a08ab1cd667dc3d9ce48bd7c1f660a0cb13a060b88484",
       "newWords": 26,
-      "missingMeaning": [
-        "Shepenmut",
-        "Duamutef"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -2332,9 +2186,7 @@
       "number": 80,
       "sourceSha256": "e4d2f1c88282a8afea46c3bde1d14564c8b6835499218a301c292ab3ac62506a",
       "newWords": 18,
-      "missingMeaning": [
-        "Nasmyth’s"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -2345,9 +2197,7 @@
       "number": 81,
       "sourceSha256": "c9ca2d1687f43427c98e31f4b0bbca97889d563910de00810a1bcc37f785d65c",
       "newWords": 20,
-      "missingMeaning": [
-        "man’s"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -2369,11 +2219,7 @@
       "number": 83,
       "sourceSha256": "1fba0ffff74b589f55a13f0a205412b5e382ab85dca7b95799e1454b8a8f0ef3",
       "newWords": 19,
-      "missingMeaning": [
-        "Lane's",
-        "Minister's",
-        "ex-Prime"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -2395,9 +2241,7 @@
       "number": 85,
       "sourceSha256": "8804658c6c69f8d3be2a87cca3d45fc2d4c85333e5ce29edb2ef9f1e2497aeb3",
       "newWords": 23,
-      "missingMeaning": [
-        "headmaster’s"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -2419,9 +2263,7 @@
       "number": 87,
       "sourceSha256": "8158bfbd4361c1ee99f4194cf47d6688411c67ba56d08972a456c06748ee31ce",
       "newWords": 7,
-      "missingMeaning": [
-        "Ferngreen"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -2454,9 +2296,7 @@
       "number": 90,
       "sourceSha256": "551100ba705ccf768dfae707a94d4986f307b87971fe1ee88aeeb2fa1ca1b54f",
       "newWords": 32,
-      "missingMeaning": [
-        "cats"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -2500,9 +2340,7 @@
       "number": 94,
       "sourceSha256": "be6014f653cff61d1fb4241c083fcfd3503a5df163c650df971f953956a8bda5",
       "newWords": 20,
-      "missingMeaning": [
-        "Los"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -2513,11 +2351,7 @@
       "number": 95,
       "sourceSha256": "5b5b46bab3ee30fa57c33c26782c90e978cdc54b5d05c4dbf8efeb731c4336d1",
       "newWords": 21,
-      "missingMeaning": [
-        "Escalopia",
-        "Ambassador's",
-        "husband's"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -2561,10 +2395,7 @@
       "number": 3,
       "sourceSha256": "a680b558861e9c41088d1ce7fb4ba27909fcf2ad2c4a16bf990bf490bb7ec933",
       "newWords": 47,
-      "missingMeaning": [
-        "Ayia",
-        "Irini"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -2575,10 +2406,7 @@
       "number": 4,
       "sourceSha256": "42e144b0d0f07bd1292056aedc24584b0b1ba363666997eed09b978217a1eeed",
       "newWords": 27,
-      "missingMeaning": [
-        "Bloggs",
-        "Alf’s"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -2589,11 +2417,7 @@
       "number": 5,
       "sourceSha256": "e6c8a1330d9839c08eee40d7185fac5f43bd4ddc73b2690d8a1d16939623d533",
       "newWords": 33,
-      "missingMeaning": [
-        "facts",
-        "president’s",
-        "fifteen-foot"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -2604,9 +2428,7 @@
       "number": 6,
       "sourceSha256": "17367c84dccd8902d56254d81fa2cf0da3e93623514af3b27ccf99a55d66b599",
       "newWords": 28,
-      "missingMeaning": [
-        "jeweller’s"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -2617,10 +2439,7 @@
       "number": 7,
       "sourceSha256": "3d8232ecbc1ae5363a46c0f567af03c86f38df939d8ea38b35e89c97d9deb8bd",
       "newWords": 27,
-      "missingMeaning": [
-        "fianc",
-        "beautifully-cooked"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -2631,9 +2450,7 @@
       "number": 8,
       "sourceSha256": "bc8cb7b170abaf95db8a755bf779ff480fa15a0d1c1e7c958f612f12a358d165",
       "newWords": 29,
-      "missingMeaning": [
-        "Bernard's"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [
         {
           "word": "St",
@@ -2755,10 +2572,7 @@
       "number": 9,
       "sourceSha256": "445489aeb8956d99d0539720ebd20871a2ec009eeacedd15a85ac5abed4bec66",
       "newWords": 45,
-      "missingMeaning": [
-        "cat’s",
-        "air-resistance"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -2790,9 +2604,7 @@
       "number": 11,
       "sourceSha256": "1145edc210481416a0b5cc9b91eb994b9a052a1920a406591a931ca24415b101",
       "newWords": 34,
-      "missingMeaning": [
-        "Officer's"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -2814,9 +2626,7 @@
       "number": 13,
       "sourceSha256": "eb021f5fb57a2fa49b4fd6a461d82ffa09dcbd30a82f8e8a65768530118e373f",
       "newWords": 18,
-      "missingMeaning": [
-        "fancy-dress"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -2827,11 +2637,7 @@
       "number": 14,
       "sourceSha256": "74872371767c225aff940599c86ceec5ac14e4b791bcc7b9e146537c2a4e7cc1",
       "newWords": 36,
-      "missingMeaning": [
-        "Hawkwood",
-        "Acuto",
-        "Haukodue"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -2853,12 +2659,7 @@
       "number": 16,
       "sourceSha256": "03c17a7134b8b24c694128fe87cbc98a9502a8e1e6d87038454130762d046063",
       "newWords": 19,
-      "missingMeaning": [
-        "Perachora",
-        "Mary's",
-        "Aleko",
-        "Aleko’s"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -2869,11 +2670,7 @@
       "number": 17,
       "sourceSha256": "59bd00e09fe511726e10cd5e36d24ca484ec62ca06da709531d2ebf29d576303",
       "newWords": 39,
-      "missingMeaning": [
-        "Angoul",
-        "Othmar",
-        "designer’s"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": [
@@ -2905,10 +2702,7 @@
       "number": 19,
       "sourceSha256": "160afa3f6e37a657e2ab3c89446f55a0aa2db75c4da9183b0ce6bc305cd8f6ce",
       "newWords": 28,
-      "missingMeaning": [
-        "Ramsay’s",
-        "kidnapper’s"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -2960,9 +2754,7 @@
       "number": 22,
       "sourceSha256": "9da755e1cffff122c4be04e2f90bf7c390ae627729fc1fc506a581373b302d90",
       "newWords": 31,
-      "missingMeaning": [
-        "aristocrat’s"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -2984,9 +2776,7 @@
       "number": 24,
       "sourceSha256": "5b50a5632f179bbafcd2dfbd1e26ee1d300eb3b383c4b8e7308a256a7ea99b79",
       "newWords": 48,
-      "missingMeaning": [
-        "reader’s"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -3018,9 +2808,7 @@
       "number": 26,
       "sourceSha256": "3d2b273336ddf19c3ece4d9c973001c59712364039c85fa54d4bad7ec1fedc4d",
       "newWords": 39,
-      "missingMeaning": [
-        "trips"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -3053,10 +2841,7 @@
       "number": 29,
       "sourceSha256": "a0d372dea40ee708cbb14f84c96d7f044fc0bcc7551a79f525ce727df7e44f18",
       "newWords": 43,
-      "missingMeaning": [
-        "Chaplin's",
-        "patient’s"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -3067,10 +2852,7 @@
       "number": 30,
       "sourceSha256": "ad0ec89b2b7c0897e0291f9cf55fc7fe32a1b9c00053cf344551549ff472284e",
       "newWords": 27,
-      "missingMeaning": [
-        "Endley",
-        "Eric"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -3081,9 +2863,7 @@
       "number": 31,
       "sourceSha256": "fd9d8d1bcc478ead06992ce244798a7a36b3063ebb7692d6b1119dc2cd65c033",
       "newWords": 35,
-      "missingMeaning": [
-        "assistant’s"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -3094,10 +2874,7 @@
       "number": 32,
       "sourceSha256": "e307b3b427ceeb4b0899bdf0ba21f400cd8ce3739c0015569dd382e25867bf1e",
       "newWords": 33,
-      "missingMeaning": [
-        "Elkor",
-        "ship’s"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": [
@@ -3129,9 +2906,7 @@
       "number": 34,
       "sourceSha256": "cc17a3809ecfa501ed051d39443cf47e25bba930b2745ac16c9bcfebceba6b5c",
       "newWords": 43,
-      "missingMeaning": [
-        "interesting-looking"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -3142,9 +2917,7 @@
       "number": 35,
       "sourceSha256": "dc6050a733c9cd957aeb19c256b4ef6696de615551b28f96c2048c0ba6220ca4",
       "newWords": 41,
-      "missingMeaning": [
-        "acts"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -3155,12 +2928,7 @@
       "number": 36,
       "sourceSha256": "203bd8801d086e3d43d25a35d254a27691f90a0a35ee6ff54b38e9c69f11ba85",
       "newWords": 42,
-      "missingMeaning": [
-        "hero’s",
-        "Bussman",
-        "workman's",
-        "Franz’s"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -3171,11 +2939,7 @@
       "number": 37,
       "sourceSha256": "62e946dcccaf38d1046216557d6bfb43608b321306549f8c76426a2c25f56414",
       "newWords": 45,
-      "missingMeaning": [
-        "Westhaven",
-        "Widley",
-        "train’s"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -3186,10 +2950,7 @@
       "number": 38,
       "sourceSha256": "3cff4a2808030a31dd7217093e7935c4a9a13380d61314966eed6225b94ebdf2",
       "newWords": 57,
-      "missingMeaning": [
-        "CDs",
-        "dots"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -3222,10 +2983,7 @@
       "number": 41,
       "sourceSha256": "f82d7898f03d922d12c7a25be9c2e4f180bd634adc28e4bca97da694affacc36",
       "newWords": 58,
-      "missingMeaning": [
-        "four-hour",
-        "evening’s"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -3236,13 +2994,7 @@
       "number": 42,
       "sourceSha256": "1ac73f7f597d86da1005b9d2d68caabaf88fc903f18e655c214ce250a0221e70",
       "newWords": 78,
-      "missingMeaning": [
-        "pot-holing",
-        "pot-holer’s",
-        "pot-holer",
-        "Gouffre",
-        "pot-holers"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -3297,11 +3049,7 @@
       "number": 47,
       "sourceSha256": "7ff0e1f47c0a4726dd4923e6539f765d10c6f0f0b3fe8f791ba0ede3ed5d5b4e",
       "newWords": 92,
-      "missingMeaning": [
-        "over-industrialized",
-        "organically-grown",
-        "summer’s"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -3323,11 +3071,7 @@
       "number": 49,
       "sourceSha256": "bd1093b3afaadec0980c1708e0224e2138e1ede085b253bc36cb79dcc4108867",
       "newWords": 52,
-      "missingMeaning": [
-        "uncle’s",
-        "aunt’s",
-        "Bessie’s"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -3359,14 +3103,7 @@
       "number": 51,
       "sourceSha256": "3f3bd3bc5c781a75937942a11937448347acdfd305beffe8977ff477f179c9d2",
       "newWords": 64,
-      "missingMeaning": [
-        "people’s",
-        "specially-written",
-        "world’s",
-        "Bagrit",
-        "uses",
-        "Bagrit’s"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": [
@@ -3387,12 +3124,7 @@
       "number": 52,
       "sourceSha256": "10d03e2b7f5f81657f222a98c249dd8ee9c298ec08534f7335d356c59b6481f2",
       "newWords": 68,
-      "missingMeaning": [
-        "curiously-shaped",
-        "Myrolite",
-        "Harry's",
-        "woman’s"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -3403,11 +3135,7 @@
       "number": 53,
       "sourceSha256": "651aaeaa36b7b2c0735f89656a472e447865d6dfa9cf10c0f62a7d38d30e17a6",
       "newWords": 65,
-      "missingMeaning": [
-        "Ombudsman’s",
-        "citizen’s",
-        "foreigner’s"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -3429,11 +3157,7 @@
       "number": 55,
       "sourceSha256": "155c11d9de0c240af0329d129ab5fd428aa47dc458719ae440cb6a403c48a848",
       "newWords": 46,
-      "missingMeaning": [
-        "life-supporting",
-        "earth-based",
-        "Earth-dwellers"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -3444,10 +3168,7 @@
       "number": 56,
       "sourceSha256": "467290a205295f89be424938c348bcf4f4a582bd62e852f78a1777b0e82e6eb9",
       "newWords": 60,
-      "missingMeaning": [
-        "Noah's",
-        "boathooks"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -3458,9 +3179,7 @@
       "number": 57,
       "sourceSha256": "e73126275b0b98d9712ccea23193ac3d9cfa7e1aca9de74e0a2adec1ee6d92a9",
       "newWords": 44,
-      "missingMeaning": [
-        "maps"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -3471,9 +3190,7 @@
       "number": 58,
       "sourceSha256": "6a9fdb04f35bf925371edad5bc699494520111ccd5b64ae9139f89418c3f3928",
       "newWords": 37,
-      "missingMeaning": [
-        "porter’s"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -3495,10 +3212,7 @@
       "number": 60,
       "sourceSha256": "5a217e525501d7fad1fb329021f568ba1c1b12fc672771b9fa1780ebfb3c8af5",
       "newWords": 42,
-      "missingMeaning": [
-        "unpunctuality",
-        "guard’s"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -3531,9 +3245,7 @@
       "number": 3,
       "sourceSha256": "16d6f946bc657160df7a0923c91f0e8466c145cb9369ff13f48564a13a7b5819",
       "newWords": 38,
-      "missingMeaning": [
-        "inns"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -3544,12 +3256,7 @@
       "number": 4,
       "sourceSha256": "c6e3f8910de5adef8bc3b41b8fe9875df787779f63281ea1dba6e1488d730f46",
       "newWords": 25,
-      "missingMeaning": [
-        "eleven-year-old",
-        "Vera",
-        "Vera's",
-        "child's"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -3560,9 +3267,7 @@
       "number": 5,
       "sourceSha256": "99edbe2196b7e157ea1b54d99da387595ccce4011fa56843640292b4b4ede189",
       "newWords": 21,
-      "missingMeaning": [
-        "clich"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -3595,11 +3300,7 @@
       "number": 8,
       "sourceSha256": "e3395e60c98c3ac2310be9357e694e38e07b5f7a8c0f860e616372f075d6c592",
       "newWords": 39,
-      "missingMeaning": [
-        "Union's",
-        "American-made",
-        "EU’s"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": [
@@ -3620,11 +3321,7 @@
       "number": 9,
       "sourceSha256": "520f944fde0ef01ca805628743b7014c2f03cd29fa91ee6d1bd11f9b0916af79",
       "newWords": 54,
-      "missingMeaning": [
-        "Alfred’s",
-        "Guthrum",
-        "raids"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -3635,13 +3332,7 @@
       "number": 10,
       "sourceSha256": "89e2d60f3eeade293f6eeba1a88845f83d05f6c57d49f85dd6e387a33ebf8ed5",
       "newWords": 65,
-      "missingMeaning": [
-        "California's",
-        "next-generation",
-        "Japan's",
-        "India-born",
-        "Reddy's"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -3663,10 +3354,7 @@
       "number": 12,
       "sourceSha256": "328fe649e28ea38886d966773fbebf4cfc64f2596bc1f5cf47d00e8d6392b8fb",
       "newWords": 29,
-      "missingMeaning": [
-        "banker-customer",
-        "customer's"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -3688,10 +3376,7 @@
       "number": 14,
       "sourceSha256": "5516eaf9a8f1ac525831b1bd6738711fc00bb8b71f88dff452368c5ddc8f0d59",
       "newWords": 44,
-      "missingMeaning": [
-        "continent-size",
-        "one-foot"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -3746,10 +3431,7 @@
       "number": 19,
       "sourceSha256": "4609075919454629579829e0a30eed5dbfe960e0cb56962d222f81681ebbfb3b",
       "newWords": 43,
-      "missingMeaning": [
-        "body's",
-        "individual's"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -3771,12 +3453,7 @@
       "number": 21,
       "sourceSha256": "8f8e066d306a79da9aa9e469ece7fb25a888986d5ef82ef2516d321e02be05e8",
       "newWords": 57,
-      "missingMeaning": [
-        "good-bad",
-        "accidental-noble",
-        "honest-but-framed",
-        "Hart’s"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -3798,10 +3475,7 @@
       "number": 23,
       "sourceSha256": "4a5a41e487b10bdbc886f36733e3bcf877352caecefcab5a6f41849c4fce26d9",
       "newWords": 53,
-      "missingMeaning": [
-        "steel-like",
-        "good-morning"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -3823,9 +3497,7 @@
       "number": 25,
       "sourceSha256": "9996f6ef1adbbd7d9764f6ec9cd68db5d889814cdb80f1e8f4301dd6a02cabc1",
       "newWords": 45,
-      "missingMeaning": [
-        "Anehin"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -3836,9 +3508,7 @@
       "number": 26,
       "sourceSha256": "0937e07ce0a33e372783ea8068a49239b8496ae5852c5e7ce4744ddff3071655",
       "newWords": 32,
-      "missingMeaning": [
-        "Beresovka"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [
         {
@@ -3871,13 +3541,7 @@
       "number": 27,
       "sourceSha256": "a89c1d9c231e0cb551f538b06775573a2540b43cf246fca24332f1789087c2b7",
       "newWords": 77,
-      "missingMeaning": [
-        "seventeenth-century",
-        "gun-decks",
-        "Skeppsbron",
-        "Stockholmers",
-        "gun-ports"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -3888,10 +3552,7 @@
       "number": 28,
       "sourceSha256": "cb67d2962b268636e8d0bbd7fded59df3db85c471f5575f4293dfd79ace914ef",
       "newWords": 47,
-      "missingMeaning": [
-        "Carlyle’s",
-        "Taylor's"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -3902,9 +3563,7 @@
       "number": 29,
       "sourceSha256": "c99a46043faf7304337370e0b5eb4804d492221c1518939f6a2b4462461c5c20",
       "newWords": 32,
-      "missingMeaning": [
-        "fruit-bowl"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -3915,10 +3574,7 @@
       "number": 30,
       "sourceSha256": "54ece5a56ae6fb1e63f3fc44f847efa82d4130cb310e4147ebb5a3becf8d54d5",
       "newWords": 43,
-      "missingMeaning": [
-        "Challenger’s",
-        "bed’s"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -3940,11 +3596,7 @@
       "number": 32,
       "sourceSha256": "14440d821da2179fd2f9d97943e1f29fe445eac076602475dea5430f42a7dbc7",
       "newWords": 61,
-      "missingMeaning": [
-        "Galileo's",
-        "Rosse’s",
-        "eighteen-forties"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -3977,12 +3629,7 @@
       "number": 35,
       "sourceSha256": "019144bf7570c6e449d826f83e88e304c770eec4aee8911ed96c2a97d1b1325a",
       "newWords": 38,
-      "missingMeaning": [
-        "Earth-orbit",
-        "mile-journey",
-        "Moon's",
-        "Moon-dwellers"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -4004,9 +3651,7 @@
       "number": 37,
       "sourceSha256": "5af8c780261088eead446e747be727f2bdb94a8ec7c28dcf07f81abe7162ef7e",
       "newWords": 33,
-      "missingMeaning": [
-        "ages"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -4028,10 +3673,7 @@
       "number": 39,
       "sourceSha256": "a8f684065a2e1ebf82120e8a270e6eded7f8af55a1d53a24627418d0c4d79e1a",
       "newWords": 43,
-      "missingMeaning": [
-        "adds",
-        "super-imposing"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -4053,9 +3695,7 @@
       "number": 41,
       "sourceSha256": "6809d836c82085da10dee5139b18e164fc50a67ab81ba6da64d94be0549eff87",
       "newWords": 59,
-      "missingMeaning": [
-        "half-trained"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -4066,9 +3706,7 @@
       "number": 42,
       "sourceSha256": "b0cd0518cdce1b407bd257be93b8b4e44f20519559f5369d1427a21f41e7cae4",
       "newWords": 29,
-      "missingMeaning": [
-        "seismometers"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -4079,11 +3717,7 @@
       "number": 43,
       "sourceSha256": "4fb91dab842e19d64e466fc56354db0bdf34955be36c8317136e44848812f7f0",
       "newWords": 51,
-      "missingMeaning": [
-        "hydrogen-dominated",
-        "home-planet",
-        "megacycles"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -4094,9 +3728,7 @@
       "number": 44,
       "sourceSha256": "e686d27d4dcf87c46922ab65b0617b47e6aba797c8683aa4271ce6b52bb98b92",
       "newWords": 59,
-      "missingMeaning": [
-        "neighbour’s"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -4107,9 +3739,7 @@
       "number": 45,
       "sourceSha256": "450c6516fb2ec09618880821a2e9c39d34e65659d329f5e1a57d0ba03d6e0824",
       "newWords": 31,
-      "missingMeaning": [
-        "ideas"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -4120,11 +3750,7 @@
       "number": 46,
       "sourceSha256": "21d8e616c387f893bef60bf9452ef440cd28b08bfbeaa0068b272b8d7047d641",
       "newWords": 62,
-      "missingMeaning": [
-        "topics",
-        "week's",
-        "Fortune's"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -4135,16 +3761,7 @@
       "number": 47,
       "sourceSha256": "1b06812bf98368d060d0f799c9151442e61e277bc748953cafb22d9ace3ffe33",
       "newWords": 85,
-      "missingMeaning": [
-        "Europe’s",
-        "Splendide",
-        "Bellavista",
-        "tre",
-        "d’h",
-        "tel",
-        "Frenchman's",
-        "Englishman’s"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -4155,10 +3772,7 @@
       "number": 48,
       "sourceSha256": "4ae4f8c38f7d6052127703279279193d31bdd2f3b908c5b2817d5fe4b9bcb67c",
       "newWords": 49,
-      "missingMeaning": [
-        "Las",
-        "well-planned"
-      ],
+      "missingMeaning": [],
       "quarantinedTargets": [],
       "quarantinedOccurrences": [],
       "excludedOrdinals": []
@@ -4166,8 +3780,8 @@
   ],
   "artifact": {
     "file": "lesson-word-targets.js",
-    "sha256": "37fb6d60d2f6362fd498165c12827e548028499e71444ca6f5bad226e7d4df89",
-    "bytes": 2646402,
+    "sha256": "4e4757e18f9c8181810bd1ece307a98ee4a599d89dd0344af61059a52dfdd181",
+    "bytes": 3452048,
     "hashEncoding": "utf8-lf"
   },
   "rebuild": "node dev/build-lesson-word-targets.cjs (offline; existing dictionary-data shards only)"

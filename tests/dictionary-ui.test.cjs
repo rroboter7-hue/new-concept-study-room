@@ -32,6 +32,10 @@ function setup(vocabulary = [], {local = false, savedWords = []} = {}) {
     $:selector=>selector==='#word-popover'?popup:selector==='#word-count'?count:selector==='#words-view'?notebook:null,
     $$:()=>anchors.filter(anchor=>anchor.classList.contains('selected')),
     toast:message=>notices.push(message),
+    // Storage IO is an isolated boundary here; full-app storage tests cover
+    // remote changes and failures. Keep the real pre-action sync helper below.
+    storageSession:{sync:local=>({ok:true,data:local})},
+    adoptStore:next=>Object.assign(context.data,next),
     persist:()=>{snapshots.push(JSON.parse(JSON.stringify(context.data)));return true;}
   };
   context.window=context;
@@ -46,6 +50,9 @@ function setup(vocabulary = [], {local = false, savedWords = []} = {}) {
   vm.runInContext(fs.readFileSync(path.join(project,'dictionary-context.js'),'utf8'),context);
   context.E=context.StudyCore.escapeHTML;
   const app=fs.readFileSync(path.join(project,'app.js'),'utf8');
+  const syncStart=app.indexOf(' function syncBeforeWordAction()'),syncEnd=app.indexOf("\n window.addEventListener('storage'",syncStart);
+  assert.ok(syncStart>=0&&syncEnd>syncStart,'the actual dictionary storage sync helper must be available');
+  vm.runInContext(app.slice(syncStart,syncEnd),context);
   const start=app.indexOf(' function dictionary('),end=app.indexOf(' function renderRecords()');
   assert.ok(start>=0&&end>start,'the actual dictionary UI functions must be available');
   vm.runInContext(app.slice(start,end),context);
@@ -286,7 +293,7 @@ test('closing aborts both provider branches and late local or English results ca
 test('saved bilingual fields fill independently in either arrival order without changing notebook metadata', async () => {
   for(const localFirst of [true,false]){
     const h=setup([],{local:true}),opening=h.open('walked');h.context.saveWord();
-    const saved=h.context.data.words[0],addedAt=saved.addedAt;saved.note='Keep my note';saved.mastered=true;
+    const original=h.context.data.words[0],addedAt=original.addedAt;original.note='Keep my note';original.mastered=true;
     h.context.current={id:'another',title:'Another lesson',vocabulary:[]};
     if(localFirst)h.localRequests[0].resolve(localEntry('walked','行走','Local English.','walk'));
     else h.requests[0].resolve(onlineEntry('walked','Online English.'));
@@ -294,6 +301,7 @@ test('saved bilingual fields fill independently in either arrival order without 
     if(localFirst)h.requests[0].resolve(onlineEntry('walked','Online English.'));
     else h.localRequests[0].resolve(localEntry('walked','行走','Local English.','walk'));
     await opening;
+    const saved=h.context.data.words[0];
     assert.equal(saved.meaning,'行走');assert.equal(saved.englishMeaning,'Online English.');
     assert.equal(saved.definitionSource,'Free Dictionary API');assert.equal(saved.note,'Keep my note');assert.equal(saved.mastered,true);
     assert.equal(saved.addedAt,addedAt);assert.equal(saved.lessonId,'source-lesson');assert.equal(saved.lesson,'Original lesson');
@@ -319,11 +327,13 @@ test('valid course Chinese stays authoritative while a review notice cannot supp
 });
 
 test('arriving dictionary data never overwrites existing saved Chinese or its notebook metadata', async () => {
-  const saved={word:'walked',meaning:'我的中文笔记',note:'Keep',mastered:true,lesson:'Old lesson',lessonId:'old',addedAt:123};
-  const h=setup([],{local:true,savedWords:[saved]}),opening=h.open('walked');
+  const original={word:'walked',meaning:'我的中文笔记',note:'Keep',mastered:true,lesson:'Old lesson',lessonId:'old',addedAt:123};
+  const h=setup([],{local:true,savedWords:[original]}),opening=h.open('walked');
   h.localRequests[0].resolve(localEntry('walked','通用行走'));h.requests[0].resolve(onlineEntry('walked','Online English.'));await opening;
+  const saved=h.context.data.words[0];
   assert.equal(saved.meaning,'我的中文笔记');assert.equal(saved.englishMeaning,'Online English.');
-  assert.equal(saved.note,'Keep');assert.equal(saved.mastered,true);assert.equal(saved.lessonId,'old');assert.equal(saved.addedAt,123);
+  assert.equal(saved.note,'Keep');assert.equal(saved.mastered,true);assert.equal(saved.lesson,'Old lesson');assert.equal(saved.lessonId,'old');assert.equal(saved.addedAt,123);
+  assert.deepEqual(h.snapshots.at(-1).words[0],JSON.parse(JSON.stringify(saved)));
   h.context.saveWord();assert.equal(h.context.data.words.length,1);
 });
 

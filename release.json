@@ -1,6 +1,6 @@
 {
   "build": "2026-10-27-book2-sourcefix30",
-  "preparedAt": "2026-10-27T09:01:25.586Z",
+  "preparedAt": "2026-10-27T09:19:56.283Z",
   "book2": {
     "book": 2,
     "total": 96,
@@ -310,8 +310,8 @@
       "unknownOrAmbiguousOwnersRejected": true
     }
   },
-  "staticFiles": 4069,
-  "staticBytes": 736270847,
+  "staticFiles": 4072,
+  "staticBytes": 737690645,
   "nativeearsAdvancedAudio": {
     "books": {
       "3": 60,
@@ -667,6 +667,38 @@
       "explicitRoundBinding": true,
       "atomicSaveAndRollback": true,
       "masteryRulesPreserved": true
+    },
+    "sixAuditFixes": {
+      "contextMeanings": {
+        "explicitReviewedSenses": 527,
+        "missingNewWordMeanings": 0,
+        "sourceIdentityBound": true,
+        "allGenericDictionarySensesReviewed": false
+      },
+      "guidedAndBatchWhConsistency": true,
+      "storage": {
+        "legacyKeyPreserved": true,
+        "crossTabReconciliation": true,
+        "mergeFirstBackupPreview": true,
+        "preImportRecoverySnapshot": true,
+        "pendingEditorPreserved": true,
+        "failedSaveDoesNotClaimSuccess": true
+      },
+      "mistakeHistory": {
+        "packTaskAndRevision": true,
+        "savedAnswersPreserved": true,
+        "sourceSpecificCorrection": true
+      },
+      "review": {
+        "expandedVocabulary": true,
+        "existingCardIdsPreserved": true,
+        "writingDoesNotGrantMastery": true
+      },
+      "recommendations": {
+        "studiedRecordsOrDeclaredRange": true,
+        "fullManualBankPreserved": true,
+        "phraseVerbPreferencePreserved": true
+      }
     }
   },
   "readingFont": {

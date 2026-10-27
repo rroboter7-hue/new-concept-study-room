@@ -214,9 +214,6 @@
           if (!checkedRow || !Array.isArray(checkedRow.issues) || !Array.isArray(checkedRow.notes)) throw new TypeError('Invalid sentence-check result');
           checkedRow.issues.forEach(function (issue) {
             if (typeof issue !== 'string') throw new TypeError('Invalid sentence finding');
-            // WH may ask for the very item named by the target; a missing word is
-            // not enough evidence of a bad transformation in this case.
-            if (kind === 'wh' && /还未识别到目标词/.test(issue)) { notes.push('目标词覆盖待复核：' + issue + ' 特殊疑问句可能已省略所问信息，不据此判错。'); return; }
             if (kind === 'combined' && !checkContext.oldWord && /请先选择.*旧词/.test(issue)) return;
             if (kind === 'combined' && !checkContext.oldPhrase && /请先选择.*旧用法|请先选择.*短语/.test(issue)) return;
             issues.push(issue);
