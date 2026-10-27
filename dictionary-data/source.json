@@ -39,7 +39,7 @@
     "inputs": [
       {
         "file": "index.html",
-        "sha256": "dbd134931f0da1aa23e987d173c37a6b4755d15133b4abf6bbc382eaf3cc0411"
+        "sha256": "a574abe3241c264ed767a7ddb8252f50eaca7184580852d4867bcf0733f0a255"
       },
       {
         "file": "lexical-word-tokens.js",
@@ -271,7 +271,7 @@
       },
       {
         "file": "lesson-word-targets.js",
-        "sha256": "fae02b458fb4295f0a003206b25f5dd5af84a1d0d493aac766e448063c557cd1"
+        "sha256": "69a2092d28bea6579aada9e081eb0c11f00e47f1cb88441703f81010c334006d"
       },
       {
         "file": "sentence-wordbank-data.js",
@@ -283,7 +283,7 @@
       },
       {
         "file": "sentence-practice.js",
-        "sha256": "7f4276541f87f919dc01e09dd283dc4bc65c78e24596da4220cb4503721d7404"
+        "sha256": "1c991ce7a65d79a3a69d76d0a309bdce7729930aaa2bccb586d1e8881f7f8d7e"
       },
       {
         "file": "dictionary-service.js",
@@ -291,11 +291,11 @@
       },
       {
         "file": "batch-sentence-core.js",
-        "sha256": "c837852e871d216b463a02a6bd0ea9e71dd04553999e098159e940a8cd748dcc"
+        "sha256": "5fd8b841a151b947cb7be692201192b0c36b27385e467cab1a038cea73f3366f"
       },
       {
         "file": "batch-sentence-practice.js",
-        "sha256": "945e45724971a7c0f630e164e77b1c5aec40fa4cd47b16d7d81d59068d75039f"
+        "sha256": "e3aa1fe292e342ec35cd0f14a6680763f69af7f1a999641bbdc9f18e7afd2124"
       },
       {
         "file": "output-practice.js",
@@ -311,7 +311,7 @@
       },
       {
         "file": "mobile-learning-shell.js",
-        "sha256": "c8e9d794ff1dcdd482d8d12951f00e006dca64c4b8f2ac78c506db8b830ecf7c"
+        "sha256": "cfff617cbdd3e5a9230b060ad28ae07746b2cea7994df343c99c74ea0aa630c3"
       },
       {
         "file": "learning-progress.js",

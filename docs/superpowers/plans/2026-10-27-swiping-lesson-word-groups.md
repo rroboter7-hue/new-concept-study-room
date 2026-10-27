@@ -44,8 +44,10 @@ Files: sentence-practice.css.
 
 Files: index.html; release.json; generated source manifests; this plan.
 
-- [ ] Rebuild manifests respecting declared hash encodings; run full appropriate regression.
+- [x] Rebuild manifests respecting declared hash encodings; run full appropriate regression.
 - [x] Exercise real local browse/select/return/reload flows with disposable data and save screenshots.
 - [ ] Preserve concurrent main, publish normally, verify full deployment checks and live mobile result.
 
 Pre-release evidence:87/87 targeted checks pass, with initial RED for absent grouping and modified-arrow interception. Independent lifecycle review and33 queue tests passed. CUA390px actually browsed group2 without changing a partial puma answer or recommendations, completed five trail sentences in group2, restored the puma partial answer in group1, and reloaded onto selected completed trail in group2. Arrow keys reached group8;320px and1280px resize preserved group8 with no horizontal page overflow. Next-unfinished revealed somehow in group2. Local screenshot01-browse-next-preserved.jpg is outside the repository. Browser plugin not available; used supported CUA Playwright APIs. Native phone touch remains a physical-device acceptance item.
+
+Full regression after preserving current main and whole-lesson batch import/export:921 tests,920 passed,1 skipped,0 failed. Generated lesson inputs validated as UTF-8 LF and dictionary selection inputs as raw bytes. Release cache tags consistently use2026-10-27-swiping-word-groups.

@@ -268,7 +268,7 @@
     },
     {
       "file": "sentence-practice.js",
-      "sha256": "eef8526b251c50580aeeff112ccf8f6809bc6cb6a7f927e35799199916b3b264"
+      "sha256": "9ec0500a0993904355b7b5c0bcf260162382ee2aead0c279ddedf8777de583f2"
     },
     {
       "file": "dictionary-service.js",
@@ -276,11 +276,11 @@
     },
     {
       "file": "batch-sentence-core.js",
-      "sha256": "cf868e10a53eae293f04ce514a0e45f2b424afdf4125652ed636c18ecc475945"
+      "sha256": "f9d8fe8a338c7cfac03c3048baf4b5f6467ce8dc144a606859f6a43c1849ace5"
     },
     {
       "file": "batch-sentence-practice.js",
-      "sha256": "8007ec5bb0cb5a4a923a21bfee080763a48b94613227bd8fa6e39fadc6dea1cf"
+      "sha256": "3ef14be567477d3027b0d10af15ec95aa9bd82757156e61d71dd31c6c1fd733b"
     },
     {
       "file": "output-practice.js",
@@ -296,7 +296,7 @@
     },
     {
       "file": "mobile-learning-shell.js",
-      "sha256": "11ee2fb04409d754ce12c432a2d8be4d12ef366530791bacfdf912f3b74000cc"
+      "sha256": "925ddc92f7ffddd9298e0b82dd5e4a71deff4380d2e3e51259d1c38a2bb5baa0"
     },
     {
       "file": "learning-progress.js",
@@ -4142,7 +4142,7 @@
   ],
   "artifact": {
     "file": "lesson-word-targets.js",
-    "sha256": "fae02b458fb4295f0a003206b25f5dd5af84a1d0d493aac766e448063c557cd1",
+    "sha256": "69a2092d28bea6579aada9e081eb0c11f00e47f1cb88441703f81010c334006d",
     "bytes": 2645672,
     "hashEncoding": "utf8-lf"
   },
