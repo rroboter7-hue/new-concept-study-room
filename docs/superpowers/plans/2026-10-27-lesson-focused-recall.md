@@ -28,3 +28,7 @@
 - Full suite: 526 passed, zero failed before merging concurrent Book 1 completion.
 - Independent review found and verified the fixed step-navigation issue.
 - Browser: desktop, 390 px and 320 px; ordered sections, hidden old-word cards, collapsed knowledge, same-lesson retell draft retention, phrase navigation, no horizontal overflow, no console errors. Courses without questions omit the empty comprehension action.
+
+## Concurrent content integration
+
+Preserved upstream `5d10a09` Book 1 completion, including both new bootstrap scripts, the 72 reading units, translations, and audio mappings. The first full merged run reported one environment failure: `all reading lessons have local audio and every Book1 printed word has a readable pronunciation file` cannot stat media excluded by this sparse checkout. The complete non-media suite is rerun with exactly that test explicitly skipped, without changing the upstream test. Independent exact-commit Git-tree verification confirms all 276 lesson targets and all 1,187 unique Book 1 pronunciation files exist and exceed 1,000 bytes, with no missing mappings or short files. This checks repository presence/size rather than decoding or listening.
