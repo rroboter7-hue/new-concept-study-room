@@ -1,6 +1,6 @@
 {
-  "build": "2026-10-27-book1-complete-readings",
-  "preparedAt": "2026-10-27T01:20:04.731Z",
+  "build": "2026-10-27-source-bound-retelling",
+  "preparedAt": "2026-10-27T01:49:26.405Z",
   "book2": {
     "book": 2,
     "total": 96,
@@ -104,10 +104,15 @@
       9,
       10
     ],
-    "notesOriginsExplicit": true
+    "notesOriginsExplicit": true,
+    "retellSourceBoundTargets": true,
+    "retellObservedInflections": true,
+    "retellCoverageIsLexicalOnly": true,
+    "retellLegacyNotesOutlinesLabelled": true,
+    "unsubmittedLegacyRetellDraftPersistence": false
   },
-  "staticFiles": 2680,
-  "staticBytes": 929031569,
+  "staticFiles": 2681,
+  "staticBytes": 929044845,
   "nativeearsAdvancedAudio": {
     "books": {
       "3": 60,
