@@ -1,6 +1,6 @@
 {
   "build": "2026-10-27-book2-context-repairs",
-  "preparedAt": "2026-10-27T02:07:44.551Z",
+  "preparedAt": "2026-10-27T02:10:02.475Z",
   "book2": {
     "book": 2,
     "total": 96,
@@ -126,7 +126,7 @@
     "newContextReviewIssuesThisBatch": 0
   },
   "staticFiles": 2723,
-  "staticBytes": 932856969,
+  "staticBytes": 932862045,
   "nativeearsAdvancedAudio": {
     "books": {
       "3": 60,
@@ -329,7 +329,8 @@
     "independentLanguageFields": true,
     "notebookBilingual": true,
     "sourceLink": "https://github.com/skywind3000/ECDICT",
-    "unknownWordsLabelled": true
+    "unknownWordsLabelled": true,
+    "independentMeaningProvenance": true
   },
   "sentenceWordPicker": {
     "design": "selected-option-2",

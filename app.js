@@ -138,7 +138,10 @@
   hideWord();
   const local=dictionary(word)||{},saved=data.words.find(item=>item.word.toLowerCase()===word.toLowerCase());
   const meaning=hasChineseMeaning(local.meaning)?local.meaning:hasChineseMeaning(saved?.meaning)?saved.meaning:local.meaning||saved?.meaning||'';
-  selectedWord={...local,word,meaning,phonetic:local.phonetic||saved?.phonetic||'',pos:local.pos||saved?.pos||'',example:local.example||saved?.example||'',englishMeaning:saved?.englishMeaning||(!hasChineseMeaning(local.meaning)?local.meaning:'')||(!hasChineseMeaning(meaning)?meaning:''),definitionSource:saved?.definitionSource||'',translationSource:hasChineseMeaning(local.meaning)?local.translationSource||'':saved?.translationSource||'',pending:false,onlineError:'',localError:'',onlineEntry:null,localEntry:null};
+  const chineseSource=hasChineseMeaning(local.meaning)?local:hasChineseMeaning(saved?.meaning)?saved:null;
+  // ECDICT translations carry their own POS; legacy saved POS/examples may be online data.
+  const chinesePos=chineseSource?.translationSource==='ECDICT'?'':chineseSource?.pos||'',chineseExample=chineseSource?.translationSource==='ECDICT'?'':chineseSource?.example||'';
+  selectedWord={...local,word,meaning,chinesePos,chineseExample,phonetic:local.phonetic||saved?.phonetic||'',pos:local.pos||saved?.pos||'',example:local.example||saved?.example||'',englishMeaning:saved?.englishMeaning||(!hasChineseMeaning(local.meaning)?local.meaning:'')||(!hasChineseMeaning(meaning)?meaning:''),definitionSource:saved?.definitionSource||'',translationSource:hasChineseMeaning(local.meaning)?local.translationSource||'':saved?.translationSource||'',pending:false,onlineError:'',localError:'',onlineEntry:null,localEntry:null};
   wordAnchor=anchor; anchor.classList.add('selected'); renderWord(); $('#word-popover').classList.remove('hidden');
   positionWord(); say(word);
   // One word click automatically starts lookup, including words with local meanings.
@@ -188,7 +191,7 @@
  function renderWord(){
   const v=selectedWord,pop=$('#word-popover');if(!v)return;
   const saved=data.words.some(x=>x.word.toLowerCase()===v.word.toLowerCase()),entry=v.onlineEntry||(v.localEntry?.definition?v.localEntry:null),chinese=hasChineseMeaning(v.meaning);
-  const localMeaning='<section class="word-chinese-result"><p class="word-source-label">中文释义'+(chinese?' · '+E(v.translationSource||'课程 / 本地释义'):'')+'</p><p class="meaning">'+(chinese?E(v.pos||'')+' '+E(v.meaning):v.pending?'正在查询中文释义…':'中文释义暂未收录。')+'</p>'+(chinese&&v.example?'<p class="example">'+E(v.example)+'</p>':'')+'</section>';
+  const localMeaning='<section class="word-chinese-result"><p class="word-source-label">中文释义'+(chinese?' · '+E(v.translationSource||'课程 / 本地释义'):'')+'</p><p class="meaning">'+(chinese?E(v.chinesePos||'')+' '+E(v.meaning):v.pending?'正在查询中文释义…':'中文释义暂未收录。')+'</p>'+(chinese&&v.chineseExample?'<p class="example">'+E(v.chineseExample)+'</p>':'')+'</section>';
   const definitions=entry?(Array.isArray(entry.meanings)?entry.meanings:[]).slice(0,3).map(m=>'<div class="word-online-sense"><strong>'+E(m.partOfSpeech)+'</strong>'+(Array.isArray(m.definitions)?m.definitions:[]).slice(0,v.onlineEntry?2:4).map(d=>'<p>'+E(d.definition)+'</p>'+(d.example?'<p class="example">'+E(d.example)+'</p>':'')).join('')+'</div>').join('')||'<p>'+E(entry.definition)+'</p>':v.englishMeaning?'<p>'+E(v.englishMeaning)+'</p>':'<p>英文释义暂未收录。</p>';
   const source=entry&&/^https?:\/\//i.test(String(entry.sourceUrl||''))?'<a href="'+E(entry.sourceUrl)+'" target="_blank" rel="noopener noreferrer">词典来源（新标签页）</a>':'';
   const online='<section class="word-online-result"><p class="word-source-label">'+(v.onlineEntry?'在线英文释义':'英文释义')+(entry?' · '+E(entry.sourceName):v.englishMeaning?' · '+E(v.definitionSource||'课程 / 本地'):'')+'</p>'+definitions+source+'</section>';

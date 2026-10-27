@@ -347,3 +347,51 @@ test('local English keeps all four bounded raw noun and verb senses while online
   for(const definition of ['Online noun one.','Online noun two.','Online verb one.','Online verb two.'])assert.ok(h.popup.innerHTML.includes(definition));
   assert.doesNotMatch(h.popup.innerHTML,/Online (?:noun|verb) (?:three|four)\./);
 });
+
+function beautifulEntries() {
+  const local=localEntry('beautiful','a. 美丽的','a. Delighting the senses.');local.pos='';
+  const online=onlineEntry('beautiful','A person who is beautiful.');online.pos='noun';online.example='Hey, beautiful!';
+  online.meanings[0].partOfSpeech='noun';online.meanings[0].definitions[0].example='Hey, beautiful!';
+  return {local,online};
+}
+function chineseSection(h) {
+  const section=h.popup.innerHTML.match(/<section class="word-chinese-result">([\s\S]*?)<\/section>/);
+  assert.ok(section,'the actual popup must show a distinct Chinese source section');return section[1];
+}
+
+test('online noun labels and examples never enter the ECDICT Chinese section in either arrival order', async () => {
+  for(const localFirst of [true,false]){
+    const h=setup([],{local:true}),opening=h.open('beautiful'),entries=beautifulEntries();
+    if(localFirst)h.localRequests[0].resolve(entries.local);else h.requests[0].resolve(entries.online);
+    await settled();
+    if(localFirst)h.requests[0].resolve(entries.online);else h.localRequests[0].resolve(entries.local);
+    await opening;
+    const chinese=chineseSection(h);assert.match(chinese,/ECDICT/);assert.match(chinese,/a\. 美丽的/);
+    assert.doesNotMatch(chinese,/noun|Hey, beautiful!/);
+    assert.match(h.popup.innerHTML,/<strong>noun<\/strong>/);assert.match(h.popup.innerHTML,/Hey, beautiful!/);
+  }
+});
+
+test('course Chinese keeps only its own part of speech and example, including when either field is absent', async () => {
+  for(const fields of [{pos:'adj.',example:'This is a beautiful painting.'},{pos:'adj.'},{example:'This is a beautiful painting.'},{}]){
+    for(const localFirst of [true,false]){
+      const h=setup([{word:'beautiful',meaning:'本课：美丽的',...fields}],{local:true}),opening=h.open('beautiful'),entries=beautifulEntries();
+      if(localFirst)h.localRequests[0].resolve(entries.local);else h.requests[0].resolve(entries.online);
+      await settled();
+      if(localFirst)h.requests[0].resolve(entries.online);else h.localRequests[0].resolve(entries.local);
+      await opening;
+      const chinese=chineseSection(h);assert.match(chinese,/本课：美丽的/);assert.doesNotMatch(chinese,/noun|Hey, beautiful!|ECDICT/);
+      if(fields.pos)assert.match(chinese,/adj\./);if(fields.example)assert.match(chinese,/This is a beautiful painting\./);
+      assert.match(h.popup.innerHTML,/<strong>noun<\/strong>/);assert.match(h.popup.innerHTML,/Hey, beautiful!/);
+    }
+  }
+});
+
+test('reopening saved ECDICT Chinese ignores legacy online POS and example without changing saved metadata', async () => {
+  const saved={word:'beautiful',meaning:'a. 美丽的',translationSource:'ECDICT',englishMeaning:'A person who is beautiful.',definitionSource:'Free Dictionary API',pos:'noun',example:'Hey, beautiful!',mastered:true,note:'Keep my note',lessonId:'old',lesson:'Old lesson',addedAt:123};
+  const h=setup([],{local:true,savedWords:[saved]}),opening=h.open('beautiful');
+  assert.match(chineseSection(h),/a\. 美丽的/);assert.doesNotMatch(chineseSection(h),/noun|Hey, beautiful!/);
+  const entries=beautifulEntries();h.requests[0].resolve(entries.online);h.localRequests[0].resolve(entries.local);await opening;
+  assert.doesNotMatch(chineseSection(h),/noun|Hey, beautiful!/);assert.match(h.popup.innerHTML,/Hey, beautiful!/);
+  assert.equal(saved.pos,'noun');assert.equal(saved.example,'Hey, beautiful!');assert.equal(saved.note,'Keep my note');assert.equal(saved.mastered,true);assert.equal(saved.addedAt,123);
+});
