@@ -54,15 +54,15 @@ test('independent: raw everyday examples in scored/referenced modes always discl
  for(const mode of ['fill','match','order','write']){pp.mode=mode;pp.submitted=true;pp.answers={phraseIndex:index};const html=pp.render();assert.match(html,/everyday|every day/,mode+' contains the relevant source example');assert.match(html,/校订|校正/,mode+' must disclose that the raw source spelling is editorially corrected');}
 });
 test('independent: actual phrase renderer escapes source, raw and edited examples, supplemental examples and grammar metadata',()=>{
- const payload='<img src=x onerror="attack()"><svg onload="attack()">',meta={example:'A safe complete example '+payload,rawExample:'Original sentence '+payload,exampleSourceType:'edited-lesson-notes',exampleSourceLabel:'校订来源 '+payload,editorialCorrection:{from:payload,to:payload}};
+ const payload='<img src=x onerror="attack()"><svg onload="attack()">',meta={example:'At least, a safe complete example '+payload,rawExample:'Original sentence '+payload,exampleSourceType:'edited-lesson-notes',exampleSourceLabel:'校订来源 '+payload,editorialCorrection:{from:payload,to:payload}};
  const item={phrase:'at least',matchedForm:'at least',meaning:'至少 '+payload,note:payload,sourceType:'lesson-passage',sourceLabel:'正文 '+payload,exampleSourceType:'lesson-notes',exampleSourceLabel:'笔记 '+payload,example:'At least, I tried '+payload+'.',editorialExample:meta,additionalExamples:[meta],synonymNote:payload};
  const lesson={id:'escape-probe',usage:[item,{phrase:'in the end',meaning:'最后',example:'In the end I went home.'}],notesUsageGrammarReview:[{title:payload,note:payload,...meta}]},pp=practice(after,lesson);pp.setLesson(lesson);
  for(const mode of ['learn','fill','match','order','write']){pp.mode=mode;pp.submitted=true;pp.answers={};const html=pp.render();assert.doesNotMatch(html,/<img\b|<svg\b|onerror="attack\(\)"|onload="attack\(\)"/i,mode);assert(html.includes('&lt;img'),mode+' payload remains literal visible text');}
 });
-test('independent: all276 bodies, translations, vocabulary and grammar, twenty packs and all877 expansion bindings survive this usage-only batch',()=>{
+test('independent: all276 bodies, translations, vocabulary and grammar, twenty-five packs and all877 expansion bindings survive this usage-only batch',()=>{
  assert.equal(before.LESSONS.length,276);assert.equal(after.LESSONS.length,276);
  for(const a of after.LESSONS){const b=before.LESSONS.find(l=>l.id===a.id);for(const key of ['paragraphs','textbook','translation','vocabulary','grammar','quiz','lines','title'])assert.deepEqual(plain(a[key]??null),plain(b[key]??null),a.id+' '+key);if(a.book!==2)assert.deepEqual(plain(a),plain(b));}
- assert.equal(after.StudyPracticePacks.registry.lessonIds().length,20);for(const id of before.StudyPracticePacks.registry.lessonIds())assert.deepEqual(plain(after.StudyPracticePacks.registry.get(id)),plain(before.StudyPracticePacks.registry.get(id)),id);
+ assert.equal(after.StudyPracticePacks.registry.lessonIds().length,25);assert.deepEqual(plain(after.StudyPracticePacks.registry.lessonIds()),plain(before.StudyPracticePacks.registry.lessonIds()));for(const id of before.StudyPracticePacks.registry.lessonIds())assert.deepEqual(plain(after.StudyPracticePacks.registry.get(id)),plain(before.StudyPracticePacks.registry.get(id)),id);
  assert.equal(after.StudyKnowledge.bank.audit.expansionQuestions.length,877);assert.deepEqual(plain(after.StudyKnowledge.bank.audit.expansionQuestions),plain(before.StudyKnowledge.bank.audit.expansionQuestions));assert.deepEqual(plain(after.StudyKnowledge.bank.audit.expansionIssues),[]);assert.deepEqual(plain(after.STUDY_WORD_AUDIO),plain(before.STUDY_WORD_AUDIO));
 });
 module.exports={DIST,FIX,load,apply,l,phrase,practice,plain,E,before,after};

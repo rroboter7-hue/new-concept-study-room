@@ -4,8 +4,14 @@
 // bootstrap order. Dictionary shards are read as JSON data, never executable code.
 const fs=require('node:fs'),path=require('node:path'),vm=require('node:vm'),crypto=require('node:crypto');
 const DEFAULT_ROOT=path.resolve(__dirname,'..');
-const POLICY='First exact spelling/form in learner-facing lesson.title followed by paragraphs[].en, in numeric book/lesson order. ASCII tokens [A-Za-z]+(?:[’\'-][A-Za-z]+)*; lowercase and smart apostrophe normalization only. No stemming or omission of names/function words. Abbreviation-only dictionary glosses require a literal uppercase source acronym or an explicitly listed standard English contraction; otherwise retain the target with a missing meaning. Valid course glosses take precedence. Original vocabulary rows remain available; this is corpus novelty, not learner mastery.';
+const lexical=require('../lexical-word-tokens.js');
+const POLICY='First exact lexical spelling/form in learner-facing lesson.title then paragraphs[].en, in numeric book/lesson order. Shared lexical-word-tokens v1: complete numeric ordinal spans are preserved as text and excluded before lexical seen tracking; 21st-century contributes century, never st-century. Dotted St. is retained in source-bound quarantine until its Saint context is reviewed, never supplied a technical ST gloss. No stemming or global short-word blacklist. Other dictionary/course precedence and original vocabulary rows are preserved. This is corpus novelty, not learner mastery.';
 const hash=value=>crypto.createHash('sha256').update(value).digest('hex');
+// Git may check scripts out with CRLF on Windows. Hash their UTF-8 text with
+// LF endings; dictionary shards and LICENSE retain their original byte hashes.
+const scriptText=value=>(Buffer.isBuffer(value)?value.toString('utf8'):String(value)).replace(/\r\n?/g,'\n');
+const scriptHash=value=>hash(scriptText(value));
+const HASH_ENCODING=Object.freeze({scriptInputs:'utf8-lf',tokenizer:'utf8-lf',generatedScript:'utf8-lf',dictionaryShards:'raw-bytes',dictionaryLicense:'raw-bytes',sourceBindings:'utf8-exact-logical-data'});
 const normalize=value=>typeof value==='string'?value.replace(/[‘’]/g,"'").trim().toLowerCase():'';
 // A finite set, not apostrophe/suffix inference. The dictionary still supplies
 // the literal gloss; this exception only distinguishes contractions from acronyms.
@@ -28,17 +34,18 @@ function collectCorpus(projectRoot=DEFAULT_ROOT){
     if(!absolute.startsWith(root+path.sep))throw Error('Bootstrap script leaves project root: '+file);
     const data=fs.readFileSync(absolute);
     vm.runInContext(data.toString('utf8'),scope,{filename:file,timeout:15_000});
-    inputs.push({file,sha256:hash(data)});
+    inputs.push({file,sha256:scriptHash(data)});
   }
   if(!Array.isArray(scope.LESSONS))throw Error('Public bootstrap did not expose LESSONS.');
   return {lessons:JSON.parse(JSON.stringify(scope.LESSONS)),inputs};
 }
 
-function sentenceAt(text,offset){
+function sentenceAt(text,offset,dottedSt=false){
   // These are literal passage slices, with no paraphrasing or generated examples.
   // Retain closing quotes; punctuation boundaries do not affect token novelty.
-  for(const match of text.matchAll(/[^.!?\n]+(?:[.!?]+[’”"']*|$)/g)){
-    if(offset>=match.index&&offset<match.index+match[0].length)return match[0].trim();
+  const scanning=dottedSt?text.replace(/\bSt\./g,'St·'):text;
+  for(const match of scanning.matchAll(/[^.!?\n]+(?:[.!?]+[’”"']*|$)/g)){
+    if(offset>=match.index&&offset<match.index+match[0].length)return text.slice(match.index,match.index+match[0].length).trim();
   }
   return text.trim();
 }
@@ -57,28 +64,36 @@ function createManifest(lessons,dictionary={},metadata={}){
   if(!Array.isArray(lessons))throw Error('Lessons must be an array.');
   const sorted=[...lessons].sort((a,b)=>a.book-b.book||a.number-b.number||String(a.id).localeCompare(String(b.id),'en'));
   const ids=new Set(),routes=new Set(),seen=new Set(),rows=[];
-  let missingMeaning=0;
+  let missingMeaning=0,activeWords=0,quarantinedFirstOccurrences=0,excludedOrdinalOccurrences=0;
   const byBook={1:0,2:0,3:0,4:0},lessonsByBook={1:0,2:0,3:0,4:0};
   for(const lesson of sorted){
     if(!lesson||typeof lesson.id!=='string'||!lesson.id||![1,2,3,4].includes(lesson.book)||!Number.isInteger(lesson.number)||lesson.number<1||typeof lesson.title!=='string'||!Array.isArray(lesson.paragraphs)||lesson.paragraphs.some(row=>!row||typeof row.en!=='string'))throw Error('Invalid reading lesson source: '+lesson?.id);
     const route=lesson.book+':'+lesson.number;
     if(ids.has(lesson.id)||routes.has(route))throw Error('Duplicate reading lesson id or book/number: '+lesson.id);
     ids.add(lesson.id);routes.add(route);lessonsByBook[lesson.book]++;
-    const vocabulary=Array.isArray(lesson.vocabulary)?lesson.vocabulary:[],targets=[];
-    const sources=[{text:lesson.title,location:'title'},...lesson.paragraphs.map(row=>({text:row.en,location:'body'}))];
-    for(const source of sources)for(const match of source.text.matchAll(/[A-Za-z]+(?:[’'-][A-Za-z]+)*/g)){
-      const key=normalize(match[0]);if(seen.has(key))continue;seen.add(key);
+    const vocabulary=Array.isArray(lesson.vocabulary)?lesson.vocabulary:[],targets=[],quarantinedTargets=[],quarantinedOccurrences=[],excludedOrdinals=[];
+    const sources=[{text:lesson.title,location:'title',paragraphIndex:null},...lesson.paragraphs.map((row,index)=>({text:row.en,location:'body',paragraphIndex:index}))];
+    for(const source of sources)for(const token of lexical.scan(source.text)){
+      const surface=token.surface,index=token.start,key=normalize(surface);
+      if(token.kind==='ordinal'){excludedOrdinals.push({surface,sourceLocation:source.location,paragraphIndex:source.paragraphIndex,start:token.start,end:token.end,sourceSentence:source.location==='title'?source.text:sentenceAt(source.text,index),reason:'numeric-ordinal-not-an-independent-lexical-word'});excludedOrdinalOccurrences++;continue;}
+      if(lexical.isDottedSt(source.text,token)){
+        const first=!seen.has(key),occurrence={word:surface,sourceForm:surface+'.',sourceLessonId:lesson.id,sourceBook:lesson.book,sourceNumber:lesson.number,sourceTitle:lesson.title,sourceBodySha256:hash(lesson.paragraphs.map(p=>p.en).join('\n\n')),sourcePdfPage:lesson.textbook?.sourcePdfPage||null,sourceLocation:source.location,paragraphIndex:source.paragraphIndex,start:token.start,end:token.end+1,sourceSentence:source.location==='title'?source.text:sentenceAt(source.text,index,true),firstLexicalOccurrence:first,candidateExpansion:'Saint',active:false,practiceEligible:false,needsContextReview:true,reason:'Dotted St. requires context review; technical ST dictionary senses are not used.'};
+        quarantinedOccurrences.push(occurrence);
+        if(first){seen.add(key);quarantinedFirstOccurrences++;quarantinedTargets.push({...occurrence,meaning:'释义待语境核对',meaningMissing:true,meaningSource:'quarantined-abbreviation',needsContextReview:true,practiceEligible:false,isLessonNew:false});}
+        continue;
+      }
+      if(seen.has(key))continue;seen.add(key);
       const original=vocabulary.find(row=>normalize(row?.word)===key&&validMeaning(row)),entry=dictionary[key];
       // Reviewed against the shipped B1L9 dialogue and Chinese line “托尼好吗？”.
       // This literal name occurrence must not inherit the adjective “tony”.
-      const tonyName=!original&&lesson.id==='nce-b1-4be758-l009'&&lesson.book===1&&lesson.number===9&&lesson.title==='第9课 · How are you today?'&&match[0]==='Tony'&&source.location==='body'&&source.text==='How is Tony?';
-      const meaning=original?.meaning.trim()||(tonyName?'人名（Tony）':dictionaryMeaning(entry,match[0]));
-      const target={word:match[0],meaning:meaning||'释义待补充',pos:original&&typeof original.pos==='string'?original.pos:tonyName?'n.':posOf(entry),sourceSentence:source.location==='title'?source.text:sentenceAt(source.text,match.index),sourceLocation:source.location,isLessonNew:true,meaningMissing:!meaning,meaningSource:original?'lesson-vocabulary':tonyName?'source-context-review':meaning?'ECDICT':'unavailable'};
+      const tonyName=!original&&lesson.id==='nce-b1-4be758-l009'&&lesson.book===1&&lesson.number===9&&lesson.title==='第9课 · How are you today?'&&surface==='Tony'&&source.location==='body'&&source.text==='How is Tony?';
+      const meaning=original?.meaning.trim()||(tonyName?'人名（Tony）':dictionaryMeaning(entry,surface));
+      const target={word:surface,meaning:meaning||'释义待补充',pos:original&&typeof original.pos==='string'?original.pos:tonyName?'n.':posOf(entry),sourceSentence:source.location==='title'?source.text:sentenceAt(source.text,index),sourceLocation:source.location,isLessonNew:true,meaningMissing:!meaning,meaningSource:original?'lesson-vocabulary':tonyName?'source-context-review':meaning?'ECDICT':'unavailable'};
       const phonetic=original&&typeof original.phonetic==='string'&&original.phonetic.trim()?original.phonetic:entry&&typeof entry.phonetic==='string'?entry.phonetic:'';
       if(phonetic)target.phonetic=phonetic;
       if(!original&&!tonyName&&meaning&&entry.headword)target.dictionaryHeadword=entry.headword;
       if(!meaning)missingMeaning++;
-      targets.push(target);byBook[lesson.book]++;
+      targets.push(target);activeWords++;byBook[lesson.book]++;
     }
     // A sentence may introduce many words. Store its literal text once and keep
     // private indices in the artifact; the public API expands sourceSentence.
@@ -88,9 +103,9 @@ function createManifest(lessons,dictionary={},metadata={}){
       target.sourceSentenceIndex=sentenceIndices.get(target.sourceSentence);delete target.sourceSentence;
     }
     const sourceBinding=binding(lesson);
-    rows.push({id:lesson.id,book:lesson.book,number:lesson.number,sourceBinding,sourceSha256:hash(sourceBinding),sourceSentences,targets});
+    rows.push({id:lesson.id,book:lesson.book,number:lesson.number,sourceBinding,sourceSha256:hash(sourceBinding),sourceSentences,targets,quarantinedTargets,quarantinedOccurrences,excludedOrdinals});
   }
-  return {version:1,policy:POLICY,status:{lessons:rows.length,newWords:seen.size,missingMeaning,byBook,lessonsByBook},inputs:metadata.inputs||[],dictionary:metadata.dictionary||null,lessons:rows};
+  return {version:2,policy:POLICY,hashEncoding:HASH_ENCODING,status:{lessons:rows.length,newWords:activeWords,missingMeaning,quarantinedFirstOccurrences,quarantinedOccurrences:rows.reduce((n,r)=>n+r.quarantinedOccurrences.length,0),excludedOrdinalOccurrences,byBook,lessonsByBook},inputs:metadata.inputs||[],dictionary:metadata.dictionary||null,tokenizer:{file:'lexical-word-tokens.js',version:lexical.version},lessons:rows};
 }
 
 // Stringified into the browser artifact, so this function has no Node dependency.
@@ -139,11 +154,12 @@ function installLessonWordTargets(payload){
     var seen=Object.create(null);
     return vocabularyForLesson(lesson,originalRows).filter(function(row){var key=normalize(row&&row.word);if(!row||row.isLessonNew!==true||seen[key])return false;seen[key]=true;return true;});
   }
+  function quarantinedForLesson(lesson){var row=lesson&&index[lesson.id];return row&&statusForLesson(lesson).bound?clone(row.quarantinedOccurrences||[]).map(function(item){item.sourceBindingSha256=row.sourceSha256;return item;}):[];}
   var status=clone(payload.status);Object.keys(status).forEach(function(key){if(status[key]&&typeof status[key]==='object')Object.freeze(status[key]);});Object.freeze(status);
-  return Object.freeze({vocabularyForLesson:vocabularyForLesson,newWordsForLesson:newWordsForLesson,statusForLesson:statusForLesson,status:status,policy:payload.policy});
+  return Object.freeze({vocabularyForLesson:vocabularyForLesson,newWordsForLesson:newWordsForLesson,quarantinedForLesson:quarantinedForLesson,statusForLesson:statusForLesson,status:status,policy:payload.policy});
 }
 function browserSource(manifest){
-  return '/* Generated offline by dev/build-lesson-word-targets.cjs. Do not hand edit. */\n(function(root,factory){\n  "use strict";var api=factory('+JSON.stringify(manifest).replace(/</g,'\\u003c')+');\n  if(typeof module==="object"&&module.exports)module.exports=api;else root.StudyLessonWordTargets=api;\n})(typeof globalThis!=="undefined"?globalThis:this,'+installLessonWordTargets.toString()+');\n';
+  return scriptText('/* Generated offline by dev/build-lesson-word-targets.cjs. Do not hand edit. */\n(function(root,factory){\n  "use strict";var api=factory('+JSON.stringify(manifest).replace(/</g,'\\u003c')+');\n  if(typeof module==="object"&&module.exports)module.exports=api;else root.StudyLessonWordTargets=api;\n})(typeof globalThis!=="undefined"?globalThis:this,'+scriptText(installLessonWordTargets.toString())+');\n');
 }
 function readDictionary(root){
   const directory=path.join(root,'dictionary-data'),entries=Object.create(null),inputs=[];
@@ -159,11 +175,13 @@ function readDictionary(root){
   return {entries,metadata:{name:source.name,commit:source.commit,license:source.license,inputs}};
 }
 function buildLessonWordTargets(options={}){
-  const root=path.resolve(options.projectRoot||DEFAULT_ROOT),corpus=collectCorpus(root),dictionary=readDictionary(root);
+  const root=path.resolve(options.projectRoot||DEFAULT_ROOT),lexicalBytes=fs.readFileSync(path.join(root,'lexical-word-tokens.js'));
+  if(scriptHash(lexicalBytes)!==scriptHash(fs.readFileSync(path.join(DEFAULT_ROOT,'lexical-word-tokens.js'))))throw Error('Shared lexical tokenizer source mismatch.');
+  const corpus=collectCorpus(root),dictionary=readDictionary(root);
   const manifest=createManifest(corpus.lessons,dictionary.entries,{inputs:corpus.inputs,dictionary:dictionary.metadata});
   const outputFile=path.resolve(options.outputFile||path.join(root,'lesson-word-targets.js')),sourceFile=path.resolve(options.sourceFile||path.join(root,'lesson-word-targets-source.json'));
   const source=browserSource(manifest);fs.writeFileSync(outputFile,source);
-  const provenance={version:manifest.version,policy:manifest.policy,status:manifest.status,inputs:manifest.inputs,dictionary:manifest.dictionary,lessons:manifest.lessons.map(row=>({id:row.id,book:row.book,number:row.number,sourceSha256:row.sourceSha256,newWords:row.targets.length,missingMeaning:row.targets.filter(target=>target.meaningMissing).map(target=>target.word)})),artifact:{file:path.basename(outputFile),sha256:hash(source),bytes:Buffer.byteLength(source)},rebuild:'node dev/build-lesson-word-targets.cjs (offline; existing dictionary-data shards only)'};
+  const provenance={version:manifest.version,policy:manifest.policy,hashEncoding:manifest.hashEncoding,status:manifest.status,inputs:manifest.inputs,dictionary:manifest.dictionary,tokenizer:{...manifest.tokenizer,hashEncoding:'utf8-lf',sha256:scriptHash(lexicalBytes)},lessons:manifest.lessons.map(row=>({id:row.id,book:row.book,number:row.number,sourceSha256:row.sourceSha256,newWords:row.targets.length,missingMeaning:row.targets.filter(target=>target.meaningMissing).map(target=>target.word),quarantinedTargets:row.quarantinedTargets,quarantinedOccurrences:row.quarantinedOccurrences,excludedOrdinals:row.excludedOrdinals})),artifact:{file:path.basename(outputFile),sha256:hash(source),bytes:Buffer.byteLength(source),hashEncoding:'utf8-lf'},rebuild:'node dev/build-lesson-word-targets.cjs (offline; existing dictionary-data shards only)'};
   fs.writeFileSync(sourceFile,JSON.stringify(provenance,null,2)+'\n');
   return provenance;
 }
