@@ -1,8 +1,51 @@
 (() => {
  'use strict';
  class TextStudyLibrary {
-  constructor(options){this.options=options;this.doc=null;this.section=0;this.tab='text';document.addEventListener('click',event=>{const b=event.target.closest('[data-text-action]');if(!b)return;options.beforeChange?.();switch(b.dataset.textAction){case'back':this.loadSeq=(this.loadSeq||0)+1;this.doc=null;options.onBack();break;case'section':this.section=Number(b.dataset.textSection)||0;this.render();break;case'tab':this.tab=b.dataset.textTab;this.render();break;}});document.addEventListener('change',event=>{if(event.target.classList.contains('text-section-select')){options.beforeChange?.();this.section=Number(event.target.value)||0;this.render();}});}
-  async open(id,index=null){this.options.beforeChange?.();const descriptor=this.options.data.find(d=>d.id===id),seq=this.loadSeq=(this.loadSeq||0)+1;if(!descriptor){this.options.toast('这份资料的文字版尚在整理，请稍后重试。');return;}this.doc=descriptor;this.tab='text';if(descriptor.dataUrl&&!descriptor.sections){this.options.container.innerHTML='<div class="text-reader"><button class="button" data-text-action="back">返回教材资料</button><p>正在载入文字资料……</p></div>';try{const url=new URL(descriptor.dataUrl,location.href);if(url.origin!==location.origin)throw Error('Invalid source');const response=await fetch(url);if(!response.ok)throw Error('Unavailable');const loaded=await response.json();if(!Array.isArray(loaded.sections))throw Error('Invalid document');descriptor.sections=loaded.sections;}catch{if(seq!==this.loadSeq)return;this.options.container.innerHTML='<div class="text-reader"><button class="button" data-text-action="back">返回教材资料</button><p>文字资料暂时未能加载，请返回后重新打开。</p></div>';return;}}if(seq!==this.loadSeq||this.options.isActive?.()===false)return;this.doc=descriptor;const first=descriptor.sections?.findIndex(s=>(s.english||[]).length>0)??0;this.section=Number.isInteger(index)&&index>=0?index:Math.max(0,descriptor.defaultSectionIndex??first);this.render();}
+  constructor(options){this.options=options;this.doc=null;this.section=0;this.tab='text';this.sectionCache=new Map();this.pendingLoads=new Map();document.addEventListener('click',event=>{const b=event.target.closest('[data-text-action]');if(!b)return;options.beforeChange?.();switch(b.dataset.textAction){case'back':this.loadSeq=(this.loadSeq||0)+1;this.doc=null;options.onBack();break;case'section':this.section=Number(b.dataset.textSection)||0;this.render();break;case'tab':this.tab=b.dataset.textTab;this.render();break;}});document.addEventListener('change',event=>{if(event.target.classList.contains('text-section-select')){options.beforeChange?.();this.section=Number(event.target.value)||0;this.render();}});}
+  rememberSections(id,sections){
+   this.sectionCache.delete(id);this.sectionCache.set(id,sections);
+   while(this.sectionCache.size>2){const oldest=[...this.sectionCache.keys()].find(key=>key!==this.doc?.id);this.sectionCache.delete(oldest);}
+   return sections;
+  }
+  loadSections(descriptor){
+   if(this.pendingLoads.has(descriptor.id))return this.pendingLoads.get(descriptor.id);
+   // A repeated open shares its request; navigation invalidates rendering without
+   // cancelling a request that another open is still waiting for.
+   const request=(async()=>{
+    const url=new URL(descriptor.dataUrl,location.href);
+    if(!/^https?:$/.test(url.protocol)||url.origin!==location.origin)throw Error('Invalid source');
+    const response=await fetch(url);if(!response.ok)throw Error('Unavailable');
+    const loaded=await response.json();if(!Array.isArray(loaded.sections))throw Error('Invalid document');
+    return this.rememberSections(descriptor.id,loaded.sections);
+   })().finally(()=>this.pendingLoads.delete(descriptor.id));
+   this.pendingLoads.set(descriptor.id,request);return request;
+  }
+  isCurrentLoad(seq,loading){
+   if(seq!==this.loadSeq||this.options.isActive?.()===false)return false;
+   // The app may replace the library panel while a fetch is pending, then return
+   // to the catalog before it completes. That response must not reopen the book.
+   return !loading||this.options.container.innerHTML.includes('data-text-loading="'+seq+'"');
+  }
+  async open(id,index=null){
+   this.options.beforeChange?.();const descriptor=this.options.data.find(d=>d.id===id),seq=this.loadSeq=(this.loadSeq||0)+1;
+   if(!descriptor){this.options.toast('这份资料的文字版尚在整理，请稍后重试。');return;}
+   if(this.options.isActive?.()===false)return;
+   this.doc=descriptor;this.tab='text';let sections=descriptor.sections,loading=false;
+   if(descriptor.dataUrl&&!Array.isArray(sections)){
+    if(this.sectionCache.has(descriptor.id))sections=this.rememberSections(descriptor.id,this.sectionCache.get(descriptor.id));
+    else{
+     loading=true;this.options.container.innerHTML='<div class="text-reader" data-text-loading="'+seq+'"><button class="button" data-text-action="back">返回教材资料</button><p>正在载入文字资料……</p></div>';
+     try{sections=await this.loadSections(descriptor);}catch{
+      if(!this.isCurrentLoad(seq,loading))return;
+      this.options.container.innerHTML='<div class="text-reader"><button class="button" data-text-action="back">返回教材资料</button><p>文字资料暂时未能加载，请返回后重新打开。</p></div>';return;
+     }
+    }
+   }
+   if(!this.isCurrentLoad(seq,loading))return;
+   this.doc=descriptor.sections===sections?descriptor:{...descriptor,sections};
+   const first=sections?.findIndex(s=>(s.english||[]).length>0)??0;
+   this.section=Number.isInteger(index)&&index>=0?index:Math.max(0,descriptor.defaultSectionIndex??first);this.render();
+  }
   lesson(section){return{id:'note-'+this.doc.id+'-'+section.id,book:this.doc.book||1,title:section.title,subtitle:this.doc.title,source:'provided',paragraphs:(section.english||[]).slice(0,25).map(en=>({en,zh:''})),vocabulary:(section.vocabulary||[]).slice(0,12),keyPoints:section.keyPoints||[],grammar:section.grammar||[],usage:section.usage||[]};}
   knowledge(section){const e=this.options.escapeHTML;const points=section.keyPoints||[],grammar=section.grammar||[],usage=section.usage||[];return `<div class="knowledge-grid">${points.length?`<section class="knowledge-card"><h3>本节重点知识</h3>${points.map((p,i)=>`<p><strong>${i+1}.</strong> ${e(p)}</p>`).join('')}</section>`:''}${grammar.map(g=>`<section class="knowledge-card grammar-card"><h3>${e(g.title||'语法要点')}</h3><p>${e(g.note||'')}</p>${g.example?`<p class="english">${this.options.wordHTML(g.example)}</p>`:''}</section>`).join('')}${usage.map(u=>`<section class="knowledge-card"><h3>${e(u.phrase)}</h3><p>${e(u.meaning||'')}</p>${u.example?`<p class="english">${this.options.wordHTML(u.example)}</p>`:''}</section>`).join('')}${(section.vocabulary||[]).length?`<section class="knowledge-card"><h3>本节词汇线索</h3>${section.vocabulary.map(v=>`<p>${this.options.wordHTML(v.word)} ${e(v.phonetic||'')} ${e(v.meaning||'')}</p>`).join('')}</section>`:''}${!points.length&&!grammar.length&&!usage.length?'<div class="text-empty">本节没有识别到独立的语法或用法条目，可从“文字阅读”查看原笔记。</div>':''}</div><p class="text-source-note">要点来自本节原笔记的文字整理，原始内容可在文字阅读中逐行核对。</p>`;}
   render(){if(!this.doc)return;const e=this.options.escapeHTML,d=this.doc,sections=d.sections||[],section=sections[this.section]||sections[0],source=(window.STUDY_LIBRARY||[]).find(f=>f.id===d.id),archived=source&&window.StudySourceFiles?.isArchived?.(source.url);if(!section){this.options.container.innerHTML=`<div class="text-reader"><button class="button" data-text-action="back">返回教材资料</button><div class="text-empty">此文件没有可提取的文字层，可能是空白书写纸或扫描页。其他资料已转换为可练习的文字。</div>${source?archived?'<p class="text-source-note">原PDF已归档</p>':`<a class="button" href="${e(source.url)}" target="_blank" rel="noopener">查看原始文件</a>`:''}</div>`;return;}

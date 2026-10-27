@@ -77,6 +77,14 @@ function collectProjectWords(projectRoot=path.resolve(__dirname,'..')){
     vm.runInContext(data.toString('utf8'),scope,{filename:file,timeout:15_000});
     inputs.push({file,sha256:sha(data)});
   }
+  // JSON bodies are intentionally absent from the browser's initial catalog.
+  // Corpus generation is offline: read the same local bodies explicitly and
+  // record their hashes so rebuilding the dictionary retains all source words.
+  for(const descriptor of scope.TEXT_LIBRARY||[]){
+    if(!descriptor.dataUrl||Array.isArray(descriptor.sections))continue;
+    const document=require('./extract-text-library.cjs').readDocument(root,descriptor.dataUrl);
+    descriptor.sections=document.sections;inputs.push({file:document.file,sha256:sha(document.bytes)});
+  }
   const words=new Set(),seen=new WeakSet();
   const textFields=new Set(['word','phrase','en','zh','lines','english','title','subtitle','topic','meaning','example','examples','question','options','answer','explanation','rule','note','sentence','sourceSentence','contrastExamples','keyPoints','prompt','text','content','matchedForm']);
   const metadata=new Set(['origin','source','sourceUrl','url','audio','phonetic','pos','id','conceptId','sourceDocId','sourceSectionIndex','sourcePages','sourcePage','sha256','sourceName']);

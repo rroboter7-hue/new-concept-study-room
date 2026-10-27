@@ -3,3 +3,6 @@ book34-language-support.js text eol=lf
 # Preserve the generated dictionary and bundled license byte hashes on Windows.
 dictionary-data/*.json -text
 dictionary-data/LICENSE -text
+# Content-addressed study notes must retain their exact JSON byte hashes.
+text-library-data/*.json -text
+text-library.js text eol=lf

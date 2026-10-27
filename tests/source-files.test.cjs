@@ -40,5 +40,5 @@ test('all four reading books and converted text remain usable after source PDF r
   assert.ok(html.indexOf('source-files.js')<html.indexOf('app.js'));
   const library=Array.isArray(c.TEXT_LIBRARY)?c.TEXT_LIBRARY:Object.values(c.TEXT_LIBRARY||{});
   assert.ok(library.length>=9);
-  for(const item of c.STUDY_LIBRARY){if(c.StudySourceFiles.isArchived(item.url)){const text=library.find(row=>row.id===item.id);assert.ok(text?.sections?.length,item.title);}}
+  for(const item of c.STUDY_LIBRARY){if(c.StudySourceFiles.isArchived(item.url)){const text=library.find(row=>row.id===item.id);assert.ok(text,item.title);const sections=text.dataUrl?JSON.parse(fs.readFileSync(path.join(root,text.dataUrl),'utf8')).sections:text.sections;assert.ok(sections?.length,item.title);}}
 });
