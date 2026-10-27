@@ -39,7 +39,7 @@
     "inputs": [
       {
         "file": "index.html",
-        "sha256": "cae51112e472ca71f11b4b0942494fd0a5703645fc665ba05cb35e4920196a09"
+        "sha256": "36fcc02e52ce15830bf9aaf50dfa845a6074bcd2923aecd0dcd9a428f6f028e9"
       },
       {
         "file": "curriculum.js",

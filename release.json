@@ -1,6 +1,6 @@
 {
-  "build": "2026-10-27-bilingual",
-  "preparedAt": "2026-10-27T01:56:24.695571+00:00",
+  "build": "2026-10-27-bilingual-v2",
+  "preparedAt": "2026-10-27T02:01:42.981947+00:00",
   "book2": {
     "book": 2,
     "total": 96,
@@ -305,7 +305,8 @@
     "independentLanguageFields": true,
     "notebookBilingual": true,
     "sourceLink": "https://github.com/skywind3000/ECDICT",
-    "unknownWordsLabelled": true
+    "unknownWordsLabelled": true,
+    "independentMeaningProvenance": true
   },
   "postReadingFlow": {
     "order": [
