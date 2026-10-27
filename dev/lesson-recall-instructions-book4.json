@@ -1,0 +1,919 @@
+{
+  "version": 1,
+  "book": 4,
+  "language": "zh-CN",
+  "lessons": [
+    {
+      "lessonId": "nce-textbook-b4-l001",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Modal perfect. Choose the correct form: They may also ___ wood and skins",
+          "sourceGrammarPoint": "Modal perfect",
+          "instructionZh": "选择正确的形式，填入空格：They may also ___ wood and skins",
+          "grammarPointZh": "情态动词与完成式"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Combine with \"neither ... nor\": Archaeologists have no history. They have no legends. Begin with \"Archaeologists have\".",
+          "sourceGrammarPoint": "Neither ... nor",
+          "instructionZh": "用 neither ... nor将下面两句合并，以 Archaeologists have 开头：Archaeologists have no history. They have no legends.",
+          "grammarPointZh": "neither…nor…（既不……也不……）"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b4-l002",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Second conditional. Choose the correct form: if it ___ not for the protection we get",
+          "sourceGrammarPoint": "Second conditional",
+          "instructionZh": "选择正确的形式，填入空格：if it ___ not for the protection we get",
+          "grammarPointZh": "第二条件句（对现在或将来的假设）"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Complete with the correct form of \"kill\": Spiders are busy in ___ insects. Write exactly 1 word.",
+          "sourceGrammarPoint": "Gerund after a preposition",
+          "instructionZh": "用 kill 的适当形式填空，只填 1 个词：Spiders are busy in ___ insects.",
+          "grammarPointZh": "介词后接动名词（-ing 形式）"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b4-l003",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Correlative comparison. Choose the correct form: the more difficult it is, the ___ it is regarded",
+          "sourceGrammarPoint": "Correlative comparison",
+          "instructionZh": "选择正确的形式，填入空格：the more difficult it is, the ___ it is regarded",
+          "grammarPointZh": "“越……越……”比较结构"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Express a strong deduction about the past, using \"must have been\": The change to the Alps was very hard indeed.",
+          "sourceGrammarPoint": "Past deduction",
+          "instructionZh": "用 must have been 表达对过去情况的强烈推断：The change to the Alps was very hard indeed.",
+          "grammarPointZh": "对过去情况的推测"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b4-l004",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Present perfect passive. Choose the correct form: Several cases ___ in Russia recently",
+          "sourceGrammarPoint": "Present perfect passive",
+          "instructionZh": "选择正确的形式，填入空格：Several cases ___ in Russia recently",
+          "grammarPointZh": "现在完成时的被动语态"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Complete with the correct form of \"put\": She happened ___ her hands on the door. Write exactly 2 words.",
+          "sourceGrammarPoint": "Infinitive complement",
+          "instructionZh": "用 put 的适当形式填空，只填 2 个词：She happened ___ her hands on the door.",
+          "grammarPointZh": "动词或形容词后的不定式结构"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b4-l005",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Cleft sentence with who. Choose the correct form: it is older people ___ create it",
+          "sourceGrammarPoint": "Cleft sentence with who",
+          "instructionZh": "选择正确的形式，填入空格：it is older people ___ create it",
+          "grammarPointZh": "强调句：强调人物"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Correct the grammatical error. Rewrite the whole sentence or phrase: The young is after all human beings.",
+          "sourceGrammarPoint": "Subject agreement",
+          "instructionZh": "改正句中的语法错误，写出完整句子：The young is after all human beings.",
+          "grammarPointZh": "主谓一致"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b4-l006",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Past participle modifier. Choose the correct form: Nearly all the sports ___ nowadays are competitive.",
+          "sourceGrammarPoint": "Past participle modifier",
+          "instructionZh": "选择正确的形式，填入空格：Nearly all the sports ___ nowadays are competitive.",
+          "grammarPointZh": "过去分词作定语"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Replace \"unless\" with \"if ... not\". Keep the rest unchanged: The game has little meaning unless you do your utmost to win.",
+          "sourceGrammarPoint": "Unless and if not",
+          "instructionZh": "用 if ... not替换 unless，其余内容保持不变：The game has little meaning unless you do your utmost to win.",
+          "grammarPointZh": "unless 与 if…not…结构转换"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b4-l007",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Relative object after a preposition. Choose the correct form: a case in ___ the voice plays a strictly utilitarian role",
+          "sourceGrammarPoint": "Relative object after a preposition",
+          "instructionZh": "选择正确的形式，填入空格：a case in ___ the voice plays a strictly utilitarian role",
+          "grammarPointZh": "介词后的关系代词"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Complete the paired comparative: The further away the obstruction is, the ___ the echo takes to return. (long) Write exactly 1 word.",
+          "sourceGrammarPoint": "Correlative comparison",
+          "instructionZh": "用 long 的适当比较级补全“越……越……”结构，只填 1 个词：The further away the obstruction is, the ___ the echo takes to return.",
+          "grammarPointZh": "“越……越……”比较结构"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b4-l008",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Cleft sentence. Choose the correct form: it is differences in national regulations, far more than tariffs, ___ put sand in the wheels of trade",
+          "sourceGrammarPoint": "Cleft sentence",
+          "instructionZh": "选择正确的形式，填入空格：it is differences in national regulations, far more than tariffs, ___ put sand in the wheels of trade",
+          "grammarPointZh": "强调句"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Expand with \"which are\". Write the whole noun phrase: chickens slaughtered in the United States.",
+          "sourceGrammarPoint": "Past participle modifier",
+          "instructionZh": "用 which are 展开省略的定语从句，写出整个名词短语：chickens slaughtered in the United States.",
+          "grammarPointZh": "过去分词作定语"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b4-l009",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Past participle describing the subject. Choose the correct form: Alfred visited Danish camps ___ as a minstrel.",
+          "sourceGrammarPoint": "Past participle describing the subject",
+          "instructionZh": "选择正确的形式，填入空格：Alfred visited Danish camps ___ as a minstrel.",
+          "grammarPointZh": "过去分词说明主语的状态"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Make this statement negative. Keep \"learned\": Alfred had learned many of their ballads in his youth.",
+          "sourceGrammarPoint": "Negative formation",
+          "instructionZh": "将下面的句子改为否定句，并保留 learned 的拼写：Alfred had learned many of their ballads in his youth.",
+          "grammarPointZh": "否定句的构成"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b4-l010",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Passive gerund. Choose the correct form: without ___ by expensive failures",
+          "sourceGrammarPoint": "Passive gerund",
+          "instructionZh": "选择正确的形式，填入空格：without ___ by expensive failures",
+          "grammarPointZh": "动名词的被动形式"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Use the correct form of \"soar\": They can let their imaginations ___. Write exactly 1 word.",
+          "sourceGrammarPoint": "Bare infinitive after let",
+          "instructionZh": "用 soar 的适当形式填空，只填 1 个词：They can let their imaginations ___.",
+          "grammarPointZh": "let 后接动词原形"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b4-l011",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Present perfect. Choose the correct form: an old man who ___ human joys and sorrows",
+          "sourceGrammarPoint": "Present perfect",
+          "instructionZh": "选择正确的形式，填入空格：an old man who ___ human joys and sorrows",
+          "grammarPointZh": "现在完成时"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Change to active. Begin with \"The fear of death\" and keep \"some old people\" as the object: Some old people are oppressed by the fear of death.",
+          "sourceGrammarPoint": "Active and passive",
+          "instructionZh": "改为主动语态，以 The fear of death 开头，并保留 some old people 作宾语：Some old people are oppressed by the fear of death.",
+          "grammarPointZh": "主动语态与被动语态转换"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b4-l012",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Gerund after a preposition. Choose the correct form: by ___ a cheque in favour of another person",
+          "sourceGrammarPoint": "Gerund after a preposition",
+          "instructionZh": "选择正确的形式，填入空格：by ___ a cheque in favour of another person",
+          "grammarPointZh": "介词后接动名词（-ing 形式）"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Change to the passive. Begin with \"Repayment\" and omit the agent: A customer may demand repayment at any time.",
+          "sourceGrammarPoint": "Modal passive",
+          "instructionZh": "改为被动语态，以 Repayment 开头，并省略动作执行者：A customer may demand repayment at any time.",
+          "grammarPointZh": "含情态动词的被动语态"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b4-l013",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Infinitive complement. Choose the correct form: has done more ___ deep drilling than any other mining activity",
+          "sourceGrammarPoint": "Infinitive complement",
+          "instructionZh": "选择正确的形式，填入空格：has done more ___ deep drilling than any other mining activity",
+          "grammarPointZh": "动词或形容词后的不定式结构"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Make a yes/no question: The deepest holes of all are made for oil.",
+          "sourceGrammarPoint": "Question formation",
+          "instructionZh": "将下面的句子改为一般疑问句：The deepest holes of all are made for oil.",
+          "grammarPointZh": "一般疑问句的构成"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b4-l014",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Passive infinitive. Choose the correct form: some starting data has to ___",
+          "sourceGrammarPoint": "Passive infinitive",
+          "instructionZh": "选择正确的形式，填入空格：some starting data has to ___",
+          "grammarPointZh": "不定式的被动形式"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Make a yes/no question with \"can\": Ground stations and satellites can see everywhere.",
+          "sourceGrammarPoint": "Question formation",
+          "instructionZh": "使用 can 将下面的句子改为一般疑问句：Ground stations and satellites can see everywhere.",
+          "grammarPointZh": "一般疑问句的构成"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b4-l015",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Relative object after a preposition. Choose the correct form: the general atmosphere of secrecy in ___ it is carried out",
+          "sourceGrammarPoint": "Relative object after a preposition",
+          "instructionZh": "选择正确的形式，填入空格：the general atmosphere of secrecy in ___ it is carried out",
+          "grammarPointZh": "介词后的关系代词"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Expand with \"who are\". Write the whole noun phrase: all those engaged in carrying it out.",
+          "sourceGrammarPoint": "Past participle modifier",
+          "instructionZh": "用 who are 展开省略的定语从句，写出整个名词短语：all those engaged in carrying it out.",
+          "grammarPointZh": "过去分词作定语"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b4-l016",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Present perfect passive. Choose the correct form: the influence of the factory upon the physiological and mental state of the workers ___",
+          "sourceGrammarPoint": "Present perfect passive",
+          "instructionZh": "选择正确的形式，填入空格：the influence of the factory upon the physiological and mental state of the workers ___",
+          "grammarPointZh": "现在完成时的被动语态"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Complete with the correct form of \"give\": Industry has expanded without ___ any consideration to these effects. Write exactly 1 word.",
+          "sourceGrammarPoint": "Gerund after a preposition",
+          "instructionZh": "用 give 的适当形式填空，只填 1 个词：Industry has expanded without ___ any consideration to these effects.",
+          "grammarPointZh": "介词后接动名词（-ing 形式）"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b4-l017",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Modal perfect. Choose the correct form: the herbage which ___ millions of sheep and cattle",
+          "sourceGrammarPoint": "Modal perfect",
+          "instructionZh": "选择正确的形式，填入空格：the herbage which ___ millions of sheep and cattle",
+          "grammarPointZh": "情态动词与完成式"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Complete with parallel gerunds: It caused devastation by burrowing and by ___ the herbage. (devour) Write exactly 1 word.",
+          "sourceGrammarPoint": "Parallel structure",
+          "instructionZh": "用 devour 的适当形式填空，使并列的两个动词形式一致。只填 1 个词：It caused devastation by burrowing and by ___ the herbage.",
+          "grammarPointZh": "并列结构中的词形一致"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b4-l018",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Concessive however. Choose the correct form: ___ intelligent they may be",
+          "sourceGrammarPoint": "Concessive however",
+          "instructionZh": "选择正确的形式，填入空格：___ intelligent they may be",
+          "grammarPointZh": "让步结构"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Complete with the correct form of \"surround\": They protect them by ___ them in defensive formation. Write exactly 1 word.",
+          "sourceGrammarPoint": "Gerund after a preposition",
+          "instructionZh": "用 surround 的适当形式填空，只填 1 个词：They protect them by ___ them in defensive formation.",
+          "grammarPointZh": "介词后接动名词（-ing 形式）"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b4-l019",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Perfect continuous. Choose the correct form: Speculations about its nature ___ on",
+          "sourceGrammarPoint": "Perfect continuous",
+          "instructionZh": "选择正确的形式，填入空格：Speculations about its nature ___ on",
+          "grammarPointZh": "完成进行时"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Change to active. Begin with \"A brief period of lying down\" and keep \"rest\" as the object: Rest can be achieved by a brief period of lying down.",
+          "sourceGrammarPoint": "Active and passive",
+          "instructionZh": "改为主动语态，以 A brief period of lying down 开头，并保留 rest 作宾语：Rest can be achieved by a brief period of lying down.",
+          "grammarPointZh": "主动语态与被动语态转换"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b4-l020",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Gerund after a preposition. Choose the correct form: without ___ poison",
+          "sourceGrammarPoint": "Gerund after a preposition",
+          "instructionZh": "选择正确的形式，填入空格：without ___ poison",
+          "grammarPointZh": "介词后接动名词（-ing 形式）"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Put these words in order, using every word or part once. Put the parts in order. Begin with \"How\": is a mystery / that snakes manufactured poison / how / it came about",
+          "sourceGrammarPoint": "Word order",
+          "instructionZh": "将下列单词或词组组成一句话，每项只用一次，并以 How 开头：is a mystery / that snakes manufactured poison / how / it came about",
+          "grammarPointZh": "单词和词组的排列顺序"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b4-l021",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Past perfect. Choose the correct form: He ___ in it as a child",
+          "sourceGrammarPoint": "Past perfect",
+          "instructionZh": "选择正确的形式，填入空格：He ___ in it as a child",
+          "grammarPointZh": "过去完成时"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Correct the grammatical error. Rewrite the whole sentence or phrase: His hero was firmly root in his memories and experiences.",
+          "sourceGrammarPoint": "Past participle after be",
+          "instructionZh": "改正句中的语法错误，写出完整句子：His hero was firmly root in his memories and experiences.",
+          "grammarPointZh": "be 后的过去分词形式"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b4-l022",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Modal passive. Choose the correct form: could ___ to another",
+          "sourceGrammarPoint": "Modal passive",
+          "instructionZh": "选择正确的形式，填入空格：could ___ to another",
+          "grammarPointZh": "含情态动词的被动语态"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Make a yes/no question: It has made extraordinary progress in the accumulation of knowledge.",
+          "sourceGrammarPoint": "Question formation",
+          "instructionZh": "将下面的句子改为一般疑问句：It has made extraordinary progress in the accumulation of knowledge.",
+          "grammarPointZh": "一般疑问句的构成"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b4-l023",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Relative subject. Choose the correct form: the smaller albatross, ___ may keep company with the vessel",
+          "sourceGrammarPoint": "Relative subject",
+          "instructionZh": "选择正确的形式，填入空格：the smaller albatross, ___ may keep company with the vessel",
+          "grammarPointZh": "定语从句：关系代词作主语"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Complete with the correct present form of \"be\": The currents of air that the ship directs upwards ___ enough to support the bird. Write exactly 1 word.",
+          "sourceGrammarPoint": "Subject agreement",
+          "instructionZh": "用 be 的一般现在时形式填空，只填 1 个词：The currents of air that the ship directs upwards ___ enough to support the bird.",
+          "grammarPointZh": "主谓一致"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b4-l024",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Subject agreement. Choose the correct form: That all great art has this power of suggesting a world beyond ___ undeniable.",
+          "sourceGrammarPoint": "Subject agreement",
+          "instructionZh": "选择正确的形式，填入空格：That all great art has this power of suggesting a world beyond ___ undeniable.",
+          "grammarPointZh": "主谓一致"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Change to active. Begin with \"People\" and retain both \"language\" and the purpose phrase: Language was invented to convey the meanings of this world.",
+          "sourceGrammarPoint": "Active and passive",
+          "instructionZh": "改为主动语态，以 People 开头，并保留 language 和原句表示目的的短语：Language was invented to convey the meanings of this world.",
+          "grammarPointZh": "主动语态与被动语态转换"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b4-l025",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Infinitive complement. Choose the correct form: they are not prepared even ___ the possibility",
+          "sourceGrammarPoint": "Infinitive complement",
+          "instructionZh": "选择正确的形式，填入空格：they are not prepared even ___ the possibility",
+          "grammarPointZh": "动词或形容词后的不定式结构"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Complete the content clause: They admit the possibility ___ noise affects people. Use the conjunction introducing the content, not a relative pronoun. Write exactly 1 word.",
+          "sourceGrammarPoint": "Content clause with that",
+          "instructionZh": "补全说明 possibility 具体内容的从句，填入引导这一内容的连词，不要用关系代词。只填 1 个词：They admit the possibility ___ noise affects people.",
+          "grammarPointZh": "说明名词具体内容的从句"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b4-l026",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Gerund after a preposition. Choose the correct form: all living creatures live by ___ on something else",
+          "sourceGrammarPoint": "Gerund after a preposition",
+          "instructionZh": "选择正确的形式，填入空格：all living creatures live by ___ on something else",
+          "grammarPointZh": "介词后接动名词（-ing 形式）"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Rewrite with inversion, beginning with \"Only by chance\": It is only by chance that such a fate is avoided.",
+          "sourceGrammarPoint": "Inversion",
+          "instructionZh": "改写为倒装句，以 Only by chance 开头：It is only by chance that such a fate is avoided.",
+          "grammarPointZh": "倒装语序"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b4-l027",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Past perfect. Choose the correct form: ___ her measurements and armament",
+          "sourceGrammarPoint": "Past perfect",
+          "instructionZh": "选择正确的形式，填入空格：___ her measurements and armament",
+          "grammarPointZh": "过去完成时"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Complete with the past simple of \"sink\": the story of a galleon that ___ Write exactly 1 word.",
+          "sourceGrammarPoint": "Past simple irregular",
+          "instructionZh": "用 sink 的一般过去时形式填空，只填 1 个词：the story of a galleon that ___",
+          "grammarPointZh": "一般过去时：不规则过去式"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b4-l028",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Inversion. Choose the correct form: Nor ___ only the ignorant and ill-educated person",
+          "sourceGrammarPoint": "Inversion",
+          "instructionZh": "选择正确的形式，填入空格：Nor ___ only the ignorant and ill-educated person",
+          "grammarPointZh": "倒装语序"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Correct the grammatical error. Rewrite the whole sentence or phrase: of cease to rise",
+          "sourceGrammarPoint": "Gerund after a preposition",
+          "instructionZh": "改正下面短语中的语法错误，写出整个短语：of cease to rise",
+          "grammarPointZh": "介词后接动名词（-ing 形式）"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b4-l029",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Absolute participle clause. Choose the correct form: the strangest of them ___ perhaps the hovercraft",
+          "sourceGrammarPoint": "Absolute participle clause",
+          "instructionZh": "选择正确的形式，填入空格：the strangest of them ___ perhaps the hovercraft",
+          "grammarPointZh": "独立主格结构中的分词"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Complete with the correct form of \"decide\": People have had difficulty in ___ how to classify the craft. Write exactly 1 word.",
+          "sourceGrammarPoint": "Gerund after a preposition",
+          "instructionZh": "用 decide 的适当形式填空，只填 1 个词：People have had difficulty in ___ how to classify the craft.",
+          "grammarPointZh": "介词后接动名词（-ing 形式）"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b4-l030",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Past simple passive. Choose the correct form: the first samples ___ by dredging the bottom",
+          "sourceGrammarPoint": "Past simple passive",
+          "instructionZh": "选择正确的形式，填入空格：the first samples ___ by dredging the bottom",
+          "grammarPointZh": "一般过去时的被动语态"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Rewrite with inversion, beginning with \"Not until 1869\" and using \"did\": They obtained this series of deep soundings only in 1869.",
+          "sourceGrammarPoint": "Inversion",
+          "instructionZh": "改写为倒装句，以 Not until 1869 开头，并使用 did：They obtained this series of deep soundings only in 1869.",
+          "grammarPointZh": "倒装语序"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b4-l031",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Present perfect passive. Choose the correct form: sculpture ___ as the most difficult of all arts",
+          "sourceGrammarPoint": "Present perfect passive",
+          "instructionZh": "选择正确的形式，填入空格：sculpture ___ as the most difficult of all arts",
+          "grammarPointZh": "现在完成时的被动语态"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Complete with the correct form of \"respond\": the ability ___ to form in three dimensions Write exactly 2 words.",
+          "sourceGrammarPoint": "Infinitive after ability",
+          "instructionZh": "用 respond 的适当形式填空，只填 2 个词：the ability ___ to form in three dimensions",
+          "grammarPointZh": "ability 后的不定式结构"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b4-l032",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Cleft sentence. Choose the correct form: it is only in modern times ___ Galileo has become a problem child",
+          "sourceGrammarPoint": "Cleft sentence",
+          "instructionZh": "选择正确的形式，填入空格：it is only in modern times ___ Galileo has become a problem child",
+          "grammarPointZh": "强调句"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Correct the grammatical error. Rewrite the whole sentence or phrase: The scientific dust has long since settle.",
+          "sourceGrammarPoint": "Present perfect",
+          "instructionZh": "改正句中的语法错误，写出完整句子：The scientific dust has long since settle.",
+          "grammarPointZh": "现在完成时"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b4-l033",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Past participle modifier. Choose the correct form: ___ of one of the greatest twentieth-century opportunities",
+          "sourceGrammarPoint": "Past participle modifier",
+          "instructionZh": "选择正确的形式，填入空格：___ of one of the greatest twentieth-century opportunities",
+          "grammarPointZh": "过去分词作定语"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Expand the participle phrase. Use \"Because modern states are convinced\" and keep the main clause: Convinced of the importance of education, modern states invest in learning.",
+          "sourceGrammarPoint": "Participle clause",
+          "instructionZh": "用 Because modern states are convinced 展开分词短语，并保留主句不变：Convinced of the importance of education, modern states invest in learning.",
+          "grammarPointZh": "分词短语与状语从句转换"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b4-l034",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Bare infinitive after make. Choose the correct form: makes them ___",
+          "sourceGrammarPoint": "Bare infinitive after make",
+          "instructionZh": "选择正确的形式，填入空格：makes them ___",
+          "grammarPointZh": "make 后接动词原形"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Complete using the future continuous with \"will\": Before very long the parents ___ . (complain) Write exactly 3 words.",
+          "sourceGrammarPoint": "Future continuous",
+          "instructionZh": "用 complain 的将来进行时填空，并使用 will。只填 3 个词：Before very long the parents ___ .",
+          "grammarPointZh": "将来进行时"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b4-l035",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Infinitive complement. Choose the correct form: The Moon is likely ___ the industrial hub of the Solar System",
+          "sourceGrammarPoint": "Infinitive complement",
+          "instructionZh": "选择正确的形式，填入空格：The Moon is likely ___ the industrial hub of the Solar System",
+          "grammarPointZh": "动词或形容词后的不定式结构"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Complete with the comparative of \"little\": It requires ___ energy than the journey from Earth. Write exactly 1 word.",
+          "sourceGrammarPoint": "Comparison",
+          "instructionZh": "用 little 的比较级填空，只填 1 个词：It requires ___ energy than the journey from Earth.",
+          "grammarPointZh": "比较结构"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b4-l036",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Gerund after a preposition. Choose the correct form: could be used for ___ the country",
+          "sourceGrammarPoint": "Gerund after a preposition",
+          "instructionZh": "选择正确的形式，填入空格：could be used for ___ the country",
+          "grammarPointZh": "介词后接动名词（-ing 形式）"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Correct the grammatical error. Rewrite the whole sentence or phrase: It should not be forgotten how small are those resources.",
+          "sourceGrammarPoint": "Embedded wh-clause",
+          "instructionZh": "改正句中的语法错误，写出完整句子：It should not be forgotten how small are those resources.",
+          "grammarPointZh": "嵌入问句：从句的语序"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b4-l037",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Possessive its. Choose the correct form: the human body is at ___ most vigorous",
+          "sourceGrammarPoint": "Possessive its",
+          "instructionZh": "选择正确的形式，填入空格：the human body is at ___ most vigorous",
+          "grammarPointZh": "物主限定词的用法"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Change to active. Begin with \"People\". Keep \"this decline in vigour with the passing of time\" as the object: This decline in vigour with the passing of time is called ageing.",
+          "sourceGrammarPoint": "Active and passive",
+          "instructionZh": "改为主动语态，以 People 开头，并保留 this decline in vigour with the passing of time 作宾语：This decline in vigour with the passing of time is called ageing.",
+          "grammarPointZh": "主动语态与被动语态转换"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b4-l038",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Modal passive. Choose the correct form: tap-water supplies should ___ as particularly suspect",
+          "sourceGrammarPoint": "Modal passive",
+          "instructionZh": "选择正确的形式，填入空格：tap-water supplies should ___ as particularly suspect",
+          "grammarPointZh": "含情态动词的被动语态"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Complete with the correct form of \"drink\": Travellers should avoid ___ tap-water. Write exactly 1 word.",
+          "sourceGrammarPoint": "Gerund after avoid",
+          "instructionZh": "用 drink 的适当形式填空，只填 1 个词：Travellers should avoid ___ tap-water.",
+          "grammarPointZh": "avoid 后的动词形式"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b4-l039",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Gerund clause after a preposition. Choose the correct form: I never heard of anyone ___ a ‘skeleton’",
+          "sourceGrammarPoint": "Gerund clause after a preposition",
+          "instructionZh": "选择正确的形式，填入空格：I never heard of anyone ___ a ‘skeleton’",
+          "grammarPointZh": "介词后的动名词结构及其逻辑主语"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Correct the grammatical error. Rewrite the whole sentence or phrase: They have little idea where are they going.",
+          "sourceGrammarPoint": "Embedded wh-clause",
+          "instructionZh": "改正句中的语法错误，写出完整句子：They have little idea where are they going.",
+          "grammarPointZh": "嵌入问句：从句的语序"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b4-l040",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Irregular plural. Choose the correct form: These ocean waves are among the earth’s most complicated natural ___.",
+          "sourceGrammarPoint": "Irregular plural",
+          "instructionZh": "选择正确的形式，填入空格：These ocean waves are among the earth’s most complicated natural ___.",
+          "grammarPointZh": "名词的不规则复数"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Change to the passive. Begin with \"The atmosphere of the earth\" and keep the agent with \"by\": Rays from the sun excite and energize the atmosphere of the earth.",
+          "sourceGrammarPoint": "Active and passive",
+          "instructionZh": "改为被动语态，以 The atmosphere of the earth 开头，并用 by 保留动作执行者：Rays from the sun excite and energize the atmosphere of the earth.",
+          "grammarPointZh": "主动语态与被动语态转换"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b4-l041",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Present perfect passive. Choose the correct form: Two main techniques ___ for training elephants",
+          "sourceGrammarPoint": "Present perfect passive",
+          "instructionZh": "选择正确的形式，填入空格：Two main techniques ___ for training elephants",
+          "grammarPointZh": "现在完成时的被动语态"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Complete with the correct form of \"set\": The method consists of ___ an elephant to work. Write exactly 1 word.",
+          "sourceGrammarPoint": "Gerund after a preposition",
+          "instructionZh": "用 set 的适当形式填空，只填 1 个词：The method consists of ___ an elephant to work.",
+          "grammarPointZh": "介词后接动名词（-ing 形式）"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b4-l042",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Neither ... nor. Choose the correct form: instruments that neither slumbered ___ slept",
+          "sourceGrammarPoint": "Neither ... nor",
+          "instructionZh": "选择正确的形式，填入空格：instruments that neither slumbered ___ slept",
+          "grammarPointZh": "并列否定结构"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Correct the grammatical error. Rewrite the whole sentence or phrase: the rigid table upon that these rods stood",
+          "sourceGrammarPoint": "Relative object after a preposition",
+          "instructionZh": "改正下面短语中的语法错误，写出整个短语：the rigid table upon that these rods stood",
+          "grammarPointZh": "介词后的关系代词"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b4-l043",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Positive agreement with so. Choose the correct form: Venus is far too hot, and so ___ Mercury.",
+          "sourceGrammarPoint": "Positive agreement with so",
+          "instructionZh": "选择正确的形式，填入空格：Venus is far too hot, and so ___ Mercury.",
+          "grammarPointZh": "so 引导的肯定附和（“……也一样”）"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Complete with the correct form of \"have\": Other stars are bound ___ planets like our own. Write exactly 2 words.",
+          "sourceGrammarPoint": "Infinitive complement",
+          "instructionZh": "用 have 的适当形式填空，只填 2 个词：Other stars are bound ___ planets like our own.",
+          "grammarPointZh": "动词或形容词后的不定式结构"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b4-l044",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Present perfect passive. Choose the correct form: Custom ___ as a subject of any great moment.",
+          "sourceGrammarPoint": "Present perfect passive",
+          "instructionZh": "选择正确的形式，填入空格：Custom ___ as a subject of any great moment.",
+          "grammarPointZh": "现在完成时的被动语态"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Replace \"no matter how\" with \"however\". Keep the rest: No matter how aberrant they are.",
+          "sourceGrammarPoint": "Concessive however",
+          "instructionZh": "用 however 替换 no matter how，其余内容保持不变：No matter how aberrant they are.",
+          "grammarPointZh": "however 引导的让步结构"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b4-l045",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Past deduction. Choose the correct form: competition with other creatures ___ critical",
+          "sourceGrammarPoint": "Past deduction",
+          "instructionZh": "选择正确的形式，填入空格：competition with other creatures ___ critical",
+          "grammarPointZh": "对过去情况的推测"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Rewrite as a second conditional. Begin with \"If I had no modern weapons\" and keep \"would\": Without modern weapons, I would make a very poor show.",
+          "sourceGrammarPoint": "Second conditional",
+          "instructionZh": "改写为第二条件句（对现在情况的假设），以 If I had no modern weapons 开头，并保留 would：Without modern weapons, I would make a very poor show.",
+          "grammarPointZh": "第二条件句（对现在或将来的假设）"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b4-l046",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Correlative comparison. Choose the correct form: The stronger the will, the ___ futile the task.",
+          "sourceGrammarPoint": "Correlative comparison",
+          "instructionZh": "选择正确的形式，填入空格：The stronger the will, the ___ futile the task.",
+          "grammarPointZh": "“越……越……”比较结构"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Complete using the past participle of \"choose\": if this something else is rightly ___ Write exactly 1 word.",
+          "sourceGrammarPoint": "Past participle in a passive verb",
+          "instructionZh": "用 choose 的过去分词填空，只填 1 个词：if this something else is rightly ___",
+          "grammarPointZh": "被动语态中的过去分词"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b4-l047",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Gerund after a preposition. Choose the correct form: it is far from ___ the only one",
+          "sourceGrammarPoint": "Gerund after a preposition",
+          "instructionZh": "选择正确的形式，填入空格：it is far from ___ the only one",
+          "grammarPointZh": "介词后接动名词（-ing 形式）"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Expand with \"which are\". Write the whole noun phrase: bicycles made for two.",
+          "sourceGrammarPoint": "Past participle modifier",
+          "instructionZh": "用 which are 展开省略的定语从句，写出整个名词短语：bicycles made for two.",
+          "grammarPointZh": "过去分词作定语"
+        }
+      ]
+    },
+    {
+      "lessonId": "nce-nativeears-b4-l048",
+      "questions": [
+        {
+          "id": "content-1",
+          "sourcePrompt": "Grammar focus: Gerund after a preposition. Choose the correct form: go about ___ that",
+          "sourceGrammarPoint": "Gerund after a preposition",
+          "instructionZh": "选择正确的形式，填入空格：go about ___ that",
+          "grammarPointZh": "介词后接动名词（-ing 形式）"
+        },
+        {
+          "id": "content-2",
+          "sourcePrompt": "Expand the participle phrase using \"who are\". Write the whole noun phrase: tipsters offering get-rich-quick opportunities.",
+          "sourceGrammarPoint": "Present participle modifier",
+          "instructionZh": "用 who are 将分词短语展开为定语从句，写出整个名词短语：tipsters offering get-rich-quick opportunities.",
+          "grammarPointZh": "现在分词作定语"
+        }
+      ]
+    }
+  ]
+}
