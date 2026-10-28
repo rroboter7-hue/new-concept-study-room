@@ -14,13 +14,15 @@ test('first visit opens the real bookshelf and does not create learning evidence
  assert.equal(Object.keys(h.api.data.records).length,0);
 });
 
-test('reload resumes the study stage, selected answer and checked result without counting the error again',async()=>{
+test('continue from the launch bookshelf resumes the checked quiz without counting the error again',async()=>{
  const h=await harness(options),ui=await enter(h),id=h.api.current.id;
  await ui.goStage(1);const question=ui.question();assert(question);
  ui.chooseAnswer((question.answer+1)%question.options.length);await ui.checkAnswer();await h.flush();
  const before=plain(h.api.data.learningPipeline.lessons[id]);assert.equal(before.attempts.length,1);
  const reloaded=await harness({...options,loaded:h.stored}),resumed=pipeline(reloaded),record=resumed.record();
- assert.equal(reloaded.api.current.id,id);assert.equal(reloaded.document.body.classList.contains('bookshelf-visible'),false);
+ assert.equal(reloaded.api.current.id,id);assert.equal(reloaded.document.body.classList.contains('bookshelf-visible'),true);
+ assert.equal(reloaded.api.data.appRoute.view,'shelf');await reloaded.click('[data-shelf-continue]');await reloaded.flush();
+ assert.equal(reloaded.document.body.classList.contains('bookshelf-visible'),false);
  assert.equal(reloaded.api.data.appRoute.view,'study');assert.equal(record.stage,1);assert.equal(record.quiz.submitted,true);
  assert.equal(record.quiz.answers[question.id],before.quiz.answers[question.id]);assert.equal(record.quiz.results[question.id].correct,false);
  assert.equal(record.attempts.length,1);assert.equal(record.mistakes[question.id].consecutiveWrong,1);
@@ -58,18 +60,19 @@ test('a failed free-writing save preserves live input and includes it in an emer
  h.setStorageWritable(true);assert.equal(await ui.flush(),true);assert(freeAnswer(h.stored,id,answer));
 });
 
-test('an explicitly saved non-shelf route is restored instead of being covered by the bookshelf',async()=>{
+test('reopening a saved records route starts on the bookshelf while records remain reachable',async()=>{
  const h=await harness(options);await enter(h);await h.api.navigate('records');await h.flush();assert.equal(h.api.data.appRoute.view,'records');
- const reloaded=await harness({...options,loaded:h.stored});assert.equal(reloaded.api.view,'records');assert.equal(reloaded.document.body.classList.contains('bookshelf-visible'),false);
+ const reloaded=await harness({...options,loaded:h.stored});assert.equal(reloaded.document.body.classList.contains('bookshelf-visible'),true);assert.equal(reloaded.api.data.appRoute.view,'shelf');
+ await reloaded.api.navigate('records');await reloaded.flush();assert.equal(reloaded.api.view,'records');assert.equal(reloaded.document.body.classList.contains('bookshelf-visible'),false);
  await reloaded.api.showBookshelf();await reloaded.flush();assert.equal(reloaded.api.data.appRoute.view,'shelf');
  const shelfReload=await harness({...options,loaded:reloaded.stored});assert.equal(shelfReload.document.body.classList.contains('bookshelf-visible'),true);
 });
 
-test('an unresolved local audio read never delays the first bookshelf or a saved records route',async()=>{
+test('an unresolved local audio read never delays the launch bookshelf, including saved records routes',async()=>{
  const first=await harness({...options,audioPending:true});pipeline(first);
  assert.equal(first.document.body.classList.contains('bookshelf-visible'),true);assert.equal(first.api.data.appRoute.view,'shelf');
  const restored=await harness({...options,audioPending:true,loaded:{appRoute:{view:'records'}}});pipeline(restored);
- assert.equal(restored.api.view,'records');assert.equal(restored.api.data.appRoute.view,'records');assert.equal(restored.document.body.classList.contains('bookshelf-visible'),false);
+ assert.equal(restored.api.data.appRoute.view,'shelf');assert.equal(restored.document.body.classList.contains('bookshelf-visible'),true);
 });
 
 test('a new learner objective attempt supplies two-line earlier writing goals without changing legacy grades',async()=>{

@@ -14,7 +14,6 @@
  let storageDevice;try{storageDevice=window.localStorage;}catch{storageWarning=true;}
  function readStore(){const result=StudyStorage.read({storage:storageDevice,key:KEY});if(!result.ok)storageWarning=true;return result.data;}
  const loaded=readStore();
- const initialRoute=loaded.appRoute;
  const data={...loaded,learningPipeline:window.StudyLearningPipeline?.sanitize(loaded.learningPipeline)||{version:2,lessons:{}},freeWriting:loaded.freeWriting&&typeof loaded.freeWriting==='object'&&!Array.isArray(loaded.freeWriting)?loaded.freeWriting:{},appRoute:loaded.appRoute&&typeof loaded.appRoute==='object'?loaded.appRoute:{view:'shelf'},shelf:sanitizeShelf(loaded.shelf),sentenceRevisit:window.StudySentenceRevisit?.sanitize(loaded.sentenceRevisit)||{version:1,entries:{},drafts:{}},outputDrafts:window.OutputPractice?.sanitizeDrafts?.(loaded.outputDrafts)||{version:1,lessons:{}},lessonRecall:window.StudyRecall?.sanitize(loaded.lessonRecall)||{version:1,lessons:{}},coach:window.StudyCoach?.sanitize(loaded.coach)||{},coachDrafts:sanitizeCoachDrafts(loaded.coachDrafts),unitPractice:loaded.unitPractice&&typeof loaded.unitPractice==='object'&&!Array.isArray(loaded.unitPractice)?loaded.unitPractice:{},sentenceBatch:loaded.sentenceBatch&&typeof loaded.sentenceBatch==='object'&&!Array.isArray(loaded.sentenceBatch)?loaded.sentenceBatch:{},sentenceBatches:loaded.sentenceBatches&&typeof loaded.sentenceBatches==='object'&&!Array.isArray(loaded.sentenceBatches)?loaded.sentenceBatches:{},sentencePractice:loaded.sentencePractice&&typeof loaded.sentencePractice==='object'&&!Array.isArray(loaded.sentencePractice)?loaded.sentencePractice:{},review:StudyReview.sanitize(loaded.review),reviewDrafts:StudyReview.sanitizeDrafts(loaded.reviewDrafts),words:Array.isArray(loaded.words)?loaded.words:[],records:loaded.records&&typeof loaded.records==='object'?loaded.records:{},imported:[],game:loaded.game&&typeof loaded.game==='object'?loaded.game:{xp:0,levels:{},daily:{}},settings:{voice:'en-GB',rate:1,translation:true,...loaded.settings}};
  if(Array.isArray(loaded.imported)&&loaded.imported.length){try{data.imported=StudyCore.parseLessonJSON(JSON.stringify(loaded.imported)).map((l,i)=>({...l,id:/^[\w-]+$/.test(loaded.imported[i].id)?loaded.imported[i].id:l.id}));}catch{storageWarning=true;}}
  let lessons=[...(window.LESSONS||[]),...data.imported];
@@ -504,7 +503,7 @@
   document.addEventListener('change',event=>{if(event.target.matches?.('[data-pipeline-translation]')){data.settings.translation=event.target.checked;persist();learningPipeline.refresh();}if(event.target.matches?.('[data-pipeline-speed]')){data.settings.rate=Number(event.target.value);audio.setRate(data.settings.rate);persist();}});
  }
  hydrateIcons();
- if(learningPipeline){void (async()=>{if(current){if(!await selectLesson(current.id))return;}else toast('课程资料尚未加载，请刷新页面。');const route=initialRoute?.view;if(route==='study')return;if(route&&['words','records','library','game','daily-review'].includes(route)){await navigate(route);return;}await showBookshelf();})();}
+ if(learningPipeline){void (async()=>{if(current){if(!await selectLesson(current.id))return;}else toast('课程资料尚未加载，请刷新页面。');await showBookshelf();})();}
  else {if(current)selectLesson(current.id);else toast('课程资料尚未加载，请刷新页面。');bookshelf?.show();}
 if(storageWarning)toast('部分历史导入资料格式异常，可重新导入备份。');
 })();
