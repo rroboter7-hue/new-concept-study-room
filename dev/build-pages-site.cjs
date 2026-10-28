@@ -6,6 +6,7 @@ const vm=require('node:vm');
 const {execFile}=require('node:child_process');
 const {promisify}=require('node:util');
 const run=promisify(execFile);
+const {bundleRuntime,readPackagedScripts}=require('./runtime-bundles.cjs');
 
 const PROFILE=Object.freeze({version:1,codec:'libmp3lame',bitrate:'64k',channels:1,sampleRate:22050});
 const AUDIO_MAPS=['STUDY_WORD_AUDIO','STUDY_LESSON_AUDIO','STUDY_LESSON_AUDIO_FALLBACKS','STUDY_CONTEXT_WORD_AUDIO'];
@@ -100,19 +101,22 @@ function relativeHtmlAsset(value){
 }
 function inspectAudioReferences(outputRoot){
  const html=fs.readFileSync(path.join(outputRoot,'index.html'),'utf8');
- for(const match of html.matchAll(/<(?:script|link)\b[^>]*\b(?:src|href)\s*=\s*["']([^"']+)["'][^>]*>/gi)){
+ const tags=html.replace(/<script\b[^>]*>[\s\S]*?<\/script\s*>/gi,tag=>tag.slice(0,tag.indexOf('>')+1));
+ for(const match of tags.matchAll(/<(?:script|link)\b[^>]*\b(?:src|href)\s*=\s*["']([^"']+)["'][^>]*>/gi)){
   const relative=relativeHtmlAsset(match[1]);
   if(relative&&!fs.existsSync(plainPath(outputRoot,relative)))throw Error('Missing runtime HTML asset: '+relative);
  }
- const scripts=Array.from(html.matchAll(/<script\b[^>]*\bsrc\s*=\s*["']([^"']+)["'][^>]*>/gi),m=>relativeHtmlAsset(m[1]));
+ const scripts=Array.from(tags.matchAll(/<script\b[^>]*\bsrc\s*=\s*["']([^"']+)["'][^>]*>/gi),m=>relativeHtmlAsset(m[1]));
+ const packaged=scripts.length?null:readPackagedScripts({outputRoot,html}),entries=packaged?.entries||scripts.map(name=>({name}));
+ if(packaged)scripts.push(...entries.map(entry=>entry.name));
  if(!scripts.includes('delivery-audio.js'))throw Error('index.html must include delivery-audio.js after audio maps and before audio.js');
  if(!scripts.includes('app.js'))throw Error('index.html app.js bootstrap was not found');
  const context={document:{addEventListener(){},querySelector(){return null;},querySelectorAll(){return [];}},URL,URLSearchParams,location:{search:'',href:'https://delivery.invalid/index.html',origin:'https://delivery.invalid'},console};
  context.window=context;vm.createContext(context);
- for(const script of scripts){
-  if(script==='app.js')break;
-  if(!script)throw Error('External bootstrap scripts cannot be verified for this static delivery');
-  vm.runInContext(fs.readFileSync(plainPath(outputRoot,script),'utf8'),context,{filename:script,timeout:30000});
+ for(const entry of entries){
+  if(entry.name==='app.js')break;
+  if(!entry.name)throw Error('External bootstrap scripts cannot be verified for this static delivery');
+  vm.runInContext(entry.source===undefined?fs.readFileSync(plainPath(outputRoot,entry.name),'utf8'):entry.source,context,{filename:entry.name,timeout:30000});
  }
  const references=[];
  function inspect(value,label){
@@ -127,7 +131,13 @@ function inspectAudioReferences(outputRoot){
   references.push(relative);
  }
  for(const name of AUDIO_MAPS)for(const [key,value]of Object.entries(context[name]||{}))inspect(value,name+'.'+key);
- return {total:references.length,unique:new Set(references).size};
+ const lessonCounts={'1':0,'2':0,'3':0,'4':0},seen=new Set();
+ for(const lesson of Array.isArray(context.LESSONS)?context.LESSONS:[]){
+  if(!lesson?.textbook||!Number.isInteger(lesson.book)||lesson.book<1||lesson.book>4||typeof lesson.id!=='string'||!lesson.id.trim()||!Array.isArray(lesson.paragraphs)||!lesson.paragraphs.some(paragraph=>typeof paragraph?.en==='string'&&paragraph.en.trim()))continue;
+  const key=lesson.book+':'+lesson.id;if(seen.has(key))continue;seen.add(key);lessonCounts[lesson.book]++;
+ }
+ if(packaged?.manifest.lessonCounts)for(const book of [1,2,3,4])if(packaged.manifest.lessonCounts[book]!==lessonCounts[book])throw Error('Published runtime lesson-count contract mismatch for book '+book);
+ return {total:references.length,unique:new Set(references).size,lessonCounts};
 }
 function folderBytes(directory){
  return fs.readdirSync(directory,{withFileTypes:true}).reduce((total,entry)=>total+(entry.isDirectory()?folderBytes(path.join(directory,entry.name)):fs.statSync(path.join(directory,entry.name)).size),0);
@@ -197,8 +207,11 @@ async function buildPages({sourceRoot=path.resolve(__dirname,'..'),outputRoot,ca
  await Promise.all(Array.from({length:concurrency},()=>worker()));if(failure)throw failure;
  if(encoder===encodeWav&&conversions.count){const {stdout}=await run('ffmpeg',['-version'],{maxBuffer:1024*1024});encoderVersion=stdout.split(/\r?\n/)[0];}
  fs.writeFileSync(path.join(outputRoot,'delivery-audio.js'),mapperSource(converted));
- const audioReferences=inspectAudioReferences(outputRoot),sourceBytes=files.reduce((total,file)=>total+file.size,0),baseBytes=folderBytes(outputRoot);
- const report={version:1,profile:PROFILE,encoderVersion,sourceBytes,publishedBytes:baseBytes,savedBytes:sourceBytes-baseBytes,definition:'Source counts runtime candidate files only; published size includes this report. Repository originals and history are unchanged.',sourceFiles:files.length,existingMp3Files,conversions,audioReferences};
+ // Validate the actual ordered source bootstrap and converted audio before
+ // replacing the published HTML with packages. The live app is never run by
+ // this inspection; its exact source remains the final packaged script.
+ const audioReferences=inspectAudioReferences(outputRoot),runtime=bundleRuntime({outputRoot,lessonCounts:audioReferences.lessonCounts}),sourceBytes=files.reduce((total,file)=>total+file.size,0),baseBytes=folderBytes(outputRoot);
+ const report={version:1,profile:PROFILE,encoderVersion,sourceBytes,publishedBytes:baseBytes,savedBytes:sourceBytes-baseBytes,definition:'Source counts runtime candidate files only; published size includes this report. Repository originals and history are unchanged.',sourceFiles:files.length,existingMp3Files,conversions,audioReferences,runtime};
  let json='';for(let i=0;i<12;i++){json=JSON.stringify(report,null,2)+'\n';const size=baseBytes+Buffer.byteLength(json);if(size===report.publishedBytes)break;report.publishedBytes=size;report.savedBytes=sourceBytes-size;}
  json=JSON.stringify(report,null,2)+'\n';fs.writeFileSync(path.join(outputRoot,'delivery-report.json'),json);
  if(folderBytes(outputRoot)!==report.publishedBytes)throw Error('Delivery byte report did not converge');

@@ -1,6 +1,6 @@
 {
-  "build": "2026-10-27-worksheet2",
-  "preparedAt": "2026-10-27T09:45:42.322Z",
+  "build": "2026-10-28-fastload",
+  "preparedAt": "2026-10-28T01:18:18Z",
   "book2": {
     "book": 2,
     "total": 96,
@@ -585,7 +585,21 @@
     "dictionaryShardCacheLimit": 4,
     "textLibraryBytesAfter": 4214,
     "audioSourcePreservation": "MP3 audio payloads unchanged; removed cover art, padding and retired files are recoverable from verified local archive",
-    "capacityReport": "delivery-report.json"
+    "capacityReport": "delivery-report.json",
+    "runtimeLoading": {
+      "version": 1,
+      "originalStartupRequests": 105,
+      "publishedScriptPackages": 6,
+      "publishedStylesheets": 1,
+      "parallelPreloads": true,
+      "contentAddressedAssets": true,
+      "integrityChecked": true,
+      "boundedRetries": true,
+      "partialDownloadRecovery": true,
+      "canonicalLessonHealthGuard": true,
+      "sourceScriptBoundariesPreserved": true,
+      "studyStorageUnchanged": true
+    }
   },
   "storageOptimization": {
     "baselineCommit": "3bdb516",

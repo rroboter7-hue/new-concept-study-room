@@ -1,0 +1,149 @@
+/* The published page embeds this small ES5 bootstrap, so recovery does not
+   depend on downloading another file. It never opens browser study storage. */
+(function (root, factory) {
+  if (typeof module === 'object' && module.exports) module.exports = factory;
+  else root.StudyStartup = factory(root);
+}(typeof window === 'object' ? window : this, function (root) {
+  'use strict';
+  var doc = root.document, manifest, current = 0, cssLeft = 0, started = false;
+  var done = {}, executed = {}, failed = [], fatal = false, finished = false;
+  var loading = [], activeSource = '', sourceError = null;
+  function el(id) { return doc.getElementById('study-startup' + (id ? '-' + id : '')); }
+  function text(id, value) { var target = el(id); if (target) target.textContent = value; }
+  function show(id, visible) { var target = el(id); if (target) target.hidden = !visible; }
+  function removeNode(node) {
+    if (node && node.parentNode) node.parentNode.removeChild(node);
+    else if (node && typeof node.remove === 'function') node.remove();
+  }
+  function unbind(task) {
+    root.clearTimeout(task.timer); root.clearTimeout(task.delay);
+    if (task.node) { task.node.onload = task.node.onerror = null; }
+  }
+  function update() {
+    if (fatal || failed.length || finished) return;
+    var total = manifest.scripts.length + manifest.styles.length;
+    var loaded = current + manifest.styles.length - cssLeft;
+    var progress = el('progress'); if (progress) { progress.max = total; progress.value = loaded; }
+    text('message', '准备课程文件（' + loaded + '/' + total + '）');
+    if (current === manifest.scripts.length && cssLeft === 0) {
+      finished = true; show('', false);
+      doc.body.className = (doc.body.className || '').replace(/\bstudy-booting\b/g, '').replace(/^\s+|\s+$/g, '');
+      root.removeEventListener('error', onError);
+    }
+  }
+  function stopForExecution(name) {
+    fatal = true; loading.forEach(unbind); failed = [];
+    text('message', '课程未能完成初始化');
+    text('error', '文件初始化失败：' + name + '。请重新加载；若仍失败，请更新浏览器，或用系统浏览器打开。');
+    show('error', true); show('retry', false); show('reload', true);
+  }
+  function onError(event) {
+    if (activeSource) { sourceError = event.error || new Error(event.message || 'Script failed'); return; }
+    var task = loading.filter(function (item) { return item.kind === 'script' && !item.complete && item.node && event.filename && event.filename.indexOf(item.asset.src) !== -1; })[0];
+    if (task) stopForExecution(task.asset.src);
+  }
+  function networkFailure(task) {
+    if (task.complete || fatal || finished) return;
+    unbind(task); removeNode(task.node);
+    if (task.attempt < 2) {
+      task.attempt += 1;
+      text('message', '连接较慢，正在重试课程文件…');
+      task.delay = root.setTimeout(function () { request(task); }, 600 * task.attempt);
+      return;
+    }
+    if (failed.indexOf(task) === -1) failed.push(task);
+    text('message', '还有文件未能加载');
+    text('error', (root.navigator && root.navigator.onLine === false ? '网络已断开。' : '网络连接中断或缓存版本已更新。') + '请重试；仍失败时重新加载页面。学习记录与已保存草稿会保留。');
+    show('error', true); show('retry', true); show('reload', true);
+  }
+  function request(task) {
+    if (fatal || finished || task.complete) return;
+    var node = doc.createElement(task.kind === 'script' ? 'script' : 'link');
+    var url = task.asset.src + (task.attempt ? (task.asset.src.indexOf('?') === -1 ? '?' : '&') + 'retry=' + task.attempt : '');
+    task.node = node;
+    if (task.asset.integrity) { node.integrity = task.asset.integrity; node.crossOrigin = 'anonymous'; }
+    if (task.kind === 'script') { node.async = true; node.src = url; }
+    else { node.rel = 'stylesheet'; node.href = url; }
+    node.onerror = function () { if (task.node === node) networkFailure(task); };
+    node.onload = function () {
+      if (task.node !== node || task.complete || fatal) return;
+      if (task.kind === 'script') { stopForExecution(task.asset.src); return; }
+      task.complete = true; unbind(task); cssLeft -= 1; update();
+    };
+    task.timer = root.setTimeout(function () { if (task.node === node) networkFailure(task); }, 30000);
+    doc.head.appendChild(node);
+  }
+  function next() {
+    update(); if (fatal || finished || current >= manifest.scripts.length) return;
+    var task = {kind:'script', asset:manifest.scripts[current], attempt:0, complete:false};
+    loading.push(task); request(task);
+  }
+  function install(id, entries) {
+    if (!started || finished || fatal || done[id]) return;
+    var asset = manifest.scripts[current];
+    if (!asset || asset.id !== id) return;
+    if (!Array.isArray(entries) || entries.length !== asset.files.length || entries.some(function (entry, i) { return entry.name !== asset.files[i] || typeof entry.source !== 'string'; })) {
+      stopForExecution(asset.src); return;
+    }
+    // A timed-out request may finish after its replacement. Only the currently
+    // expected, content-addressed group may execute, and each source runs once.
+    var task = loading.filter(function (item) { return item.kind === 'script' && item.asset.id === id; })[0];
+    if (!task) return;
+    task.complete = true; unbind(task);
+    for (var i = 0; i < entries.length; i += 1) {
+      var entry = entries[i]; if (executed[entry.name]) continue;
+      if (entry.name === 'app.js' && manifest.lessonCounts) {
+        var catalog = Array.isArray(root.LESSONS) ? root.LESSONS : [];
+        var incomplete = Object.keys(manifest.lessonCounts).some(function (book) {
+          var seen = {};
+          return catalog.filter(function (lesson) {
+            if (!lesson || typeof lesson.id !== 'string' || !lesson.id || seen[lesson.id] || String(lesson.book) !== book || !lesson.textbook || !Array.isArray(lesson.paragraphs) || !lesson.paragraphs.some(function (paragraph) { return paragraph && typeof paragraph.en === 'string' && /\S/.test(paragraph.en); })) return false;
+            seen[lesson.id] = true; return true;
+          }).length < manifest.lessonCounts[book];
+        });
+        if (incomplete) { stopForExecution('课程正文未完整加载'); return; }
+      }
+      activeSource = entry.name; sourceError = null;
+      var script = doc.createElement('script');
+      script.text = entry.source + '\n//# sourceURL=' + entry.name.replace(/[\r\n]/g, '');
+      try { doc.head.appendChild(script); } catch (error) { sourceError = error; }
+      removeNode(script); activeSource = '';
+      if (sourceError) { stopForExecution(entry.name); return; }
+      executed[entry.name] = true;
+    }
+    done[id] = true; current += 1;
+    failed = failed.filter(function (item) { return item !== task; });
+    if (!failed.length) { show('error', false); show('retry', false); show('reload', false); }
+    next();
+  }
+  function start(config) {
+    if (started) return; started = true; manifest = config;
+    doc.body.className = (doc.body.className || '') + ' study-booting';
+    show('', true); show('error', false); show('retry', false); show('reload', false);
+    el('retry').onclick = function () {
+      if (fatal || finished) return;
+      var tasks = failed.slice(); failed = []; show('error', false); show('retry', false); show('reload', false);
+      tasks.forEach(function (task) { task.attempt = 0; request(task); }); update();
+    };
+    el('reload').onclick = function () {
+      var parts = root.location.href.split('#'), base = parts.shift().replace(/([?&])refresh=[^&]*&?/g, '$1').replace(/[?&]$/, '');
+      root.location.assign(base + (base.indexOf('?') === -1 ? '?' : '&') + 'refresh=' + new Date().getTime() + (parts.length ? '#' + parts.join('#') : ''));
+    };
+    root.addEventListener('error', onError);
+    cssLeft = config.styles.length;
+    config.styles.forEach(function (asset) { var task = {kind:'style',asset:asset,attempt:0,complete:false}; loading.push(task); request(task); });
+    next();
+  }
+  return {start:start,install:install};
+}));
+
+if (typeof module === 'object' && module.exports) module.exports.renderHTML = function (manifest, loaderSource) {
+  var encoded = JSON.stringify(manifest).replace(/</g, '\\u003c').replace(/\u2028/g, '\\u2028').replace(/\u2029/g, '\\u2029');
+  var attr = function (value) { return String(value).replace(/[&"<>]/g, function (ch) { return {'&':'&amp;','"':'&quot;','<':'&lt;','>':'&gt;'}[ch]; }); };
+  var preload = function (asset, kind) { return '<link rel="preload" as="' + kind + '" href="' + attr(asset.src) + '"' + (asset.integrity ? ' integrity="' + attr(asset.integrity) + '" crossorigin="anonymous"' : '') + '>'; };
+  return {
+    head:'<style id="study-startup-style">body.study-booting>:not(#study-startup):not(script):not(noscript){visibility:hidden}#study-startup[hidden],#study-startup [hidden]{display:none!important}#study-startup{position:fixed;z-index:99999;inset:0;display:flex;align-items:center;justify-content:center;padding:24px;background:#fbf9f3;color:#17342e;font:16px/1.6 system-ui,sans-serif;box-sizing:border-box}#study-startup>div{width:100%;max-width:380px}#study-startup h1{font-size:24px;margin:0 0 14px}#study-startup progress{width:100%;accent-color:#265b50;height:8px}#study-startup small{display:block;color:#68766e}#study-startup button{min-height:44px;padding:10px 16px;margin:12px 8px 0 0;border:1px solid #cad7cd;border-radius:8px;background:#265b50;color:white;font:inherit}#study-startup-error{font-size:14px}</style>' + manifest.styles.map(function (asset) { return preload(asset, 'style'); }).join('') + manifest.scripts.map(function (asset) { return preload(asset, 'script'); }).join(''),
+    bodyStart:'<section id="study-startup" role="status" aria-live="polite"><div><h1>知新 · 学习室</h1><p id="study-startup-message">正在准备课程…</p><progress id="study-startup-progress" aria-label="课程加载进度"></progress><small>首次打开或网络较慢时，请稍候。</small><p id="study-startup-error" hidden></p><button id="study-startup-retry" type="button" hidden>重试未完成文件</button><button id="study-startup-reload" type="button" hidden>重新加载页面</button></div></section><noscript>请启用浏览器 JavaScript 后打开学习室。</noscript>',
+    bodyEnd:'<script>\n' + loaderSource.replace(/<\/script/gi, '<\\/script') + '\nwindow.StudyStartup.start(' + encoded + ');\n</script>'
+  };
+};

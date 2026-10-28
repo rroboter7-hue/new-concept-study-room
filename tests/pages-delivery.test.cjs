@@ -9,7 +9,9 @@ function fixture(t){
  t.after(()=>{const resolved=path.resolve(temp),boundary=path.resolve(os.tmpdir())+path.sep;assert(resolved.startsWith(boundary));fs.rmSync(resolved,{recursive:true,force:true});});
  const source=path.join(temp,'source');fs.mkdirSync(source);
  const write=(file,body)=>{const p=path.join(source,file);fs.mkdirSync(path.dirname(p),{recursive:true});fs.writeFileSync(p,body);};
- const wav=Buffer.concat([Buffer.from('RIFFtestWAVE'),Buffer.alloc(10000,7)]);
+ // Keep the media fixture larger than the fixed startup/recovery UI overhead,
+ // so the whole-artifact savings assertion still measures a realistic delivery.
+ const wav=Buffer.concat([Buffer.from('RIFFtestWAVE'),Buffer.alloc(50000,7)]);
  const existing=Buffer.concat([Buffer.from('ID3already-encoded'),Buffer.alloc(1200,9)]);
  write('index.html','<!doctype html><title>study</title><link rel="stylesheet" href="styles.css?build=test"><script defer src="generated-audio.js"></script><script defer src="delivery-audio.js"></script><script defer src="audio.js"></script><script defer src="app.js"></script>');
  write('generated-audio.js','window.STUDY_WORD_AUDIO={word:"audio/words/same.wav"};window.STUDY_LESSON_AUDIO={lesson:"audio/lessons/story.wav",original:"audio/words/same.mp3"};window.STUDY_LESSON_AUDIO_FALLBACKS={lesson:"audio/words/same.wav"};');
@@ -24,7 +26,7 @@ function fixture(t){
 }
 
 test('publish artifact keeps runtime assets and licenses, converts WAV without duplicate originals and preserves existing MP3 bytes',async t=>{
- assert.equal(typeof delivery.buildPages,'function');const f=fixture(t),out=f.out('site');
+ assert.equal(typeof delivery.buildPages,'function');const f=fixture(t),out=f.out('site'),sourceIndex=fs.readFileSync(path.join(f.source,'index.html'),'utf8');
  const report=await delivery.buildPages({sourceRoot:f.source,outputRoot:out,encoder:f.encoder,probe:f.probe});
  for(const file of ['index.html','app.js','styles.css','.nojekyll','release.json','resources/book.pdf','dictionary-data/a.json','dictionary-data/LICENSE','dictionary-data/source.json','text-data/notes.json','recall-data/book1.json','delivery-audio.js','delivery-report.json'])assert(fs.existsSync(path.join(out,file)),file);
  for(const file of ['dev','tests','docs','.env','.git','outputs','node_modules','package.json','private.js','dictionary-data/.env','dictionary-data/private.json','text-data/secret.json','audio/words/same.wav','audio/lessons/story.wav'])assert.equal(fs.existsSync(path.join(out,file)),false,file);
@@ -34,6 +36,9 @@ test('publish artifact keeps runtime assets and licenses, converts WAV without d
  const saved=JSON.parse(fs.readFileSync(path.join(out,'delivery-report.json'),'utf8'));assert.equal(saved.publishedBytes,report.publishedBytes);assert.equal(saved.savedBytes,saved.sourceBytes-saved.publishedBytes);
  const total=(dir)=>fs.readdirSync(dir,{withFileTypes:true}).reduce((n,e)=>n+(e.isDirectory()?total(path.join(dir,e.name)):fs.statSync(path.join(dir,e.name)).size),0);assert.equal(saved.publishedBytes,total(out),'reported delivered size includes its own report');
  assert.deepEqual(fs.readFileSync(path.join(f.source,'audio/words/same.wav')),f.wav,'source repository remains byte-identical');
+ assert.equal(fs.readFileSync(path.join(f.source,'index.html'),'utf8'),sourceIndex,'runtime packaging changes only the published copy');
+ assert.equal(report.runtime.styles.length,1);assert(report.runtime.scripts.length<=6);const scriptNames=report.runtime.scripts.flatMap(item=>item.files);assert.deepEqual(scriptNames,['generated-audio.js','delivery-audio.js','audio.js','app.js']);
+ for(const item of [...report.runtime.scripts,...report.runtime.styles])assert(fs.existsSync(path.join(out,item.src)),item.src+' is present in the final artifact');
 });
 
 test('generated mapper changes only converted exact paths, including the fallback map',async t=>{
@@ -41,6 +46,33 @@ test('generated mapper changes only converted exact paths, including the fallbac
  const c={STUDY_WORD_AUDIO:{a:'audio/words/same.wav',other:'audio/words/same.wav?legacy=1'},STUDY_LESSON_AUDIO:{a:'audio/words/same.mp3',other:'audio/elsewhere/same.wav'},STUDY_LESSON_AUDIO_FALLBACKS:{a:'audio/lessons/story.wav'}};c.window=c;
  vm.runInNewContext(fs.readFileSync(path.join(out,'delivery-audio.js'),'utf8'),c);
  assert.equal(c.STUDY_WORD_AUDIO.a,'audio/optimized/words/same.mp3');assert.equal(c.STUDY_WORD_AUDIO.other,'audio/words/same.wav?legacy=1');assert.equal(c.STUDY_LESSON_AUDIO.a,'audio/words/same.mp3');assert.equal(c.STUDY_LESSON_AUDIO.other,'audio/elsewhere/same.wav');assert.equal(c.STUDY_LESSON_AUDIO_FALLBACKS.a,'audio/optimized/lessons/story.mp3');
+});
+
+test('published startup health contract counts actual unique canonical passages before packaging',async t=>{
+ const f=fixture(t),out=f.out('health'),lessons=[
+  {id:'book-one',book:1,textbook:{verified:true},paragraphs:[{en:'The first passage.'}]},
+  {id:'book-two',book:2,textbook:{verified:true},paragraphs:[{en:'The second passage.'}]},
+  {id:'book-two',book:2,textbook:{verified:true},paragraphs:[{en:'Duplicate identity must not mask a missing course.'}]},
+  {id:'empty-three',book:3,textbook:{verified:true},paragraphs:[{en:'   '}]},
+  {id:'notes-four',book:4,paragraphs:[{en:'Notes are not a canonical passage.'}]},
+  {id:'book-four',book:4,textbook:{verified:true},paragraphs:[{zh:'Only Chinese.'},{en:'A real fourth-book passage.'}]}
+ ];
+ fs.appendFileSync(path.join(f.source,'generated-audio.js'),'\nwindow.LESSONS='+JSON.stringify(lessons)+';\n');
+ const report=await delivery.buildPages({sourceRoot:f.source,outputRoot:out,encoder:f.encoder,probe:f.probe}),expected={'1':1,'2':1,'3':0,'4':1};
+ assert.deepEqual(report.audioReferences.lessonCounts,expected);assert.deepEqual(report.runtime.lessonCounts,expected);assert(fs.readFileSync(path.join(out,'index.html'),'utf8').includes('"lessonCounts":{"1":1,"2":1,"3":0,"4":1}'),'the inline manifest carries the measured source health contract');
+ assert.deepEqual(delivery.inspectAudioReferences(out),report.audioReferences,'reinspection verifies the real packaged sources without starting the app');
+});
+
+test('reinspection rejects a corrupted published package before evaluating any of its source scripts',async t=>{
+ const f=fixture(t),out=f.out('integrity'),report=await delivery.buildPages({sourceRoot:f.source,outputRoot:out,encoder:f.encoder,probe:f.probe}),asset=report.runtime.scripts[0],file=path.join(out,asset.src),original=fs.readFileSync(file);
+ fs.appendFileSync(file,'\nthrow Error("corrupt package must never be evaluated");\n');
+ assert.throws(()=>delivery.inspectAudioReferences(out),/integrity|digest|checksum|hash|package size/i);
+ const altered=Buffer.from(original);altered[0]=altered[0]===47?35:47;fs.writeFileSync(file,altered);
+ assert.throws(()=>delivery.inspectAudioReferences(out),/hash integrity/i,'same-length corruption must fail its digest before VM parsing');
+ fs.writeFileSync(file,original);assert.deepEqual(delivery.inspectAudioReferences(out),report.audioReferences);
+ const style=report.runtime.styles[0],styleFile=path.join(out,style.src),styleBytes=fs.readFileSync(styleFile),alteredStyle=Buffer.from(styleBytes);alteredStyle[0]=35;fs.writeFileSync(styleFile,alteredStyle);
+ assert.throws(()=>delivery.inspectAudioReferences(out),/hash integrity/i,'stylesheets are included in finished-package integrity validation');
+ fs.writeFileSync(styleFile,styleBytes);assert.deepEqual(delivery.inspectAudioReferences(out),report.audioReferences);
 });
 
 test('normal vocabulary audio named test, private or secret is retained inside the audio asset directory',async t=>{
