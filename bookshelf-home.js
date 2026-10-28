@@ -17,7 +17,7 @@ constructor(options={}){
 this.options=options;this.destroyed=false;this.visible=false;this.drawerOpen=false;this.book=2;this.query='';this.favoritesOnly=false;this.cleanups=[];this.animations=[];this.animationToken=0;
 this.mount();this.listen(this.root,'click',e=>this.click(e));this.listen(this.overlay,'click',e=>this.click(e));
 this.listen(this.overlay,'input',e=>{if(e.target.matches('[data-shelf-search]')){this.query=e.target.value;this.renderLessons();}});
-this.listen(document,'keydown',e=>this.keydown(e));this.listen(document,'focusin',e=>{if(this.drawerOpen&&!this.dialog.contains(e.target))this.closeButton.focus({preventScroll:true});});this.update();
+this.listen(document,'click',e=>this.dismissMenu(e));this.listen(document,'keydown',e=>this.keydown(e));this.listen(document,'focusin',e=>{if(this.drawerOpen&&!this.dialog.contains(e.target))this.closeButton.focus({preventScroll:true});});this.update();
 }
 get isVisible(){return this.visible&&!this.destroyed;}
 listen(node,name,fn){node.addEventListener(name,fn);this.cleanups.push(()=>node.removeEventListener(name,fn));}
@@ -31,6 +31,7 @@ document.body.appendChild(this.overlay);this.dialog=this.overlay.querySelector('
 lessons(){return this.options.getLessons?.()||[];}favorites(){return this.options.getFavorites?.()||[];}current(){return this.options.getCurrent?.()||null;}resume(book){return resumeFor(this.lessons(),book,this.current(),this.options.getLastLesson?.(book));}
 update(){if(this.destroyed)return;const lesson=this.current()||this.resume(2),book=Number(lesson?.book)||2;this.root.querySelector('[data-shelf-resume-label]').textContent=lesson?BOOKS[book].name+' · 第'+lesson.number+'课':'从第二册开始';this.root.querySelector('[data-shelf-resume-title]').textContent=lesson?title(lesson):'选择一课，开始学习';for(const n of this.root.querySelectorAll('[data-shelf-book]'))n.classList.toggle('is-current',Number(n.dataset.shelfBook)===book);if(this.drawerOpen)this.renderLessons();}
 show({focus=false}={}){if(this.destroyed)return;this.visible=true;this.root.hidden=false;document.body.classList.add('bookshelf-visible');this.update();if(focus){const h=this.root.querySelector('.shelf-title');h.tabIndex=-1;h.focus({preventScroll:true});global.scrollTo?.({top:0,behavior:'instant'});}}
+dismissMenu(event){if(this.destroyed||!this.visible)return;const menu=this.root.querySelector('.shelf-menu');if(menu.open&&!menu.contains(event.target))menu.open=false;}
 hide(){if(this.destroyed||!this.visible)return;this.closeDrawer({animate:false,restoreFocus:false});this.visible=false;this.root.hidden=true;document.body.classList.remove('bookshelf-visible');this.root.querySelector('.shelf-menu').open=false;this.options.onLeave?.();}
 click(event){const n=event.target.closest('[data-shelf-book],[data-shelf-close],[data-shelf-view],[data-shelf-continue],[data-shelf-resume-book],[data-shelf-filter],[data-shelf-lesson],[data-shelf-favorite]');if(!n||this.destroyed)return;
 if(n.hasAttribute('data-shelf-close')){this.closeDrawer();return;}if(n.dataset.shelfBook){this.openBook(Number(n.dataset.shelfBook),n);return;}if(n.dataset.shelfFilter){this.favoritesOnly=n.dataset.shelfFilter==='favorites';this.renderLessons();return;}

@@ -242,7 +242,6 @@
       if (!Number.isInteger(book) || !BOOK_NAMES[book]) return;
       if(this.menu)this.menu.open=false;
       this.body.classList.remove('mls-coach-open');
-      this.closeCourses({restoreFocus:false});
       this.options.selectBook?.(book);
       this.update();
     }
@@ -295,7 +294,7 @@
       const button = event.target.closest?.('[data-lesson]');
       if (!button) return;
       const id = button.dataset.lesson;
-      this.closeCourses({restoreFocus: false});
+      this.closeCourses({restoreFocus: false, restoreBook: false});
       // app.js receives the original event and selects the lesson in bubble phase.
       // Defer the notification until its synchronous DOM replacement has finished.
       this.defer(() => {
@@ -306,6 +305,7 @@
 
     openCourses(opener) {
       if (!this.enabled || !this.mobile || this.destroyed || this.drawerOpen) return;
+      this.catalogueBookBefore = Number(this.options.getSelectedBook?.());
       this.returnFocus = this.menu?.contains?.(opener)?this.menu.querySelector('summary'):(opener || document.activeElement);
       if(this.menu)this.menu.open=false;
       this.drawerOpen = true;
@@ -323,7 +323,7 @@
       });
     }
 
-    closeCourses({restoreFocus = true} = {}) {
+    closeCourses({restoreFocus = true, restoreBook = true} = {}) {
       if (!this.enabled || !this.drawerOpen) return;
       this.drawerOpen = false;
       this.overlay.hidden = true;
@@ -331,6 +331,9 @@
       this.header.querySelector('[data-mobile-action="open-courses"]').setAttribute('aria-expanded', 'false');
       for (const [node, before] of this.inertBefore) node.inert = before;
       this.inertBefore.clear();
+      const previousBook = this.catalogueBookBefore;
+      this.catalogueBookBefore = null;
+      if (restoreBook && BOOK_NAMES[previousBook]) this.options.onCoursesClose?.(previousBook);
       if (restoreFocus && visible(this.returnFocus)) this.returnFocus.focus({preventScroll: true});
     }
 
