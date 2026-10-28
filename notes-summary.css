@@ -1,0 +1,28 @@
+/* Concise notes show the rule and examples first; full references stay on demand. */
+.notes-summary .section-title{margin-top:24px;margin-bottom:12px}
+.notes-summary>.section-title:first-child{margin-top:0}
+.notes-summary .notes-core-card{margin-bottom:13px;padding:17px 18px}
+.notes-summary .notes-core-card>h3{font-size:17px;line-height:1.5;margin:0 0 9px;color:var(--ink,#183a32)}
+.notes-summary .notes-rule{font-size:14px;line-height:1.75;margin:7px 0 11px}
+.notes-summary .notes-example{padding:9px 12px;margin:8px 0;background:#f3f6ef;border-radius:8px;border-left:2px solid #b3c6ac}
+.notes-summary .notes-example .english{font-size:17px;line-height:1.65;margin:0}
+.notes-summary .notes-example-translation{font-size:13px;line-height:1.65;color:#647365;margin:5px 0 0}
+.notes-summary .notes-detail{margin-top:12px;border-top:1px solid #e5eadd;padding-top:3px}
+.notes-summary details>summary{cursor:pointer;min-height:44px;line-height:1.5;display:list-item;padding:11px 0;color:#476449;font-size:13px;font-weight:600}
+.notes-summary .notes-detail-body{padding:0 0 5px;font-size:14px;line-height:1.8}
+.notes-summary .notes-detail-body>p{margin:9px 0}
+.notes-summary .notes-original-explanation{white-space:pre-line}
+.notes-summary .notes-more,.notes-summary .notes-reference,.notes-summary .notes-vocabulary{margin:13px 0 22px;border:1px solid #dce4d8;border-radius:9px;padding:0 13px}
+.notes-summary .notes-more>summary,.notes-summary .notes-reference>summary,.notes-summary .notes-vocabulary>summary{font-size:14px;min-height:46px}
+.notes-summary .notes-reference-point{padding:12px 2px;border-top:1px solid #e5eadd;scroll-margin-top:100px}
+.notes-summary .notes-reference-point>h4{font-size:15px;line-height:1.7;margin:0 0 9px}
+.notes-summary .notes-reference-point>p{font-size:14px;line-height:1.8;margin:8px 0}
+.notes-summary .notes-source{font-size:12px;line-height:1.7;color:#748270}
+.notes-summary .notes-usage-card{padding:15px 18px;margin-bottom:12px}
+.notes-summary .notes-usage-card .usage-phrase{margin-bottom:7px}
+.notes-summary .notes-usage-card .usage-phrase h3{font-size:20px;line-height:1.4}
+.notes-summary .notes-usage-card>strong{font-size:14px}
+.notes-summary .notes-usage-example{font-size:17px;line-height:1.7;margin:9px 0 5px}
+.notes-summary .notes-vocabulary .vocab-grid{margin:0 0 13px}
+.notes-summary .notes-vocabulary small{font-weight:400;margin-left:7px;color:#7c8778}
+@media(max-width:760px){.notes-summary .notes-core-card,.notes-summary .notes-usage-card{padding:14px}.notes-summary .notes-example{padding:9px 10px}.notes-summary .notes-core-card>h3{font-size:16px}.notes-summary .notes-rule{font-size:14px}.notes-summary .notes-usage-card .usage-phrase h3{font-size:19px}}

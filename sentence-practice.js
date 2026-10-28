@@ -1132,7 +1132,7 @@
     }
 
     emptyWorksheetHTML() {
-      const e=this.escape,nav=[['batch','批量检查'],['write','课文默写'],['retell','英文复述'],['spell','单词拼写']].map(([mode,label])=>'<button type="button" class="button subtle" data-sentence-action="navigate-mode" data-sentence-mode="'+mode+'">'+label+'</button>').join('');
+      const e=this.escape,nav=[['retell','课文复述'],['batch','批量检查'],['spell','单词拼写']].map(([mode,label])=>'<button type="button" class="button subtle" data-sentence-action="navigate-mode" data-sentence-mode="'+mode+'">'+label+'</button>').join('');
       return '<div class="sentence-quick-workspace sentence-worksheet"><header class="sentence-sheet-header"><button type="button" class="sentence-sheet-back" data-sentence-action="back" aria-label="返回课文">'+(this.options.icon?.('left')||'返回')+'</button><h3>造句练习</h3><span></span><details class="sentence-sheet-menu"'+this.sheetMenuOpenAttribute()+'><summary aria-label="更多练习选项">'+(this.options.icon?.('list')||'更多')+'</summary><div class="sentence-sheet-menu-content">'+nav+'</div></details></header><p class="sentence-note sentence-sheet-empty">本课暂无可练习的新词。</p></div>';
     }
 
@@ -1141,7 +1141,7 @@
       const current=this.lessonTargets().filter(item=>phrase?item.kind==='phrase':(item.kind||'word')==='word');
       const reviewed=!current.some(item=>item.key===target.key),progress=this.lessonProgress();
       const options=rows=>rows.map(item=>this.optionHTML(item,draft.targetKey)).join('');
-      const nav=[['batch','批量检查'],['write','课文默写'],['retell','英文复述'],['spell','单词拼写']].map(([mode,label])=>'<button type="button" class="button subtle" data-sentence-action="navigate-mode" data-sentence-mode="'+mode+'">'+label+'</button>').join('');
+      const nav=[['retell','课文复述'],['batch','批量检查'],['spell','单词拼写']].map(([mode,label])=>'<button type="button" class="button subtle" data-sentence-action="navigate-mode" data-sentence-mode="'+mode+'">'+label+'</button>').join('');
       const returnToLesson=reviewed&&current.length?'<button type="button" class="button subtle" data-sentence-action="current-lesson">返回本课新词</button>':'';
       const menu='<details class="sentence-sheet-menu"'+this.sheetMenuOpenAttribute()+'><summary aria-label="更多练习选项">'+(this.options.icon?.('list')||'更多')+'</summary><div class="sentence-sheet-menu-content"><div class="sentence-sheet-navigation">'+returnToLesson+nav+'</div><p class="sentence-quick-progress">本课已练 '+progress.done+' / '+progress.total+' '+(phrase?'项用法':'个词')+' · 已练不代表掌握<button type="button" data-sentence-action="next-unfinished"'+(progress.done===progress.total?' disabled':'')+'>下一个未练</button></p>'+this.oldPickerEntryHTML()+this.worksheetToolsHTML()+'<details class="sentence-quick-legacy"><summary>更多训练与旧版草稿</summary>'+this.controlsHTML(true)+'</details>'+this.referenceHTML()+(draft.assisted?'<p class="sentence-note sentence-assisted">本轮已借助参考。</p>':'')+'<button type="button" class="button subtle" data-sentence-action="save">重试保存</button></div></details>';
       const header='<header class="sentence-sheet-header"><button type="button" class="sentence-sheet-back" data-sentence-action="back" aria-label="返回课文">'+(this.options.icon?.('left')||'返回')+'</button><h3 id="sentence-step-title">造句练习</h3><p class="sentence-save-status" data-save-state="'+status.state+'" title="'+e(status.text)+'" role="status" aria-live="polite">'+e(this.sheetSaveText(status))+'</p>'+menu+'</header>';

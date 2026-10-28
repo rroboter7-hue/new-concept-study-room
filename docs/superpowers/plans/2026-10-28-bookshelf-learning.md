@@ -7,3 +7,11 @@ User selected the second blue/white bookshelf concept and approved the cover exp
 5. Store user-confirmed sentence corrections separately, review in groups of at most ten on 1/3/7-day intervals; no automatic free grammar grading.
 6. Preserve drafts and backup/import compatibility through existing reconciled storage.
 7. Run source tests excluding the prohibited local-server test, deploy via current Pages workflow, then verify mobile/desktop flows and visual fidelity in browser.
+
+## User steering: concise study screens and consistent colors
+- Default notes show the actual lesson grammar and short examples; full questions, explanations, vocabulary and supplemental training stay collapsed and source-complete.
+- Same-phrase different meanings are retained; only full-content duplicates are merged.
+- Mobile navigation is one row: passage, notes, sentence writing, text retelling. Menu exposes four primary destinations and folds rare tools.
+- Dictation is removed from ordinary mode selection; old data and drafts remain.
+- Reading sentence actions appear only after opening focused listening.
+- All learning surfaces use the homepage blue/white palette; correctness colors retain their meaning.

@@ -1,6 +1,6 @@
 {
-  "build": "2026-10-28-bookshelf-mobile-fit",
-  "preparedAt": "2026-10-28T02:55:38.554327Z",
+  "build": "2026-10-28-clean-study",
+  "preparedAt": "2026-10-28T03:40:30Z",
   "book2": {
     "book": 2,
     "total": 96,
@@ -310,8 +310,8 @@
       "unknownOrAmbiguousOwnersRejected": true
     }
   },
-  "staticFiles": 4085,
-  "staticBytes": 738989360,
+  "staticFiles": 4087,
+  "staticBytes": 739034491,
   "nativeearsAdvancedAudio": {
     "books": {
       "3": 60,
@@ -588,7 +588,7 @@
     "capacityReport": "delivery-report.json",
     "runtimeLoading": {
       "version": 1,
-      "originalStartupRequests": 111,
+      "originalStartupRequests": 113,
       "publishedScriptPackages": 6,
       "publishedStylesheets": 1,
       "parallelPreloads": true,
@@ -737,7 +737,7 @@
   },
   "mobileWriting": {
     "visibleMenu": true,
-    "directDictationAndRetell": true,
+    "directDictationAndRetell": false,
     "readingContinuesToWriting": true,
     "primary": [
       "four-forms",
@@ -770,7 +770,15 @@
       "namedFieldAutosave": true,
       "existingDraftsPreserved": true,
       "perFieldInsertionAndReuse": true
-    }
+    },
+    "directTextRetell": true,
+    "legacyDictationDraftsPreserved": true,
+    "primaryNavigation": [
+      "reading",
+      "notes",
+      "sentences",
+      "retell"
+    ]
   },
   "bookshelf": {
     "design": "selected-blue-white-bookshelf",
@@ -781,7 +789,10 @@
     "perBookContinuation": true,
     "favoritesPersisted": true,
     "originalStudyDataPreserved": true,
-    "mobileFirstViewportFit": true
+    "mobileFirstViewportFit": true,
+    "consistentBlueWhiteTheme": true,
+    "compactMenus": true,
+    "readingControlsOnDemand": true
   },
   "focusedListening": {
     "exactSourceSentences": true,
@@ -805,6 +816,20 @@
   },
   "notesReturn": {
     "lessonSourceAndIndexBound": true,
-    "returnsToOriginalSentence": true
+    "returnsToOriginalSentence": true,
+    "opensCollapsedAncestors": true
+  },
+  "conciseNotes": {
+    "coreRulesAndShortExamples": true,
+    "fullReferencesCollapsed": true,
+    "distinctSensesPreserved": true,
+    "allQuestionReferencesRetained": true,
+    "scoringDataUnchanged": true
+  },
+  "unifiedTheme": {
+    "palette": "blue-white-bookshelf",
+    "learningSurfaces": true,
+    "mobileBrowserTheme": "#0873ff",
+    "feedbackStatusColorsPreserved": true
   }
 }

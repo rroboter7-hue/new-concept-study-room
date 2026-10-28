@@ -100,14 +100,12 @@
     }
 
     mount() {
-      this.header = element('header', 'mls-header', '<div class="mls-brand"></div><select class="mls-book-select" data-mobile-book aria-label="选择分册">'+BOOK_NAMES.slice(1).map((name,i)=>'<option value="'+(i+1)+'">'+name+'</option>').join('')+'</select><button type="button" class="mls-course-button" data-mobile-action="open-courses" aria-haspopup="dialog" aria-expanded="false" aria-controls="mls-course-drawer">选课 ' + icon('M9 6h12M9 12h12M9 18h12M3 6h1m-1 6h1m-1 6h1') + '</button>');
-      this.bookSelect = this.header.querySelector('[data-mobile-book]');
-      this.header.querySelector('.mls-brand').innerHTML = '<details class="mls-learning-menu"><summary aria-label="打开学习菜单"><span class="mls-menu-mark">'+icon('M4 6h16M4 12h16M4 18h16')+'菜单</span><strong class="mls-header-lesson">第1课</strong></summary><div class="mls-menu-items"><span class="mls-book-summary"></span><button type="button" data-mobile-tab="reading">听读课文</button><button type="button" data-mobile-output="sentences">四句型与造句</button><button type="button" data-mobile-output="write">课文默写</button><button type="button" data-mobile-output="retell">英文复述</button><button type="button" data-mobile-tab="usage">知识讲解</button><button type="button" data-mobile-tab="phrases">习惯用法</button><button type="button" data-mobile-action="today-tasks">今日任务</button><button type="button" data-mobile-view="daily-review">每日复习</button><button type="button" data-mobile-view="words">我的生词本</button><button type="button" data-mobile-view="records">学习记录</button><button type="button" data-mobile-view="game">闯关挑战</button><button type="button" data-mobile-view="library">教材资料</button><button type="button" data-mobile-action="reading-tools">译文、音频与来源</button></div></details>';
+      this.header = element('header', 'mls-header', '<div class="mls-brand"></div><span class="mls-current-book"></span>');
+      this.header.querySelector('.mls-brand').innerHTML = '<details class="mls-learning-menu"><summary aria-label="打开学习菜单"><span class="mls-menu-mark">'+icon('M4 6h16M4 12h16M4 18h16')+'菜单</span><strong class="mls-header-lesson">第1课</strong></summary><div class="mls-menu-items"><span class="mls-book-summary"></span><div class="mls-menu-primary"><button type="button" data-mobile-action="open-courses" aria-haspopup="dialog" aria-expanded="false" aria-controls="mls-course-drawer">选择课程</button><button type="button" data-mobile-view="daily-review">每日复习</button><button type="button" data-mobile-view="words">生词本</button><button type="button" data-mobile-view="records">学习记录</button></div><details class="mls-menu-more"><summary>更多</summary><div><button type="button" data-mobile-action="today-tasks">今日任务</button><button type="button" data-mobile-tab="practice">巩固练习</button><button type="button" data-mobile-view="game">闯关挑战</button><button type="button" data-mobile-view="library">教材资料</button><button type="button" data-mobile-action="reading-tools">学习设置与来源</button></div></details></div></details>';
       this.menu = this.header.querySelector('.mls-learning-menu');
-      this.modeNav = element('nav','mls-mode-nav',[['reading','听读课文'],['output','四句型·造句'],['practice','更多练习']].map(([tab,label])=>'<button type="button" role="tab" id="mls-tab-'+tab+'" data-mobile-tab="'+tab+'" aria-controls="reader-content" aria-selected="false">'+label+'</button>').join(''));
+      this.modeNav = element('nav','mls-mode-nav',[['reading','课文','tab'],['usage','笔记','tab'],['sentences','造句','output'],['retell','课文复述','output']].map(([mode,label,kind])=>'<button type="button" role="tab" id="mls-tab-'+mode+'" data-mobile-'+kind+'="'+mode+'" aria-controls="reader-content" aria-selected="false">'+label+'</button>').join(''));
       this.modeNav.setAttribute('role','tablist');this.modeNav.setAttribute('aria-label','课程主要模式');
-      this.quickNav=element('nav','mls-quick-nav','<button type="button" data-mobile-output="write" aria-pressed="false">'+icon('m15 5 4 4M4 20l4-1L20 7a2.8 2.8 0 0 0-4-4L4 15z')+'<span>课文默写</span></button><button type="button" data-mobile-output="retell" aria-pressed="false">'+icon('M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9H13a8.5 8.5 0 0 1 8 8v.5Z')+'<span>英文复述</span></button><button type="button" data-mobile-view="daily-review">'+icon('M12 8v5l3 2M22 12a10 10 0 1 1-20 0 10 10 0 0 1 20 0')+'<span>每日复习</span></button>');
-      this.quickNav.setAttribute('aria-label','默写、复述和复习快捷入口');
+      this.quickNav=null;
       this.readNext=element('button','button primary mls-read-next','听读完成，去造句');this.readNext.type='button';this.readNext.dataset.mobileAction='read-next';
       const readerFooter=this.reader?.querySelector('.reader-footer');if(readerFooter)readerFooter.parentNode.insertBefore(this.readNext,readerFooter);
       this.home = element('section', 'mls-learning-home', '<p class="mls-home-kicker">从一段课文开始</p><button type="button" class="mls-continue-button" data-mobile-action="continue"><span class="mls-continue-label"></span>' + icon('m9 5 7 7-7 7') + '</button><p class="mls-current-title"></p><div class="mls-home-footer"><span class="mls-lesson-status"></span><button type="button" class="mls-game-link" data-mobile-action="game">闯关挑战 <span aria-hidden="true">→</span></button></div>');
@@ -115,7 +113,6 @@
       if (this.main) {
         this.main.insertBefore(this.header, this.main.firstChild);
         this.main.insertBefore(this.modeNav, this.header.nextSibling);
-        this.main.insertBefore(this.quickNav, this.modeNav.nextSibling);
         const study = document.getElementById('study-view');
         this.main.insertBefore(this.home, study || this.header.nextSibling);
       }
@@ -126,7 +123,8 @@
       this.overlay.hidden = true;
       this.backdrop = element('div', 'mls-course-backdrop');
       this.backdrop.setAttribute('aria-hidden', 'true');
-      this.dialog = element('section', 'mls-course-dialog', '<div class="mls-drawer-heading"><div><h2 id="mls-drawer-title">选择课程</h2><p class="mls-drawer-book-summary"></p></div><button type="button" class="mls-close-button" data-mobile-action="close-courses" aria-label="关闭课程目录">' + icon('m6 6 12 12M6 18 18 6') + '</button></div>');
+      this.dialog = element('section', 'mls-course-dialog', '<div class="mls-drawer-heading"><div><h2 id="mls-drawer-title">选择课程</h2><p class="mls-drawer-book-summary"></p></div><button type="button" class="mls-close-button" data-mobile-action="close-courses" aria-label="关闭课程目录">' + icon('m6 6 12 12M6 18 18 6') + '</button></div><label class="mls-drawer-book-label">选择分册<select class="mls-book-select" data-mobile-book aria-label="选择分册">'+BOOK_NAMES.slice(1).map((name,i)=>'<option value="'+(i+1)+'">'+name+'</option>').join('')+'</select></label>');
+      this.bookSelect = this.dialog.querySelector('[data-mobile-book]');
       this.dialog.id = 'mls-course-drawer';
       this.dialog.setAttribute('role', 'dialog');
       this.dialog.setAttribute('aria-modal', 'true');
@@ -201,6 +199,7 @@
       const brandSummary=this.header?.querySelector('.mls-book-summary'),drawerSummary=this.dialog?.querySelector('.mls-drawer-book-summary');
       if(brandSummary)brandSummary.textContent=summary;
       if(drawerSummary)drawerSummary.textContent=summary;
+      const currentBook=this.header?.querySelector('.mls-current-book');if(currentBook)currentBook.textContent=BOOK_NAMES[book];
       this.home.querySelector('.mls-continue-label').textContent = lesson ? '继续学习'+BOOK_NAMES[book]+'第' + number + '课' : '开始学习'+BOOK_NAMES[selectedBook];
       this.home.querySelector('.mls-current-title').textContent = lesson ? String(lesson.title || '').replace(/^第\d+(?:[–—-]\d+)?课\s*[·・]\s*/, '') : '选择一课，开始阅读';
       const label=this.header?.querySelector('.mls-header-lesson');if(label)label.textContent=lesson?'第'+number+'课':BOOK_NAMES[selectedBook];
@@ -228,7 +227,7 @@
       this.body.classList.toggle('mls-sentence-sheet',p.focused&&this.state?.tab==='output'&&this.outputMode==='sentences'&&this.state?.sentenceWorksheet===true);
       this.body.setAttribute('data-mls-tab',this.state?.tab||'reading');
       if(this.inlinePlayerSlot)this.inlinePlayerSlot.hidden=!p.inlinePlayer;
-      if(this.modeNav)for(const button of this.modeNav.querySelectorAll('[data-mobile-tab]')){const active=this.state?.view==='study'&&button.dataset.mobileTab===this.state?.tab&&(button.dataset.mobileTab!=='output'||this.outputMode==='sentences');button.setAttribute('aria-selected',String(active));}
+      if(this.modeNav){const buttons=[...this.modeNav.querySelectorAll('[role="tab"]')];for(const button of buttons){const active=this.state?.view==='study'&&(button.dataset.mobileOutput?this.state?.tab==='output'&&button.dataset.mobileOutput===this.outputMode:button.dataset.mobileTab===this.state?.tab);button.setAttribute('aria-selected',String(active));button.tabIndex=active?0:-1;}if(buttons.length&&!buttons.some(button=>button.getAttribute('aria-selected')==='true'))buttons[0].tabIndex=0;}
       if(this.quickNav)for(const button of this.quickNav.querySelectorAll('[data-mobile-output]'))button.setAttribute('aria-pressed',String(this.state?.view==='study'&&this.state?.tab==='output'&&button.dataset.mobileOutput===this.outputMode));
       this.body.classList.toggle('mls-player-collapsed', this.mobile && this.playerCollapsed);
       if (this.playerButton) {
@@ -255,7 +254,7 @@
         this.closeCourses();
         return;
       }
-      if (!target) return;
+      if (!target) {if(this.menu?.open&&!this.menu.contains?.(event.target))this.menu.open=false;return;}
       if(target.dataset.mobileOutput){
         if(this.menu)this.menu.open=false;
         this.body.classList.remove('mls-coach-open');
@@ -307,7 +306,8 @@
 
     openCourses(opener) {
       if (!this.enabled || !this.mobile || this.destroyed || this.drawerOpen) return;
-      this.returnFocus = opener || document.activeElement;
+      this.returnFocus = this.menu?.contains?.(opener)?this.menu.querySelector('summary'):(opener || document.activeElement);
+      if(this.menu)this.menu.open=false;
       this.drawerOpen = true;
       this.overlay.hidden = false;
       this.body.classList.add('mls-drawer-open');
@@ -335,6 +335,11 @@
     }
 
     keydown(event) {
+      if(!this.drawerOpen&&this.mobile&&this.modeNav?.contains?.(event.target)&&['ArrowLeft','ArrowRight','Home','End'].includes(event.key)){
+        const buttons=[...this.modeNav.querySelectorAll('[role="tab"]')],at=buttons.indexOf(event.target);if(at<0||!buttons.length)return;
+        const index=event.key==='Home'?0:event.key==='End'?buttons.length-1:(at+(event.key==='ArrowRight'?1:-1)+buttons.length)%buttons.length;
+        event.preventDefault();this.click({target:buttons[index]});this.defer(()=>buttons[index].focus({preventScroll:true}));return;
+      }
       if(!this.drawerOpen&&this.menu?.open&&event.key==='Escape'){
         event.preventDefault();this.menu.open=false;this.menu.querySelector('summary')?.focus();return;
       }

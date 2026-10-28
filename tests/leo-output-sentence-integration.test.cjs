@@ -53,7 +53,7 @@ test('omitting the optional availability callback retains sentence mode', () => 
   assert.equal(h.practice.target().word,'book');
 });
 
-test('when availability changes, an active sentence mode flushes its draft and falls back to writing', () => {
+test('when availability changes, an active sentence mode flushes its draft and falls back to retelling', () => {
   let allowed = true;
   const h = setup(() => allowed);
   h.output.render();h.mode('sentences');h.input('I keep my book.');
@@ -61,7 +61,7 @@ test('when availability changes, an active sentence mode flushes its draft and f
   assert.equal(h.practice.active.draft.answers.affirmative,'I keep my book.');
   allowed = false;
   const html = h.output.render();
-  assert.equal(h.output.mode,'write');
+  assert.equal(h.output.mode,'retell');
   assert.doesNotMatch(html,/data-output-mode="sentences"/);
   assert.match(html,/data-output-input="answer"/);
   assert.ok(Object.values(h.drafts).some(draft=>draft.answers.affirmative==='I keep my book.'));
