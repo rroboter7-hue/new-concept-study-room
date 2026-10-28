@@ -95,12 +95,6 @@
    const note=text(row.note),brief=!note||/^整理说明[，,；; ]*(?:非原\s*PDF\s*译文)?[。.]?$/i.test(note)?meaning:note;
    add(row,'usage',text(row.phrase),brief,'本课表达用法 · 原有资料整理',note||meaning);
   }
-  for(const row of list(lesson.vocabulary)){
-   if(row.needsContextReview===true||row.meaningMissing===true)continue;
-   const meaning=text(row.meaning);
-   if(!meaning||/未附|未提供|暂无|待(?:补|核|审)/.test(meaning))continue;
-   add(row,'vocabulary',text(row.word),meaning,'本课词汇表 · 按本课词义整理');
-  }
   return {items,vocabulary,usage,notice:NOTICE};
  }
  return Object.freeze({forLesson});

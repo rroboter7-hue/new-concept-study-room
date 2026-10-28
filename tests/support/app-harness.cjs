@@ -57,7 +57,7 @@ async function harness({pilot=true,loaded={},realFormalShell=false,realCoach=fal
  ['book2-reviewed-usage-26-30.js','reviewed-usage-registry.js','book2-lexical-source-corrections-32-34.js'].forEach(file=>real.add(file));
  if(realOutput)real.add('output-practice.js');
  if(realCoach)['learning-coach-core.js','learning-coach.js','sentence-core.js'].forEach(file=>real.add(file));
- const pipelineScripts=['sentence-core.js','grammar-check.js','person-name-targets.js','learning-pipeline-core.js','learning-pipeline-questions.js','writing-target-plan.js','free-writing-practice.js','sentence-feedback.js','lesson-key-points.js','lesson-sentence-export.js','learning-pipeline.js','bookshelf-home.js'];
+ const pipelineScripts=['sentence-core.js','grammar-check.js','person-name-targets.js','learning-pipeline-core.js','learning-pipeline-questions.js','writing-target-plan.js','free-writing-practice.js','sentence-feedback.js','lesson-key-points.js','lesson-sentence-export.js','retell-support.js','learning-pipeline.js','bookshelf-home.js'];
  if(realPipeline)pipelineScripts.forEach(file=>real.add(file));
  const loadedScripts=new Set();
  const scripts=Array.from(read('index.html').matchAll(/<script\b([^>]*)\bsrc="([^"]+)"[^>]*>/g),m=>m[2].split('?')[0]);for(const script of scripts)if(real.has(script)){vm.runInContext(read(script),c,{filename:script});loadedScripts.add(script);}

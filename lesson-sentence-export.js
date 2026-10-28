@@ -8,6 +8,16 @@
   const own=(value,key)=>Object.getOwnPropertyDescriptor(object(value),key)?.value;
   const entries=value=>Object.entries(object(value));
   const kinds=['affirmative','negative','yesno','wh','combined'];
+  const kindLabels={affirmative:'陈述句',negative:'否定句',yesno:'一般疑问句',wh:'特殊疑问句',combined:'综合句',dictation:'听写',retell:'复述'};
+  function displayTarget(row){
+    if(typeof row?.targetLabel==='string'&&row.targetLabel.trim())return row.targetLabel.trim();
+    let value=typeof row?.target==='string'?row.target:'';
+    if(!value)return '';
+    try{value=decodeURIComponent(value);}catch(_){return value;}
+    const match=value.match(/^(?:word|phrase):[^:]+:(.+)$/);
+    if(!match)return value;
+    try{return decodeURIComponent(match[1]);}catch(_){return match[1];}
+  }
   function identity(key){
     const parts=key.split(':');let lesson,target,mode;
     if(parts.length===3&&parts[0]==='v1')[,lesson,target]=parts;
@@ -46,7 +56,7 @@
       '指出具体问题、简短理由与最小修改；正确的句子请说明，无充分依据时标明不确定。不要替换学习者意图或凭空添加情境。',
       '这些草稿和有限本地初检未构成完整批改，不计入成绩；重复句可能属于不同练习，请逐条保留。',''];
     const sourceLabels={freeWriting:'自主造句',sentencePractice:'旧版分组造句',sentenceBatches:'旧版批量句子'},outputKinds={dictation:'旧版听写稿',retell:'旧版复述稿'};
-    rows.forEach((row,index)=>lines.push((index+1)+'. ['+(row.source==='outputDrafts'?outputKinds[row.kind]||'旧版输出草稿':sourceLabels[row.source]||row.source||'草稿')+(row.kind?' · '+row.kind:'')+(row.target?' · 目标 '+row.target:'')+']\n'+row.answer));
+    rows.forEach((row,index)=>lines.push((index+1)+'. ['+(row.source==='outputDrafts'?outputKinds[row.kind]||'旧版输出草稿':sourceLabels[row.source]||'学习草稿')+(row.kind&&row.source!=='outputDrafts'?' · '+(kindLabels[row.kind]||'练习句子'):'')+(displayTarget(row)?' · 目标 '+displayTarget(row):'')+']\n'+row.answer));
     if(!rows.length)lines.push('本课暂无已写草稿。');
     return lines.join('\n\n');
   }

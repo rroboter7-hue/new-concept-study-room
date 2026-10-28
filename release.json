@@ -1,5 +1,5 @@
 {
-  "build": "2026-10-28-integrated-study",
+  "build": "2026-10-28-retell-study",
   "preparedAt": "2026-10-28T06:52:36.530Z",
   "book2": {
     "book": 2,
@@ -837,12 +837,13 @@
     "feedbackStatusColorsPreserved": true
   },
   "learningPipeline": {
-    "version": 1,
+    "version": 2,
     "stages": [
       "optional-reading-and-listening",
       "grammar-choice",
       "free-writing",
       "recap",
+      "lesson-retelling",
       "lesson-key-points"
     ],
     "refreshRestoresStageQuestionAndDrafts": true,
@@ -863,7 +864,7 @@
     "keyPointsOnlineAI": false,
     "backupRestore": true,
     "studentTextUpload": false,
-    "integratedVersion": 2,
+    "integratedVersion": 3,
     "sourceAwareCurrentAndReviewTargets": true,
     "sourceSupportedCanonicalLabels": true,
     "unchangedDraftStorageIdentities": true,
@@ -890,6 +891,16 @@
       "other-earlier-knowledge"
     ],
     "legacyGameLazyInitialization": true,
-    "perLessonTargetPlanCache": true
+    "perLessonTargetPlanCache": true,
+    "retelling": {
+      "sourceBoundChineseMeaning": true,
+      "sourceBoundCharacters": true,
+      "currentWordAndUsageHints": true,
+      "independentAutosavedDraft": true,
+      "explicitLegacyImport": true,
+      "copyExactLearnerEnglishOnly": true
+    },
+    "keyPointsGrammarAndUsageOnly": true,
+    "legacyStageMigrationOnce": true
   }
 }

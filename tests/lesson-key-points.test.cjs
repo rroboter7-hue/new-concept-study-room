@@ -7,7 +7,8 @@ const fixture=()=>({id:'current',book:2,number:22,title:'A letter',paragraphs:[{
 
 test('collects three to five short points with complete local examples and honest provenance',()=>{
  const result=summarize(fixture());
- assert.ok(result.items.length>=3&&result.items.length<=5);
+ assert.ok(result.items.length>=1&&result.items.length<=5);
+ assert.ok(result.items.every(item=>['grammar','usage'].includes(item.category)));
  assert.ok(result.items.some(item=>item.category==='grammar'&&item.summary==='过去发生的动作使用过去式。'));
  assert.ok(result.items.some(item=>item.category==='usage'));
  assert.ok(result.items.every(item=>item.sourceLessonId==='current'&&item.sourceLabel));
@@ -105,7 +106,8 @@ test('real public data yields source-scoped, nonempty points and at least one ex
  for(const lesson of lessons){
   const reviewed=scope.StudyReviewedUsage.grammarNotesFor(lesson),questions=scope.StudyKnowledge.bank.hasLesson(lesson.id)?scope.StudyKnowledge.bank.questionsForLesson(lesson.id):lesson.quiz;
   const before=JSON.stringify(lesson),result=summarize(lesson,{reviewedGrammar:reviewed,questions});
-  assert.ok(result.items.length>=3&&result.items.length<=5,lesson.id+': expected 3–5 points');
+  assert.ok(result.items.length<=5,lesson.id+': at most five points');
+  assert.ok(result.items.every(item=>['grammar','usage'].includes(item.category)),lesson.id+': current grammar and usage only');
   assert.ok(result.items.every(item=>item.sourceLessonId===lesson.id&&item.title&&item.summary&&item.sourceLabel),lesson.id+': source scope');
   const corpus=JSON.stringify([lesson,reviewed,questions]);
   assert.ok(result.items.some(item=>item.example&&/[A-Za-z]/.test(item.example)),lesson.id+': existing English example');

@@ -107,13 +107,22 @@
 
   function sanitize(raw){
     const state=object(raw)?clone(raw):{};
-    state.version=1;
+    const legacy=state.version!==2;
+    state.version=2;
     state.activeLessonId=safeId(state.activeLessonId)?state.activeLessonId:null;
     const lessons={};
     for(const [id,value] of Object.entries(object(state.lessons)?state.lessons:{})){
       if(!safeId(id))continue;
       const record=object(value)?value:{},quiz=object(record.quiz)?record.quiz:{};
-      record.stage=integer(record.stage)&&record.stage<=4?record.stage:0;
+      if(legacy){
+        if(record.stage===4)record.stage=5;
+        if(object(record.scrollPositions)&&Object.hasOwn(record.scrollPositions,'4')){
+          record.scrollPositions={...record.scrollPositions,5:record.scrollPositions[4]};
+          delete record.scrollPositions[4];
+        }
+      }
+      record.stage=integer(record.stage)&&record.stage<=5?record.stage:0;
+      record.retellText=typeof record.retellText==='string'?record.retellText:'';
       record.round=count(record.round);
       record.quiz={...quiz,questions:array(quiz.questions),answers:object(quiz.answers)?quiz.answers:{},index:count(quiz.index),submitted:quiz.submitted===true};
       record.mistakes=object(record.mistakes)?record.mistakes:{};

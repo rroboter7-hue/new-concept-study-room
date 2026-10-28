@@ -85,7 +85,7 @@ test('a new learner objective attempt supplies two-line earlier writing goals wi
 
 test('finishing a round also supplies earlier writing goals while retaining existing old score records',async()=>{
  const h=await harness({...options,loaded:{records:{historic:{best:64,attempts:3}}}}),ui=await enter(h),earlier=h.api.current,next=h.c.LESSONS.find(lesson=>lesson.book===earlier.book&&lesson.number===earlier.number+1);
- await ui.goStage(4);await ui.finish();await h.flush();assert(h.api.data.learningPipeline.lessons[earlier.id].finishedAt);assert.equal(ui.record().attempts.length,0);
+ await ui.goStage(5);await ui.finish();await h.flush();assert(h.api.data.learningPipeline.lessons[earlier.id].finishedAt);assert.equal(ui.record().attempts.length,0);
  await h.api.selectLesson(next.id);await h.flush();await ui.goStage(2);const prior=ui.writing.targets().filter(target=>target.prior);
  assert.equal(prior.length,4);assert(prior.every(target=>target.requiredCount===2&&target.source.id===earlier.id));
  assert.equal(h.api.data.records[earlier.id],undefined);assert.deepEqual(plain(h.api.data.records.historic),{best:64,attempts:3});

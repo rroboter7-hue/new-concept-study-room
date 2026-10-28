@@ -57,3 +57,11 @@ Files: app/index/release/host CSS, integration and delivery tests.
 - The previous proposal is the approved design; this document records it, rather than reopening settled choices.
 - Existing unrelated modifications to reading-view.js and its tests are preserved and excluded from task commits.
 - No new server-backed AI service or automatic cross-device sync is introduced; the user's free manual-copy workflow is retained.
+
+### Task 5: Source-supported retelling and six-stage migration
+User addition: insert retelling between recap and key points and add full-retelling copy below its input. Key points are current grammar/usages only.
+- [ ] Create pure `retell-support.js` with `StudyRetellSupport.forLesson(lesson,{writingTargets,readingModel})`, source-bound Chinese sections, names/roles, limited current vocabulary/usages; no retelling copy prompt or model answer; expose verified person names safely from the existing finite source registry.
+- [ ] Restrict `lesson-key-points.js` to current grammar and usages, no standalone vocabulary filler.
+- [ ] Migrate pipeline schema v1 stage4 to v2 stage5 exactly once. New stage4 retelling saves its own complete text, controls support disclosures and provides full-text copying/fallback. Preserve old/new draft identities and all quiz/scroll history.
+- [ ] Copy/export uses readable current target labels, including ring despite old rang storage keys, without changing source IDs or bindings.
+- [ ] Root wires new callbacks, source helpers, lesson summaries and script order; tests legacy migration, immediate refresh, retell autosave/copy/failure, source-name correctness and current key-point categories; new final CI/publication supersedes intermediate deployment.

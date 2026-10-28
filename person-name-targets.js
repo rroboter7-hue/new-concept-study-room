@@ -44,6 +44,78 @@
     }
     return false;
   }
+  function namesForLesson(lesson){
+    if(!lesson||typeof lesson!=='object')return [];
+    var id=ownData(lesson,'id'),row=typeof id==='string'&&Object.prototype.hasOwnProperty.call(registry,id)?registry[id]:null;
+    var paragraphs=ownData(lesson,'paragraphs');
+    if(!Array.isArray(paragraphs))return [];
+    var result=[],seen=Object.create(null),covered=Object.create(null);
+    var approved=Object.create(null),contexts=[];
+    var base=function(value){return normalize(value).normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/'s$/,'');};
+    var titleWords=Object.create(null);
+    exactTitles.forEach(function(value){titleWords[value]=true;});titleWords.miss=true;titleWords.captain=true;
+    if(row&&ownData(lesson,'book')===row.book&&ownData(lesson,'number')===row.number&&ownData(lesson,'title')===row.title){
+      Object.keys(row.words).forEach(function(token){
+        if(token.length<2||titleWords[token.replace(/\.$/,'')])return;
+        var expected=row.words[token];
+        if(!isPersonNameTarget({word:token,sourceSentence:expected},lesson))return;
+        approved[base(token)]=true;contexts.push(expected);
+      });
+      // The reviewed B2L64 word-target OCR drops terminal accents; the
+      // supplied English source retains the complete Aimé Thomé spelling.
+      if(id==='nce-b2-eef57c-l064'){
+        if(approved.aim)approved.aime=true;
+        if(approved.thom)approved.thome=true;
+      }
+    }
+    function add(name,role,source,parts){
+      var key=base(name);
+      if(!name||seen[key])return;
+      seen[key]=true;result.push({name:name,role:role||'',sourceText:source,parts:parts});
+    }
+    function scan(source){
+      if(typeof source!=='string'||!source)return;
+      var tokens=Array.from(source.matchAll(/[\p{L}]+(?:[-’'][\p{L}]+)*/gu),function(match){return {value:match[0],start:match.index,end:match.index+match[0].length,key:base(match[0])};});
+      var candidates=[];
+      for(var i=0;i<tokens.length;i++){
+        var first=tokens[i];
+        if(!approved[first.key]||titleWords[first.key])continue;
+        if(i>0&&approved[tokens[i-1].key]&&/^\s+$/.test(source.slice(tokens[i-1].end,first.start)))continue;
+        var end=i,parts=[first.key];
+        while(end+1<tokens.length){
+          var next=tokens[end+1],gap=source.slice(tokens[end].end,next.start);
+          if(!/^\s+$/.test(gap))break;
+          var vetted=approved[next.key]&&!titleWords[next.key];
+          var adjacent=contexts.some(function(context){return context.includes(tokens[end].value+' '+next.value);});
+          if(!vetted&&!(/^[A-ZÀ-ÖØ-Þ]/.test(next.value)&&adjacent))break;
+          end++;parts.push(next.key);
+        }
+        var start=first.start;
+        if(i>0){
+          var previous=tokens[i-1],prefixGap=source.slice(previous.end,start);
+          if(titleWords[previous.key]&&/^[.\s]*$/.test(prefixGap))start=previous.start;
+        }
+        var name=source.slice(start,tokens[end].end).replace(/[’']s$/,'');
+        candidates.push({name:name,sourceText:source,parts:parts,order:first.start});
+        i=end;
+      }
+      // Prefer whole reviewed names over later shortened mentions of the same person.
+      candidates.sort(function(a,b){return b.parts.length-a.parts.length||a.order-b.order;});
+      candidates.forEach(function(candidate){
+        if(candidate.parts.every(function(part){return covered[part];}))return;
+        add(candidate.name,'',candidate.sourceText,candidate.parts);
+        candidate.parts.forEach(function(part){covered[part]=true;});
+      });
+    }
+    paragraphs.forEach(function(paragraph){scan(ownData(paragraph,'en'));});
+    if(row)scan(ownData(lesson,'title'));
+    // Explicitly reviewed prose name absent from the word-target registry.
+    if(id==='nce-b2-eef57c-l002'&&ownData(lesson,'book')===2&&ownData(lesson,'number')===2&&ownData(lesson,'title')==='第2课 · Breakfast or lunch?'){
+      var lucy=paragraphs.find(function(p){return /\bmy aunt Lucy\b/.test(ownData(p,'en')||'');});
+      if(lucy)add('Lucy','姨妈',ownData(lucy,'en'),['lucy']);
+    }
+    return result.map(function(person){return {name:person.name,role:person.role,sourceText:person.sourceText};});
+  }
   var scope=Object.freeze({version:1,lessons:120,personTokens:273,sourceBoundTitles:4,exactHonorifics:exactTitles.length,byBook:Object.freeze({"1":100,"2":82,"3":55,"4":36}),policy:'Finite source-lesson/token/context registry; exact conventional honorifics; unknown and ambiguous contexts stay eligible.'});
-  return Object.freeze({isPersonNameTarget:isPersonNameTarget,scope:scope});
+  return Object.freeze({isPersonNameTarget:isPersonNameTarget,namesForLesson:namesForLesson,scope:scope});
 });

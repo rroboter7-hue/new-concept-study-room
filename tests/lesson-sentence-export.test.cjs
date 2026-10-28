@@ -14,3 +14,9 @@ test('legacy bundle arrays remain lesson bound and preserve multiline learner te
  const rows=api.collect({lessonId:'now',sentencePractice:[{lessonId:'now',sourceKey:'bundle',targetKey:'word',answers:{affirmative:'First.\nSecond.'}},{lessonId:'other',sourceKey:'other',answers:{affirmative:'Other.'}}]});
  assert.equal(rows.length,1);assert.equal(rows[0].answer,'First.\nSecond.');
 });
+test('prompt uses readable target labels and readable source categories without altering identities',()=>{
+ const rows=[{source:'freeWriting',target:'word:lesson:rang',targetLabel:'ring',sourceId:'raw-id',answer:'The phone rang.'},{source:'sentencePractice',kind:'affirmative',target:'phrase%3Alesson%3Aturn%20round',answer:'I turned round.'}];
+ const before=JSON.stringify(rows),prompt=api.prompt({id:'lesson',book:2,number:2,title:'Breakfast or lunch?'},rows);
+ assert.match(prompt,/目标 ring/);assert.match(prompt,/目标 turn round/);assert.doesNotMatch(prompt,/目标 word:|目标 phrase%3A/);assert.doesNotMatch(prompt,/· affirmative/);
+ assert.equal(JSON.stringify(rows),before);
+});

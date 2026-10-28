@@ -109,7 +109,7 @@ test('sanitize supplies usable defaults and strips unsafe keys without discardin
   assert.equal(result.lessons['lesson-1'].stage,0);
   assert.equal(result.lessons['lesson-1'].quiz.index,0);
   assert.deepEqual(result.lessons['lesson-1'].quiz.answers,{});
-  assert.equal(result.lessons.old.stage,4);
+  assert.equal(result.lessons.old.stage,5);
   assert.equal(Object.hasOwn(result.lessons,'__proto__'),false);
   assert.equal(Object.hasOwn(result,'constructor'),false);
   assert.equal({}.polluted,undefined);
@@ -217,7 +217,27 @@ test('browser build exposes the same pure API without a module loader or DOM',()
   const context={window:{}};
   vm.runInNewContext(fs.readFileSync(corePath,'utf8'),context);
   assert.equal(typeof context.window.StudyLearningPipeline.planQuiz,'function');
-  assert.equal(context.window.StudyLearningPipeline.sanitize(null).version,1);
+  assert.equal(context.window.StudyLearningPipeline.sanitize(null).version,2);
+});
+
+test('migrates stored five-stage key points and scroll exactly once while preserving other evidence',()=>{
+ const legacy={version:1,activeLessonId:'lesson-2',lessons:{'lesson-2':{stage:4,scrollPositions:{3:{containerY:7},4:{containerY:88}},retellText:'Already mine.',recapText:'Notes',attempts:[{at:8}],quiz:{answers:{q:1}}}}};
+ const migrated=api('sanitize')(legacy),again=api('sanitize')(migrated);
+ assert.equal(migrated.version,2);assert.equal(migrated.lessons['lesson-2'].stage,5);
+ assert.deepEqual(migrated.lessons['lesson-2'].scrollPositions,{3:{containerY:7},5:{containerY:88}});
+ assert.equal(migrated.lessons['lesson-2'].retellText,'Already mine.');
+ assert.deepEqual(migrated.lessons['lesson-2'].attempts,[{at:8}]);
+ assert.deepEqual(migrated.lessons['lesson-2'].quiz.answers,{q:1});
+ assert.equal(again.lessons['lesson-2'].stage,5);assert.deepEqual(again.lessons['lesson-2'].scrollPositions,migrated.lessons['lesson-2'].scrollPositions);
+ assert.equal(legacy.lessons['lesson-2'].stage,4);
+});
+
+test('current retelling stage four remains four on repeated sanitation and supports long text',()=>{
+ const retell='One paragraph.\n\n'+('Another sentence. '.repeat(1000));
+ const current={version:2,lessons:{'lesson-1':{stage:4,scrollPositions:{4:{containerY:40},5:{containerY:50}},retellText:retell}}};
+ const twice=api('sanitize')(api('sanitize')(current));
+ assert.equal(twice.lessons['lesson-1'].stage,4);assert.equal(twice.lessons['lesson-1'].retellText,retell);
+ assert.deepEqual(twice.lessons['lesson-1'].scrollPositions,current.lessons['lesson-1'].scrollPositions);
 });
 
 test('earlier review prioritizes real unresolved mistakes then overdue questions across active lesson histories',()=>{

@@ -1,6 +1,28 @@
 'use strict';
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),vm=require('node:vm');
 const policy=require('../person-name-targets.js');
+test('namesForLesson exposes source-verified Lucy but never Sunday or sentence-initial It',()=>{
+ const source=payload.lessons.find(row=>row.book===2&&row.number===2);assert(source);
+ const binding=JSON.parse(source.sourceBinding);
+ const lesson={id:source.id,book:2,number:2,title:binding[0],paragraphs:binding[1].map(en=>({en}))};
+ const names=policy.namesForLesson(lesson);
+ assert.deepEqual(names.map(row=>row.name),['Lucy']);assert.equal(names[0].role,'姨妈');
+ assert.deepEqual(policy.namesForLesson({...lesson,paragraphs:[{en:'It was Sunday.'}]}),[]);
+ const edited={...lesson,paragraphs:[{en:'Yesterday it was my aunt Lucy who called.'}]};
+ const editedLucy=policy.namesForLesson(edited)[0];
+ assert.equal(editedLucy.name,'Lucy');assert.equal(editedLucy.sourceText,edited.paragraphs[0].en);
+});
+test('whole source names stay together and honorifics never become standalone people',()=>{
+ const lesson=(book,number)=>{const row=payload.lessons.find(item=>item.book===book&&item.number===number);assert(row);const binding=JSON.parse(row.sourceBinding);return {id:row.id,book,number,title:binding[0],paragraphs:binding[1].map(en=>({en}))};};
+ const first=policy.namesForLesson(lesson(1,5));
+ assert.ok(first.some(row=>row.name==='Miss Sophie Dupont'&&row.sourceText.includes('Miss Sophie Dupont')));
+ assert.ok(first.some(row=>row.name==='Mr. Blake'));
+ assert.ok(!first.some(row=>['Miss','Sophie','Dupont'].includes(row.name)));
+ const tunnel=policy.namesForLesson(lesson(2,64));
+ assert.ok(tunnel.some(row=>row.name==='Aimé Thomé de Gamond'));
+ assert.ok(tunnel.some(row=>row.name==='William Low'));
+ assert.ok(!tunnel.some(row=>['Aim','Thom','de','Gamond','William'].includes(row.name)));
+});
 const artifact=fs.readFileSync(path.join(__dirname,'../lesson-word-targets.js'),'utf8');
 const beginning=artifact.indexOf('var api=factory(')+'var api=factory('.length;
 const payload=JSON.parse(artifact.slice(beginning,artifact.indexOf('\n',beginning)).trim().replace(/\);$/,''));

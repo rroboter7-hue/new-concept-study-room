@@ -1,5 +1,6 @@
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path');
 const file=path.resolve(__dirname,'../learning-pipeline.js');
+const {harness}=require('./support/app-harness.cjs');
 let LearningPipeline;if(fs.existsSync(file))LearningPipeline=require(file);
 const lessons=[{id:'old',book:1,number:1,title:'Earlier',paragraphs:[{en:'A book.',zh:'一本书。'}],vocabulary:[{word:'book',meaning:'书'}],usage:[{phrase:'look at',meaning:'看'}]},{id:'now',book:1,number:3,title:'Today <script>',paragraphs:[{en:'She is here.',zh:'她在这里。'}],vocabulary:[{word:'here',meaning:'这里'}],usage:[{phrase:'on time',meaning:'准时'}]}];
 const questions=id=>Array.from({length:12},(_,i)=>({id:id+'-q'+i,type:'grammar',graded:true,question:'She ___ here. '+i,options:['is','are'],answer:0,rule:'单数主语用 is。',explanation:'She is here.',sourceLabel:'已有教材语法题',origin:{page:3}}));
@@ -11,11 +12,11 @@ function setup(extra={}){
  return {ui,container,handlers,nodes,calls,writes,getState:()=>state,setExternal:value=>state=value,setFailure:value=>{fail=value;}};
 }
 
-test('reading stage shows only the current task with optional reading and a five-step strip',async()=>{
+test('reading stage shows only the current task with optional reading and a six-step strip',async()=>{
  const h=setup();h.ui.mount(h.container);await h.ui.setLesson(lessons[1],{resume:true});
  const html=h.ui.render();
  assert.match(html,/Original reading/);assert.match(html,/开始选择题/);assert.match(html,/本课音频/);
- assert.equal((html.match(/data-pipeline-stage=/g)||[]).length,5);
+ assert.equal((html.match(/data-pipeline-stage=/g)||[]).length,6);
  assert.doesNotMatch(html,/data-pipeline-answer|data-free-answer|data-pipeline-recap/);
  assert.match(html,/Today &lt;script&gt;/);assert.equal(h.calls.filter(x=>x==='mount-reading').length>=1,true);
  h.ui.destroy();assert.deepEqual(h.handlers,{});
@@ -85,9 +86,87 @@ test('writing stage mounts the independent component and can advance before all 
 });
 
 test('key points show actual examples and sources without pretending they came from online AI',async()=>{
- const h=setup();await h.ui.setLesson(lessons[1],{resume:true});await h.ui.goStage(4);
+ const h=setup();await h.ui.setLesson(lessons[1],{resume:true});await h.ui.goStage(5);
  const html=h.ui.render();assert.match(html,/She is here\./);assert.match(html,/本课教材/);assert.match(html,/非实时在线 AI/);
  await h.ui.finish();assert(h.calls.includes('shelf'));
+});
+
+test('retelling support is source-backed in a collapsed disclosure above the writing area',async()=>{
+ const h=setup({getRetellSupport:()=>({sections:[{meaning:'她到了。'},{meaning:''}],characters:[{name:'Mary',role:'学生'}],words:[{word:'arrive',meaning:'到达'}],usages:[{phrase:'on time',meaning:'准时'}],notice:'部分段落暂无译文。'})});
+ await h.ui.setLesson(lessons[1]);await h.ui.goStage(4);
+ const html=h.ui.render();assert.match(html,/data-pipeline-retell/);assert.match(html,/lang="en"/);
+ assert.ok(html.indexOf('查看课文复述提示')<html.indexOf('data-pipeline-retell'));
+ assert.match(html,/<details class="pipeline-disclosure pipeline-retell-support"><summary>/);
+ assert.match(html,/Mary/);assert.match(html,/学生/);assert.match(html,/arrive/);assert.match(html,/on time/);assert.match(html,/暂无已核对的中文译文/);
+ assert.match(html,/data-stage="5"/);
+});
+
+test('retelling autosaves exact long paragraphs without repainting the active textarea and survives reload',async()=>{
+ const h=setup();h.ui.mount(h.container);await h.ui.setLesson(lessons[1]);await h.ui.goStage(4);
+ const before=h.container.innerHTML,retell='First paragraph.\n\n'+('Second paragraph. '.repeat(1000));
+ h.ui.setRetellText(retell);assert.equal(await h.ui.flush(),true);
+ assert.equal(h.container.innerHTML,before);assert.equal(h.getState().lessons.now.retellText,retell);
+ const restored=setup({state:h.getState()});await restored.ui.setLesson(lessons[1]);
+ assert.equal(restored.ui.record().stage,4);assert.match(restored.ui.render(),/First paragraph\.\n\nSecond paragraph\./);
+});
+
+test('failed retelling save retains the draft in memory until retry',async()=>{
+ const h=setup();await h.ui.setLesson(lessons[1]);await h.ui.goStage(4);h.setFailure(true);h.ui.setRetellText('<keep>\n\nexact');
+ assert.equal(await h.ui.flush(),false);assert.equal(h.ui.record().retellText,'<keep>\n\nexact');assert.match(h.ui.render(),/保存失败/);
+ h.setFailure(false);assert.equal(await h.ui.flush(),true);assert.equal(h.getState().lessons.now.retellText,'<keep>\n\nexact');
+});
+
+test('retelling copy sends only exact learner text with paragraph breaks and gives a selectable failure fallback',async()=>{
+ let copied;const h=setup({copyText:async value=>{copied=value;throw Error('denied');},getRetellSupport:()=>({notice:'Chinese support',sections:[{meaning:'中文'}]})});
+ await h.ui.setLesson(lessons[1]);await h.ui.goStage(4);h.ui.setRetellText('I arrived.\n\nShe waited.  ');
+ assert.equal(await h.ui.copyRetell(),false);assert.equal(copied,'I arrived.\n\nShe waited.  ');
+ const html=h.ui.render();assert.match(html,/data-pipeline-retell-copy-fallback/);assert.match(html,/I arrived\.\n\nShe waited\.  /);
+});
+
+test('retelling copy does not expose a failed old lesson clipboard request after navigation',async()=>{
+ let rejectCopy;const h=setup({copyText:()=>new Promise((_,reject)=>rejectCopy=reject)});
+ await h.ui.setLesson(lessons[1]);await h.ui.goStage(4);h.ui.setRetellText('Private lesson text.');await h.ui.flush();
+ const copying=h.ui.copyRetell();await h.ui.setLesson(lessons[0]);rejectCopy(Error('denied'));assert.equal(await copying,false);
+ await h.ui.goStage(4);assert.doesNotMatch(h.ui.render(),/Private lesson text|data-pipeline-retell-copy-fallback/);
+});
+
+test('retelling copy failure does not replace a newer draft with a stale fallback',async()=>{
+ let rejectCopy;const h=setup({copyText:()=>new Promise((_,reject)=>rejectCopy=reject)});
+ await h.ui.setLesson(lessons[1]);await h.ui.goStage(4);h.ui.setRetellText('Earlier draft.');
+ const copying=h.ui.copyRetell();h.ui.setRetellText('Newest draft.');rejectCopy(Error('denied'));
+ assert.equal(await copying,false);assert.equal(h.ui.record().retellText,'Newest draft.');
+ assert.doesNotMatch(h.ui.render(),/data-pipeline-retell-copy-fallback/);
+});
+
+test('editing after failed retelling copy hides the visible old fallback without replacing the focused textarea',async()=>{
+ const lessonId='nce-b2-eef57c-l002',h=await harness({realPipeline:true,pilot:false,realOutput:true,loaded:{lastLesson:lessonId}});
+ await h.api.selectLesson(lessonId);const ui=h.api.learningPipeline;await ui.goStage(4);
+ let input=h.document.querySelector('[data-pipeline-retell]');assert(input);
+ await h.input(input,'First draft.');h.c.navigator.clipboard={writeText:async()=>{throw Error('denied');}};
+ assert.equal(await ui.copyRetell(),false);
+ const fallback=h.document.querySelector('[data-pipeline-retell-copy-fallback]');assert(fallback);
+ assert.equal(fallback.value,'First draft.');assert.equal(fallback.closest('label').hasAttribute('hidden'),false);
+ input=h.document.querySelector('[data-pipeline-retell]');assert(input);input.focus();input.selectionStart=5;input.selectionEnd=5;
+ await h.input(input,'Second full draft.');
+ assert.equal(h.stored.learningPipeline.lessons[lessonId].retellText,'Second full draft.');
+ assert.equal(h.document.querySelector('[data-pipeline-retell]'),input);
+ assert.equal(h.document.activeElement,input);assert.equal(input.selectionStart,5);assert.equal(input.selectionEnd,5);
+ assert.equal(fallback.closest('label').hasAttribute('hidden'),true,'obsolete manual-copy text is no longer visible');
+});
+
+test('legacy retelling is imported only on explicit action into an empty new draft',async()=>{
+ const h=setup({getLegacyRetell:()=> 'Legacy words.'});await h.ui.setLesson(lessons[1]);await h.ui.goStage(4);
+ assert.equal(h.ui.record().retellText,'');assert.match(h.ui.render(),/导入旧版复述/);
+ assert.equal(await h.ui.importLegacyRetell(),true);assert.equal(h.ui.record().retellText,'Legacy words.');
+ h.ui.setRetellText('My new words.');assert.equal(await h.ui.importLegacyRetell(),false);assert.equal(h.ui.record().retellText,'My new words.');
+});
+
+test('sentence copy resolves display labels from pure writing targets without changing stored target identities',async()=>{
+ const h=setup({getWritingTargets:()=>({words:[{word:'ring',storageLabel:'rang',storageSourceId:'now',meaning:'响'}],phrases:[],priorWords:[{word:'book',source:lessons[0],meaning:'书'}]}),getFreeDrafts:()=>({d:{lessonId:'now',targets:{'word:now:rang':{answers:['The bell rang.']},'word:old:book':{answers:['The book is here.']}}}}),copyText:async()=>true});
+ await h.ui.setLesson(lessons[1]);await h.ui.goStage(3);
+ const rows=h.ui.sentences();assert.equal(rows.find(row=>row.target==='word:now:rang').targetLabel,'ring');
+ assert.equal(rows.find(row=>row.target==='word:old:book').targetLabel,'book');
+ assert.equal(rows.find(row=>row.target==='word:now:rang').target,'word:now:rang');
 });
 
 test('each stage restores its own scroll position and a new stage starts at the top',async()=>{
