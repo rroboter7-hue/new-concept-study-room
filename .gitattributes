@@ -24,3 +24,5 @@ context-meanings-review.tsv text eol=lf
 
 # Frozen sourcefix30 compatibility fixture.
 tests/fixtures/reviewed30-before-sourcefix-baseline.json text eol=lf
+# Published content hashes and SRI require byte-identical compatibility assets.
+runtime-styles-*.css -text
