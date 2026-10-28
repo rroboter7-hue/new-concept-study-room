@@ -904,7 +904,6 @@
     "legacyStageMigrationOnce": true,
     "optionalClassifiedWritingLibrary": {
       "recommendationLed": true,
-      "learnedRangeAndRecordedLessons": true,
       "currentAndEarlierBooksOnly": true,
       "categories": [
         "verb",
@@ -916,7 +915,15 @@
       ],
       "selectionDoesNotIncreaseQuota": true,
       "draftsPreserved": true,
-      "lazyEntryBuilding": true
+      "lazyEntryBuilding": true,
+      "firstBookAndPreviousCourseLessonsIncluded": true,
+      "futureLessonsExcluded": true,
+      "rangeSetupRequired": false,
+      "oneTapPicker": true,
+      "layout": "category-overview",
+      "categoryMoreAndSearch": true,
+      "shortTaughtMeanings": true,
+      "inlineSelectedReferences": true
     },
     "grammarFirstKeyPoints": true,
     "sourceBoundErrorCautions": true,

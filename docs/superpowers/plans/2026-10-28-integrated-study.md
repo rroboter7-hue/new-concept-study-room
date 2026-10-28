@@ -74,3 +74,6 @@ Selective reviewed patches preserve daily grouping, six stages and copy, protect
 
 ### Task8: Recommendation-led optional word library and concise grammar focus
 Current and earlier learned words/usages, book/POS filters and manual learned-range preferences; no extra writing quota. User canceled Leo method. Key points emphasize current grammar with source-backed error attention; usages secondary collapsed.
+
+### Task9: Selected one-tap category overview and concise source glosses
+Implement exact user-selected fourth mockup, native modal/keyboard behavior, first-book plus course-history availability without range setup, reference identity aliases, short taught meanings and compact cards. Browser compare at390px, verify More/search/source/selection/Escape/reload, scoped review then publish.

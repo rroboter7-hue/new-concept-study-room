@@ -1,26 +1,26 @@
-# Bookshelf and learning flow QA — 2026-10-28
-final result: blocked (awaiting live visual capture)
+# Selected vocabulary-library QA — 2026-10-28
+final result: passed
 
-## Scope
-Selected target: option 2, blue and white bookshelf.
-Reference: outputs/nce-home-concepts-20261028/concepts/02-modern-bookshelf.png, 853×1844.
-Planned comparison viewport: 390×844 CSS pixels; also inspect 320px and desktop.
-Implementation commit: 673451d4a1b483f14a751957183d0817198e892e.
+Source visual truth: C:/Users/Admin/AppData/Local/Temp/codex-clipboard-e98ef35d-00d6-487e-bc2f-111ddc583ccd.png (selected category-overview mockup).
+Rendered implementation: http://127.0.0.1:4191/; mobile390x844, desktop1280x900.
+Evidence: ../outputs/integrated-study-2026-10-28/library-before-density.png, library-mobile-final.png, selected-references-inline.png. Source and rendered screenshots were presented together in one comparison input at matching portrait ratio; actual curriculum content replaces illustrative mock words.
 
-## Verified before live capture
-- Existing main reliability, translations, loader recovery and source content retained.
-- Source suite: 1164 passed, 3 Windows/fixture skips, 0 failures before final boundary additions.
-- Extra app notes tests: correct selected-sentence return and cross-lesson clearing passed.
-- Final corrected-sentence boundaries and actual app integration: 32 passed, 0 failures.
-- Original four-form drafts, legacy data and storage semantics preserved.
-- Dedicated system-voice sentence playback does not claim timed recording excerpts.
-- Fixed mobile bottom-nav event propagation and moved shelf return above the compact course header.
-- Rejected oversized correction/recall writes; saved correction version history; fixed ten-item round identity.
+## Iterations
+- P2 long dictionary definitions, broken English wrapping and contractions in lexical verbs: short taught/source glosses, corrected categories, narrow complete-gloss validation, compact padding and accessible full labels implemented and recaptured.
+- P2 recommendation row wrapped into an oversized block: one-row mobile strip and smaller preview cards implemented and recaptured. Word meanings stay brief; full labels remain in More and title/accessibility labels.
+- P2 selected references disappeared on returning to writing: selected word+meaning strip now persists beneath entry; actual mobile capture confirms be careful / 小心 and until lunchtime / 直到午餐时间 remain visible.
 
-## Live checks pending
-- Homepage fidelity comparison with equal viewport and content state.
-- Book expansion/close, book-local resume, search and favorite persistence.
-- Exact sentence listening and notes return, translation toggle and whole-lesson playback.
-- Correction capture draft/modal, daily review navigation and editor restoration.
-- 320px and desktop overflow, keyboard focus, console and asset delivery.
-\n## Pass 1 live finding\nP2: a390px mobile content viewport can place the bottom of the review CTA behind the fixed navigation. Reduced heading-to-covers spacing by5px and continue-card vertical padding by3px each side. Post-fix capture pending.\n
+## Fidelity and interaction surfaces
+- Typography: system Chinese sans-serif consistent with existing site; readable hierarchy,14px English/13px short gloss/11px source metadata; full English accessible despite long preview labels using ellipsis.
+- Layout: one entry, native picker, source tabs/search, target/recommendation, two-column category sections, full-width usage section, scrolling body and persistent return footer. Desktop900x810 panel centered with no horizontal overflow.
+- Colors: existing blue-white surfaces and blue action/selection styling preserved. No semantic status color removed.
+- Assets: source contains native controls and typography only; no raster content required. Existing UI controls used; no device chrome fabricated.
+- Copy: real first-book/preceding-lesson data, short sourced meanings, no extra writing quota, no invented mastery or population error-frequency claims. Future lessons excluded.
+- Behavior: actual mobile one-tap open, first-book scope, category More, paging1→2, keyword garden→花园, Escape with focus restoration, draft/selection restoration and inline references tested. Desktop grouping and console checked; console errors empty.
+
+## Accepted small differences / follow-up polish
+- Real source badges and44px touch controls require more scrolling than the illustrative mock. The usage and additional Other-words groups remain available inside the scrolling picker; persistent actions remain visible.
+- A few long preview words use accessible ellipsis; More displays full words and brief meanings. No content is truncated in stored data.
+
+## Verification
+64/64 final targeted source/UI/app/regression checks passed. Full-source CI and production integrity/audio/UI verification remain release gates, not substituted by this visual QA pass.

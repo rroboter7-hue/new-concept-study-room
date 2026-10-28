@@ -4,26 +4,32 @@ const {harness}=require('./support/app-harness.cjs');
 const first='nce-b2-eef57c-l001',second='nce-b2-eef57c-l002';
 const options={realPipeline:true,realOutput:true,pilot:false};
 async function enter(loaded={}){const h=await harness({...options,loaded:{lastLesson:second,...loaded}});await h.api.selectLesson(second);await h.api.learningPipeline.goStage(2);return h;}
-async function open(h){const detail=h.document.querySelector('[data-library-disclosure]');assert(detail);detail.open=true;await h.document.dispatch('toggle',detail);await h.flush();return detail;}
+async function open(h){await h.click('[data-library-action="open"]');const dialog=h.document.querySelector('[data-library-dialog]');assert(dialog?.hasAttribute('open'));return dialog;}
 test('classified library opens lazily, selects references and leaves five-sentence answers and quotas intact',async()=>{
  const h=await enter({records:{[first]:{attempts:1}}}),ui=h.api.learningPipeline;
  const field=h.document.querySelector('[data-free-answer="0"]');await h.input(field,'My existing sentence is safe.');const before=JSON.stringify(ui.writing.ensure().draft.targets),counts=ui.writing.targets().map(row=>row.requiredCount);
- await open(h);assert(h.document.querySelector('[data-library-category]'));const card=h.document.querySelector('[data-library-key]');assert(card);
+ await open(h);assert(h.document.querySelector('[data-library-section="verb"]'));const card=h.document.querySelector('[data-library-key]');assert(card);
  await h.click(card);assert.equal(h.document.querySelector('[data-free-answer="0"]'),field);
  assert.equal(field.value,'My existing sentence is safe.');assert.equal(JSON.stringify(ui.writing.ensure().draft.targets),before);
  assert.deepEqual(ui.writing.targets().map(row=>row.requiredCount),counts);
  const state=h.api.data.learningPipeline.lessons[second].writingLibrary;
  assert(Object.values(state.selectedByTarget).some(keys=>keys.length===1));
- const reloaded=await enter(h.stored);assert(reloaded.document.querySelector('[data-library-selected]').innerHTML.includes('这组可融合'));
+ await h.click('[data-library-action="return"]');
+ const inline=h.document.querySelector('[data-library-inline-selected]');assert(inline&&!inline.hidden);assert.match(inline.innerHTML,/参考|已选/);
+ const reloaded=await enter(h.stored);assert(reloaded.document.querySelector('[data-library-inline-selected]'));assert(!reloaded.document.querySelector('[data-library-dialog]').hasAttribute('open'));
 });
-test('explicit earlier-book learning range expands the bank without creating lesson mastery',async()=>{
- const h=await enter();await open(h);const records=JSON.stringify(h.api.data.records),range=h.document.querySelector('[data-library-range="1"]');assert(range);
- range.value='3';await h.document.dispatch('change',range);await h.flush();
- assert.equal(h.api.data.settings.learnedRange.books[1],3);assert.equal(JSON.stringify(h.api.data.records),records);
- const book=h.document.querySelector('[data-library-book]');book.value='1';await h.document.dispatch('change',book);await h.flush();
- assert.match(h.document.querySelector('[data-library-results]').innerHTML,/第1册/);
- assert.equal(h.api.backupData().settings.learnedRange.books[1],3);
+test('first-book and preceding lesson references are directly available without creating mastery or requiring range setup',async()=>{
+ const h=await enter(),records=JSON.stringify(h.api.data.records);let entries=[];const api=h.c.StudyWritingLibrary;
+ h.c.StudyWritingLibrary={...api,forLesson:(lesson,context)=>{assert.equal(context.includeEarlierLessons,true);entries=api.forLesson(lesson,context);return entries;}};
+ await open(h);assert(entries.some(row=>row.category==='phrase'&&row.sources.some(source=>source.book===1)));
+ assert(entries.some(row=>row.category!=='phrase'&&row.sources.some(source=>source.book===1)));
+ assert(entries.some(row=>row.sources.some(source=>source.id===first)));
+ assert(entries.every(row=>row.sources.every(source=>source.book<2||source.book===2&&source.number<=2)));
+ await h.click('[data-library-scope="1"]');assert.match(h.document.querySelector('[data-library-overview]').innerHTML,/第1册/);
+ assert.equal(JSON.stringify(h.api.data.records),records);assert.equal(h.api.data.settings.learnedRange,undefined);
+ assert(!h.document.querySelector('[data-library-range]'));
 });
+
 test('key points foreground grammar and source-backed cautions while usage stays secondary',async()=>{
  const h=await enter(),ui=h.api.learningPipeline;
  ui.options.getKeyPoints=()=>({grammar:[{title:'现在进行时',summary:'am/is/are + 动词-ing。',example:'She is reading.',details:'注意不要漏掉 be。',sourceLessonId:second}],usages:[{title:'get up',summary:'起床。',category:'usage'}],pitfalls:[{text:'注意不要漏掉 be。',sourceLessonId:second}],items:[]});
