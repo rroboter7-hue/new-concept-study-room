@@ -1,7 +1,7 @@
 const test=require('node:test'),assert=require('node:assert/strict');
 const {harness}=require('./leo-coach-harness.cjs');
 
-test('visible mobile writing shortcuts restore independent drafts and focus the editor',async()=>{
+test('retell navigation restores its own draft and preserves legacy dictation data',async()=>{
  const h=await harness({pilot:false,realOutput:true});
  h.api.setTab('output');await h.click('[data-output-mode="retell"]');
  await h.input('[data-output-input="answer"]','I remember my own retelling.');

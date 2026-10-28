@@ -1,0 +1,22 @@
+'use strict';
+const test=require('node:test'),assert=require('node:assert/strict'),vm=require('node:vm'),fs=require('node:fs'),path=require('node:path');
+function setup({mobile=false,initial={}}={}){
+ const root={innerHTML:'',querySelector:()=>null},scope={document:{addEventListener(){},removeEventListener(){},querySelector:selector=>selector==='#output-content'?root:null}};scope.window=scope;vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../output-practice.js'),'utf8'),scope);
+ let stored=JSON.parse(JSON.stringify(initial));const records=[],lesson={id:'book2-1',title:'A private conversation',paragraphs:[{en:'They were talking loudly.',zh:'他们大声交谈。'}],vocabulary:[{word:'talking',meaning:'交谈'}]},ui=new scope.OutputPractice({getLesson:()=>lesson,getState:()=>stored,saveState:next=>{stored=JSON.parse(JSON.stringify(next));return true;},saveRecord:row=>{records.push(row);return true;},defaultMode:()=> 'retell',isMobileWorkspace:()=>mobile,sentencePractice:{flush(){},render:()=>'<section>Four forms</section>'},batchPractice:{flush(){},cancel(){},render:()=>'<section>Batch</section>'}});ui.setLesson(lesson);return {ui,records,get stored(){return stored;},OutputPractice:scope.OutputPractice};
+}
+test('desktop and mobile expose retell and sentence tabs, hide legacy dictation and keep optional tools closed',()=>{
+ for(const mobile of [false,true]){const {ui}=setup({mobile}),html=ui.render(),write=html.match(/<button\b[^>]*data-output-mode="write"[^>]*>/)?.[0];assert(write);assert.match(write,/\shidden\b/);assert.match(write,/aria-hidden="true"/);assert.match(write,/tabindex="-1"/);assert.match(write,/display:none!important/);assert.match(html,/data-output-mode="retell"[^>]*>课文复述</);assert.match(html,/data-output-mode="sentences"/);const more=html.match(/<details\b[^>]*class="mls-output-more"[^>]*>/)?.[0];assert(more);assert.doesNotMatch(more,/\sopen\b/);assert.match(html,/<summary>更多练习<\/summary>/);const inside=html.slice(html.indexOf('class="mls-output-more"'));assert.match(inside,/data-output-mode="spell"/);assert.match(inside,/data-output-mode="batch"/);}
+});
+test('grammar help starts closed and automatically opens after a completed check, including no-issue feedback',()=>{
+ const {ui}=setup();ui.grammarIssues=null;let html=ui.grammarHTML(),tag=html.match(/^<details\b[^>]*>/)?.[0];assert(tag);assert.doesNotMatch(tag,/\sopen\b/);assert.match(html,/<summary>语法检查与修改建议<\/summary>/);assert.match(html,/最多检查前10000个字符/);ui.grammarIssues=[];html=ui.grammarHTML();assert.match(html,/^<details[^>]*\sopen>/);assert.match(html,/未发现已覆盖类型的问题/);
+ ui.grammarIssues=[{original:'He go',replacement:'He goes',message:'第三人称单数用 goes。'}];html=ui.grammarHTML();assert.match(html,/^<details[^>]*\sopen>/);assert.match(html,/第三人称单数用 goes/);assert.match(html,/data-output-action="grammar-apply"/);assert.match(html,/data-output-action="grammar-all"/);assert.match(html,/data-output-action="grammar-check"/);
+});
+test('legacy write and retell drafts remain independent and retain their existing storage schema',()=>{
+ const initial={version:1,lessons:{'book2-1':{mode:'write',assisted:false,roundKey:'',modes:{write:{assisted:false,roundKey:'',paragraphIndex:0,answers:{0:'My old dictation stays here.'}},retell:{assisted:false,roundKey:'',answer:'My old retell stays here.'}}}}},h=setup({initial});assert.equal(h.ui.mode,'write');assert.equal(h.ui.answer,'My old dictation stays here.');const before=JSON.stringify(h.ui.snapshot().lessons['book2-1'].modes.write);h.ui.switchMode('retell');assert.equal(h.ui.answer,'My old retell stays here.');h.ui.answer='My newer retell is saved separately.';h.ui.flush();assert.equal(JSON.stringify(h.stored.lessons['book2-1'].modes.write),before);h.ui.switchMode('write');assert.equal(h.ui.answer,'My old dictation stays here.');assert.equal(h.stored.lessons['book2-1'].modes.retell.answer,'My newer retell is saved separately.');assert.equal(h.records.length,0);
+});
+
+test('lessons without sentence targets fall back to retell and restore its own saved draft',()=>{
+ const initial={version:1,lessons:{'book2-1':{mode:'retell',modes:{write:{paragraphIndex:0,answers:{0:'Keep my dictation.'}},retell:{answer:'Restore my retell.'}}}}},h=setup({initial});
+ h.ui.options.canPracticeSentences=()=>false;h.ui.switchMode('sentences');h.ui.render();
+ assert.equal(h.ui.mode,'retell');assert.equal(h.ui.answer,'Restore my retell.');assert.equal(h.stored.lessons['book2-1'].modes.write.answers[0],'Keep my dictation.');assert.equal(h.records.length,0);
+});
