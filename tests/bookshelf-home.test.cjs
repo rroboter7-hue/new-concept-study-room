@@ -16,3 +16,41 @@ test('favorite toggling uses app-owned state and empty favorites explain how to 
 test('reduced motion bypasses cover animation and Escape returns to originating book',()=>{const e=fixture();e.ui.openBook(3,e.book);let stopped=false;e.ui.keydown({key:'Escape',preventDefault(){},stopPropagation(){stopped=true;}});assert.equal(stopped,true);assert.equal(e.ui.overlay.hidden,true);assert.equal(e.ui.root.inert,false);assert.equal(e.book.focused,true);assert.equal(e.ui.zoomCover,null);});
 test('hiding during closing animation clears overlay and stale animation cannot hide a reopened drawer',async()=>{const e=fixture();e.scope.matchMedia=()=>({matches:false});const resolves=[];e.ui.animateCover=()=>new Promise(resolve=>resolves.push(resolve));e.ui.openBook(2,e.book);const closing=e.ui.closeDrawer();e.ui.hide();assert.equal(e.ui.overlay.hidden,true);assert.equal(e.ui.root.inert,false);e.ui.show();e.ui.openBook(3,e.book);resolves[1]();await closing;assert.equal(e.ui.drawerOpen,true);assert.equal(e.ui.overlay.hidden,false);});
 test('Tab navigation wraps within the drawer in both directions',()=>{const e=fixture(),first=control(),last=control();e.ui.openBook(2,e.book);e.ui.dialog.querySelectorAll=()=>[first,last];e.ui.dialog.contains=n=>n===first||n===last;let prevented=0;e.scope.document.activeElement=last;e.ui.keydown({key:'Tab',shiftKey:false,preventDefault(){prevented++;}});assert.equal(first.focused,true);e.scope.document.activeElement=first;e.ui.keydown({key:'Tab',shiftKey:true,preventDefault(){prevented++;}});assert.equal(last.focused,true);assert.equal(prevented,2);});
+
+
+function pendingCloseFixture(){
+ const e=fixture(),pending=[];e.scope.matchMedia=()=>({matches:false});
+ e.ui.animateCover=open=>open?Promise.resolve():new Promise(resolve=>pending.push(resolve));
+ e.ui.openBook(2,e.book);e.pending=pending;return e;
+}
+for(const [name,dataset,attribute] of [
+ ['lesson',{shelfLesson:'b2-12'}],
+ ['book resume',{},'data-shelf-resume-book'],
+ ['favorite',{shelfFavorite:'b2-12'}],
+ ['filter',{shelfFilter:'favorites'}]
+])test('closing animation ignores a late '+name+' action before its overlay disappears',async()=>{
+ const e=pendingCloseFixture(),closing=e.ui.closeDrawer(),target=control(dataset);if(attribute)target.setAttribute(attribute,'');
+ e.ui.overlay.contains=node=>node===target;
+ assert.equal(e.ui.drawerOpen,false);assert.equal(e.ui.overlay.hidden,false,'the closing animation is still visible');
+ e.ui.click({target:{closest:()=>target}});
+ assert.deepEqual(e.calls,[],'a fading drawer cannot navigate or persist a favorite');assert.deepEqual(e.favorites,[]);
+ assert.equal(e.ui.favoritesOnly,false);assert.equal(e.ui.visible,true);assert.equal(e.ui.overlay.inert,true,'all native pointer and keyboard input is disabled immediately');
+ assert.equal(e.book.focused,undefined,'focus returns only after the animation finishes');
+ e.pending[0]();await closing;
+ assert.equal(e.ui.overlay.hidden,true);assert.equal(e.ui.root.inert,false);assert.equal(e.book.focused,true);
+});
+
+test('reopening while close is pending re-enables the current drawer and ignores the stale close completion',async()=>{
+ const e=pendingCloseFixture(),closing=e.ui.closeDrawer();
+ e.ui.openBook(3,e.book);assert.equal(e.ui.overlay.inert,false);assert.equal(e.ui.drawerOpen,true);assert.equal(e.ui.book,3);
+ e.pending[0]();await closing;
+ assert.equal(e.ui.overlay.hidden,false);assert.equal(e.ui.overlay.inert,false);assert.equal(e.ui.root.inert,true);assert.equal(e.ui.drawerOpen,true);
+ const target=control({shelfLesson:'b3-1'});e.ui.overlay.contains=node=>node===target;e.ui.click({target:{closest:()=>target}});
+ assert.deepEqual(e.calls,[['leave'],['lesson','b3-1']]);assert.equal(e.ui.overlay.hidden,true);
+});
+
+test('reduced-motion close disables stale drawer actions and a normal reopen accepts them again',async()=>{
+ const e=fixture();e.ui.openBook(2,e.book);await e.ui.closeDrawer();assert.equal(e.ui.overlay.inert,true);
+ const target=control({shelfFilter:'favorites'});e.ui.overlay.contains=node=>node===target;e.ui.click({target:{closest:()=>target}});assert.equal(e.ui.favoritesOnly,false);
+ e.ui.openBook(2,e.book);assert.equal(e.ui.overlay.inert,false);e.ui.click({target:{closest:()=>target}});assert.equal(e.ui.favoritesOnly,true);
+});
