@@ -362,3 +362,10 @@ body .pack-feedback.is-incorrect{border-color:#d5bfb0}
 body.mls-book-workspace.mls-mobile .mls-drawer-heading h2{color:#0756b6}
 body .sentence-learning-range>summary:focus-visible,
 body .sentence-learning-books select:focus-visible{outline-color:var(--teal)}
+/* Reader headings must also override the legacy two-class selectors. */
+body .reader-content .section-title,
+body .text-reader .section-title,
+body .notes-summary .section-title{color:var(--theme-text)}
+body .reader-content .section-title small,
+body .text-reader .section-title small,
+body .notes-summary .section-title small{color:var(--theme-secondary)}

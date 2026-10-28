@@ -1,6 +1,6 @@
 {
   "build": "2026-10-28-clean-study",
-  "preparedAt": "2026-10-28T03:40:30Z",
+  "preparedAt": "2026-10-28T04:02:11Z",
   "book2": {
     "book": 2,
     "total": 96,
@@ -311,7 +311,7 @@
     }
   },
   "staticFiles": 4087,
-  "staticBytes": 739034491,
+  "staticBytes": 739034849,
   "nativeearsAdvancedAudio": {
     "books": {
       "3": 60,
