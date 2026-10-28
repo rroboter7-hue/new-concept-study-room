@@ -1,0 +1,109 @@
+/* Selected blue bookshelf homepage; existing learning screens retain their own layout. */
+.bookshelf-home[hidden],.shelf-overlay[hidden]{display:none!important}
+body.bookshelf-visible{margin:0;background:#fff;color:#080f27;min-width:0;padding:0;overflow-x:clip}
+body.bookshelf-visible>.app-main,body.bookshelf-visible>.app-sidebar,body.bookshelf-visible>.player,body.bookshelf-visible>.mls-bottom-nav,body.bookshelf-visible>.mls-player-toggle,body.bookshelf-visible>.mls-course-overlay{display:none!important}
+.bookshelf-home{--shelf-blue:#0873ff;--shelf-ink:#080f27;--shelf-muted:#747e91;background:#fff;color:var(--shelf-ink);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei",sans-serif;min-height:100dvh;padding-bottom:calc(65px + env(safe-area-inset-bottom));box-sizing:border-box}
+.bookshelf-home *,.shelf-overlay *{box-sizing:border-box}
+.bookshelf-home button,.shelf-overlay button{font-family:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+.bookshelf-home button:focus-visible,.bookshelf-home summary:focus-visible,.shelf-overlay button:focus-visible,.shelf-overlay input:focus-visible{outline:3px solid #006dff;outline-offset:3px}
+.bookshelf-home svg,.shelf-overlay svg{display:block;width:24px;height:24px;flex-shrink:0}
+.shelf-page{width:100%;max-width:570px;margin:0 auto;padding:23px 17px 22px}
+.shelf-header{display:flex;align-items:center;justify-content:space-between;gap:8px;height:32px;margin-bottom:24px}
+.shelf-brand{display:flex;align-items:center;gap:8px;white-space:nowrap;min-width:0}
+.shelf-brand strong{font-size:26px;line-height:1;color:var(--shelf-blue);letter-spacing:-1px;font-weight:850}
+.shelf-brand>span{font-size:14px;font-weight:600;color:#6b7484;letter-spacing:.2px}
+.shelf-menu{position:relative;flex:0 0 32px;color:#394457}
+.shelf-menu summary{list-style:none;display:flex;justify-content:center;align-items:center;min-height:44px;min-width:36px;cursor:pointer}
+.shelf-menu summary::-webkit-details-marker{display:none}
+.shelf-menu svg{width:27px;height:27px;stroke-width:2.4}
+.shelf-menu nav{position:absolute;z-index:10;right:0;top:44px;width:220px;padding:8px;background:#fff;border:1px solid #dce5ef;border-radius:14px;box-shadow:0 10px 40px #183a6726}
+.shelf-menu button{display:block;width:100%;padding:13px 12px;border:0;border-radius:8px;text-align:left;background:#fff;color:#233249;font-size:15px}
+.shelf-menu button:hover{background:#edf5ff}
+.shelf-title{font-family:inherit;font-size:46px;font-weight:850;line-height:1.15;letter-spacing:-2.3px;margin:0 0 23px;color:var(--shelf-ink)}
+.shelf-title>span{color:var(--shelf-blue)}
+.shelf-books{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 11px;margin-bottom:13px}
+.shelf-book{position:relative;display:block;min-width:0;padding:0;border:0;border-radius:12px;background:transparent;aspect-ratio:400/384;transition:box-shadow .15s;overflow:hidden}
+.shelf-book img{display:block;width:100%;height:100%;object-fit:cover;border-radius:11px}
+.shelf-book.is-current{outline:2.5px solid var(--shelf-blue);outline-offset:0}
+.shelf-book:hover{box-shadow:0 4px 16px #1c4e9220}
+.shelf-resume{border-radius:15px;padding:19px;background:#f0f6fd;margin-bottom:10px}
+.shelf-resume-meta{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:15px;min-height:48px}
+.shelf-resume-meta>div{min-width:0}
+.shelf-resume-meta p{font-size:14px;line-height:1.4;color:#68758a;margin:0 0 7px;font-weight:550;letter-spacing:.3px}
+.shelf-resume-meta h2{font-size:21px;line-height:1.22;letter-spacing:-.8px;font-weight:750;margin:0;overflow-wrap:anywhere}
+.shelf-resume-icon{width:46px;height:46px;border-radius:50%;background:#e0efff;display:flex;align-items:center;justify-content:center;color:var(--shelf-blue);flex-shrink:0}
+.shelf-resume-icon svg{width:26px;height:26px}
+.shelf-primary{width:100%;min-height:46px;border:0;border-radius:12px;background:var(--shelf-blue);color:white;font-size:18px;letter-spacing:2px;font-weight:650;display:flex;align-items:center;justify-content:center;gap:14px}
+.shelf-primary:hover{background:#0065e8}
+.shelf-review{display:flex;width:100%;min-height:64px;align-items:center;gap:14px;text-align:left;border:0;border-radius:13px;background:#f0f6fd;padding:10px 18px;color:var(--shelf-ink)}
+.shelf-review-icon{width:38px;height:40px;display:flex;align-items:center;justify-content:center;flex-shrink:0;border-radius:12px;background:#dbeaff;color:var(--shelf-blue)}
+.shelf-review strong{font-size:17px;line-height:1.3;display:block;font-weight:750}
+.shelf-review small{font-size:14px;line-height:1.5;color:#788397;display:block;margin-top:2px}
+.shelf-review>svg{margin-left:auto;color:#727e90;width:20px;height:20px}
+.shelf-bottom-nav{position:fixed;inset:auto 0 0;z-index:60;display:flex;justify-content:center;background:#fffffff5;border-top:1px solid #e0e5eb;padding:6px 8px max(5px,env(safe-area-inset-bottom));height:calc(65px + env(safe-area-inset-bottom));backdrop-filter:blur(12px)}
+.shelf-bottom-nav button{flex:1;max-width:140px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;color:#747d8c;background:transparent;border:0;padding:0;min-height:48px;font-size:13px;line-height:1.3}
+.shelf-bottom-nav svg{width:25px;height:25px;stroke-width:1.8}
+.shelf-bottom-nav [aria-current="page"]{color:var(--shelf-blue);font-weight:650}
+.shelf-bottom-nav [aria-current="page"] svg{fill:var(--shelf-blue);stroke:#fff;stroke-width:1}
+body.shelf-drawer-open{overflow:hidden;overscroll-behavior:none}
+.shelf-overlay{--shelf-blue:#0873ff;--shelf-ink:#080f27;position:fixed;inset:0;z-index:200;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei",sans-serif;color:var(--shelf-ink);display:flex;align-items:flex-end;justify-content:center}
+.shelf-backdrop{position:absolute;inset:0;background:#0d1d3870;backdrop-filter:blur(4px)}
+.shelf-drawer{position:relative;display:flex;flex-direction:column;max-height:calc(100dvh - max(24px,env(safe-area-inset-top)));width:100%;max-width:650px;border-radius:24px 24px 0 0;background:#fff;padding:22px 18px max(18px,env(safe-area-inset-bottom));box-shadow:0 -12px 60px #0f295136;overflow:hidden;isolation:isolate}
+.shelf-drawer-head{display:flex;align-items:center;gap:16px;margin-bottom:18px;flex-shrink:0}
+.shelf-drawer-cover-slot{flex-shrink:0;width:76px;height:73px;border-radius:8px;overflow:hidden}
+.shelf-drawer-cover{display:block;width:100%;height:100%;object-fit:cover}
+.shelf-drawer-heading{min-width:0;flex:1}
+.shelf-drawer-heading>p{font-size:9px;color:#7c879a;letter-spacing:1px;margin:0 0 4px}
+.shelf-drawer-heading>h2{font-family:inherit;font-weight:750;font-size:25px;line-height:1.3;margin:0 0 4px}
+.shelf-drawer-count{display:block;font-size:11px;color:#69768d;line-height:1.5}
+.shelf-close{display:flex;align-items:center;justify-content:center;align-self:flex-start;width:44px;height:44px;border:0;border-radius:50%;background:#f1f5f9;color:#4d5e75;flex-shrink:0;margin:-5px -4px 0 0}
+.shelf-close svg{width:20px;height:20px}
+.shelf-drawer-continue{border:0;background:#0873ff;color:#fff;display:flex;align-items:center;justify-content:space-between;text-align:left;gap:12px;padding:13px 16px;border-radius:13px;flex-shrink:0;min-height:70px;margin-bottom:20px}
+.shelf-drawer-continue small{display:block;font-size:12px;line-height:1.5;opacity:.88;margin-bottom:3px}
+.shelf-drawer-continue strong{display:block;font-size:17px;line-height:1.4;font-weight:650;overflow-wrap:anywhere}
+.shelf-drawer-continue:disabled{opacity:.6;cursor:default}
+.shelf-drawer-controls{display:flex;flex-direction:column;gap:13px;flex-shrink:0}
+.shelf-filter-tabs{display:flex;gap:8px}
+.shelf-filter-tabs button{border:1px solid #dce5ef;background:#fff;border-radius:9px;min-height:40px;padding:8px 14px;font-size:14px;font-weight:600;color:#68768a}
+.shelf-filter-tabs [aria-pressed="true"]{background:#eaf3ff;border-color:#b4d4ff;color:#0867df}
+.shelf-search{display:flex;flex-direction:column;gap:7px}
+.shelf-search>span{font-size:12px;font-weight:550;color:#6c7a8f}
+.shelf-search input{width:100%;min-height:42px;border:1px solid #d8e2ef;background:#f8fafc;border-radius:10px;padding:9px 12px;color:#192b44;font-family:inherit;font-size:16px}
+.shelf-results{font-size:12px;line-height:1.5;color:#778398;margin:13px 0 8px;flex-shrink:0}
+.shelf-lesson-list{overflow:auto;min-height:90px;overscroll-behavior:contain;scrollbar-gutter:stable}
+.shelf-lesson-row{display:flex;align-items:center;border-bottom:1px solid #edf1f6;border-radius:8px;min-height:72px;gap:3px;padding-right:3px}
+.shelf-lesson-row.is-current{background:#f0f6ff}
+.shelf-lesson-open{display:flex;align-items:center;gap:12px;flex:1;min-width:0;min-height:72px;text-align:left;border:0;background:transparent;color:#15253e;padding:10px 7px}
+.shelf-lesson-open>span:nth-child(2){min-width:0;flex:1}
+.shelf-lesson-number{font-size:17px;font-weight:650;color:#8b9ab0;width:28px;flex-shrink:0;text-align:center}
+.shelf-lesson-row.is-current .shelf-lesson-number{color:#0873ff}
+.shelf-lesson-open strong{font-size:14px;line-height:1.45;font-weight:600;display:block;overflow-wrap:anywhere}
+.shelf-lesson-open small{font-size:11px;line-height:1.4;color:#7b879a;display:block;margin-top:3px}
+.shelf-lesson-open svg{width:17px;height:17px;color:#95a3b7}
+.shelf-favorite{border:0;background:transparent;color:#95a3b7;border-radius:8px;min-width:44px;min-height:44px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.shelf-favorite svg{width:20px;height:20px}
+.shelf-favorite[aria-pressed="true"]{color:#0873ff;background:#e4efff}
+.shelf-favorite[aria-pressed="true"] svg{fill:#0873ff;stroke:#0873ff}
+.shelf-empty{padding:28px 14px;text-align:center}
+.shelf-empty h3{font-size:17px;margin:0 0 10px}
+.shelf-empty p{font-size:14px;color:#718097;line-height:1.7;margin:0}
+.shelf-zoom-cover{position:fixed;z-index:201;pointer-events:none;object-fit:cover;border-radius:12px;will-change:left,top,width,height,opacity}
+@media(min-width:761px){
+.shelf-page{max-width:1120px;padding:35px 44px 40px;display:grid;grid-template-columns:minmax(0,2fr) minmax(280px,1fr);gap:0 32px;align-items:start}
+.shelf-header{grid-column:1/-1;margin-bottom:38px}
+.shelf-brand strong{font-size:30px}.shelf-brand>span{font-size:16px}
+.shelf-title{grid-column:1/-1;font-size:62px;line-height:1.15;margin-bottom:32px}
+.shelf-books{grid-column:1;grid-row:3/6;gap:16px;margin:0}
+.shelf-resume{grid-column:2;grid-row:3;margin-top:0;padding:25px;margin-bottom:16px}
+.shelf-resume-meta{align-items:flex-start;gap:8px;margin-bottom:24px;min-height:100px}.shelf-resume-meta h2{font-size:24px;line-height:1.35}.shelf-resume-meta p{margin-bottom:12px}.shelf-resume-icon{width:40px;height:40px}.shelf-resume-icon svg{width:23px;height:23px}
+.shelf-review{grid-column:2;grid-row:4;margin:0;min-height:86px}
+.shelf-book{border-radius:16px}.shelf-book img{border-radius:15px}
+.shelf-drawer{align-self:stretch;margin:24px 0 24px auto;border-radius:24px 0 0 24px;max-height:calc(100dvh - 48px);max-width:560px;padding:28px 28px 24px}
+.shelf-overlay{align-items:center;justify-content:flex-end}
+.shelf-drawer-cover-slot{width:92px;height:88px}.shelf-drawer-heading>h2{font-size:30px}.shelf-drawer-count{font-size:12px}
+.shelf-lesson-open strong{font-size:15px}.shelf-lesson-open small{font-size:12px}.shelf-lesson-row{min-height:78px}
+}
+@media(max-width:359px){.shelf-page{padding-left:15px;padding-right:15px}.shelf-brand>span{font-size:12px}.shelf-brand{gap:5px}.shelf-brand strong{font-size:24px}.shelf-title{font-size:42px;margin-bottom:20px}.shelf-resume{padding:15px}.shelf-resume-meta h2{font-size:18px}.shelf-resume-icon{width:36px;height:36px}.shelf-drawer{padding-left:13px;padding-right:13px}.shelf-drawer-head{gap:10px}.shelf-drawer-heading>h2{font-size:22px}.shelf-drawer-cover-slot{width:65px;height:63px}.shelf-close{width:40px;height:40px}.shelf-drawer-count{font-size:10px}}
+@media(prefers-reduced-motion:reduce){.shelf-book{transition:none}.shelf-zoom-cover{display:none}}
+@media(max-height:620px){.shelf-drawer{overflow-y:auto}.shelf-drawer-head{margin-bottom:12px}.shelf-drawer-continue{margin-bottom:12px}.shelf-drawer-controls{gap:9px}.shelf-lesson-list{flex-shrink:0;max-height:50dvh;min-height:90px}}
+

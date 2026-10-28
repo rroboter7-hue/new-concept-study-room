@@ -404,6 +404,13 @@
       return this;
     }
 
+    pauseForSentence() {
+      this.pause();
+      this._cancelTts();
+      if (this._synth) this._synth.resume();
+      return this;
+    }
+
     stop() {
       this._cancelWord('单词朗读已停止。');
       this._mediaRequest += 1;
