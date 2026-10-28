@@ -147,3 +147,12 @@ test('dangling cached metadata symlinks cannot write outside the source director
  fs.unlinkSync(meta);try{fs.symlinkSync(outside,meta,'file');}catch(error){if(error.code==='EPERM'){t.skip('OS does not allow file symlinks');return;}throw error;}
  await assert.rejects(()=>delivery.buildPages({...settings,outputRoot:f.out('second')}),/symlink|symbolic/i);assert.equal(fs.existsSync(outside),false);
 });
+
+test('cover image delivery is explicit and preserves binary assets while excluding unrelated files',async t=>{
+ const f=fixture(t),out=f.out('covers'),bytes=Buffer.from('RIFFbook-cover-WEBP');
+ f.write('images/books/book-2.webp',bytes);f.write('images/private.json','do not publish');f.write('images/books/test-cover.webp','private');
+ await delivery.buildPages({sourceRoot:f.source,outputRoot:out,encoder:f.encoder,probe:f.probe});
+ assert.deepEqual(fs.readFileSync(path.join(out,'images/books/book-2.webp')),bytes);
+ assert.equal(fs.existsSync(path.join(out,'images/private.json')),false);
+ assert.equal(fs.existsSync(path.join(out,'images/books/test-cover.webp')),false);
+});

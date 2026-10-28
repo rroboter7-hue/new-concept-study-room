@@ -13,6 +13,7 @@ const AUDIO_MAPS=['STUDY_WORD_AUDIO','STUDY_LESSON_AUDIO','STUDY_LESSON_AUDIO_FA
 const DATA_DIRS=new Map([
  ['audio',new Set(['.wav','.mp3','.m4a','.ogg'])],
  ['resources',new Set(['.pdf'])],
+ ['images',new Set(['.webp','.png','.jpg','.jpeg'])],
  ['dictionary-data',new Set(['.json'])],
  ['text-data',new Set(['.json'])],
  ['recall-data',new Set(['.json'])]
