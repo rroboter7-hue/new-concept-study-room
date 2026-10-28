@@ -1,6 +1,6 @@
 {
-  "build": "2026-10-28-navigation-drafts",
-  "preparedAt": "2026-10-28T05:38:37Z",
+  "build": "2026-10-28-learning-flow",
+  "preparedAt": "2026-10-28T05:40:09.526Z",
   "book2": {
     "book": 2,
     "total": 96,
@@ -796,11 +796,15 @@
   },
   "focusedListening": {
     "exactSourceSentences": true,
-    "source": "system-speech",
+    "source": "exact-text-synthetic-mp3-with-system-speech-fallback",
     "wholeLessonRecordingsPreserved": true,
     "loop": true,
     "followReadingGapSeconds": 5,
-    "translationTogglePreserved": true
+    "translationTogglePreserved": true,
+    "recordedSentenceRows": 4334,
+    "uniqueMp3Files": 4246,
+    "syntheticVoice": "Microsoft Zira Desktop en-US",
+    "downloadOnDemand": true
   },
   "sentenceRevisit": {
     "userConfirmedCorrections": true,
@@ -832,10 +836,32 @@
     "mobileBrowserTheme": "#0873ff",
     "feedbackStatusColorsPreserved": true
   },
-  "navigationDraftFixes": {
-    "browseBookWithoutChangingLesson": true,
-    "cancelRestoresCourseDirectory": true,
-    "homeMenuOutsideClickCloses": true,
-    "correctionEditDraftBoundToEntry": true
+  "learningPipeline": {
+    "version": 1,
+    "stages": [
+      "optional-reading-and-listening",
+      "grammar-choice",
+      "free-writing",
+      "recap",
+      "lesson-key-points"
+    ],
+    "refreshRestoresStageQuestionAndDrafts": true,
+    "questionTarget": {
+      "current": 7,
+      "earlier": 3
+    },
+    "noEarlierMaterialUsesCurrentOnly": true,
+    "shortfallExplicit": true,
+    "newWordsAndUsagesSentences": 5,
+    "earlierLearnedWordsAndUsagesSentences": 2,
+    "requiredSentenceForms": false,
+    "objectiveMistakesPreserveHistory": true,
+    "freeWritingIndependentDrafts": true,
+    "automaticLocalFeedbackOnly": true,
+    "uncertainLanguageRequiresReview": true,
+    "keyPointsFromExistingLessonSources": true,
+    "keyPointsOnlineAI": false,
+    "backupRestore": true,
+    "studentTextUpload": false
   }
 }

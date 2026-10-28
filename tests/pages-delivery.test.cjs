@@ -43,9 +43,25 @@ test('publish artifact keeps runtime assets and licenses, converts WAV without d
 
 test('generated mapper changes only converted exact paths, including the fallback map',async t=>{
  const f=fixture(t),out=f.out('site');await delivery.buildPages({sourceRoot:f.source,outputRoot:out,encoder:f.encoder,probe:f.probe});
- const c={STUDY_WORD_AUDIO:{a:'audio/words/same.wav',other:'audio/words/same.wav?legacy=1'},STUDY_LESSON_AUDIO:{a:'audio/words/same.mp3',other:'audio/elsewhere/same.wav'},STUDY_LESSON_AUDIO_FALLBACKS:{a:'audio/lessons/story.wav'}};c.window=c;
+ const c={STUDY_WORD_AUDIO:{a:'audio/words/same.wav',other:'audio/words/same.wav?legacy=1'},STUDY_LESSON_AUDIO:{a:'audio/words/same.mp3',other:'audio/elsewhere/same.wav'},STUDY_LESSON_AUDIO_FALLBACKS:{a:'audio/lessons/story.wav'},STUDY_SENTENCE_AUDIO:{a:[{en:'audio/words/same.wav',src:'audio/words/same.wav',source:'synthetic'},{en:'. .',source:'non-speech'}]}};c.window=c;
  vm.runInNewContext(fs.readFileSync(path.join(out,'delivery-audio.js'),'utf8'),c);
  assert.equal(c.STUDY_WORD_AUDIO.a,'audio/optimized/words/same.mp3');assert.equal(c.STUDY_WORD_AUDIO.other,'audio/words/same.wav?legacy=1');assert.equal(c.STUDY_LESSON_AUDIO.a,'audio/words/same.mp3');assert.equal(c.STUDY_LESSON_AUDIO.other,'audio/elsewhere/same.wav');assert.equal(c.STUDY_LESSON_AUDIO_FALLBACKS.a,'audio/optimized/lessons/story.mp3');
+ assert.equal(c.STUDY_SENTENCE_AUDIO.a[0].src,'audio/optimized/words/same.mp3');assert.equal(c.STUDY_SENTENCE_AUDIO.a[0].en,'audio/words/same.wav','source text is never rewritten as an asset path');assert.equal(c.STUDY_SENTENCE_AUDIO.a[0].source,'synthetic');assert.equal(c.STUDY_SENTENCE_AUDIO.a[1].source,'non-speech');assert.equal(c.STUDY_SENTENCE_AUDIO.a[1].src,undefined);
+});
+
+test('sentence audio src fields are included in packaged verification while source text and non-speech rows remain intact',async t=>{
+ const f=fixture(t),out=f.out('sentence-audio');
+ f.write('provided-sentence-audio.js','window.STUDY_SENTENCE_AUDIO={lesson:[{en:"A spoken sentence.",src:"audio/sentences/existing.mp3",source:"synthetic"},{en:"Another spoken sentence.",src:"audio/sentences/source.wav",source:"synthetic"},{en:". .",source:"non-speech"}]};');
+ f.write('audio/sentences/existing.mp3',f.existing);f.write('audio/sentences/source.wav',f.wav);
+ const index=path.join(f.source,'index.html');fs.writeFileSync(index,fs.readFileSync(index,'utf8').replace('<script defer src="delivery-audio.js">','<script defer src="provided-sentence-audio.js"></script><script defer src="delivery-audio.js">'));
+ const report=await delivery.buildPages({sourceRoot:f.source,outputRoot:out,encoder:f.encoder,probe:f.probe});
+ assert.equal(report.audioReferences.total,6);assert.equal(report.audioReferences.unique,5);assert.equal(report.existingMp3Files,2);assert.deepEqual(fs.readFileSync(path.join(out,'audio/sentences/existing.mp3')),f.existing);assert(fs.existsSync(path.join(out,'audio/optimized/sentences/source.mp3')));assert(report.runtime.scripts.flatMap(item=>item.files).includes('provided-sentence-audio.js'));
+ assert.deepEqual(delivery.inspectAudioReferences(out),report.audioReferences,'the final bundled source validates the same sentence assets');
+});
+
+test('a missing sentence MP3 blocks publication even when all lesson and word audio files exist',async t=>{
+ const f=fixture(t);fs.appendFileSync(path.join(f.source,'generated-audio.js'),'\nwindow.STUDY_SENTENCE_AUDIO={lesson:[{en:"An exact sentence.",src:"audio/sentences/missing.mp3",source:"synthetic"},{en:". .",source:"non-speech"}]};');
+ await assert.rejects(()=>delivery.buildPages({sourceRoot:f.source,outputRoot:f.out('missing-sentence'),encoder:f.encoder,probe:f.probe}),/Missing runtime audio file: audio\/sentences\/missing\.mp3.*STUDY_SENTENCE_AUDIO/);
 });
 
 test('already cached previous HTML keeps its exact stylesheet available without loading it in new pages',async t=>{

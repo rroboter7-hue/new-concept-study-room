@@ -4,3 +4,4 @@
 .fl-row-actions{display:none}
 .focus-listening[open]~.reading-layout .fl-row-actions{display:flex}
 .fl-notes{border:0;background:transparent;padding:4px 0;font:inherit;font-size:13px;color:#075fc7;text-decoration:underline;text-underline-offset:4px;min-height:40px}
+.fl-source-toggle{font:inherit;font-size:12px;border:1px solid #c5d5ee;border-radius:8px;padding:7px 10px;min-height:40px;background:#fff;color:#24456f}.fl-source-toggle[hidden]{display:none}.focus-listening[data-state="error"] .fl-status,.focus-listening[data-state="unavailable"] .fl-status{color:#9c3423;background:#fff1ed;padding:8px 10px;border-radius:8px}.fl-row-actions button:disabled{opacity:.5;cursor:not-allowed}
