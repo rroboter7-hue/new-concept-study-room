@@ -7,6 +7,20 @@
  const integer=(v,min,max)=>Number.isInteger(v)&&v>=min&&v<=max;
  const nowOf=options=>timestamp(options?.now)?options.now:Date.now();
  const validId=id=>typeof id==='string'&&id.startsWith('review:')&&id.length<=8000;
+ const draftContext=context=>{if(['daily','practice','review'].includes(context))return true;if(typeof context!=='string'||context.length>2500)return false;try{const parts=JSON.parse(context);return Array.isArray(parts)&&parts.length===4&&parts[0]==='task'&&parts.slice(1).every(value=>typeof value==='string'&&value.length>0&&value.length<=800);}catch{return false;}};
+ function draftKey(context,cardId,revision){return draftContext(context)&&validId(cardId)&&(integer(revision,0,1000000)||context==='practice'&&revision===null)?JSON.stringify([context,cardId,revision]):'';}
+ function sanitizeDrafts(raw,options={}){
+  const result={version:1,entries:Object.create(null)},entries=raw?.entries;
+  if(!entries||typeof entries!=='object'||Array.isArray(entries))return result;
+  const rows=Object.entries(entries).slice(0,2000).filter(([key,d])=>{
+   if(!d||typeof d!=='object'||key!==draftKey(d.context,d.cardId,d.revision)||!key||typeof d.input!=='string'||d.input.length>10000||!timestamp(d.updatedAt)||!['writing','revealed','checked','assisted'].every(field=>typeof d[field]==='boolean'))return false;
+   if(options.cards){const current=options.cards[d.cardId];if(d.revision!==(current?.revision??null)||!current&&d.context!=='practice')return false;}
+   return true;
+  }).sort((a,b)=>b[1].updatedAt-a[1].updatedAt).slice(0,100);
+  for(const [key,d]of rows)result.entries[key]={context:d.context,cardId:d.cardId,revision:d.revision,input:d.input,writing:d.writing,revealed:d.revealed,checked:d.revealed&&d.checked,assisted:d.assisted,updatedAt:d.updatedAt};
+  return result;
+ }
+
  function cleanEvidence(value){
   if(!value||typeof value!=='object'||typeof value.correct!=='boolean'||typeof value.assisted!=='boolean'||typeof value.objective!=='boolean'||!['word','phrase','grammar'].includes(value.kind)||!timestamp(value.at))return null;
   return {correct:value.correct,assisted:value.assisted,objective:value.objective,kind:value.kind,answer:text(value.answer,10000),at:value.at};
@@ -267,5 +281,5 @@
   const answer=normalize(input);
   return {correct:Boolean(answer&&answerForms(card).includes(answer)),expected:card?.target||'',answer:String(input??'')};
  }
- global.StudyReview={hasStudied,matchRecurrences,cardsForLessons,sanitize,enroll,queue,revisitMistakes,revisitQuestionMistakes,assist,rate,stats,dayKey,checkAnswer,hasPhrase,intervalDays:INTERVALS.slice()};
+ global.StudyReview={draftKey,sanitizeDrafts,hasStudied,matchRecurrences,cardsForLessons,sanitize,enroll,queue,revisitMistakes,revisitQuestionMistakes,assist,rate,stats,dayKey,checkAnswer,hasPhrase,intervalDays:INTERVALS.slice()};
 })(window);

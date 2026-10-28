@@ -901,6 +901,35 @@
       "copyExactLearnerEnglishOnly": true
     },
     "keyPointsGrammarAndUsageOnly": true,
-    "legacyStageMigrationOnce": true
-  }
+    "legacyStageMigrationOnce": true,
+    "optionalClassifiedWritingLibrary": {
+      "recommendationLed": true,
+      "learnedRangeAndRecordedLessons": true,
+      "currentAndEarlierBooksOnly": true,
+      "categories": [
+        "verb",
+        "adjective",
+        "noun",
+        "adverb",
+        "phrase",
+        "word"
+      ],
+      "selectionDoesNotIncreaseQuota": true,
+      "draftsPreserved": true,
+      "lazyEntryBuilding": true
+    },
+    "grammarFirstKeyPoints": true,
+    "sourceBoundErrorCautions": true,
+    "usagePointsCollapsed": true,
+    "atomicLessonAndRouteNavigation": true,
+    "freeWritingLineMerge": true,
+    "restoreGenerationGuard": true
+  },
+  "dailyReviewDrafts": {
+    "separateFromGrades": true,
+    "cardRevisionAndContextBound": true,
+    "failedSaveBackup": true,
+    "reloadAfterBackupRestore": true
+  },
+  "readingFontInPipeline": true
 }

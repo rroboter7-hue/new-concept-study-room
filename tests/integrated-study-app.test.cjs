@@ -100,3 +100,11 @@ test('dictionary relabeling and prior reclassification keep existing lesson free
  await ui.goStage(3);assert(ui.sentences().some(row=>row.answer==='The telephone rang twice.'));
  assert(ui.sentences().some(row=>row.answer==='He turned round again.'));
 });
+
+test('notes adapter opens stage five key points after retelling stage insertion',async()=>{
+ const h=await harness({...options,loaded:{lastLesson:second}});await h.api.selectLesson(second);
+ await h.api.setTab('usage');const ui=h.api.learningPipeline;
+ assert.equal(ui.record().stage,5);
+ assert(h.document.querySelector('.pipeline-key-points'),'key points stage is visible');
+ assert.equal(h.document.querySelector('[data-pipeline-retell]'),null,'notes must not open the retelling form');
+});

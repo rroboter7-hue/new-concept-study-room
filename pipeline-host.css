@@ -33,3 +33,12 @@ body.learning-pipeline-active .learning-pipeline{--pipeline-ink:#18334b;--pipeli
 .pipeline-reading-tools select{padding:8px 10px;border:1px solid #dbe5f0;border-radius:8px;background:#fff;color:#18334b;}
 body.learning-pipeline-active .learning-pipeline :where(button,select,textarea){font-family:inherit;}
 @media(max-width:760px){body.learning-pipeline-active .learning-pipeline{padding:14px 14px max(28px,env(safe-area-inset-bottom));}body.learning-pipeline-active .pipeline-current-task{padding:20px 16px;}body.learning-pipeline-active .pipeline-topbar h1{font-size:21px;line-height:1.35;}}
+
+/* Keep the restored reading controls behind one compact entry. */
+.pipeline-font-settings{position:relative;font-size:14px;color:var(--pipeline-ink,#18334b);}
+.pipeline-font-settings>summary{display:flex;align-items:center;justify-content:center;min-height:44px;padding:8px 12px;border:1px solid var(--pipeline-line,#dbe5f0);border-radius:10px;background:#fff;cursor:pointer;box-sizing:border-box;}
+.pipeline-font-settings[open]{flex-basis:100%;}
+.pipeline-font-settings[open]>summary{justify-content:flex-start;}
+.pipeline-font-settings .reading-font-tools{margin:6px 0 0;padding:8px 0;}
+.pipeline-font-settings .reading-font-label{display:none;}
+.pipeline-font-settings>summary:focus-visible{outline:2px solid var(--pipeline-blue,#0873ff);outline-offset:2px;}

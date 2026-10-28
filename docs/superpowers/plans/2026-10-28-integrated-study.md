@@ -65,3 +65,12 @@ User addition: insert retelling between recap and key points and add full-retell
 - [ ] Migrate pipeline schema v1 stage4 to v2 stage5 exactly once. New stage4 retelling saves its own complete text, controls support disclosures and provides full-text copying/fallback. Preserve old/new draft identities and all quiz/scroll history.
 - [ ] Copy/export uses readable current target labels, including ring despite old rang storage keys, without changing source IDs or bindings.
 - [ ] Root wires new callbacks, source helpers, lesson summaries and script order; tests legacy migration, immediate refresh, retell autosave/copy/failure, source-name correctness and current key-point categories; new final CI/publication supersedes intermediate deployment.
+
+### Task6: Restore daily-review drafts and compact reading font access
+Integrate isolated reviewed modules supplied by authorized assisting chat; preserve six-stage flow/copy and current storage migration; test failed-save/backup replacement and restored reading font controls before joint publication.
+
+### Task7: Integrate atomic navigation and per-line writing safety
+Selective reviewed patches preserve daily grouping, six stages and copy, protect failed saves/multi-window edits/restore generation.
+
+### Task8: Recommendation-led optional word library and concise grammar focus
+Current and earlier learned words/usages, book/POS filters and manual learned-range preferences; no extra writing quota. User canceled Leo method. Key points emphasize current grammar with source-backed error attention; usages secondary collapsed.

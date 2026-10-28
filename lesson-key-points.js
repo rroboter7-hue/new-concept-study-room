@@ -95,7 +95,15 @@
    const note=text(row.note),brief=!note||/^整理说明[，,；; ]*(?:非原\s*PDF\s*译文)?[。.]?$/i.test(note)?meaning:note;
    add(row,'usage',text(row.phrase),brief,'本课表达用法 · 原有资料整理',note||meaning);
   }
-  return {items,vocabulary,usage,notice:NOTICE};
+  const grammar=items.filter(item=>item.category==='grammar'),usages=items.filter(item=>item.category==='usage');
+  // Cautions are direct sentences from the current source note, not inferred
+  // learner error rates or rewritten grammar advice.
+  const pitfalls=[];
+  for(const point of grammar){
+   const sentence=point.details.split(/(?<=[。！？；;])\s*/).map(text).find(part=>/(?:注意|易错|不要|避免|切勿|不能|不可)/.test(part));
+   if(sentence)pitfalls.push({text:sentence,sourceLessonId:point.sourceLessonId,sourceLabel:point.sourceLabel,sourceReference:{...point.sourceReference}});
+  }
+  return {items,grammar,usages,pitfalls,vocabulary,usage,notice:NOTICE};
  }
  return Object.freeze({forLesson});
 });

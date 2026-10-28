@@ -28,7 +28,7 @@ class Document {
  async click(selectorOrNode){const node=typeof selectorOrNode==='string'?this.querySelector(selectorOrNode):selectorOrNode;assert(node,'click target exists: '+selectorOrNode);assert.equal(node.disabled,false,'click target is enabled');await this.dispatch('click',node);return node;}
  async input(selectorOrNode,value){const node=typeof selectorOrNode==='string'?this.querySelector(selectorOrNode):selectorOrNode;assert(node,'input target exists: '+selectorOrNode);assert.equal(node.disabled,false,'input target is enabled');node.value=value;await this.dispatch('input',node);return node;}
 }
-async function harness({pilot=true,loaded={},realFormalShell=false,realCoach=false,realOutput=false,realPipeline=false,audioPending=false,withoutCoachContainer=false,now=Date.parse('2026-10-26T04:00:00Z')}={}){
+async function harness({pilot=true,loaded={},realFormalShell=false,realCoach=false,realOutput=false,realPipeline=false,realFont=false,audioPending=false,withoutCoachContainer=false,now=Date.parse('2026-10-26T04:00:00Z')}={}){
  const document=new Document(),frames=[],writes=[],shells=[],downloads=[],blobs=new Map(),storageMap=new Map([['zhixin-study-v1',JSON.stringify(loaded)]]);let audioInstance,storageWritable=true,clockNow=now;
  if(withoutCoachContainer)document.roots.delete('#learning-coach');
  class ClockDate extends Date {constructor(...args){super(...(args.length?args:[clockNow]));}static now(){return clockNow;}}
@@ -38,12 +38,14 @@ async function harness({pilot=true,loaded={},realFormalShell=false,realCoach=fal
  class PanelBoundary {constructor(options){this.options=options;}setLesson(){}render(){return '';}flush(){}reloadFromStorage(){}clearFilters(){}cards(){return [];}due(){return [];}setFilter(){}openTarget(value){this.openedTarget=value;return true;}startTask(value){this.startedTask=value;return true;}}
  class MobileBoundary {constructor(options){this.options=options;this.enabled=pilot;this.updates=[];this.focusCalls=0;this.outputModes=[];shells.push(this);}update(state){this.updates.push(state);}focusReader(){this.focusCalls++;}setOutputMode(mode,state){this.outputModes.push({mode,state});}}
  const c={console,document,URL:URLBoundary,Blob,URLSearchParams,Intl,Date:ClockDate,location:{search:pilot?'?pilot=1':'',href:'https://example.test/'+(pilot?'?pilot=1':'')},navigator:{},setTimeout:()=>0,clearTimeout(){},requestAnimationFrame:fn=>{frames.push(fn);return frames.length;},cancelAnimationFrame(){},localStorage:{get length(){return storageMap.size;},key:index=>[...storageMap.keys()][index]??null,getItem:key=>storageMap.get(key)??null,removeItem:key=>{if(!storageWritable)throw new Error('simulated storage full');storageMap.delete(key);},setItem:(key,v)=>{if(!storageWritable)throw new Error('simulated storage full');storageMap.set(key,v);if(key==='zhixin-study-v1')writes.push(JSON.parse(v));}},StudyAudio:AudioBoundary,StudyFiles:{getAudio:async()=>null},ReviewPractice:PanelBoundary,SentencePractice:PanelBoundary,OutputPractice:PanelBoundary,PhrasePractice:PanelBoundary,TextStudyLibrary:PanelBoundary,MobileLearningShell:MobileBoundary,StudySentences:{sanitizeDraft:x=>x},addEventListener(){},removeEventListener(){}};c.window=c;vm.createContext(c);
+ if(realFont){const values=new Map();document.documentElement.style={setProperty:(key,value)=>values.set(key,String(value)),getPropertyValue:key=>values.get(key)||''};}
  if(audioPending)c.StudyFiles.getAudio=()=>new Promise(()=>{});
  c.innerHeight=800;c.innerWidth=390;c.scrollBy=()=>{};
  // Style/geometry remains a Node boundary: only visibility required by the
  // production redraw contract is modeled, with no CSS/layout assertion.
  c.getComputedStyle=node=>({display:node.classList?.contains('hidden')?'none':'block',visibility:'visible',position:'static'});
  const real=new Set(['curriculum.js','textbook-lessons.js','book1-first10-lessons.js','book1-first10-catalogue.js','book2-lessons.js','book2-translations.js','book2-reading-alignment.js','phrase-library.js','book2-learning-support.js','book2-vocabulary.js','book2-quality-support.js','book2-practice-packs.js','book2-reviewed-questions.js','study-knowledge.js','pilot-question-expansion.js','book2-later-question-expansion.js','knowledge-bootstrap.js','practice-pack-core.js','practice-pack-bootstrap.js','nativeears-advanced-catalogue.js','book3-lessons.js','book4-lessons.js','core.js','review-engine.js','reading-layout.js','pilot-grammar-followups.js','learning-remediation.js','game.js','batch-sentence-core.js','batch-sentence-practice.js','learning-progress.js','lesson-practice.js']);
+ if(realFont)real.add('reading-font.js');
  real.add('reading-view.js');real.add('nativeears-advanced-audio.js');real.add('book34-language-support.js');real.add('phrase-practice.js');
  ['book1-complete-lessons.js','book1-first10-audio.js','book1-complete-audio.js'].forEach(file=>real.add(file));
  real.add('recurrence.js');
@@ -57,7 +59,7 @@ async function harness({pilot=true,loaded={},realFormalShell=false,realCoach=fal
  ['book2-reviewed-usage-26-30.js','reviewed-usage-registry.js','book2-lexical-source-corrections-32-34.js'].forEach(file=>real.add(file));
  if(realOutput)real.add('output-practice.js');
  if(realCoach)['learning-coach-core.js','learning-coach.js','sentence-core.js'].forEach(file=>real.add(file));
- const pipelineScripts=['sentence-core.js','grammar-check.js','person-name-targets.js','learning-pipeline-core.js','learning-pipeline-questions.js','writing-target-plan.js','free-writing-practice.js','sentence-feedback.js','lesson-key-points.js','lesson-sentence-export.js','retell-support.js','learning-pipeline.js','bookshelf-home.js'];
+ const pipelineScripts=['sentence-core.js','grammar-check.js','person-name-targets.js','learning-pipeline-core.js','learning-pipeline-questions.js','writing-target-plan.js','writing-word-library.js','writing-word-library-ui.js','free-writing-practice.js','sentence-feedback.js','lesson-key-points.js','lesson-sentence-export.js','retell-support.js','learning-pipeline.js','bookshelf-home.js'];
  if(realPipeline)pipelineScripts.forEach(file=>real.add(file));
  const loadedScripts=new Set();
  const scripts=Array.from(read('index.html').matchAll(/<script\b([^>]*)\bsrc="([^"]+)"[^>]*>/g),m=>m[2].split('?')[0]);for(const script of scripts)if(real.has(script)){vm.runInContext(read(script),c,{filename:script});loadedScripts.add(script);}

@@ -121,3 +121,53 @@ test('browser entry point exposes the local module without DOM or network access
  assert.equal(typeof scope.window.StudyLessonKeyPoints.forLesson,'function');
  assert.match(scope.window.StudyLessonKeyPoints.forLesson(fixture()).notice,/非实时在线\s*AI/);
 });
+
+test('separates current lesson grammar and optional usages while retaining compatible items',()=>{
+ const result=summarize(fixture());
+ assert.deepEqual(result.grammar.map(item=>item.title),['一般过去时']);
+ assert.deepEqual(result.usages.map(item=>item.title),['receive a letter']);
+ assert.deepEqual(result.items,[...result.grammar,...result.usages]);
+});
+
+test('pitfalls quote explicit current grammar cautions and preserve their source',()=>{
+ const result=summarize(fixture());
+ assert.equal(result.pitfalls.length,1);
+ assert.match(result.pitfalls[0].text,/did 后用动词原形/);
+ assert.equal(result.pitfalls[0].sourceLessonId,'current');
+ assert.equal(result.pitfalls[0].sourceLabel,result.grammar[0].sourceLabel);
+});
+
+test('does not invent an error warning when current rules give no caution',()=>{
+ const lesson=fixture();lesson.grammar=[{title:'一般过去时',note:'过去发生的动作使用过去式。',example:'Jane received a letter.'}];
+ assert.deepEqual(summarize(lesson).pitfalls,[]);
+});
+
+test('cross-lesson and reading notes cannot create pitfall warnings',()=>{
+ const lesson=fixture();lesson.grammar=[];lesson.usage=[];
+ const result=summarize(lesson,{reviewedGrammar:[
+  {lessonId:'old',title:'一般现在时',note:'注意第三人称单数。'},
+  {lessonId:'current',category:'reading-comprehension',title:'阅读理解',note:'注意文章细节。'}
+ ]});
+ assert.deepEqual(result.pitfalls,[]);
+});
+
+test('present simple and present continuous cautions come from their own current notes',()=>{
+ for(const [title,note,expected] of [
+  ['一般现在时','第三人称单数主语后，动词通常加 s。注意 does 后用动词原形。','注意 does 后用动词原形。'],
+  ['现在进行时','现在进行时使用 be 加现在分词。注意不要漏掉 be 动词。','注意不要漏掉 be 动词。']
+ ]){
+  const lesson=fixture();lesson.grammar=[{title,note,example:'She is happy.'}];lesson.usage=[];
+  const result=summarize(lesson);
+  assert.equal(result.grammar[0].title,title);
+  assert.deepEqual(result.pitfalls.map(item=>item.text),[expected]);
+ }
+});
+
+test('sparse imported lesson returns only available source points',()=>{
+ const sparse={id:'sparse',book:2,number:1,title:'Sparse',paragraphs:[],grammar:[],usage:[],vocabulary:[]};
+ const result=summarize(sparse,{reviewedGrammar:[],questions:[]});
+ assert.deepEqual(result.items,[]);
+ assert.deepEqual(result.grammar,[]);
+ assert.deepEqual(result.usages,[]);
+ assert.deepEqual(result.pitfalls,[]);
+});

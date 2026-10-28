@@ -177,6 +177,64 @@
     return draft;
   }
 
+  // Free-writing lines are independent answers. Keep the storage layer's
+  // generic array semantics unchanged and merge only this versioned draft.
+  function mergeDraft(base, local, latest) {
+    const id = own(local,'lessonId');
+    if (own(local,'version') !== 1 || typeof id !== 'string' || !id ||
+        latest && (own(latest,'version') !== 1 || own(latest,'lessonId') !== id)) {
+      return {ok:false,error:'自由造句草稿来源不一致，当前输入已保留，请先复制文字后重新打开课程。'};
+    }
+    const original = own(base,'lessonId') === id ? base : {}, remote = latest || {};
+    const targets = {}, conflicts = [], same = (a,b) => JSON.stringify(a) === JSON.stringify(b);
+    const rows = value => own(value,'targets') || {};
+    const line = (row,index) => {
+      const answer = own(own(row,'answers'),String(index));
+      const value = typeof answer === 'string' ? answer : '';
+      const feedback = own(own(row,'feedback'),String(index)), fusion = own(own(row,'fusion'),String(index));
+      return {answer:value,feedback:feedback && own(feedback,'sentence') === value ? cleanFeedback(feedback,value) : null,
+        fusion:Array.isArray(fusion) ? Array.from(new Set(fusion.filter(key => typeof key === 'string'))).slice(0,2) : []};
+    };
+    const primary = row => [row.answer,row.fusion];
+    for (const key of new Set([...Object.keys(rows(original)),...Object.keys(rows(local)),...Object.keys(rows(remote))])) {
+      if (!/^(word|phrase):/.test(key)) continue;
+      const before = own(rows(original),key), entered = own(rows(local),key), saved = own(rows(remote),key);
+      const count = Math.max(...[before,entered,saved].map(row => Array.isArray(own(row,'answers')) ? own(row,'answers').length : 0));
+      const result = {answers:[],feedback:[],fusion:[]};
+      for (let index=0;index<count;index++) {
+        const a=line(before,index),b=line(entered,index),c=line(saved,index);
+        const localChanged=!same(primary(a),primary(b)),remoteChanged=!same(primary(a),primary(c));
+        if (localChanged && remoteChanged && !same(primary(b),primary(c))) { conflicts.push({targetKey:key,index}); continue; }
+        const selected = localChanged ? b : c;
+        let feedback = selected.feedback;
+        if (same(primary(b),primary(c))) feedback = !same(a.feedback,b.feedback) ? b.feedback : c.feedback;
+        result.answers.push(selected.answer); result.fusion.push(selected.fusion);
+        result.feedback.push(feedback && feedback.sentence === selected.answer ? feedback : null);
+      }
+      targets[key] = result;
+    }
+    if (conflicts.length) {
+      const first=conflicts[0];let label=first.targetKey.slice(first.targetKey.lastIndexOf(':')+1);
+      try { label=decodeURIComponent(label); } catch (_) { /* Keep the stored label readable. */ }
+      return {ok:false,conflicts,error:'“'+label+'”第 '+(first.index+1)+' 句在另一个窗口也有修改，保存发生冲突。当前输入已保留；请先复制本地句子，再重新打开核对两个版本。'};
+    }
+    // The destination's daily grouping is independent from sentence contents.
+    // Preserve disjoint days; never silently replace two different plans for one day.
+    const dailyPlans={},planRows=value=>own(value,'dailyPlans')||{};
+    const hasDailyPlans=[original,local,remote].some(value=>own(value,'dailyPlans')!==undefined);
+    for(const day of new Set([...Object.keys(planRows(original)),...Object.keys(planRows(local)),...Object.keys(planRows(remote))])){
+      if(!/^\d{4}-\d{2}-\d{2}$/.test(day))continue;
+      const a=own(planRows(original),day),b=own(planRows(local),day),c=own(planRows(remote),day);
+      const localChanged=!same(a,b),remoteChanged=!same(a,c);
+      if(localChanged&&remoteChanged&&!same(b,c))return {ok:false,error:'今日造句分组已在另一个窗口修改，当前输入仍保留；请先复制文字，重新打开后核对分组。'};
+      const selected=localChanged?b:c;if(selected!==undefined)dailyPlans[day]=clone(selected);
+    }
+    // Target selection belongs to this live editor; another tab must not redirect its next input.
+    const active = own(local,'activeTargetKey') || own(remote,'activeTargetKey');
+    return {ok:true,draft:{version:1,lessonId:id,activeTargetKey:typeof active === 'string' ? active : '',targets,...(hasDailyPlans?{dailyPlans}:{}),
+      updatedAt:Math.max(Number(own(local,'updatedAt'))||0,Number(own(remote,'updatedAt'))||0)}};
+  }
+
   class FreeWritingPractice {
     constructor(options = {}) {
       this.options = options; this.cache = new Map(); this.container = null; this.lessonOverride = null;
@@ -202,7 +260,7 @@
         const key = draftKey(lesson.id);
         let stored;
         try { stored = own(this.options.getDrafts?.(),key); } catch (_) { /* Keep the workspace usable if draft reading fails. */ }
-        entry = {key,lesson,targets,draft:sanitizeDraft(stored,lesson,targets),revision:0,savedRevision:0,status:'idle',checking:new Set(),checkError:''};
+        entry = {key,lesson,targets,draft:sanitizeDraft(stored,lesson,targets),baseDraft:stored ? clone(stored) : null,revision:0,savedRevision:0,status:'idle',checking:new Set(),checkError:''};
         this.cache.set(lesson.id,entry);
       }
       this.active = entry;
@@ -286,7 +344,7 @@
       row.feedback[index] = null; this.touch(entry); this.refresh(); return true;
     }
     statusMessage(entry) {
-      if (entry.status === 'error') return '保存失败，输入仍保留在本页；请重试保存，成功前不要关闭页面。';
+      if (entry.status === 'error') return entry.saveError || '保存失败，输入仍保留在本页；请重试保存，成功前不要关闭页面。';
       if (entry.status === 'saving') return '正在保存草稿…';
       if (entry.revision > entry.savedRevision) return '草稿待保存…';
       return entry.status === 'saved' ? '草稿已保存' : '逐行输入后自动保存草稿';
@@ -324,14 +382,46 @@
             const revision = entry.revision, snapshot = clone(entry.draft);
             entry.status = 'saving'; this.updateStatus(entry);
             try {
-              if (typeof this.options.saveDraft !== 'function' || await this.options.saveDraft(entry.key,snapshot) !== true) throw new Error('Draft storage did not confirm saving');
-              entry.savedRevision = revision; entry.status = revision === entry.revision ? 'saved' : 'dirty'; this.updateStatus(entry);
-            } catch (_) { entry.status = 'error'; this.updateStatus(entry); success = false; break; }
+              if (typeof this.options.saveDraft !== 'function') throw new Error('Draft storage did not confirm saving');
+              const result = await this.options.saveDraft(entry.key,snapshot,{baseDraft:entry.baseDraft ? clone(entry.baseDraft) : null});
+              if (result !== true && result?.ok !== true) throw Object.assign(new Error('Draft storage did not confirm saving'),{publicMessage:typeof result?.error === 'string' ? result.error : ''});
+              const persisted = result?.draft ? sanitizeDraft(result.draft,entry.lesson,entry.targets) : snapshot;
+              const previous = clone(entry.draft), merged = mergeDraft(snapshot,entry.draft,persisted);
+              if (!merged.ok) throw Object.assign(new Error('Draft conflict'),{publicMessage:merged.error});
+              entry.baseDraft = clone(persisted);
+              const normalized=sanitizeDraft(merged.draft,entry.lesson,entry.targets);
+              entry.draft.activeTargetKey=normalized.activeTargetKey;entry.draft.updatedAt=normalized.updatedAt;
+              if(Object.hasOwn(normalized,'dailyPlans'))entry.draft.dailyPlans=normalized.dailyPlans;
+              for(const [key,row] of Object.entries(normalized.targets)) {
+                const current=entry.draft.targets[key];
+                if(current){current.answers=row.answers;current.feedback=row.feedback;current.fusion=row.fusion;}
+                else entry.draft.targets[key]=row;
+              }
+              this.syncRenderedDraft(entry,previous);
+              entry.savedRevision = revision; entry.saveError = ''; entry.status = revision === entry.revision ? 'saved' : 'dirty'; this.updateStatus(entry);
+            } catch (error) { entry.status = 'error'; entry.saveError = error?.publicMessage || ''; this.updateStatus(entry); success = false; break; }
           }
         }
         return success;
       })().finally(() => { this.saving = null; });
       return this.saving;
+    }
+    syncRenderedDraft(entry,previous) {
+      if (entry !== this.active || !this.container) return;
+      const key=entry.draft.activeTargetKey,row=entry.draft.targets[key],before=previous.targets[key];
+      if (!row || previous.activeTargetKey !== key) return;
+      this.container.querySelectorAll?.('textarea[data-free-answer]').forEach(field => {
+        const index=Number(field.dataset.freeAnswer);
+        if (field.value === before?.answers[index] && field.value !== row.answers[index]) field.value=row.answers[index] || '';
+      });
+      this.container.querySelectorAll?.('select[data-free-fusion]').forEach(field => {
+        const index=Number(field.dataset.freeFusion),value=row.fusion[index]?.[0] || '';
+        if(field.value === (before?.fusion[index]?.[0] || '') && field.value !== value)field.value=value;
+      });
+      row.answers.forEach((answer,index) => {
+        const field=this.container.querySelector?.('[data-free-feedback="'+index+'"]');
+        if (field && JSON.stringify(before?.feedback[index]) !== JSON.stringify(row.feedback[index])) field.innerHTML=this.feedbackHTML(row.feedback[index]);
+      });
     }
     async check(key) {
       const entry = this.ensure(), target = entry?.targets.find(item => item.key === (key || entry.draft.activeTargetKey));
@@ -373,7 +463,7 @@
       const position = groupTargets.findIndex(item => item.key === target.key);
       const remaining = entry.targets.some(item => writtenCount(entry.draft.targets[item.key]) < item.requiredCount);
       const group = prior => entry.targets.filter(item => item.prior === prior).map(item => '<option value="' + escapeHTML(item.key) + '"' + (item.key === target.key ? ' selected' : '') + '>' + escapeHTML(item.label) + ' · ' + (item.kind === 'phrase' ? '用法' : '单词') + ' · ' + item.requiredCount + '句</option>').join('');
-      const help = phrases.length ? '<details class="free-writing-help"><summary>用法参考（可选，可自由融合）</summary><p>按句意自由搭配，无需逐句指定。已有草稿选定的用法仍随原句检查。</p><ul>' + phrases.map(phrase => '<li><strong lang="en">' + escapeHTML(phrase.label) + '</strong> · ' + escapeHTML(phrase.meaning) + ' <small>' + (phrase.prior ? '前课复习' : '本课用法') + '</small></li>').join('') + '</ul></details>' : '';
+      const help = this.options.mountReferenceLibrary ? '<div data-free-word-library></div>' : phrases.length ? '<details class="free-writing-help"><summary>用法参考（可选，可自由融合）</summary><p>按句意自由搭配，无需逐句指定。已有草稿选定的用法仍随原句检查。</p><ul>' + phrases.map(phrase => '<li><strong lang="en">' + escapeHTML(phrase.label) + '</strong> · ' + escapeHTML(phrase.meaning) + ' <small>' + (phrase.prior ? '前课复习' : '本课用法') + '</small></li>').join('') + '</ul></details>' : '';
       const lines = row.answers.map((answer,index) => {
         if (index >= target.requiredCount && !answer.trim()) return '';
         const selected = (row.fusion[index] || []).map(key => entry.targets.find(item => item.key === key)).filter(Boolean);
@@ -390,7 +480,7 @@
     refresh() {
       if (!this.container && !this.options.onRender) return;
       const html = this.render();
-      if (this.container) this.container.innerHTML = html;
+      if (this.container) {this.container.innerHTML = html;const entry=this.ensure(),slot=this.container.querySelector('[data-free-word-library]');if(entry&&slot)this.options.mountReferenceLibrary?.(slot,{lesson:entry.lesson,target:this.currentTarget(entry)});}
       this.options.onRender?.(html,this);
     }
     mount(container) {
@@ -421,11 +511,12 @@
       this.refresh(); return true;
     }
     unmount() {
+      this.options.unmountReferenceLibrary?.();
       if (this.container && this.handlers) for (const [event,handler] of Object.entries(this.handlers)) this.container.removeEventListener?.(event,handler);
       this.container = null; this.handlers = null;
     }
   }
-  Object.assign(FreeWritingPractice,{buildTargets,sanitizeDraft,dailyPlan,localCheck,cleanFeedback,classifyIssue,draftKey,TYPE_LABELS,MAX_ANSWER});
+  Object.assign(FreeWritingPractice,{mergeDraft,buildTargets,sanitizeDraft,dailyPlan,localCheck,cleanFeedback,classifyIssue,draftKey,TYPE_LABELS,MAX_ANSWER});
   FreeWritingPractice.FreeWritingPractice = FreeWritingPractice;
   return FreeWritingPractice;
 });

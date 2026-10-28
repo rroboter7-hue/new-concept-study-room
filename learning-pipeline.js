@@ -56,11 +56,22 @@
     }
     async setLesson(lesson,options={resume:true}){
       if(!lesson||typeof lesson.id!=='string')return false;
-      if(!await this.flush())return false;
-      this.detachStage();this.lesson=lesson;this.copyFallback='';this.retellCopyFallback='';this.copyGeneration=(this.copyGeneration||0)+1;const id=lesson.id;
-      this.queue(state=>{const record=this.ensureRecord(state,id);state.activeLessonId=id;if(options.resume===false)record.stage=0;return state;},'active-lesson');
-      if(this.record().stage===1)this.prepareQuiz(false);
-      const saved=await this.flush();this.refresh();return saved;
+      const isCurrent=options.isCurrent||(()=>true);
+      if(!await this.flush()||!isCurrent())return false;
+      // Prepare the destination while the current editor remains attached.
+      const next=this.baseState(),id=lesson.id,record=this.ensureRecord(next,id);
+      next.activeLessonId=id;if(options.resume===false)record.stage=0;
+      if(record.stage===1&&record.quiz.planned!==true&&!record.quiz.questions.length){
+        const round=record.round||0,plan=this.core.planQuiz({lesson,lessons:this.options.getLessons?.()||[],records:this.options.getRecords?.()||{},pipelineState:next,round,questionsForLesson:this.options.questionsForLesson,count:10});
+        record.quiz={questions:plan.questions,answers:{},index:0,submitted:false,checked:{},results:{},planned:true,plan};
+      }
+      const snapshot=this.core.sanitize(next),save=options.commit||this.options.saveState;
+      if(!isCurrent())return false;
+      this.status='saving';this.updateStatus();
+      try{if(typeof save!=='function'||await save(snapshot)!==true)throw Error('Lesson storage did not confirm saving');}
+      catch(_){this.status='error';this.updateStatus();return false;}
+      this.lastSaved=snapshot;
+      this.detachStage();this.lesson=lesson;this.copyFallback='';this.retellCopyFallback='';this.copyGeneration=(this.copyGeneration||0)+1;this.status='saved';this.refresh();this.updateStatus();return true;
     }
     prepareQuiz(force){
       if(!this.lesson)return;
@@ -313,9 +324,16 @@
       const help='<details class="pipeline-disclosure pipeline-retell-support"><summary>查看课文复述提示</summary><p class="pipeline-source">'+e(support.notice||'以下仅为本课现有资料提示。')+'</p><h3>各段中文意思</h3><ol>'+sectionHTML+'</ol><h3>人物与身份</h3><ul>'+characterHTML+'</ul><h3>主要新词</h3><ul>'+wordHTML+'</ul><h3>本课用法</h3><ul>'+usageHTML+'</ul></details>';
       return '<h2>用自己的英文复述本课</h2><p class="pipeline-task-note">看过提示后，按自己的理解写完整内容；可分段，草稿会自动保存。</p>'+help+'<label class="pipeline-retell-label">我的英文复述<textarea rows="8" lang="en" data-pipeline-retell placeholder="Write your retelling in English.">'+e(record.retellText)+'</textarea></label><div class="pipeline-copy-actions"><button class="button subtle" data-pipeline-action="copy-retell">复制复述全文</button></div>'+(this.retellCopyFallback?'<label class="pipeline-copy-fallback">复制未成功，请选择下方全文手动复制<textarea rows="12" lang="en" readonly data-pipeline-retell-copy-fallback>'+e(this.retellCopyFallback)+'</textarea></label>':'')+(legacy?'<div class="pipeline-legacy-retell"><details><summary>查看旧版复述草稿</summary><p lang="en">'+e(legacy)+'</p></details><button class="button subtle" data-pipeline-action="import-legacy-retell"'+(record.retellText?' disabled':'')+'>导入旧版复述</button></div>':'')+'<div class="pipeline-footer"><button class="button primary" data-pipeline-action="stage" data-stage="5">查看本课重点</button><button class="button subtle" data-pipeline-action="stage" data-stage="3">返回复盘</button></div>';
     }
+    keyPointHTML(item,index){
+      const e=this.e;
+      return '<article class="pipeline-point"><span>'+e(index+1)+'</span><div><h3>'+e(item.title)+'</h3><p>'+e(item.summary||item.note)+'</p>'+(item.example?'<blockquote lang="en">'+e(item.example)+'</blockquote>':'')+'<details><summary>完整说明与来源</summary><p>'+e(item.details||item.summary)+'</p><p>'+e(item.sourceLabel||'本课已有学习资料')+'</p>'+(item.example?'<p>'+e(item.exampleSourceLabel||'本课已有资料例句')+'</p>':'')+(item.exampleDetails&&item.exampleDetails!==item.example?'<p lang="en">'+e(item.exampleDetails)+'</p>':'')+(item.sourceReference?.page?'<p>来源第 '+e(item.sourceReference.page)+' 页</p>':'')+'</details></div></article>';
+    }
     keyPointsHTML(){
-      const e=this.e,raw=this.options.getKeyPoints?.(this.lesson)||{},items=list(Array.isArray(raw)?raw:raw.items).slice(0,5);
-      return '<h2>带走这些重点</h2><p class="pipeline-task-note">'+e(raw.notice||'根据本课已有资料进行本地整理，非实时在线 AI。')+'</p><div class="pipeline-key-points">'+items.map((item,index)=>'<article class="pipeline-point"><span>'+e(index+1)+'</span><div><h3>'+e(item.title)+'</h3><p>'+e(item.summary||item.note)+'</p>'+(item.example?'<blockquote lang="en">'+e(item.example)+'</blockquote><small>'+e(item.exampleSourceLabel||'本课已有资料例句')+'</small>':'<p class="pipeline-notice">当前资料未附可展示的完整例句。</p>')+'<details><summary>来源与完整说明</summary><p>'+e(item.sourceLabel||'本课已有学习资料')+'</p><p>'+e(item.details||item.summary)+'</p>'+(item.exampleDetails&&item.exampleDetails!==item.example?'<p lang="en">'+e(item.exampleDetails)+'</p>':'')+(item.sourceReference?.page?'<p>来源第 '+e(item.sourceReference.page)+' 页</p>':'')+'</details></div></article>').join('')+'</div>'+(!items.length?'<p>本课重点资料尚未整理，可以先保留自己的回顾。</p>':'')+'<div class="pipeline-footer"><button class="button primary" data-pipeline-action="finish">完成本轮，回书架</button><button class="button subtle" data-pipeline-action="stage" data-stage="4">返回课文复述</button>'+(this.nextLesson()?'<button class="button subtle" data-pipeline-action="next-lesson">下一课</button>':'')+'</div>';
+      const e=this.e,raw=this.options.getKeyPoints?.(this.lesson)||{},items=list(Array.isArray(raw)?raw:raw.items);
+      const grammar=list(raw.grammar||items.filter(item=>item.category==='grammar')).slice(0,3),usages=list(raw.usages||items.filter(item=>item.category==='usage')).slice(0,3);
+      const cautions=list(raw.pitfalls).filter(item=>!item.sourceLessonId||item.sourceLessonId===this.lesson.id).slice(0,3);
+      const mistakes=Object.values(this.record().mistakes||{}).filter(row=>row.question?.type==='grammar'&&(row.question.pipeline?.sourceLessonId||row.question.sourceLessonId||this.lesson.id)===this.lesson.id).sort((a,b)=>(b.wrongCount||0)-(a.wrongCount||0)).slice(0,2);
+      return '<h2>本课语法与易错点</h2><p class="pipeline-task-note">记住用法和句子结构，再对照容易出错的地方。</p><div class="pipeline-key-points">'+grammar.map((item,index)=>this.keyPointHTML(item,index)).join('')+'</div>'+(!grammar.length?'<p class="pipeline-source">本课暂无已核对的独立语法讲解，可对照课文和复盘继续理解。</p>':'')+(cautions.length?'<section class="pipeline-cautions"><h3>易错提醒</h3><ul>'+cautions.map(item=>'<li>'+e(item.text)+'</li>').join('')+'</ul></section>':'')+(mistakes.length?'<details class="pipeline-disclosure"><summary>本课做错过的题（'+e(mistakes.length)+'）</summary>'+mistakes.map(row=>'<p>'+e(this.questionLabel(row.question))+'</p><p>参考答案：<strong>'+e(row.question.options?.[row.question.answer])+'</strong> · 曾答错 '+e(row.wrongCount)+' 次</p>').join('')+'<button class="button subtle" data-pipeline-action="stage" data-stage="3">去复盘订正</button></details>':'')+(usages.length?'<details class="pipeline-disclosure" data-pipeline-usage-details><summary>本课用法补充（'+e(usages.length)+'）</summary>'+usages.map((item,index)=>this.keyPointHTML(item,index)).join('')+'</details>':'')+'<details class="pipeline-disclosure pipeline-point-source"><summary>整理来源</summary><p>'+e(raw.notice||'根据本课已有资料进行本地整理，非实时在线 AI。')+'</p></details><div class="pipeline-footer"><button class="button primary" data-pipeline-action="finish">完成本轮，回书架</button><button class="button subtle" data-pipeline-action="stage" data-stage="4">返回课文复述</button>'+(this.nextLesson()?'<button class="button subtle" data-pipeline-action="next-lesson">下一课</button>':'')+'</div>';
     }
     render(){
       if(!this.lesson)return '<section class="learning-pipeline"><p>请从书架选择一课。</p></section>';
@@ -327,7 +345,7 @@
     ensureWriting(){
       if(this.writing)return this.writing;
       const Class=this.options.FreeWritingPractice||Writing;if(!Class)return null;
-      this.writing=new Class({getLesson:()=>this.lesson,getLessons:this.options.getLessons,getTargets:this.options.getWritingTargets,getDrafts:this.options.getFreeDrafts,saveDraft:this.options.saveFreeDraft,checkSentence:this.options.checkSentence,getLearnedLessonIds:this.options.getLearnedLessonIds});return this.writing;
+      this.writing=new Class({getLesson:()=>this.lesson,getLessons:this.options.getLessons,getTargets:this.options.getWritingTargets,getDrafts:this.options.getFreeDrafts,saveDraft:this.options.createFreeDraftSaver?.()||this.options.saveFreeDraft,checkSentence:this.options.checkSentence,getLearnedLessonIds:this.options.getLearnedLessonIds,mountReferenceLibrary:this.options.mountReferenceLibrary,unmountReferenceLibrary:this.options.unmountReferenceLibrary});return this.writing;
     }
     detachStage(){
       if(this.readingMounted){this.options.stopReading?.();this.readingMounted=false;}
@@ -342,9 +360,9 @@
       this.restoreScroll();this.options.changed?.({lessonId:this.lesson?.id,stage:this.visibleStage});
     }
     nextLesson(){return (this.options.getLessons?.()||[]).filter(lesson=>lesson.book>this.lesson.book||lesson.book===this.lesson.book&&lesson.number>this.lesson.number).sort((a,b)=>a.book-b.book||a.number-b.number)[0]||null;}
-    async finish(){if(!this.lesson)return false;const id=this.lesson.id;this.queue(state=>{this.ensureRecord(state,id).finishedAt=Date.now();return state;});if(!await this.flush())return false;this.options.onShelf?.();return true;}
-    async shelf(){this.captureScroll();if(!await this.flush())return false;this.detachStage();this.options.onShelf?.();return true;}
-    async selectNextLesson(){const next=this.nextLesson();if(!next||!await this.flush())return false;this.detachStage();this.options.onSelectLesson?.(next.id);return true;}
+    async finish(){if(!this.lesson)return false;const id=this.lesson.id;this.queue(state=>{this.ensureRecord(state,id).finishedAt=Date.now();return state;});if(!await this.flush())return false;return await this.options.onShelf?.()!==false;}
+    async shelf(){this.captureScroll();if(!await this.flush())return false;return await this.options.onShelf?.()!==false;}
+    async selectNextLesson(){const next=this.nextLesson();if(!next||!await this.flush())return false;return await this.options.onSelectLesson?.(next.id)!==false;}
     mount(container){
       this.unmount();if(!container||typeof container.addEventListener!=='function')return false;this.destroyed=false;this.container=container;
       const click=event=>{

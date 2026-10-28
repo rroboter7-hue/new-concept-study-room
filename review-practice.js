@@ -3,10 +3,37 @@
  const KINDS={word:'单词拼写',phrase:'习惯用法',grammar:'语法要点'};
  class ReviewPractice{
   constructor(options){
-   this.options=options;this.container=options.container;this.active=null;this.revealed=false;this.input='';this.writing=false;this.feedback=null;this.kind='';this.lessonId='';this.cardIds=null;this.practiceDone=new Set();this.reviewCardIds=null;this.reviewTask=null;this.practiceSerial=0;this.attemptAssistance=new Map();this.batchSize=10;this.batchIds=null;this.batchDone=new Set();this.sessionDone=new Set();this.sessionEnded=false;this.batchNumber=1;
+   this.options=options;this.container=options.container;this.localDrafts={version:1,entries:{}};this.pendingDrafts=new Map();this.draftSaveFailed=false;this.active=null;this.revealed=false;this.input='';this.writing=false;this.feedback=null;this.kind='';this.lessonId='';this.cardIds=null;this.practiceDone=new Set();this.reviewCardIds=null;this.reviewTask=null;this.practiceSerial=0;this.attemptAssistance=new Map();this.batchSize=10;this.batchIds=null;this.batchDone=new Set();this.sessionDone=new Set();this.sessionEnded=false;this.batchNumber=1;
    this.container.addEventListener('click',e=>{const b=e.target.closest('[data-review-action]');if(b&&this.container.contains(b))return this.action(b.dataset.reviewAction,b);});
-   this.container.addEventListener('input',e=>{if(e.target.dataset.reviewInput!==undefined){if(this.revealed)this.markAssisted('edited-after-feedback');this.input=e.target.value;this.revealed=false;this.feedback=null;const area=this.container.querySelector('[data-review-feedback]');if(area)area.innerHTML='';this.container.querySelectorAll('[data-review-rating],[data-review-action="practice-next"],[data-review-action="practice-again"]').forEach(b=>b.disabled=true);}});
-   this.container.addEventListener('change',e=>{if(e.target.dataset.reviewFilter!==undefined){this.kind=e.target.value;this.resetBatch();this.render();}});
+   this.container.addEventListener('input',e=>{if(e.target.dataset.reviewInput!==undefined){if(this.revealed)this.markAssisted('edited-after-feedback');this.input=e.target.value;this.revealed=false;this.feedback=null;const area=this.container.querySelector('[data-review-feedback]');if(area)area.innerHTML='';this.container.querySelectorAll('[data-review-rating],[data-review-action="practice-next"],[data-review-action="practice-again"]').forEach(b=>b.disabled=true);this.saveCurrentDraft();}});
+   this.container.addEventListener('change',e=>{if(e.target.dataset.reviewFilter!==undefined){this.saveCurrentDraft();this.kind=e.target.value;this.resetBatch();this.render();}});
+  }
+  draftContext(){return this.cardIds?'practice':this.reviewTask?JSON.stringify(['task',this.reviewTask.taskId,this.reviewTask.day,this.reviewTask.roundKey]):this.reviewCardIds?'review':'daily';}
+  currentDraftKey(){const c=this.active;return c?global.StudyReview.draftKey(this.draftContext(),c.id,c.progress.revision):'';}
+  snapshotDrafts(){
+   const R=global.StudyReview,cards=this.state()?.cards||{},raw=typeof this.options.getDrafts==='function'?this.options.getDrafts():this.localDrafts,base=R.sanitizeDrafts(raw,{cards});
+   for(const [key,draft]of this.pendingDrafts){if(draft===null)delete base.entries[key];else if(draft.revision===(cards[draft.cardId]?.revision??null)&&(cards[draft.cardId]||draft.context==='practice'))base.entries[key]={...draft};}
+   const rows=Object.entries(base.entries).sort((a,b)=>b[1].updatedAt-a[1].updatedAt).slice(0,100);return {version:1,entries:Object.fromEntries(rows)};
+  }
+  draftStatusHTML(){return this.draftSaveFailed?(this.draftTooLong?'草稿暂未保存：超过10000字。请先备份或缩短后重试。 ':'草稿暂未保存，已保留在当前页面，可备份或重试。 ')+'<button class="button subtle" data-review-action="retry-draft">重试保存草稿</button>':'';}
+  updateDraftStatus(){const status=this.container.querySelector('[data-review-draft-status]');if(status)status.innerHTML=this.draftStatusHTML();}
+  persistDrafts(){
+   const snapshot=this.snapshotDrafts(),clean=global.StudyReview.sanitizeDrafts(snapshot,{cards:this.state()?.cards||{}});this.draftTooLong=Object.values(snapshot.entries).some(d=>d.input.length>10000);let saved=false;
+   try{saved=Object.keys(snapshot.entries).length===Object.keys(clean.entries).length&&(!this.options.saveDrafts||this.options.saveDrafts(clean)===true);}catch{}
+   if(saved){this.localDrafts=clean;this.pendingDrafts.clear();this.draftSaveFailed=false;}else {if(!this.draftSaveFailed)this.options.toast('复习草稿未能保存，输入仍保留；可备份或重试保存。');this.draftSaveFailed=true;}
+   this.updateDraftStatus();return saved;
+  }
+  stageDraft(key,draft){this.pendingDrafts.delete(key);this.pendingDrafts.set(key,draft);while(this.pendingDrafts.size>100)this.pendingDrafts.delete(this.pendingDrafts.keys().next().value);}
+  saveCurrentDraft(){
+   const c=this.active,key=this.currentDraftKey();if(!c||!key)return true;
+   if(!this.input&&!this.writing&&!this.revealed&&!this.isAssisted()&&!this.snapshotDrafts().entries[key])return true;
+   this.stageDraft(key,{context:this.draftContext(),cardId:c.id,revision:c.progress.revision,input:this.input,writing:this.writing,revealed:this.revealed,checked:!!this.feedback,assisted:this.isAssisted(),updatedAt:Date.now()});return this.persistDrafts();
+  }
+  clearCurrentDraft(){const key=this.currentDraftKey();if(!key)return;this.stageDraft(key,null);this.persistDrafts();}
+  restoreDraft(){
+   const c=this.active,key=this.currentDraftKey(),draft=this.snapshotDrafts().entries[key];if(!c||!draft)return;
+   this.input=draft.input;this.writing=c.kind==='phrase'&&draft.writing;this.revealed=draft.revealed;if(draft.assisted)this.attemptAssistance.set(this.attemptKey(c),true);
+   if(draft.checked&&this.revealed){if(this.writing){const grammarAvailable=typeof global.StudyGrammar?.check==='function';this.feedback={writing:true,covered:global.StudyReview.hasPhrase(c,this.input),grammarAvailable,issues:grammarAvailable?global.StudyGrammar.check(this.input):[]};}else {this.feedback=global.StudyReview.checkAnswer(c,this.input);if(!this.feedback.correct)this.attemptAssistance.set(this.attemptKey(c),true);}}
   }
   attemptKey(c=this.active){return c?c.id+':'+c.progress.revision+':'+(this.cardIds?'practice-'+this.practiceSerial:'due'):'';}
   isAssisted(c=this.active){if(!c)return false;return this.attemptAssistance.has(this.attemptKey(c))||this.state().cards?.[c.id]?.assistance?.revision===c.progress.revision;}
@@ -16,10 +43,11 @@
   reset(){this.active=null;this.revealed=false;this.input='';this.feedback=null;this.writing=false;}
   resetBatch(){this.batchIds=null;this.batchDone=new Set();this.sessionEnded=false;this.reset();}
   focusCard(){if(global.matchMedia?.('(max-width:760px)')?.matches)this.container.querySelector(this.active?'.review-question':'.review-empty')?.scrollIntoView?.({block:'start',behavior:'smooth'});}
-  clearFilters(){this.kind='';this.lessonId='';this.cardIds=null;this.reviewCardIds=null;this.reviewTask=null;this.practiceDone=new Set();this.sessionDone=new Set();this.batchNumber=1;this.resetBatch();}
-  startPractice(cardIds){
+  clearFilters({saveDraft=true}={}){if(saveDraft)this.saveCurrentDraft();this.kind='';this.lessonId='';this.cardIds=null;this.reviewCardIds=null;this.reviewTask=null;this.practiceDone=new Set();this.sessionDone=new Set();this.batchNumber=1;this.resetBatch();}
+  reloadFromStorage(){this.pendingDrafts.clear();this.localDrafts={version:1,entries:{}};this.attemptAssistance.clear();this.draftSaveFailed=false;this.draftTooLong=false;this.practiceSerial=0;this.lastLessons=null;this.catalog=null;this.clearFilters({saveDraft:false});this.render();}
+  startPractice(cardIds,{newRound=false}={}){
    this.clearFilters();this.practiceSerial++;const requested=new Set(Array.isArray(cardIds)?cardIds.filter(id=>typeof id==='string'):[]);
-   this.cardIds=new Set(this.cards().filter(card=>requested.has(card.id)).map(card=>card.id));return this.cardIds.size;
+   this.cardIds=new Set(this.cards().filter(card=>requested.has(card.id)).map(card=>card.id));if(newRound){for(const [key,draft]of Object.entries(this.snapshotDrafts().entries))if(draft.context==='practice'&&this.cardIds.has(draft.cardId))this.stageDraft(key,null);this.persistDrafts();}return this.cardIds.size;
   }
   startDrill(cardIds){return this.startPractice(cardIds);}
   startReview(cardIds,task=null){
@@ -37,7 +65,7 @@
   }
   render(){
    const E=this.options.escapeHTML,practice=this.cardIds!==null,stats=global.StudyReview.stats(this.state(),this.scopedCards()),due=this.due();
-   if(!this.active||!due.some(c=>c.id===this.active.id&&c.progress.revision===this.active.progress.revision)){this.reset();this.active=due[0]||null;}
+   if(!this.active||!due.some(c=>c.id===this.active.id&&c.progress.revision===this.active.progress.revision)){this.reset();this.active=due[0]||null;this.restoreDraft();}
    const card=this.active,current=this.options.getCurrentLesson();
    let body='';
    if(!card){
@@ -55,7 +83,7 @@
     body='<div class="review-workspace"><section class="review-question"><div class="review-card-meta"><strong>'+KINDS[card.kind]+'</strong><button class="resource-text-button" data-review-action="source" data-review-source="'+E(source.id)+'">学自第'+source.book+'册第'+source.number+'课</button></div>'+(card.kind==='phrase'?'<div class="quiz-toolbar"><button class="quiz-mode '+(!this.writing?'active':'')+'" data-review-action="recall">短语回忆</button><button class="quiz-mode '+(this.writing?'active':'')+'" data-review-action="writing">用法造句</button></div>':'')+'<h3 class="review-prompt">'+E(card.kind==='phrase'&&this.writing?card.target:card.prompt)+'</h3>'+(card.kind==='word'?'<button class="button subtle" data-review-action="speak">听发音</button>':'')+input+'<div class="review-submit"><button class="button primary" data-review-action="check">提交并检查</button><button class="button subtle" data-review-action="reveal">查看答案</button></div><div data-review-feedback aria-live="polite">'+this.feedbackHTML()+'</div>'+controls+'</section><aside class="review-support"><h3>本题来自</h3><p>第'+source.book+'册 · 第'+source.number+'课</p>'+sourceTitleHTML+'<h3>间隔复习节奏</h3><ol class="review-schedule">'+global.StudyReview.intervalDays.map(d=>'<li>'+d+' 天后</li>').join('')+'</ol><p class="small-note">'+(practice?'提前练习保留原定到期时间。':'这是可调整的建议间隔；忘记了会在10分钟后再练。')+'</p></aside></div>';
    }
    const counters=practice?'<span>本轮已看 <strong>'+this.practiceDone.size+'</strong> / '+this.cardIds.size+' 项</span>':'<span class="review-batch-counter">第 '+this.batchNumber+' 组 · 本组已处理 <strong>'+this.batchDone.size+'</strong> / '+(this.batchIds?.size||0)+' 项</span><span>当前到期 <strong>'+stats.due+'</strong> 项</span>';
-   this.container.innerHTML=(this.options.taskBarHTML?.()||'')+'<div class="view-heading"><div><h2>'+(practice?'旧知随堂练习':'每日复习')+'</h2><p>'+(practice?'把本课复现的前课知识再练一遍，保留每日复习安排。':'每组最多10项。先回忆再看答案，完成一组就可以休息。')+'</p></div><button class="button subtle" data-review-action="backup">备份复习进度</button></div><div class="review-stats">'+counters+'<label>内容 <select data-review-filter aria-label="筛选复习类型"><option value="">全部</option>'+Object.entries(KINDS).map(([k,v])=>'<option value="'+k+'" '+(this.kind===k?'selected':'')+'>'+v+'</option>').join('')+'</select></label>'+(this.kind||this.lessonId||practice||this.reviewCardIds?'<button class="button subtle" data-review-action="all">查看全部到期内容</button>':'')+(!practice&&!this.reviewTask&&card?'<button class="button subtle" data-review-action="end-session">结束本轮复习</button>':'')+'</div>'+body+'<p class="small-note">已处理不代表已掌握。进度保存在当前浏览器，可用学习备份在其他设备恢复。</p>';
+   this.container.innerHTML=(this.options.taskBarHTML?.()||'')+'<div data-review-draft-status aria-live="polite">'+this.draftStatusHTML()+'</div>'+'<div class="view-heading"><div><h2>'+(practice?'旧知随堂练习':'每日复习')+'</h2><p>'+(practice?'把本课复现的前课知识再练一遍，保留每日复习安排。':'每组最多10项。先回忆再看答案，完成一组就可以休息。')+'</p></div><button class="button subtle" data-review-action="backup">备份复习进度</button></div><div class="review-stats">'+counters+'<label>内容 <select data-review-filter aria-label="筛选复习类型"><option value="">全部</option>'+Object.entries(KINDS).map(([k,v])=>'<option value="'+k+'" '+(this.kind===k?'selected':'')+'>'+v+'</option>').join('')+'</select></label>'+(this.kind||this.lessonId||practice||this.reviewCardIds?'<button class="button subtle" data-review-action="all">查看全部到期内容</button>':'')+(!practice&&!this.reviewTask&&card?'<button class="button subtle" data-review-action="end-session">结束本轮复习</button>':'')+'</div>'+body+'<p class="small-note">已处理不代表已掌握。进度保存在当前浏览器，可用学习备份在其他设备恢复。</p>';
   }
   feedbackHTML(){
    if(!this.revealed||!this.active)return '';
@@ -65,18 +93,19 @@
   }
   action(action,b){
    const R=global.StudyReview,c=this.active;
+   if(action==='retry-draft'){this.persistDrafts();this.render();return;}
    if(action==='continue-task')return this.options.onContinueTask?.();
    if(action==='next-batch'&&!this.cardIds&&!this.reviewTask){this.batchNumber++;this.resetBatch();this.render();this.focusCard();return;}
    if(action==='end-session'&&!this.cardIds&&!this.reviewTask){this.sessionEnded=true;this.reset();this.render();this.focusCard();return;}
    if(action==='enroll'){this.options.enrollCurrent();this.clearFilters();this.render();return;}
    if(action==='all'){this.clearFilters();this.render();return;}
    if(action==='backup'){this.options.backup();return;}
-   if(action==='source'){this.markAssisted('source-lesson');this.options.openLesson(b.dataset.reviewSource);return;}
+   if(action==='source'){this.markAssisted('source-lesson');this.saveCurrentDraft();this.options.openLesson(b.dataset.reviewSource);return;}
    if(!c)return;
-   if(action==='speak'){this.markAssisted('pronunciation-hint');this.options.speak(c.target);return;}
-   if(action==='recall'||action==='writing'){if(action==='writing'||this.writing||this.revealed)this.markAssisted('writing-reference');this.writing=action==='writing';this.input='';this.revealed=false;this.feedback=null;this.render();return;}
-   if(action==='choice'){if(this.revealed)this.markAssisted('edited-after-feedback');this.input=c.options[Number(b.dataset.reviewOption)]||'';this.revealed=false;this.feedback=null;this.render();return;}
-   if(action==='reveal'){this.markAssisted('answer');this.revealed=true;this.feedback=null;this.render();return;}
+   if(action==='speak'){this.markAssisted('pronunciation-hint');this.saveCurrentDraft();this.options.speak(c.target);return;}
+   if(action==='recall'||action==='writing'){if(action==='writing'||this.writing||this.revealed)this.markAssisted('writing-reference');this.writing=action==='writing';this.input='';this.revealed=false;this.feedback=null;this.saveCurrentDraft();this.render();return;}
+   if(action==='choice'){if(this.revealed)this.markAssisted('edited-after-feedback');this.input=c.options[Number(b.dataset.reviewOption)]||'';this.revealed=false;this.feedback=null;this.saveCurrentDraft();this.render();return;}
+   if(action==='reveal'){this.markAssisted('answer');this.revealed=true;this.feedback=null;this.saveCurrentDraft();this.render();return;}
    if(action==='check'){
     if(!this.input.trim()){this.options.toast('请先作答，再提交检查。');return;}
     if(c.kind==='phrase'&&this.writing){
@@ -85,14 +114,14 @@
      const grammarAvailable=typeof global.StudyGrammar?.check==='function';
      this.feedback={writing:true,covered,grammarAvailable,issues:grammarAvailable?global.StudyGrammar.check(this.input):[]};
     }else {this.feedback=R.checkAnswer(c,this.input);if(!this.feedback.correct)this.markAssisted('incorrect-feedback');}
-    this.revealed=true;this.render();return;
+    this.revealed=true;this.saveCurrentDraft();this.render();return;
    }
-   if(action==='apply'&&this.feedback?.writing){this.markAssisted('correction');this.input=global.StudyGrammar?.applyAll(this.input,this.feedback.issues)||this.input;this.feedback=null;this.revealed=false;this.render();return;}
-   if(this.cardIds&&this.revealed&&action==='practice-again'){this.markAssisted('repeat-after-feedback');this.input='';this.feedback=null;this.revealed=false;this.render();return;}
-   if(this.cardIds&&this.revealed&&action==='practice-next'){this.practiceDone.add(c.id);this.reset();this.render();return;}
+   if(action==='apply'&&this.feedback?.writing){this.markAssisted('correction');this.input=global.StudyGrammar?.applyAll(this.input,this.feedback.issues)||this.input;this.feedback=null;this.revealed=false;this.saveCurrentDraft();this.render();return;}
+   if(this.cardIds&&this.revealed&&action==='practice-again'){this.markAssisted('repeat-after-feedback');this.input='';this.feedback=null;this.revealed=false;this.saveCurrentDraft();this.render();return;}
+   if(this.cardIds&&this.revealed&&action==='practice-next'){this.clearCurrentDraft();this.practiceDone.add(c.id);this.reset();this.render();return;}
    if(this.cardIds&&this.revealed&&action==='rate'){
     if(b.dataset.reviewRating==='good'&&!this.independentlyCorrect()){this.options.toast('请先独立答对；仅查看答案或造句反馈不能标记为记住了。');return;}
-    if(['again','hard','good'].includes(b.dataset.reviewRating)){this.practiceDone.add(c.id);this.reset();this.render();}return;
+    if(['again','hard','good'].includes(b.dataset.reviewRating)){this.clearCurrentDraft();this.practiceDone.add(c.id);this.reset();this.render();}return;
    }
    if(action==='rate'&&this.revealed&&!this.cardIds){
     let rating=b.dataset.reviewRating;
@@ -105,7 +134,7 @@
     try{saved=this.options.saveState(result.state);}catch{this.options.toast('复习进度未能保存，请重试；当前项目仍保留。');return;}
     if(saved!==true){this.options.toast('复习进度未能保存，请重试；当前项目仍保留。');return;}
     try{this.options.onEvidence?.({type:'review',lessonId:c.sourceLesson.id,cardId:c.id,kind:c.kind,correct:evidence.correct,assisted:evidence.assisted,rating,answer:this.input,complete:true,at:result.state.cards[c.id].lastReviewedAt,...(this.reviewTask?{taskId:this.reviewTask.taskId,day:this.reviewTask.day,roundKey:this.reviewTask.roundKey,processed:true}:{})});}catch{}
-    this.batchDone.add(c.id);this.sessionDone.add(c.id);this.options.onChange?.();this.reset();this.render();this.focusCard();return;
+    this.clearCurrentDraft();this.batchDone.add(c.id);this.sessionDone.add(c.id);this.options.onChange?.();this.reset();this.render();this.focusCard();return;
    }
   }
  }
