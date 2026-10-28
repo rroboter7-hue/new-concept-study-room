@@ -17,6 +17,8 @@
 
 * { box-sizing: border-box; }
 html { min-width: 320px; scroll-behavior: smooth; }
+/* Keep vertical boundary pulls from reloading the study app. */
+html, body { overscroll-behavior-y: none; }
 body {
   margin: 0;
   color: var(--ink);
