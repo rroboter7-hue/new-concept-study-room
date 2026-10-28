@@ -1,6 +1,6 @@
 {
-  "build": "2026-10-28-clean-study",
-  "preparedAt": "2026-10-28T04:02:11Z",
+  "build": "2026-10-28-navigation-drafts",
+  "preparedAt": "2026-10-28T05:38:37Z",
   "book2": {
     "book": 2,
     "total": 96,
@@ -831,5 +831,11 @@
     "learningSurfaces": true,
     "mobileBrowserTheme": "#0873ff",
     "feedbackStatusColorsPreserved": true
+  },
+  "navigationDraftFixes": {
+    "browseBookWithoutChangingLesson": true,
+    "cancelRestoresCourseDirectory": true,
+    "homeMenuOutsideClickCloses": true,
+    "correctionEditDraftBoundToEntry": true
   }
 }
