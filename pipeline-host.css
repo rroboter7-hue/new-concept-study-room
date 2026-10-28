@@ -1,0 +1,35 @@
+/* Keep one learning task on screen, with the bookshelf as the course chooser. */
+body.learning-pipeline-active{background:#f5f8fc;padding:0!important;}
+body.learning-pipeline-active:not(.bookshelf-visible)>.app-sidebar,
+body.learning-pipeline-active:not(.bookshelf-visible) .player,
+body.learning-pipeline-active:not(.bookshelf-visible) .app-main>.topbar,
+body.learning-pipeline-active:not(.bookshelf-visible) .hero,
+body.learning-pipeline-active:not(.bookshelf-visible) .book-grid,
+body.learning-pipeline-active:not(.bookshelf-visible) #learning-coach,
+body.learning-pipeline-active:not(.bookshelf-visible) .course-panel,
+body.learning-pipeline-active:not(.bookshelf-visible) .tips-panel,
+body.learning-pipeline-active:not(.bookshelf-visible) .reader-meta,
+body.learning-pipeline-active:not(.bookshelf-visible) .lesson-heading,
+body.learning-pipeline-active:not(.bookshelf-visible) .reader-tabs,
+body.learning-pipeline-active:not(.bookshelf-visible) .reader-footer,
+body.learning-pipeline-active:not(.bookshelf-visible) #reading-font-tools,
+body.learning-pipeline-active:not(.bookshelf-visible) #reading-controls,
+body.learning-pipeline-active:not(.bookshelf-visible) .mobile-resource-actions,
+body.learning-pipeline-active:not(.bookshelf-visible) .site-footer,
+body.learning-pipeline-active:not(.bookshelf-visible) .mls-header,
+body.learning-pipeline-active:not(.bookshelf-visible) .mls-bottom-nav,
+body.learning-pipeline-active:not(.bookshelf-visible) .mls-workspace-tabs,
+body.learning-pipeline-active:not(.bookshelf-visible) .mls-mode-nav,
+body.learning-pipeline-active:not(.bookshelf-visible) .mls-read-next,
+body.learning-pipeline-active:not(.bookshelf-visible) .mls-quick-actions{display:none!important;}
+body.learning-pipeline-active .app-main{margin:0!important;padding:0!important;max-width:none!important;}
+body.learning-pipeline-active .workspace{display:block!important;max-width:960px;margin:0 auto;padding:0!important;}
+body.learning-pipeline-active .reader-panel{border:0!important;box-shadow:none!important;background:transparent!important;padding:0!important;overflow:visible!important;}
+body.learning-pipeline-active #reader-content{padding:0!important;margin:0!important;max-height:none!important;overflow:visible!important;}
+body.learning-pipeline-active .learning-pipeline{--pipeline-ink:#18334b;--pipeline-muted:#5b7083;--pipeline-line:#dbe5f0;--pipeline-blue:#0873ff;--pipeline-accent:#0873ff;--pipeline-soft:#edf5ff;padding-bottom:max(24px,env(safe-area-inset-bottom));}
+.pipeline-reading-tools{display:flex;flex-wrap:wrap;align-items:center;gap:16px;margin-bottom:20px;color:#425e76;font-size:14px;}
+.pipeline-reading-tools label{display:flex;align-items:center;gap:8px;min-height:40px;}
+.pipeline-reading-tools input{width:18px;height:18px;accent-color:#0873ff;}
+.pipeline-reading-tools select{padding:8px 10px;border:1px solid #dbe5f0;border-radius:8px;background:#fff;color:#18334b;}
+body.learning-pipeline-active .learning-pipeline :where(button,select,textarea){font-family:inherit;}
+@media(max-width:760px){body.learning-pipeline-active .learning-pipeline{padding:14px 14px max(28px,env(safe-area-inset-bottom));}body.learning-pipeline-active .pipeline-current-task{padding:20px 16px;}body.learning-pipeline-active .pipeline-topbar h1{font-size:21px;line-height:1.35;}}

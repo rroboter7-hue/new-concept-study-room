@@ -15,7 +15,10 @@ const server = http.createServer((req,res) => {
     if (error || !stat.isFile()) {
       // Sparse development checkout: public media stays on its original host.
       if (/^\/(?:resources|audio)\//.test(pathname)) {
-        res.writeHead(302, {Location:'https://rroboter7-hue.github.io/new-concept-study-room' + encodeURI(pathname)});
+        const published = /^\/audio\/.*\.wav$/i.test(pathname)
+          ? '/audio/optimized/' + pathname.slice('/audio/'.length).replace(/\.wav$/i, '.mp3')
+          : pathname;
+        res.writeHead(302, {Location:'https://rroboter7-hue.github.io/new-concept-study-room' + encodeURI(published)});
       } else res.writeHead(404);
       res.end(); return;
     }

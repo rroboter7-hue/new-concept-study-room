@@ -93,4 +93,9 @@ test('preview server serves seekable byte ranges and HEAD without exposing paths
     assert.equal(response.status, 302);
     assert.match(response.headers.location, /^https:\/\/rroboter7-hue\.github\.io\/new-concept-study-room\/audio\//);
   });
+  await t.test('sparse source WAV redirects to its real optimized published MP3', async () => {
+    const response = await request(base, '/audio/words/pipeline-preview-not-present.wav');
+    assert.equal(response.status, 302);
+    assert.equal(response.headers.location, 'https://rroboter7-hue.github.io/new-concept-study-room/audio/optimized/words/pipeline-preview-not-present.mp3');
+  });
 });
