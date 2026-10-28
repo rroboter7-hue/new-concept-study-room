@@ -19,14 +19,14 @@ body.bookshelf-visible>.app-main,body.bookshelf-visible>.app-sidebar,body.booksh
 .shelf-menu nav{position:absolute;z-index:10;right:0;top:44px;width:220px;padding:8px;background:#fff;border:1px solid #dce5ef;border-radius:14px;box-shadow:0 10px 40px #183a6726}
 .shelf-menu button{display:block;width:100%;padding:13px 12px;border:0;border-radius:8px;text-align:left;background:#fff;color:#233249;font-size:15px}
 .shelf-menu button:hover{background:#edf5ff}
-.shelf-title{font-family:inherit;font-size:46px;font-weight:850;line-height:1.15;letter-spacing:-2.3px;margin:0 0 23px;color:var(--shelf-ink)}
+.shelf-title{font-family:inherit;font-size:46px;font-weight:850;line-height:1.15;letter-spacing:-2.3px;margin:0 0 18px;color:var(--shelf-ink)}
 .shelf-title>span{color:var(--shelf-blue)}
 .shelf-books{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 11px;margin-bottom:13px}
 .shelf-book{position:relative;display:block;min-width:0;padding:0;border:0;border-radius:12px;background:transparent;aspect-ratio:400/384;transition:box-shadow .15s;overflow:hidden}
 .shelf-book img{display:block;width:100%;height:100%;object-fit:cover;border-radius:11px}
 .shelf-book.is-current{outline:2.5px solid var(--shelf-blue);outline-offset:0}
 .shelf-book:hover{box-shadow:0 4px 16px #1c4e9220}
-.shelf-resume{border-radius:15px;padding:19px;background:#f0f6fd;margin-bottom:10px}
+.shelf-resume{border-radius:15px;padding:16px;background:#f0f6fd;margin-bottom:10px}
 .shelf-resume-meta{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:15px;min-height:48px}
 .shelf-resume-meta>div{min-width:0}
 .shelf-resume-meta p{font-size:14px;line-height:1.4;color:#68758a;margin:0 0 7px;font-weight:550;letter-spacing:.3px}
