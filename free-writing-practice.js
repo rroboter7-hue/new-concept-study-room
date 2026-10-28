@@ -48,16 +48,47 @@
         if (kind === 'word' && (own(item, 'isLessonNew') === false && !prior || excludedPerson(item, prior ? earlierLesson(item) : lesson, personAPI))) continue;
         const source = prior ? earlierLesson(item) : lesson;
         if (prior && !before(source, lesson)) continue;
-        if (prior && count >= (Number.isInteger(options.priorLimit) ? Math.max(0, Math.min(4, options.priorLimit)) : kind === 'phrase' ? 1 : 2)) break;
+        const lessonReference = prior && own(item,'fromCurrentLesson') === true;
+        if (prior && !lessonReference && count >= (Number.isInteger(options.priorLimit) ? Math.max(0, Math.min(4, options.priorLimit)) : kind === 'phrase' ? 1 : 2)) continue;
         const requiredCount = prior ? (own(item, 'requiredCount') === 2 ? 2 : 1) : 5;
-        const key = kind + ':' + encoded(source.id) + ':' + encoded(normalized);
+        const storageLabel = normalize(own(item,'storageLabel')) || normalized;
+        const key = kind + ':' + encoded(text(own(item,'storageSourceId'),160) || source.id) + ':' + encoded(storageLabel);
         result.push({...item,key,kind,label,[kind]:label,prior,requiredCount,meaning:text(own(item,'meaning') || own(item,'note')),source:{id:source.id,book:source.book,number:source.number,title:text(source.title,300)}});
-        seen.add(kind + ':' + normalized); count++;
+        seen.add(kind + ':' + normalized); if (!lessonReference) count++;
       }
     }
     add(input.words, 'word', false); add(input.phrases, 'phrase', false);
     add(input.priorWords, 'word', true); add(input.priorPhrases, 'phrase', true);
     return result;
+  }
+
+  const writtenCount = row => (Array.isArray(row?.answers) ? row.answers : []).filter(answer => typeof answer === 'string' && answer.trim()).length;
+  function cleanDailyPlan(value, day) {
+    const groups = own(value,'day') === day && Array.isArray(own(value,'groups')) ? own(value,'groups') : [];
+    return {day,groups:groups.map(group => ({items:(Array.isArray(own(group,'items')) ? own(group,'items') : []).filter(item => typeof own(item,'key') === 'string' && /^(word|phrase):/.test(own(item,'key')) && Number.isInteger(own(item,'baseline')) && own(item,'baseline') >= 0 && Number.isInteger(own(item,'goal')) && own(item,'goal') >= 0).map(item => ({key:own(item,'key'),baseline:own(item,'baseline'),goal:own(item,'goal')}))}))};
+  }
+  // Baselines count only remaining cumulative work when a group is scheduled.
+  // Completing it never silently schedules more: another group is an explicit action.
+  function dailyPlan(targets, rows, day, previous, another = false) {
+    const plan = cleanDailyPlan(previous,day);
+    const available = new Set(targets.map(target => target.key));
+    for (const group of plan.groups) group.items = group.items.filter(item => available.has(item.key));
+    for (const group of plan.groups) for (const item of group.items) {
+      const target = targets.find(target => target.key === item.key);
+      if (target) { item.baseline = Math.min(item.baseline,target.requiredCount); item.goal = target.requiredCount-item.baseline; }
+    }
+    if (plan.groups.length && !another) return plan;
+    if (another && plan.groups.some(group => group.items.some(item => writtenCount(rows[item.key]) < item.baseline + item.goal))) return plan;
+    const unfinished = targets.filter(target => writtenCount(rows[target.key]) < target.requiredCount);
+    const selected = unfinished.filter(target => !target.prior).slice(0,2).concat(unfinished.filter(target => target.prior).slice(0,1));
+    if (selected.length || !plan.groups.length) plan.groups.push({items:selected.map(target => { const baseline = writtenCount(rows[target.key]); return {key:target.key,baseline,goal:target.requiredCount-baseline}; })});
+    return plan;
+  }
+  function dailyProgress(plan, rows) {
+    const items = plan.groups.flatMap(group => group.items);
+    const total = items.reduce((sum,item) => sum + item.goal,0);
+    const written = items.reduce((sum,item) => sum + Math.max(0,Math.min(item.goal,writtenCount(rows[item.key])-item.baseline)),0);
+    return {written,total,done:written === total};
   }
 
   function classifyIssue(issue) {
@@ -112,7 +143,11 @@
 
   function sanitizeDraft(value, lesson, targets) {
     const saved = own(value,'version') === 1 && own(value,'lessonId') === lesson.id ? value : {};
-    const draft = {version:1,lessonId:lesson.id,activeTargetKey:'',targets:{},updatedAt:0};
+    const draft = {version:1,lessonId:lesson.id,activeTargetKey:'',targets:{},dailyPlans:{},updatedAt:0};
+    const plans = own(saved,'dailyPlans');
+    if (plans && typeof plans === 'object') for (const day of Object.keys(plans)) {
+      if (/^\d{4}-\d{2}-\d{2}$/.test(day)) draft.dailyPlans[day] = cleanDailyPlan(own(plans,day),day);
+    }
     const storedTargets = own(saved,'targets');
     // A changed vocabulary/learned range may temporarily hide a target. Preserve
     // its free-writing rows so the next successful save cannot delete this work.
@@ -170,7 +205,30 @@
         entry = {key,lesson,targets,draft:sanitizeDraft(stored,lesson,targets),revision:0,savedRevision:0,status:'idle',checking:new Set(),checkError:''};
         this.cache.set(lesson.id,entry);
       }
-      this.active = entry; return entry;
+      this.active = entry;
+      const day = this.dayKey();
+      const plan = dailyPlan(entry.targets,entry.draft.targets,day,entry.draft.dailyPlans[day]);
+      if (JSON.stringify(plan) !== JSON.stringify(entry.draft.dailyPlans[day])) {
+        entry.draft.dailyPlans[day] = plan;
+        this.touch(entry);
+      }
+      return entry;
+    }
+    dayKey() {
+      const supplied = typeof this.options.dayKey === 'function' ? this.options.dayKey() : this.options.dayKey;
+      if (typeof supplied === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(supplied)) return supplied;
+      const now = new Date();
+      return now.getFullYear() + '-' + String(now.getMonth()+1).padStart(2,'0') + '-' + String(now.getDate()).padStart(2,'0');
+    }
+    today(entry) {
+      const day = this.dayKey();
+      // A pending save can finish after midnight without another ensure(). Read
+      // the new day's view safely; the next interaction persists it via ensure.
+      return entry.draft.dailyPlans[day] || dailyPlan(entry.targets,entry.draft.targets,day);
+    }
+    groupTargets(entry) {
+      const keys = new Set(this.today(entry).groups.at(-1)?.items.map(item => item.key) || []);
+      return entry.targets.filter(target => keys.has(target.key));
     }
     targets() { return this.ensure()?.targets || []; }
     setLesson(lesson) {
@@ -196,6 +254,20 @@
     selectTarget(key) {
       const entry = this.ensure(); if (!entry?.targets.some(target => target.key === key)) return false;
       entry.draft.activeTargetKey = key; this.touch(entry); this.refresh(); return true;
+    }
+    navigateTarget(direction) {
+      const entry = this.ensure(); if (!entry || ![-1,1].includes(direction)) return false;
+      const targets = this.groupTargets(entry), index = targets.findIndex(target => target.key === entry.draft.activeTargetKey);
+      const next = targets[index < 0 ? 0 : index + direction];
+      return next ? this.selectTarget(next.key) : false;
+    }
+    anotherGroup() {
+      const entry = this.ensure(); if (!entry) return false;
+      const day = this.dayKey(), previous = this.today(entry), plan = dailyPlan(entry.targets,entry.draft.targets,day,previous,true);
+      if (plan.groups.length === previous.groups.length) return false;
+      entry.draft.dailyPlans[day] = plan;
+      entry.draft.activeTargetKey = plan.groups.at(-1).items[0].key;
+      this.touch(entry); this.refresh(); return true;
     }
     editAnswer(key, index, value) {
       const entry = this.ensure(), row = entry?.draft.targets[key];
@@ -227,6 +299,20 @@
       if (node) { node.textContent = state.message; node.dataset.state = entry.status; }
       const retry = this.container?.querySelector?.('[data-free-action="save"]');
       if (retry) retry.hidden = entry.status !== 'error';
+      const progress = dailyProgress(this.today(entry),entry.draft.targets);
+      const today = this.container?.querySelector?.('[data-free-today-progress]');
+      if (today) today.textContent = '今日已写 ' + progress.written + ' / ' + progress.total + ' 句';
+      const cumulative = this.container?.querySelector?.('[data-free-cumulative]');
+      if (cumulative) cumulative.textContent = this.cumulativeLabel(entry);
+      const next = this.container?.querySelector?.('[data-free-action="another"]');
+      if (next) next.hidden = !progress.done || !entry.targets.some(target => writtenCount(entry.draft.targets[target.key]) < target.requiredCount);
+      const completed = this.container?.querySelector?.('[data-free-daily-complete]');
+      if (completed) completed.hidden = !progress.done;
+    }
+    cumulativeLabel(entry) {
+      const total = entry.targets.reduce((sum,item) => sum + item.requiredCount,0);
+      const written = entry.targets.reduce((sum,item) => sum + Math.min(item.requiredCount,writtenCount(entry.draft.targets[item.key])),0);
+      return '本课累计 ' + written + ' / ' + total + ' 句';
     }
     flush() {
       if (this.timer !== null) { clearTimeout(this.timer); this.timer = null; }
@@ -281,11 +367,25 @@
       if (!entry) return '<section class="free-writing-practice"><p>选择一课后开始自由造句。</p></section>';
       const target = this.currentTarget(entry);
       if (!target) return '<section class="free-writing-practice"><h3>自由造句</h3><p>本课暂无可用的新词或习惯用法目标。来源资料整理后可继续练习。</p></section>';
-      const row = entry.draft.targets[target.key], written = row.answers.filter(value => value.trim()).length;
+      const row = entry.draft.targets[target.key], written = writtenCount(row);
       const phrases = entry.targets.filter(item => item.kind === 'phrase' && item.key !== target.key);
-      const total = entry.targets.reduce((sum,item) => sum + item.requiredCount,0), allWritten = entry.targets.reduce((sum,item) => sum + entry.draft.targets[item.key].answers.filter(value => value.trim()).length,0);
+      const progress = dailyProgress(this.today(entry),entry.draft.targets), groupTargets = this.groupTargets(entry);
+      const position = groupTargets.findIndex(item => item.key === target.key);
+      const remaining = entry.targets.some(item => writtenCount(entry.draft.targets[item.key]) < item.requiredCount);
       const group = prior => entry.targets.filter(item => item.prior === prior).map(item => '<option value="' + escapeHTML(item.key) + '"' + (item.key === target.key ? ' selected' : '') + '>' + escapeHTML(item.label) + ' · ' + (item.kind === 'phrase' ? '用法' : '单词') + ' · ' + item.requiredCount + '句</option>').join('');
-      return '<section class="free-writing-practice" aria-label="自由造句专项"><header class="free-writing-header"><div><h3>自由造句</h3><p>每个本课新词、习惯用法各写5句；少量已学旧词、旧用法各写1–2句。</p></div><span class="free-writing-progress">已写 ' + allWritten + ' / ' + total + ' 句</span></header><p class="free-writing-guidance">肯定、否定、疑问自由搭配，按自己的意思造句；也可以把单词和本课或前课用法写在同一句中。</p><label class="free-writing-target-label">本轮目标<select data-free-select="target" aria-label="选择自由造句目标"><optgroup label="本课目标">' + group(false) + '</optgroup>' + (entry.targets.some(item => item.prior) ? '<optgroup label="已学前课复习">' + group(true) + '</optgroup>' : '') + '</select></label><div class="free-writing-target"><strong lang="en">' + escapeHTML(target.label) + '</strong><span>' + escapeHTML(target.meaning) + '</span><small>' + (target.prior ? '前课复习 · 第' + target.source.book + '册第' + target.source.number + '课' : '本课' + (target.kind === 'phrase' ? '习惯用法' : '新单词')) + ' · 已写 ' + written + '/' + target.requiredCount + '</small></div><div class="free-writing-lines">' + row.answers.map((answer,index) => '<article class="free-writing-line"><label for="free-writing-' + index + '">第 ' + (index+1) + ' 句</label><textarea id="free-writing-' + index + '" data-free-answer="' + index + '" rows="2" maxlength="' + MAX_ANSWER + '" lang="en" spellcheck="true" placeholder="写一句自己的英文，句型自由选择…">' + escapeHTML(answer) + '</textarea>' + (phrases.length ? '<label class="free-writing-fusion-label">融合用法（可选）<select data-free-fusion="' + index + '" aria-label="第' + (index+1) + '句融合用法"><option value="">自由搭配</option>' + phrases.map(phrase => '<option value="' + escapeHTML(phrase.key) + '"' + (row.fusion[index].includes(phrase.key) ? ' selected' : '') + '>' + escapeHTML(phrase.label) + (phrase.prior ? ' · 前课' : ' · 本课') + '</option>').join('') + '</select></label>' : '') + '<div data-free-feedback="' + index + '">' + this.feedbackHTML(row.feedback[index]) + '</div></article>').join('') + '</div><div class="free-writing-actions"><button type="button" class="button primary" data-free-action="check"' + (entry.checking.has(target.key) ? ' disabled' : '') + '>' + (entry.checking.has(target.key) ? '正在逐句检查…' : '逐句检查本组') + '</button><span data-free-save-status data-state="' + entry.status + '" role="status" aria-live="polite">' + escapeHTML(this.statusMessage(entry)) + '</span>' + ('<button type="button" class="button subtle" data-free-action="save"' + (entry.status === 'error' ? '' : ' hidden') + '>重试保存</button>') + '</div>' + (entry.checkError ? '<p role="alert" class="free-writing-error">' + escapeHTML(entry.checkError) + '</p>' : '') + '<p class="free-writing-limit">检查提供拼写、时态、搭配、大小写与标点的修改参考；规则覆盖不足会标为需复核，不计学习成绩。</p></section>';
+      const help = phrases.length ? '<details class="free-writing-help"><summary>用法参考（可选，可自由融合）</summary><p>按句意自由搭配，无需逐句指定。已有草稿选定的用法仍随原句检查。</p><ul>' + phrases.map(phrase => '<li><strong lang="en">' + escapeHTML(phrase.label) + '</strong> · ' + escapeHTML(phrase.meaning) + ' <small>' + (phrase.prior ? '前课复习' : '本课用法') + '</small></li>').join('') + '</ul></details>' : '';
+      const lines = row.answers.map((answer,index) => {
+        if (index >= target.requiredCount && !answer.trim()) return '';
+        const selected = (row.fusion[index] || []).map(key => entry.targets.find(item => item.key === key)).filter(Boolean);
+        return '<article class="free-writing-line"><label for="free-writing-' + index + '">' + (index >= target.requiredCount ? '已保存的额外句 ' : '第 ') + (index+1) + (index >= target.requiredCount ? '' : ' 句') + '</label><textarea id="free-writing-' + index + '" data-free-answer="' + index + '" rows="2" maxlength="' + MAX_ANSWER + '" lang="en" spellcheck="true" placeholder="写一句自己的英文，句型自由选择…">' + escapeHTML(answer) + '</textarea>' + (selected.length ? '<p class="free-writing-selected">原句已选用法：' + selected.map(item => escapeHTML(item.label)).join('、') + '</p>' : '') + '<div data-free-feedback="' + index + '">' + this.feedbackHTML(row.feedback[index]) + '</div></article>';
+      }).join('');
+      return '<section class="free-writing-practice" aria-label="自由造句专项"><header class="free-writing-header"><h3>自由造句</h3><span class="free-writing-progress" data-free-today-progress>今日已写 ' + progress.written + ' / ' + progress.total + ' 句</span></header><p class="free-writing-intro">新词、新用法各5句，旧知1–2句，分次完成。</p>' +
+        '<p class="free-writing-guidance">句型自由，可融合学过的用法。</p>' +
+        '<div class="free-writing-daily"><span data-free-daily-complete' + (progress.done ? '' : ' hidden') + '>今日计划已完成，可回看修改或继续。</span><button type="button" class="button subtle" data-free-action="another"' + (progress.done && remaining ? '' : ' hidden') + '>再来一组</button></div>' +
+        '<details class="free-writing-cumulative"><summary><span data-free-cumulative>' + this.cumulativeLabel(entry) + '</span> · 查看全部目标</summary><p>每个本课新词、习惯用法累计各写5句；已学旧词、旧用法各写1–2句。今日小组不会减少总目标，额外已写句子也会保留。</p><label class="free-writing-target-label">全部目标<select data-free-select="target" aria-label="选择自由造句目标"><optgroup label="本课目标">' + group(false) + '</optgroup>' + (entry.targets.some(item => item.prior) ? '<optgroup label="已学前课复习">' + group(true) + '</optgroup>' : '') + '</select></label></details>' +
+        '<nav class="free-writing-navigation" aria-label="今日目标切换"><button type="button" class="button subtle" data-free-action="previous"' + (position <= 0 ? ' disabled' : '') + '>上一个目标</button><span>' + (position < 0 ? '全部目标中的其他草稿' : '第' + this.today(entry).groups.length + '组 · ' + (position+1) + '/' + groupTargets.length) + '</span><button type="button" class="button subtle" data-free-action="next"' + (position >= groupTargets.length-1 ? ' disabled' : '') + '>下一个目标</button></nav>' +
+        '<div class="free-writing-target"><strong lang="en">' + escapeHTML(target.label) + '</strong><span>' + escapeHTML(target.meaning) + '</span><small>' + (target.prior ? '前课复习 · 第' + target.source.book + '册第' + target.source.number + '课' : '本课' + (target.kind === 'phrase' ? '习惯用法' : '新单词')) + ' · 累计已写 ' + Math.min(written,target.requiredCount) + '/' + target.requiredCount + (written > target.requiredCount ? ' · 另存 ' + (written-target.requiredCount) + ' 句' : '') + '</small></div>' + help +
+        '<div class="free-writing-lines">' + lines + '</div><div class="free-writing-actions"><button type="button" class="button primary" data-free-action="check"' + (entry.checking.has(target.key) ? ' disabled' : '') + '>' + (entry.checking.has(target.key) ? '正在逐句检查…' : '逐句检查本组') + '</button><span data-free-save-status data-state="' + entry.status + '" role="status" aria-live="polite">' + escapeHTML(this.statusMessage(entry)) + '</span><button type="button" class="button subtle" data-free-action="save"' + (entry.status === 'error' ? '' : ' hidden') + '>重试保存</button></div>' + (entry.checkError ? '<p role="alert" class="free-writing-error">' + escapeHTML(entry.checkError) + '</p>' : '') + '<p class="free-writing-limit">检查提供拼写、时态、搭配、大小写与标点的修改参考；规则覆盖不足会标为需复核，不计学习成绩。</p></section>';
     }
     refresh() {
       if (!this.container && !this.options.onRender) return;
@@ -312,6 +412,9 @@
         event.preventDefault();
         if (button.dataset.freeAction === 'check') void this.check();
         else if (button.dataset.freeAction === 'save') void this.flush();
+        else if (button.dataset.freeAction === 'previous') this.navigateTarget(-1);
+        else if (button.dataset.freeAction === 'next') this.navigateTarget(1);
+        else if (button.dataset.freeAction === 'another') this.anotherGroup();
       };
       this.handlers = {input,change,click};
       for (const [event,handler] of Object.entries(this.handlers)) container.addEventListener(event,handler);
@@ -322,7 +425,7 @@
       this.container = null; this.handlers = null;
     }
   }
-  Object.assign(FreeWritingPractice,{buildTargets,sanitizeDraft,localCheck,cleanFeedback,classifyIssue,draftKey,TYPE_LABELS,MAX_ANSWER});
+  Object.assign(FreeWritingPractice,{buildTargets,sanitizeDraft,dailyPlan,localCheck,cleanFeedback,classifyIssue,draftKey,TYPE_LABELS,MAX_ANSWER});
   FreeWritingPractice.FreeWritingPractice = FreeWritingPractice;
   return FreeWritingPractice;
 });

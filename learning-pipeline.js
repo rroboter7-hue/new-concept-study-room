@@ -2,9 +2,9 @@
 (function(root,factory){
   'use strict';
   const node=typeof module==='object'&&module.exports;
-  const api=factory(root,node?require('./learning-pipeline-core.js'):root.StudyLearningPipeline,node?require('./free-writing-practice.js'):root.FreeWritingPractice);
+  const api=factory(root,node?require('./learning-pipeline-core.js'):root.StudyLearningPipeline,node?require('./free-writing-practice.js'):root.FreeWritingPractice,node?require('./lesson-sentence-export.js'):root.StudyLessonSentenceExport);
   if(node)module.exports=api;else root.LearningPipeline=api;
-})(typeof window!=='undefined'?window:globalThis,function(global,defaultCore,Writing){
+})(typeof window!=='undefined'?window:globalThis,function(global,defaultCore,Writing,SentenceExport){
   'use strict';
   const STAGES=['读课文','选择题','自由造句','复盘','重点'];
   const escape=value=>String(value??'').replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
@@ -57,7 +57,7 @@
     async setLesson(lesson,options={resume:true}){
       if(!lesson||typeof lesson.id!=='string')return false;
       if(!await this.flush())return false;
-      this.detachStage();this.lesson=lesson;const id=lesson.id;
+      this.detachStage();this.lesson=lesson;this.copyFallback='';const id=lesson.id;
       this.queue(state=>{const record=this.ensureRecord(state,id);state.activeLessonId=id;if(options.resume===false)record.stage=0;return state;},'active-lesson');
       if(this.record().stage===1)this.prepareQuiz(false);
       const saved=await this.flush();this.refresh();return saved;
@@ -67,7 +67,7 @@
       const id=this.lesson.id,record=this.record();
       if(!force&&(record.quiz.planned===true||record.quiz.questions.length))return;
       const round=force?(record.round||0)+1:record.round||0;
-      const plan=this.core.planQuiz({lesson:this.lesson,lessons:this.options.getLessons?.()||[],records:this.options.getRecords?.()||{},round,questionsForLesson:this.options.questionsForLesson,count:10});
+      const plan=this.core.planQuiz({lesson:this.lesson,lessons:this.options.getLessons?.()||[],records:this.options.getRecords?.()||{},pipelineState:this.options.getReviewState?.()||this.state(),round,questionsForLesson:this.options.questionsForLesson,count:10});
       this.queue(state=>{const record=this.ensureRecord(state,id);if(!force&&(record.quiz.planned===true||record.quiz.questions.length))return state;record.round=round;record.quiz={questions:plan.questions,answers:{},index:0,submitted:false,checked:{},results:{},planned:true,plan};return state;},'quiz-plan:'+id);
     }
     async goStage(stage){
@@ -144,6 +144,87 @@
       const page=question?.sourcePage||question?.sourcePdfPage||question?.origin?.page;
       return '<p class="pipeline-source">来源：'+e(label)+(source.id?' · 第'+e(source.book)+'册第'+e(source.number)+'课 '+e(source.title):'')+(page?' · 第'+e(page)+'页':'')+'</p>';
     }
+    questionLabel(question){return text(question?.question||question?.prompt).replace(/^\s*【自编[^】]*】\s*/,'');}
+    shortRule(question){
+      const stem=this.questionLabel(question),answer=question?.options?.[question.answer],completed=stem.replace(/_{2,}|…{2,}/,()=>answer||'');
+      const continuous=completed.match(/\b(am|is|are)\s+(not\s+)?([A-Za-z]+ing)\b/i);
+      const metadata=[question.rule,question.explanation,question.conceptId].join(' ');
+      const currentTime=/\b(?:right now|now|at (?:this|the) moment)\b|当前正在|现在正在|此刻/i.test(stem);
+      const futureTime=/\b(?:tomorrow|next\s+(?:week(?:end)?|month|year|Monday|Tuesday|Wednesday|Thursday|Friday|Saturday|Sunday))\b|将来安排|未来安排/i.test(stem);
+      // An -ing spelling alone can be an adjective ("is interesting"). Keep
+      // its supplied rule unless the completed clause supports an action form.
+      const adjective=continuous&&/^(?:interesting|boring|exciting|surprising|amazing|disappointing|tiring|confusing|pleasing|shocking|charming|frightening|worrying|rewarding)$/i.test(continuous[3]);
+      if(continuous&&!adjective&&!futureTime&&(currentTime||/现在进行时|present[- ](?:continuous|progressive)/i.test(metadata)))return '现在进行时用 am/is/are + '+(continuous[2]?'not + ':'')+'V-ing；本句完整结构是 '+continuous[0]+'。';
+      return (text(question?.rule)||text(question?.explanation)).split(/(?<=[。！？])\s*/)[0];
+    }
+    feedbackHTML(question,selected){
+      const e=this.e,reasons=question.wrongReasons||{};
+      return '<p>你的选择：'+e(selected??'尚未选择')+'</p><p>参考答案：'+e(question.options?.[question.answer])+'</p><p>'+e(this.shortRule(question))+'</p><details class="pipeline-feedback-details"><summary>完整讲解与来源</summary><p>'+e(question.explanation||question.rule)+'</p>'+Object.entries(reasons).map(([option,reason])=>'<p>'+e(option)+'：'+e(reason)+'</p>').join('')+list(question.contrastExamples).map(example=>'<p lang="en">'+e(example)+'</p>').join('')+this.sourceHTML(question)+(question.sourceEvidence?'<p class="pipeline-source">'+e(question.sourceEvidence)+'</p>':'')+'<p class="pipeline-source">原题标记：'+e(question.question||question.prompt)+'</p></details>';
+    }
+    recapBinding(question){return {lessonId:this.lesson.id,questionId:question.id,round:this.record().round||0,signature:JSON.stringify([question.question||question.prompt,question.options,question.answer])};}
+    recapQuestion(expected,state=this.state()){
+      const row=state.lessons[this.lesson?.id],question=row?.mistakes?.[expected?.questionId]?.question;
+      return row?.stage===3&&expected?.lessonId===this.lesson.id&&expected.round===(row.round||0)&&question&&expected.signature===JSON.stringify([question.question||question.prompt,question.options,question.answer])?question:null;
+    }
+    async retryFromRecap(expected){
+      const valid=state=>!!this.recapQuestion(expected,state);
+      if(!valid(this.state())){this.refresh();this.options.toast?.('题目已更新，请从最新复盘重新选择。');return false;}
+      if(!await this.flush())return false;
+      if(!valid(this.state())){this.refresh();return false;}
+      const id=this.lesson.id;
+      this.queue(state=>{if(!valid(state))return state;const record=this.ensureRecord(state,id),quiz=record.quiz,index=quiz.questions.findIndex(q=>q.id===expected.questionId&&JSON.stringify([q.question||q.prompt,q.options,q.answer])===expected.signature);
+        if(index<0){record.recapPractice={question:this.recapQuestion(expected,state),round:record.round,answerIndex:null,submitted:false};return state;}
+        quiz.index=index;quiz.submitted=false;quiz.checked={...quiz.checked,[expected.questionId]:false};record.stage=1;return state;});
+      const saved=await this.flush();this.refresh();return saved;
+    }
+    validRecapPractice(expected,state=this.state()){
+      const question=this.recapQuestion(expected,state),practice=state.lessons[this.lesson?.id]?.recapPractice;
+      return !!question&&practice?.question?.id===question.id&&practice.round===expected.round&&!practice.submitted&&JSON.stringify(practice.question)===JSON.stringify(question);
+    }
+    chooseRecapAnswer(index,expected){
+      if(!this.validRecapPractice(expected)){this.refresh();return false;}
+      const question=this.recapQuestion(expected);if(!Number.isInteger(index)||index<0||index>=question.options.length)return false;
+      const id=this.lesson.id;this.queue(state=>{if(this.validRecapPractice(expected,state))state.lessons[id].recapPractice.answerIndex=index;return state;});this.refresh();return true;
+    }
+    async checkRecapPractice(expected){
+      if(this.checking||!this.validRecapPractice(expected)){this.refresh();return false;}
+      const id=this.lesson.id,answer=this.record().recapPractice.answerIndex;
+      if(!Number.isInteger(answer)){this.options.toast?.('先选择一个答案，再检查。');return false;}
+      this.checking=true;
+      this.queue(state=>{
+        if(!this.validRecapPractice(expected,state))return state;
+        const quiz=state.lessons[id].quiz,result=this.core.captureAttempt(state,{lessonId:id,question:this.recapQuestion(expected,state),answerIndex:answer});
+        if(!result.accepted)return state;
+        // Capture the real check and its history, while the saved 7+3 round
+        // remains byte-for-byte intact during this independent correction.
+        result.state.lessons[id].quiz=quiz;result.state.lessons[id].recapPractice.submitted=true;return result.state;
+      });
+      this.refresh();try{const saved=await this.flush();this.refresh();return saved;}finally{this.checking=false;}
+    }
+    recapPracticeHTML(question,binding){
+      const practice=this.record().recapPractice;if(practice?.question?.id!==question.id||practice.round!==binding.round)return '';
+      if(practice.submitted)return '<p class="pipeline-source">本次重练已记录，原轮次和全部错误历史仍保留。</p>';
+      const e=this.e,attrs=' data-pipeline-lesson-id="'+e(binding.lessonId)+'" data-pipeline-question-id="'+e(binding.questionId)+'" data-pipeline-round="'+e(binding.round)+'" data-pipeline-question-signature="'+e(binding.signature)+'"';
+      return '<div class="pipeline-options" role="group" aria-label="旧题独立重练">'+question.options.map((option,index)=>'<button class="pipeline-option'+(practice.answerIndex===index?' selected':'')+'" data-pipeline-action="recap-answer" data-answer="'+index+'"'+attrs+' aria-pressed="'+(practice.answerIndex===index)+'">'+e(option)+'</button>').join('')+'</div><button class="button primary" data-pipeline-action="recap-check"'+attrs+'>检查重练答案</button>';
+    }
+    async correctSentence(key){
+      if(typeof key!=='string'||!key)return false;
+      if(!await this.goStage(2))return false;
+      return this.ensureWriting()?.selectTarget?.(key)===true;
+    }
+    async copySentences(){
+      const rows=this.sentences(),lessonId=this.lesson?.id,generation=(this.copyGeneration||0)+1;this.copyGeneration=generation;this.copyFallback='';
+      if(!rows.length){this.options.toast?.('本课暂无已写草稿，可以先返回自由造句。');return false;}
+      const content=SentenceExport.prompt(this.lesson,rows);
+      const current=()=>this.lesson?.id===lessonId&&this.copyGeneration===generation&&!this.destroyed;
+      try{if(typeof this.options.copyText!=='function')throw Error('Clipboard unavailable');if(await this.options.copyText(content)===false)throw Error('Clipboard failed');if(current()){this.refresh();this.options.toast?.('已复制，可手动粘贴给豆包复核。');}return true;}
+      catch(_){if(!current())return false;this.copyFallback=content;this.refresh();const area=this.container?.querySelector?.('[data-pipeline-copy-fallback]');area?.focus?.();area?.select?.();return false;}
+    }
+    recallHTML(){
+      const e=this.e,points=list(this.lesson.grammar).map(item=>typeof item==='string'?item:item.title||item.name||item.rule||item.explanation).filter(Boolean);
+      const labels=points.length?points:list(this.options.getKeyPoints?.(this.lesson)?.items).map(item=>item.title).filter(Boolean);
+      return '<div class="pipeline-recall"><strong>合上资料，先回想本课</strong>'+(labels.length?'<ul>'+labels.slice(0,3).map(label=>'<li>关于「'+e(label)+'」，你能回忆适用情境和句子结构吗？在下方写下仍不确定的地方。</li>').join('')+'</ul>':'<p>回想《'+e(this.lesson.title)+'》课文中的句子，再展开课文回顾对照其结构。</p>')+'</div>';
+    }
     readingHTML(){
       const body=this.options.renderReading?.(this.lesson)||list(this.lesson.paragraphs).map(paragraph=>'<p lang="en">'+this.e(paragraph.en)+'</p><p>'+this.e(paragraph.zh)+'</p>').join('');
       return '<div class="pipeline-reading-intro"><h2>先读课文</h2><p>可先听本课音频，或直接开始选择题；熟悉程度由你决定。</p><button type="button" class="button subtle" data-pipeline-action="play">播放本课音频</button><span class="pipeline-source" data-pipeline-audio-progress></span></div><div data-pipeline-reading>'+body+'</div><div class="pipeline-footer"><button class="button primary" data-pipeline-action="stage" data-stage="1">开始选择题</button></div>';
@@ -154,17 +235,16 @@
       const summary='<p class="pipeline-task-note">目标10题 · 本课 '+e(counts.current)+' 题 + 前课 '+e(counts.review)+' 题 · 本次实际 '+e(counts.total)+' 题</p>'+(quiz.plan?.shortfall?.total?'<p class="pipeline-notice">当前可用题量不足，尚缺 '+e(quiz.plan.shortfall.total)+' 题；本次按实际题量练习。</p>':'');
       if(!question)return '<h2>选择题</h2>'+summary+'<p>本课暂无可用的客观语法题，可以继续自由造句。</p><button class="button primary" data-pipeline-action="stage" data-stage="2">开始自由造句</button>';
       const answer=quiz.answers[question.id],result=quiz.results?.[question.id],explanation=text(question.explanation)||text(question.rule);
-      return '<div class="pipeline-task-heading"><h2>选择题</h2><span>第 '+e(quiz.index+1)+' / '+e(quiz.questions.length)+' 题</span></div>'+summary+'<article class="pipeline-question"><p class="pipeline-question-source">'+(question.isReview?'前课回顾':'本课练习')+'</p><h3>'+e(question.question||question.prompt)+'</h3><div class="pipeline-options" role="group" aria-label="本题选项">'+question.options.map((option,index)=>'<button type="button" data-pipeline-answer="'+index+'"'+binding+' class="pipeline-option'+(answer===index?' selected':'')+'" aria-pressed="'+(answer===index)+'"'+(quiz.submitted?' disabled':'')+'><span>'+e(String.fromCharCode(65+index))+'</span>'+e(option)+'</button>').join('')+'</div>'+(quiz.submitted?'<section class="pipeline-answer-feedback" role="status"><strong>'+(result?.correct?'本题答案一致':'这题再看一下')+'</strong><p>参考答案：'+e(question.options[question.answer])+'</p><p>'+e(explanation)+'</p>'+this.sourceHTML(question)+'</section>':'')+'</article><div class="pipeline-footer">'+(quiz.submitted?'<button class="button primary" data-pipeline-action="next"'+binding+'>'+(quiz.index===quiz.questions.length-1?'开始自由造句':'下一题')+'</button><button class="button subtle" data-pipeline-action="retry"'+binding+'>重试本题</button>':'<button class="button primary" data-pipeline-action="check"'+binding+'>检查答案</button>')+'<button class="button subtle" data-pipeline-action="new-round">换一组</button></div>';
+      return '<div class="pipeline-task-heading"><h2>选择题</h2><span>第 '+e(quiz.index+1)+' / '+e(quiz.questions.length)+' 题</span></div>'+summary+'<article class="pipeline-question"><p class="pipeline-question-source">'+(question.isReview?'前课回顾':'本课练习')+'</p><h3>'+e(this.questionLabel(question))+'</h3><div class="pipeline-options" role="group" aria-label="本题选项">'+question.options.map((option,index)=>'<button type="button" data-pipeline-answer="'+index+'"'+binding+' class="pipeline-option'+(answer===index?' selected':'')+'" aria-pressed="'+(answer===index)+'"'+(quiz.submitted?' disabled':'')+'><span>'+e(String.fromCharCode(65+index))+'</span>'+e(option)+'</button>').join('')+'</div>'+(quiz.submitted?'<section class="pipeline-answer-feedback" role="status"><strong>'+(result?.correct?'本题答案一致':'这题再看一下')+'</strong>'+this.feedbackHTML(question,result?.selectedAnswer??question.options[answer])+'</section>':'')+'</article><div class="pipeline-footer">'+(quiz.submitted?'<button class="button primary" data-pipeline-action="next"'+binding+'>'+(quiz.index===quiz.questions.length-1?'开始自由造句':'下一题')+'</button><button class="button subtle" data-pipeline-action="retry"'+binding+'>重试本题</button>':'<button class="button primary" data-pipeline-action="check"'+binding+'>检查答案</button>')+'<button class="button subtle" data-pipeline-action="new-round">换一组</button></div>';
     }
     sentences(){
-      const collected=[];const drafts=this.options.getFreeDrafts?.()||{};
-      for(const draft of Object.values(drafts))if(draft?.lessonId===this.lesson?.id){
-        for(const [key,row] of Object.entries(draft.targets||{}))for(const [index,answer] of list(row?.answers).entries())if(typeof answer==='string'&&answer.trim()){
-          const feedback=row.feedback?.[index];
-          collected.push({answer,target:key,index,feedback:feedback?.sentence===answer?feedback:null});
-        }
+      const collected=SentenceExport.collect({lessonId:this.lesson?.id,freeWriting:this.options.getFreeDrafts?.()||{}}),seen=new Set(collected.map(row=>row.sourceId));
+      for(const value of list(this.options.getSentences?.(this.lesson))){
+        const row=typeof value==='string'?{answer:value}:value;
+        if(!row?.answer||row.lessonId&&row.lessonId!==this.lesson?.id||row.sourceId&&seen.has(row.sourceId))continue;
+        if(row.sourceId)seen.add(row.sourceId);
+        collected.push({...row,feedback:row.feedback?.sentence===row.answer?row.feedback:null});
       }
-      for(const row of list(this.options.getSentences?.(this.lesson)))if(row?.answer||typeof row==='string')collected.push(typeof row==='string'?{answer:row}:{...row,feedback:row.feedback?.sentence===row.answer?row.feedback:null});
       return collected;
     }
     recapTargets(){
@@ -186,10 +266,13 @@
       const labels=Writing?.TYPE_LABELS||{spelling:'拼写',grammar:'语法',tense:'时态与动词形式',collocation:'固定搭配',capitalization:'大小写',punctuation:'标点',target:'目标表达',completeness:'句意完整性',review:'需复核'};
       const correctionHTML=corrections.map(row=>{
         const feedback=row.feedback;
-        return '<article class="pipeline-recap-card"><p class="pipeline-saved-sentence" lang="en">'+e(row.answer)+'</p>'+list(feedback.issues).map(issue=>'<p><strong>'+e(labels[issue?.type]||'需复核')+'</strong> · '+e(typeof issue==='string'?issue:issue?.message)+'</p>'+(issue?.replacement?'<p>局部修改参考：'+(issue.original?'<del lang="en">'+e(issue.original)+'</del> → ':'')+'<span lang="en">'+e(issue.replacement)+'</span></p>':'')).join('')+(feedback.incomplete?'<p>本句检查未完成，请复核尚未覆盖的部分。</p>':'')+(feedback.reference?'<p>局部修改参考（整句仍需复核）：<span lang="en">'+e(feedback.reference)+'</span></p>':'')+list(feedback.reviewNeeded).map(note=>'<p class="pipeline-source">'+e(note)+'</p>').join('')+'<small>以上为已有检查提示；整句仍需复核，不记为客观错题或学习成绩。</small></article>';
+        return '<article class="pipeline-recap-card"><p class="pipeline-saved-sentence" lang="en">'+e(row.answer)+'</p>'+list(feedback.issues).map(issue=>'<p><strong>'+e(labels[issue?.type]||'需复核')+'</strong> · '+e(typeof issue==='string'?issue:issue?.message)+'</p>'+(issue?.replacement?'<p>局部修改参考：'+(issue.original?'<del lang="en">'+e(issue.original)+'</del> → ':'')+'<span lang="en">'+e(issue.replacement)+'</span></p>':'')).join('')+(feedback.incomplete?'<p>本句检查未完成，请复核尚未覆盖的部分。</p>':'')+(feedback.reference?'<p>局部修改参考（整句仍需复核）：<span lang="en">'+e(feedback.reference)+'</span></p>':'')+list(feedback.reviewNeeded).map(note=>'<p class="pipeline-source">'+e(note)+'</p>').join('')+'<small>以上为已有检查提示；整句仍需复核，不记为客观错题或学习成绩。</small>'+(row.source==='freeWriting'&&row.target?'<button class="button subtle" data-pipeline-action="correct-sentence" data-target="'+e(row.target)+'">返回这组订正</button>':'')+'</article>';
       }).join('');
-      const mistakeHTML=mistakes.length?mistakes.map(mistake=>{const question=mistake.question||{};return '<article class="pipeline-recap-card"><h3>'+e(question.question||question.prompt)+'</h3><p>连错 '+e(mistake.consecutiveWrong||0)+' 次 · 历史最多连错 '+e(mistake.maxConsecutiveWrong||0)+' 次 · 累计错误 '+e(mistake.wrongCount||0)+' 次</p><p>参考答案：'+e(question.options?.[question.answer]||'')+'</p><p>'+e(question.explanation||question.rule||'')+'</p>'+this.sourceHTML(question)+'<small>保留 '+e(list(mistake.history).length)+' 次真实检查记录；之后答对也保留历史。</small></article>';}).join(''):'<p>本课暂未记录客观错题；可以回顾自己的造句和表达。</p>';
-      return '<h2>本课复盘</h2><p class="pipeline-task-note">先看卡住的地方，再写下自己的发现。</p><details class="pipeline-disclosure" open><summary>自动整理的错题（'+e(mistakes.length)+'）</summary>'+mistakeHTML+'</details><details class="pipeline-disclosure"><summary>造句待订正（'+e(corrections.length)+'）</summary>'+(correctionHTML||'<p>暂无已有检查提示需要集中订正；未检查或只有一般复核提醒的句子不计为错误。</p>')+'</details><label class="pipeline-recap-label">我的回顾<textarea rows="5" data-pipeline-recap placeholder="哪一处还不确定？下次想怎样表达？">'+e(record.recapText??record.reflection?.notes??'')+'</textarea></label><details class="pipeline-disclosure"><summary>所有已写造句（'+e(sentences.length)+'）</summary>'+(sentences.length?sentences.map(row=>'<p class="pipeline-saved-sentence" lang="en">'+e(row.answer)+'</p>').join(''):'<p>暂未写入造句；随时可以回到自由造句补写。</p>')+'</details><details class="pipeline-disclosure"><summary>课文回顾</summary>'+list(this.lesson.paragraphs).map(paragraph=>'<p lang="en">'+e(paragraph.en)+'</p><p>'+e(paragraph.zh)+'</p>').join('')+'</details><details class="pipeline-disclosure"><summary>本课词汇与用法</summary>'+targets.words.map(row=>'<p><strong lang="en">'+e(row.word||row.label)+'</strong> · '+e(row.meaning)+'</p>').join('')+targets.phrases.map(row=>'<p><strong lang="en">'+e(row.phrase||row.label)+'</strong> · '+e(row.meaning||row.note)+'</p>').join('')+'</details><div class="pipeline-footer"><button class="button primary" data-pipeline-action="stage" data-stage="4">查看本课重点</button><button class="button subtle" data-pipeline-action="stage" data-stage="2">返回自由造句</button></div>';
+      const mistakeHTML=mistakes.length?mistakes.map(mistake=>{
+        const question=mistake.question||{},binding=this.recapBinding(question),stored=record.quiz.questions.some(q=>q.id===question.id&&JSON.stringify([q.question||q.prompt,q.options,q.answer])===binding.signature);
+        return '<article class="pipeline-recap-card"><h3>'+e(this.questionLabel(question))+'</h3>'+this.feedbackHTML(question,list(mistake.history).at(-1)?.selectedAnswer??question.options?.[mistake.lastAnswerIndex])+('<button class="button subtle" data-pipeline-action="recap-retry" data-pipeline-lesson-id="'+e(binding.lessonId)+'" data-pipeline-question-id="'+e(binding.questionId)+'" data-pipeline-round="'+e(binding.round)+'" data-pipeline-question-signature="'+e(binding.signature)+'">'+(stored?'重试这道题':'重练这道旧题')+'</button>')+this.recapPracticeHTML(question,binding)+'<details><summary>检查历史</summary><p>连错 '+e(mistake.consecutiveWrong||0)+' 次 · 历史最多连错 '+e(mistake.maxConsecutiveWrong||0)+' 次 · 累计错误 '+e(mistake.wrongCount||0)+' 次</p><small>保留 '+e(list(mistake.history).length)+' 次真实检查记录；之后答对也保留历史。</small></details></article>';
+      }).join(''):'<p>本课暂未记录客观错题；可以回顾自己的造句和表达。</p>';
+      return '<h2>本课复盘</h2><p class="pipeline-task-note">先看卡住的地方，再写下自己的发现。</p><details class="pipeline-disclosure" open><summary>自动整理的错题（'+e(mistakes.length)+'）</summary>'+mistakeHTML+'</details><details class="pipeline-disclosure"><summary>造句待订正（'+e(corrections.length)+'）</summary>'+(correctionHTML||'<p>暂无已有检查提示需要集中订正；未检查或只有一般复核提醒的句子不计为错误。</p>')+'</details>'+this.recallHTML()+'<label class="pipeline-recap-label">我的回顾<textarea rows="5" data-pipeline-recap placeholder="先回忆上方的本课结构，再记下需要对照的地方。">'+e(record.recapText??record.reflection?.notes??'')+'</textarea></label><div class="pipeline-copy-actions"><button class="button subtle" data-pipeline-action="copy-sentences"'+(!sentences.length?' disabled':'')+'>复制本课全部句子</button><p class="pipeline-source">含旧版草稿，复制后手动粘贴到豆包</p></div>'+(this.copyFallback?'<label class="pipeline-copy-fallback">复制未成功，请选择下方全文手动复制<textarea rows="12" readonly data-pipeline-copy-fallback>'+e(this.copyFallback)+'</textarea></label>':'')+'<details class="pipeline-disclosure"><summary>本课造句与旧稿（'+e(sentences.length)+'）</summary>'+(sentences.length?sentences.map(row=>'<p class="pipeline-saved-sentence" lang="en">'+e(row.answer)+'</p>').join(''):'<p>暂未写入造句；随时可以回到自由造句补写。</p>')+'</details><details class="pipeline-disclosure"><summary>课文回顾</summary>'+list(this.lesson.paragraphs).map(paragraph=>'<p lang="en">'+e(paragraph.en)+'</p><p>'+e(paragraph.zh)+'</p>').join('')+'</details><details class="pipeline-disclosure"><summary>本课词汇与用法</summary>'+targets.words.map(row=>'<p><strong lang="en">'+e(row.word||row.label)+'</strong> · '+e(row.meaning)+'</p>').join('')+targets.phrases.map(row=>'<p><strong lang="en">'+e(row.phrase||row.label)+'</strong> · '+e(row.meaning||row.note)+'</p>').join('')+'</details><div class="pipeline-footer"><button class="button primary" data-pipeline-action="stage" data-stage="4">查看本课重点</button><button class="button subtle" data-pipeline-action="stage" data-stage="2">返回自由造句</button></div>';
     }
     keyPointsHTML(){
       const e=this.e,raw=this.options.getKeyPoints?.(this.lesson)||{},items=list(Array.isArray(raw)?raw:raw.items).slice(0,5);
@@ -231,7 +314,7 @@
         const expected=data.pipelineQuestionId!==undefined?{lessonId:data.pipelineLessonId,questionId:data.pipelineQuestionId,round:Number(data.pipelineRound),signature:data.pipelineQuestionSignature}:undefined;
         if(data.pipelineStage!==undefined){void this.goStage(Number(data.pipelineStage));return;}
         if(data.pipelineAnswer!==undefined){this.chooseAnswer(Number(data.pipelineAnswer),expected);return;}
-        const actions={stage:()=>this.goStage(Number(data.stage)),play:()=>this.options.playLesson?.(this.lesson),check:()=>this.checkAnswer(expected),retry:()=>this.retryQuestion(expected),next:()=>this.nextQuestion(expected),'new-round':()=>this.newQuizRound(),save:()=>this.flush(),shelf:()=>this.shelf(),finish:()=>this.finish(),'next-lesson':()=>this.selectNextLesson()};
+        const actions={stage:()=>this.goStage(Number(data.stage)),play:()=>this.options.playLesson?.(this.lesson),check:()=>this.checkAnswer(expected),retry:()=>this.retryQuestion(expected),next:()=>this.nextQuestion(expected),'recap-retry':()=>this.retryFromRecap(expected),'recap-answer':()=>this.chooseRecapAnswer(Number(data.answer),expected),'recap-check':()=>this.checkRecapPractice(expected),'correct-sentence':()=>this.correctSentence(data.target),'copy-sentences':()=>this.copySentences(),'new-round':()=>this.newQuizRound(),save:()=>this.flush(),shelf:()=>this.shelf(),finish:()=>this.finish(),'next-lesson':()=>this.selectNextLesson()};
         void actions[data.pipelineAction]?.();
       };
       const input=event=>{if(event.target?.dataset?.pipelineRecap!==undefined)this.setRecapText(event.target.value);};

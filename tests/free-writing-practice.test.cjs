@@ -25,7 +25,7 @@ test('gives every current word and usage five free rows and earlier learned targ
   assert.equal(targets.some(t=>/Mr|Tom|future|known/.test(t.label)),false);
   const html=ui.render();
   assert.equal((html.match(/<textarea\b/g)||[]).length,5);
-  assert.match(html,/肯定、否定、疑问自由搭配/);
+  assert.match(html,/句型自由，可融合学过的用法/);
   assert.doesNotMatch(html,/一般疑问句|特殊疑问句|第[一1]句改/);
   assert.equal((html.match(/class="button primary"/g)||[]).length,1);
 });
@@ -191,4 +191,183 @@ test('setting the same lesson with newly loaded source data refreshes its goals 
   ui.setLesson({...lesson,vocabulary:[...lesson.vocabulary,{word:'pen'}]});
   assert.deepEqual(ui.targets().map(target=>target.label),['book','pen']);
   assert.equal(ui.active.draft.targets[key].answers[0],'Keep this book.');
+});
+
+test('daily groups persist remaining work across reload and roll over without resetting answers',async()=>{
+  let day='2026-10-28';
+  const saved={}, getTargets=()=>({words:[{word:'book'},{word:'pen'},{word:'table'}],phrases:[{phrase:'on time'}],priorWords:[{word:'walk',source:old,requiredCount:2}]});
+  const opts={dayKey:()=>day,getTargets,getDrafts:()=>saved,saveDraft:(key,value)=>{saved[key]=structuredClone(value);return true;}};
+  const {ui}=setup(opts), key=ui.targets()[0].key;
+  assert.match(ui.render(),/今日已写 0 \/ 12 句/);
+  ui.editAnswer(key,0,'One book.');
+  await ui.flush();
+  const reloaded=setup(opts).ui;
+  assert.match(reloaded.render(),/今日已写 1 \/ 12 句/);
+  assert.deepEqual(reloaded.active.draft.dailyPlans[day].groups[0].items.map(item=>item.key),['word:now:book','word:now:pen','word:old:walk']);
+  day='2026-10-29';
+  assert.match(reloaded.render(),/今日已写 0 \/ 11 句/);
+  assert.equal(reloaded.active.draft.targets[key].answers[0],'One book.');
+  assert.ok(reloaded.active.draft.dailyPlans['2026-10-28']);
+  await reloaded.flush();
+});
+
+test('completed daily group waits for explicit another group while full cumulative goals remain accessible',async()=>{
+  const {ui}=setup({dayKey:'2026-10-28',getTargets:()=>({words:[{word:'book'},{word:'pen'},{word:'table'}]})});
+  ui.render();
+  for (const target of ui.targets().slice(0,2)) for(let index=0;index<5;index++) ui.editAnswer(target.key,index,'A '+target.label+'.');
+  assert.match(ui.render(),/今日已写 10 \/ 10 句/);
+  assert.match(ui.render(),/本课累计 10 \/ 15 句/);
+  assert.match(ui.render(),/再来一组/);
+  assert.equal(ui.active.draft.dailyPlans['2026-10-28'].groups.length,1);
+  assert.equal(ui.anotherGroup(),true);
+  assert.equal(ui.currentTarget().label,'table');
+  assert.match(ui.render(),/今日已写 10 \/ 15 句/);
+  assert.equal(ui.anotherGroup(),false,'unfinished group cannot be skipped by requesting another');
+  await ui.flush();
+});
+
+test('renamed display target keeps storage identity, extra answers, feedback and selected row fusion',async()=>{
+  const key='word:now:rang', phrase='phrase:now:on%20time';
+  const saved={'free-writing:v1:now':{version:1,lessonId:'now',activeTargetKey:key,targets:{[key]:{answers:['The bell rang.','','','','','Extra sentence.'],fusion:[[phrase]],feedback:[{sentence:'The bell rang.',issues:[{type:'review',message:'Keep me'}]}]}}}};
+  const seen=[];
+  const {ui}=setup({getDrafts:()=>saved,getTargets:()=>({words:[{word:'ring',storageLabel:'rang'}],phrases:[{phrase:'on time'}]}),checkSentence:(sentence,context)=>{seen.push(context);return {issues:[]};}});
+  assert.equal(ui.targets()[0].key,key);
+  assert.equal(ui.currentTarget().label,'ring');
+  assert.equal(ui.active.draft.targets[key].answers[5],'Extra sentence.');
+  assert.match(ui.render(),/Keep me/);
+  assert.equal((ui.render().match(/data-free-fusion=/g)||[]).length,0,'reference help is shared, not repeated for each sentence');
+  await ui.check(key);
+  assert.equal(seen[0].fusionTargets[0].label,'on time');
+});
+
+test('daily plan storage failure keeps plan and cursor intact through pending save and retry',async()=>{
+  let release, failing=true, replacements=0;
+  const {ui}=setup({dayKey:'2026-10-28',saveDraft:async()=>{if(failing){await new Promise(resolve=>{release=resolve;});throw new Error('full');}return true;}});
+  const status={dataset:{},textContent:''}, today={textContent:''};
+  const container={set innerHTML(value){replacements++;},addEventListener(){},removeEventListener(){},querySelector:s=>s==='[data-free-save-status]'?status:s==='[data-free-today-progress]'?today:null};
+  ui.mount(container);
+  const key=ui.targets()[0].key;
+  ui.editAnswer(key,0,'One book.');
+  const saving=ui.flush();await Promise.resolve();
+  ui.editAnswer(key,1,'Two books.');
+  release();assert.equal(await saving,false);
+  assert.match(status.textContent,/保存失败/);
+  assert.equal(replacements,1);
+  assert.match(today.textContent,/2 \/ 12/);
+  failing=false;assert.equal(await ui.flush(),true);
+  assert.equal(ui.active.draft.targets[key].answers[1],'Two books.');
+  assert.equal(replacements,1);
+});
+
+test('previous and next target navigation follows the current small group without hiding other drafts',()=>{
+  const {ui}=setup({dayKey:'2026-10-28'});
+  ui.render();
+  assert.equal(ui.navigateTarget(1),true);
+  assert.equal(ui.currentTarget().label,'on time');
+  assert.equal(ui.navigateTarget(1),true);
+  assert.equal(ui.currentTarget().label,'walk');
+  assert.equal(ui.navigateTarget(1),false);
+  assert.equal(ui.navigateTarget(-1),true);
+  assert.equal(ui.currentTarget().label,'on time');
+  assert.equal(ui.selectTarget(ui.targets().find(item=>item.label==='look at').key),true);
+  assert.match(ui.render(),/look at/);
+});
+
+test('same-day quota reclassification keeps old storage source, nonempty extra rows and coherent daily goals',async()=>{
+  let prior=false;
+  const {ui}=setup({dayKey:'2026-10-28',getTargets:()=>prior ? {priorWords:[{word:'ring',storageLabel:'rang',storageSourceId:'now',source:old,requiredCount:2}]} : {words:[{word:'rang'}]}});
+  const key=ui.targets()[0].key;
+  ui.editAnswer(key,0,'The bell rang.');
+  ui.editAnswer(key,4,'It rang again.');
+  prior=true;ui.setLesson(lesson);
+  assert.equal(ui.targets()[0].key,'word:now:rang');
+  assert.equal(ui.active.draft.targets[key].answers.length,5,'stored empty and written rows stay intact');
+  const html=ui.render();
+  assert.equal((html.match(/<textarea\b/g)||[]).length,3,'show two required rows plus the historical written extra');
+  assert.match(html,/今日已写 2 \/ 2 句/);
+  assert.match(html,/本课累计 2 \/ 2 句/);
+  await ui.flush();
+});
+
+test('crossing midnight while editing keeps the visible selected target and its answer binding',async()=>{
+  let day='2026-10-28';
+  const {ui}=setup({dayKey:()=>day});
+  const phrase=ui.targets().find(target=>target.label==='on time');
+  ui.selectTarget(phrase.key);
+  day='2026-10-29';
+  assert.equal(ui.currentTarget().key,phrase.key);
+  ui.editAnswer(ui.currentTarget().key,0,'I arrive on time.');
+  assert.equal(ui.active.draft.targets[phrase.key].answers[0],'I arrive on time.');
+  assert.equal(ui.active.draft.targets['word:now:book'].answers[0],'');
+  await ui.flush();
+});
+
+test('daily helper counts only remaining work and does not mutate caller state or silently move groups',()=>{
+  const targets=[{key:'word:now:a',requiredCount:5,prior:false},{key:'word:now:b',requiredCount:5,prior:false},{key:'word:now:c',requiredCount:5,prior:false}];
+  const rows={'word:now:a':{answers:['One.','Two.','Three.','Four.','Five.','Extra.']},'word:now:b':{answers:['One.','Two.']}};
+  const plan=FreeWritingPractice.dailyPlan(targets,rows,'2026-10-28');
+  assert.deepEqual(plan.groups[0].items,[{key:'word:now:b',baseline:2,goal:3},{key:'word:now:c',baseline:0,goal:5}]);
+  const snapshot=structuredClone(plan);
+  rows['word:now:b'].answers.push('Three.','Four.','Five.');
+  const unchanged=FreeWritingPractice.dailyPlan(targets,rows,'2026-10-28',plan,true);
+  assert.deepEqual(plan,snapshot);
+  assert.equal(unchanged.groups.length,1);
+});
+
+test('prior references present in the current lesson all remain goals while only optional padding is capped',()=>{
+  const {ui}=setup({dayKey:'2026-10-28',getTargets:()=>({priorWords:[{word:'optional one',source:old},{word:'optional two',source:old},{word:'optional three',source:old},{word:'ring',source:old,fromCurrentLesson:true,requiredCount:2},{word:'repeat',source:old,fromCurrentLesson:true,requiredCount:2},{word:'send',source:old,fromCurrentLesson:true,requiredCount:2}]})});
+  assert.deepEqual(ui.targets().map(target=>target.label),['optional one','optional two','ring','repeat','send']);
+  assert.match(ui.render(),/本课累计 0 \/ 8 句/);
+  assert.deepEqual(ui.active.draft.dailyPlans['2026-10-28'].groups[0].items.map(item=>item.key),['word:old:optional%20one']);
+});
+
+test('midnight before a pending autosave preserves input and selected target without replacing textareas',async()=>{
+  let day='2026-10-28', replacements=0;
+  const status={dataset:{},textContent:''};
+  const {ui,writes}=setup({dayKey:()=>day});
+  const phrase=ui.targets().find(target=>target.label==='on time');
+  ui.selectTarget(phrase.key);
+  ui.mount({set innerHTML(value){replacements++;},addEventListener(){},removeEventListener(){},querySelector:s=>s==='[data-free-save-status]'?status:null});
+  ui.editAnswer(phrase.key,0,'I arrive on time.');
+  day='2026-10-29';
+  assert.equal(await ui.flush(),true);
+  assert.equal(writes.at(-1)[1].targets[phrase.key].answers[0],'I arrive on time.');
+  assert.equal(writes.at(-1)[1].activeTargetKey,phrase.key);
+  assert.equal(replacements,1);
+  assert.match(status.textContent,/草稿已保存/);
+});
+
+test('midnight while awaiting an asynchronous save preserves its answer and selected target',async()=>{
+  let day='2026-10-28', release, replacements=0;
+  const snapshots=[],status={dataset:{},textContent:''};
+  const {ui}=setup({dayKey:()=>day,saveDraft:async(key,draft)=>{snapshots.push(structuredClone(draft));await new Promise(resolve=>{release=resolve;});return true;}});
+  const phrase=ui.targets().find(target=>target.label==='on time');
+  ui.selectTarget(phrase.key);
+  ui.mount({set innerHTML(value){replacements++;},addEventListener(){},removeEventListener(){},querySelector:s=>s==='[data-free-save-status]'?status:null});
+  ui.editAnswer(phrase.key,0,'I arrive on time.');
+  const saving=ui.flush();await Promise.resolve();
+  day='2026-10-29';release();
+  assert.equal(await saving,true);
+  assert.equal(snapshots.at(-1).targets[phrase.key].answers[0],'I arrive on time.');
+  assert.equal(ui.active.draft.activeTargetKey,phrase.key);
+  assert.equal(replacements,1);
+  assert.match(status.textContent,/草稿已保存/);
+});
+
+test('removed daily targets keep archived drafts without blocking the remaining visible group',async()=>{
+  let includeBook=true;
+  const {ui,writes}=setup({dayKey:'2026-10-28',getTargets:()=>({words:(includeBook?['book','pen','table']:['pen','table']).map(word=>({word}))})});
+  const book=ui.targets()[0].key;
+  ui.editAnswer(book,0,'Keep my book.');
+  includeBook=false;ui.setLesson(lesson);
+  const pen=ui.targets().find(target=>target.label==='pen');
+  for(let index=0;index<5;index++)ui.editAnswer(pen.key,index,'My pen works.');
+  assert.match(ui.render(),/今日已写 5 \/ 5 句/);
+  assert.equal(ui.anotherGroup(),true);
+  assert.equal(ui.currentTarget().label,'table');
+  assert.match(ui.render(),/今日已写 5 \/ 10 句/);
+  await ui.flush();
+  assert.equal(writes.at(-1)[1].targets[book].answers[0],'Keep my book.');
+  includeBook=true;ui.setLesson(lesson);ui.selectTarget(book);
+  assert.match(ui.render(),/Keep my book\./);
 });

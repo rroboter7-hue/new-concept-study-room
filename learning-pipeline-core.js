@@ -78,6 +78,19 @@
     const desiredCounts={current:desiredCurrent,review:desiredReview,total};
     if(safeId(lesson.id))take(rotate(pool(lesson,'current'),round*desiredCurrent),desiredCurrent);
     let remaining=desiredReview;
+    // Use the newest real check even when a review was answered under a later
+    // active lesson. Candidates still come exclusively from eligible sources.
+    const latest=new Map(),now=time(options.now)?options.now:Date.now();
+    for(const record of Object.values(object(options.pipelineState?.lessons)?options.pipelineState.lessons:{})){
+      for(const [id,stat]of Object.entries({...(object(record.mistakes)?record.mistakes:{}),...(object(record.questionStats)?record.questionStats:{})})){
+        if(!object(stat)||typeof stat.lastCorrect!=='boolean'||!time(stat.lastAt))continue;
+        if(!latest.has(id)||stat.lastAt>latest.get(id).lastAt)latest.set(id,stat);
+      }
+    }
+    const urgent=availableEarlier.flatMap(row=>row.questions).map(question=>({question,stat:latest.get(question.id)}))
+      .filter(row=>row.stat&&(row.stat.lastCorrect===false||now-row.stat.lastAt>=7*86400000))
+      .sort((a,b)=>Number(a.stat.lastCorrect)-Number(b.stat.lastCorrect)||count(b.stat.consecutiveWrong)-count(a.stat.consecutiveWrong)||a.stat.lastAt-b.stat.lastAt||a.question.id.localeCompare(b.question.id));
+    remaining-=take(urgent.map(row=>row.question),remaining);
     for(const studied of [true,false]){
       const sources=rotate(availableEarlier.filter(row=>hasStudied(own(records,row.source.id))===studied),round);
       const pools=sources.map(row=>rotate(row.questions,round*desiredReview));

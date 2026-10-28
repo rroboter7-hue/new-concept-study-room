@@ -1,6 +1,6 @@
 {
-  "build": "2026-10-28-learning-flow",
-  "preparedAt": "2026-10-28T05:40:09.526Z",
+  "build": "2026-10-28-integrated-study",
+  "preparedAt": "2026-10-28T06:52:36.530Z",
   "book2": {
     "book": 2,
     "total": 96,
@@ -862,6 +862,34 @@
     "keyPointsFromExistingLessonSources": true,
     "keyPointsOnlineAI": false,
     "backupRestore": true,
-    "studentTextUpload": false
+    "studentTextUpload": false,
+    "integratedVersion": 2,
+    "sourceAwareCurrentAndReviewTargets": true,
+    "sourceSupportedCanonicalLabels": true,
+    "unchangedDraftStorageIdentities": true,
+    "currentDerivedPriorReferencesRetained": true,
+    "dailyBatch": {
+      "newTargets": 2,
+      "priorTargets": 1,
+      "doesNotReduceCumulativeQuota": true,
+      "dayRolloverSafe": true,
+      "removedTargetSafe": true
+    },
+    "previousAndNextTargets": true,
+    "groupedUsageReference": true,
+    "conciseRecap": true,
+    "fullSourceDetailsPreserved": true,
+    "currentAndArchivedQuestionRetry": true,
+    "legacyLessonDraftsVisible": true,
+    "manualDoubaoCopy": true,
+    "copyFailureSelectableFallback": true,
+    "lessonGrammarRecallPrompts": true,
+    "rollingReviewPriority": [
+      "real-mistakes",
+      "older-checked-knowledge",
+      "other-earlier-knowledge"
+    ],
+    "legacyGameLazyInitialization": true,
+    "perLessonTargetPlanCache": true
   }
 }

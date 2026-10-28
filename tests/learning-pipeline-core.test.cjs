@@ -219,3 +219,16 @@ test('browser build exposes the same pure API without a module loader or DOM',()
   assert.equal(typeof context.window.StudyLearningPipeline.planQuiz,'function');
   assert.equal(context.window.StudyLearningPipeline.sanitize(null).version,1);
 });
+
+test('earlier review prioritizes real unresolved mistakes then overdue questions across active lesson histories',()=>{
+ const lessons=[lesson(1),lesson(2),lesson(3),lesson(4)],now=20*86400000;
+ const pipelineState={lessons:{'lesson-3':{questionStats:{
+  'lesson-2-q8':{question:questions('lesson-2')[8],lastCorrect:false,lastAt:now-100,wrongCount:2,consecutiveWrong:2},
+  'lesson-1-q9':{question:questions('lesson-1')[9],lastCorrect:true,lastAt:0},
+  'lesson-4-q0':{question:questions('lesson-4')[0],lastCorrect:false,lastAt:0}
+ }}}};
+ const result=api('planQuiz')({lesson:lessons[2],lessons,questionsForLesson:bank,pipelineState,now,records:{'lesson-1':{completed:true}}});
+ assert.deepEqual(result.questions.filter(row=>row.isReview).slice(0,2).map(row=>row.id),['lesson-2-q8','lesson-1-q9']);
+ assert.equal(result.actualCounts.current,7);assert.equal(result.actualCounts.review,3);
+ assert.ok(result.questions.every(row=>row.pipeline.sourceLesson.number<=3));
+});

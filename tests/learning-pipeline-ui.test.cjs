@@ -154,3 +154,69 @@ test('stale check, retry and next actions cannot change a new quiz round or crea
  assert.equal(await h.ui.checkAnswer(expected),false);assert.equal(await h.ui.retryQuestion(expected),false);assert.equal(await h.ui.nextQuestion(expected),false);await h.ui.flush();
  assert.equal(h.ui.record().round,1);assert.equal(h.ui.record().quiz.index,0);assert.equal(h.ui.record().quiz.submitted,false);assert.equal(h.ui.record().attempts.length,0);assert.deepEqual(h.ui.record().mistakes,{});
 });
+
+test('quiz feedback teaches the full supported continuous structure and collapses audit details',async()=>{
+ const h=setup({questionsForLesson:id=>[{...questions(id)[0],question:'【自编语法审核】She is ___ a book.',options:['reading','read'],answer:0,rule:'用现在进行时。',explanation:'本题空格填 reading。',wrongReasons:{read:'需要现在分词。'}}]});
+ await h.ui.setLesson(lessons[1]);await h.ui.goStage(1);h.ui.chooseAnswer(1);await h.ui.checkAnswer();
+ const html=h.ui.render();assert.doesNotMatch(html,/<h3>【自编/);assert.match(html,/你的选择：read/);assert.match(html,/is reading/);assert.match(html,/<details[^>]*><summary>完整讲解与来源/);assert.match(html,/需要现在分词/);
+});
+test('current-action be blanks teach full positive and negative progressive despite generic be metadata',()=>{
+ const h=setup();
+ for(const [stem,phrase]of [['【自编语法审核】选择现在的 be 形式（当前正在进行的动作）：Right now, she ___ not watching a play.','is not watching'],['当前正在进行的动作：Right now, she ___ watching a play.','is watching']]){
+  const question={question:stem,options:['is','was'],answer:0,rule:'一般现在时中，第三人称单数主语使用 is。',explanation:'一般现在时的 be 随主语变化。',conceptId:'be-present'};
+  const before=JSON.stringify(question),rule=h.ui.shortRule(question),feedback=h.ui.feedbackHTML(question,'was');
+  assert.match(rule,/现在进行时/);assert.ok(rule.includes(phrase));assert.equal(JSON.stringify(question),before);
+  assert.match(feedback,/<summary>完整讲解与来源<\/summary><p>一般现在时的 be 随主语变化。/);
+ }
+});
+test('progressive summary does not misclassify adjective, noun predicates or future arrangements as ongoing actions',()=>{
+ const h=setup();
+ for(const question of [
+  {question:'Right now, the story ___ interesting.',options:['is','are'],answer:0,rule:'形容词 interesting 作表语。'},
+  {question:'Right now, she ___ a nurse.',options:['is','are'],answer:0,rule:'名词 a nurse 作表语。'},
+  {question:'She ___ travelling next weekend.',options:['is','are'],answer:0,rule:'此处表示已安排的将来活动。'}
+ ])assert.equal(h.ui.shortRule(question),question.rule);
+});
+test('recap copy affordance describes manual clipboard use and labels legacy output kinds',async()=>{
+ const h=setup({getSentences:()=>[{answer:'A dictation.',source:'outputDrafts',kind:'dictation'},{answer:'A retelling.',source:'outputDrafts',kind:'retell'}]});
+ await h.ui.setLesson(lessons[1]);await h.ui.goStage(3);const html=h.ui.render();
+ assert.match(html,/复制本课全部句子/);assert.match(html,/含旧版草稿，复制后手动粘贴到豆包/);assert.match(html,/本课造句与旧稿/);
+});
+test('recap retry returns to the original saved quiz question and rejects a stale replaced round',async()=>{
+ const h=setup();await h.ui.setLesson(lessons[1]);await h.ui.goStage(1);h.ui.chooseAnswer(1);await h.ui.checkAnswer();const q=h.ui.question();
+ await h.ui.goStage(3);const binding=h.ui.recapBinding(q);assert.match(h.ui.render(),/data-pipeline-action="recap-retry"/);
+ assert.equal(await h.ui.retryFromRecap(binding),true);assert.equal(h.ui.record().stage,1);assert.equal(h.ui.question().id,q.id);assert.equal(h.ui.record().quiz.submitted,false);assert.equal(h.ui.record().attempts.length,1);
+ await h.ui.goStage(3);const external=structuredClone(h.getState());external.lessons.now.round++;h.setExternal(external);assert.equal(await h.ui.retryFromRecap(binding),false);
+});
+test('manual copy includes all lesson drafts and leaves a full selectable fallback on clipboard failure',async()=>{
+ const h=setup({getFreeDrafts:()=>({d:{lessonId:'now',targets:{t:{answers:['Free.']}}}}),getSentences:()=>[{answer:'Legacy.',source:'sentencePractice',sourceId:'legacy'}],copyText:async()=>{throw Error('denied');}});
+ await h.ui.setLesson(lessons[1]);await h.ui.goStage(3);assert.equal(await h.ui.copySentences(),false);
+ const html=h.ui.render();assert.match(html,/data-pipeline-copy-fallback/);assert.match(html,/Free\./);assert.match(html,/Legacy\./);assert.match(html,/readonly/);assert.match(html,/人工复核|人工完整复核/);
+});
+test('recap correction selects its writing target and recall is grounded in this lesson grammar',async()=>{
+ const lesson={...lessons[1],grammar:[{title:'现在进行时',explanation:'be + V-ing'}]},selected=[];
+ class Writer{flush(){return true;}unmount(){}selectTarget(key){selected.push(key);return true;}}
+ const h=setup({getLesson:()=>lesson,FreeWritingPractice:Writer});await h.ui.setLesson(lesson);await h.ui.goStage(3);
+ assert.match(h.ui.render(),/现在进行时/);assert.match(h.ui.render(),/回忆|回想/);
+ assert.equal(await h.ui.correctSentence('word:now:here'),true);assert.deepEqual(selected,['word:now:here']);assert.equal(h.ui.record().stage,2);
+});
+test('an asynchronous copy failure cannot expose the previous lesson draft in the next lesson',async()=>{
+ let rejectCopy;
+ const h=setup({getSentences:()=>[{answer:'Private to this lesson.'}],copyText:()=>new Promise((_,reject)=>rejectCopy=reject)});
+ await h.ui.setLesson(lessons[1]);await h.ui.goStage(3);const copying=h.ui.copySentences();await h.ui.setLesson(lessons[0]);rejectCopy(Error('denied'));await copying;
+ assert.doesNotMatch(h.ui.render(),/Private to this lesson\.|data-pipeline-copy-fallback/);await h.ui.goStage(3);assert.doesNotMatch(h.ui.render(),/data-pipeline-copy-fallback/);
+});
+test('an archived recap question has an independent retry without replacing the current saved quiz',async()=>{
+ const h=setup({questionsForLesson:id=>Array.from({length:24},(_,i)=>({...questions(id)[0],id:id+'-q'+i}))});await h.ui.setLesson(lessons[1]);await h.ui.goStage(1);h.ui.chooseAnswer(1);await h.ui.checkAnswer();const question=h.ui.question();
+ await h.ui.newQuizRound();await h.ui.goStage(3);const savedQuiz=JSON.stringify(h.ui.record().quiz),binding=h.ui.recapBinding(question);
+ assert.equal(await h.ui.retryFromRecap(binding),true);assert.equal(h.ui.record().stage,3);assert.match(h.ui.render(),/data-pipeline-action="recap-answer"/);
+ assert.equal(h.ui.chooseRecapAnswer(0,binding),true);assert.equal(await h.ui.checkRecapPractice(binding),true);
+ assert.equal(JSON.stringify(h.ui.record().quiz),savedQuiz);assert.equal(h.ui.record().mistakes[question.id].history.length,2);assert.equal(h.ui.record().mistakes[question.id].lastCorrect,true);
+ assert.equal(await h.ui.checkRecapPractice(binding),false);
+});
+test('a stale archived recap check cannot write into another round or create attempt history',async()=>{
+ const h=setup({questionsForLesson:id=>Array.from({length:24},(_,i)=>({...questions(id)[0],id:id+'-q'+i}))});await h.ui.setLesson(lessons[1]);await h.ui.goStage(1);h.ui.chooseAnswer(1);await h.ui.checkAnswer();const question=h.ui.question();
+ await h.ui.newQuizRound();await h.ui.goStage(3);const binding=h.ui.recapBinding(question);await h.ui.retryFromRecap(binding);h.ui.chooseRecapAnswer(0,binding);await h.ui.flush();
+ const external=structuredClone(h.getState());external.lessons.now.round++;h.setExternal(external);
+ assert.equal(await h.ui.checkRecapPractice(binding),false);assert.equal(h.ui.record().attempts.length,1);
+});
