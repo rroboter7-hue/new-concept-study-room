@@ -33,7 +33,30 @@ test('selected book controls catalogue summary independently of current lesson a
 });
 
 test('book change accepts only the native selector and a valid numeric book while mobile',()=>{
- const e=fixture();e.ui.drawerOpen=true;e.ui.bookSelect.value='3';e.ui.changeBook({target:e.ui.bookSelect});assert.deepEqual(e.calls.books,[3]);assert.deepEqual(e.calls.openAtCallback,[false]);assert.equal(e.calls.closed,1);assert.equal(e.nodes.get('.mls-book-summary').textContent,'第三册 · 60课');
+ const e=fixture();e.ui.drawerOpen=true;e.ui.bookSelect.value='3';e.ui.changeBook({target:e.ui.bookSelect});assert.deepEqual(e.calls.books,[3]);assert.deepEqual(e.calls.openAtCallback,[true]);assert.equal(e.calls.closed,0);assert.equal(e.ui.drawerOpen,true);assert.equal(e.nodes.get('.mls-book-summary').textContent,'第三册 · 60课');
  assert.equal(e.ui.menu.open,false);assert.equal(e.classes.has('mls-coach-open'),false);
- for(const value of ['0','5','2.5','invalid']){e.ui.bookSelect.value=value;e.ui.changeBook({target:e.ui.bookSelect});}e.ui.changeBook({target:{value:'2'}});e.ui.mobile=false;e.ui.bookSelect.value='4';e.ui.changeBook({target:e.ui.bookSelect});assert.deepEqual(e.calls.books,[3]);assert.equal(e.calls.closed,1);
+ for(const value of ['0','5','2.5','invalid']){e.ui.bookSelect.value=value;e.ui.changeBook({target:e.ui.bookSelect});}e.ui.changeBook({target:{value:'2'}});e.ui.mobile=false;e.ui.bookSelect.value='4';e.ui.changeBook({target:e.ui.bookSelect});assert.deepEqual(e.calls.books,[3]);assert.equal(e.calls.closed,0);
+});
+
+
+test('choosing a concrete lesson commits the browsed catalogue instead of restoring the previous book',()=>{
+ const e=fixture(),calls=[];e.ui.closeCourses=options=>calls.push(options);e.ui.options.onSelect=id=>calls.push(id);e.ui.defer=fn=>fn();
+ const target={dataset:{lesson:'book3-2'}};e.ui.captureLesson({target:{closest:()=>target}});
+ assert.equal(calls[0].restoreBook,false);assert.equal(calls[0].restoreFocus,false);assert.equal(calls[1],'book3-2');
+});
+
+test('closing the catalogue restores its opening book only on cancellation',()=>{
+ for(const restoreBook of [true,false]){
+  const e=fixture(),restored=[];e.ui.drawerOpen=true;e.ui.catalogueBookBefore=2;e.ui.overlay={hidden:false};e.ui.inertBefore=new Map();e.ui.body.classList.remove=()=>{};
+  e.ui.options.onCoursesClose=book=>restored.push(book);delete e.ui.closeCourses;
+  e.ui.closeCourses({restoreBook,restoreFocus:false});
+  assert.deepEqual(restored,restoreBook?[2]:[]);assert.equal(e.ui.catalogueBookBefore,null);assert.equal(e.ui.drawerOpen,false);assert.equal(e.ui.overlay.hidden,true);
+ }
+});
+
+
+test('opening the catalogue remembers the original book before browsing another one',()=>{
+ const e=fixture();e.ui.inertBefore=new Map();e.ui.overlay={hidden:true};e.ui.closeButton={focus(){}};e.ui.body.classList.add=()=>{};
+ e.ui.openCourses({});assert.equal(e.ui.catalogueBookBefore,2);
+ e.ui.bookSelect.value='3';e.ui.changeBook({target:e.ui.bookSelect});assert.equal(e.ui.catalogueBookBefore,2);assert.equal(e.ui.drawerOpen,true);
 });

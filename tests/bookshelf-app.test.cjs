@@ -45,3 +45,11 @@ test('note return is cleared when another lesson is selected',async()=>{
  const next=h.c.LESSONS.find(l=>l.book===2&&l.number===2);h.api.selectLesson(next.id);h.api.setTab('usage');
  assert(!h.html().includes(h.c.StudyCore.escapeHTML(old)),'opening a new lesson must not retain the prior source sentence');
 });
+
+
+test('shelf menu dismisses on a page-title click but stays open for clicks within its own popup',async()=>{
+ const h=await harness({pilot:false}),menu=h.api.bookshelf.root.querySelector('.shelf-menu');menu.open=true;
+ await h.click(menu.querySelector('summary'));assert.equal(menu.open,true,'internal clicks are left to the native details control');
+ await h.click(h.api.bookshelf.root.querySelector('.shelf-title'));assert.equal(menu.open,false);assert.equal(h.api.bookshelf.isVisible,true);
+ assert.equal(h.api.current.book,2);assert.equal(h.api.activeTab,'reading');
+});

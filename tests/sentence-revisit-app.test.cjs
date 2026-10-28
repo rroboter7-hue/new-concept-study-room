@@ -51,3 +51,58 @@ test('oversized recall input is preserved with a clear error and cannot reveal o
  await h.input('[data-sr-field="recall"]',long);assert.equal(h.document.querySelector('[data-sr-field="recall"]').value,long);assert.match(h.document.querySelector('[data-sr-status]').textContent,/2000/);assert.deepEqual(copy(h.stored.sentenceRevisit.entries[id]),before);
  await h.click('[data-sr-action="reveal"]');assert.equal(h.document.querySelector('[data-sr-field="recall"]').value,long);assert.equal(h.api.sentenceRevisit.revealed.has(id),false);assert.match(h.document.querySelector('[data-sr-status]').textContent,/2000/);assert.deepEqual(copy(h.stored.sentenceRevisit.entries[id]),before);
 });
+
+
+async function correctionForEditDraftTest(h,original,corrected){
+ const ui=h.api.sentenceRevisit;ui.openCapture({original});
+ await h.input(ui.dialog.querySelector('[data-sr-field="corrected"]'),corrected);
+ await h.click(ui.dialog.querySelector('[data-sr-action="save"]'));
+ return Object.values(h.stored.sentenceRevisit.entries).find(entry=>entry.original===original);
+}
+
+test('reopening an existing correction restores only its bound unfinished edit before saving',async()=>{
+ const h=await harness({pilot:false}),ui=h.api.sentenceRevisit;
+ const saved=await correctionForEditDraftTest(h,'He go home.','He goes home.');
+ ui.openCapture({...saved,lesson:{id:saved.lessonId}});
+ await h.input(ui.dialog.querySelector('[data-sr-field="original"]'),'He go home every evening.');
+ await h.input(ui.dialog.querySelector('[data-sr-field="corrected"]'),'He goes home every evening.');
+ await h.input(ui.dialog.querySelector('[data-sr-field="reason"]'),'Keep the third-person singular verb.');
+ ui.closeCapture();
+ assert.equal(h.stored.sentenceRevisit.drafts[saved.lessonId].entryId,saved.id);
+ assert.equal(h.stored.sentenceRevisit.entries[saved.id].corrected,saved.corrected);
+ ui.openCapture({...saved,lesson:{id:saved.lessonId}});
+ assert.equal(ui.dialog.querySelector('[data-sr-field="original"]').value,'He go home every evening.');
+ assert.equal(ui.dialog.querySelector('[data-sr-field="corrected"]').value,'He goes home every evening.');
+ assert.equal(ui.dialog.querySelector('[data-sr-field="reason"]').value,'Keep the third-person singular verb.');
+ await h.click(ui.dialog.querySelector('[data-sr-action="save"]'));
+ const updated=h.stored.sentenceRevisit.entries[saved.id];
+ assert.equal(updated.corrected,'He goes home every evening.');
+ assert.equal(updated.firstOriginal,saved.original);
+ assert.equal(updated.history.at(-1).corrected,saved.corrected);
+ assert.equal(h.stored.sentenceRevisit.drafts[saved.lessonId],undefined);
+});
+
+test('an unfinished edit for another correction in the same lesson never replaces the selected correction',async()=>{
+ const h=await harness({pilot:false}),ui=h.api.sentenceRevisit;
+ const first=await correctionForEditDraftTest(h,'He go home.','He goes home.');
+ const second=await correctionForEditDraftTest(h,'She walk home.','She walks home.');
+ ui.openCapture({...first,lesson:{id:first.lessonId}});
+ await h.input(ui.dialog.querySelector('[data-sr-field="corrected"]'),'He goes home every evening.');ui.closeCapture();
+ assert.equal(h.stored.sentenceRevisit.drafts[first.lessonId].entryId,first.id);
+ ui.openCapture({...second,lesson:{id:second.lessonId}});
+ assert.equal(ui.dialog.querySelector('[data-sr-field="original"]').value,second.original);
+ assert.equal(ui.dialog.querySelector('[data-sr-field="corrected"]').value,second.corrected);
+ assert.equal(ui.captureContext.id,second.id);
+});
+
+test('an unbound new-correction draft never replaces an existing correction opened for editing',async()=>{
+ const h=await harness({pilot:false}),ui=h.api.sentenceRevisit;
+ const saved=await correctionForEditDraftTest(h,'He go home.','He goes home.');
+ ui.openCapture({original:'A new unfinished original.'});
+ await h.input(ui.dialog.querySelector('[data-sr-field="corrected"]'),'A new unfinished correction.');ui.closeCapture();
+ assert.equal(h.stored.sentenceRevisit.drafts[saved.lessonId].entryId,'');
+ ui.openCapture({...saved,lesson:{id:saved.lessonId}});
+ assert.equal(ui.dialog.querySelector('[data-sr-field="original"]').value,saved.original);
+ assert.equal(ui.dialog.querySelector('[data-sr-field="corrected"]').value,saved.corrected);
+ assert.equal(ui.captureContext.id,saved.id);
+});
