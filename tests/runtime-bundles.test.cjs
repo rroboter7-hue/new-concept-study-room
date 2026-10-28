@@ -44,6 +44,18 @@ test('generated HTML references complete content-addressed packages while keepin
  assert.notEqual(html,original);assert.match(html,/StudyStartup\.start\(/);assert.doesNotMatch(html,/<script[^>]+src="(?:first|second|app)\.js/);assert.doesNotMatch(html,/<link[^>]+href="(?:first|second)\.css/);assert.match(html,/Study fixture/);assert.match(html,/<main id="study">Study<\/main>/);
  for(const item of [...manifest.scripts,...manifest.styles]){assert.match(item.src,/^runtime-[a-z]+-[a-f0-9]{20}\.(?:js|css)$/);const bytes=fs.readFileSync(path.join(f.out,item.src));assert.equal(item.bytes,bytes.length);assert.equal(item.integrity,sri(bytes));assert(item.src.includes(hash(bytes).slice(0,20)));assert(html.includes(item.src),'the emitted HTML references each finished package');}
  assert.equal(fs.readFileSync(path.join(f.out,'first.js'),'utf8'),'"use strict";\nwindow.order=["first"]; const sharedLexical=41;\n');
+ for(const match of html.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script\s*>/gi))assert.doesNotThrow(()=>new vm.Script(match[1]),'the actual published inline bootstrap must parse');
+});
+
+test('HTML insertion preserves JavaScript containing replacement-string tokens exactly',t=>{
+ const f=fixture(t),loaderSource='window.sentinels='+JSON.stringify(["$'",'$&','$`','$$'])+';';
+ runtime.bundleRuntime({outputRoot:f.out,loaderSource});
+ const html=fs.readFileSync(path.join(f.out,'index.html'),'utf8');assert(html.includes(loaderSource),'embedding must not interpret dollar sequences as String.replace substitutions');
+ for(const match of html.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script\s*>/gi))assert.doesNotThrow(()=>new vm.Script(match[1]));
+});
+
+test('a syntactically invalid inline startup script blocks publication',t=>{
+ const f=fixture(t);assert.throws(()=>runtime.bundleRuntime({outputRoot:f.out,loaderSource:'function incomplete( {'}),/inline|startup|SyntaxError/i);
 });
 
 test('changing an asset changes its package hash and unchanged builds are deterministic',t=>{

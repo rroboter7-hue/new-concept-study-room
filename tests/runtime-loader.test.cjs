@@ -17,6 +17,20 @@ function setup(){
  const fireTimer=()=>{const [id,t]=[...timers].sort((a,b)=>a[1].ms-b[1].ms)[0]||[];if(t){timers.delete(id);t.fn();}return t;};
  return {root,loader,nodes,requests,timers,listeners,executions,manifest,deliver,fireTimer};
 }
+function canonicalManifest(h){
+ h.manifest.scripts.forEach((asset,i)=>{asset.src='runtime-scripts-'+String(i+1).repeat(20)+'.js';asset.id=String(i+1).repeat(64);asset.integrity='sha384-'+Buffer.alloc(48,i+1).toString('base64');});
+ h.manifest.styles[0].src='runtime-styles-'+('3'.repeat(20))+'.css';h.manifest.styles[0].integrity='sha384-'+Buffer.alloc(48,3).toString('base64');
+}
+function exhaustSecondScript(h){
+ canonicalManifest(h);
+ h.loader.start(h.manifest);h.requests.find(x=>x.tagName==='LINK').onload();h.deliver(0);
+ for(let i=0;i<3;i++){h.requests.filter(x=>x.tagName==='SCRIPT').at(-1).onerror();if(i<2)h.fireTimer();}
+}
+function newerHTML(h,changed=true){
+ const latest=JSON.parse(JSON.stringify(h.manifest));latest.build='new';
+ if(changed){latest.scripts[0].src='runtime-scripts-'+('a'.repeat(20))+'.js';latest.scripts[0].id='b'.repeat(64);latest.scripts[0].integrity='sha384-new';}
+ return factory.renderHTML(latest,'window.mustNotRunFetchedHTML=true;').bodyEnd;
+}
 test('startup keeps the application covered until ordered scripts and stylesheet finish',()=>{
  const h=setup();h.loader.start(h.manifest);assert.equal(h.requests.filter(x=>x.tagName==='SCRIPT').length,1);
  assert.equal(h.nodes.get('study-startup').hidden,false);
@@ -107,4 +121,50 @@ test('duplicate course rows cannot disguise a missing textbook lesson',()=>{
  const lesson={id:'lesson-one',book:2,textbook:{},paragraphs:[{en:'Only one real lesson.'}]};h.root.LESSONS=[lesson,lesson];
  h.loader.start(h.manifest);h.loader.install('one',[{name:'app.js',source:'window.startedApp=true;'}]);
  assert.equal(h.root.startedApp,undefined);assert.match(h.nodes.get('study-startup-error').textContent,/课程正文未完整加载/);
+});
+
+test('a proven stale package list triggers one guarded same-origin refresh without executing the fetched page',async()=>{
+ const h=setup(),probes=[];h.root.location.replace=value=>{h.root.location.replaced=value;};
+ h.root.fetch=(url,options)=>{probes.push({url,options});return Promise.resolve({ok:true,url:'https://study.example/project/?startup-check=now',text:async()=>newerHTML(h)});};
+ exhaustSecondScript(h);await new Promise(resolve=>setImmediate(resolve));
+ assert.equal(probes.length,1);assert.match(probes[0].url,/^https:\/\/study\.example\/project\/\?startup-check=\d+$/);assert.equal(probes[0].options.cache,'no-store');assert.equal(probes[0].options.credentials,'same-origin');assert.equal(probes[0].options.redirect,'error');
+ assert.match(h.root.location.replaced,/build=old/);assert.match(h.root.location.replaced,/refresh=\d+&startup-reloaded=1#study$/);assert.equal(h.root.mustNotRunFetchedHTML,undefined);assert.equal(h.timers.size,0);
+});
+
+test('ordinary network failure and an unchanged latest package list stay on manual recovery',async()=>{
+ for(const response of ['same','offline','invalid','redirect']){
+  const h=setup();let probes=0;h.root.fetch=()=>{probes++;return response==='offline'?Promise.reject(Error('offline')):Promise.resolve({ok:true,url:response==='redirect'?'https://outside.example/page':'https://study.example/project/',text:async()=>response==='invalid'?'<html>No manifest</html>':newerHTML(h,false)});};
+  exhaustSecondScript(h);await new Promise(resolve=>setImmediate(resolve));
+  assert.equal(probes,1,response+' checks freshness without running the fetched HTML');
+  assert.equal(h.root.location.assigned,undefined,response+' must not trigger a speculative reload');assert.equal(h.nodes.get('study-startup-retry').hidden,false);assert.equal(h.nodes.get('study-startup-reload').hidden,false);assert.equal(h.timers.size,0);
+ }
+});
+
+test('the refresh URL guard prevents another automatic update loop',async()=>{
+ const h=setup();h.root.location.href='https://study.example/project/?build=old&startup-reloaded=1#study';let probes=0;
+ h.root.fetch=()=>{probes++;return Promise.resolve({ok:true,text:async()=>newerHTML(h)});};
+ exhaustSecondScript(h);await new Promise(resolve=>setImmediate(resolve));assert.equal(probes,0);assert.equal(h.root.location.assigned,undefined);assert.equal(h.nodes.get('study-startup-retry').hidden,false);
+});
+
+test('a late version response cannot refresh after manual recovery has already completed',async()=>{
+ const h=setup();let resolveFetch;h.root.fetch=()=>new Promise(resolve=>resolveFetch=resolve);
+ exhaustSecondScript(h);assert.equal(typeof resolveFetch,'function');h.nodes.get('study-startup-retry').onclick();h.deliver(1);assert.equal(h.nodes.get('study-startup').hidden,true);
+ resolveFetch({ok:true,url:'https://study.example/project/',text:async()=>newerHTML(h)});await new Promise(resolve=>setImmediate(resolve));assert.equal(h.root.location.assigned,undefined);
+});
+
+test('a timed-out version probe cannot block retry or trigger a late automatic refresh',async()=>{
+ const h=setup();let resolveFetch;h.root.fetch=()=>new Promise(resolve=>resolveFetch=resolve);
+ exhaustSecondScript(h);const timer=h.fireTimer();assert.equal(timer.ms,5000);
+ resolveFetch({ok:true,url:'https://study.example/project/',text:async()=>newerHTML(h)});await new Promise(resolve=>setImmediate(resolve));
+ assert.equal(h.root.location.assigned,undefined);assert.equal(h.nodes.get('study-startup-retry').hidden,false);h.nodes.get('study-startup-retry').onclick();h.deliver(1);assert.equal(h.nodes.get('study-startup').hidden,true);
+});
+
+test('concurrent stylesheet and script failures share one version probe and one guarded refresh',async()=>{
+ const h=setup();canonicalManifest(h);let probes=0,resolveFetch;h.root.fetch=()=>{probes++;return new Promise(resolve=>resolveFetch=resolve);};
+ h.loader.start(h.manifest);
+ for(let i=0;i<3;i++){h.requests.filter(x=>x.tagName==='LINK').at(-1).onerror();if(i<2)h.fireTimer();}
+ assert.equal(probes,1);h.deliver(0);
+ for(let i=0;i<3;i++){h.requests.filter(x=>x.tagName==='SCRIPT').at(-1).onerror();if(i<2)h.fireTimer();}
+ assert.equal(probes,1);resolveFetch({ok:true,url:'https://study.example/project/',text:async()=>newerHTML(h)});await new Promise(resolve=>setImmediate(resolve));
+ assert.match(h.root.location.assigned,/startup-reloaded=1/);assert.deepEqual(Array.from(h.root.order),[0],'a failed stylesheet does not fabricate completion or rerun prior source scripts');
 });

@@ -48,6 +48,15 @@ test('generated mapper changes only converted exact paths, including the fallbac
  assert.equal(c.STUDY_WORD_AUDIO.a,'audio/optimized/words/same.mp3');assert.equal(c.STUDY_WORD_AUDIO.other,'audio/words/same.wav?legacy=1');assert.equal(c.STUDY_LESSON_AUDIO.a,'audio/words/same.mp3');assert.equal(c.STUDY_LESSON_AUDIO.other,'audio/elsewhere/same.wav');assert.equal(c.STUDY_LESSON_AUDIO_FALLBACKS.a,'audio/optimized/lessons/story.mp3');
 });
 
+test('already cached previous HTML keeps its exact stylesheet available without loading it in new pages',async t=>{
+ const name='runtime-styles-69a0cf19e86bb4795158.css',bytes=fs.readFileSync(path.join(__dirname,'..',name));
+ assert.equal(require('node:crypto').createHash('sha256').update(bytes).digest('hex'),'69a0cf19e86bb479515825810b21010f1ebb3bb7e8c8b9721ef437dc4db4fa9c','the cached previous HTML integrity value must remain valid');
+ const f=fixture(t),out=f.out('cached-compatibility');f.write(name,bytes);
+ const report=await delivery.buildPages({sourceRoot:f.source,outputRoot:out,encoder:f.encoder,probe:f.probe});
+ assert.deepEqual(fs.readFileSync(path.join(out,name)),bytes,'old cached URLs remain resolvable in a fresh publication');
+ assert.equal(report.runtime.styles.length,1);assert.equal(report.runtime.styles[0].files.includes(name),false,'new pages load only their current stylesheet');
+});
+
 test('published startup health contract counts actual unique canonical passages before packaging',async t=>{
  const f=fixture(t),out=f.out('health'),lessons=[
   {id:'book-one',book:1,textbook:{verified:true},paragraphs:[{en:'The first passage.'}]},

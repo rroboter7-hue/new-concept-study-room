@@ -8,6 +8,7 @@
   var doc = root.document, manifest, current = 0, cssLeft = 0, started = false;
   var done = {}, executed = {}, failed = [], fatal = false, finished = false;
   var loading = [], activeSource = '', sourceError = null;
+  var versionChecked = false;
   function el(id) { return doc.getElementById('study-startup' + (id ? '-' + id : '')); }
   function text(id, value) { var target = el(id); if (target) target.textContent = value; }
   function show(id, visible) { var target = el(id); if (target) target.hidden = !visible; }
@@ -42,6 +43,52 @@
     var task = loading.filter(function (item) { return item.kind === 'script' && !item.complete && item.node && event.filename && event.filename.indexOf(item.asset.src) !== -1; })[0];
     if (task) stopForExecution(task.asset.src);
   }
+  function reloadPage(automatic) {
+    var parts = root.location.href.split('#'), base = parts.shift().replace(/([?&])refresh=[^&]*&?/g, '$1').replace(/[?&]$/, '');
+    var nextURL = base + (base.indexOf('?') === -1 ? '?' : '&') + 'refresh=' + new Date().getTime() + (automatic ? '&startup-reloaded=1' : '') + (parts.length ? '#' + parts.join('#') : '');
+    if (automatic && typeof root.location.replace === 'function') root.location.replace(nextURL);
+    else root.location.assign(nextURL);
+  }
+  function packageKey(config) {
+    if (!config || config.version !== 1 || !Array.isArray(config.scripts) || !config.scripts.length || !Array.isArray(config.styles)) return null;
+    var keys = [], valid = true;
+    [['scripts', config.scripts, 'js'], ['styles', config.styles, 'css']].forEach(function (group) {
+      group[1].forEach(function (asset) {
+        if (!asset || typeof asset.src !== 'string' || !(new RegExp('^runtime-' + group[0] + '-[a-f0-9]{20}\\.' + group[2] + '$')).test(asset.src) || typeof asset.integrity !== 'string' || !/^sha384-[A-Za-z0-9+/]+={0,2}$/.test(asset.integrity) || group[0] === 'scripts' && (typeof asset.id !== 'string' || !/^[a-f0-9]{64}$/.test(asset.id))) valid = false;
+        else keys.push(group[0] + ':' + asset.src + ':' + (asset.id || '') + ':' + asset.integrity);
+      });
+    });
+    return valid ? keys.join('\n') : null;
+  }
+  function checkForStalePage() {
+    if (versionChecked || typeof root.fetch !== 'function' || /(?:\?|&)startup-reloaded=1(?:&|$)/.test(root.location.href.split('#')[0])) return;
+    var currentKey = packageKey(manifest), path = root.location.href.split('#')[0].split('?')[0];
+    if (!currentKey || !/^https?:\/\//i.test(path)) return;
+    versionChecked = true;
+    var closed = false, origin = path.match(/^https?:\/\/[^/]+/i)[0].toLowerCase();
+    var controller = typeof root.AbortController === 'function' ? new root.AbortController() : null;
+    var options = {cache:'no-store', credentials:'same-origin', mode:'same-origin', redirect:'error'};
+    if (controller) options.signal = controller.signal;
+    var timer = root.setTimeout(function () { closed = true; if (controller) controller.abort(); }, 5000);
+    function complete() { root.clearTimeout(timer); closed = true; }
+    try {
+      root.fetch(path + '?startup-check=' + new Date().getTime(), options).then(function (response) {
+        if (closed || !response || !response.ok || response.url && (!/^https?:\/\/[^/]+/i.test(response.url) || response.url.match(/^https?:\/\/[^/]+/i)[0].toLowerCase() !== origin)) return null;
+        return response.text();
+      }).then(function (html) {
+        if (closed) return; complete();
+        if (typeof html !== 'string' || fatal || finished || !failed.length) return;
+        var marker = '\nwindow.StudyStartup.start(', at = html.lastIndexOf(marker), latest;
+        if (at === -1) return;
+        var tail = html.slice(at + marker.length), end = tail.indexOf('</script>');
+        if (end === -1) return; tail = tail.slice(0, end).replace(/^\s+|\s+$/g, '');
+        if (tail.slice(-2) !== ');') return;
+        try { latest = JSON.parse(tail.slice(0, -2)); } catch (error) { return; }
+        var latestKey = packageKey(latest);
+        if (latestKey && latestKey !== currentKey) { text('message', '课程已更新，正在重新载入…'); reloadPage(true); }
+      }, complete);
+    } catch (error) { complete(); }
+  }
   function networkFailure(task) {
     if (task.complete || fatal || finished) return;
     unbind(task); removeNode(task.node);
@@ -55,6 +102,7 @@
     text('message', '还有文件未能加载');
     text('error', (root.navigator && root.navigator.onLine === false ? '网络已断开。' : '网络连接中断或缓存版本已更新。') + '请重试；仍失败时重新加载页面。学习记录与已保存草稿会保留。');
     show('error', true); show('retry', true); show('reload', true);
+    checkForStalePage();
   }
   function request(task) {
     if (fatal || finished || task.complete) return;
@@ -126,8 +174,7 @@
       tasks.forEach(function (task) { task.attempt = 0; request(task); }); update();
     };
     el('reload').onclick = function () {
-      var parts = root.location.href.split('#'), base = parts.shift().replace(/([?&])refresh=[^&]*&?/g, '$1').replace(/[?&]$/, '');
-      root.location.assign(base + (base.indexOf('?') === -1 ? '?' : '&') + 'refresh=' + new Date().getTime() + (parts.length ? '#' + parts.join('#') : ''));
+      reloadPage(false);
     };
     root.addEventListener('error', onError);
     cssLeft = config.styles.length;

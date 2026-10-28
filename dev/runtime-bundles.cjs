@@ -86,10 +86,14 @@ function bundleRuntime({outputRoot,loaderSource,lessonCounts}={}){
  if(!rendered||typeof rendered.head!=='string'||typeof rendered.bodyStart!=='string'||typeof rendered.bodyEnd!=='string')throw Error('Invalid runtime startup HTML');
  let html=original;for(const tag of [...scriptTags,...styleTags])html=html.replace(tag,'');
  if(!/<\/head\s*>/i.test(html))html='<head></head>'+html;
- html=html.replace(/<\/head\s*>/i,rendered.head+'</head>');
+ html=html.replace(/<\/head\s*>/i,()=>rendered.head+'</head>');
  if(/<body\b[^>]*>/i.test(html))html=html.replace(/<body\b[^>]*>/i,match=>match+rendered.bodyStart);
  else html+='<body>'+rendered.bodyStart+'</body>';
- html=html.replace(/<\/body\s*>/i,rendered.bodyEnd+'</body>');
+ html=html.replace(/<\/body\s*>/i,()=>rendered.bodyEnd+'</body>');
+ for(const match of html.matchAll(/<script\b[^>]*>([\s\S]*?)<\/script\s*>/gi)){
+  try{new vm.Script(match[1],{filename:'published-startup.js'});}
+  catch(error){throw Error('Invalid inline startup script; publication stopped: '+error.message,{cause:error});}
+ }
  fs.writeFileSync(index,html);
  return manifest;
 }

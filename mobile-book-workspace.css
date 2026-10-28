@@ -40,7 +40,7 @@
  .mls-book-workspace.mls-mobile .pilot-progress,.mls-book-workspace.mls-mobile .learning-progress-panel,.mls-book-workspace.mls-mobile .lesson-progress-note{display:none}
  .mls-book-workspace.mls-mobile .lesson-progress-note:has(#return-to-source-exercise){display:block;margin:0 0 16px;background:var(--teal-soft)}
  .mls-book-workspace.mls-mobile #reading-controls{display:none;position:static;background:var(--paper);margin-bottom:18px}
- .mls-book-workspace.mls-mobile.mls-reading-tools-open[data-mls-tab=reading] #reading-controls:not(.hidden){display:flex}
+ .mls-book-workspace.mls-mobile[data-mls-view=study][data-mls-tab=reading] #reading-controls:not(.hidden){display:flex}
  .mls-book-workspace.mls-mobile .text-source-note,.mls-book-workspace.mls-mobile .translation-attribution{display:none}
  .mls-book-workspace.mls-mobile.mls-reading-tools-open[data-mls-tab=reading] .reader-meta{display:flex;flex-wrap:wrap;gap:12px;margin-bottom:16px}
  .mls-book-workspace.mls-mobile.mls-reading-tools-open[data-mls-tab=reading] .text-source-note,.mls-book-workspace.mls-mobile.mls-reading-tools-open[data-mls-tab=reading] .translation-attribution{display:block;font-size:12px;line-height:1.7}

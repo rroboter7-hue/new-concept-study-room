@@ -1,6 +1,6 @@
 {
-  "build": "2026-10-28-fastload",
-  "preparedAt": "2026-10-28T01:18:18Z",
+  "build": "2026-10-28-mobile-recovery",
+  "preparedAt": "2026-10-28T01:53:06Z",
   "book2": {
     "book": 2,
     "total": 96,
@@ -411,7 +411,7 @@
         320,
         390
       ],
-      "mobileTranslationControl": "available-in-reading-tools-menu"
+      "mobileTranslationControl": "always-visible-above-reading-passage"
     },
     "book3SentenceAlignedLessons": 60,
     "book3SentencePairs": 1301,
@@ -598,7 +598,17 @@
       "partialDownloadRecovery": true,
       "canonicalLessonHealthGuard": true,
       "sourceScriptBoundariesPreserved": true,
-      "studyStorageUnchanged": true
+      "studyStorageUnchanged": true,
+      "previousCachedHtmlCompatibility": {
+        "build": "2026-10-28-fastload",
+        "asset": "runtime-styles-69a0cf19e86bb4795158.css",
+        "bytes": 197165,
+        "sha256": "69a0cf19e86bb479515825810b21010f1ebb3bb7e8c8b9721ef437dc4db4fa9c",
+        "integrity": "sha384-cs5O2iRpTWpWG5pUrfylVVlkF5A7djfTR9xiSE5ty0O+DbAhLXnAXBU32pvRP6eT",
+        "reason": "Serve the exact stylesheet referenced by already cached 07f34fb HTML; newer HTML can recover future stale packages."
+      },
+      "confirmedStaleHtmlSingleRefresh": true,
+      "inlineStartupSyntaxCheckedBeforePublication": true
     }
   },
   "storageOptimization": {
