@@ -243,17 +243,17 @@
       if(!lesson)return '<div class="empty-state">请选择一篇课文后开始输出练习。</div>';
       const sentenceAvailable=Boolean(this.options.sentencePractice)&&(typeof this.options.canPracticeSentences!=='function'||this.options.canPracticeSentences(lesson)!==false);
       if(!sentenceAvailable&&this.mode==='sentences'){
-        this.options.sentencePractice?.flush();this.mode='write';this.result=null;this.showOriginal=false;
+        this.options.sentencePractice?.flush();this.loadMode('retell');this.flush();this.result=null;this.showOriginal=false;
       }
       const modes=[];
       if(sentenceAvailable)modes.push(['sentences','四句型与造句']);
-      modes.push(['write','课文默写'],['retell','英文复述'],['spell','单词拼写']);
+      modes.push(['write','课文默写'],['retell','课文复述'],['spell','单词拼写']);
       if(this.options.batchPractice)modes.push(['batch','批量检查']);
       const mobile=this.options.isMobileWorkspace?.()===true;
-      const modeHTML=([mode,label])=>'<button type="button" class="output-tab '+(this.mode===mode?'active':'')+'" data-output-action="mode" data-output-mode="'+mode+'" aria-pressed="'+(this.mode===mode)+'">'+label+'</button>';
+      const modeHTML=([mode,label])=>'<button type="button" class="output-tab '+(this.mode===mode?'active':'')+'" data-output-action="mode" data-output-mode="'+mode+'" aria-pressed="'+(this.mode===mode)+'"'+(mode==='write'?' hidden aria-hidden="true" tabindex="-1" style="display:none!important"':'')+'>'+label+'</button>';
       const primary=['sentences','batch'].includes(this.mode),visibleModes=['sentences','write','retell'];
-      const tabs='<div class="output-tabs" aria-label="输出练习模式">'+(mobile?modes.filter(([mode])=>visibleModes.includes(mode)):modes).map(modeHTML).join('')+'</div>';
-      const more=mobile?'<details class="mls-output-more"'+(!visibleModes.includes(this.mode)?' open':'')+'><summary>拼写与批量检查</summary><div class="output-tabs">'+modes.filter(([mode])=>!visibleModes.includes(mode)).map(modeHTML).join('')+'</div></details>':'';
+      const tabs='<div class="output-tabs" aria-label="输出练习模式">'+modes.filter(([mode])=>visibleModes.includes(mode)).map(modeHTML).join('')+'</div>';
+      const more='<details class="mls-output-more"><summary>更多练习</summary><div class="output-tabs">'+modes.filter(([mode])=>!visibleModes.includes(mode)).map(modeHTML).join('')+'</div></details>';
       const content=this.mode==='sentences'&&sentenceAvailable?this.options.sentencePractice.render():this.mode==='batch'&&this.options.batchPractice?this.options.batchPractice.render():(this.mode==='spell'?this.renderSpell():this.mode==='retell'?this.renderRetell():this.renderWrite())+(this.mode!=='spell'?this.grammarHTML():'');
       const worksheet=mobile&&this.mode==='sentences'&&(this.options.sentencePractice?.usesWorksheetLayout?.()??this.options.sentencePractice?.isQuickMode?.())===true;
       this.options.onModeChange?.(this.mode,{worksheet});
@@ -263,8 +263,7 @@
 
     checkGrammar(redraw=true){if(!this.answer.trim()){this.notify('先写一段英文，再检查。');return;}if(!global.StudyGrammar){this.grammarText='';this.grammarIssues=null;this.notify('语法规则正在加载，请刷新后再试。');return;}if(redraw)this.assisted=true;this.grammarText=this.answer;this.grammarIssues=global.StudyGrammar.check(this.answer);if(redraw){this.flush();this.redraw();}}
     applyGrammar(index){if(this.grammarText!==this.answer){this.notify('输入已改变，请重新检查。');return;}this.assisted=true;this.answer=index<0?global.StudyGrammar.applyAll(this.answer,this.grammarIssues||[]):global.StudyGrammar.apply(this.answer,(this.grammarIssues||[])[index]);this.result=null;this.grammarText=this.answer;this.grammarIssues=global.StudyGrammar.check(this.answer);this.flush();this.redraw();this.notify('建议已填回输入框，请结合句意确认。');}
-    grammarHTML(){const e=this.escape,issues=this.grammarIssues;return `<section class="grammar-helper"><h3>基础语法检查与修改建议</h3><p>提交默写或复述后，会自动检查主谓一致、助动词、冠词和常见搭配，并在这里显示修改建议。全部在本地处理，最多检查前10000个字符；这是常见规则检查，复杂语法和句意仍需结合原文确认。</p><button class="button" data-output-action="grammar-check">${issues?'重新检查语法':'单独检查语法'}</button><div class="grammar-feedback">${issues?issues.length?`<h4>发现 ${issues.length} 处可检查的问题</h4>${issues.map((issue,i)=>`<article class="grammar-issue"><div><del>${e(issue.original)}</del><span> → </span><ins>${e(issue.replacement)}</ins></div><p>${e(issue.message)}</p><button class="button subtle" data-output-action="grammar-apply" data-grammar-index="${i}">采用此建议</button></article>`).join('')}<button class="button subtle" data-output-action="grammar-all">应用当前全部建议</button>`:'<p class="grammar-ok">已完成本地常见规则检查，未发现已覆盖类型的问题。可对照原文继续检查时态、句意和遗漏。</p>':''}</div></section>`;}
-
+    grammarHTML(){const e=this.escape,issues=this.grammarIssues;return `<details class="grammar-helper"${Array.isArray(issues)?' open':''}><summary>语法检查与修改建议</summary><div class="grammar-helper-body"><p class="small-note">检查常见语法；句意需自行核对。</p><details class="grammar-check-scope"><summary>检查范围与限制</summary><p>提交默写或复述后，会自动检查主谓一致、助动词、冠词和常见搭配，并在这里显示修改建议。全部在本地处理，最多检查前10000个字符；这是常见规则检查，复杂语法和句意仍需结合原文确认。</p></details><button class="button" data-output-action="grammar-check">${issues?'重新检查语法':'单独检查语法'}</button><div class="grammar-feedback">${issues?issues.length?`<h4>发现 ${issues.length} 处可检查的问题</h4>${issues.map((issue,i)=>`<article class="grammar-issue"><div><del>${e(issue.original)}</del><span> → </span><ins>${e(issue.replacement)}</ins></div><p>${e(issue.message)}</p><button class="button subtle" data-output-action="grammar-apply" data-grammar-index="${i}">采用此建议</button></article>`).join('')}<button class="button subtle" data-output-action="grammar-all">应用当前全部建议</button>`:'<p class="grammar-ok">已完成本地常见规则检查，未发现已覆盖类型的问题。可对照原文继续检查时态、句意和遗漏。</p>':''}</div></div></details>`;}
     originalHTML(paragraphs) {return this.showOriginal?`<div class="output-target">${paragraphs.map(paragraph=>`<p class="english">${this.escape(paragraph.en)}</p>`).join('')}</div>`:'';}
     originalButton() {return `<button type="button" class="button subtle" data-output-action="original">${this.showOriginal?'隐藏原文':'查看原文'}</button>`;}
     textarea(placeholder) {return `<label><span class="sr-only">${this.escape(placeholder)}</span><textarea class="output-textarea" data-output-input="answer" rows="7" maxlength="30000" spellcheck="false" autocapitalize="off" autocomplete="off" placeholder="${this.escape(placeholder)}" ${this.result?'readonly':''}>${this.escape(this.answer)}</textarea></label><p class="output-counter">${words(this.answer).length} 个英文单词</p>`;}

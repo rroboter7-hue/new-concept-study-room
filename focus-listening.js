@@ -36,7 +36,7 @@
    this.options=options;this.panel=null;this.open=false;this.lessonId=null;
    this.engine=new FocusListeningEngine({...options,onChange:()=>this.update(),onError:options.toast});
    this.click=event=>{const b=event.target.closest?.('[data-fl-action]');if(!b)return;const action=b.dataset.flAction;
-    if(action==='notes'){this.stop();this.options.onNotes?.(Number(b.dataset.flIndex));return;}
+    if(action==='notes'){this.stop();this.options.onNotes?.(b.dataset.flIndex===undefined?this.engine.index:Number(b.dataset.flIndex));return;}
     if(action==='pick'){this.open=true;this.engine.index=Number(b.dataset.flIndex);this.panel.open=true;this.engine.play(this.engine.index);this.panel.scrollIntoView?.({block:'nearest',behavior:'smooth'});}
     if(action==='play'){if(this.engine.playing)this.stop();else this.engine.play();}
     if(action==='prev'||action==='next'){const index=this.engine.index+(action==='prev'?-1:1);if(index<0||index>=this.engine.rows.length)return;this.engine.stop();this.engine.index=index;this.update();}
@@ -52,13 +52,13 @@
    this.engine.setLesson(lesson,rows);
    root.querySelector('[data-focus-listening]')?.remove();
    const panel=global.document.createElement('details');panel.className='focus-listening';panel.dataset.focusListening='';panel.open=this.open;
-   panel.innerHTML='<summary>单句精听与跟读<small>系统语音</small></summary><div class="fl-body"><p class="fl-source-note">逐句使用系统英语语音；教材整课音频在上方播放器。</p><p class="fl-counter"></p><p class="fl-sentence" lang="en"></p><div class="fl-actions"><button type="button" data-fl-action="prev" aria-label="上一句">上一句</button><button type="button" class="fl-play" data-fl-action="play">播放本句</button><button type="button" data-fl-action="next" aria-label="下一句">下一句</button></div><div class="fl-settings"><label><input type="checkbox" data-fl-setting="loop">循环本句</label><label><input type="checkbox" data-fl-setting="follow">留 5 秒跟读</label></div><p class="fl-status" role="status" aria-live="polite"></p></div>';
+   panel.innerHTML='<summary>单句精听<small>系统语音</small></summary><div class="fl-body"><p class="fl-source-note">单句使用系统语音 · 整课音频见播放器</p><p class="fl-counter"></p><p class="fl-sentence" lang="en"></p><div class="fl-actions"><button type="button" data-fl-action="prev" aria-label="上一句">上一句</button><button type="button" class="fl-play" data-fl-action="play">播放本句</button><button type="button" data-fl-action="next" aria-label="下一句">下一句</button></div><button type="button" class="fl-notes" data-fl-action="notes">查看本句笔记</button><div class="fl-settings"><label><input type="checkbox" data-fl-setting="loop">循环本句</label><label><input type="checkbox" data-fl-setting="follow">留 5 秒跟读</label></div><p class="fl-status" role="status" aria-live="polite"></p></div>';
    panel.addEventListener('toggle',()=>{this.open=panel.open;if(!this.open)this.stop();});
    root.querySelector('.reading-layout')?.before(panel);this.panel=panel;
    panel.querySelector('[data-fl-setting="loop"]').checked=this.engine.loop;panel.querySelector('[data-fl-setting="follow"]').checked=this.engine.follow;
    root.querySelectorAll('.reading-pair').forEach(pair=>{
     if(pair.querySelector('.fl-row-actions'))return;const row=pair.querySelector('[data-sentence]');if(!row)return;const index=Number(row.dataset.sentence);
-    const bar=global.document.createElement('div');bar.className='fl-row-actions';bar.innerHTML='<button type="button" data-fl-action="pick" data-fl-index="'+index+'" aria-label="精听第 '+(index+1)+' 句">精听</button><button type="button" data-fl-action="notes" data-fl-index="'+index+'" aria-label="从第 '+(index+1)+' 句查看本课笔记">看笔记</button>';pair.append(bar);
+    const bar=global.document.createElement('div');bar.className='fl-row-actions';bar.innerHTML='<button type="button" data-fl-action="pick" data-fl-index="'+index+'" aria-label="精听第 '+(index+1)+' 句">听这一句</button>';pair.append(bar);
    });this.update();
   }
   update(){
