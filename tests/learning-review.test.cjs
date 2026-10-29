@@ -75,13 +75,23 @@ test('review-engine alone rejects placeholder and known bad glosses even without
 test('explicit practice shows future-due and unenrolled selected cards without ever writing spaced progress',()=>{
  for(const options of [{future:true},{unenrolled:true},{}]){
   const h=component(options),before=JSON.stringify(h.state());assert.equal(typeof h.ui.startPractice,'function');assert.equal(h.ui.startPractice([h.cards[0].id,'unknown',h.cards[0].id]),1);h.ui.render();assert.equal(h.ui.active.id,h.cards[0].id);
-  assert.doesNotMatch(h.container.innerHTML,/data-review-rating=/);assert.match(h.container.innerHTML,/下一张/);h.ui.input='book';h.ui.action('check',{});h.ui.action('practice-again',{});assert.equal(h.ui.active.id,h.cards[0].id);assert.equal(h.ui.revealed,false);
-  h.ui.input='book';h.ui.action('check',{});h.ui.action('practice-next',{});assert.equal(h.ui.active,null);assert.equal(h.writes(),0);assert.equal(JSON.stringify(h.state()),before);
+  assert.doesNotMatch(h.container.innerHTML,/data-review-rating=/);assert.doesNotMatch(h.container.innerHTML,/data-review-action="practice-next"/);h.ui.input='book';h.ui.action('check',{});assert.equal((h.container.innerHTML.match(/data-review-action="practice-next"/g)||[]).length,1);h.ui.action('practice-again',{});assert.equal(h.ui.active.id,h.cards[0].id);assert.equal(h.ui.revealed,false);assert.doesNotMatch(h.container.innerHTML,/data-review-action="practice-next"/);
+  h.ui.input='book';h.ui.action('check',{});assert.equal((h.container.innerHTML.match(/data-review-action="practice-next"/g)||[]).length,1);h.ui.action('practice-next',{});assert.equal(h.ui.active,null);assert.equal(h.writes(),0);assert.equal(JSON.stringify(h.state()),before);
+ }
+});
+
+test('stale next actions cannot skip unanswered practice, while checked future-due and unenrolled cards advance without scheduling or evidence',()=>{
+ for(const options of [{future:true},{unenrolled:true},{}]){
+  const h=component(options),before=JSON.stringify(h.state()),events=[];h.ui.options.onEvidence=e=>events.push(e);h.ui.startPractice(h.cards.map(c=>c.id));h.ui.render();
+  for(const card of h.cards){
+   assert.equal(h.ui.active.id,card.id);assert.equal(h.ui.revealed,false);assert.doesNotMatch(h.container.innerHTML,/data-review-action="practice-next"/);assert.doesNotMatch(h.container.innerHTML,/data-review-rating=/);h.ui.action('practice-next',{});assert.equal(h.ui.active.id,card.id);h.ui.input=card.target;h.ui.action('check',{});assert.equal((h.container.innerHTML.match(/data-review-action="practice-next"/g)||[]).length,1);h.ui.action('practice-next',{});
+  }
+  assert.equal(h.ui.active,null);assert.equal(h.ui.practiceDone.size,2);assert.equal(h.writes(),0);assert.equal(events.length,0);assert.equal(JSON.stringify(h.state()),before);
  }
 });
 
 test('leaving explicit practice restores the due queue and normal ratings still save a schedule',()=>{
- const h=component();assert.equal(typeof h.ui.startPractice,'function');h.ui.startPractice([h.cards[1].id]);h.ui.render();h.ui.clearFilters();h.ui.render();assert.equal(h.ui.cardIds,null);assert.match(h.container.innerHTML,/data-review-rating="good"/);h.ui.input=h.ui.active.target;h.ui.action('check',{});h.ui.action('rate',{dataset:{reviewRating:'good'}});assert.equal(h.writes(),1);assert.equal(Object.values(h.state().cards).some(r=>r.stage===1),true);
+ const h=component();assert.equal(typeof h.ui.startPractice,'function');h.ui.startPractice([h.cards[1].id]);h.ui.render();h.ui.clearFilters();h.ui.render();assert.equal(h.ui.cardIds,null);assert.doesNotMatch(h.container.innerHTML,/data-review-rating=/);assert.doesNotMatch(h.container.innerHTML,/data-review-action="practice-next"/);h.ui.input=h.ui.active.target;h.ui.action('check',{});assert.equal(h.ui.independentlyCorrect(),true);assert.match(h.container.innerHTML,/data-review-rating="good"/);h.ui.action('rate',{dataset:{reviewRating:'good'}});assert.equal(h.writes(),1);assert.equal(Object.values(h.state().cards).some(r=>r.stage===1),true);
 });
 
 test('ordinary spaced ratings preserve all intervals, future guards and stale revision rejection',()=>{

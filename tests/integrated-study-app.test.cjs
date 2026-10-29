@@ -23,7 +23,7 @@ test('retelling aids and legacy import are current-lesson bound without changing
  assert(!points.items.some(row=>row.category==='usage'&&row.title==='turn round'));
 });
 
-test('six-stage app saves full retelling through refresh and copies only the learner English',async()=>{
+test('six-stage app saves full retelling through refresh and copies a lesson-bound checking prompt',async()=>{
  const h=await harness({...options,loaded:{lastLesson:second}});await h.api.selectLesson(second);
  const ui=h.api.learningPipeline;await ui.goStage(3);
  assert.match(ui.render(),/data-stage="4"/);await ui.goStage(4);
@@ -33,7 +33,14 @@ test('six-stage app saves full retelling through refresh and copies only the lea
  await h.input(input,content);assert.equal(h.document.querySelector('[data-pipeline-retell]'),input,'autosave retains the focused textarea');
  assert.equal(h.stored.learningPipeline.version,2);assert.equal(h.stored.learningPipeline.lessons[second].retellText,content);
  assert.match(h.api.lessonProgress(second).summary,/课文复述/);
- await ui.copyRetell();assert.deepEqual(copied,[content],'no article hints, title or checking prompt is copied');
+ const scores=JSON.stringify(h.api.data.records);await ui.copyRetell();assert.equal(copied.length,1);
+ assert.ok(copied[0].endsWith(content),'the exact learner paragraphs and boundary whitespace are retained');
+ assert.match(copied[0],/课程：第2册第2课 · Breakfast or lunch\?/);assert.match(copied[0],/【检查要求】/);
+ assert.match(copied[0],/语法、时态、词语搭配/);assert.match(copied[0],/遗漏、事实矛盾/);
+ for(const paragraph of h.api.current.paragraphs)assert.ok(copied[0].includes(paragraph.en),'the current lesson reference is complete');
+ assert.doesNotMatch(copied[0],/Last week I went to the theatre\./,'another lesson is not included');
+ assert.equal(JSON.stringify(h.api.data.records),scores,'copying does not change learning grades');
+ assert.equal(h.stored.learningPipeline.lessons[second].retellText,content);
  const backup=h.api.backupData();assert.equal(backup.learningPipeline.lessons[second].retellText,content);
  const reloaded=await harness({...options,loaded:h.stored});await reloaded.api.selectLesson(second);
  assert.equal(reloaded.api.learningPipeline.record().stage,4);
