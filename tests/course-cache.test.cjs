@@ -9,14 +9,14 @@ function setup({scope='https://study.example/project/',stores=new Map(),version=
  const config={version:sha(version),index:descriptor('index.html',html),assets:[{...descriptor(src,js),integrity:'sha384-'+crypto.createHash('sha384').update(js).digest('base64')},{...descriptor('recall-data/book1.json',json),build:sha(json).slice(0,16)},descriptor('images/books/book-1.webp',cover)]};
  const bodies=new Map([[scope+'index.html',html],[scope+src,js],[scope+'recall-data/book1.json',json],[scope+'images/books/book-1.webp',cover]]),calls=[],events={},messages=[];let offline=false;
  const caches={async keys(){return [...stores.keys()];},async open(name){if(!stores.has(name))stores.set(name,new Map());const data=stores.get(name);return {async match(key){return data.get(typeof key==='string'?key:key.url)?.clone();},async put(key,value){if(quota)throw Error('QuotaExceededError');data.set(typeof key==='string'?key:key.url,value.clone());}};},async delete(name){return stores.delete(name);}};
- const root={registration:{scope},location:{href:scope+'course-cache-worker.js'},crypto:crypto.webcrypto,Request,Response,URL,URLSearchParams,caches,setTimeout,clearTimeout,clients:{claim:async()=>{},matchAll:async()=>[{postMessage:m=>messages.push(m)}]},addEventListener(name,fn){events[name]=fn;},async fetch(input,options){const url=typeof input==='string'?input:input.url;calls.push({url,options});if(offline)throw Error('offline');const body=bodies.get(url);return new Response(broken&&url.endsWith(broken)?'corrupt':body||'missing',{status:body===undefined?404:200});}};
+ const root={registration:{scope},location:{href:scope+'course-cache-worker.js'},crypto:crypto.webcrypto,Request,Response,URL,URLSearchParams,caches,setTimeout,clearTimeout,clients:{claim:async()=>{},matchAll:async()=>[{postMessage:m=>messages.push(m)}]},addEventListener(name,fn){events[name]=fn;},async fetch(input,options){const url=typeof input==='string'?input:input.url;calls.push({url,options});if(offline)throw Error('offline');const parsed=new URL(url);const body=bodies.get(url)??(parsed.pathname===new URL(scope).pathname?bodies.get(scope+'index.html'):undefined);return new Response(broken&&url.endsWith(broken)?'corrupt':body||'missing',{status:body===undefined?404:200});}};
  Object.defineProperty(root,'localStorage',{get(){throw Error('cache must not access learner storage');}});Object.defineProperty(root,'indexedDB',{get(){throw Error('cache must not access learner storage');}});
  const api=worker(root,config);
  async function install(){await api.install();}
  async function fetchURL(relative,{mode='navigate',method='GET'}={}){const url=new URL(relative,scope).href;return api.respond({url,mode,method});}
  return {root,config,calls,stores,events,messages,bodies,src,html,api,install,fetchURL,offline(){offline=true;}};
 }
-test('cold install verifies complete shell and warm/offline navigation never waits on network',async()=>{const h=setup();await h.install();const n=h.calls.length;h.offline();assert.equal(await (await h.fetchURL('./')).text(),h.html);assert.equal(await (await h.fetchURL('index.html?build=old')).text(),h.html);assert.equal(await (await h.fetchURL(h.src,{mode:'cors'})).text(),'runtime a');assert.equal(await (await h.fetchURL('recall-data/book1.json?sha256='+sha('{"book":1}'),{mode:'cors'})).text(),'{"book":1}');assert.equal(await (await h.fetchURL('./?v=0c03d9e')).text(),h.html);assert.equal(h.calls.length,n);assert.equal((await h.api.status()).state,'ready');});
+test('cold install verifies complete shell and offline navigation falls back to its compatible document',async()=>{const h=setup();await h.install();const n=h.calls.length;h.offline();assert.equal(await (await h.fetchURL('./')).text(),h.html);assert.equal(await (await h.fetchURL('index.html?build=old')).text(),h.html);assert.equal(await (await h.fetchURL(h.src,{mode:'cors'})).text(),'runtime a');assert.equal(await (await h.fetchURL('recall-data/book1.json?sha256='+sha('{"book":1}'),{mode:'cors'})).text(),'{"book":1}');assert.equal(await (await h.fetchURL('./?v=0c03d9e')).text(),h.html);assert.equal(h.calls.length,n+3);assert.equal((await h.api.status()).state,'ready');});
 test('first install uses browser HTTP cache with SRI and index takes explicit network path',async()=>{const h=setup();await h.install();assert.equal(h.calls.find(x=>x.url.endsWith(h.src)).options.cache,'force-cache');assert.match(h.calls.find(x=>x.url.endsWith(h.src)).options.integrity,/^sha384-/);assert.equal(h.calls.find(x=>x.url.endsWith('index.html')).options.cache,'no-store');});
 test('failed partial or quota install retains usable previous cache and never stores unverified resources',async()=>{const h=setup();await h.install();const oldKeys=[...h.stores.keys()];for(const bad of [setup({stores:h.stores,version:'b',broken:'.js'}),setup({stores:h.stores,version:'c',quota:true})]){await assert.rejects(bad.install());assert.deepEqual([...h.stores.keys()],oldKeys);assert.equal((await h.api.status()).state,'ready');}h.offline();assert.equal(await (await h.fetchURL('./')).text(),h.html);});
 test('new release installs atomically without forcing activation and old worker keeps its compatible HTML',async()=>{const old=setup();await old.install();const next=setup({stores:old.stores,version:'b'});await next.install();old.offline();next.offline();assert.equal(await (await old.fetchURL('./')).text(),old.html);assert.equal(await (await next.fetchURL('./')).text(),next.html);assert.equal('skipWaiting' in next.root,false);assert(next.events.install&&next.events.activate&&next.events.fetch);});
@@ -35,3 +35,33 @@ test('frozen old tab preserves compatible cache; further versions stop at retent
 test('missing message-channel support with existing tabs retains old complete courses conservatively',async()=>{const stores=new Map();for(const version of ['a','b'])await setup({stores,version}).install();const c=setup({stores,version:'c'});await c.install();c.root.clients.matchAll=async()=>[{url:'https://study.example/project/',postMessage(){}}];await c.api.activate();assert.equal(stores.size,3);});
 
 test('a stalled network install has a finite deadline and removes its partial cache',async()=>{const h=setup();h.root.fetch=()=>new Promise(()=>{});h.root.setTimeout=fn=>setTimeout(fn,0);await assert.rejects(h.install(),/timed out/);assert.equal(h.stores.size,0);});
+
+test('online reopening the unchanged original URL reads the latest document while immutable old resources remain compatible',async()=>{
+ const h=setup();await h.install();h.bodies.set('https://study.example/project/index.html','<html>latest release</html>');
+ assert.equal(await (await h.fetchURL('./')).text(),'<html>latest release</html>');
+ assert.equal(h.calls.at(-1).options.cache,'no-store');
+ h.offline();assert.equal(await (await h.fetchURL('./')).text(),h.html);
+});
+
+test('successful install event activates the new worker without navigating or messaging a reload to existing editors',async()=>{
+ const h=setup();let activated=0,navigated=0;h.root.skipWaiting=async()=>activated++;h.root.clients.matchAll=async()=>[{url:'https://study.example/project/',postMessage:m=>h.messages.push(m),navigate:()=>navigated++}];
+ let task;h.events.install({waitUntil:p=>task=p});await task;assert.equal(activated,1);assert.equal(navigated,0);assert(!h.messages.some(m=>m.type==='reload'));
+});
+
+test('full pinned cache budget permits verified online upgrade without removing compatible caches or learner data',async()=>{
+ const stores=new Map();for(const version of ['a','b','c','d']){const h=setup({stores,version});h.root.clients.matchAll=async()=>[{url:'https://study.example/project/',postMessage(){}}];await h.install();}
+ const oldKeys=[...stores.keys()],h=setup({stores,version:'e'});h.root.clients.matchAll=async()=>[{url:'https://study.example/project/',postMessage(){}}];let activated=0;h.root.skipWaiting=async()=>activated++;
+ let task;h.events.install({waitUntil:p=>task=p});await task;assert.equal(activated,1);assert.deepEqual([...stores.keys()],oldKeys);assert.equal((await h.api.status()).state,'online');assert.equal(await (await h.fetchURL('./')).text(),h.html);
+});
+
+test('a newer navigation never substitutes error pages and a stalled request falls back to the complete cached document',async()=>{
+ const h=setup();await h.install();h.root.fetch=async()=>new Response('upstream error',{status:503});assert.equal(await (await h.fetchURL('./')).text(),h.html);
+ h.root.fetch=()=>new Promise(()=>{});h.root.setTimeout=fn=>setTimeout(fn,0);assert.equal(await (await h.fetchURL('./')).text(),h.html);
+});
+
+test('cache-full online activation still serves a retained old package for an editor and rejects unverified upgrade HTML',async()=>{
+ const old=setup();await old.install();const next=setup({stores:old.stores,version:'b',quota:true});let activated=0;next.root.skipWaiting=async()=>activated++;let task;next.events.install({waitUntil:p=>task=p});await task;assert.equal(activated,1);next.offline();assert.equal(await (await next.fetchURL(old.src,{mode:'cors'})).text(),'runtime a');
+ const bad=setup({version:'c',quota:true,broken:'index.html'});bad.root.skipWaiting=async()=>{throw Error('must not activate');};bad.events.install({waitUntil:p=>task=p});await assert.rejects(task,/integrity/);
+});
+
+test('non-HTML success responses cannot replace a valid offline learning document',async()=>{const h=setup();await h.install();h.root.fetch=async()=>new Response('{"error":"maintenance"}');assert.equal(await (await h.fetchURL('./')).text(),h.html);});

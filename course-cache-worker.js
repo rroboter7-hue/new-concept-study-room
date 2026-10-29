@@ -9,6 +9,7 @@
   const cacheName = prefix + config.version, marker = new URL('.__study_course_ready__', base).href;
   const assets = new Map(config.assets.map(asset => [new URL(asset.src, base).href, asset]));
   const indexURL = new URL('index.html', base).href;
+  let onlineOnly = false;
   const owned = name => name.startsWith(prefix) && /^[a-f0-9]{64}$/.test(name.slice(prefix.length));
   const hex = bytes => Array.from(new Uint8Array(bytes), b => b.toString(16).padStart(2, '0')).join('');
   async function complete(name) {
@@ -61,7 +62,7 @@
       const nextBytes=config.index.bytes+config.assets.reduce((sum,asset)=>sum+asset.bytes,0);
       // Suspended tabs can temporarily pin extra old versions. Refuse another
       // update at the budget instead of deleting a tab's compatible course.
-      if(completeNames.length>=4||retainedBytes+nextBytes>128*1024*1024)throw Error('Course cache retention budget reached');
+      if(completeNames.length>=4||retainedBytes+nextBytes>128*1024*1024){const error=Error('Course cache retention budget reached');error.name='CourseCacheBudgetError';throw error;}
       const names = await root.caches.keys(), cache = await root.caches.open(cacheName);
       // Verify the compatible HTML first. A deployment racing this worker cannot
       // publish a mixed version; its partial cache is discarded on any failure.
@@ -100,10 +101,22 @@
     previous.sort((a,b)=>b.time-a.time);
     if(!uncertain)for(const entry of previous.slice(retainPrevious))if(!pinned.has(entry.name))await root.caches.delete(entry.name);
   }
+  async function installAndActivate() {
+    try { await install(); }
+    catch (error) {
+      // A full offline cache must not permanently pin the site to an old UI.
+      // Keep all compatible caches and run this verified release online instead.
+      if(!/^(?:CourseCacheBudgetError|QuotaExceededError)$/.test(error.name)&&!/QuotaExceededError/.test(error.message||''))throw error;
+      await download(config.index,true);
+      onlineOnly=true;
+      await notify({state:'online',version:config.version});
+    }
+    // Activation changes fetch handling only. Never navigate/reload an editor.
+    if(typeof root.skipWaiting==='function')await root.skipWaiting();
+  }
   async function activate() {
     await prune(1);
-    // No skipWaiting: activation follows the normal lifecycle, after old tabs
-    // close. Claiming the first uncontrolled tab does not reload its editor.
+    // Claiming clients does not navigate them; pinned old resources are retained.
     await root.clients.claim();
   }
   function keyFor(request) {
@@ -125,9 +138,23 @@
     if(/^recall-data\//.test(relative)&&keys.length===1&&keys[0]==='build'&&/^[a-f0-9]{16}$/.test(url.searchParams.get('build')))return canonical;
     return null;
   }
+  async function latestDocument(request) {
+    const controller=typeof AbortController==='function'?new AbortController():null;let timer;
+    try {
+      return await Promise.race([
+        (async()=>{
+          const response=await root.fetch(request.url,{cache:'no-store',credentials:'same-origin',mode:'same-origin',redirect:'error',...(controller?{signal:controller.signal}:{})});
+          if(!response||!response.ok||response.redirected||response.type==='opaque')throw Error('Latest document unavailable');
+          if(!/<(?:!doctype\s+html|html)(?:\s|>)/i.test(await response.clone().text()))throw Error('Not an HTML document');
+          return response;
+        })(),
+        new Promise((_,reject)=>{timer=root.setTimeout(()=>{if(controller)controller.abort();reject(Error('Document check timed out'));},2500);})
+      ]);
+    }catch(_){return null;}finally{root.clearTimeout(timer);}
+  }
   async function respond(request) {
     const key=keyFor(request);if(!key)return null;
-    if(!await complete(cacheName))return null;
+    if(key===indexURL&&request.mode==='navigate'){const latest=await latestDocument(request);if(latest)return latest;}
     const url=new URL(request.url),revision=url.searchParams.get('sha256'),build=url.searchParams.get('build');
     const immutable=/\/runtime-(?:scripts|styles)-[a-f0-9]{20}\.(?:js|css)$/.test(key);
     const candidates=[cacheName];
@@ -139,8 +166,8 @@
     }
     return null;
   }
-  async function status(){return {state:await complete(cacheName)?'ready':'missing',version:config.version};}
-  root.addEventListener('install',event=>event.waitUntil(install()));
+  async function status(){return {state:await complete(cacheName)?'ready':onlineOnly?'online':'missing',version:config.version};}
+  root.addEventListener('install',event=>event.waitUntil(installAndActivate()));
   root.addEventListener('activate',event=>event.waitUntil(activate()));
   root.addEventListener('fetch',event=>{
     if(!keyFor(event.request))return;
