@@ -2,6 +2,15 @@
 const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs'),path=require('node:path'),os=require('node:os'),vm=require('node:vm'),crypto=require('node:crypto');
 const {bundleRuntime}=require('../dev/runtime-bundles.cjs');
 const sha=bytes=>crypto.createHash('sha256').update(bytes).digest('hex');
+
+test('inline vector covers do not download old raster covers into the offline cache',t=>{
+ const root=fs.mkdtempSync(path.join(os.tmpdir(),'inline-cover-cache-'));t.after(()=>fs.rmSync(root,{recursive:true,force:true}));
+ fs.writeFileSync(path.join(root,'runtime.js'),'window.ready=true;');fs.mkdirSync(path.join(root,'images/books'),{recursive:true});
+ for(let book=1;book<=4;book++)fs.writeFileSync(path.join(root,'images/books/book-'+book+'.webp'),'legacy cover');
+ const builder=require('../dev/course-cache.cjs'),manifest={scripts:[{src:'runtime.js',files:['book-covers.js']}],styles:[]};
+ assert.deepEqual(builder.courseAssets(root,manifest).map(row=>row.src),['runtime.js']);
+ manifest.scripts[0].files=['legacy.js'];assert.equal(builder.courseAssets(root,manifest).length,5,'legacy builds retain their actual dependencies');
+});
 test('published worker binds exact final HTML, bounded runtime/covers/text/recall assets and inline client',t=>{
  const root=fs.mkdtempSync(path.join(os.tmpdir(),'course-cache-build-'));t.after(()=>fs.rmSync(root,{recursive:true,force:true}));
  const write=(name,body)=>{const target=path.join(root,name);fs.mkdirSync(path.dirname(target),{recursive:true});fs.writeFileSync(target,body);};

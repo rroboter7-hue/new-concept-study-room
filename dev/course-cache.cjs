@@ -3,7 +3,8 @@ const fs=require('node:fs'),path=require('node:path'),crypto=require('node:crypt
 const hash=bytes=>crypto.createHash('sha256').update(bytes).digest('hex');
 function courseAssets(root,manifest){
  const entries=[...manifest.scripts,...manifest.styles].map(asset=>({src:asset.src,integrity:asset.integrity}));
- for(let book=1;book<=4;book++){const src='images/books/book-'+book+'.webp';if(fs.existsSync(path.join(root,src)))entries.push({src});}
+ const inlineCovers=manifest.scripts.some(asset=>Array.isArray(asset.files)&&asset.files.includes('book-covers.js'));
+ if(!inlineCovers)for(let book=1;book<=4;book++){const src='images/books/book-'+book+'.webp';if(fs.existsSync(path.join(root,src)))entries.push({src});}
  for(const folder of ['text-data','recall-data']){
   const directory=path.join(root,folder);if(!fs.existsSync(directory))continue;
   for(const name of fs.readdirSync(directory).sort())if(/^[a-z0-9-]+\.json$/.test(name))entries.push({src:folder+'/'+name});

@@ -9,7 +9,7 @@
   var done = {}, executed = {}, failed = [], fatal = false, finished = false;
   var loading = [], activeSource = '', sourceError = null;
   var versionChecked = false;
-  var intent = '', readyTimer = null, readyObserver = null, readyChecks = 0;
+  var intent = '', readyTimer = null, readyObserver = null, readyChecks = 0, cacheScheduled = false, hinted = {};
   function el(id) { return doc.getElementById('study-startup' + (id ? '-' + id : '')); }
   function text(id, value) { var target = el(id); if (target) target.textContent = value; }
   function show(id, visible) { var target = el(id); if (target) target.hidden = !visible; }
@@ -67,6 +67,12 @@
     root.removeEventListener('error', onError);
     // Clear before dispatch so reentrant or duplicate deliveries cannot navigate twice.
     intent = ''; if (target) target.click();
+    // Offline preparation is secondary to the first usable screen. An existing
+    // worker can still serve caches before registration is checked again.
+    if (!cacheScheduled && manifest.courseCache && root.StudyCourseCacheClient) {
+      cacheScheduled = true;
+      root.setTimeout(function () { root.StudyCourseCacheClient.start(manifest.courseCache); }, 500);
+    }
   }
   function update() {
     if (fatal || failed.length || finished) return;
@@ -164,11 +170,26 @@
       if (task.kind === 'script') { stopForExecution(task.asset.src); return; }
       task.complete = true; unbind(task); cssLeft -= 1; update();
     };
-    task.timer = root.setTimeout(function () { if (task.node === node) networkFailure(task); }, 30000);
+    task.timer = root.setTimeout(function () {
+      if (task.node !== node || task.complete || fatal || finished) return;
+      // Do not abandon a large, still-pending preload after only 30 seconds.
+      // A second URL would compete with that same download on a slow mobile link.
+      if (task.kind === 'script' && task.asset.bytes > 500000) {
+        text('message', '连接较慢，正在继续下载课程文件…');
+        task.timer = root.setTimeout(function () { if (task.node === node) networkFailure(task); }, 90000);
+      } else networkFailure(task);
+    }, 30000);
     doc.head.appendChild(node);
   }
   function next() {
     update(); if (fatal || finished || current >= manifest.scripts.length) return;
+    var upcoming = manifest.scripts[current + 1];
+    if (current >= 1 && upcoming && !hinted[upcoming.src]) {
+      hinted[upcoming.src] = true;
+      var hint = doc.createElement('link'); hint.rel = 'preload'; hint.as = 'script'; hint.href = upcoming.src;
+      if (upcoming.integrity) { hint.integrity = upcoming.integrity; hint.crossOrigin = 'anonymous'; }
+      doc.head.appendChild(hint);
+    }
     var task = {kind:'script', asset:manifest.scripts[current], attempt:0, complete:false};
     loading.push(task); request(task);
   }
@@ -212,7 +233,6 @@
   }
   function start(config) {
     if (started) return; started = true; manifest = config;
-    if (config.courseCache && root.StudyCourseCacheClient) root.StudyCourseCacheClient.start(config.courseCache);
     doc.body.className = (doc.body.className || '') + ' study-booting';
     show('', true); show('error', false); show('retry', false); show('reload', false);
     ['1','2','3','4','continue'].forEach(function (key) {
@@ -240,11 +260,11 @@ if (typeof module === 'object' && module.exports) module.exports.renderHTML = fu
   var encoded = JSON.stringify(manifest).replace(/</g, '\\u003c').replace(/\u2028/g, '\\u2028').replace(/\u2029/g, '\\u2029');
   var attr = function (value) { return String(value).replace(/[&"<>]/g, function (ch) { return {'&':'&amp;','"':'&quot;','<':'&lt;','>':'&gt;'}[ch]; }); };
   var preload = function (asset, kind) { return '<link rel="preload" as="' + kind + '" href="' + attr(asset.src) + '"' + (asset.integrity ? ' integrity="' + attr(asset.integrity) + '" crossorigin="anonymous"' : '') + '>'; };
-  var books = ['第一册','第二册','第三册','第四册'], levels = ['基础','进阶','提升','拓展'];
-  var shelf = '<section id="study-startup" aria-label="知新学习书架"><div class="startup-page"><header><strong>知新</strong><span>· 新概念英语学习室</span></header><h1>选一本，<br>继续进步<span>。</span></h1><div class="startup-books" aria-label="选择分册">' + books.map(function (book, i) { return '<button id="study-startup-book-' + (i + 1) + '" type="button" aria-label="打开' + book + '，' + levels[i] + '" aria-pressed="false"><img src="images/books/book-' + (i + 1) + '.webp" alt="' + book + ' · ' + levels[i] + '" width="400" height="384" decoding="async"></button>'; }).join('') + '</div><section class="startup-resume" aria-label="继续学习"><p>每一天，进步一点</p><h2>接着上次的进度学习</h2><button id="study-startup-continue" type="button" aria-pressed="false">继续学习 <span aria-hidden="true">→</span></button></section><div class="startup-status" role="status" aria-live="polite"><p id="study-startup-intent">可以先选一本，课程正在后台准备。</p><p id="study-startup-message">正在准备课程文件…</p><progress id="study-startup-progress" aria-label="课程加载进度"></progress><p id="study-startup-cache"></p><p id="study-startup-error" hidden></p><button id="study-startup-retry" type="button" hidden>重试未完成文件</button><button id="study-startup-reload" type="button" hidden>重新加载页面</button></div></div></section><noscript>请启用浏览器 JavaScript 后打开学习室。</noscript>';
+  var books = ['第一册','第二册','第三册','第四册'], levels = ['基础','进阶','提升','拓展'], covers = require('./book-covers.js');
+  var shelf = '<section id="study-startup" aria-label="知新学习书架"><div class="startup-page"><header><strong>知新</strong><span>· 新概念英语学习室</span></header><h1>选一本，<br>继续进步<span>。</span></h1><div class="startup-books" aria-label="选择分册">' + books.map(function (book, i) { return '<button id="study-startup-book-' + (i + 1) + '" type="button" aria-label="打开' + book + '，' + levels[i] + '" aria-pressed="false"><img src="' + attr(covers.src(i + 1)) + '" alt="' + book + ' · ' + levels[i] + '" width="400" height="384" decoding="async"></button>'; }).join('') + '</div><section class="startup-resume" aria-label="继续学习"><p>每一天，进步一点</p><h2>接着上次的进度学习</h2><button id="study-startup-continue" type="button" aria-pressed="false">继续学习 <span aria-hidden="true">→</span></button></section><div class="startup-status" role="status" aria-live="polite"><p id="study-startup-intent">可以先选一本，课程正在后台准备。</p><p id="study-startup-message">正在准备课程文件…</p><progress id="study-startup-progress" aria-label="课程加载进度"></progress><p id="study-startup-cache"></p><p id="study-startup-error" hidden></p><button id="study-startup-retry" type="button" hidden>重试未完成文件</button><button id="study-startup-reload" type="button" hidden>重新加载页面</button></div></div></section><noscript>请启用浏览器 JavaScript 后打开学习室。</noscript>';
   var css = 'html,body{overscroll-behavior-y:none}body.study-booting{margin:0;background:#fff;color:#080f27}body.study-booting>:not(#study-startup):not(script):not(noscript){visibility:hidden}#study-startup[hidden],#study-startup [hidden]{display:none!important}#study-startup{position:fixed;z-index:99999;inset:0;overflow:auto;background:#fff;color:#080f27;font:16px/1.6 Inter,-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei",sans-serif}#study-startup *{box-sizing:border-box}#study-startup .startup-page{width:100%;max-width:570px;margin:auto;padding:23px 17px max(24px,env(safe-area-inset-bottom))}#study-startup header{display:flex;align-items:center;gap:8px;min-height:32px;margin-bottom:24px}#study-startup header strong{font-size:26px;line-height:1;color:#0873ff;letter-spacing:-1px}#study-startup header span{color:#6b7484;font-size:14px;font-weight:600}#study-startup h1{font-size:46px;font-weight:850;line-height:1.15;letter-spacing:-2.3px;margin:0 0 18px}#study-startup h1 span{color:#0873ff}#study-startup .startup-books{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 11px;margin-bottom:13px}#study-startup button{font:inherit;cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent}#study-startup button:focus-visible{outline:3px solid #006dff;outline-offset:3px}#study-startup .startup-books button{display:block;min-width:0;border:0;border-radius:12px;padding:0;background:#f0f6fd;aspect-ratio:400/384;overflow:hidden}#study-startup .startup-books img{display:block;width:100%;height:100%;object-fit:cover}#study-startup .startup-books [aria-pressed="true"]{outline:3px solid #0873ff;outline-offset:0}#study-startup .startup-resume{border-radius:15px;padding:16px;background:#f0f6fd;margin-bottom:10px}#study-startup .startup-resume p{font-size:14px;color:#68758a;margin:0 0 7px}#study-startup h2{font-size:21px;line-height:1.35;margin:0 0 18px;letter-spacing:-.8px}#study-startup-continue{display:flex;align-items:center;justify-content:center;gap:14px;width:100%;min-height:46px;border:0;border-radius:12px;background:#0873ff;color:#fff;font-size:18px;font-weight:650;letter-spacing:2px}#study-startup-continue[aria-pressed="true"]{background:#005bc9}#study-startup .startup-status{border:1px solid #dbe5f0;border-radius:15px;padding:14px 16px;color:#5b7083;font-size:14px;overflow-wrap:anywhere}#study-startup .startup-status p{margin:0 0 8px}#study-startup-intent{color:#18334b;font-weight:600}#study-startup progress{display:block;width:100%;accent-color:#0873ff;height:8px}#study-startup-error{margin-top:12px!important;color:#9c2828}#study-startup .startup-status button{min-height:44px;padding:9px 12px;margin:12px 8px 0 0;border:1px solid #b7d6ff;border-radius:8px;background:#edf5ff;color:#075ec9}@media(min-width:761px){#study-startup .startup-page{max-width:1120px;padding:35px 44px 40px;display:grid;grid-template-columns:minmax(0,2fr) minmax(280px,1fr);gap:0 32px;align-items:start}#study-startup header{grid-column:1/-1;margin-bottom:38px}#study-startup header strong{font-size:30px}#study-startup header span{font-size:16px}#study-startup h1{grid-column:1/-1;font-size:62px;margin-bottom:32px}#study-startup .startup-books{grid-column:1;grid-row:3/6;gap:16px;margin:0}#study-startup .startup-resume{grid-column:2;padding:25px;margin-bottom:16px}#study-startup .startup-status{grid-column:2}#study-startup h2{font-size:24px;margin-bottom:24px}}@media(max-width:359px){#study-startup header span{font-size:12px}#study-startup h1{font-size:42px}#study-startup h2{font-size:18px}}';
   return {
-    head:'<style id="study-startup-style">' + css + '</style>' + manifest.styles.map(function (asset) { return preload(asset, 'style'); }).join('') + manifest.scripts.map(function (asset) { return preload(asset, 'script'); }).join(''),
+    head:'<style id="study-startup-style">' + css + '</style>' + manifest.styles.map(function (asset) { return preload(asset, 'style'); }).join('') + manifest.scripts.slice(0,2).map(function (asset) { return preload(asset, 'script'); }).join(''),
     bodyStart:shelf,
     bodyEnd:'<script>\n' + loaderSource.replace(/<\/script/gi, '<\\/script') + '\nwindow.StudyStartup.start(' + encoded + ');\n</script>'
   };

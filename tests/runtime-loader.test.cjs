@@ -3,11 +3,11 @@ const test=require('node:test'),assert=require('node:assert/strict'),fs=require(
 const file=path.resolve(__dirname,'../runtime-loader.js');
 const factory=fs.existsSync(file)?require(file):()=>({start(){},install(){}});
 function setup(){
- const nodes=new Map(),requests=[],timers=new Map(),listeners={},executions=[];let clock=0;
+ const nodes=new Map(),requests=[],preloads=[],timers=new Map(),listeners={},executions=[];let clock=0;
  const node=tag=>({tagName:tag.toUpperCase(),hidden:false,disabled:false,textContent:'',attributes:{},setAttribute(k,v){this.attributes[k]=String(v);},remove(){this.removed=true;},addEventListener(k,fn){this['on'+k]=fn;}});
  for(const id of ['study-startup','study-startup-message','study-startup-progress','study-startup-error','study-startup-retry','study-startup-reload','study-startup-intent','study-startup-continue','study-startup-book-1','study-startup-book-2','study-startup-book-3','study-startup-book-4'])nodes.set(id,node('div'));
  const document={body:node('body'),getElementById:id=>nodes.get(id),createElement:node};
- document.head={appendChild(el){if(el.tagName==='SCRIPT'&&!el.src){try{vm.runInContext(el.text||el.textContent,context);executions.push(el.text||el.textContent);}catch(error){for(const fn of listeners.error||[])fn({error,message:error.message,filename:'inline.js'});}return el;}if(el.rel!=='preload')requests.push(el);return el;}};
+ document.head={appendChild(el){if(el.tagName==='SCRIPT'&&!el.src){try{vm.runInContext(el.text||el.textContent,context);executions.push(el.text||el.textContent);}catch(error){for(const fn of listeners.error||[])fn({error,message:error.message,filename:'inline.js'});}return el;}if(el.rel==='preload')preloads.push(el);else requests.push(el);return el;}};
  const root={document,location:{href:'https://study.example/project/?build=old#study',assign(value){this.assigned=value;}},navigator:{onLine:true},setTimeout(fn,ms){timers.set(++clock,{fn,ms});return clock;},clearTimeout:id=>timers.delete(id),addEventListener(k,fn){(listeners[k]??=[]).push(fn);},removeEventListener(k,fn){listeners[k]=(listeners[k]||[]).filter(f=>f!==fn);},console};
  Object.defineProperty(root,'localStorage',{get(){throw Error('startup must never read or clear study data');}});
  root.window=root;const context=vm.createContext(root),loader=factory(root);root.StudyStartup=loader;
@@ -15,8 +15,39 @@ function setup(){
  const manifest={version:1,build:'test',scripts,styles:[{src:'runtime-style.abc.css',integrity:'sha384-css'}]};
  const deliver=(index,source)=>loader.install(scripts[index].id,[{name:scripts[index].files[0],source:source||'window.order=(window.order||[]).concat('+index+');'}]);
  const fireTimer=()=>{const [id,t]=[...timers].sort((a,b)=>a[1].ms-b[1].ms)[0]||[];if(t){timers.delete(id);t.fn();}return t;};
- return {root,loader,nodes,requests,timers,listeners,executions,manifest,deliver,fireTimer};
+ return {root,loader,nodes,requests,preloads,timers,listeners,executions,manifest,deliver,fireTimer};
 }
+
+test('offline course caching waits until the actual shelf is ready instead of competing with startup downloads',()=>{
+ const h=setup();let cacheStarts=0;h.root.StudyCourseCacheClient={start(){cacheStarts++;}};h.manifest.courseCache={version:'fixture',worker:'course-cache-worker.js'};
+ h.loader.start(h.manifest);assert.equal(cacheStarts,0);
+ h.deliver(0);h.deliver(1);assert.equal(cacheStarts,0);h.requests.find(x=>x.tagName==='LINK').onload();
+ assert.equal(h.nodes.get('study-startup').hidden,true);assert.equal(cacheStarts,0,'the first paint gets priority');
+ h.fireTimer();assert.equal(cacheStarts,1);
+});
+
+test('a slow large package keeps its in-flight download at 30 seconds instead of duplicating it with a retry URL',()=>{
+ const h=setup();h.manifest.scripts[0].bytes=3000000;h.loader.start(h.manifest);h.requests.find(x=>x.tagName==='LINK').onload();
+ assert.equal(h.fireTimer().ms,30000);assert.match(h.nodes.get('study-startup-message').textContent,/继续下载/);
+ assert.equal(h.requests.filter(x=>x.tagName==='SCRIPT').length,1);assert([...h.timers.values()].every(t=>t.ms<=90000));
+ h.deliver(0);h.deliver(1);assert.deepEqual(Array.from(h.root.order),[0,1]);assert.equal(h.nodes.get('study-startup').hidden,true);
+});
+
+test('a genuinely stalled large package still has a bounded deadline and retry',()=>{
+ const h=setup();h.manifest.scripts[0].bytes=3000000;h.loader.start(h.manifest);h.requests.find(x=>x.tagName==='LINK').onload();
+ assert.equal(h.fireTimer().ms,30000);assert.equal(h.fireTimer().ms,90000);assert.equal(h.fireTimer().ms,600);
+ assert.equal(h.requests.filter(x=>x.tagName==='SCRIPT').length,2);assert.match(h.requests.filter(x=>x.tagName==='SCRIPT').at(-1).src,/retry=1/);
+});
+
+test('a rolling two-package preload window preserves ordered execution and does not preload the complete course upfront',()=>{
+ const h=setup();h.manifest.scripts.push({id:'three',src:'runtime-three.js',files:['c.js'],integrity:'sha384-three'},{id:'four',src:'runtime-four.js',files:['d.js'],integrity:'sha384-four'});
+ const html=factory.renderHTML(h.manifest,fs.readFileSync(file,'utf8'));
+ assert(html.head.includes('href="runtime-one.abc.js"'));assert(html.head.includes('href="runtime-two.def.js"'));
+ assert(!html.head.includes('href="runtime-three.js"'));assert(!html.head.includes('href="runtime-four.js"'));
+ h.loader.start(h.manifest);assert.equal(h.preloads.length,0);h.deliver(0);
+ assert.equal(h.preloads.length,1);assert.equal(h.preloads[0].href,'runtime-three.js');assert.equal(h.preloads[0].integrity,'sha384-three');
+ h.deliver(1);assert.equal(h.preloads[1].href,'runtime-four.js');assert.deepEqual(Array.from(h.root.order),[0,1]);
+});
 function canonicalManifest(h){
  h.manifest.scripts.forEach((asset,i)=>{asset.src='runtime-scripts-'+String(i+1).repeat(20)+'.js';asset.id=String(i+1).repeat(64);asset.integrity='sha384-'+Buffer.alloc(48,i+1).toString('base64');});
  h.manifest.styles[0].src='runtime-styles-'+('3'.repeat(20))+'.css';h.manifest.styles[0].integrity='sha384-'+Buffer.alloc(48,3).toString('base64');
@@ -127,7 +158,7 @@ test('the initial HTML already offers all four books and continuing before any c
  const h=setup(),html=factory.renderHTML(h.manifest,'').bodyStart;
  for(const book of [1,2,3,4]){
   assert.match(html,new RegExp('id="study-startup-book-'+book+'"'));
-  assert.match(html,new RegExp('src="images/books/book-'+book+'\\.webp"'));
+  assert.match(html,new RegExp('alt="'+['第一册','第二册','第三册','第四册'][book-1]+' · '));
  }
  assert.match(html,/id="study-startup-continue"/);assert.match(html,/选一本/);
  h.loader.start(h.manifest);h.nodes.get('study-startup-book-2').onclick();
