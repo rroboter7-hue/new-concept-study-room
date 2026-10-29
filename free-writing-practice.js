@@ -375,10 +375,17 @@
       const feedback=row.feedback[index];
       return feedback ? feedback.incomplete || feedback.issues.length ? '需复核' : '已做本地检查 · 仍需复核' : '草稿 · 未检查';
     }
+    hasCorrectionNotes(row,index) {
+      return ['notes','reference','retry'].some(field=>text(row?.corrections?.[index]?.[field],3000).trim().length>0);
+    }
     updateLineStatus(entry,key,index) {
       if(entry!==this.active || key!==entry.draft.activeTargetKey)return;
+      const row=entry.draft.targets[key],hasNotes=this.hasCorrectionNotes(row,index);
       const node=this.container?.querySelector?.('[data-free-line-status="'+index+'"]');
-      if(node)node.textContent=this.lineStatus(entry.draft.targets[key],index);
+      if(node)node.textContent=this.lineStatus(row,index);
+      const panel=this.container?.querySelector?.('[data-free-correction-panel="'+index+'"]');
+      panel?.classList?.toggle?.('has-notes',hasNotes);
+      const summary=panel?.querySelector?.('summary');if(summary)summary.textContent=hasNotes?'订正记录 · 已填写':'订正记录（可选）';
     }
     targetCountLabel(target,row) {
       const written=writtenCount(row);
@@ -557,8 +564,8 @@
       return '<div class="free-writing-feedback"><p class="free-writing-feedback-title">' + (feedback.incomplete ? '本句检查未完成' : feedback.issues.length ? '检查建议' : '有限规则未发现已覆盖的问题') + '</p>' + feedback.issues.map(issue => '<div class="free-writing-issue"><strong>' + escapeHTML(TYPE_LABELS[issue.type] || TYPE_LABELS.review) + '</strong><p>' + escapeHTML(issue.message) + '</p>' + (issue.replacement ? '<p class="free-writing-reference">修改参考：' + (issue.original ? '<del>' + escapeHTML(issue.original) + '</del> → ' : '') + '<span lang="en">' + escapeHTML(issue.replacement) + '</span></p>' : '') + '</div>').join('') + (feedback.reference ? '<p class="free-writing-reference">局部修改参考（整句仍需复核）：<span lang="en">' + escapeHTML(feedback.reference) + '</span></p>' : '') + '<p class="free-writing-review">' + feedback.reviewNeeded.map(escapeHTML).join(' ') + '</p></div>';
     }
     correctionHTML(row,index) {
-      const correction=row.corrections[index];
-      return '<p class="free-writing-line-status" data-free-line-status="'+index+'">'+this.lineStatus(row,index)+'</p><details class="free-writing-correction"><summary>订正记录（可选）</summary><p>可粘贴豆包等外部 AI 的订正意见与参考。上方保留原句；订正记录不会改变成绩，也不增加任务。</p>'+['notes','reference','retry'].map(field=>'<label>'+({notes:'外部订正意见（可选）',reference:'外部参考句（可选）',retry:'我的订正句（原句保留）'})[field]+'<textarea rows="2" data-free-correction="'+field+'" data-free-line="'+index+'" maxlength="'+(field==='notes'?3000:MAX_ANSWER)+'"'+(field==='notes'?'':' lang="en"')+'>'+escapeHTML(correction[field])+'</textarea></label>').join('')+'<button type="button" class="button subtle" data-free-action="record-correction" data-free-line="'+index+'">记录我的订正</button></details>';
+      const correction=row.corrections[index],hasNotes=this.hasCorrectionNotes(row,index);
+      return '<p class="free-writing-line-status" data-free-line-status="'+index+'">'+this.lineStatus(row,index)+'</p><details class="free-writing-correction'+(hasNotes?' has-notes':'')+'" data-free-correction-panel="'+index+'"><summary>'+(hasNotes?'订正记录 · 已填写':'订正记录（可选）')+'</summary><p>可粘贴豆包等外部 AI 的订正意见与参考。上方保留原句；订正记录不会改变成绩，也不增加任务。</p>'+['notes','reference','retry'].map(field=>'<label>'+({notes:'外部订正意见（可选）',reference:'外部参考句（可选）',retry:'我的订正句（原句保留）'})[field]+'<textarea rows="2" data-free-correction="'+field+'" data-free-line="'+index+'" maxlength="'+(field==='notes'?3000:MAX_ANSWER)+'"'+(field==='notes'?'':' lang="en"')+'>'+escapeHTML(correction[field])+'</textarea></label>').join('')+'<button type="button" class="button subtle" data-free-action="record-correction" data-free-line="'+index+'">记录我的订正</button></details>';
     }
     render() {
       const entry = this.ensure();

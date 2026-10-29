@@ -510,6 +510,18 @@
    getKeyPoints:lesson=>StudyLessonKeyPoints.forLesson({...lesson,usage:writingTargets(lesson).phrases},{questions:questionsForPipeline(lesson.id,lesson)}),onShelf:showBookshelf,onSelectLesson:selectLesson,escapeHTML:E,toast});
   document.addEventListener('change',event=>{if(event.target.matches?.('[data-pipeline-translation]')){data.settings.translation=event.target.checked;persist();learningPipeline.refresh();}if(event.target.matches?.('[data-pipeline-speed]')){data.settings.rate=Number(event.target.value);audio.setRate(data.settings.rate);persist();}});
  }
+ // The cache client cannot inspect or save learner data. Only this app can
+ // authorize an explicit update from a settled shelf after existing draft saves.
+ if(window.StudyCourseCacheClient){
+  const canApplyCourseUpdate=()=>!!bookshelf?.isVisible&&!bookshelf.navigationPending&&!bookshelf.root.inert&&!bookshelf.drawerOpen&&!learningPipeline?.container&&!document.querySelector('#dialog-root .dialog-overlay')&&!document.activeElement?.matches?.('input,textarea,[contenteditable="true"]');
+  window.StudyCourseCacheClient.configureUpdate({canApply:canApplyCourseUpdate,prepare:async()=>{
+   const navigation=pipelineNavigationVersion,stillSafe=()=>navigation===pipelineNavigationVersion&&canApplyCourseUpdate();
+   await pipelineNavigationTask;if(!stillSafe())return false;
+   if(learningPipeline&&await learningPipeline.flush()!==true)return false;
+   for(const editor of [output,lessonRecall,sentencePractice,batchPractice])if(editor?.flush&&await editor.flush()===false)return false;
+   return stillSafe()?stillSafe:false;
+  }});
+ }
  hydrateIcons();
  // The constructor already points at the saved lesson. Mount its stage and bind
  // audio only when a lesson is opened from the shelf.

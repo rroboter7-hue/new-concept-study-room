@@ -3,6 +3,43 @@ const test=require('node:test'),assert=require('node:assert/strict');
 const Writing=require('../free-writing-practice.js');
 const lesson={id:'correction',book:1,number:2,title:'Writing'};
 function setup(options={}){const writes=[];const ui=new Writing({getLesson:()=>lesson,getTargets:()=>({words:[{word:'book'}]}),saveDraft:async(key,draft)=>{writes.push(structuredClone(draft));return true;},...options});const key=ui.targets()[0].key;return {ui,key,writes};}
+
+test('correction entry marks real note content, ignores whitespace, and restores the empty state after clearing',()=>{
+ const {ui,key}=setup(),row=ui.active.draft.targets[key];
+ ui.editAnswer(key,0,'My original sentence.');assert.doesNotMatch(ui.correctionHTML(row,0),/has-notes|已填写/);
+ ui.editCorrection(key,0,'notes','  \n ');assert.doesNotMatch(ui.correctionHTML(row,0),/has-notes|已填写/);
+ for(const field of ['notes','reference','retry']){
+  ui.editCorrection(key,0,field,'A real note.');assert.match(ui.correctionHTML(row,0),/has-notes/);assert.match(ui.correctionHTML(row,0),/订正记录 · 已填写/);
+  ui.editCorrection(key,0,field,'');
+ }
+ assert.doesNotMatch(ui.correctionHTML(row,0),/has-notes|已填写/);assert.match(ui.correctionHTML(row,0),/订正记录（可选）/);
+ ui.editCorrection(key,0,'notes','\n'.repeat(1300)+'A note after pasted blank lines.');assert.match(ui.correctionHTML(row,0),/订正记录 · 已填写/);
+});
+
+test('typing, reload and clearing update the note marker without replacing focused inputs or opening another row',async()=>{
+ const {harness}=require('./support/app-harness.cjs'),options={realPipeline:true,pilot:false,realOutput:true};
+ const h=await harness(options);await h.api.selectLesson(h.api.current.id);await h.api.learningPipeline.goStage(2);await h.flush();
+ const field=h.document.querySelector('[data-free-correction="notes"][data-free-line="0"]'),answer=h.document.querySelector('[data-free-answer="0"]'),panel=h.document.querySelector('[data-free-correction-panel="0"]');
+ assert(panel);panel.open=true;field.focus();await h.input(field,'Remember to use the past tense.');
+ assert.equal(h.document.activeElement,field);assert.equal(h.document.querySelector('[data-free-answer="0"]'),answer);assert.equal(panel.open,true);
+ assert.equal(panel.classList.contains('has-notes'),true);assert.equal(panel.querySelector('summary').textContent,'订正记录 · 已填写');
+ assert.equal(h.document.querySelector('[data-free-correction-panel="1"]').classList.contains('has-notes'),false);
+ await h.api.learningPipeline.flush();await h.flush();
+ const reload=await harness({...options,loaded:h.stored});await reload.click('[data-shelf-continue]');await reload.flush();
+ const restored=reload.document.querySelector('[data-free-correction-panel="0"]');assert.equal(restored.classList.contains('has-notes'),true);
+ await reload.input('[data-free-correction="notes"][data-free-line="0"]','');assert.equal(restored.classList.contains('has-notes'),false);assert.equal(restored.querySelector('summary').textContent,'订正记录（可选）');
+});
+
+test('merged notes and remote clearing refresh the marker in place',async()=>{
+ const {harness}=require('./support/app-harness.cjs'),h=await harness({pilot:false});let remoteNote='An independently saved note.';
+ const {ui,key}=setup({saveDraft:async(_key,input)=>{const draft=structuredClone(input);draft.targets[key].corrections[0].notes=remoteNote;return {ok:true,draft};}});
+ const host=h.document.createElement('div');h.document.body.appendChild(host);ui.mount(host);
+ const note=host.querySelector('[data-free-correction="notes"][data-free-line="0"]'),panel=host.querySelector('[data-free-correction-panel="0"]');note.focus();
+ ui.editAnswer(key,0,'My original book.');assert.equal(await ui.flush(),true);
+ assert.equal(panel.classList.contains('has-notes'),true);assert.equal(note.value,remoteNote);assert.equal(h.document.activeElement,note);
+ remoteNote='';ui.editAnswer(key,1,'Another sentence.');assert.equal(await ui.flush(),true);
+ assert.equal(panel.classList.contains('has-notes'),false);assert.equal(note.value,'');assert.equal(host.querySelector('[data-free-correction="notes"][data-free-line="0"]'),note);ui.unmount();
+});
 test('optional correction keeps original, survives save/reload and invalidates learner status on retry edits',async()=>{
  const {ui,key,writes}=setup();ui.editAnswer(key,0,'This are my book.');
  assert.equal(ui.editCorrection(key,0,'notes','Use is.'),true);ui.editCorrection(key,0,'reference','This is my book.');ui.editCorrection(key,0,'retry','This is my book.');

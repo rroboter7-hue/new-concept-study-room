@@ -54,6 +54,8 @@
 .free-writing-line-status{margin:8px 0;color:var(--muted,#697777);font-size:.78rem;line-height:1.5}
 .free-writing-correction{margin-top:9px;padding:9px 12px;border:1px solid var(--border,#dce4e1);border-radius:9px;font-size:.85rem;line-height:1.6}
 .free-writing-correction summary{cursor:pointer;font-weight:600;min-height:26px}
+.free-writing-correction.has-notes>summary{color:#075ac1;background:#eaf3ff;border-radius:8px;padding:6px 10px;font-weight:650}
+.free-writing-correction.has-notes>summary:focus-visible{outline:2px solid #0873ff;outline-offset:3px}
 .free-writing-correction p{margin:8px 0;color:var(--muted,#697777)}
 .free-writing-correction label{display:grid;gap:6px;margin:10px 0}
 .free-writing-correction textarea{min-height:76px;font-size:.9rem}

@@ -82,7 +82,9 @@ function bundleRuntime({outputRoot,loaderSource,lessonCounts}={}){
  // It owns startup UI and is deliberately inlined so it cannot itself be a
  // missing request that leaves users with an inert page.
  const loaderFile=path.resolve(__dirname,'../runtime-loader.js'),loader=require(loaderFile);
- const rendered=loader.renderHTML(manifest,loaderSource===undefined?fs.readFileSync(loaderFile,'utf8'):loaderSource);
+ const actualLoader=loaderSource===undefined?fs.readFileSync(loaderFile,'utf8'):loaderSource;
+ const cacheBuilder=require('./course-cache.cjs'),prepared=cacheBuilder.prepare({root,manifest,original,loaderSource:actualLoader});
+ const rendered=loader.renderHTML(manifest,actualLoader);
  if(!rendered||typeof rendered.head!=='string'||typeof rendered.bodyStart!=='string'||typeof rendered.bodyEnd!=='string')throw Error('Invalid runtime startup HTML');
  let html=original;for(const tag of [...scriptTags,...styleTags])html=html.replace(tag,'');
  if(!/<\/head\s*>/i.test(html))html='<head></head>'+html;
@@ -95,6 +97,7 @@ function bundleRuntime({outputRoot,loaderSource,lessonCounts}={}){
   catch(error){throw Error('Invalid inline startup script; publication stopped: '+error.message,{cause:error});}
  }
  fs.writeFileSync(index,html);
+ cacheBuilder.publish({root,html,prepared});
  return manifest;
 }
 
