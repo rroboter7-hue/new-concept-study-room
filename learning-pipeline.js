@@ -345,7 +345,7 @@
     ensureWriting(){
       if(this.writing)return this.writing;
       const Class=this.options.FreeWritingPractice||Writing;if(!Class)return null;
-      this.writing=new Class({getLesson:()=>this.lesson,getLessons:this.options.getLessons,getTargets:this.options.getWritingTargets,getDrafts:this.options.getFreeDrafts,saveDraft:this.options.createFreeDraftSaver?.()||this.options.saveFreeDraft,checkSentence:this.options.checkSentence,getLearnedLessonIds:this.options.getLearnedLessonIds,mountReferenceLibrary:this.options.mountReferenceLibrary,unmountReferenceLibrary:this.options.unmountReferenceLibrary});return this.writing;
+      this.writing=new Class({getLesson:()=>this.lesson,getLessons:this.options.getLessons,getTargets:this.options.getWritingTargets,getDrafts:this.options.getFreeDrafts,saveDraft:this.options.createFreeDraftSaver?.()||this.options.saveFreeDraft,checkSentence:this.options.checkSentence,copyText:this.options.copyText,getLearnedLessonIds:this.options.getLearnedLessonIds,mountReferenceLibrary:this.options.mountReferenceLibrary,unmountReferenceLibrary:this.options.unmountReferenceLibrary});return this.writing;
     }
     detachStage(){
       if(this.readingMounted){this.options.stopReading?.();this.readingMounted=false;}

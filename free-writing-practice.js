@@ -239,7 +239,7 @@
     constructor(options = {}) {
       this.options = options; this.cache = new Map(); this.container = null; this.lessonOverride = null;
       this.timer = null; this.saving = null; this.handlers = null;
-      this.active = null;
+      this.active = null; this.copyRequest = 0;
     }
     lesson() { return this.lessonOverride || this.options.getLesson?.(); }
     defaultTargets(lesson) {
@@ -334,6 +334,7 @@
       this.touch(entry);
       const feedbackNode = this.container?.querySelector?.('[data-free-feedback="' + index + '"]');
       if (feedbackNode) feedbackNode.innerHTML = '';
+      this.updateCopyFeedback();
       return true;
     }
     setFusion(key, index, keys) {
@@ -423,6 +424,45 @@
         if (field && JSON.stringify(before?.feedback[index]) !== JSON.stringify(row.feedback[index])) field.innerHTML=this.feedbackHTML(row.feedback[index]);
       });
     }
+    copyReviewText(entry = this.ensure(), target = this.currentTarget(entry)) {
+      if (!entry || !target) return '';
+      const row = entry.draft.targets[target.key];
+      return ['请帮我逐句检查下面的英语自由造句。',
+        '课程：第 ' + entry.lesson.book + ' 册 · 第 ' + entry.lesson.number + ' 课 · ' + text(entry.lesson.title,300),
+        '目标表达：' + target.label + (target.meaning ? '（' + target.meaning + '）' : ''),
+        '以下是我的原句，请保留编号：',
+        ...row.answers.map((answer,index) => index < target.requiredCount || answer.trim() ? (index+1) + '. ' + (answer.trim() || '【未填写，请勿代写】') : '').filter(Boolean),
+        '', '检查要求：逐句检查语法、时态、主谓一致、拼写、习惯搭配和表达自然度，并核对目标表达是否用对。',
+        '有错误时指出具体位置，说明原因，再给出尽量保留我原意的修改；正确的句子也请简要说明。',
+        '缺少语境时请说明不确定之处；不要把未填写的句子当作我写的内容，不要代写，也不要只给分数。'].join('\n');
+    }
+    async copyForReview() {
+      const entry = this.ensure(), target = this.currentTarget(entry);
+      if (!entry || !target) return false;
+      const payload = this.copyReviewText(entry,target), request = ++this.copyRequest;
+      const current = () => request === this.copyRequest && this.active === entry && this.currentTarget(entry)?.key === target.key && this.copyReviewText(entry,target) === payload;
+      const show = (message,fallback = '') => {
+        if (!current()) return;
+        entry.copyResult = {key:target.key,payload,message,fallback}; this.updateCopyFeedback();
+      };
+      if (!writtenCount(entry.draft.targets[target.key])) { show('先写一句英文，再复制给豆包检查。'); return false; }
+      try {
+        const copy = this.options.copyText || (value => global.navigator?.clipboard?.writeText ? global.navigator.clipboard.writeText(value) : Promise.reject(new Error('Clipboard unavailable')));
+        if (await copy(payload) === false) throw new Error('Clipboard failed');
+        show('已复制句子和检查要求，请到豆包粘贴检查。'); return true;
+      } catch (_) {
+        show('自动复制未成功，请长按下方文字手动复制。',payload); return false;
+      }
+    }
+    copyFeedbackHTML(entry = this.ensure()) {
+      const result = entry?.copyResult, target = this.currentTarget(entry);
+      if (!result || !target || result.key !== target.key || result.payload !== this.copyReviewText(entry,target)) return '';
+      return '<p role="status" aria-live="polite">' + escapeHTML(result.message) + '</p>' + (result.fallback ? '<label>待复制的句子与检查要求<textarea readonly rows="8" data-free-copy-text>' + escapeHTML(result.fallback) + '</textarea></label><button type="button" class="button subtle" data-free-action="select-copy">全选文本</button>' : '');
+    }
+    updateCopyFeedback() {
+      const slot = this.container?.querySelector?.('[data-free-copy-feedback]');
+      if (slot) slot.innerHTML = this.copyFeedbackHTML();
+    }
     async check(key) {
       const entry = this.ensure(), target = entry?.targets.find(item => item.key === (key || entry.draft.activeTargetKey));
       if (!target || entry.checking.has(target.key)) return false;
@@ -475,7 +515,7 @@
         '<details class="free-writing-cumulative"><summary><span data-free-cumulative>' + this.cumulativeLabel(entry) + '</span> · 查看全部目标</summary><p>每个本课新词、习惯用法累计各写5句；已学旧词、旧用法各写1–2句。今日小组不会减少总目标，额外已写句子也会保留。</p><label class="free-writing-target-label">全部目标<select data-free-select="target" aria-label="选择自由造句目标"><optgroup label="本课目标">' + group(false) + '</optgroup>' + (entry.targets.some(item => item.prior) ? '<optgroup label="已学前课复习">' + group(true) + '</optgroup>' : '') + '</select></label></details>' +
         '<nav class="free-writing-navigation" aria-label="今日目标切换"><button type="button" class="button subtle" data-free-action="previous"' + (position <= 0 ? ' disabled' : '') + '>上一个目标</button><span>' + (position < 0 ? '全部目标中的其他草稿' : '第' + this.today(entry).groups.length + '组 · ' + (position+1) + '/' + groupTargets.length) + '</span><button type="button" class="button subtle" data-free-action="next"' + (position >= groupTargets.length-1 ? ' disabled' : '') + '>下一个目标</button></nav>' +
         '<div class="free-writing-target"><strong lang="en">' + escapeHTML(target.label) + '</strong><span>' + escapeHTML(target.meaning) + '</span><small>' + (target.prior ? '前课复习 · 第' + target.source.book + '册第' + target.source.number + '课' : '本课' + (target.kind === 'phrase' ? '习惯用法' : '新单词')) + ' · 累计已写 ' + Math.min(written,target.requiredCount) + '/' + target.requiredCount + (written > target.requiredCount ? ' · 另存 ' + (written-target.requiredCount) + ' 句' : '') + '</small></div>' + help +
-        '<div class="free-writing-lines">' + lines + '</div><div class="free-writing-actions"><button type="button" class="button primary" data-free-action="check"' + (entry.checking.has(target.key) ? ' disabled' : '') + '>' + (entry.checking.has(target.key) ? '正在逐句检查…' : '逐句检查本组') + '</button><span data-free-save-status data-state="' + entry.status + '" role="status" aria-live="polite">' + escapeHTML(this.statusMessage(entry)) + '</span><button type="button" class="button subtle" data-free-action="save"' + (entry.status === 'error' ? '' : ' hidden') + '>重试保存</button></div>' + (entry.checkError ? '<p role="alert" class="free-writing-error">' + escapeHTML(entry.checkError) + '</p>' : '') + '<p class="free-writing-limit">检查提供拼写、时态、搭配、大小写与标点的修改参考；规则覆盖不足会标为需复核，不计学习成绩。</p></section>';
+        '<div class="free-writing-lines">' + lines + '</div><div class="free-writing-actions"><button type="button" class="button primary" data-free-action="check"' + (entry.checking.has(target.key) ? ' disabled' : '') + '>' + (entry.checking.has(target.key) ? '正在逐句检查…' : '逐句检查本组') + '</button><button type="button" class="button subtle" data-free-action="copy-review">' + (target.requiredCount === 5 ? '一键复制五句话' : '一键复制本组') + '</button><span data-free-save-status data-state="' + entry.status + '" role="status" aria-live="polite">' + escapeHTML(this.statusMessage(entry)) + '</span><button type="button" class="button subtle" data-free-action="save"' + (entry.status === 'error' ? '' : ' hidden') + '>重试保存</button></div><div class="free-writing-copy-feedback" data-free-copy-feedback>' + this.copyFeedbackHTML(entry) + '</div>' + (entry.checkError ? '<p role="alert" class="free-writing-error">' + escapeHTML(entry.checkError) + '</p>' : '') + '<p class="free-writing-limit">检查提供拼写、时态、搭配、大小写与标点的修改参考；规则覆盖不足会标为需复核，不计学习成绩。</p></section>';
     }
     refresh() {
       if (!this.container && !this.options.onRender) return;
@@ -501,6 +541,8 @@
         if (!button || container.contains && !container.contains(button)) return;
         event.preventDefault();
         if (button.dataset.freeAction === 'check') void this.check();
+        else if (button.dataset.freeAction === 'copy-review') void this.copyForReview();
+        else if (button.dataset.freeAction === 'select-copy') { const field = container.querySelector?.('[data-free-copy-text]'); field?.focus?.(); field?.select?.(); }
         else if (button.dataset.freeAction === 'save') void this.flush();
         else if (button.dataset.freeAction === 'previous') this.navigateTarget(-1);
         else if (button.dataset.freeAction === 'next') this.navigateTarget(1);
