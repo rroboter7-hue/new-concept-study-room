@@ -94,9 +94,9 @@ test('using a hint after correct feedback immediately withdraws remembered witho
  }
 });
 
-test('practice next controls also wait for feedback and disappear on the next card',()=>{
- const h=harness(manyWords());h.ui.startPractice(h.ui.cards().slice(0,2).map(c=>c.id));h.ui.render();assert.equal(h.container.button('practice-next'),undefined);
- h.container.type(h.ui.active.target);h.container.click('check');assert.ok(h.container.button('practice-next'));const first=h.ui.active.id;h.container.click('practice-next');assert.notEqual(h.ui.active.id,first);assert.equal(h.container.button('practice-next'),undefined);assert.ok(h.container.button('check'));assert.equal(h.saved,0);
+test('practice next waits for feedback and becomes unavailable again after editing or advancing',()=>{
+ const h=harness(manyWords());h.ui.startPractice(h.ui.cards().slice(0,2).map(c=>c.id));h.ui.render();const nextCount=()=>h.container.nodes.filter(n=>n.dataset.reviewAction==='practice-next').length;assert.equal(nextCount(),0);assert.equal(h.container.button('practice-again'),undefined);
+ h.container.type(h.ui.active.target);h.container.click('check');assert.equal(nextCount(),1);assert.ok(h.container.button('practice-again'));h.container.type('a changed draft');assert.equal(nextCount(),0);assert.equal(h.container.button('practice-again'),undefined);const first=h.ui.active.id;h.ui.action('practice-next',{});assert.equal(h.ui.active.id,first);assert.equal(h.ui.practiceDone.size,0);h.container.type(h.ui.active.target);h.container.click('check');assert.equal(nextCount(),1);h.container.click('practice-next');assert.notEqual(h.ui.active.id,first);assert.equal(nextCount(),0);assert.ok(h.container.button('check'));assert.equal(h.saved,0);
 });
 
 test('grammar choice changes invalidate the previous answer and cannot be rated unsubmitted',()=>{

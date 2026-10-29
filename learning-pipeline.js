@@ -155,7 +155,8 @@
     retellCopyText(answer){
       const lesson=this.lesson||{},paragraphs=lesson.paragraphs||lesson.textbook?.paragraphs;
       const source=list(Array.isArray(paragraphs)?paragraphs:paragraphs?.en).map(row=>typeof row==='string'?row:text(row?.en)).filter(row=>row.trim()).join('\n\n');
-      return '请帮我检查这篇新概念英语课文复述。\n课程：第'+lesson.book+'册第'+lesson.number+'课 · '+text(lesson.title)+'\n\n'+
+      const title=text(lesson.title).replace(/^第\s*\d+\s*课\s*[·.:：-]\s*/,'');
+      return '请帮我检查这篇新概念英语课文复述。\n课程：第'+lesson.book+'册第'+lesson.number+'课 · '+title+'\n\n'+
         '【检查要求】\n1. 检查语法、时态、词语搭配、拼写与标点，列出原句、修改建议和简短原因。\n'+
         '2. 对照下方课文原文，指出重要遗漏、事实矛盾或意思改变；允许用自己的说法，不要求逐字背诵。\n'+
         '3. 先指出问题，再给出尽量保留我表达方式的修改版本。不要代写新的情节，不要打分或推断我已掌握。\n'+
