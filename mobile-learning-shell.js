@@ -8,7 +8,7 @@
   const NAV = [
     ['study', '学习', 'M3 5c3-1 6-1 9 1 3-2 6-2 9-1v15c-3-1-6-1-9 1-3-2-6-2-9-1zM12 6v15'],
     ['daily-review', '复习', 'M12 8v5l3 2M22 12a10 10 0 1 1-20 0 10 10 0 0 1 20 0'],
-    ['words', '生词', 'M7 3h12v18H7a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3ZM7 3v15m-3 0h15M11 7h4m-4 4h4'],
+    ['words', '词库', 'M7 3h12v18H7a3 3 0 0 1-3-3V6a3 3 0 0 1 3-3ZM7 3v15m-3 0h15M11 7h4m-4 4h4'],
     ['records', '我的', 'M16 7a4 4 0 1 1-8 0 4 4 0 0 1 8 0ZM4 21v-2a8 8 0 0 1 16 0v2']
   ];
   const icon = path => '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="' + path + '"></path></svg>';
