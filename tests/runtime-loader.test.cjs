@@ -39,6 +39,11 @@ test('a genuinely stalled large package still has a bounded deadline and retry',
  assert.equal(h.requests.filter(x=>x.tagName==='SCRIPT').length,2);assert.match(h.requests.filter(x=>x.tagName==='SCRIPT').at(-1).src,/retry=1/);
 });
 
+test('an offline browser does not extend a pending request as if it were merely a slow connection',()=>{
+ const h=setup();h.root.navigator.onLine=false;h.manifest.scripts[0].bytes=3000000;h.loader.start(h.manifest);h.requests.find(x=>x.tagName==='LINK').onload();
+ h.fireTimer();assert(![...h.timers.values()].some(t=>t.ms===90000));
+});
+
 test('a rolling two-package preload window preserves ordered execution and does not preload the complete course upfront',()=>{
  const h=setup();h.manifest.scripts.push({id:'three',src:'runtime-three.js',files:['c.js'],integrity:'sha384-three'},{id:'four',src:'runtime-four.js',files:['d.js'],integrity:'sha384-four'});
  const html=factory.renderHTML(h.manifest,fs.readFileSync(file,'utf8'));

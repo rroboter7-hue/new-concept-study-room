@@ -174,7 +174,7 @@
       if (task.node !== node || task.complete || fatal || finished) return;
       // Do not abandon a large, still-pending preload after only 30 seconds.
       // A second URL would compete with that same download on a slow mobile link.
-      if (task.kind === 'script' && task.asset.bytes > 500000) {
+      if (task.kind === 'script' && task.asset.bytes > 500000 && (!root.navigator || root.navigator.onLine !== false)) {
         text('message', '连接较慢，正在继续下载课程文件…');
         task.timer = root.setTimeout(function () { if (task.node === node) networkFailure(task); }, 90000);
       } else networkFailure(task);
