@@ -49,3 +49,11 @@ body.main-entries-ready.learning-tools-active .topbar{display:none!important;}
 @media(min-width:761px){.main-entry-nav{left:50%;right:auto;bottom:18px;transform:translateX(-50%);width:480px;max-width:calc(100% - 40px);border:1px solid var(--entry-line);border-radius:18px;padding:6px;box-shadow:0 6px 28px #183d6c12;}.main-entry-nav button{flex-direction:row;gap:10px;min-height:48px;font-size:14px;}.main-entries-ready .shelf-page{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:0 30px;}.main-entries-ready .shelf-header{grid-column:1/-1;grid-row:1}.main-entries-ready .shelf-resume{grid-column:1;grid-row:2/5}.main-entries-ready .shelf-title{grid-column:2;grid-row:2;margin-top:0}.main-entries-ready .shelf-books{grid-column:2;grid-row:3/5;gap:12px;margin-bottom:20px;}.main-entries-ready .shelf-review{grid-column:1;grid-row:5}.main-entries-ready .shelf-data-notice{grid-column:2;grid-row:5}.entry-library-controls{grid-template-columns:minmax(0,1fr) minmax(0,1fr);}.entry-segments{grid-column:1/-1;}.entry-filter-row{gap:14px;}}
 @media(max-width:760px){#words-view,#records-view{padding:16px 2px;}.entry-heading{gap:8px;margin-bottom:18px;}.entry-heading h1{font-size:25px;}.entry-heading .button{font-size:12px;padding:8px 10px;min-height:44px;}.entry-word-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;}.entry-word-card{padding:12px;}.entry-word-card h3{font-size:17px;}.entry-panel{padding:17px;}.entry-history{padding:4px 14px}.entry-history .stats-grid{grid-template-columns:repeat(2,minmax(0,1fr));}.main-entries-ready .shelf-resume{margin-top:0;margin-bottom:22px;}.main-entries-ready .shelf-header{margin-bottom:22px;}.main-entries-ready .shelf-title span{display:none;}}
 @media(prefers-reduced-motion:reduce){.main-entry-nav,.main-entry-nav *{transition:none!important;scroll-behavior:auto!important;}}
+
+body.main-entries-ready.learning-tools-active .mls-header{display:none!important;}
+.main-entry-nav button:focus{outline:2px solid #0873ff;outline-offset:1px;}
+.main-entry-nav button{font-family:inherit;font-size:12px;font-weight:500;line-height:1.25;}
+.entry-segments button{font-family:inherit;font-size:14px;font-weight:600;}
+@media(min-width:761px){.main-entry-nav button{font-size:14px;}}
+
+[data-shelf-resume-progress]{display:block;color:#58718e;font-size:12px;line-height:1.6;margin-top:8px;}

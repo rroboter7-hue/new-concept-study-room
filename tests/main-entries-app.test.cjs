@@ -19,5 +19,22 @@ test('leaving writing through a main entry preserves drafts and failed storage k
  await h.input('[data-free-answer="0"]','Keep this original sentence.');
  h.setStorageWritable(false);await h.click('[data-main-entry="words"]');assert.equal(h.api.view,'study');assert(h.document.querySelector('[data-free-answer="0"]'));
  h.setStorageWritable(true);await h.click('[data-main-entry="words"]');assert.equal(h.api.view,'words');
- await h.click('[data-main-entry="study"]');await h.click('[data-shelf-continue]');assert.equal(h.document.querySelector('[data-free-answer="0"]').value,'Keep this original sentence.');
+ await h.click('[data-main-entry="study"]');assert.match(h.document.querySelector('[data-shelf-resume-progress]').textContent,/自由造句/);await h.click('[data-shelf-continue]');assert.equal(h.document.querySelector('[data-free-answer="0"]').value,'Keep this original sentence.');
+});
+test('normal review tab returns retain filters and the same pending session, including a study detour',async()=>{
+ const h=await harness(options),review=h.api.dailyReview;let clears=0;review.clearFilters=()=>{clears++;};
+ await h.click('[data-main-entry="daily-review"]');review.kind='phrase';review.input='My pending recall.';
+ await h.click('[data-main-entry="records"]');await h.click('[data-main-entry="daily-review"]');
+ assert.equal(clears,0);assert.equal(review.kind,'phrase');assert.equal(review.input,'My pending recall.');
+ await h.click('[data-main-entry="study"]');await h.click('[data-shelf-continue]');await h.click('[data-main-entry="daily-review"]');assert.equal(clears,0);
+});
+test('entry scroll position returns without changing a word query or learning record',async()=>{
+ const h=await harness(options);h.c.scrollTo=options=>{h.c.scrollY=options.top;};await h.click('[data-main-entry="words"]');h.c.scrollY=460;
+ await h.click('[data-main-entry="records"]');await h.click('[data-main-entry="words"]');assert.equal(h.c.scrollY,460);
+ h.c.scrollY=720;await h.click('[data-main-entry="study"]');await h.click('[data-main-entry="words"]');assert.equal(h.c.scrollY,720);
+});
+test('continuing the same study stage restores its position without applying it to a different lesson',async()=>{
+ const h=await harness(options);h.c.scrollTo=options=>{h.c.scrollY=options.top;};await h.click('[data-shelf-continue]');h.c.scrollY=640;
+ await h.click('[data-main-entry="words"]');await h.click('[data-main-entry="study"]');await h.click('[data-shelf-continue]');assert.equal(h.c.scrollY,640);
+ const other=h.c.LESSONS.find(row=>row.book===2&&row.id!==h.api.current.id);h.c.scrollY=170;await h.api.selectLesson(other.id,{preserveReview:true});await h.flush();assert.notEqual(h.c.scrollY,640);
 });

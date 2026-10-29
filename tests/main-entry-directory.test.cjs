@@ -18,3 +18,7 @@ test('invalid fields and unsafe labels remain plain model text and filtering nev
  const source=JSON.stringify(entries);assert.equal(Directory.filter(entries,{query:'no matching term'}).length,0);
  assert.equal(Directory.combine(null,[{word:'<img>',meaning:'文字'},null]).length,1);assert.equal(JSON.stringify(entries),source);
 });
+test('manual favorites keep their explicitly stored part of speech and phrase category',()=>{
+ const rows=Directory.combine([],[{word:'skip',pos:'v.'},{word:'on time',kind:'phrase'},{word:'often',pos:'adv.'}]);
+ assert.deepEqual(rows.map(row=>row.category),['verb','phrase','adverb']);
+});
