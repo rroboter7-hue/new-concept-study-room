@@ -19,19 +19,28 @@ class Container{
    const values={},dataset={};
    for(const a of attrs.matchAll(/([\w-]+)(?:="([^"]*)")?/g)){values[a[1]]=decode(a[2]??'');if(a[1].startsWith('data-'))dataset[a[1].slice(5).replace(/-([a-z])/g,(_,c)=>c.toUpperCase())]=decode(a[2]??'');}
    const node={owner:this,generation:this.generation,tagName:tag.toUpperCase(),dataset,disabled:Object.hasOwn(values,'disabled'),value:tag==='textarea'?decode(body):values.value||'',innerHTML:body,closest:selector=>selector==='[data-review-action]'&&dataset.reviewAction?node:null};
-   this.nodes.push(node);return node;
+   node.markup='<'+tag+attrs+'>'+body+'</'+tag+'>';this.nodes.push(node);return node;
   };
   for(const m of value.matchAll(/<button\b([^>]*)>([\s\S]*?)<\/button>/g))add('button',m[1],m[2]);
   for(const m of value.matchAll(/<textarea\b([^>]*)>([\s\S]*?)<\/textarea>/g))add('textarea',m[1],m[2]);
   for(const m of value.matchAll(/<select\b([^>]*)>/g))add('select',m[1]);
-  const start=value.indexOf('<div data-review-feedback');
-  if(start>=0){const open=value.indexOf('>',start)+1,end=value.indexOf('<div class="review-ratings">',open);add('div','data-review-feedback',value.slice(open,end).replace(/<\/div>$/,''));}
+  for(const region of ['feedback','answer-actions','grading']){
+   const start=value.indexOf('<div data-review-'+region);
+   if(start<0)continue;
+   const open=value.indexOf('>',start)+1,next=region==='feedback'?value.indexOf('<div data-review-grading',open):region==='answer-actions'?value.indexOf('<div data-review-feedback',open):value.indexOf('</section><aside',open);
+   const end=next<0?value.indexOf('<div class="review-ratings">',open):next;
+   let body=value.slice(open,end).replace(/<\/div>$/,''),children=this.nodes.filter(n=>body.includes(n.markup));
+   const node=add('div','data-review-'+region,body);
+   Object.defineProperty(node,'innerHTML',{get:()=>body,set:html=>{body=html;this.nodes=this.nodes.filter(n=>!children.includes(n));children=[];for(const m of html.matchAll(/<button\b([^>]*)>([\s\S]*?)<\/button>/g))children.push(add('button',m[1],m[2]));}});
+  }
  }
  get innerHTML(){return this.html;}
  querySelector(selector){return this.querySelectorAll(selector)[0]||null;}
  querySelectorAll(selector){
   if(selector.includes(','))return [...new Set(selector.split(',').flatMap(part=>this.querySelectorAll(part.trim())))];
   if(selector==='[data-review-feedback]')return this.nodes.filter(n=>n.dataset.reviewFeedback!==undefined);
+  if(selector==='[data-review-answer-actions]')return this.nodes.filter(n=>n.dataset.reviewAnswerActions!==undefined);
+  if(selector==='[data-review-grading]')return this.nodes.filter(n=>n.dataset.reviewGrading!==undefined);
   if(selector==='[data-review-rating]')return this.nodes.filter(n=>n.dataset.reviewRating!==undefined);
   if(selector==='[data-review-input]')return this.nodes.filter(n=>n.dataset.reviewInput!==undefined);
   return [];
@@ -56,17 +65,38 @@ function harness(lessons,{grammar=true,saveMode='ok',enroll=true}={}){
 const wordLessons=()=>[lesson(1,{vocabulary:[{word:'seat',meaning:'座位',example:'This is a seat.'}]})];
 const phraseLessons=()=>[lesson(2,{usage:[{phrase:"can't stand",meaning:'无法忍受',matchedForm:"can't stand",variants:['cannot stand'],example:'I cannot stand this noise.'}]})];
 
-test('rating stays disabled until an answer is checked or explicitly revealed',()=>{
- const h=harness(wordLessons());const buttons=h.container.querySelectorAll('[data-review-rating]');assert.equal(buttons.length,3);assert.ok(buttons.every(b=>b.disabled));
- h.container.click('rate','good');h.ui.action('rate',{dataset:{reviewRating:'good'}});assert.equal(h.saved,0);
+test('only applicable grades appear after feedback, with answer actions hidden until editing',()=>{
+ const h=harness(wordLessons());assert.equal(h.container.querySelectorAll('[data-review-rating]').length,0);assert.ok(h.container.button('check'));assert.ok(h.container.button('reveal'));
+ h.ui.action('rate',{dataset:{reviewRating:'good'}});assert.equal(h.saved,0);
  h.container.click('check');assert.equal(h.ui.revealed,false);assert.equal(h.saved,0);
- h.container.type('sit');h.container.click('check');assert.equal(h.ui.feedback.correct,false);assert.equal(h.container.button('rate','good').disabled,true);assert.equal(h.container.button('rate','again').disabled,false);assert.equal(h.container.button('rate','hard').disabled,false);
- const r=harness(wordLessons());r.container.click('reveal');assert.equal(r.ui.revealed,true);assert.equal(r.container.button('rate','good').disabled,true);assert.equal(r.container.button('rate','again').disabled,false);assert.equal(r.container.button('rate','hard').disabled,false);
+ h.container.type('sit');h.container.click('check');assert.equal(h.ui.feedback.correct,false);assert.deepEqual(h.container.querySelectorAll('[data-review-rating]').map(b=>b.dataset.reviewRating),['again']);assert.equal(h.container.button('check'),undefined);assert.equal(h.container.button('reveal'),undefined);
+ const r=harness(wordLessons());r.container.click('reveal');assert.equal(r.ui.revealed,true);assert.deepEqual(r.container.querySelectorAll('[data-review-rating]').map(b=>b.dataset.reviewRating),['again','hard']);assert.equal(r.container.button('check'),undefined);
+ const c=harness(wordLessons());c.container.type('seat');c.container.click('check');assert.deepEqual(c.container.querySelectorAll('[data-review-rating]').map(b=>b.dataset.reviewRating),['again','hard','good']);assert.equal(c.container.button('rate','good').disabled,false);
 });
 
 test('editing an answer clears old feedback and revokes all rating buttons',()=>{
  const h=harness(wordLessons());h.container.type('seat');h.container.click('check');assert.equal(h.ui.feedback.correct,true);assert.ok(h.container.querySelector('[data-review-feedback]').innerHTML.includes('回答正确'));
- h.container.type('sit');assert.equal(h.ui.feedback,null);assert.equal(h.ui.revealed,false);assert.equal(h.container.querySelector('[data-review-feedback]').innerHTML,'');assert.ok(h.container.querySelectorAll('[data-review-rating]').every(b=>b.disabled));h.container.click('rate','good');assert.equal(h.state.cards[h.ui.active.id].repetitions,0);assert.equal(h.state.cards[h.ui.active.id].assistance.revision,0);
+ const input=h.container.type('sit');assert.equal(h.ui.feedback,null);assert.equal(h.ui.revealed,false);assert.equal(h.container.querySelector('[data-review-feedback]').innerHTML,'');assert.equal(h.container.querySelectorAll('[data-review-rating]').length,0);assert.equal(h.container.querySelector('[data-review-input]'),input,'typing must preserve the live input node and caret');assert.ok(h.container.button('check'));assert.ok(h.container.button('reveal'));h.ui.action('rate',{dataset:{reviewRating:'good'}});assert.equal(h.state.cards[h.ui.active.id].repetitions,0);assert.equal(h.state.cards[h.ui.active.id].assistance.revision,0);
+});
+
+test('hinted and corrected recalls never expose remembered, including after a later correct answer',()=>{
+ for(const hint of ['speak','reveal','wrong']){
+  const h=harness(wordLessons());if(hint==='wrong'){h.container.type('sit');h.container.click('check');}else h.container.click(hint);
+  h.container.type('seat');h.container.click('check');assert.equal(h.ui.feedback.correct,true);assert.equal(h.ui.independentlyCorrect(),false);assert.deepEqual(h.container.querySelectorAll('[data-review-rating]').map(b=>b.dataset.reviewRating),['again','hard']);
+  h.ui.action('rate',{dataset:{reviewRating:'good'}});assert.equal(h.state.cards[h.ui.active.id].repetitions,0);
+ }
+});
+
+test('using a hint after correct feedback immediately withdraws remembered without replacing the input',()=>{
+ for(const hint of ['speak','source']){
+  const h=harness(wordLessons());h.container.type('seat');h.container.click('check');const input=h.container.querySelector('[data-review-input]');assert.ok(h.container.button('rate','good'));
+  h.container.click(hint);assert.equal(h.ui.independentlyCorrect(),false);assert.equal(h.container.button('rate','good'),undefined);assert.equal(h.container.querySelector('[data-review-input]'),input);assert.ok(h.container.button('rate','hard'));
+ }
+});
+
+test('practice next controls also wait for feedback and disappear on the next card',()=>{
+ const h=harness(manyWords());h.ui.startPractice(h.ui.cards().slice(0,2).map(c=>c.id));h.ui.render();assert.equal(h.container.button('practice-next'),undefined);
+ h.container.type(h.ui.active.target);h.container.click('check');assert.ok(h.container.button('practice-next'));const first=h.ui.active.id;h.container.click('practice-next');assert.notEqual(h.ui.active.id,first);assert.equal(h.container.button('practice-next'),undefined);assert.ok(h.container.button('check'));assert.equal(h.saved,0);
 });
 
 test('grammar choice changes invalidate the previous answer and cannot be rated unsubmitted',()=>{
