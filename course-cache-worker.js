@@ -97,8 +97,8 @@
       channel.port1.onmessage=event=>{if(/^[a-f0-9]{64}$/.test(event.data?.version))pinned.add(prefix+event.data.version);else uncertain=true;finish();};
       try{client.postMessage({type:'study-course-cache-version'},[channel.port2]);}catch(_){uncertain=true;finish();}
     })));
-    for(const name of names)if(owned(name)&&name!==cacheName){const meta=await complete(name);if(meta)previous.push({name,time:meta.installedAt});else await root.caches.delete(name);}
-    previous.sort((a,b)=>b.time-a.time);
+    for(const name of names)if(owned(name)&&name!==cacheName){const meta=await complete(name);if(meta)previous.push({name,time:meta.installedAt,order:previous.length});else await root.caches.delete(name);}
+    previous.sort((a,b)=>(b.time-a.time)||(b.order-a.order));
     if(!uncertain)for(const entry of previous.slice(retainPrevious))if(!pinned.has(entry.name))await root.caches.delete(entry.name);
   }
   async function installAndActivate() {

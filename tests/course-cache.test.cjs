@@ -65,3 +65,10 @@ test('cache-full online activation still serves a retained old package for an ed
 });
 
 test('non-HTML success responses cannot replace a valid offline learning document',async()=>{const h=setup();await h.install();h.root.fetch=async()=>new Response('{"error":"maintenance"}');assert.equal(await (await h.fetchURL('./')).text(),h.html);});
+
+test('equal install timestamps retain the newest previous cache as well as a pinned editing version',async()=>{
+ const stores=new Map(),a=setup({stores,version:'tie-a'});await a.install();const b=setup({stores,version:'tie-b'});await b.install();const c=setup({stores,version:'tie-c'});await c.install();
+ for(const cache of stores.values())for(const [key,value] of cache)if(key.endsWith('.__study_course_ready__')){const meta=await value.clone().json();meta.installedAt=100;cache.set(key,new Response(JSON.stringify(meta)));}
+ c.root.MessageChannel=function(){this.port1={close(){}};this.port2={channel:this};};c.root.clients.matchAll=async()=>[{url:'https://study.example/project/',postMessage(message,ports){ports[0].channel.port1.onmessage({data:{version:a.config.version}});}}];
+ await c.api.activate();assert.equal(stores.size,3);assert.equal((await a.api.status()).state,'ready');assert.equal((await b.api.status()).state,'ready');
+});
