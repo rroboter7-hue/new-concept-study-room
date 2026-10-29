@@ -7,11 +7,11 @@ test('four-entry navigation exposes unified library and profile without changing
  assert(h.document.querySelector('[data-main-entry="words"]'));
  await h.click('[data-main-entry="words"]');assert.equal(h.api.view,'words');
  assert.match(h.document.querySelector('#words-view').innerHTML,/词库|习惯用法|收藏/);
- assert(h.document.querySelector('[data-directory-query]'));
- await h.input('[data-directory-query]','get');
+ assert.equal(h.document.querySelector('[data-directory-query]'),null,'the global directory has no search field');
+ const category=h.document.querySelector('[data-directory-filter="category"]');category.value='verb';await h.document.dispatch('change',category);await h.flush();
  await h.click('[data-main-entry="records"]');assert.equal(h.api.view,'records');
  for(const label of ['我的','备份','阅读设置','课程缓存'])assert(h.document.querySelector('#records-view').innerHTML.includes(label),label);
- await h.click('[data-main-entry="words"]');assert.equal(h.document.querySelector('[data-directory-query]').value,'get');
+ await h.click('[data-main-entry="words"]');assert(h.document.querySelector('[data-directory-filter="category"]').querySelector('[value="verb"][selected]'));
  assert.equal(JSON.stringify(h.api.data.records),records);
 });
 test('leaving writing through a main entry preserves drafts and failed storage keeps the editor',async()=>{
@@ -28,7 +28,7 @@ test('normal review tab returns retain filters and the same pending session, inc
  assert.equal(clears,0);assert.equal(review.kind,'phrase');assert.equal(review.input,'My pending recall.');
  await h.click('[data-main-entry="study"]');await h.click('[data-shelf-continue]');await h.click('[data-main-entry="daily-review"]');assert.equal(clears,0);
 });
-test('entry scroll position returns without changing a word query or learning record',async()=>{
+test('entry scroll position returns without changing learning records',async()=>{
  const h=await harness(options);h.c.scrollTo=options=>{h.c.scrollY=options.top;};await h.click('[data-main-entry="words"]');h.c.scrollY=460;
  await h.click('[data-main-entry="records"]');await h.click('[data-main-entry="words"]');assert.equal(h.c.scrollY,460);
  h.c.scrollY=720;await h.click('[data-main-entry="study"]');await h.click('[data-main-entry="words"]');assert.equal(h.c.scrollY,720);

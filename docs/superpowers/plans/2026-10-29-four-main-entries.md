@@ -37,3 +37,5 @@
 
 ## Follow-up: independent grammar browsing
 Human requested book/lesson selectors for reviewing previous grammar in the word directory. Keep selection as in-memory presentation state, not the learning route. Reuse verified getKeyPoints for chosen lesson, max3 grammar points and1 caution; retain complete title below native selector, preserve open/selection on entry return, provide return-to-current. No lesson/audio binding or evidence writes from browsing. Regression-first tests validate all4 book catalogs, invalid IDs, exact current/draft/evidence preservation and Continue. Mobile390 and desktop1280 browser checks before original-site CI/publication.
+
+- User steering: remove the global word-directory search field shown in screenshot. Keep independent grammar book/lesson selectors, vocabulary book/category/favorites, and the separate writing-picker search. Cancelled the pending intermediate e47 deployment and will publish the combined final version once.
