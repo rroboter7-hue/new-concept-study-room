@@ -180,18 +180,51 @@ test('passage-backed grammar precedes note extensions while labels keep example 
  assert.equal(result.usages[0].sourceKind,'passage');assert.equal(result.usages[0].example,'Jane received a letter. She is happy.');
  assert.equal(result.usages[0].exampleDetails,'A note-only sentence.');
 });
-test('the audited Breakfast or lunch lesson uses exact passage examples for its existing rules with drift guards',()=>{
- const lesson={id:'nce-b2-eef57c-l002',book:2,number:2,title:'第2课 · Breakfast or lunch?',paragraphs:[{en:'I never get up early on Sundays.'},{en:'‘But I\'m still having breakfast,’ I said.'},{en:'Do you always get up so late?'}],grammar:[{title:'一般现在时',note:'习惯动作。',example:'He goes to that theatre every weekend.'},{title:'现在进行时',note:'正在进行的动作。',example:'We are having a conversation.'},{title:'一般疑问句',note:'be 提到主语前。',example:'Are they talking loudly?'}]};
- const result=summarize(lesson);
- assert.deepEqual(result.grammar.map(row=>row.example),lesson.paragraphs.map(row=>row.en));
- assert.equal(result.grammar[0].exampleDetails,'He goes to that theatre every weekend.');
- assert(result.grammar.every(row=>row.exampleSourceKind==='passage'));
- const drift=summarize({...lesson,paragraphs:[{en:'Changed source.'}]});assert.equal(drift.grammar[0].example,lesson.grammar[0].example);
+test('curated Breakfast notes bind to their actual excerpts and fail closed on passage drift',()=>{
+ const id='nce-b2-eef57c-l002',authored=require('../lesson-grammar-focus-book2.js')[id].points;
+ const lesson={id,book:2,number:2,title:'第2课 · Breakfast or lunch?',paragraphs:authored.map(point=>({en:point.example})),grammar:[{title:'不应使用外课模板',note:'通用说明。',example:'He goes to that theatre every weekend.'}],usage:[]};
+ const result=summarize(lesson);assert.deepEqual(result.grammar.map(row=>row.example),authored.map(point=>point.example));assert(result.grammar.every(row=>row.curated&&row.exampleSourceKind==='passage'));
+ const drift=summarize({...lesson,paragraphs:[{en:'Changed source.'}]});assert.deepEqual(drift.grammar,[]);assert.equal(drift.contentStatus,'needs-review');assert.match(drift.notice,/重新核对/);assert.doesNotMatch(JSON.stringify(drift.grammar),/theatre|通用说明/);
 });
+
 test('concrete wrong and right reminders quote only authored grammar questions and reasons',()=>{
  const question={type:'grammar',sourceLessonId:'current',question:'She ___ working now.',options:['is','are'],answer:0,graded:true,rule:'be 随主语变化。',wrongReasons:{are:'主语为 she，不能使用 are。'},sourceLabel:'自编已校对练习'};
  const result=summarize(fixture(),{questions:[question,{...question,sourceLessonId:'foreign'}]});
  const reminder=result.pitfalls.find(row=>row.question===question.question);
  assert(reminder);assert.equal(reminder.wrongAnswer,'are');assert.equal(reminder.correctAnswer,'is');assert.equal(reminder.reason,question.wrongReasons.are);
  assert.match(reminder.text,/误选：are/);assert.match(reminder.text,/应选：is/);assert.equal(reminder.sourceLabel,question.sourceLabel);
+});
+
+function browserPoints(scripts){
+ const window={};window.window=window;vm.createContext(window);
+ for(const name of [...scripts,'lesson-key-points.js'])vm.runInContext(fs.readFileSync(path.join(root,name),'utf8'),window,{filename:name});
+ return window.StudyLessonKeyPoints;
+}
+function assertMissingOfficialContent(points,lesson){
+ const result=points.forLesson(lesson,{questions:[{type:'grammar',graded:true,rule:'原句含有情态动词。',example:'Jane received a letter.'}]});
+ assert.equal(result.contentStatus,'needs-review');
+ assert.equal(result.grammar.length,0);
+ assert.equal(result.pitfalls.length,0);
+ assert.match(result.notice,/暂缺|缺少|未加载/);
+ assert.match(result.notice,/正文|不匹配/);
+ assert.doesNotMatch(JSON.stringify(result.grammar),/原句含有情态动词|语法运用/);
+}
+
+test('a missing browser book catalog never revives generic grammar for its official lessons',()=>{
+ const points=browserPoints(['lesson-grammar-focus-book1.js','lesson-grammar-focus-book3.js','lesson-grammar-focus-book4.js','lesson-grammar-focus.js']);
+ assertMissingOfficialContent(points,{...fixture(),id:'nce-b2-eef57c-l002'});
+});
+
+test('a missing browser aggregator fails closed for every official id family while custom notes still work',()=>{
+ const points=browserPoints([]);
+ for(const id of ['nce-b1-4be758-l001','nce-b2-eef57c-l002','nce-b3-fa4874-l001','nce-b3-140ed4-l041','nce-nativeears-b3-l045','nce-nativeears-b4-l048','nce-textbook-b4-l001']){
+  assertMissingOfficialContent(points,{...fixture(),id});
+ }
+ const custom=points.forLesson(fixture());
+ assert.equal(custom.contentStatus,'existing-notes');assert.equal(custom.grammar[0].title,'一般过去时');
+});
+
+test('an official id missing from loaded catalogs requires review without affecting custom imports',()=>{
+ assertMissingOfficialContent(api,{...fixture(),id:'nce-b2-eef57c-l999'});
+ assert.equal(summarize(fixture()).contentStatus,'existing-notes');
 });

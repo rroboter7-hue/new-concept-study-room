@@ -399,7 +399,7 @@
  function lessonFocusHTML(lesson=focusLesson()){
   if(!lesson)return '<p class="small-note">暂无可查看的课程。</p>';
   const raw=learningPipeline?.options?.getKeyPoints?.(lesson)||{},grammar=(raw.grammar||raw.items?.filter(row=>row.category==='grammar')||[]).filter(row=>row.sourceLessonId===lesson.id).slice(0,3),caution=raw.pitfalls?.find(row=>row.sourceLessonId===lesson.id);
-  return '<p class="entry-focus-label">第'+E(lesson.book)+'册 · 第'+E(lesson.number)+'课</p><h3 class="entry-focus-title">'+E(lesson.title.replace(/^第\s*\d+\s*课\s*[·.：:－-]\s*/,''))+'</h3>'+(grammar.length?grammar.map(row=>'<p><strong>'+E(row.title)+'</strong> '+E(/[:：]/.test(row.title)?'':row.summary||'')+'</p>').join(''):'<p class="small-note">这课暂未整理独立语法要点，可以回看课文或选择其他课。</p>')+(caution?'<p class="small-note"><strong>注意：</strong>'+E(caution.text)+'</p>':'');
+  return '<p class="entry-focus-label">第'+E(lesson.book)+'册 · 第'+E(lesson.number)+'课</p><h3 class="entry-focus-title">'+E(lesson.title.replace(/^第\s*\d+\s*课\s*[·.：:－-]\s*/,''))+'</h3>'+(grammar.length?grammar.map(row=>'<section class="lesson-grammar-note"><p><strong>'+E(row.title)+'</strong> '+E(row.curated?row.summary:/[:：]/.test(row.title)?'':row.summary||'')+'</p>'+(row.curated?'<blockquote class="lesson-grammar-example" lang="en">'+E(row.example)+'</blockquote><p class="lesson-grammar-pitfall"><strong>易错：</strong>'+E(row.pitfall)+'</p>':'')+'</section>').join(''):'<p class="small-note">这课暂未整理独立语法要点，可以回看课文或选择其他课。</p>')+(caution&&!grammar.some(row=>row.curated)?'<p class="small-note"><strong>注意：</strong>'+E(caution.text)+'</p>':'');
  }
  function renderGrammarFocus(){
   const host=$('[data-entry-focus-body]'),lesson=focusLesson();if(!host||!lesson)return;

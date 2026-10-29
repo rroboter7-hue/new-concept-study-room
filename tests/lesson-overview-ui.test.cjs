@@ -16,3 +16,7 @@ test('an explanatory grammar heading stays compact rather than repeating its ful
  const html=ui({grammar:[{sourceLessonId:'current',title:'一般过去时：讲述过去发生的事',summary:'一般过去时用来讲述过去发生的动作或状态。'}]}).readingHTML();
  assert.match(html,/一般过去时：讲述过去发生的事/);assert.doesNotMatch(html,/一般过去时用来讲述/);
 });
+test('curated overview shows its English evidence and per-point caution without repeating a generic warning',()=>{
+ const html=ui({grammar:[{sourceLessonId:'current',curated:true,title:'一般过去时',summary:'went 在讲上周看戏。',example:'I went to the theatre.',pitfall:'不要把 went 写成 go。'}],pitfalls:[{sourceLessonId:'current',text:'不要把 went 写成 go。'}]}).readingHTML();
+ assert.match(html,/I went to the theatre\./);assert.match(html,/易错/);assert.equal((html.match(/不要把 went 写成 go/g)||[]).length,1);
+});

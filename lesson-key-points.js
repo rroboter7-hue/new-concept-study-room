@@ -1,16 +1,17 @@
 /* Selects brief points from existing lesson material; no network or new examples. */
 (function(root,factory){
  'use strict';
- const api=factory(root);
+ const api=factory(root,typeof module==='object'&&module.exports?require('./lesson-grammar-focus.js'):root.StudyLessonGrammarFocus);
  if(typeof module==='object'&&module.exports)module.exports=api;
  else root.StudyLessonKeyPoints=api;
-})(typeof window!=='undefined'?window:globalThis,function(root){
+})(typeof window!=='undefined'?window:globalThis,function(root,curatedRegistry){
  'use strict';
  const list=value=>Array.isArray(value)?value:[];
  const text=value=>typeof value==='string'?value.trim():'';
  const clone=value=>value===undefined?undefined:JSON.parse(JSON.stringify(value));
  const NOTICE='根据本课已有教材与校对笔记整理；采用本地整理逻辑，非实时在线 AI。';
  const reading=/reading|comprehension|main[-_ ]?idea|阅读理解|课文理解|细节理解|理解题/i;
+ const officialLesson=/^nce-(?:b[123]-[a-f\d]{6}|nativeears-b[34]|textbook-b4)-l\d{3}$/;
  function sameLesson(row,lesson){
   if(!row||typeof row!=='object')return false;
   if(row.isReview===true||row.pipeline?.origin==='review')return false;
@@ -66,6 +67,7 @@
  }
  function forLesson(lesson,options={}){
   lesson=lesson&&typeof lesson==='object'?lesson:{};
+  const curated=curatedRegistry?.forLesson?.(lesson)||(officialLesson.test(text(lesson.id))?{status:'needs-review',points:[],errors:['本课作者语法资料暂缺，请重新核对。']}:null);
   const items=[],seen=new Set(),vocabulary=clone(list(lesson.vocabulary)),usage=clone(list(lesson.usage));
   let reviewed=options.reviewedGrammar;
   if(reviewed===undefined){
@@ -80,20 +82,21 @@
    const key=category+':'+title.normalize('NFKC').toLowerCase();
    if(seen.has(key))return;
    seen.add(key);
-   const {bodyBound,...example}=exampleFor(row,lesson);
-   items.push({title,summary:shortSummary(note,title),...example,details:text(details)||note,category,...sourceKind(row,lesson,bodyBound||['lesson-passage','textbook-passage'].includes(row.sourceType)&&list(row.sourceForms).some(form=>inPassage(form,lesson))),
+   const {bodyBound,...example}=row.editorial&&inPassage(row.example,lesson)?{bodyBound:true,example:row.example,exampleDetails:row.example}:exampleFor(row,lesson);
+   items.push({title,summary:row.editorial?text(row.summary):shortSummary(note,title),...(row.editorial?{curated:true,pitfall:text(row.pitfall)}:{}),...example,details:text(details)||note,category,...sourceKind(row,lesson,bodyBound||['lesson-passage','textbook-passage'].includes(row.sourceType)&&list(row.sourceForms).some(form=>inPassage(form,lesson))),
     sourceLabel:text(row.sourceLabel||row.label||row.source)||fallback,
     exampleSourceLabel:bodyBound?'本课教材正文原句（英文）':text(row.exampleSourceLabel)||'本课已有资料中的例句或摘句',
     exampleSourceKind:bodyBound?'passage':'lesson-extension',
     exampleDetailsSourceLabel:example.exampleDetails!==example.example?(text(row.exampleSourceLabel)||'原有学习笔记例句（非所选课文原句）'):'',
     sourceLessonId:lesson.id,sourceReference:reference(row)});
   }
+  if(curated?.status==='ready')for(const point of curated.points)add({...point,editorial:true,sourceLabel:'本课原句语法提示 · 自编整理',sourcePage:lesson.textbook?.sourcePdfPage},'grammar',point.title,point.summary+' 注意：'+point.pitfall,'本课原句语法提示 · 自编整理');
   const grammarLimit=3;
-  const grammarCandidates=[...list(reviewed).map(row=>({row,fallback:'本课已校对语法笔记 · 中文整理'})),...list(lesson.grammar).map(row=>({row,fallback:'本课语法笔记 · 学习整理'}))];
+  const grammarCandidates=curated?[]:[...list(reviewed).map(row=>({row,fallback:'本课已校对语法笔记 · 中文整理'})),...list(lesson.grammar).map(row=>({row,fallback:'本课语法笔记 · 学习整理'}))];
   grammarCandidates.sort((a,b)=>Number(exampleFor(b.row,lesson).bodyBound)-Number(exampleFor(a.row,lesson).bodyBound));
   for(const {row,fallback} of grammarCandidates)if(items.length<grammarLimit)add(row,'grammar',row.title,row.note||row.rule||row.explanation,fallback);
   const questionRules=new Set();
-  for(const row of questions){
+  for(const row of curated?[]:questions){
    if(items.length>=grammarLimit)break;
    if(row?.type!=='grammar'||row.graded===false||!sameLesson(row,lesson)||reading.test([row.category,row.focus,row.kind,row.conceptId,row.grammarConceptId,row.question].join(' ')))continue;
    const original=text(row.explanation).match(/^原句：([\s\S]+?)\s+巩固原句中的动词形式。$/);
@@ -117,11 +120,12 @@
   // learner error rates or rewritten grammar advice.
   const pitfalls=[];
   for(const point of grammar){
+   if(point.curated){pitfalls.push({text:point.pitfall,sourceLessonId:point.sourceLessonId,sourceLabel:point.sourceLabel,sourceReference:{...point.sourceReference}});continue;}
    const sentence=point.details.split(/(?<=[。！？；;])\s*/).map(text).find(part=>/(?:注意|易错|不要|避免|切勿|不能|不可)/.test(part));
    if(sentence)pitfalls.push({text:sentence,sourceLessonId:point.sourceLessonId,sourceLabel:point.sourceLabel,sourceReference:{...point.sourceReference}});
   }
   const reminderRules=new Set();
-  for(const row of questions){
+  for(const row of curated?[]:questions){
    if(pitfalls.length>=3)break;
    if(row?.type!=='grammar'||row.graded!==true||!sameLesson(row,lesson)||reading.test([row.category,row.focus,row.kind,row.conceptId,row.grammarConceptId,row.question].join(' ')))continue;
    const question=text(row.question),choices=list(row.options),correctAnswer=text(choices[row.answer]);
@@ -133,7 +137,7 @@
    reminderRules.add(key);
    pitfalls.push({text:question+' 误选：'+wrongAnswer+'；应选：'+correctAnswer+'。'+reason,question,wrongAnswer,correctAnswer,reason,sourceLessonId:lesson.id,sourceLabel:text(row.sourceLabel)||'本课已有语法练习解析',sourceReference:reference(row)});
   }
-  return {items,grammar,usages,pitfalls,vocabulary,usage,notice:NOTICE};
+  return {items,grammar,usages,pitfalls,vocabulary,usage,contentStatus:curated?.status||'existing-notes',notice:curated?.status==='ready'?'语法与易错提示依据本课英文原句自编整理；例句引自本课，非教材官方语法讲义或实时在线 AI。':curated?'本课语法资料暂缺或与当前正文不匹配，请重新核对；暂不显示通用补位内容。':NOTICE};
  }
  return Object.freeze({forLesson});
 });
