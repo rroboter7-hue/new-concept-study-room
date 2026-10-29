@@ -18,7 +18,7 @@ test('a failed lesson selection keeps the real bookshelf drawer open and a succe
  await h.click('[data-shelf-book="2"]');h.setStorageWritable(false);
  await h.click('[data-shelf-lesson="'+next.id+'"]');
  assert.equal(visible(h),true);assert.equal(home.drawerOpen,true);assert.equal(home.overlay.hidden,false);assert.equal(home.overlay.inert,false);
- assert.equal(h.api.current.id,original);assert.equal(h.api.data.appRoute.view,'shelf');assert.equal(h.audio.lessonChanges.at(-1),original);
+ assert.equal(h.api.current.id,original);assert.equal(h.api.data.appRoute.view,'shelf');assert.deepEqual(h.audio.lessonChanges,[],'failed navigation from the lazy shelf must not bind audio');
  h.setStorageWritable(true);await h.click('[data-shelf-lesson="'+next.id+'"]');
  assert.equal(visible(h),false);assert.equal(home.overlay.hidden,true);assert.equal(h.api.current.id,next.id);
  assert.equal(h.stored.appRoute.lessonId,next.id);assert.equal(h.audio.lessonChanges.at(-1),next.id);

@@ -25,7 +25,7 @@ test('real app bridge preserves independent free-writing rows saved by another w
  assert.deepEqual(plain(h.stored.freeWriting[key].targets[target.key].answers.slice(0,3)),expected);
  assert.equal(writing.active.draft.targets[target.key].answers[1],expected[1]);
  assert(locks.length>=2);assert(locks.every(lock=>lock.name==='zhixin-study-v1:free-writing:'+key&&lock.settings.mode==='exclusive'));
- const reloaded=await harness({...options,loaded:h.stored}),restored=reloaded.api.learningPipeline.writing;
+ const reloaded=await harness({...options,loaded:h.stored});assert.equal(reloaded.api.learningPipeline.writing,null);await reloaded.click('[data-shelf-continue]');await reloaded.flush();const restored=reloaded.api.learningPipeline.writing;
  assert(restored);assert.deepEqual(plain(restored.active.draft.targets[target.key].answers.slice(0,3)),expected);
 });
 
