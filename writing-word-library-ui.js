@@ -101,14 +101,14 @@
    const scopes=[['','全部'],...books.map(book=>[String(book),'第'+['','一','二','三','四'][book]+'册']),['history','第'+['','一','二','三','四'][this.lesson.book]+'册前课'],['current','本课']];
    host.innerHTML=scopes.map(([value,label])=>'<button type="button" data-library-scope="'+(value||'all')+'" aria-pressed="'+(this.state.book===value)+'">'+this.e(label)+'</button>').join('');
   }
-  frequencyLabel(row){const rating=(this.options.frequency||root.StudyFrequencyReference)?.lookup?.(row.label,row.category==='phrase'?'phrase':'word');return rating?'，'+(rating.stars?'频率参考 '+rating.stars+'/3':'频率待统计'):'';}
-  annotation(row){return '<span class="writing-library-annotation">'+this.pos(row)+this.frequency(row)+'</span>';}
+  annotation(row){return '<span class="writing-library-annotation">'+this.pos(row)+'</span>';}
   frequency(row){return (this.options.frequency||root.StudyFrequencyReference)?.badge?.(row.label,row.category==='phrase'?'phrase':'word')||'';}
   card(row){
    const e=this.e,chosen=list(this.state.selectedByTarget[this.target.key]).includes(row.key);
-   const source=this.scopedSources(row)[0]||row.source;
-   const location=source?.id===this.lesson.id?'本课':'第'+source?.book+'册 · 第'+source?.number+'课';
-   return '<button type="button" class="writing-library-card" data-library-key="'+e(row.key)+'" aria-pressed="'+chosen+'" title="'+e(row.label+' · '+row.meaning)+'" aria-label="'+e(row.label+'，'+row.meaning)+e(this.frequencyLabel(row))+'"><strong class="writing-library-label" lang="en">'+e(row.label)+'</strong><span>'+e(row.meaning)+'</span><small class="writing-library-card-meta"><span>'+e(location)+'</span>'+this.frequency(row)+'</small></button>';
+   const origins=this.scopedSources(row).map(source=>'<li>'+e('第'+source.book+'册 · 第'+source.number+'课'+(source.id===this.lesson.id?'（本课）':'')+(source.title?' · '+source.title:''))+'</li>').join('');
+   const frequency=this.frequency(row);
+   const detail='<details class="writing-library-details"><summary>来源与详情<span class="sr-only">：'+e(row.label)+'</span></summary><div><ul>'+origins+'</ul>'+(row.detailMeaning?'<p>'+e(row.detailMeaning)+'</p>':'')+(row.example?'<p lang="en">'+e(row.example)+'</p>':'')+(frequency?'<p class="writing-library-frequency">'+frequency+' <a href="frequency-data-notice.html" target="_blank" rel="noopener">频率说明</a></p>':'')+'</div></details>';
+   return '<article class="writing-library-word-entry"><button type="button" class="writing-library-card" data-library-key="'+e(row.key)+'" aria-pressed="'+chosen+'" title="'+e(row.label+' · '+row.meaning)+'" aria-label="'+e(row.label+'，'+(posLabels[row.category]||text(row.pos).trim()||'词性未标注')+'，'+row.meaning)+'"><strong class="writing-library-label" lang="en">'+e(row.label)+'</strong>'+this.pos(row)+'<span class="writing-library-meaning">'+e(row.meaning)+'</span></button>'+detail+'</article>';
   }
   drawResults(){
    const host=this.container?.querySelector('[data-library-stage]');if(!host)return;
@@ -125,7 +125,7 @@
   }
   drawSelected(){
    const host=this.container?.querySelector('[data-library-selected]');if(!host)return;
-   const rows=this.selected();host.innerHTML=rows.length?'<div class="writing-library-selected">'+rows.map(row=>'<button type="button" data-library-key="'+this.e(row.key)+'" title="'+this.e(row.label)+'" aria-label="移除 '+this.e(row.label)+this.e('，'+(posLabels[row.category]||text(row.pos).trim()||'词性未标注'))+this.e(this.frequencyLabel(row))+'"><span class="writing-library-label" lang="en">'+this.e(row.label)+'</span>'+this.annotation(row)+' ×</button>').join('')+'</div>':'<p class="writing-library-selected-empty">可选最多 4 个参考词</p>';
+   const rows=this.selected();host.innerHTML=rows.length?'<div class="writing-library-selected">'+rows.map(row=>'<button type="button" data-library-key="'+this.e(row.key)+'" title="'+this.e(row.label)+'" aria-label="移除 '+this.e(row.label)+this.e('，'+(posLabels[row.category]||text(row.pos).trim()||'词性未标注'))+'"><span class="writing-library-label" lang="en">'+this.e(row.label)+'</span>'+this.annotation(row)+' ×</button>').join('')+'</div>':'<p class="writing-library-selected-empty">可选最多 4 个参考词</p>';
    const inline=this.container?.querySelector('[data-library-inline-selected]');
    if(inline){inline.innerHTML=rows.length?'<small>已选参考</small><div>'+rows.map(row=>'<span title="'+this.e(row.label+' · '+row.meaning)+'"><strong class="writing-library-label" lang="en">'+this.e(row.label)+'</strong>'+this.annotation(row)+'<span>'+this.e(row.meaning)+'</span></span>').join('')+'</div>':'';if(rows.length)inline.removeAttribute('hidden');else inline.setAttribute('hidden','');}
   }
@@ -134,11 +134,14 @@
    if(!button||!this.container?.contains(button)||button.disabled)return;
    const key=button.dataset.libraryKey;
    if(key){
+    const section=button.closest('[data-library-section]')?.dataset.librarySection;
+    const region=button.closest('.writing-library-recommend-items')?'.writing-library-recommend-items':button.closest('[data-library-selected]')?'[data-library-selected]':section?'[data-library-section="'+section+'"]':'[data-library-results]';
     const selected=list(this.state.selectedByTarget[this.target.key]).slice(),at=selected.indexOf(key);
     if(at<0&&!this.bank().some(row=>row.key===key&&this.scopedSources(row).length))return;
     if(at>=0)selected.splice(at,1);else if(selected.length<4)selected.push(key);else{this.setNotice('先移除一个参考词，再选择新的。');this.options.toast?.('先移除一个参考词，再选择新的。');return;}this.setNotice('');
     this.state.selectedByTarget[this.target.key]=selected;this.drawResults();this.drawSelected();
-    this.container.querySelector('[data-library-key="'+this.e(key)+'"]')?.focus?.({preventScroll:true});
+    const focus=Array.from(this.container.querySelector(region)?.querySelectorAll('[data-library-key]')||[]).find(node=>node.dataset.libraryKey===key)||this.container.querySelector('.writing-library-done');
+    focus?.focus?.({preventScroll:true});
     await this.save();return;
    }
    if(button.hasAttribute('data-library-scope')){this.state.book=button.dataset.libraryScope==='all'?'':button.dataset.libraryScope;this.state.page=0;this.drawScopes();this.drawResults();await this.save();return;}

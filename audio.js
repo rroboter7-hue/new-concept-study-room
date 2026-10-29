@@ -241,7 +241,10 @@
           listen('error', () => {
             this._playing = false;
             var code = audio.error && audio.error.code;
-            this._report(makeError(code === 4 ? '浏览器无法解码此音频，请换用 MP3、WAV 或浏览器支持的格式。' : '音频加载或播放失败，请重新导入有效的音频文件。', audio.error));
+            // An unreachable URL can also produce SRC_NOT_SUPPORTED (4).
+            // Only a decoding error (3) identifies a decoding failure.
+            var message = code === 3 ? '音频解码失败，请重试或换用浏览器支持的格式。' : this._mediaSource === 'imported' ? (code === 4 ? '浏览器无法读取此本地音频，请换用 MP3、WAV 或浏览器支持的格式。' : '音频文件加载或播放失败，请重新导入有效的音频文件。') : '课程音频暂时无法读取，请检查网络或稍后重试。';
+            this._report(makeError(message, audio.error));
             this._emitState();
           });
           audio.src = sourceURL;
@@ -364,7 +367,7 @@
           if (request !== this._mediaRequest || audio !== this._audio) return;
           this._playing = false;
           this._emitState();
-          throw this._report(makeError(error && error.name === 'NotAllowedError' ? '浏览器阻止了音频，请点击播放按钮重试。' : '音频无法播放，请检查格式或重新导入。', error));
+          throw this._report(makeError(error && error.name === 'NotAllowedError' ? '浏览器阻止了音频，请点击播放按钮重试。' : this._mediaSource === 'imported' ? '音频无法播放，请检查格式或重新导入。' : '课程音频暂时无法播放，请检查网络后重试。', error));
         }
         return;
       }

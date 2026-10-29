@@ -7,3 +7,4 @@
 @media(max-width:600px){.pipeline-steps button{font-size:.62rem}.pipeline-retell-label textarea{min-height:170px}}
 
 .pipeline-audio-controls{display:flex;align-items:center;gap:12px;margin-top:12px;max-width:600px}.pipeline-audio-controls input{flex:1;min-width:0;min-height:44px;accent-color:var(--pipeline-blue)}.pipeline-audio-controls .button{white-space:nowrap}.pipeline-audio-controls :disabled{opacity:.5}
+.pipeline-retell-editor .pipeline-copy-actions .primary{width:100%;justify-content:center;min-height:44px}.pipeline-retell-editor .pipeline-copy-actions .pipeline-source{margin:8px 0 0}
