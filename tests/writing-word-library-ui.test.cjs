@@ -51,3 +51,5 @@ test('three compact frequency stars appear in recommendations and selected refer
  assert.match(f.host.querySelector('[data-library-inline-selected]').innerHTML,/data-frequency-score="2.8"/);
  assert.equal(f.ui.selected()[0].key,'reference:garden');
 });
+
+test('opening the library starts browsing instead of focusing the mobile search keyboard',async()=>{const f=await setup();await open(f);const query=f.host.querySelector('[data-library-query]'),back=f.host.querySelector('[data-library-action="return"]');assert.notEqual(f.h.document.activeElement,query);assert.equal(f.h.document.activeElement,back);query.focus();await f.h.document.input(query,'garden');assert.match(f.host.querySelector('[data-library-results]').innerHTML,/garden/);});

@@ -71,7 +71,7 @@
    this.returnFocus=this.container.querySelector('[data-library-action="open"]');
    if(!dialog.open&&typeof dialog.showModal==='function')try{dialog.showModal();}catch(_){dialog.setAttribute('open','');}
    else dialog.setAttribute('open','');
-   this.state.open=true;this.bank();this.drawResults();this.drawSelected();this.container.querySelector('[data-library-query]')?.focus?.({preventScroll:true});
+   this.state.open=true;this.bank();this.drawResults();this.drawSelected();this.container.querySelector('[data-library-action="return"]')?.focus?.({preventScroll:true});
    if(persist||this.migrated){this.migrated=false;void this.save();}
   }
   closeDialog(persist=true){

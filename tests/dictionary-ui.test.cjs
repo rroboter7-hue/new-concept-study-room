@@ -435,3 +435,5 @@ test('reopening saved ECDICT Chinese ignores legacy online POS and example witho
   assert.doesNotMatch(chineseSection(h),/noun|Hey, beautiful!/);assert.match(h.popup.innerHTML,/Hey, beautiful!/);
   assert.equal(saved.pos,'noun');assert.equal(saved.example,'Hey, beautiful!');assert.equal(saved.note,'Keep my note');assert.equal(saved.mastered,true);assert.equal(saved.addedAt,123);
 });
+
+test('course sense and example stay visible while unrelated dictionary meanings are collapsed',async()=>{const h=setup([{word:'outside',meaning:'在外面',pos:'adv.',example:'It was dark outside.'}]);const opening=h.open('outside');h.requests[0].resolve(onlineEntry('outside','The outer surface.'));await opening;const html=h.popup.innerHTML,details=html.match(/<details[^>]*data-word-other-senses[^>]*>[\s\S]*?<\/details>/)?.[0];assert(details,'other senses have a disclosure');assert.doesNotMatch(details,/<details[^>]*\bopen\b/);assert.match(details,/The outer surface/);assert.match(html.replace(details,''),/adv\.|在外面/);assert.match(html.replace(details,''),/It was dark outside/);});

@@ -260,9 +260,23 @@
       const labels=points.length?points:list(this.options.getKeyPoints?.(this.lesson)?.items).map(item=>item.title).filter(Boolean);
       return '<div class="pipeline-recall"><strong>合上资料，先回想本课</strong>'+(labels.length?'<ul>'+labels.slice(0,3).map(label=>'<li>关于「'+e(label)+'」，你能回忆适用情境和句子结构吗？在下方写下仍不确定的地方。</li>').join('')+'</ul>':'<p>回想《'+e(this.lesson.title)+'》课文中的句子，再展开课文回顾对照其结构。</p>')+'</div>';
     }
+    audioState() { const state=this.options.getAudioState?.(); return state?.lessonId===this.lesson?.id ? state : null; }
+    seekAudio(value) {
+      const state=this.audioState(), number=Number(value);
+      if (!state || state.canSeek===false || !Number.isFinite(state.duration) || state.duration<=0 || !Number.isFinite(number) || typeof this.options.seekLessonAudio!=='function') return false;
+      this.options.seekLessonAudio(Math.max(0,Math.min(1000,number))/1000,this.lesson);return true;
+    }
+    rewindAudio() { const state=this.audioState();return state&&Number.isFinite(state.currentTime)&&state.duration>0 ? this.seekAudio(Math.max(0,state.currentTime-5)/state.duration*1000) : false; }
+    updateAudioProgress(state=this.audioState()) {
+      if (!state || state.lessonId!==this.lesson?.id) return;
+      const seek=this.container?.querySelector?.('[data-pipeline-audio-seek]'),back=this.container?.querySelector?.('[data-pipeline-action="rewind-audio"]');
+      const ready=state.canSeek!==false&&Number.isFinite(state.duration)&&state.duration>0;
+      if(seek){seek.disabled=!ready;if(this.audioSeekDraft==null)seek.value=String(ready?Math.round(Math.max(0,Math.min(1,(Number(state.currentTime)||0)/state.duration))*1000):0);}
+      if(back)back.disabled=!ready;
+    }
     readingHTML(){
       const body=this.options.renderReading?.(this.lesson)||list(this.lesson.paragraphs).map(paragraph=>'<p lang="en">'+this.e(paragraph.en)+'</p><p>'+this.e(paragraph.zh)+'</p>').join('');
-      return '<div class="pipeline-reading-intro"><h2>先读课文</h2><p>可先听本课音频，或直接开始选择题；熟悉程度由你决定。</p><button type="button" class="button subtle" data-pipeline-action="play">播放本课音频</button><span class="pipeline-source" data-pipeline-audio-progress></span></div><div data-pipeline-reading>'+body+'</div><div class="pipeline-footer"><button class="button primary" data-pipeline-action="stage" data-stage="1">开始选择题</button></div>';
+      return '<div class="pipeline-reading-intro"><h2>先读课文</h2><p>可先听本课音频，或直接开始选择题；熟悉程度由你决定。</p><button type="button" class="button subtle" data-pipeline-action="play">播放本课音频</button><span class="pipeline-source" data-pipeline-audio-progress></span><div class="pipeline-audio-controls"><button type="button" class="button subtle" data-pipeline-action="rewind-audio" disabled>回退5秒</button><input type="range" min="0" max="1000" step="1" value="0" data-pipeline-audio-seek aria-label="整课音频播放进度" disabled></div></div><div data-pipeline-reading>'+body+'</div><div class="pipeline-footer"><button class="button primary" data-pipeline-action="stage" data-stage="1">开始选择题</button></div>';
     }
     quizHTML(){
       const e=this.e,record=this.record(),quiz=record.quiz,question=this.question(),counts=quiz.plan?.actualCounts||{current:quiz.questions.filter(q=>q.isCurrent).length,review:quiz.questions.filter(q=>q.isReview).length,total:quiz.questions.length};
@@ -357,7 +371,7 @@
       this.detachStage();this.visibleStage=this.record().stage;this.container.innerHTML=this.render();
       if(this.visibleStage===0){const reading=this.container.querySelector?.('[data-pipeline-reading]');if(reading){this.options.mountReading?.(reading,this.lesson);this.readingMounted=true;}}
       if(this.visibleStage===2){const area=this.container.querySelector?.('[data-pipeline-writing]'),writing=this.ensureWriting();if(area&&writing){writing.setLesson(this.lesson);writing.mount(area);}}
-      this.restoreScroll();this.options.changed?.({lessonId:this.lesson?.id,stage:this.visibleStage});
+      this.updateAudioProgress();this.restoreScroll();this.options.changed?.({lessonId:this.lesson?.id,stage:this.visibleStage});
     }
     nextLesson(){return (this.options.getLessons?.()||[]).filter(lesson=>lesson.book>this.lesson.book||lesson.book===this.lesson.book&&lesson.number>this.lesson.number).sort((a,b)=>a.book-b.book||a.number-b.number)[0]||null;}
     async finish(){if(!this.lesson)return false;const id=this.lesson.id;this.queue(state=>{this.ensureRecord(state,id).finishedAt=Date.now();return state;});if(!await this.flush())return false;return await this.options.onShelf?.()!==false;}
@@ -371,17 +385,18 @@
         const expected=data.pipelineQuestionId!==undefined?{lessonId:data.pipelineLessonId,questionId:data.pipelineQuestionId,round:Number(data.pipelineRound),signature:data.pipelineQuestionSignature}:undefined;
         if(data.pipelineStage!==undefined){void this.goStage(Number(data.pipelineStage));return;}
         if(data.pipelineAnswer!==undefined){this.chooseAnswer(Number(data.pipelineAnswer),expected);return;}
-        const actions={stage:()=>this.goStage(Number(data.stage)),play:()=>this.options.playLesson?.(this.lesson),check:()=>this.checkAnswer(expected),retry:()=>this.retryQuestion(expected),next:()=>this.nextQuestion(expected),'recap-retry':()=>this.retryFromRecap(expected),'recap-answer':()=>this.chooseRecapAnswer(Number(data.answer),expected),'recap-check':()=>this.checkRecapPractice(expected),'correct-sentence':()=>this.correctSentence(data.target),'copy-sentences':()=>this.copySentences(),'copy-retell':()=>this.copyRetell(),'import-legacy-retell':()=>this.importLegacyRetell(),'new-round':()=>this.newQuizRound(),save:()=>this.flush(),shelf:()=>this.shelf(),finish:()=>this.finish(),'next-lesson':()=>this.selectNextLesson()};
+        const actions={'rewind-audio':()=>this.rewindAudio(),stage:()=>this.goStage(Number(data.stage)),play:()=>this.options.playLesson?.(this.lesson),check:()=>this.checkAnswer(expected),retry:()=>this.retryQuestion(expected),next:()=>this.nextQuestion(expected),'recap-retry':()=>this.retryFromRecap(expected),'recap-answer':()=>this.chooseRecapAnswer(Number(data.answer),expected),'recap-check':()=>this.checkRecapPractice(expected),'correct-sentence':()=>this.correctSentence(data.target),'copy-sentences':()=>this.copySentences(),'copy-retell':()=>this.copyRetell(),'import-legacy-retell':()=>this.importLegacyRetell(),'new-round':()=>this.newQuizRound(),save:()=>this.flush(),shelf:()=>this.shelf(),finish:()=>this.finish(),'next-lesson':()=>this.selectNextLesson()};
         void actions[data.pipelineAction]?.();
       };
-      const input=event=>{if(event.target?.dataset?.pipelineRecap!==undefined)this.setRecapText(event.target.value);if(event.target?.dataset?.pipelineRetell!==undefined)this.setRetellText(event.target.value);};
+      const input=event=>{if(event.target?.dataset?.pipelineAudioSeek!==undefined)this.audioSeekDraft=Number(event.target.value);if(event.target?.dataset?.pipelineRecap!==undefined)this.setRecapText(event.target.value);if(event.target?.dataset?.pipelineRetell!==undefined)this.setRetellText(event.target.value);};
       const scroll=()=>this.captureScroll(),pagehide=()=>{this.captureScroll();void this.flush();};
-      this.handlers={click,input,scroll};for(const [name,handler]of Object.entries(this.handlers))container.addEventListener(name,handler);
+      const change=event=>{if(event.target?.dataset?.pipelineAudioSeek!==undefined){const value=Number(event.target.value);this.audioSeekDraft=null;this.seekAudio(value);this.updateAudioProgress();}};
+      this.handlers={click,input,change,scroll};for(const [name,handler]of Object.entries(this.handlers))container.addEventListener(name,handler);
       this.windowHandlers={scroll,pagehide};for(const [name,handler]of Object.entries(this.windowHandlers))this.window?.addEventListener(name,handler);
       this.refresh();return true;
     }
     unmount(){
-      this.detachStage();if(this.restoreTimer!==null){clearTimeout(this.restoreTimer);this.restoreTimer=null;}
+      this.audioSeekDraft=null;this.detachStage();if(this.restoreTimer!==null){clearTimeout(this.restoreTimer);this.restoreTimer=null;}
       if(this.container&&this.handlers)for(const [name,handler]of Object.entries(this.handlers))this.container.removeEventListener?.(name,handler);
       if(this.windowHandlers)for(const [name,handler]of Object.entries(this.windowHandlers))this.window?.removeEventListener?.(name,handler);
       this.container=null;this.handlers=null;this.windowHandlers=null;
