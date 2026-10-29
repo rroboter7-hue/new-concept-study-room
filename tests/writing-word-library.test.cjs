@@ -12,6 +12,19 @@ const phrase=(phrase,meaning,extra={})=>({phrase,meaning,...extra});
 const current=lesson('b2-l9',2,9,[word('write','v.','写')]);
 function entries(options){assert.equal(typeof library.forLesson,'function');return library.forLesson(current,options);}
 
+test('nationality labels use English capitals while saved identities and aliases stay lowercase',()=>{
+ const source=lesson('nationalities',1,1,[word('japanese','adj.','日本的'),word('german','n.','德国人'),word('korean','adj.','韩国的'),word('garden','n.','花园')]);
+ const before=JSON.stringify(source),rows=library.forLesson(source);
+ for(const [lower,label] of [['japanese','Japanese'],['german','German'],['korean','Korean']]){
+  const row=rows.find(row=>row.key==='word:nationalities:'+lower);
+  assert.equal(row.label,label);
+  assert.deepEqual(row.aliases,['word:nationalities:'+lower]);
+  assert.equal(library.filter(rows,{query:lower})[0].label,label);
+ }
+ assert.equal(rows.find(row=>row.label==='garden').label,'garden');
+ assert.equal(JSON.stringify(source),before);
+});
+
 test('only current and explicitly learned earlier sources enter the bank before deduplication',()=>{
  const known=lesson('b1-l2',1,2,[word('kind','adj.','友善的')]);
  const unknown=lesson('b1-l3',1,3,[word('KIND','adj.','种类')]);

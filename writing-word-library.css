@@ -91,8 +91,8 @@
 .pipeline-cautions h3{font-size:.95rem;margin:0 0 8px}
 .pipeline-cautions ul{font-size:.86rem;line-height:1.75;margin:0;padding-left:20px}
 .pipeline-point-source{font-size:.77rem;color:#72849a}
-/* Compact overview cards keep the English label intact; the title exposes clipped text. */
-.writing-library-preview .writing-library-card strong{display:block;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;overflow-wrap:normal}
+/* English labels use two readable lines; title retains the complete reference. */
+.writing-library .writing-library-label{display:-webkit-box;min-width:0;max-width:100%;overflow:hidden;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-clamp:2;white-space:normal;overflow-wrap:anywhere;line-height:1.3}
 .writing-library-preview .writing-library-card span{display:-webkit-box;max-width:100%;overflow:hidden;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-clamp:2;overflow-wrap:anywhere}
 .writing-library-preview .writing-library-card small{display:block;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11px}
 .writing-library-result-grid .writing-library-card strong{white-space:normal;overflow-wrap:anywhere}
@@ -125,3 +125,25 @@
 .writing-library-inline-selected>div>span{display:inline-flex;gap:5px;max-width:100%;padding:3px 8px;border-radius:7px;background:#e8f3ff;overflow-wrap:anywhere}
 .writing-library-inline-selected strong{color:#006cf0}
 .writing-library-inline-selected>div>span>span{color:#527297}
+.writing-library .writing-library-pos{flex:none;color:#597395;font-size:.76rem;font-weight:400;white-space:nowrap}
+.writing-library .writing-library-recommend-items button{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;column-gap:5px;min-width:120px;max-width:min(260px,calc(100vw - 150px));white-space:normal;text-align:left}
+.writing-library-recommend-items .writing-library-label{margin-right:0}
+.writing-library-recommend-meaning{grid-column:1/-1;display:-webkit-box;overflow:hidden;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-clamp:2;overflow-wrap:anywhere}
+.writing-library .writing-library-selected button{display:inline-flex;align-items:center;gap:5px;min-width:0;max-width:100%;text-align:left}
+.writing-library-selected .writing-library-label,.writing-library-inline-selected .writing-library-label{max-width:16em}
+.writing-library-inline-selected>div>span{align-items:center;flex-wrap:wrap}
+.frequency-badge{display:inline-block;flex:none;font-family:system-ui,sans-serif;font-size:11px!important;font-weight:500;line-height:1.25;letter-spacing:.5px;color:#9b7c3b;white-space:nowrap;vertical-align:middle;}
+.frequency-unrated{color:#758297;font-size:10px!important;letter-spacing:0;}
+.frequency-star{display:inline-block;position:relative;width:1em;color:#8b98aa;line-height:1.25;}
+.frequency-star-fill{position:absolute;left:0;top:0;overflow:hidden;color:#9b7c3b;white-space:nowrap;}
+.writing-library-card-meta{display:flex;align-items:center;flex-wrap:wrap;gap:3px 6px;}
+.free-writing-target>.frequency-badge{justify-self:start;font-size:12px!important;}
+.writing-library .frequency-badge.frequency-badge{display:inline-flex;align-items:center;justify-self:start;width:max-content;max-width:max-content;overflow:visible;-webkit-line-clamp:unset;line-clamp:unset;white-space:nowrap;font-size:11px!important;line-height:1.25;}
+.writing-library .frequency-badge .frequency-star{display:inline-block;flex:0 0 1em;width:1em;max-width:none;overflow:visible;white-space:nowrap;-webkit-line-clamp:unset;line-clamp:unset;font-size:inherit!important;line-height:1.25;}
+.writing-library .frequency-badge .frequency-star-fill{display:block;position:absolute;overflow:hidden;max-width:none;white-space:nowrap;-webkit-line-clamp:unset;line-clamp:unset;font-size:inherit!important;line-height:1.25;color:#9b7c3b;}
+.writing-library .writing-library-card small.writing-library-card-meta{display:flex;align-items:center;flex-wrap:wrap;gap:3px 5px;white-space:normal;overflow:visible;}
+.writing-library .writing-library-card-meta>span:not(.frequency-badge){display:block;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;line-clamp:unset;-webkit-line-clamp:unset;font-size:10px;}
+.writing-library-annotation{display:inline-flex;align-items:center;flex-wrap:wrap;gap:4px;}
+.writing-library-recommend-items .writing-library-label{grid-column:1/-1;}
+.writing-library-recommend-items .writing-library-annotation{grid-column:2;grid-row:2;justify-content:flex-end;}
+.writing-library-recommend-items .writing-library-recommend-meaning{grid-column:1;grid-row:2;}

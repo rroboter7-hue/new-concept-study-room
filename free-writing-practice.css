@@ -49,3 +49,11 @@
 .free-writing-copy-feedback .button{min-height:44px;margin-top:8px}
 @media(max-width:580px){.free-writing-actions>[data-free-action="copy-review"]{width:100%;justify-content:center}}
 @media(max-width:580px){.free-writing-header h3{font-size:1.15rem}.free-writing-guidance{font-size:.85rem}.free-writing-navigation{gap:6px}.free-writing-navigation .button{padding-left:10px;padding-right:10px;font-size:.8rem}.free-writing-cumulative,.free-writing-help{padding:9px 11px}.free-writing-actions>.primary{width:100%;justify-content:center}.free-writing-actions{gap:10px}.free-writing-feedback{padding:11px}.free-writing-target{padding-left:11px}.free-writing-target-label{font-size:.8rem}}
+.free-writing-line-status{margin:8px 0;color:var(--muted,#697777);font-size:.78rem;line-height:1.5}
+.free-writing-correction{margin-top:9px;padding:9px 12px;border:1px solid var(--border,#dce4e1);border-radius:9px;font-size:.85rem;line-height:1.6}
+.free-writing-correction summary{cursor:pointer;font-weight:600;min-height:26px}
+.free-writing-correction p{margin:8px 0;color:var(--muted,#697777)}
+.free-writing-correction label{display:grid;gap:6px;margin:10px 0}
+.free-writing-correction textarea{min-height:76px;font-size:.9rem}
+.free-writing-correction .button{min-height:44px}
+.free-writing-target [data-free-target-count]{font:inherit;white-space:normal}

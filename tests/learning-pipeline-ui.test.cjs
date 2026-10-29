@@ -299,3 +299,11 @@ test('a stale archived recap check cannot write into another round or create att
  const external=structuredClone(h.getState());external.lessons.now.round++;h.setExternal(external);
  assert.equal(await h.ui.checkRecapPractice(binding),false);assert.equal(h.ui.record().attempts.length,1);
 });
+test('retelling uses verified scenes and independent hint groups without exposing reference English in the editor',async()=>{
+ const h=setup({getRetellSupport:()=>({scenes:[{meaning:'第一处场景',speaker:'旁白'},{meaning:'第二处场景',speaker:'Lucy'}],sections:[{meaning:'原始大段'}],participants:[{name:'I',role:'叙述者（我）'},{name:'Lucy',role:'姨妈'}],words:[{word:'ring',meaning:'响'}],usages:[{phrase:'next weekend',meaning:'下周末',sourceKindLabel:'课堂拓展'}]})});
+ h.ui.mount(h.container);await h.ui.setLesson(lessons[1]);await h.ui.goStage(4);const html=h.ui.render();
+ assert.match(html,/第一处场景/);assert.match(html,/第二处场景/);assert.doesNotMatch(html,/原始大段/);
+ assert.match(html,/叙述者（我）/);assert.match(html,/课堂拓展/);assert.match(html,/pipeline-retell-workspace/);
+ assert.match(html,/data-retell-hint="chinese"/);assert.match(html,/data-retell-hint="keywords"/);
+ assert.match(html,/data-pipeline-retell[^>]*><\/textarea>/);
+});

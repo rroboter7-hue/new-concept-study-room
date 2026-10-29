@@ -9,6 +9,7 @@
  const escape=x=>String(x??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
  const categories={verb:'动词',noun:'名词',adjective:'形容词',adverb:'副词',phrase:'习惯用法',word:'其他词'};
  const ordered=['verb','noun','adjective','adverb','phrase','word'];
+ const posLabels={noun:'n.',verb:'v.',adjective:'adj.',adverb:'adv.',phrase:'短语'};
  class WritingWordLibrary{
   constructor(options={}){this.options=options;this.e=options.escapeHTML||escape;this.bindings=[];this.contexts=new Map();this.generation=0;}
   cleanState(raw){
@@ -53,6 +54,7 @@
    return this.entries;
   }
   selected(){const bank=this.bank(),keys=list(this.state.selectedByTarget[this.target.key]);return bank.filter(row=>keys.includes(row.key));}
+  pos(row){return '<span class="writing-library-pos">'+this.e(posLabels[row.category]||text(row.pos).trim()||'词性未标注')+'</span>';}
   async save(){
    const lesson=this.lesson,state=clone(this.state),generation=this.generation,revision=this.saveRevision=(this.saveRevision||0)+1;
    try{if(typeof this.options.saveState==='function'&&await this.options.saveState(lesson,state)===false)throw Error('Save failed');if(generation===this.generation&&revision===this.saveRevision){this.error='';this.updateError();}return true;}
@@ -61,7 +63,7 @@
   updateError(){const node=this.container?.querySelector('[data-library-error]');if(node){node.textContent=this.error;node.hidden=!this.error;}}  setNotice(message){const node=this.container?.querySelector('[data-library-notice]');if(node){node.textContent=message;node.hidden=!message;}}
   draw(){
    if(!this.container)return;
-   this.container.innerHTML='<div class="writing-library"><button type="button" class="writing-library-entry" data-library-action="open" aria-haspopup="dialog">选词库 <span>查看已学词语和用法 ›</span></button><div class="writing-library-inline-selected" data-library-inline-selected hidden></div><dialog class="writing-library-dialog" data-library-dialog aria-label="选词库"><div class="writing-library-shell"><header class="writing-library-header"><button type="button" data-library-action="return" class="writing-library-back">‹ 返回造句</button><h2>选词库</h2><span aria-hidden="true"></span></header><div class="writing-library-top"><label class="writing-library-search"><span class="sr-only">搜索英文或中文</span><input type="search" data-library-query aria-label="搜索英文或中文" placeholder="搜索英文或中文" value="'+this.e(this.state.query)+'"></label><div class="writing-library-scopes" aria-label="词语来源"></div></div><div class="writing-library-scroll"><div class="writing-library-target">当前造句目标： <strong lang="en">'+this.e(this.target.label||'')+'</strong></div><div data-library-stage></div></div><footer class="writing-library-footer"><div data-library-selected></div><button type="button" class="writing-library-done" data-library-action="return">选好了，回去造句</button><small>只作参考，不增加任务</small><p class="writing-library-notice" data-library-notice role="status" hidden></p><p class="writing-library-error" data-library-error role="status" hidden></p></footer></div></dialog></div>';
+   this.container.innerHTML='<div class="writing-library"><button type="button" class="writing-library-entry" data-library-action="open" aria-haspopup="dialog">选词库 <span>查看已学词语和用法 ›</span></button><div class="writing-library-inline-selected" data-library-inline-selected hidden></div><dialog class="writing-library-dialog" data-library-dialog aria-label="选词库"><div class="writing-library-shell"><header class="writing-library-header"><button type="button" data-library-action="return" class="writing-library-back">‹ 返回造句</button><h2>选词库</h2><span aria-hidden="true"></span></header><div class="writing-library-top"><label class="writing-library-search"><span class="sr-only">搜索英文或中文</span><input type="search" data-library-query aria-label="搜索英文或中文" placeholder="搜索英文或中文" value="'+this.e(this.state.query)+'"></label><div class="writing-library-scopes" aria-label="词语来源"></div></div><div class="writing-library-scroll"><div class="writing-library-target">当前造句目标： <strong lang="en">'+this.e(this.target.label||'')+'</strong></div><div data-library-stage></div></div><footer class="writing-library-footer"><div data-library-selected></div><button type="button" class="writing-library-done" data-library-action="return">选好了，回去造句</button><small>只作参考，不增加任务 · <a href="frequency-data-notice.html" target="_blank" rel="noopener">频率说明</a></small><p class="writing-library-notice" data-library-notice role="status" hidden></p><p class="writing-library-error" data-library-error role="status" hidden></p></footer></div></dialog></div>';
    this.drawScopes();if(this.state.open)this.drawResults();if(this.state.open||list(this.state.selectedByTarget[this.target.key]).length)this.drawSelected();this.updateError();
   }
   openDialog(persist=true){
@@ -99,11 +101,14 @@
    const scopes=[['','全部'],...books.map(book=>[String(book),'第'+['','一','二','三','四'][book]+'册']),['history','第'+['','一','二','三','四'][this.lesson.book]+'册前课'],['current','本课']];
    host.innerHTML=scopes.map(([value,label])=>'<button type="button" data-library-scope="'+(value||'all')+'" aria-pressed="'+(this.state.book===value)+'">'+this.e(label)+'</button>').join('');
   }
+  frequencyLabel(row){const rating=(this.options.frequency||root.StudyFrequencyReference)?.lookup?.(row.label,row.category==='phrase'?'phrase':'word');return rating?'，'+(rating.stars?'频率参考 '+rating.stars+'/3':'频率待统计'):'';}
+  annotation(row){return '<span class="writing-library-annotation">'+this.pos(row)+this.frequency(row)+'</span>';}
+  frequency(row){return (this.options.frequency||root.StudyFrequencyReference)?.badge?.(row.label,row.category==='phrase'?'phrase':'word')||'';}
   card(row){
    const e=this.e,chosen=list(this.state.selectedByTarget[this.target.key]).includes(row.key);
    const source=this.scopedSources(row)[0]||row.source;
    const location=source?.id===this.lesson.id?'本课':'第'+source?.book+'册 · 第'+source?.number+'课';
-   return '<button type="button" class="writing-library-card" data-library-key="'+e(row.key)+'" aria-pressed="'+chosen+'" title="'+e(row.label+' · '+row.meaning)+'" aria-label="'+e(row.label+'，'+row.meaning)+'"><strong lang="en">'+e(row.label)+'</strong><span>'+e(row.meaning)+'</span><small>'+e(location)+'</small></button>';
+   return '<button type="button" class="writing-library-card" data-library-key="'+e(row.key)+'" aria-pressed="'+chosen+'" title="'+e(row.label+' · '+row.meaning)+'" aria-label="'+e(row.label+'，'+row.meaning)+e(this.frequencyLabel(row))+'"><strong class="writing-library-label" lang="en">'+e(row.label)+'</strong><span>'+e(row.meaning)+'</span><small class="writing-library-card-meta"><span>'+e(location)+'</span>'+this.frequency(row)+'</small></button>';
   }
   drawResults(){
    const host=this.container?.querySelector('[data-library-stage]');if(!host)return;
@@ -114,15 +119,15 @@
     return;
    }
    const available=this.filtered(),recommend=list(api?.recommend?.(available,{target:this.target,count:2,rotation:this.state.rotation}));
-   const recommendation=recommend.length?'<div class="writing-library-recommend"><strong>推荐搭配</strong><div class="writing-library-recommend-items">'+recommend.map(row=>'<button type="button" data-library-key="'+e(row.key)+'" aria-pressed="'+list(this.state.selectedByTarget[this.target.key]).includes(row.key)+'"><b lang="en">'+e(row.label)+'</b><span>'+e(row.meaning)+'</span></button>').join('')+'</div><button type="button" data-library-action="rotate">⟳ 换一组</button></div>':'';
+   const recommendation=recommend.length?'<div class="writing-library-recommend"><strong>推荐搭配</strong><div class="writing-library-recommend-items">'+recommend.map(row=>'<button type="button" data-library-key="'+e(row.key)+'" aria-pressed="'+list(this.state.selectedByTarget[this.target.key]).includes(row.key)+'" title="'+e(row.label+' · '+row.meaning)+'"><b class="writing-library-label" lang="en">'+e(row.label)+'</b>'+this.annotation(row)+'<span class="writing-library-recommend-meaning">'+e(row.meaning)+'</span></button>').join('')+'</div><button type="button" data-library-action="rotate">⟳ 换一组</button></div>':'';
    const sections=ordered.map(name=>{const rows=available.filter(row=>row.category===name);if(!rows.length)return '';return '<section class="writing-library-section writing-library-section-'+name+'" data-library-section="'+name+'"><div class="writing-library-section-head"><h3>'+e(categories[name])+'</h3><button type="button" data-library-more="'+name+'">更多 ›</button></div><div class="writing-library-preview">'+rows.slice(0,4).map(row=>this.card(row)).join('')+'</div></section>';}).join('');
    host.innerHTML='<div data-library-overview>'+recommendation+'<div class="writing-library-overview-grid">'+(sections||'<p class="writing-library-empty">这个范围暂无词条，可换来源查看。</p>')+'</div></div>';
   }
   drawSelected(){
    const host=this.container?.querySelector('[data-library-selected]');if(!host)return;
-   const rows=this.selected();host.innerHTML=rows.length?'<div class="writing-library-selected">'+rows.map(row=>'<button type="button" data-library-key="'+this.e(row.key)+'" aria-label="移除 '+this.e(row.label)+'"><span lang="en">'+this.e(row.label)+'</span> ×</button>').join('')+'</div>':'<p class="writing-library-selected-empty">可选最多 4 个参考词</p>';
+   const rows=this.selected();host.innerHTML=rows.length?'<div class="writing-library-selected">'+rows.map(row=>'<button type="button" data-library-key="'+this.e(row.key)+'" title="'+this.e(row.label)+'" aria-label="移除 '+this.e(row.label)+this.e('，'+(posLabels[row.category]||text(row.pos).trim()||'词性未标注'))+this.e(this.frequencyLabel(row))+'"><span class="writing-library-label" lang="en">'+this.e(row.label)+'</span>'+this.annotation(row)+' ×</button>').join('')+'</div>':'<p class="writing-library-selected-empty">可选最多 4 个参考词</p>';
    const inline=this.container?.querySelector('[data-library-inline-selected]');
-   if(inline){inline.innerHTML=rows.length?'<small>已选参考</small><div>'+rows.map(row=>'<span><strong lang="en">'+this.e(row.label)+'</strong><span>'+this.e(row.meaning)+'</span></span>').join('')+'</div>':'';if(rows.length)inline.removeAttribute('hidden');else inline.setAttribute('hidden','');}
+   if(inline){inline.innerHTML=rows.length?'<small>已选参考</small><div>'+rows.map(row=>'<span title="'+this.e(row.label+' · '+row.meaning)+'"><strong class="writing-library-label" lang="en">'+this.e(row.label)+'</strong>'+this.annotation(row)+'<span>'+this.e(row.meaning)+'</span></span>').join('')+'</div>':'';if(rows.length)inline.removeAttribute('hidden');else inline.setAttribute('hidden','');}
   }
   async click(event){
    const button=event.target?.closest?.('[data-library-key],[data-library-action],[data-library-scope],[data-library-more]');

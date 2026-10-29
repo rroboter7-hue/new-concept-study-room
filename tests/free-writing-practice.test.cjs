@@ -24,7 +24,7 @@ test('gives every current word and usage five free rows and earlier learned targ
   assert.deepEqual(targets.map(t=>[t.label,t.requiredCount]),[['book',5],['on time',5],['walk',2],['look at',1]]);
   assert.equal(targets.some(t=>/Mr|Tom|future|known/.test(t.label)),false);
   const html=ui.render();
-  assert.equal((html.match(/<textarea\b/g)||[]).length,5);
+  assert.equal((html.match(/data-free-answer="/g)||[]).length,5);
   assert.match(html,/句型自由，可融合学过的用法/);
   assert.doesNotMatch(html,/一般疑问句|特殊疑问句|第[一1]句改/);
   assert.equal((html.match(/class="button primary"/g)||[]).length,1);
@@ -283,7 +283,7 @@ test('same-day quota reclassification keeps old storage source, nonempty extra r
   assert.equal(ui.targets()[0].key,'word:now:rang');
   assert.equal(ui.active.draft.targets[key].answers.length,5,'stored empty and written rows stay intact');
   const html=ui.render();
-  assert.equal((html.match(/<textarea\b/g)||[]).length,3,'show two required rows plus the historical written extra');
+  assert.equal((html.match(/data-free-answer="/g)||[]).length,3,'show two required rows plus the historical written extra');
   assert.match(html,/今日已写 2 \/ 2 句/);
   assert.match(html,/本课累计 2 \/ 2 句/);
   await ui.flush();

@@ -11,6 +11,8 @@
  const list=value=>Array.isArray(value)?value:[];
  const text=value=>typeof value==='string'?value.trim():'';
  const normalize=value=>text(value).normalize('NFKC').replace(/[‘’]/g,"'").replace(/\s+/g,' ').toLowerCase();
+ // Display spelling is independent of the normalized identity used by saved references.
+ const displayLabel=value=>/^(?:japanese|german|korean)$/i.test(text(value))?text(value).charAt(0).toUpperCase()+text(value).slice(1).toLowerCase():value;
  const before=(a,b)=>a.book<b.book||a.book===b.book&&a.number<b.number;
  const valid=lesson=>lesson&&typeof lesson.id==='string'&&/^[A-Za-z0-9][A-Za-z0-9._:-]{0,159}$/.test(lesson.id)&&Number.isInteger(lesson.book)&&lesson.book>=1&&lesson.book<=4&&Number.isInteger(lesson.number)&&lesson.number>=1&&lesson.number<=10000;
  const names=new Set(['mr','mrs','ms','dr','sir','madam','prof','rev','esq','mister','madame','mademoiselle','monsieur']);
@@ -159,7 +161,7 @@
    const aliases=[...list(item.aliases)];
    if(field==='word')for(const origin of item.sources)aliases.push(...list(referenceAliases.get(origin.id+'|'+normalize(item.label))));
    const meaning=cardMeaning(item);
-   const result={key:item.key,aliases:[...new Set(aliases)],label:item.label,meaning,category:item.category,pos:item.pos,source:{...item.source},sources:item.sources.map(origin=>({...origin}))};
+   const result={key:item.key,aliases:[...new Set(aliases)],label:displayLabel(item.label),meaning,category:item.category,pos:item.pos,source:{...item.source},sources:item.sources.map(origin=>({...origin}))};
    if(meaning!==item.meaning)result.detailMeaning=item.meaning;
    if(evidence)result.example=evidence.example.trim();
    return result;

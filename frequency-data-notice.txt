@@ -1,0 +1,47 @@
+Frequency reference data (2026-10-29)
+
+This site uses a compact derived table for its own curriculum expressions.
+No learner writing, personal progress or browser data was used to make it.
+
+Single words: wordfreq 3.1.1, English large wordlist, by Robyn Speer and
+contributors. https://github.com/rspeer/wordfreq
+Derived word-frequency data: Creative Commons Attribution-ShareAlike 4.0.
+https://creativecommons.org/licenses/by-sa/4.0/
+Original software: Apache 2.0. The data combine multiple genres and sources,
+including Google Books Ngrams, OpenSubtitles, Wikipedia and other corpora.
+Source attribution and bibliography: https://github.com/rspeer/wordfreq#sources-and-supported-languages
+SUBTLEX wordlists by Marc Brysbaert et al., freely available at
+http://crr.ugent.be/programs-data/subtitle-frequencies
+Google Books acknowledgement: https://books.google.com/ngrams
+
+Partial-star fill: round(clamp(Zipf - 2, 0.1, 3), 1 decimal).
+Zipf >=5 fills all three stars; unmeasured words get no score.
+The compact source table also retains coarse tiers (>=5/ >=4/ positive).
+These are display thresholds chosen for this learning site, not an official
+wordfreq classification, proficiency grade or census of native speakers.
+The source score describes a word form, not its part of speech or a specific
+meaning. Numbers reflect this fixed data version, not a live 2026 frequency.
+
+Phrases: exact contiguous token matches in the 10,000 top English sentences
+from orgtre/top-open-subtitles-sentences, derived from OPUS OpenSubtitles2018.
+https://github.com/orgtre/top-open-subtitles-sentences
+https://opus.nlpl.eu/OpenSubtitles-v2018.php
+Lison, P. and Tiedemann, J. (2016), OpenSubtitles2016: Extracting Large Parallel
+Corpora from Movie and TV Subtitles. Proceedings of LREC 2016.
+The upstream project documents the lists under the terms of the underlying
+corpus and its processing code under CC BY 3.0. Raw subtitles are not included
+in this site. Only aggregate match counts for curriculum expressions are kept.
+
+Phrase partial-star fill uses log10(weighted matches per million)+3 as
+a sample-only Zipf-like input to the same visual mapping. Coarse source
+tiers use weighted occurrences per million words IN THIS TOP-SENTENCE
+SAMPLE: >=100 =>three; >=10 =>two; any recorded match below10 =>one. These
+figures are sample-specific, biased toward common short subtitle sentences,
+not whole-corpus conversation estimates. The corpus can contain translated
+or scripted dialogue. Word and phrase tiers use different sources and should
+not be directly compared. Unmatched phrases show unmeasured, never low-frequency.
+No phrase score is inferred by combining frequencies of its component words.
+
+Metadata and source file SHA256 are in frequency-reference-data.js. The full
+underlying datasets are not downloaded by a visitor. Stars do not add tasks,
+change five-sentence goals or count as evidence of learning/mastery.

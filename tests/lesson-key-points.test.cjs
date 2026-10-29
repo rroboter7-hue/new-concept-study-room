@@ -17,13 +17,13 @@ test('collects three to five short points with complete local examples and hones
  assert.match(result.notice,/非实时在线\s*AI/);
 });
 
-test('verified grammar notes take priority while their notes example keeps its exact source label',()=>{
+test('verified grammar notes retain their exact source label after passage-backed rules',()=>{
  const reviewed=[{lessonId:'current',title:'介词后用动名词',note:'介词 of 后接动名词。',example:'She dreamed of taking part in the play.',sourceLabel:'校对笔记中文整理',exampleSourceLabel:'本课学习笔记例句（非教材正文）',sourcePage:104}];
  const result=summarize(fixture(),{reviewedGrammar:reviewed});
- assert.equal(result.items[0].title,'介词后用动名词');
- assert.equal(result.items[0].example,'She dreamed of taking part in the play.');
- assert.equal(result.items[0].exampleSourceLabel,'本课学习笔记例句（非教材正文）');
- assert.equal(result.items[0].sourceReference.page,104);
+ const point=result.grammar.find(row=>row.title==='介词后用动名词');
+ assert.equal(point.example,'She dreamed of taking part in the play.');
+ assert.equal(point.exampleSourceLabel,'本课学习笔记例句（非教材正文）');
+ assert.equal(point.sourceReference.page,104);
 });
 
 test('keeps the full original note in details and never cuts a rule or English sentence midstream',()=>{
@@ -170,4 +170,28 @@ test('sparse imported lesson returns only available source points',()=>{
  assert.deepEqual(result.grammar,[]);
  assert.deepEqual(result.usages,[]);
  assert.deepEqual(result.pitfalls,[]);
+});
+test('passage-backed grammar precedes note extensions while labels keep example and target provenance separate',()=>{
+ const lesson=fixture();lesson.usage=[{phrase:'receive a letter',meaning:'收到信',sourceType:'lesson-passage',sourceForms:['received a letter'],example:'A note-only sentence.',contextEvidence:{paragraphs:[{sourceText:'Jane received a letter. She is happy.'}]}}];
+ const result=summarize(lesson,{reviewedGrammar:[{title:'笔记扩展规则',note:'本课笔记中的扩展。',example:'We are meeting next weekend.'}]});
+ assert.equal(result.grammar[0].title,'一般过去时');
+ assert.equal(result.grammar[0].exampleSourceKind,'passage');
+ const extension=result.grammar.find(row=>row.title==='笔记扩展规则');assert.equal(extension.exampleSourceKind,'lesson-extension');assert.match(extension.sourceKindLabel,/扩展/);
+ assert.equal(result.usages[0].sourceKind,'passage');assert.equal(result.usages[0].example,'Jane received a letter. She is happy.');
+ assert.equal(result.usages[0].exampleDetails,'A note-only sentence.');
+});
+test('the audited Breakfast or lunch lesson uses exact passage examples for its existing rules with drift guards',()=>{
+ const lesson={id:'nce-b2-eef57c-l002',book:2,number:2,title:'第2课 · Breakfast or lunch?',paragraphs:[{en:'I never get up early on Sundays.'},{en:'‘But I\'m still having breakfast,’ I said.'},{en:'Do you always get up so late?'}],grammar:[{title:'一般现在时',note:'习惯动作。',example:'He goes to that theatre every weekend.'},{title:'现在进行时',note:'正在进行的动作。',example:'We are having a conversation.'},{title:'一般疑问句',note:'be 提到主语前。',example:'Are they talking loudly?'}]};
+ const result=summarize(lesson);
+ assert.deepEqual(result.grammar.map(row=>row.example),lesson.paragraphs.map(row=>row.en));
+ assert.equal(result.grammar[0].exampleDetails,'He goes to that theatre every weekend.');
+ assert(result.grammar.every(row=>row.exampleSourceKind==='passage'));
+ const drift=summarize({...lesson,paragraphs:[{en:'Changed source.'}]});assert.equal(drift.grammar[0].example,lesson.grammar[0].example);
+});
+test('concrete wrong and right reminders quote only authored grammar questions and reasons',()=>{
+ const question={type:'grammar',sourceLessonId:'current',question:'She ___ working now.',options:['is','are'],answer:0,graded:true,rule:'be 随主语变化。',wrongReasons:{are:'主语为 she，不能使用 are。'},sourceLabel:'自编已校对练习'};
+ const result=summarize(fixture(),{questions:[question,{...question,sourceLessonId:'foreign'}]});
+ const reminder=result.pitfalls.find(row=>row.question===question.question);
+ assert(reminder);assert.equal(reminder.wrongAnswer,'are');assert.equal(reminder.correctAnswer,'is');assert.equal(reminder.reason,question.wrongReasons.are);
+ assert.match(reminder.text,/误选：are/);assert.match(reminder.text,/应选：is/);assert.equal(reminder.sourceLabel,question.sourceLabel);
 });

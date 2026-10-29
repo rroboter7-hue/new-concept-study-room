@@ -141,6 +141,9 @@
     return cleanFeedback({issues,reviewNeeded},sentence);
   }
 
+  function cleanCorrection(value) {
+    return {notes:text(own(value,'notes'),3000),reference:text(own(value,'reference'),MAX_ANSWER),retry:text(own(value,'retry'),MAX_ANSWER),recorded:own(value,'recorded') === true && !!text(own(value,'retry'),MAX_ANSWER).trim()};
+  }
   function sanitizeDraft(value, lesson, targets) {
     const saved = own(value,'version') === 1 && own(value,'lessonId') === lesson.id ? value : {};
     const draft = {version:1,lessonId:lesson.id,activeTargetKey:'',targets:{},dailyPlans:{},updatedAt:0};
@@ -153,11 +156,13 @@
     // its free-writing rows so the next successful save cannot delete this work.
     function restoreRow(row, requiredCount) {
       const answers = own(row,'answers'), feedback = own(row,'feedback'), fusion = own(row,'fusion');
-      const count = Math.max(requiredCount, Array.isArray(answers) ? answers.length : 0);
-      const restored = {answers:[],feedback:[],fusion:[]};
+      const corrections=own(row,'corrections');
+      const count = Math.max(requiredCount, Array.isArray(answers) ? answers.length : 0,Array.isArray(corrections)?corrections.length:0);
+      const restored = {answers:[],feedback:[],fusion:[],corrections:[]};
       for (let index=0;index<count;index++) {
         const answer = typeof own(answers,String(index)) === 'string' ? own(answers,String(index)) : '';
         restored.answers.push(answer);
+        restored.corrections.push(cleanCorrection(own(own(row,'corrections'),String(index))));
         const previous = own(feedback,String(index));
         restored.feedback.push(previous && own(previous,'sentence') === answer ? cleanFeedback(previous,answer) : null);
         const chosen = own(fusion,String(index));
@@ -192,20 +197,31 @@
       const answer = own(own(row,'answers'),String(index));
       const value = typeof answer === 'string' ? answer : '';
       const feedback = own(own(row,'feedback'),String(index)), fusion = own(own(row,'fusion'),String(index));
-      return {answer:value,feedback:feedback && own(feedback,'sentence') === value ? cleanFeedback(feedback,value) : null,
+      return {answer:value,correction:cleanCorrection(own(own(row,'corrections'),String(index))),feedback:feedback && own(feedback,'sentence') === value ? cleanFeedback(feedback,value) : null,
         fusion:Array.isArray(fusion) ? Array.from(new Set(fusion.filter(key => typeof key === 'string'))).slice(0,2) : []};
     };
     const primary = row => [row.answer,row.fusion];
     for (const key of new Set([...Object.keys(rows(original)),...Object.keys(rows(local)),...Object.keys(rows(remote))])) {
       if (!/^(word|phrase):/.test(key)) continue;
       const before = own(rows(original),key), entered = own(rows(local),key), saved = own(rows(remote),key);
-      const count = Math.max(...[before,entered,saved].map(row => Array.isArray(own(row,'answers')) ? own(row,'answers').length : 0));
-      const result = {answers:[],feedback:[],fusion:[]};
+      const count = Math.max(...[before,entered,saved].map(row => Math.max(Array.isArray(own(row,'answers')) ? own(row,'answers').length : 0,Array.isArray(own(row,'corrections')) ? own(row,'corrections').length : 0)));
+      const result = {answers:[],feedback:[],fusion:[],corrections:[]};
       for (let index=0;index<count;index++) {
         const a=line(before,index),b=line(entered,index),c=line(saved,index);
         const localChanged=!same(primary(a),primary(b)),remoteChanged=!same(primary(a),primary(c));
         if (localChanged && remoteChanged && !same(primary(b),primary(c))) { conflicts.push({targetKey:key,index}); continue; }
         const selected = localChanged ? b : c;
+        const correction = {};
+        for (const field of ['notes','reference','retry','recorded']) {
+          const x=a.correction[field],y=b.correction[field],z=c.correction[field];
+          if (!same(x,y) && !same(x,z) && !same(y,z)) conflicts.push({targetKey:key,index});
+          correction[field] = !same(x,y) ? y : z;
+        }
+        // A changed original or retry needs a fresh learner acknowledgement.
+        if (selected.answer !== a.answer || correction.retry !== a.correction.retry) {
+          correction.recorded = !!(b.correction.recorded && b.answer === selected.answer && b.correction.retry === correction.retry || c.correction.recorded && c.answer === selected.answer && c.correction.retry === correction.retry);
+        }
+        result.corrections.push(cleanCorrection(correction));
         let feedback = selected.feedback;
         if (same(primary(b),primary(c))) feedback = !same(a.feedback,b.feedback) ? b.feedback : c.feedback;
         result.answers.push(selected.answer); result.fusion.push(selected.fusion);
@@ -260,7 +276,7 @@
         const key = draftKey(lesson.id);
         let stored;
         try { stored = own(this.options.getDrafts?.(),key); } catch (_) { /* Keep the workspace usable if draft reading fails. */ }
-        entry = {key,lesson,targets,draft:sanitizeDraft(stored,lesson,targets),baseDraft:stored ? clone(stored) : null,revision:0,savedRevision:0,status:'idle',checking:new Set(),checkError:''};
+        entry = {key,lesson,targets,draft:sanitizeDraft(stored,lesson,targets),baseDraft:stored ? clone(stored) : null,revision:0,savedRevision:0,status:'idle',checking:new Set(),lineVersions:new Map(),checkError:''};
         this.cache.set(lesson.id,entry);
       }
       this.active = entry;
@@ -330,19 +346,50 @@
     editAnswer(key, index, value) {
       const entry = this.ensure(), row = entry?.draft.targets[key];
       if (!row || !Number.isInteger(index) || index < 0 || index >= row.answers.length) return false;
-      row.answers[index] = text(value,MAX_ANSWER); row.feedback[index] = null; entry.checkError = '';
+      row.answers[index] = text(value,MAX_ANSWER); row.feedback[index] = null; row.corrections[index].recorded = false; entry.checkError = '';
+      this.invalidateLine(entry,key,index);
       this.touch(entry);
       const feedbackNode = this.container?.querySelector?.('[data-free-feedback="' + index + '"]');
       if (feedbackNode) feedbackNode.innerHTML = '';
-      this.updateCopyFeedback();
+      this.updateCopyFeedback(); this.updateLineStatus(entry,key,index);
       return true;
     }
+    invalidateLine(entry,key,index) {
+      const id=key+'\n'+index; entry.lineVersions.set(id,(entry.lineVersions.get(id)||0)+1);
+    }
+    editCorrection(key,index,field,value) {
+      const entry=this.ensure(),row=entry?.draft.targets[key];
+      if (!row || !Number.isInteger(index) || index<0 || index>=row.answers.length || !['notes','reference','retry'].includes(field)) return false;
+      row.corrections[index][field]=text(value,field==='notes'?3000:MAX_ANSWER);
+      if(field==='retry')row.corrections[index].recorded=false;
+      this.touch(entry);this.updateLineStatus(entry,key,index);return true;
+    }
+    recordCorrection(key,index) {
+      const entry=this.ensure(),row=entry?.draft.targets[key];
+      if(!row || !Number.isInteger(index) || !row.answers[index]?.trim() || !row.corrections[index]?.retry.trim())return false;
+      row.corrections[index].recorded=true;this.touch(entry);this.updateLineStatus(entry,key,index);return true;
+    }
+    lineStatus(row,index) {
+      if(row.corrections[index]?.recorded)return '学习者已记录订正 · 仍需复核';
+      const feedback=row.feedback[index];
+      return feedback ? feedback.incomplete || feedback.issues.length ? '需复核' : '已做本地检查 · 仍需复核' : '草稿 · 未检查';
+    }
+    updateLineStatus(entry,key,index) {
+      if(entry!==this.active || key!==entry.draft.activeTargetKey)return;
+      const node=this.container?.querySelector?.('[data-free-line-status="'+index+'"]');
+      if(node)node.textContent=this.lineStatus(entry.draft.targets[key],index);
+    }
+    targetCountLabel(target,row) {
+      const written=writtenCount(row);
+      return '累计已写 '+Math.min(written,target.requiredCount)+'/'+target.requiredCount+(written>target.requiredCount?' · 另存 '+(written-target.requiredCount)+' 句':'');
+    }
+    todayLabel(progress) { return '今日已写 '+progress.written+' / '+progress.total+' 句 · 今日剩余 '+(progress.total-progress.written)+' 句'; }
     setFusion(key, index, keys) {
       const entry = this.ensure(), row = entry?.draft.targets[key];
       if (!row || !Number.isInteger(index) || index < 0 || index >= row.answers.length) return false;
       const allowed = new Set(entry.targets.filter(target => target.kind === 'phrase' && target.key !== key).map(target => target.key));
       row.fusion[index] = Array.from(new Set((Array.isArray(keys) ? keys : []).filter(value => allowed.has(value)))).slice(0,2);
-      row.feedback[index] = null; this.touch(entry); this.refresh(); return true;
+      row.feedback[index] = null; this.invalidateLine(entry,key,index); this.touch(entry); this.refresh(); return true;
     }
     statusMessage(entry) {
       if (entry.status === 'error') return entry.saveError || '保存失败，输入仍保留在本页；请重试保存，成功前不要关闭页面。';
@@ -360,7 +407,9 @@
       if (retry) retry.hidden = entry.status !== 'error';
       const progress = dailyProgress(this.today(entry),entry.draft.targets);
       const today = this.container?.querySelector?.('[data-free-today-progress]');
-      if (today) today.textContent = '今日已写 ' + progress.written + ' / ' + progress.total + ' 句';
+      if (today) today.textContent = this.todayLabel(progress);
+      const target=this.currentTarget(entry),count=this.container?.querySelector?.('[data-free-target-count]');
+      if(target && count)count.textContent=this.targetCountLabel(target,entry.draft.targets[target.key]);
       const cumulative = this.container?.querySelector?.('[data-free-cumulative]');
       if (cumulative) cumulative.textContent = this.cumulativeLabel(entry);
       const next = this.container?.querySelector?.('[data-free-action="another"]');
@@ -395,7 +444,14 @@
               if(Object.hasOwn(normalized,'dailyPlans'))entry.draft.dailyPlans=normalized.dailyPlans;
               for(const [key,row] of Object.entries(normalized.targets)) {
                 const current=entry.draft.targets[key];
-                if(current){current.answers=row.answers;current.feedback=row.feedback;current.fusion=row.fusion;}
+                if(current){
+                  // Adopted remote edits must invalidate pending checks even if
+                  // a later save restores the same answer and selected usages.
+                  for(let index=0;index<Math.max(current.answers.length,row.answers.length);index++) {
+                    if(current.answers[index] !== row.answers[index] || JSON.stringify(current.fusion[index]||[]) !== JSON.stringify(row.fusion[index]||[]))this.invalidateLine(entry,key,index);
+                  }
+                  current.answers=row.answers;current.feedback=row.feedback;current.fusion=row.fusion;current.corrections=row.corrections;
+                }
                 else entry.draft.targets[key]=row;
               }
               this.syncRenderedDraft(entry,previous);
@@ -419,7 +475,13 @@
         const index=Number(field.dataset.freeFusion),value=row.fusion[index]?.[0] || '';
         if(field.value === (before?.fusion[index]?.[0] || '') && field.value !== value)field.value=value;
       });
+      this.container.querySelectorAll?.('textarea[data-free-correction]').forEach(field=>{
+        const index=Number(field.dataset.freeLine),name=field.dataset.freeCorrection;
+        if(field.value === before?.corrections?.[index]?.[name] && field.value !== row.corrections[index]?.[name])field.value=row.corrections[index]?.[name]||'';
+      });
+      this.updateCopyFeedback();
       row.answers.forEach((answer,index) => {
+        this.updateLineStatus(entry,key,index);
         const field=this.container.querySelector?.('[data-free-feedback="'+index+'"]');
         if (field && JSON.stringify(before?.feedback[index]) !== JSON.stringify(row.feedback[index])) field.innerHTML=this.feedbackHTML(row.feedback[index]);
       });
@@ -471,6 +533,7 @@
       entry.checking.add(target.key); entry.checkError = ''; this.refresh();
       try {
         for (let index=0;index<row.answers.length;index++) {
+          const lineVersion=entry.lineVersions.get(target.key+'\n'+index)||0;
           const sentence = row.answers[index], selected = row.fusion[index].slice(), selection = selected.join('\n');
           if (!sentence.trim()) continue;
           const context = {target,lesson:entry.lesson,index,fusionTargets:selected.map(key => entry.targets.find(item => item.key === key)).filter(Boolean)};
@@ -483,7 +546,7 @@
             } else feedback = localCheck(sentence,context,this.options);
           }
           catch (_) { feedback = cleanFeedback({issues:[],incomplete:true,reviewNeeded:['本句检查失败，尚未完成拼写、时态、搭配检查；请重试。']},sentence); }
-          if (entry.draft.targets[target.key] === row && row.answers[index] === sentence && row.fusion[index].join('\n') === selection) { row.feedback[index] = feedback; this.touch(entry); }
+          if ((entry.lineVersions.get(target.key+'\n'+index)||0) === lineVersion && entry.draft.targets[target.key] === row && row.answers[index] === sentence && row.fusion[index].join('\n') === selection) { row.feedback[index] = feedback; this.touch(entry); }
         }
       } finally { entry.checking.delete(target.key); this.refresh(); }
       await this.flush(); return true;
@@ -491,6 +554,10 @@
     feedbackHTML(feedback) {
       if (!feedback) return '';
       return '<div class="free-writing-feedback"><p class="free-writing-feedback-title">' + (feedback.incomplete ? '本句检查未完成' : feedback.issues.length ? '检查建议' : '有限规则未发现已覆盖的问题') + '</p>' + feedback.issues.map(issue => '<div class="free-writing-issue"><strong>' + escapeHTML(TYPE_LABELS[issue.type] || TYPE_LABELS.review) + '</strong><p>' + escapeHTML(issue.message) + '</p>' + (issue.replacement ? '<p class="free-writing-reference">修改参考：' + (issue.original ? '<del>' + escapeHTML(issue.original) + '</del> → ' : '') + '<span lang="en">' + escapeHTML(issue.replacement) + '</span></p>' : '') + '</div>').join('') + (feedback.reference ? '<p class="free-writing-reference">局部修改参考（整句仍需复核）：<span lang="en">' + escapeHTML(feedback.reference) + '</span></p>' : '') + '<p class="free-writing-review">' + feedback.reviewNeeded.map(escapeHTML).join(' ') + '</p></div>';
+    }
+    correctionHTML(row,index) {
+      const correction=row.corrections[index];
+      return '<p class="free-writing-line-status" data-free-line-status="'+index+'">'+this.lineStatus(row,index)+'</p><details class="free-writing-correction"><summary>订正记录（可选）</summary><p>可粘贴豆包等外部 AI 的订正意见与参考。上方保留原句；订正记录不会改变成绩，也不增加任务。</p>'+['notes','reference','retry'].map(field=>'<label>'+({notes:'外部订正意见（可选）',reference:'外部参考句（可选）',retry:'我的订正句（原句保留）'})[field]+'<textarea rows="2" data-free-correction="'+field+'" data-free-line="'+index+'" maxlength="'+(field==='notes'?3000:MAX_ANSWER)+'"'+(field==='notes'?'':' lang="en"')+'>'+escapeHTML(correction[field])+'</textarea></label>').join('')+'<button type="button" class="button subtle" data-free-action="record-correction" data-free-line="'+index+'">记录我的订正</button></details>';
     }
     render() {
       const entry = this.ensure();
@@ -505,17 +572,17 @@
       const group = prior => entry.targets.filter(item => item.prior === prior).map(item => '<option value="' + escapeHTML(item.key) + '"' + (item.key === target.key ? ' selected' : '') + '>' + escapeHTML(item.label) + ' · ' + (item.kind === 'phrase' ? '用法' : '单词') + ' · ' + item.requiredCount + '句</option>').join('');
       const help = this.options.mountReferenceLibrary ? '<div data-free-word-library></div>' : phrases.length ? '<details class="free-writing-help"><summary>用法参考（可选，可自由融合）</summary><p>按句意自由搭配，无需逐句指定。已有草稿选定的用法仍随原句检查。</p><ul>' + phrases.map(phrase => '<li><strong lang="en">' + escapeHTML(phrase.label) + '</strong> · ' + escapeHTML(phrase.meaning) + ' <small>' + (phrase.prior ? '前课复习' : '本课用法') + '</small></li>').join('') + '</ul></details>' : '';
       const lines = row.answers.map((answer,index) => {
-        if (index >= target.requiredCount && !answer.trim()) return '';
+        if (index >= target.requiredCount && !answer.trim() && !['notes','reference','retry'].some(field=>row.corrections[index][field].trim())) return '';
         const selected = (row.fusion[index] || []).map(key => entry.targets.find(item => item.key === key)).filter(Boolean);
-        return '<article class="free-writing-line"><label for="free-writing-' + index + '">' + (index >= target.requiredCount ? '已保存的额外句 ' : '第 ') + (index+1) + (index >= target.requiredCount ? '' : ' 句') + '</label><textarea id="free-writing-' + index + '" data-free-answer="' + index + '" rows="2" maxlength="' + MAX_ANSWER + '" lang="en" spellcheck="true" placeholder="写一句自己的英文，句型自由选择…">' + escapeHTML(answer) + '</textarea>' + (selected.length ? '<p class="free-writing-selected">原句已选用法：' + selected.map(item => escapeHTML(item.label)).join('、') + '</p>' : '') + '<div data-free-feedback="' + index + '">' + this.feedbackHTML(row.feedback[index]) + '</div></article>';
+        return '<article class="free-writing-line"><label for="free-writing-' + index + '">' + (index >= target.requiredCount ? '已保存的额外句 ' : '第 ') + (index+1) + (index >= target.requiredCount ? '' : ' 句') + '</label><textarea id="free-writing-' + index + '" data-free-answer="' + index + '" rows="2" maxlength="' + MAX_ANSWER + '" lang="en" spellcheck="true" placeholder="写一句自己的英文，句型自由选择…">' + escapeHTML(answer) + '</textarea>' + (selected.length ? '<p class="free-writing-selected">原句已选用法：' + selected.map(item => escapeHTML(item.label)).join('、') + '</p>' : '') + '<div data-free-feedback="' + index + '">' + this.feedbackHTML(row.feedback[index]) + '</div>' + this.correctionHTML(row,index) + '</article>';
       }).join('');
-      return '<section class="free-writing-practice" aria-label="自由造句专项"><header class="free-writing-header"><h3>自由造句</h3><span class="free-writing-progress" data-free-today-progress>今日已写 ' + progress.written + ' / ' + progress.total + ' 句</span></header><p class="free-writing-intro">新词、新用法各5句，旧知1–2句，分次完成。</p>' +
+      return '<section class="free-writing-practice" aria-label="自由造句专项"><header class="free-writing-header"><h3>自由造句</h3><span class="free-writing-progress" data-free-today-progress>' + this.todayLabel(progress) + '</span></header><p class="free-writing-intro">新词、新用法各5句，旧知1–2句，分次完成。</p>' +
         '<p class="free-writing-guidance">句型自由，可融合学过的用法。</p>' +
         '<div class="free-writing-daily"><span data-free-daily-complete' + (progress.done ? '' : ' hidden') + '>今日计划已完成，可回看修改或继续。</span><button type="button" class="button subtle" data-free-action="another"' + (progress.done && remaining ? '' : ' hidden') + '>再来一组</button></div>' +
         '<details class="free-writing-cumulative"><summary><span data-free-cumulative>' + this.cumulativeLabel(entry) + '</span> · 查看全部目标</summary><p>每个本课新词、习惯用法累计各写5句；已学旧词、旧用法各写1–2句。今日小组不会减少总目标，额外已写句子也会保留。</p><label class="free-writing-target-label">全部目标<select data-free-select="target" aria-label="选择自由造句目标"><optgroup label="本课目标">' + group(false) + '</optgroup>' + (entry.targets.some(item => item.prior) ? '<optgroup label="已学前课复习">' + group(true) + '</optgroup>' : '') + '</select></label></details>' +
         '<nav class="free-writing-navigation" aria-label="今日目标切换"><button type="button" class="button subtle" data-free-action="previous"' + (position <= 0 ? ' disabled' : '') + '>上一个目标</button><span>' + (position < 0 ? '全部目标中的其他草稿' : '第' + this.today(entry).groups.length + '组 · ' + (position+1) + '/' + groupTargets.length) + '</span><button type="button" class="button subtle" data-free-action="next"' + (position >= groupTargets.length-1 ? ' disabled' : '') + '>下一个目标</button></nav>' +
-        '<div class="free-writing-target"><strong lang="en">' + escapeHTML(target.label) + '</strong><span>' + escapeHTML(target.meaning) + '</span><small>' + (target.prior ? '前课复习 · 第' + target.source.book + '册第' + target.source.number + '课' : '本课' + (target.kind === 'phrase' ? '习惯用法' : '新单词')) + ' · 累计已写 ' + Math.min(written,target.requiredCount) + '/' + target.requiredCount + (written > target.requiredCount ? ' · 另存 ' + (written-target.requiredCount) + ' 句' : '') + '</small></div>' + help +
-        '<div class="free-writing-lines">' + lines + '</div><div class="free-writing-actions"><button type="button" class="button primary" data-free-action="check"' + (entry.checking.has(target.key) ? ' disabled' : '') + '>' + (entry.checking.has(target.key) ? '正在逐句检查…' : '逐句检查本组') + '</button><button type="button" class="button subtle" data-free-action="copy-review">' + (target.requiredCount === 5 ? '一键复制五句话' : '一键复制本组') + '</button><span data-free-save-status data-state="' + entry.status + '" role="status" aria-live="polite">' + escapeHTML(this.statusMessage(entry)) + '</span><button type="button" class="button subtle" data-free-action="save"' + (entry.status === 'error' ? '' : ' hidden') + '>重试保存</button></div><div class="free-writing-copy-feedback" data-free-copy-feedback>' + this.copyFeedbackHTML(entry) + '</div>' + (entry.checkError ? '<p role="alert" class="free-writing-error">' + escapeHTML(entry.checkError) + '</p>' : '') + '<p class="free-writing-limit">检查提供拼写、时态、搭配、大小写与标点的修改参考；规则覆盖不足会标为需复核，不计学习成绩。</p></section>';
+        '<div class="free-writing-workspace"><div class="free-writing-reference-pane"><div class="free-writing-target"><strong lang="en">' + escapeHTML(target.label) + '</strong>' + (global.StudyFrequencyReference?.badge?.(target.label,target.kind)||'') + '<span>' + escapeHTML(target.meaning) + '</span><small>' + (target.prior ? '前课复习 · 第' + target.source.book + '册第' + target.source.number + '课' : '本课' + (target.kind === 'phrase' ? '习惯用法' : '新单词')) + ' · <span data-free-target-count>' + this.targetCountLabel(target,row) + '</span>' + '</small></div>' + help + '</div>' +
+        '<div class="free-writing-editor-pane"><div class="free-writing-lines">' + lines + '</div><div class="free-writing-actions"><button type="button" class="button primary" data-free-action="check"' + (entry.checking.has(target.key) ? ' disabled' : '') + '>' + (entry.checking.has(target.key) ? '正在逐句检查…' : '逐句检查本组') + '</button><button type="button" class="button subtle" data-free-action="copy-review">' + (target.requiredCount === 5 ? '一键复制五句话' : '一键复制本组') + '</button><span data-free-save-status data-state="' + entry.status + '" role="status" aria-live="polite">' + escapeHTML(this.statusMessage(entry)) + '</span><button type="button" class="button subtle" data-free-action="save"' + (entry.status === 'error' ? '' : ' hidden') + '>重试保存</button></div><div class="free-writing-copy-feedback" data-free-copy-feedback>' + this.copyFeedbackHTML(entry) + '</div>' + (entry.checkError ? '<p role="alert" class="free-writing-error">' + escapeHTML(entry.checkError) + '</p>' : '') + '<p class="free-writing-limit">检查提供拼写、时态、搭配、大小写与标点的修改参考；规则覆盖不足会标为需复核；本地检查与自行订正不代表整句正确或掌握，不计学习成绩。</p></div></div></section>';
     }
     refresh() {
       if (!this.container && !this.options.onRender) return;
@@ -528,6 +595,8 @@
       if (!container || typeof container.addEventListener !== 'function') return false;
       this.container = container;
       const input = event => {
+        const correction=event.target?.dataset?.freeCorrection;
+        if(correction!==undefined)this.editCorrection(this.currentTarget()?.key,Number(event.target.dataset.freeLine),correction,event.target.value);
         const index = event.target?.dataset?.freeAnswer;
         if (index !== undefined) this.editAnswer(this.currentTarget()?.key,Number(index),event.target.value);
       };
@@ -540,7 +609,8 @@
         const button = event.target?.closest?.('[data-free-action]');
         if (!button || container.contains && !container.contains(button)) return;
         event.preventDefault();
-        if (button.dataset.freeAction === 'check') void this.check();
+        if(button.dataset.freeAction === 'record-correction') this.recordCorrection(this.currentTarget()?.key,Number(button.dataset.freeLine));
+        else if (button.dataset.freeAction === 'check') void this.check();
         else if (button.dataset.freeAction === 'copy-review') void this.copyForReview();
         else if (button.dataset.freeAction === 'select-copy') { const field = container.querySelector?.('[data-free-copy-text]'); field?.focus?.(); field?.select?.(); }
         else if (button.dataset.freeAction === 'save') void this.flush();

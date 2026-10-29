@@ -25,10 +25,18 @@
   return first&&first.length<=110?first:value.length<=110?value||title:title;
  }
  function inPassage(value,lesson){return !!text(value)&&list(lesson.paragraphs).some(paragraph=>typeof paragraph.en==='string'&&paragraph.en.includes(value));}
+ // Editorial selections for the audited lesson only. Exact inclusion is required
+ // on every read; these do not replace the authored rule or its note example.
+ function auditedExample(row,lesson){
+  if(lesson.id!=='nce-b2-eef57c-l002'||lesson.book!==2||lesson.number!==2||lesson.title!=='第2课 · Breakfast or lunch?')return '';
+  const value={'一般现在时':'I never get up early on Sundays.','现在进行时':'‘But I\'m still having breakfast,’ I said.','一般疑问句':'Do you always get up so late?'}[row.title];
+  return inPassage(value,lesson)?value:'';
+ }
  function exampleFor(row,lesson){
-  const candidates=[row.example,...list(row.supportingExamples),row.sourceEvidence?.sourceText,row.evidence?.sourceSentence,row.sourceExample].map(text).filter(value=>value&&/[A-Za-z]/.test(value)&&!value.includes('___'));
+  const candidates=[row.example,...list(row.supportingExamples),row.sourceEvidence?.sourceText,row.evidence?.sourceSentence,row.sourceExample,...list(row.contextEvidence?.paragraphs).map(item=>item.sourceText)].map(text).filter(value=>value&&/[A-Za-z]/.test(value)&&!value.includes('___'));
   const backed=candidates.filter(value=>inPassage(value,lesson));
   const selected=value=>({example:value,exampleDetails:candidates[0]||value,bodyBound:inPassage(value,lesson)});
+  const audited=auditedExample(row,lesson);if(audited)return selected(audited);
   const short=backed.find(value=>value.length<=220);
   if(short)return selected(short);
   for(const value of backed){
@@ -50,6 +58,12 @@
   const page=row.sourcePage||row.sourcePdfPage||row.sourceEvidence?.sourcePage||row.evidence?.sourcePage;
   return {page:Number.isSafeInteger(page)&&page>0?page:null,url:text(row.sourceUrl),docId:text(row.sourceDocId||row.sourceEvidence?.sourceDocId||row.evidence?.sourceDocId||row.origin?.docId)};
  }
+ function sourceKind(row,lesson,bodyBound){
+  const passage=bodyBound&&(!row.phrase||['lesson-passage','textbook-passage'].includes(row.sourceType)||inPassage(row.phrase,lesson));
+  const prior=list(row.contextEvidence?.relatedPriorLessons).some(item=>text(item.lessonId)&&item.lessonId!==lesson.id);
+  const kind=passage?'passage':prior?'prior-revision':'lesson-extension';
+  return {sourceKind:kind,sourceKindLabel:passage?'本课正文用法':prior?'本课笔记 · 旧知复习线索':'本课笔记扩展（非正文）'};
+ }
  function forLesson(lesson,options={}){
   lesson=lesson&&typeof lesson==='object'?lesson:{};
   const items=[],seen=new Set(),vocabulary=clone(list(lesson.vocabulary)),usage=clone(list(lesson.usage));
@@ -67,14 +81,17 @@
    if(seen.has(key))return;
    seen.add(key);
    const {bodyBound,...example}=exampleFor(row,lesson);
-   items.push({title,summary:shortSummary(note,title),...example,details:text(details)||note,category,
+   items.push({title,summary:shortSummary(note,title),...example,details:text(details)||note,category,...sourceKind(row,lesson,bodyBound||['lesson-passage','textbook-passage'].includes(row.sourceType)&&list(row.sourceForms).some(form=>inPassage(form,lesson))),
     sourceLabel:text(row.sourceLabel||row.label||row.source)||fallback,
     exampleSourceLabel:bodyBound?'本课教材正文原句（英文）':text(row.exampleSourceLabel)||'本课已有资料中的例句或摘句',
+    exampleSourceKind:bodyBound?'passage':'lesson-extension',
+    exampleDetailsSourceLabel:example.exampleDetails!==example.example?(text(row.exampleSourceLabel)||'原有学习笔记例句（非所选课文原句）'):'',
     sourceLessonId:lesson.id,sourceReference:reference(row)});
   }
   const grammarLimit=3;
-  for(const row of list(reviewed))if(items.length<grammarLimit)add(row,'grammar',row.title,row.note||row.rule,'本课已校对语法笔记 · 中文整理');
-  for(const row of list(lesson.grammar))if(items.length<grammarLimit)add(row,'grammar',row.title,row.note||row.rule||row.explanation,'本课语法笔记 · 学习整理');
+  const grammarCandidates=[...list(reviewed).map(row=>({row,fallback:'本课已校对语法笔记 · 中文整理'})),...list(lesson.grammar).map(row=>({row,fallback:'本课语法笔记 · 学习整理'}))];
+  grammarCandidates.sort((a,b)=>Number(exampleFor(b.row,lesson).bodyBound)-Number(exampleFor(a.row,lesson).bodyBound));
+  for(const {row,fallback} of grammarCandidates)if(items.length<grammarLimit)add(row,'grammar',row.title,row.note||row.rule||row.explanation,fallback);
   const questionRules=new Set();
   for(const row of questions){
    if(items.length>=grammarLimit)break;
@@ -102,6 +119,19 @@
   for(const point of grammar){
    const sentence=point.details.split(/(?<=[。！？；;])\s*/).map(text).find(part=>/(?:注意|易错|不要|避免|切勿|不能|不可)/.test(part));
    if(sentence)pitfalls.push({text:sentence,sourceLessonId:point.sourceLessonId,sourceLabel:point.sourceLabel,sourceReference:{...point.sourceReference}});
+  }
+  const reminderRules=new Set();
+  for(const row of questions){
+   if(pitfalls.length>=3)break;
+   if(row?.type!=='grammar'||row.graded!==true||!sameLesson(row,lesson)||reading.test([row.category,row.focus,row.kind,row.conceptId,row.grammarConceptId,row.question].join(' ')))continue;
+   const question=text(row.question),choices=list(row.options),correctAnswer=text(choices[row.answer]);
+   if(!question||!Number.isInteger(row.answer)||!correctAnswer)continue;
+   const wrongAnswer=choices.map(text).find((choice,index)=>index!==row.answer&&choice&&text(row.wrongReasons?.[choice]));
+   if(!wrongAnswer)continue;
+   const reason=text(row.wrongReasons[wrongAnswer]),key=text(row.rule)||reason;
+   if(reminderRules.has(key))continue;
+   reminderRules.add(key);
+   pitfalls.push({text:question+' 误选：'+wrongAnswer+'；应选：'+correctAnswer+'。'+reason,question,wrongAnswer,correctAnswer,reason,sourceLessonId:lesson.id,sourceLabel:text(row.sourceLabel)||'本课已有语法练习解析',sourceReference:reference(row)});
   }
   return {items,grammar,usages,pitfalls,vocabulary,usage,notice:NOTICE};
  }
