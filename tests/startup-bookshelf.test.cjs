@@ -16,7 +16,8 @@ test('read-only storage still opens the initial shelf and permits exporting an e
  const h=await harness({...options,loaded,initialStorageWritable:false});
  assert.equal(onShelf(h),true,'showing the initial shelf must not require a storage write');
  assert.equal(h.stored.appRoute.view,'study','launch does not replace the saved route');
- assert.equal(await h.api.navigate('records'),true,'a read-only backup view remains available from the shelf');await h.flush();
+ assert(h.document.querySelector('[data-shelf-backup]'));await h.click('[data-shelf-backup]');
+ assert.equal(h.api.view,'records','the dedicated backup entry remains available from the read-only shelf');
  assert(h.document.querySelector('#export-backup'));await h.click('#export-backup');
  assert.equal(h.downloads.length,1);const backup=JSON.parse(await h.downloads[0].blob.text());
  assert.equal(backup.data.learningPipeline.lessons[id].retellText,draft);assert.deepEqual(plain(backup.data.records),loaded.records);
