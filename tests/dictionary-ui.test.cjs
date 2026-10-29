@@ -27,7 +27,7 @@ function setup(vocabulary = [], {local = false, savedWords = []} = {}) {
   const count={textContent:0},grid={innerHTML:''},more={hidden:false},notebook={rootHTML:''};Object.defineProperty(notebook,'innerHTML',{get:()=>notebook.rootHTML+grid.innerHTML,set:value=>{notebook.rootHTML=value;}});
   const context = {
     console,AbortController,selectedWord:null,wordLookup:0,dictionaryController:null,wordAnchor:null,
-    learningPipeline:null,directoryCache:null,directoryState:{scope:'all',book:'',category:'all',query:'',limit:48},sentenceVocabulary:()=>[],sentenceUsage:()=>[],data:{words:savedWords},view:'study',query:'',current:{id:'source-lesson',title:'Original lesson',vocabulary},lessons:[],
+    learningPipeline:null,grammarFocusState:{lessonId:null,open:false},directoryCache:null,directoryState:{scope:'all',book:'',category:'all',query:'',limit:48},sentenceVocabulary:()=>[],sentenceUsage:()=>[],data:{words:savedWords},view:'study',query:'',current:{id:'source-lesson',title:'Original lesson',vocabulary},lessons:[],
     innerWidth:1000,innerHeight:800,icon:()=>'',audio:{speakWord:async word=>{spoken.push(word);}},
     $:selector=>selector==='#word-popover'?popup:selector==='#word-count'?count:selector==='#words-view'?notebook:selector==='[data-directory-results]'?grid:selector==='[data-directory-count]'?count:selector==='[data-directory-more]'?more:null,
     $$:()=>anchors.filter(anchor=>anchor.classList.contains('selected')),

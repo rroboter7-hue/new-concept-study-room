@@ -34,3 +34,6 @@
 - Browser QA:320/390/1280, no overflow; one current nav marker; real review draft/filter survives tab return; saved get-up bookmark,120% font and backup preview verified. Published package6 JS/1 CSS generated and source-backed focus shown; no console errors.
 - All global entry navigation still waits for existing atomic saves. Presentation filters/positions stay in memory; no new learner-evidence field is written.
 - Saved bilingual explanations/notes and existing explicit mastery/removal controls retained inside a disclosure; meanings and examples remain escaped.
+
+## Follow-up: independent grammar browsing
+Human requested book/lesson selectors for reviewing previous grammar in the word directory. Keep selection as in-memory presentation state, not the learning route. Reuse verified getKeyPoints for chosen lesson, max3 grammar points and1 caution; retain complete title below native selector, preserve open/selection on entry return, provide return-to-current. No lesson/audio binding or evidence writes from browsing. Regression-first tests validate all4 book catalogs, invalid IDs, exact current/draft/evidence preservation and Continue. Mobile390 and desktop1280 browser checks before original-site CI/publication.
