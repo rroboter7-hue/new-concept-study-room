@@ -270,13 +270,17 @@
     updateAudioProgress(state=this.audioState()) {
       if (!state || state.lessonId!==this.lesson?.id) return;
       const seek=this.container?.querySelector?.('[data-pipeline-audio-seek]'),back=this.container?.querySelector?.('[data-pipeline-action="rewind-audio"]');
+      const timeline=this.container?.querySelector?.('[data-pipeline-audio-progress]'),play=this.container?.querySelector?.('[data-pipeline-action="play"]');
+      const time=value=>{const seconds=Number.isFinite(Number(value))?Math.floor(Math.max(0,Number(value))):0;return String(Math.floor(seconds/60)).padStart(2,'0')+':'+String(seconds%60).padStart(2,'0');};
+      if(timeline)timeline.textContent=time(state.currentTime)+' / '+(state.isEstimated?'约 ':'')+(Number.isFinite(state.duration)&&state.duration>0?time(state.duration):'--:--');
+      if(play){play.textContent=state.playing?'暂停本课音频':'播放本课音频';play.setAttribute('aria-pressed',String(!!state.playing));}
       const ready=state.canSeek!==false&&Number.isFinite(state.duration)&&state.duration>0;
       if(seek){seek.disabled=!ready;if(this.audioSeekDraft==null)seek.value=String(ready?Math.round(Math.max(0,Math.min(1,(Number(state.currentTime)||0)/state.duration))*1000):0);}
       if(back)back.disabled=!ready;
     }
     readingHTML(){
       const body=this.options.renderReading?.(this.lesson)||list(this.lesson.paragraphs).map(paragraph=>'<p lang="en">'+this.e(paragraph.en)+'</p><p>'+this.e(paragraph.zh)+'</p>').join('');
-      return '<div class="pipeline-reading-intro"><h2>先读课文</h2><p>可先听本课音频，或直接开始选择题；熟悉程度由你决定。</p><button type="button" class="button subtle" data-pipeline-action="play">播放本课音频</button><span class="pipeline-source" data-pipeline-audio-progress></span><div class="pipeline-audio-controls"><button type="button" class="button subtle" data-pipeline-action="rewind-audio" disabled>回退5秒</button><input type="range" min="0" max="1000" step="1" value="0" data-pipeline-audio-seek aria-label="整课音频播放进度" disabled></div></div><div data-pipeline-reading>'+body+'</div><div class="pipeline-footer"><button class="button primary" data-pipeline-action="stage" data-stage="1">开始选择题</button></div>';
+      return '<div class="pipeline-reading-intro"><h2>听读课文</h2><p>点词查义，也可以听完一遍再往下读。</p><div class="pipeline-audio-player"><div class="pipeline-audio-heading"><button type="button" class="button primary" data-pipeline-action="play">播放本课音频</button><span class="pipeline-source" data-pipeline-audio-progress></span></div><div class="pipeline-audio-controls"><button type="button" class="button subtle" data-pipeline-action="rewind-audio" disabled>回退5秒</button><input type="range" min="0" max="1000" step="1" value="0" data-pipeline-audio-seek aria-label="整课音频播放进度" disabled></div></div></div><div data-pipeline-reading>'+body+'</div><div class="pipeline-footer"><button class="button primary" data-pipeline-action="stage" data-stage="1">开始选择题</button></div>';
     }
     quizHTML(){
       const e=this.e,record=this.record(),quiz=record.quiz,question=this.question(),counts=quiz.plan?.actualCounts||{current:quiz.questions.filter(q=>q.isCurrent).length,review:quiz.questions.filter(q=>q.isReview).length,total:quiz.questions.length};

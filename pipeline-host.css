@@ -141,3 +141,102 @@ body.learning-tools-active .view-heading{gap:20px;flex-wrap:wrap;}
  :is(.learning-pipeline,body.learning-tools-active,.dialog-card) .button:not(:disabled):hover,
  :is(.learning-pipeline,body.learning-tools-active,.dialog-card) .button.primary:not(:disabled):hover{transform:none;}
 }
+
+/* A quiet, shared rhythm for reading, writing and review. Keep one set of
+   controls per action; supporting tools remain native disclosures. */
+.pipeline-audio-player{max-width:600px;padding:14px;border:1px solid #dbe7f6;border-radius:16px;background:#f5f9ff;}
+.pipeline-audio-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;}
+.pipeline-audio-heading [data-pipeline-audio-progress]{font-variant-numeric:tabular-nums;white-space:nowrap;}
+.learning-pipeline .pipeline-audio-player .pipeline-audio-controls{margin-top:8px;padding:0;border:0;background:transparent;}
+.review-options,.review-backlog{font-size:13px;color:#52647e;}
+.review-options>summary,.review-backlog>summary{min-height:44px;display:flex;align-items:center;gap:8px;cursor:pointer;}
+.review-options>summary::before,.review-backlog>summary::before{content:'+';color:#0873ff;font-size:17px;}
+.review-options[open]>summary::before,.review-backlog[open]>summary::before{content:'−';}
+.review-options-content{display:flex;align-items:center;flex-wrap:wrap;gap:12px;padding:12px;border:1px solid #dbe5f0;border-radius:12px;background:#fff;}
+.review-options-content label{margin:0;}
+.review-options-content select{min-height:44px;font:inherit;}
+.review-options:focus-within,.review-backlog:focus-within{outline-offset:3px;}
+
+@media(max-width:760px){
+ body.learning-pipeline-active .learning-pipeline{padding:16px 16px max(28px,env(safe-area-inset-bottom));}
+ body.learning-pipeline-active .pipeline-current-task{padding:4px 0;}
+ body.learning-pipeline-active .pipeline-topbar{gap:12px;padding-bottom:16px;align-items:center;}
+ body.learning-pipeline-active .pipeline-topbar>div{min-width:0;}
+ body.learning-pipeline-active .pipeline-topbar h1{font-size:19px;line-height:1.45;letter-spacing:-.3px;}
+ .learning-pipeline .pipeline-shelf{min-height:44px;display:flex;align-items:center;padding:0;font-size:13px;}
+ .learning-pipeline .pipeline-steps{gap:3px;margin-bottom:18px;padding-bottom:12px;}
+ .learning-pipeline .pipeline-steps button{min-height:54px;font-size:11px;line-height:1.4;gap:5px;padding:7px 0;border-radius:12px;white-space:nowrap;}
+ .learning-pipeline .pipeline-current-task h2{font-size:20px;line-height:1.5;letter-spacing:-.3px;}
+ .learning-pipeline .pipeline-task-note,.learning-pipeline .pipeline-reading-intro>p{font-size:13px;line-height:1.7;margin:5px 0 16px;color:#5b7083;}
+ .pipeline-reading-intro{margin-bottom:16px;}
+ .pipeline-audio-player{padding:12px;border-radius:16px;}
+ .pipeline-audio-heading .button{font-size:13px;padding:10px 12px;}
+ .pipeline-audio-heading [data-pipeline-audio-progress]{font-size:11px;}
+ .pipeline-reading-tools{gap:8px 12px;margin-bottom:14px;font-size:13px;}
+ .pipeline-reading-tools label{min-height:44px;gap:6px;}
+ .pipeline-reading-tools select{min-height:44px;padding:7px 8px;font-size:16px;}
+ .pipeline-font-settings{font-size:13px;}
+ .pipeline-font-settings>summary{padding:8px 10px;}
+ .learning-pipeline .focus-listening{margin-top:0;}
+ .learning-pipeline .reading-pair .english,.learning-pipeline .reading-pair .sentence{overflow-wrap:break-word;word-break:normal;}
+ .learning-pipeline .pipeline-footer{margin-top:20px;gap:10px;}
+ .learning-pipeline .pipeline-save-line{margin-top:20px;padding-top:12px;border-top:1px solid #edf1f7;}
+ .free-writing-header{align-items:flex-start;gap:10px;margin-bottom:8px;}
+ .free-writing-header h3{font-size:20px;line-height:1.5;white-space:nowrap;}
+ .free-writing-progress{max-width:190px;white-space:normal;padding:5px 8px;font-size:11px;line-height:1.65;background:#f2f7fe;}
+ .free-writing-intro{font-size:13px;line-height:1.7;}
+ .free-writing-cumulative{margin:5px 0;padding:0;border:0;background:transparent;color:#52647e;}
+ .free-writing-cumulative>summary{min-height:44px;align-content:center;font-size:12px;font-weight:500;}
+ .free-writing-cumulative[open]{padding:0 0 10px;border-bottom:1px solid #e5edf7;}
+ .free-writing-navigation{margin:4px 0 12px;font-size:12px;gap:8px;}
+ .free-writing-navigation .button{font-size:12px;padding:9px 10px;}
+ .free-writing-target{margin:0 0 10px;padding:13px 14px;border:1px solid #dce9fa;border-radius:14px;background:#f2f7ff;gap:4px;}
+ .free-writing-target strong{font-size:21px;letter-spacing:-.3px;}
+ .free-writing-target small{font-size:12px;}
+ .writing-library-entry{margin-bottom:14px;}
+ .free-writing-lines{gap:14px;}
+ .free-writing-line{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:6px 10px;padding:14px;border:1px solid #e0e9f4;border-radius:15px;background:#fff;box-shadow:0 2px 8px #18334b04;}
+ .free-writing-line>label,.free-writing-line>textarea,.free-writing-line>[data-free-feedback],.free-writing-line>.free-writing-selected{grid-column:1/-1;}
+ .free-writing-line>label{margin:0;color:#36546f;font-size:13px;}
+ .free-writing-line>textarea{min-height:88px;margin:0;padding:10px 11px;font-size:16px;background:#fbfdff;border-color:#d7e3f0;}
+ .free-writing-line-status{grid-column:1;align-self:center;margin:0;font-size:11px;}
+ .free-writing-correction{grid-column:2;margin:0;padding:0;border:0;font-size:12px;min-width:0;}
+ .free-writing-correction>summary{min-height:44px;align-content:center;color:#43668b;font-weight:500;}
+ .free-writing-correction[open]{grid-column:1/-1;border-top:1px solid #e5edf7;padding-top:6px;}
+ .free-writing-correction textarea{font-size:16px;}
+ .free-writing-actions{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px;margin-top:16px;}
+ .free-writing-actions>.button{width:100%;padding:11px 8px;font-size:13px;}
+ .free-writing-actions>[data-free-save-status],.free-writing-actions>[data-free-action=save]{grid-column:1/-1;}
+ .free-writing-limit{font-size:11px;line-height:1.8;margin-top:10px;}
+ .pipeline-retell-workspace{gap:2px;}
+ .pipeline-retell-hints>.pipeline-disclosure{margin:0 0 6px;padding:10px 13px;border-radius:13px;background:#f8fbff;}
+ .pipeline-retell-label{margin:8px 0 10px;font-size:13px;color:#36546f;}
+ .pipeline-retell-label textarea{font-size:16px;min-height:250px;padding:14px;background:#fbfdff;border-radius:15px;line-height:1.85;}
+ .pipeline-retell-editor .pipeline-copy-actions{margin:12px 0;}
+ body.learning-tools-active #daily-review-view{margin:12px auto 24px;}
+ #daily-review-view .view-heading{margin:8px 0 16px;}
+ #daily-review-view .view-heading h2{font-family:inherit;font-size:23px;letter-spacing:-.4px;}
+ #daily-review-view .view-heading p{font-size:13px;line-height:1.7;margin-top:6px;}
+ #daily-review-view .review-stats{gap:0 14px;padding:0 0 14px;margin-bottom:16px;align-items:center;}
+ #daily-review-view .review-batch-counter{padding:12px 14px;border:1px solid #dce9fa;border-radius:13px;font-size:13px;line-height:1.7;background:#f0f6ff;color:#365b80;}
+ #daily-review-view .review-stats strong{font-size:16px;}
+ #daily-review-view .review-options[open],#daily-review-view .review-backlog[open]{flex-basis:100%;}
+ #daily-review-view .review-options-content{gap:10px;}
+ #daily-review-view .review-stats>[data-review-action=end-session]{padding:9px 0;min-height:44px;border:0;background:transparent;box-shadow:none;font-size:12px;font-weight:400;margin-left:auto;}
+ #daily-review-view .review-question{padding:18px 16px;border-color:#dce5f0;border-radius:18px;box-shadow:0 4px 18px #18334b05;}
+ #daily-review-view .review-card-meta{flex-direction:row;align-items:center;gap:10px;margin-bottom:14px;font-size:12px;}
+ #daily-review-view .review-card-meta strong{font-size:12px;font-weight:600;background:#edf5ff;color:#24588b;padding:6px 9px;border-radius:7px;}
+ #daily-review-view .review-card-meta button{min-height:44px;font-size:12px;}
+ #daily-review-view .review-prompt{font-family:inherit;font-size:20px;font-weight:600;line-height:1.7;margin:18px 0;}
+ #daily-review-view .review-choices{gap:9px;}
+ #daily-review-view .review-choices .quiz-option{min-height:48px;padding:12px 14px;border:1px solid #d7e3f0;border-radius:12px;background:#fbfdff;color:#18334b;font-size:16px;}
+ #daily-review-view .review-choices .quiz-option.selected{border-color:#0873ff;background:#edf5ff;box-shadow:inset 0 0 0 1px #0873ff;}
+ #daily-review-view .review-input-label{font-size:13px;line-height:1.6;margin-top:16px;}
+ #daily-review-view .review-answer{font-family:inherit;font-size:16px;line-height:1.8;padding:12px;border-radius:12px;border-color:#d7e3f0;background:#fbfdff;color:#18334b;margin:8px 0 16px;}
+ #daily-review-view .review-submit{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:14px 0;}
+ #daily-review-view .review-submit .button{font-size:13px;padding:11px 8px;}
+ #daily-review-view .review-ratings{padding-top:16px;margin:16px 0 10px;border-top:1px solid #e5edf7;gap:7px;}
+ #daily-review-view .review-ratings .button{min-width:0;font-size:12px;padding:10px 5px;}
+ #daily-review-view .small-note{font-size:11px;line-height:1.8;}
+}
+@media(max-width:360px){.learning-pipeline .pipeline-steps button{font-size:10.5px;}}
