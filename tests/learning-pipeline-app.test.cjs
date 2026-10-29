@@ -35,6 +35,8 @@ test('free-writing container input persists through real app storage and a fresh
  await h.input('[data-free-answer="0"]',answer);await ui.flush();await h.flush();
  assert(freeAnswer(h.stored,id,answer));
  const reloaded=await harness({...options,loaded:h.stored}),resumed=pipeline(reloaded);assert.equal(resumed.record().stage,2);
+ assert.equal(resumed.writing,null,'the launch shelf does not initialize the hidden editor');
+ await reloaded.click('[data-shelf-continue]');await reloaded.flush();
  assert(resumed.writing);assert(freeAnswer(reloaded.api.data,id,answer));
  assert.equal(reloaded.document.querySelector('[data-free-answer="0"]').value,answer);
 });
@@ -50,6 +52,7 @@ test('backup and replacement restore retain free writing and every pre-existing 
  assert.equal(h.api.data.sentenceBatches['legacy-lesson'].rawText,'Keep a batch sentence.');
  assert.equal(h.api.data.outputDrafts.lessons['legacy-lesson'].modes.retell.answer,'Keep my earlier retell.');assert.equal(h.api.data.custom.note,'Keep unknown fields.');
  const reloaded=await harness({...options,loaded:h.stored});assert(freeAnswer(reloaded.api.data,id,answer));
+ await reloaded.click('[data-shelf-continue]');await reloaded.flush();
  assert.equal(reloaded.document.querySelector('[data-free-answer="0"]').value,answer);
 });
 

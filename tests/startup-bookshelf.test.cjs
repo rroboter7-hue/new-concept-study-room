@@ -46,3 +46,27 @@ test('returning through the bookshelf preserves a multi-paragraph retelling with
  assert.equal(reopened.document.querySelector('[data-pipeline-retell]').value,text);
  assert.deepEqual(plain(reopened.api.data.records),before.records);
 });
+
+test('all saved stages open the shelf without mounting an editor or binding lesson audio',async()=>{
+ const id='nce-b2-eef57c-l002';
+ for(const stage of [0,1,2,3,4,5]){
+  const loaded={lastLesson:id,appRoute:{view:'study',lessonId:id},learningPipeline:{version:2,activeLessonId:id,lessons:{[id]:{stage,retellText:'A saved retelling.'}}},records:{historic:{best:78,attempts:2}}};
+  const h=await harness({...options,loaded});
+  assert.equal(onShelf(h),true);assert.equal(h.api.current.id,id);
+  assert.equal(h.api.learningPipeline.record().stage,stage);
+  assert.equal(h.api.learningPipeline.container,null);
+  assert.equal(h.api.learningPipeline.writing,null,'hidden writing stage must not create an editor');
+  assert.deepEqual(h.audio.lessonChanges,[],'shelf launch must not bind or fetch lesson audio');
+  assert.deepEqual(plain(h.api.data.records),loaded.records);
+  await h.click('[data-shelf-continue]');await h.flush();
+  assert.equal(onShelf(h),false);assert.equal(h.api.learningPipeline.record().stage,stage);
+  assert.deepEqual(h.audio.lessonChanges,[id],'Continue binds the saved lesson audio');
+ }
+});
+
+test('the study navigation entry also initializes audio when opened directly from the launch shelf',async()=>{
+ const h=await harness(options);const id=h.api.current.id;
+ await h.api.navigate('study');await h.flush();
+ assert.equal(onShelf(h),false);assert.deepEqual(h.audio.lessonChanges,[id]);
+ assert(h.api.learningPipeline.container);
+});

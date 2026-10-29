@@ -82,3 +82,62 @@ body.learning-tools-active .view-heading{gap:20px;flex-wrap:wrap;}
  .pipeline-key-points .pipeline-point{min-width:0;}
 }
 @media(max-width:600px){.records-data-actions{width:100%;}.records-data-actions .button{flex:1 1 140px;}.local-data-notice{font-size:12px;}}
+
+/* Refine the existing controls, without adding navigation or changing layout. */
+:is(.learning-pipeline,body.learning-tools-active,.dialog-card) .button{
+ min-height:44px;box-sizing:border-box;border:1px solid #d7e3f0;border-radius:12px;
+ padding:10px 17px;font-size:14px;font-weight:600;line-height:1.45;
+ background:#fff;color:#36546f;box-shadow:0 1px 2px #18334b08;
+ transition:background-color .16s ease,border-color .16s ease,box-shadow .16s ease,transform .16s ease;
+}
+:is(.learning-pipeline,body.learning-tools-active,.dialog-card) .button.primary{
+ color:#fff;background:#0873ff;border-color:#0873ff;box-shadow:0 3px 9px #0873ff22;
+}
+:is(.learning-pipeline,body.learning-tools-active,.dialog-card) .button.subtle{
+ color:#365b80;background:#fff;border-color:#d7e3f0;
+}
+:is(.learning-pipeline,body.learning-tools-active,.dialog-card) .button:disabled{
+ opacity:.5;cursor:not-allowed;box-shadow:none;transform:none;
+}
+:is(.learning-pipeline,body.learning-tools-active,.dialog-card) .button:focus-visible{
+ outline:3px solid #0873ff;outline-offset:3px;
+}
+.learning-pipeline .pipeline-steps button{min-height:44px;border:1px solid transparent;transition:background-color .16s ease,border-color .16s ease;}
+.learning-pipeline .pipeline-steps [aria-current=step]{border-color:#d5e7ff;background:#edf5ff;box-shadow:0 1px 3px #0873ff0a;}
+.learning-pipeline .pipeline-option{min-height:48px;transition:background-color .16s ease,border-color .16s ease;}
+.learning-pipeline .pipeline-option.selected{border-color:#0873ff;box-shadow:inset 0 0 0 1px #0873ff18;}
+.learning-pipeline :is(textarea,select){border-color:#d7e3f0;border-radius:11px;}
+.learning-pipeline textarea:focus{border-color:#0873ff;outline:2px solid #0873ff;outline-offset:2px;}
+.learning-pipeline .pipeline-point{background:#fff;box-shadow:0 2px 8px #18334b04;}
+.learning-pipeline .pipeline-disclosure{background:#fff;border-color:#dbe5f0;}
+.learning-pipeline .pipeline-disclosure>summary{min-height:32px;}
+.learning-pipeline .pipeline-audio-controls{padding:8px 12px;border:1px solid #dbe5f0;border-radius:14px;background:#f6f9ff;}
+.learning-pipeline .pipeline-audio-controls input{cursor:pointer;}
+.learning-pipeline .pipeline-audio-controls input:disabled{cursor:default;}
+.learning-pipeline .pipeline-audio-controls .button{padding-left:12px;padding-right:12px;}
+.writing-library .writing-library-done{min-height:46px;border-radius:12px;box-shadow:0 3px 9px #0873ff22;}
+.writing-library .writing-library-scopes button{transition:background-color .16s ease,color .16s ease;}
+.writing-library :is(.writing-library-card,.writing-library-recommend-items button){transition:border-color .16s ease,background-color .16s ease;}
+.dialog-card{border-color:#dbe5f0;background:#fff;box-shadow:0 16px 56px #18334b26;}
+.dialog-card :is(.dialog-header,.dialog-footer){border-color:#e4ecf5;}
+.dialog-card :is(input,textarea,select){border-color:#d7e3f0;border-radius:10px;}
+@media(hover:hover) and (pointer:fine){
+ :is(.learning-pipeline,body.learning-tools-active,.dialog-card) .button:not(:disabled):hover{background:#f1f7ff;border-color:#adcdf6;box-shadow:0 2px 5px #18334b0b;}
+ :is(.learning-pipeline,body.learning-tools-active,.dialog-card) .button.primary:not(:disabled):hover{background:#0065e5;border-color:#0065e5;box-shadow:0 4px 12px #0873ff30;transform:translateY(-1px);}
+ .learning-pipeline .pipeline-steps button:not([aria-current=step]):hover{background:#f5f9ff;border-color:#e4edf8;}
+ .learning-pipeline .pipeline-option:not(:disabled):hover{border-color:#9fc6f6;background:#f8fbff;}
+ .writing-library :is(.writing-library-card,.writing-library-recommend-items button):hover{border-color:#9fc6f6;background:#f5f9ff;}
+}
+:is(.learning-pipeline,body.learning-tools-active,.dialog-card) .button:not(:disabled):active,
+:is(.learning-pipeline,body.learning-tools-active,.dialog-card) .button.primary:not(:disabled):active{transform:translateY(0);box-shadow:none;}
+@media(max-width:600px){
+ :is(.learning-pipeline,body.learning-tools-active,.dialog-card) .button{padding:11px 14px;}
+ .learning-pipeline .pipeline-audio-controls{gap:8px;padding:6px 8px;}
+}
+@media(prefers-reduced-motion:reduce){
+ :is(.learning-pipeline,body.learning-tools-active,.dialog-card) .button,
+ .learning-pipeline .pipeline-steps button,.learning-pipeline .pipeline-option,
+ .writing-library :is(.writing-library-card,.writing-library-recommend-items button,.writing-library-scopes button){transition:none;}
+ :is(.learning-pipeline,body.learning-tools-active,.dialog-card) .button:not(:disabled):hover,
+ :is(.learning-pipeline,body.learning-tools-active,.dialog-card) .button.primary:not(:disabled):hover{transform:none;}
+}

@@ -89,7 +89,7 @@
  function saveOutputDrafts(next){return saveEditorDraft('outputDrafts',window.OutputPractice?.sanitizeDrafts?.(next)||{version:1,lessons:{}});}
  function saveReadingFont(value){const old=data.settings.readingFontPercent;data.settings.readingFontPercent=value;if(persist())return true;data.settings.readingFontPercent=old;return false;}
  function guidedBatchText(){sentencePractice.flush();if(!sentencePractice.ensureState())return '';const lesson=outputContext||current,bundle=sentencePractice.exportLessonDrafts(lesson).find(item=>item.sourceKey===sentencePractice.active?.key);return StudySentenceBatch.lessonImportBlocks(bundle?[bundle]:[]).map(block=>block.text).join('\n\n');}
- function lessonProgress(id){const l=lessons.find(x=>x.id===id),cards=l?StudyReview.cardsForLessons([l]):[];const progress=StudyLearningProgress.describe(safeRecord(id),{dueCount:StudyReview.queue(data.review,cards).length}),flow=data.learningPipeline?.lessons?.[id];return learningPipeline&&flow?{...progress,summary:progress.retestPassed?'复测通过':flow.finishedAt?'本轮完成 · 尚未复测':'学习中 · '+(['读课文','选择题','自由造句','复盘','课文复述','重点'][flow.stage]||'读课文')+(progress.canRetest?' · 待复测':'')}:progress;}
+ function lessonProgress(id){const l=lessons.find(x=>x.id===id),cards=l?StudyReview.cardsForLessons([l]):[];const progress=StudyLearningProgress.describe(safeRecord(id),{dueCount:StudyReview.queue(data.review,cards).length}),flow=data.learningPipeline?.lessons?.[id];return learningPipeline&&flow?{...progress,summary:progress.retestPassed?'复测通过':flow.finishedAt?'本轮完成 · 尚未复测':'学习中 · '+(['读课文','选择题','自由造句','复盘','课文复述','重点'][flow.stage]||'读课文')+(progress.canRetest?' · 待复测':'')}:learningPipeline?{...progress,summary:progress.retestPassed?'复测通过':progress.practiced&&progress.retestDueAt?progress.labels.filter(label=>label!=='待复习').concat('待复测').join(' · '):progress.summary}:progress;}
  function freshPractice(lesson=current){return {mode:window.StudyPracticePacks?.registry?.has(lesson?.id)?'unit':'mixed',answers:{},submitted:false};}
  function canRetestPack(id,revision){const r=safeRecord(id);return lessonProgress(id).canRetest&&r.practicePack?.revision===revision;}
  function backupData(){const guided={...editorBases.sentencePractice},batch={...editorBases.sentenceBatches},explanations={...editorBases.coachDrafts};for(const entry of sentencePractice?.entries?.values?.()||[])guided[entry.key]=StudySentences.sanitizeDraft(entry.draft);for(const [id,entry]of batchPractice?.entries||[])batch[id]=StudySentenceBatch.sanitizeDraft(entry.draft);for(const [key,draft]of coach?.drafts||[])explanations[key]=draft;const freeDrafts={...data.freeWriting};for(const entry of learningPipeline?.writing?.cache?.values?.()||[])freeDrafts[entry.key]=StudyStorage.clone(entry.draft);const local={...data,learningPipeline:learningPipeline?.state()||data.learningPipeline,freeWriting:editorDraft('freeWriting',freeDrafts),outputDrafts:editorDraft('outputDrafts',output?.snapshot?.()||editorBases.outputDrafts),lessonRecall:editorDraft('lessonRecall',lessonRecall?.snapshot()||editorBases.lessonRecall),unitPractice:editorDraft('unitPractice',unitPractice?.snapshot()||editorBases.unitPractice),sentencePractice:editorDraft('sentencePractice',guided),sentenceBatches:editorDraft('sentenceBatches',batch),coachDrafts:editorDraft('coachDrafts',sanitizeCoachDrafts(explanations)),reviewDrafts:dailyReview?.snapshotDrafts?.()||data.reviewDrafts};const result=storageSession.previewLocal(local);return result.ok?{...local,...result.data}:local;}
@@ -258,6 +258,7 @@
  }
  function enrollLessonReview(lesson){if(!lesson)return false;const cards=StudyReview.cardsForLessons([lesson]);if(!cards.length){toast('这课的词汇、用法和语法卡片正在整理。');return false;}return saveReviewState(StudyReview.enroll(data.review,cards));}
  async function navigate(v,{cardIds=null,practice=false,formalReview=false,reviewTask=null}={}){
+  if(learningPipeline&&v==='study'&&!learningPipeline.container)return selectLesson(current?.id);
   const navigation=++pipelineNavigationVersion;
   const move=()=>{bookshelf?.hide();focusListening?.stop();flushLegacyOutput();if(v==='daily-review'){dailyReview.clearFilters();if(formalReview&&cardIds)dailyReview.startReview(cardIds,reviewTask);else if(practice&&cardIds)dailyReview.startPractice(cardIds);else dailyReview.cardIds=cardIds?new Set(cardIds):null;}if(v!=='study')audio.pause();view=v;hideWord();renderAll();return true;};
   if(!learningPipeline)return move();
@@ -507,7 +508,9 @@
   document.addEventListener('change',event=>{if(event.target.matches?.('[data-pipeline-translation]')){data.settings.translation=event.target.checked;persist();learningPipeline.refresh();}if(event.target.matches?.('[data-pipeline-speed]')){data.settings.rate=Number(event.target.value);audio.setRate(data.settings.rate);persist();}});
  }
  hydrateIcons();
- if(learningPipeline){void (async()=>{if(current){if(!await selectLesson(current.id))return;}else toast('课程资料尚未加载，请刷新页面。');await showBookshelf();})();}
+ // The constructor already points at the saved lesson. Mount its stage and bind
+ // audio only when a lesson is opened from the shelf.
+ if(learningPipeline){void showBookshelf();}
  else {if(current)selectLesson(current.id);else toast('课程资料尚未加载，请刷新页面。');bookshelf?.show();}
 if(storageWarning)toast('部分历史导入资料格式异常，可重新导入备份。');
 })();

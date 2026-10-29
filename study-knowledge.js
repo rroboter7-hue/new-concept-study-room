@@ -54,8 +54,12 @@
    words.set(lesson.id,local);pools.set(lesson.id,[]);quizzes.set(lesson.id,[]);legacyByLesson.set(lesson.id,clone(list(lesson.quizAudit?.legacyQuiz||lesson.quiz)));
   }
   const allWords=Array.from(records.values()).filter(r=>r.kind==='word'),wordQuestions=new Map();
+  // A word may have several lesson-specific senses. Index all of them once so
+  // none can become a distractor for another sense of the same normalized word.
+  const excludedByWord=new Map();
+  for(const record of allWords){const key=norm(record.word);if(!excludedByWord.has(key))excludedByWord.set(key,new Set());excludedByWord.get(key).add(norm(record.meaning));}
   for(const record of allWords){
-   const excluded=new Set(allWords.filter(r=>norm(r.word)===norm(record.word)).map(r=>norm(r.meaning))),seen=new Set([norm(record.meaning)]),wrong=[];
+   const excluded=excludedByWord.get(norm(record.word)),seen=new Set([norm(record.meaning)]),wrong=[];
    for(const other of allWords){const key=norm(other.meaning);if(excluded.has(key)||seen.has(key))continue;seen.add(key);wrong.push(other.meaning);if(wrong.length===3)break;}
    if(!wrong.length)continue;
    const options=wrong.slice(),answer=slotFor(record.id,options.length+1);options.splice(answer,0,record.meaning);
