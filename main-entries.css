@@ -57,3 +57,5 @@ body.main-entries-ready.learning-tools-active .mls-header{display:none!important
 @media(min-width:761px){.main-entry-nav button{font-size:14px;}}
 
 [data-shelf-resume-progress]{display:block;color:#58718e;font-size:12px;line-height:1.6;margin-top:8px;}
+
+.entry-saved-details{margin-top:8px;font-size:12px;color:#5d7690;}.entry-saved-details>summary{min-height:44px;align-content:center;cursor:pointer;}.entry-saved-details .button{min-height:44px;margin:5px 4px 0 0;font-size:12px;}.entry-saved-details p{font-size:12px;}

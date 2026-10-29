@@ -24,12 +24,12 @@ const settled = () => new Promise(resolve => setImmediate(resolve));
 function setup(vocabulary = [], {local = false, savedWords = []} = {}) {
   const requests = [], localRequests = [], linkQueries = [], snapshots = [], notices = [], anchors = [], spoken = [];
   const popup = {innerHTML:'',style:{},classList:classes(),getBoundingClientRect:()=>({height:250}),querySelector:()=>null,contains:()=>false};
-  const count = {textContent:0},notebook={innerHTML:''};
+  const count={textContent:0},grid={innerHTML:''},more={hidden:false},notebook={rootHTML:''};Object.defineProperty(notebook,'innerHTML',{get:()=>notebook.rootHTML+grid.innerHTML,set:value=>{notebook.rootHTML=value;}});
   const context = {
     console,AbortController,selectedWord:null,wordLookup:0,dictionaryController:null,wordAnchor:null,
-    data:{words:savedWords},view:'study',query:'',current:{id:'source-lesson',title:'Original lesson',vocabulary},lessons:[],
+    learningPipeline:null,directoryCache:null,directoryState:{scope:'all',book:'',category:'all',query:'',limit:48},sentenceVocabulary:()=>[],sentenceUsage:()=>[],data:{words:savedWords},view:'study',query:'',current:{id:'source-lesson',title:'Original lesson',vocabulary},lessons:[],
     innerWidth:1000,innerHeight:800,icon:()=>'',audio:{speakWord:async word=>{spoken.push(word);}},
-    $:selector=>selector==='#word-popover'?popup:selector==='#word-count'?count:selector==='#words-view'?notebook:null,
+    $:selector=>selector==='#word-popover'?popup:selector==='#word-count'?count:selector==='#words-view'?notebook:selector==='[data-directory-results]'?grid:selector==='[data-directory-count]'?count:selector==='[data-directory-more]'?more:null,
     $$:()=>anchors.filter(anchor=>anchor.classList.contains('selected')),
     toast:message=>notices.push(message),
     // Storage IO is an isolated boundary here; full-app storage tests cover
@@ -46,7 +46,7 @@ function setup(vocabulary = [], {local = false, savedWords = []} = {}) {
   };
   if(local)context.StudyDictionary.lookupLocal=(word,{signal})=>new Promise((resolve,reject)=>localRequests.push({word,signal,resolve,reject}));
   vm.createContext(context);
-  vm.runInContext(fs.readFileSync(path.join(project,'core.js'),'utf8'),context);
+  vm.runInContext(fs.readFileSync(path.join(project,'core.js'),'utf8'),context);vm.runInContext(fs.readFileSync(path.join(project,'main-entry-directory.js'),'utf8'),context);
   vm.runInContext(fs.readFileSync(path.join(project,'dictionary-context.js'),'utf8'),context);
   context.E=context.StudyCore.escapeHTML;
   const app=fs.readFileSync(path.join(project,'app.js'),'utf8');

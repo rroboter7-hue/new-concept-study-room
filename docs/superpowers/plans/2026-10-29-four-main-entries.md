@@ -19,13 +19,18 @@
 - Tense summaries come from this lesson's grammar notes, not guessed from sentence counts. Non-tense lessons say main grammar rather than inventing a tense.
 
 ## Steps
-- [ ] Regression-first: directory source/category/favorites; filter/scroll persistence; failed-save preservation; overview source/length/escaping.
-- [ ] Implement four entry presentation and compact directory, profile actions, home continuation order; preserve daily review session on normal tab return.
-- [ ] Add source-backed reading overview from getKeyPoints with max3 grammar points and1 caution.
-- [ ] Integrate counterpart's pending mobile simplification/audio changes, then focused tests and browser phone/desktop QA.
+- [x] Regression-first: directory source/category/favorites; filter/scroll persistence; failed-save preservation; overview source/length/escaping.
+- [x] Implement four entry presentation and compact directory, profile actions, home continuation order; preserve daily review session on normal tab return.
+- [x] Add source-backed reading overview from getKeyPoints with max3 grammar points and1 caution.
+- [x] Integrate counterpart's pending mobile simplification/audio changes, then focused tests and browser phone/desktop QA.
 - [ ] Final review, full original-media CI, deploy to original Pages URL, verify bundles and live entry flows.
 
 ## Ledger
 - Native managed-worktree tool rejected nested sourceRoot (not an attached root). Used a new sparse linked worktree inside writable workspace; old experiments untouched.
 - Base e192cae. Counterpart owns pending mobile-study-simplify changes; wait for its precise published head before integration/push.
 - Approved existing blue/white layout is binding; no new redesign approval needed.
+
+- Final base fd20a08 merged. Independent review passed after fixing shelf detour and exact study-stage scroll restore. New directory/overview/navigation regressions,116 integrated checks,27 continuation/shelf checks,39 dictionary/storage legacy checks passed. Final focused gate19/19.
+- Browser QA:320/390/1280, no overflow; one current nav marker; real review draft/filter survives tab return; saved get-up bookmark,120% font and backup preview verified. Published package6 JS/1 CSS generated and source-backed focus shown; no console errors.
+- All global entry navigation still waits for existing atomic saves. Presentation filters/positions stay in memory; no new learner-evidence field is written.
+- Saved bilingual explanations/notes and existing explicit mastery/removal controls retained inside a disclosure; meanings and examples remain escaped.

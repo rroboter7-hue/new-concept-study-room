@@ -295,7 +295,7 @@
       const raw=this.options.getKeyPoints?.(this.lesson)||{},grammar=list(raw.grammar||raw.items?.filter(row=>row.category==='grammar')).filter(row=>row.sourceLessonId===this.lesson.id).slice(0,3);
       if(!grammar.length)return '';
       const caution=list(raw.pitfalls).find(row=>row.sourceLessonId===this.lesson.id);
-      return '<aside class="pipeline-lesson-focus" aria-label="本课要掌握"><h3>本课要掌握</h3>'+grammar.map(row=>'<p><strong>'+this.e(row.title)+'</strong> '+this.e(row.summary||'')+'</p>').join('')+(caution?'<p><strong>注意：</strong>'+this.e(caution.text)+'</p>':'')+'</aside>';
+      return '<aside class="pipeline-lesson-focus" aria-label="本课要掌握"><h3>本课要掌握</h3>'+grammar.map(row=>'<p><strong>'+this.e(row.title)+'</strong> '+this.e(/[:：]/.test(row.title)?'':row.summary||'')+'</p>').join('')+(caution?'<p><strong>注意：</strong>'+this.e(caution.text)+'</p>':'')+'</aside>';
     }
     readingHTML(){
       const body=this.options.renderReading?.(this.lesson)||list(this.lesson.paragraphs).map(paragraph=>'<p lang="en">'+this.e(paragraph.en)+'</p><p>'+this.e(paragraph.zh)+'</p>').join('');

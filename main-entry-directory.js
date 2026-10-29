@@ -7,9 +7,9 @@
  function savedCategory(row){if(row.kind==='phrase')return 'phrase';const pos=norm(row.pos);return /^adv\b/.test(pos)?'adverb':/^adj\b/.test(pos)?'adjective':/^(?:v|vt|vi)\b/.test(pos)?'verb':/^n\b/.test(pos)?'noun':'word';}
  function combine(entries,saved){
   const favorites=new Map(list(saved).filter(row=>row&&typeof row.word==='string'&&row.word.trim()).map(row=>[norm(row.word),row]));
-  const rows=list(entries).filter(row=>row&&typeof row.label==='string').map(row=>({...row,favorite:favorites.has(norm(row.label))}));
+  const rows=list(entries).filter(row=>row&&typeof row.label==='string').map(row=>({...row,favorite:favorites.has(norm(row.label)),saved:favorites.get(norm(row.label))}));
   const known=new Set(rows.map(row=>norm(row.label)));
-  for(const [key,row] of favorites)if(!known.has(key))rows.push({key:'saved:'+key,label:row.word,meaning:row.meaning||'',pos:row.pos||'',category:savedCategory(row),favorite:true,sources:[],example:row.example||''});
+  for(const [key,row] of favorites)if(!known.has(key))rows.push({key:'saved:'+key,label:row.word,meaning:row.meaning||'',pos:row.pos||'',category:savedCategory(row),favorite:true,saved:row,sources:[],example:row.example||''});
   return rows;
  }
  function filter(entries,{scope='all',book='',category='all',query=''}={}){

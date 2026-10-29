@@ -12,3 +12,7 @@ test('non-tense lessons keep their real grammar heading and empty lessons do not
  const html=ui({grammar:[{sourceLessonId:'current',title:'名词所有格',summary:'表示所属关系。'}]}).readingHTML();assert.match(html,/名词所有格/);assert.doesNotMatch(html,/一般过去时/);
  assert.doesNotMatch(ui({grammar:[]}).readingHTML(),/pipeline-lesson-focus/);
 });
+test('an explanatory grammar heading stays compact rather than repeating its full note',()=>{
+ const html=ui({grammar:[{sourceLessonId:'current',title:'一般过去时：讲述过去发生的事',summary:'一般过去时用来讲述过去发生的动作或状态。'}]}).readingHTML();
+ assert.match(html,/一般过去时：讲述过去发生的事/);assert.doesNotMatch(html,/一般过去时用来讲述/);
+});

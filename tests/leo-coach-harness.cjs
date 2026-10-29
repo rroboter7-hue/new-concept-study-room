@@ -44,7 +44,7 @@ async function harness({pilot=true,loaded={},sharedStorage=null,realFormalShell=
  if(realFont)real.add('reading-font.js');
  if(realReview)real.add('review-practice.js');
  if(realOutput)['sentence-core.js','sentence-practice.js','output-practice.js','grammar-check.js'].forEach(file=>real.add(file));
- const scripts=Array.from(read('index.html').matchAll(/<script\b([^>]*)\bsrc="([^"]+)"[^>]*>/g),m=>m[2].split('?')[0]);real.add('study-storage.js');for(const script of scripts)if(real.has(script))vm.runInContext(read(script),c,{filename:script});
+ const scripts=Array.from(read('index.html').matchAll(/<script\b([^>]*)\bsrc="([^"]+)"[^>]*>/g),m=>m[2].split('?')[0]);real.add('study-storage.js');real.add('main-entry-directory.js');for(const script of scripts)if(real.has(script))vm.runInContext(read(script),c,{filename:script});
  if(!scripts.includes('study-storage.js')&&fs.existsSync(path.join(DIST,'study-storage.js')))vm.runInContext(read('study-storage.js'),c,{filename:'study-storage.js'});
  if(realFormalShell)vm.runInContext(read('mobile-learning-shell.js'),c,{filename:'mobile-learning-shell.js'});
  // Add a test-only closure export after all real app statements, without
