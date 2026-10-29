@@ -44,15 +44,13 @@ test('an offline browser does not extend a pending request as if it were merely 
  h.fireTimer();assert(![...h.timers.values()].some(t=>t.ms===90000));
 });
 
-test('a rolling two-package preload window preserves ordered execution and does not preload the complete course upfront',()=>{
+test('main packages preload in parallel while their classic scripts still execute in order',()=>{
  const h=setup();h.manifest.scripts.push({id:'three',src:'runtime-three.js',files:['c.js'],integrity:'sha384-three'},{id:'four',src:'runtime-four.js',files:['d.js'],integrity:'sha384-four'});
  const html=factory.renderHTML(h.manifest,fs.readFileSync(file,'utf8'));
- assert(html.head.includes('href="runtime-one.abc.js"'));assert(html.head.includes('href="runtime-two.def.js"'));
- assert(!html.head.includes('href="runtime-three.js"'));assert(!html.head.includes('href="runtime-four.js"'));
- h.loader.start(h.manifest);assert.equal(h.preloads.length,0);h.deliver(0);
- assert.equal(h.preloads.length,1);assert.equal(h.preloads[0].href,'runtime-three.js');assert.equal(h.preloads[0].integrity,'sha384-three');
- h.deliver(1);assert.equal(h.preloads[1].href,'runtime-four.js');assert.deepEqual(Array.from(h.root.order),[0,1]);
+ for(const asset of h.manifest.scripts)assert(html.head.includes('href="'+asset.src+'"'));
+ h.loader.start(h.manifest);h.deliver(0);h.deliver(1);assert.deepEqual(Array.from(h.root.order),[0,1]);
 });
+
 function canonicalManifest(h){
  h.manifest.scripts.forEach((asset,i)=>{asset.src='runtime-scripts-'+String(i+1).repeat(20)+'.js';asset.id=String(i+1).repeat(64);asset.integrity='sha384-'+Buffer.alloc(48,i+1).toString('base64');});
  h.manifest.styles[0].src='runtime-styles-'+('3'.repeat(20))+'.css';h.manifest.styles[0].integrity='sha384-'+Buffer.alloc(48,3).toString('base64');
