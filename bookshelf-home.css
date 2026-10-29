@@ -21,6 +21,7 @@ body.bookshelf-visible>.app-main,body.bookshelf-visible>.app-sidebar,body.booksh
 .shelf-menu button:hover{background:#edf5ff}
 .shelf-title{font-family:inherit;font-size:46px;font-weight:850;line-height:1.15;letter-spacing:-2.3px;margin:0 0 18px;color:var(--shelf-ink)}
 .shelf-title>span{color:var(--shelf-blue)}
+.shelf-title:focus{outline:none}
 .shelf-books{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 11px;margin-bottom:13px}
 .shelf-book{position:relative;display:block;min-width:0;padding:0;border:0;border-radius:12px;background:transparent;aspect-ratio:400/384;transition:box-shadow .15s;overflow:hidden}
 .shelf-book img{display:block;width:100%;height:100%;object-fit:cover;border-radius:11px}

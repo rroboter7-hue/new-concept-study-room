@@ -5,7 +5,7 @@ const factory=fs.existsSync(file)?require(file):()=>({start(){},install(){}});
 function setup(){
  const nodes=new Map(),requests=[],timers=new Map(),listeners={},executions=[];let clock=0;
  const node=tag=>({tagName:tag.toUpperCase(),hidden:false,disabled:false,textContent:'',attributes:{},setAttribute(k,v){this.attributes[k]=String(v);},remove(){this.removed=true;},addEventListener(k,fn){this['on'+k]=fn;}});
- for(const id of ['study-startup','study-startup-message','study-startup-progress','study-startup-error','study-startup-retry','study-startup-reload'])nodes.set(id,node('div'));
+ for(const id of ['study-startup','study-startup-message','study-startup-progress','study-startup-error','study-startup-retry','study-startup-reload','study-startup-intent','study-startup-continue','study-startup-book-1','study-startup-book-2','study-startup-book-3','study-startup-book-4'])nodes.set(id,node('div'));
  const document={body:node('body'),getElementById:id=>nodes.get(id),createElement:node};
  document.head={appendChild(el){if(el.tagName==='SCRIPT'&&!el.src){try{vm.runInContext(el.text||el.textContent,context);executions.push(el.text||el.textContent);}catch(error){for(const fn of listeners.error||[])fn({error,message:error.message,filename:'inline.js'});}return el;}if(el.rel!=='preload')requests.push(el);return el;}};
  const root={document,location:{href:'https://study.example/project/?build=old#study',assign(value){this.assigned=value;}},navigator:{onLine:true},setTimeout(fn,ms){timers.set(++clock,{fn,ms});return clock;},clearTimeout:id=>timers.delete(id),addEventListener(k,fn){(listeners[k]??=[]).push(fn);},removeEventListener(k,fn){listeners[k]=(listeners[k]||[]).filter(f=>f!==fn);},console};
@@ -31,7 +31,7 @@ function newerHTML(h,changed=true){
  if(changed){latest.scripts[0].src='runtime-scripts-'+('a'.repeat(20))+'.js';latest.scripts[0].id='b'.repeat(64);latest.scripts[0].integrity='sha384-new';}
  return factory.renderHTML(latest,'window.mustNotRunFetchedHTML=true;').bodyEnd;
 }
-test('startup keeps the application covered until ordered scripts and stylesheet finish',()=>{
+test('the startup shelf stays visible until ordered scripts and stylesheet finish',()=>{
  const h=setup();h.loader.start(h.manifest);assert.equal(h.requests.filter(x=>x.tagName==='SCRIPT').length,1);
  assert.equal(h.nodes.get('study-startup').hidden,false);
  h.deliver(0);assert.equal(h.requests.filter(x=>x.tagName==='SCRIPT').length,2);h.deliver(1);
@@ -121,6 +121,86 @@ test('duplicate course rows cannot disguise a missing textbook lesson',()=>{
  const lesson={id:'lesson-one',book:2,textbook:{},paragraphs:[{en:'Only one real lesson.'}]};h.root.LESSONS=[lesson,lesson];
  h.loader.start(h.manifest);h.loader.install('one',[{name:'app.js',source:'window.startedApp=true;'}]);
  assert.equal(h.root.startedApp,undefined);assert.match(h.nodes.get('study-startup-error').textContent,/课程正文未完整加载/);
+});
+
+test('the initial HTML already offers all four books and continuing before any course package arrives',()=>{
+ const h=setup(),html=factory.renderHTML(h.manifest,'').bodyStart;
+ for(const book of [1,2,3,4]){
+  assert.match(html,new RegExp('id="study-startup-book-'+book+'"'));
+  assert.match(html,new RegExp('src="images/books/book-'+book+'\\.webp"'));
+ }
+ assert.match(html,/id="study-startup-continue"/);assert.match(html,/选一本/);
+ h.loader.start(h.manifest);h.nodes.get('study-startup-book-2').onclick();
+ assert.equal(h.nodes.get('study-startup').hidden,false);
+ assert.match(h.nodes.get('study-startup-intent').textContent,/正在准备.*第二册/);
+ h.deliver(0);assert.match(h.nodes.get('study-startup-intent').textContent,/正在准备.*第二册/);
+});
+
+function prepareRealShelf(h){
+ const clicks=[],shelf={hidden:true,querySelector(selector){return {click(){clicks.push(selector);}};}};
+ h.root.document.querySelector=selector=>selector==='.bookshelf-home'?shelf:null;
+ h.manifest.scripts[1].files=['bookshelf-home.js','app.js'];
+ const complete=()=>h.loader.install('two',[{name:'bookshelf-home.js',source:'window.shelfModule=true;'},{name:'app.js',source:'window.appInitialized=true;'}]);
+ return {clicks,shelf,complete};
+}
+
+test('a chosen book waits for all resources and the visible real shelf, then opens exactly once',()=>{
+ const h=setup(),s=prepareRealShelf(h);h.loader.start(h.manifest);
+ h.nodes.get('study-startup-book-2').onclick();h.nodes.get('study-startup-book-3').onclick();
+ h.deliver(0);s.complete();assert.deepEqual(s.clicks,[]);
+ h.requests.find(x=>x.tagName==='LINK').onload();assert.equal(h.nodes.get('study-startup').hidden,false);assert.deepEqual(s.clicks,[]);
+ s.shelf.hidden=false;h.fireTimer();
+ assert.deepEqual(s.clicks,['[data-shelf-book="3"]']);assert.equal(h.nodes.get('study-startup').hidden,true);
+ s.complete();h.nodes.get('study-startup-book-3').onclick();h.fireTimer();
+ assert.deepEqual(s.clicks,['[data-shelf-book="3"]']);
+});
+
+test('continue intent survives network recovery and delegates once to the real resume button',()=>{
+ const h=setup(),s=prepareRealShelf(h);h.loader.start(h.manifest);h.nodes.get('study-startup-continue').onclick();
+ assert.match(h.nodes.get('study-startup-intent').textContent,/正在准备/);
+ h.requests.find(x=>x.tagName==='LINK').onload();h.deliver(0);
+ for(let i=0;i<3;i++){h.requests.filter(x=>x.tagName==='SCRIPT').at(-1).onerror();if(i<2)h.fireTimer();}
+ assert.deepEqual(s.clicks,[]);assert.equal(h.nodes.get('study-startup').hidden,false);
+ h.nodes.get('study-startup-retry').onclick();s.shelf.hidden=false;s.complete();
+ assert.deepEqual(s.clicks,['[data-shelf-continue]']);
+ s.complete();assert.deepEqual(s.clicks,['[data-shelf-continue]']);
+});
+
+test('a course integrity failure never consumes the pending navigation',()=>{
+ const h=setup(),s=prepareRealShelf(h);h.manifest.lessonCounts={2:1};
+ h.loader.start(h.manifest);h.nodes.get('study-startup-continue').onclick();
+ h.requests.find(x=>x.tagName==='LINK').onload();h.deliver(0);s.shelf.hidden=false;s.complete();
+ assert.deepEqual(s.clicks,[]);assert.equal(h.root.appInitialized,undefined);
+ assert.match(h.nodes.get('study-startup-error').textContent,/课程正文未完整加载/);
+});
+
+test('an initialized app that never exposes its shelf keeps a recoverable startup error',()=>{
+ const h=setup(),s=prepareRealShelf(h);h.loader.start(h.manifest);h.nodes.get('study-startup-continue').onclick();
+ h.requests.find(x=>x.tagName==='LINK').onload();h.deliver(0);s.complete();
+ for(let i=0;i<1001&&h.timers.size;i++)h.fireTimer();
+ assert.deepEqual(s.clicks,[]);assert.equal(h.nodes.get('study-startup').hidden,false);
+ assert.equal(h.nodes.get('study-startup-reload').hidden,false);
+});
+
+test('a DOM readiness observer hands off once and clears its timeout and observer',()=>{
+ const h=setup(),s=prepareRealShelf(h);let changed,disconnected=0;
+ h.root.MutationObserver=class{constructor(fn){changed=fn;}observe(){}disconnect(){disconnected++;}};
+ h.loader.start(h.manifest);h.nodes.get('study-startup-book-1').onclick();
+ h.requests.find(x=>x.tagName==='LINK').onload();h.deliver(0);s.complete();
+ changed();assert.equal(h.nodes.get('study-startup').hidden,false);assert.deepEqual(s.clicks,[]);
+ s.shelf.hidden=false;changed();changed();
+ assert.deepEqual(s.clicks,['[data-shelf-book="1"]']);assert.equal(h.nodes.get('study-startup').hidden,true);
+ assert.equal(disconnected,1);assert.equal(h.timers.size,0);
+});
+
+test('a DOM readiness timeout disconnects observation and cannot replay an intent later',()=>{
+ const h=setup(),s=prepareRealShelf(h);let changed,disconnected=0;
+ h.root.MutationObserver=class{constructor(fn){changed=fn;}observe(){}disconnect(){disconnected++;}};
+ h.loader.start(h.manifest);h.nodes.get('study-startup-continue').onclick();
+ h.requests.find(x=>x.tagName==='LINK').onload();h.deliver(0);s.complete();
+ assert.equal(h.fireTimer().ms,30000);s.shelf.hidden=false;changed();
+ assert.deepEqual(s.clicks,[]);assert.equal(h.nodes.get('study-startup').hidden,false);
+ assert.equal(h.nodes.get('study-startup-reload').hidden,false);assert.equal(disconnected,1);assert.equal(h.timers.size,0);
 });
 
 test('a proven stale package list triggers one guarded same-origin refresh without executing the fetched page',async()=>{

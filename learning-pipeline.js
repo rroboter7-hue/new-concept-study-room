@@ -7,6 +7,7 @@
 })(typeof window!=='undefined'?window:globalThis,function(global,defaultCore,Writing,SentenceExport){
   'use strict';
   const STAGES=['读课文','选择题','自由造句','复盘','复述','重点'];
+  const SHORT_STAGES=['听读','练习','造句','复盘','复述','重点'];
   const escape=value=>String(value??'').replace(/[&<>"']/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[char]));
   const list=value=>Array.isArray(value)?value:[];
   const text=value=>typeof value==='string'?value:'';
@@ -356,9 +357,10 @@
     render(){
       if(!this.lesson)return '<section class="learning-pipeline"><p>请从书架选择一课。</p></section>';
       const e=this.e,stage=this.record().stage;
+      const heading=text(this.lesson.title).replace(new RegExp('^第\\s*'+this.lesson.number+'\\s*课\\s*[·:：.、-]?\\s*'),'');
       this.visibleQuiz=stage===1?this.quizSnapshot():null;
       let body=stage===0?this.readingHTML():stage===1?this.quizHTML():stage===2?'<div data-pipeline-writing></div><div class="pipeline-footer"><button class="button subtle" data-pipeline-action="stage" data-stage="3">进入复盘</button><button class="button subtle" data-pipeline-action="shelf">稍后继续</button></div>':stage===3?this.recapHTML():stage===4?this.retellHTML():this.keyPointsHTML();
-      return '<section class="learning-pipeline" aria-label="逐课学习"><header class="pipeline-topbar"><button type="button" class="pipeline-shelf" data-pipeline-action="shelf">← 书架</button><div><small>第 '+e(this.lesson.book)+' 册 · 第 '+e(this.lesson.number)+' 课</small><h1>'+e(this.lesson.title)+'</h1></div></header><nav class="pipeline-steps" aria-label="本课学习步骤">'+STAGES.map((label,index)=>'<button type="button" data-pipeline-stage="'+index+'"'+(index===stage?' aria-current="step"':'')+'><span>'+index+'</span>'+e(label)+'</button>').join('')+'</nav><main class="pipeline-current-task" data-pipeline-current-stage="'+stage+'">'+body+'</main><div class="pipeline-save-line"><span data-pipeline-save-status data-state="'+this.status+'" role="status" aria-live="polite">'+e(this.saveMessage())+'</span><button class="button subtle" data-pipeline-action="save"'+(this.status==='error'?'':' hidden')+'>重试保存</button></div></section>';
+      return '<section class="learning-pipeline" aria-label="逐课学习"><header class="pipeline-topbar"><div class="pipeline-coursebar"><button type="button" class="pipeline-shelf" data-pipeline-action="shelf" aria-label="返回书架"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m14 6-6 6 6 6"/></svg><span>书架</span></button><small>第 '+e(this.lesson.book)+' 册 · 第 '+e(this.lesson.number)+' 课</small></div><h1>'+e(heading||this.lesson.title)+'</h1></header><nav class="pipeline-steps" aria-label="本课学习步骤">'+STAGES.map((label,index)=>'<button type="button" data-pipeline-stage="'+index+'" aria-label="'+e(label)+'"'+(index===stage?' aria-current="step"':'')+'><span class="pipeline-step-number" aria-hidden="true">'+(index+1)+'</span><span class="pipeline-step-label" aria-hidden="true">'+e(label)+'</span><span class="pipeline-step-short" aria-hidden="true">'+SHORT_STAGES[index]+'</span></button>').join('')+'</nav><main class="pipeline-current-task" data-pipeline-current-stage="'+stage+'">'+body+'</main><div class="pipeline-save-line"><span data-pipeline-save-status data-state="'+this.status+'" role="status" aria-live="polite">'+e(this.saveMessage())+'</span><button class="button subtle" data-pipeline-action="save"'+(this.status==='error'?'':' hidden')+'>重试保存</button></div></section>';
     }
     ensureWriting(){
       if(this.writing)return this.writing;

@@ -10,6 +10,19 @@ async function setup(stage){
  await h.api.selectLesson(lesson.id);await h.api.learningPipeline.goStage(stage);await h.flush();return h;
 }
 
+test('read-only storage still opens the initial shelf and permits exporting an existing retelling',async()=>{
+ const id='nce-b2-eef57c-l002',draft='Keep this saved retelling.\n\nDo not lose its paragraphs.';
+ const loaded={lastLesson:id,appRoute:{view:'study',lessonId:id},learningPipeline:{version:2,activeLessonId:id,lessons:{[id]:{stage:4,retellText:draft}}},records:{historic:{best:78,attempts:2}}};
+ const h=await harness({...options,loaded,initialStorageWritable:false});
+ assert.equal(onShelf(h),true,'showing the initial shelf must not require a storage write');
+ assert.equal(h.stored.appRoute.view,'study','launch does not replace the saved route');
+ assert.equal(await h.api.navigate('records'),true,'a read-only backup view remains available from the shelf');await h.flush();
+ assert(h.document.querySelector('#export-backup'));await h.click('#export-backup');
+ assert.equal(h.downloads.length,1);const backup=JSON.parse(await h.downloads[0].blob.text());
+ assert.equal(backup.data.learningPipeline.lessons[id].retellText,draft);assert.deepEqual(plain(backup.data.records),loaded.records);
+ assert.equal(h.stored.learningPipeline.lessons[id].retellText,draft);
+});
+
 test('reopening a writing task starts on the bookshelf and continue restores its exact lesson, stage and draft',async()=>{
  const h=await setup(2),id=h.api.current.id,answer='Keep this sentence until I choose to continue.';
  await h.input('[data-free-answer="0"]',answer);await h.api.learningPipeline.flush();await h.flush();

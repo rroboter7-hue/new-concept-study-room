@@ -28,8 +28,8 @@ class Document {
  async click(selectorOrNode){const node=typeof selectorOrNode==='string'?this.querySelector(selectorOrNode):selectorOrNode;assert(node,'click target exists: '+selectorOrNode);assert.equal(node.disabled,false,'click target is enabled');await this.dispatch('click',node);return node;}
  async input(selectorOrNode,value){const node=typeof selectorOrNode==='string'?this.querySelector(selectorOrNode):selectorOrNode;assert(node,'input target exists: '+selectorOrNode);assert.equal(node.disabled,false,'input target is enabled');node.value=value;await this.dispatch('input',node);return node;}
 }
-async function harness({pilot=true,loaded={},realFormalShell=false,realCoach=false,realOutput=false,realPipeline=false,realFont=false,audioPending=false,withoutCoachContainer=false,now=Date.parse('2026-10-26T04:00:00Z')}={}){
- const document=new Document(),frames=[],writes=[],shells=[],downloads=[],blobs=new Map(),storageMap=new Map([['zhixin-study-v1',JSON.stringify(loaded)]]);let audioInstance,storageWritable=true,clockNow=now;
+async function harness({pilot=true,loaded={},realFormalShell=false,realCoach=false,realOutput=false,realPipeline=false,realFont=false,audioPending=false,withoutCoachContainer=false,initialStorageWritable=true,now=Date.parse('2026-10-26T04:00:00Z')}={}){
+ const document=new Document(),frames=[],writes=[],shells=[],downloads=[],blobs=new Map(),storageMap=new Map([['zhixin-study-v1',JSON.stringify(loaded)]]);let audioInstance,storageWritable=initialStorageWritable,clockNow=now;
  if(withoutCoachContainer)document.roots.delete('#learning-coach');
  class ClockDate extends Date {constructor(...args){super(...(args.length?args:[clockNow]));}static now(){return clockNow;}}
  class URLBoundary extends URL {static createObjectURL(blob){const key='blob:stub-'+blobs.size;blobs.set(key,blob);return key;}static revokeObjectURL(key){blobs.delete(key);}}

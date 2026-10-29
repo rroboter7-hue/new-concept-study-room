@@ -384,7 +384,7 @@
       const written=writtenCount(row);
       return '累计已写 '+Math.min(written,target.requiredCount)+'/'+target.requiredCount+(written>target.requiredCount?' · 另存 '+(written-target.requiredCount)+' 句':'');
     }
-    todayLabel(progress) { return '今日已写 '+progress.written+' / '+progress.total+' 句 · 今日剩余 '+(progress.total-progress.written)+' 句'; }
+    todayLabel(progress) { return '今日已写 '+progress.written+' / '+progress.total+' 句'; }
     setFusion(key, index, keys) {
       const entry = this.ensure(), row = entry?.draft.targets[key];
       if (!row || !Number.isInteger(index) || index < 0 || index >= row.answers.length) return false;

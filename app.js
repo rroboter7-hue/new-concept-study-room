@@ -63,9 +63,11 @@
  }
 
  function sanitizeShelf(raw){const obj=x=>x&&typeof x==='object'&&!Array.isArray(x)?x:{},valid=x=>/^[A-Za-z0-9._-]{1,200}$/.test(x);return {favorites:Object.fromEntries(Object.entries(obj(raw?.favorites)).slice(-1000).filter(([id,value])=>valid(id)&&typeof value==='boolean')),lastByBook:Object.fromEntries(Object.entries(obj(raw?.lastByBook)).filter(([book,id])=>/^[1-4]$/.test(book)&&typeof id==='string'&&valid(id)))};}
- async function showBookshelf(){
+ async function showBookshelf({initial=false}={}){
   const navigation=++pipelineNavigationVersion;
   const show=()=>{hideWord();flushLegacyOutput();focusListening?.stop();audio?.pause();mobileShell?.closeCourses?.({restoreFocus:false});bookshelf?.show({focus:true});return true;};
+  // First paint is a read-only presentation, including when browser storage is full.
+  if(initial){data.appRoute={view:'shelf',lessonId:current?.id};learningPipeline?.unmount();document.body.classList.remove('learning-pipeline-active');return show();}
   if(!learningPipeline)return show();
   return runPipelineNavigation(navigation,async()=>{if(!await learningPipeline.flush()||navigation!==pipelineNavigationVersion)return false;if(!savePipelineRoute('shelf'))return false;learningPipeline.unmount();document.body.classList.remove('learning-pipeline-active');return show();});
  }
@@ -259,10 +261,11 @@
  function enrollLessonReview(lesson){if(!lesson)return false;const cards=StudyReview.cardsForLessons([lesson]);if(!cards.length){toast('这课的词汇、用法和语法卡片正在整理。');return false;}return saveReviewState(StudyReview.enroll(data.review,cards));}
  async function navigate(v,{cardIds=null,practice=false,formalReview=false,reviewTask=null}={}){
   if(learningPipeline&&v==='study'&&!learningPipeline.container)return selectLesson(current?.id);
+  const shelfBackup=v==='records'&&learningPipeline&&!learningPipeline.container&&document.body.classList.contains('bookshelf-visible');
   const navigation=++pipelineNavigationVersion;
   const move=()=>{bookshelf?.hide();focusListening?.stop();flushLegacyOutput();if(v==='daily-review'){dailyReview.clearFilters();if(formalReview&&cardIds)dailyReview.startReview(cardIds,reviewTask);else if(practice&&cardIds)dailyReview.startPractice(cardIds);else dailyReview.cardIds=cardIds?new Set(cardIds):null;}if(v!=='study')audio.pause();view=v;hideWord();renderAll();return true;};
   if(!learningPipeline)return move();
-  return runPipelineNavigation(navigation,async()=>{if(!await learningPipeline.flush()||navigation!==pipelineNavigationVersion)return false;if(!savePipelineRoute(v))return false;if(v!=='study')learningPipeline.unmount();return move();});
+  return runPipelineNavigation(navigation,async()=>{if(!await learningPipeline.flush()||navigation!==pipelineNavigationVersion)return false;if(!savePipelineRoute(v)&&!shelfBackup)return false;if(v!=='study')learningPipeline.unmount();return move();});
  }
  function setTab(tab,{sentenceIndex}={}){if(learningPipeline){const stages={reading:0,practice:1,output:2,usage:5,phrases:2};return learningPipeline.goStage(stages[tab]??0);}if(['usage','phrases'].includes(tab)&&activeTab==='reading')notesAnchor=captureNotesAnchor(sentenceIndex);if(tab!=='reading')focusListening?.stop();flushOutput();activeTab=tab;hideWord();renderReader();mobileShell?.update({view,tab:activeTab,lesson:current});}
  function focusLessonStep(){mobileShell?.focusReader();if(!document.body.classList.contains('mls-mobile')){const panel=$('.reader-panel');if(panel){panel.tabIndex=-1;panel.focus({preventScroll:true});panel.scrollIntoView?.({block:'start',behavior:'instant'});}}}
@@ -510,7 +513,7 @@
  hydrateIcons();
  // The constructor already points at the saved lesson. Mount its stage and bind
  // audio only when a lesson is opened from the shelf.
- if(learningPipeline){void showBookshelf();}
+ if(learningPipeline){void showBookshelf({initial:true});}
  else {if(current)selectLesson(current.id);else toast('课程资料尚未加载，请刷新页面。');bookshelf?.show();}
 if(storageWarning)toast('部分历史导入资料格式异常，可重新导入备份。');
 })();

@@ -11,7 +11,7 @@ test('optional correction keeps original, survives save/reload and invalidates l
  assert.equal(restored.ui.active.draft.targets[key].answers[0],'This are my book.');assert.equal(restored.ui.active.draft.targets[key].corrections[0].notes,'Use is.');
  ui.editCorrection(key,0,'retry','This is a book.');assert.equal(ui.active.draft.targets[key].corrections[0].recorded,false);
  ui.editAnswer(key,0,'These are my books.');assert.equal(ui.active.draft.targets[key].corrections[0].notes,'Use is.');
- assert.match(ui.render(),/订正记录/);assert.match(ui.render(),/今日剩余/);assert.match(ui.render(),/不代表整句正确或掌握/);
+ assert.match(ui.render(),/订正记录/);assert.match(ui.render(),/今日已写/);assert.match(ui.render(),/不代表整句正确或掌握/);
 });
 test('correction sanitization preserves historical extra rows and treats imported completion as a boolean',()=>{
  const {ui,key}=setup(),value={version:1,lessonId:lesson.id,targets:{[key]:{answers:['Original.','','','','','Extra.'],corrections:[{notes:'n',reference:'r',retry:'Retry.',recorded:'yes'},null,null,null,null,{notes:'extra'}]}}};

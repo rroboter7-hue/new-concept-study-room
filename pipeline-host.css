@@ -240,3 +240,29 @@ body.learning-tools-active .view-heading{gap:20px;flex-wrap:wrap;}
  #daily-review-view .small-note{font-size:11px;line-height:1.8;}
 }
 @media(max-width:360px){.learning-pipeline .pipeline-steps button{font-size:10.5px;}}
+
+/* Learning navigation: one return control, one title and a single segmented rail. */
+.learning-pipeline .pipeline-topbar{display:block;padding-bottom:20px;}
+.pipeline-coursebar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:16px;}
+.learning-pipeline .pipeline-shelf{display:inline-flex;align-items:center;justify-content:center;gap:5px;min-height:44px;padding:8px 13px;border:1px solid #d8e5f4;border-radius:12px;background:#f6f9fe;color:#345f90;font-size:13px;font-weight:600;line-height:1.4;}
+.pipeline-shelf svg{width:17px;height:17px;flex-shrink:0;}
+.pipeline-coursebar small{font-size:12px;line-height:1.5;color:#6b7d93;letter-spacing:.3px;}
+.learning-pipeline .pipeline-topbar h1{margin:0;font-size:27px;font-weight:750;line-height:1.35;letter-spacing:-.65px;color:#172c47;}
+.learning-pipeline .pipeline-steps .pipeline-step-label,.learning-pipeline .pipeline-steps .pipeline-step-short{width:auto;height:auto;border-radius:0;background:transparent;color:inherit;font:inherit;}
+.learning-pipeline .pipeline-steps .pipeline-step-short{display:none;}
+@media(max-width:760px){
+ body.learning-pipeline-active .pipeline-topbar{padding-bottom:18px;}
+ body.learning-pipeline-active .pipeline-topbar h1{font-size:24px;line-height:1.35;letter-spacing:-.6px;}
+ .pipeline-coursebar{margin-bottom:15px;}
+ .learning-pipeline .pipeline-shelf{padding:8px 12px;min-height:44px;}
+ .learning-pipeline .pipeline-steps{margin-bottom:22px;padding:5px;border:1px solid #e2eaf5;border-radius:15px;background:#f2f6fc;gap:2px;}
+ .learning-pipeline .pipeline-steps button{min-height:44px;flex-direction:row;gap:0;padding:9px 0;border:0;border-radius:10px;color:#657992;font-size:12px;font-weight:500;line-height:1.5;}
+ .learning-pipeline .pipeline-steps button[aria-current=step]{background:#0873ff;color:#fff;border:0;font-weight:650;box-shadow:0 3px 9px #0873ff26;}
+ .learning-pipeline .pipeline-steps .pipeline-step-number,.learning-pipeline .pipeline-steps .pipeline-step-label{display:none;}
+ .learning-pipeline .pipeline-steps .pipeline-step-short{display:inline;}
+ .free-writing-progress{padding:6px 10px;font-size:12px;}
+ .free-writing-navigation{gap:5px;padding:4px;border:1px solid #e5edf8;border-radius:12px;background:#f6f9fe;}
+ .free-writing-navigation .button.subtle{border:0;background:transparent;box-shadow:none;color:#35608e;font-size:12px;padding:9px 8px;}
+ .free-writing-navigation>span{font-size:11px;color:#667d98;}
+}
+@media(hover:hover) and (pointer:fine){.learning-pipeline .pipeline-shelf:hover{background:#eaf3ff;border-color:#bad3f1;}}
