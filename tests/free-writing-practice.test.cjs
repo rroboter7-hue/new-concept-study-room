@@ -30,6 +30,25 @@ test('gives every current word and usage five free rows and earlier learned targ
   assert.equal((html.match(/class="button primary"/g)||[]).length,1);
 });
 
+test('target cards show the supplied part of speech, distinguish phrases, and leave unknown words unclassified',()=>{
+ const {ui}=setup({getTargets:()=>({words:[{word:'outside',pos:'adv.',meaning:'外面；在外面'},{word:'private',pos:'adj.',meaning:'私人的'},{word:'actor',pos:'n.',meaning:'演员'},{word:'unclassified',meaning:'待整理'}],phrases:[{phrase:'look at',meaning:'看'}]})});
+ const targets=ui.targets();
+ assert.match(ui.render(),/data-free-target-pos>adv\. 副词</);assert.match(ui.render(),/外面；在外面/);
+ ui.selectTarget(targets.find(t=>t.label==='private').key);assert.match(ui.render(),/data-free-target-pos>adj\. 形容词</);
+ ui.selectTarget(targets.find(t=>t.label==='actor').key);assert.match(ui.render(),/data-free-target-pos>n\. 名词</);
+ ui.selectTarget(targets.find(t=>t.label==='unclassified').key);assert.match(ui.render(),/data-free-target-pos>词性待补充</);
+ ui.selectTarget(targets.find(t=>t.kind==='phrase').key);assert.match(ui.render(),/data-free-target-pos>习惯用法</);
+ assert.deepEqual(ui.targets().map(t=>t.key),targets.map(t=>t.key),'display labels do not change draft identity');
+});
+
+test('unrecognized imported POS values are displayed as escaped text rather than object properties',()=>{
+ for(const pos of ['constructor','__proto__','<img src=x onerror=alert(1)>']){
+  const {ui}=setup({getTargets:()=>({words:[{word:'sample',pos,meaning:'示例'}]})});
+  const badge=ui.render().match(/data-free-target-pos>(.*?)<\/span>/)?.[1];
+  assert.equal(badge,pos.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'));
+ }
+});
+
 test('saves independent free answers without reading or mutating legacy drafts',async()=>{
   const legacy={version:3,answers:{affirmative:'The old book is here.',negative:'It is not here.'}};
   const h=setup({getDrafts:()=>({legacy})}), target=h.ui.targets()[0];

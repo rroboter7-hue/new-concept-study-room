@@ -9,6 +9,8 @@
 .free-writing-practice select{width:100%;min-width:0;max-width:100%;min-height:42px;padding:9px 34px 9px 12px;border:1px solid var(--border,#dce4e1);border-radius:9px;background:var(--surface,#fff);color:inherit;font:inherit}
 .free-writing-target{display:grid;gap:5px;border-left:3px solid var(--accent,#487568);padding:10px 14px;margin:10px 0 12px;background:var(--surface-muted,#f4f7f5);border-radius:0 9px 9px 0}
 .free-writing-target strong{font-size:1.18rem;font-weight:650}
+.free-writing-target-heading{display:flex;align-items:center;flex-wrap:wrap;gap:8px}
+.free-writing-target .free-writing-target-pos{font-size:12px;line-height:1.5;font-weight:500;color:#365b80;background:#fff;border:1px solid #d5e3f5;border-radius:6px;padding:3px 7px;white-space:normal}
 .free-writing-target span{font-size:.9rem;white-space:pre-line;line-height:1.5}
 .free-writing-target small{font-size:.78rem;color:var(--muted,#697777)}
 .free-writing-lines{display:grid;gap:17px}

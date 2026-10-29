@@ -7,6 +7,15 @@ const pipeline=h=>{assert(h.api.learningPipeline,'real app constructs LearningPi
 async function enter(h){const controller=pipeline(h);await h.api.selectLesson(h.api.current.id);await h.flush();return controller;}
 function freeAnswer(data,lessonId,answer){return Object.values(data.freeWriting||{}).filter(draft=>draft.lessonId===lessonId).flatMap(draft=>Object.values(draft.targets||{})).some(row=>row.answers?.includes(answer));}
 
+test('Book 2 Lesson 2 writing target carries the contextual outside adverb label through the real app',async()=>{
+ const h=await harness(options),lesson=h.c.LESSONS.find(l=>l.book===2&&l.number===2);
+ await h.api.selectLesson(lesson.id);const ui=pipeline(h);await ui.goStage(2);await h.flush();
+ const target=ui.writing.targets().find(t=>t.label==='outside');assert(target);assert.equal(target.pos,'adv.');
+ ui.writing.selectTarget(target.key);const html=ui.writing.render();
+ assert.match(html,/data-free-target-pos>adv\. 副词</);assert.match(html,/外面；在外面/);
+ assert.doesNotMatch(html,/data-free-target-pos>n\. 名词</);
+});
+
 test('first visit opens the real bookshelf and does not create learning evidence',async()=>{
  const h=await harness(options);pipeline(h);
  assert.equal(h.document.body.classList.contains('bookshelf-visible'),true);
