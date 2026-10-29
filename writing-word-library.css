@@ -15,6 +15,7 @@
 .writing-library-search input{box-sizing:border-box;width:100%;height:54px;padding:0 20px 0 52px;border:0;border-radius:13px;background:#f0f6fd;color:#09275e;font:inherit;font-size:1rem;box-shadow:inset 0 0 0 1px #eaf1fa}
 .writing-library-search:before{content:'⌕';position:absolute;margin:8px 0 0 18px;color:#6b86aa;font-size:1.8rem;line-height:1}
 .writing-library-search input::placeholder{color:#6d86a9}
+.writing-library-word-entry>.writing-library-frequency{display:flex;align-items:center;gap:4px;margin:0;padding:0 12px 4px;font-size:10px;line-height:1.3;color:#73859a;}
 .writing-library-scopes{display:flex;gap:8px;margin-top:14px;overflow-x:auto;scrollbar-width:thin}
 .writing-library .writing-library-scopes button{flex:1 0 auto;min-height:48px;padding:9px 18px;border:0;border-radius:12px;background:#edf5fd;color:#09275e;white-space:nowrap}
 .writing-library .writing-library-scopes button[aria-pressed=true]{background:#0670f9;color:#fff;font-weight:700}

@@ -34,6 +34,7 @@ body.main-entries-ready.learning-tools-active .topbar{display:none!important;}
 .entry-word-info{display:contents;}
 .entry-word-title{grid-column:1;grid-row:1;display:flex;gap:4px;align-items:baseline;flex-wrap:wrap;min-width:0;}
 .entry-word-meaning{grid-column:1/-1;grid-row:2;}
+.entry-word-frequency{grid-column:1/-1;grid-row:3;display:flex;align-items:center;gap:4px;margin-top:3px;min-height:14px;font-size:10px;line-height:1.3;color:#73859a;}
 .entry-word-card h3{font-size:14px;line-height:1.4;overflow-wrap:anywhere;word-break:normal;margin:0;color:#17375b;}
 .entry-pos{font-size:10px;color:#657c96}.entry-word-card p{font-size:12px;line-height:1.4;margin:1px 0 0;color:#516b87;overflow-wrap:anywhere;}
 .entry-word-card small{color:#7b8da1;font-size:11px;}

@@ -98,10 +98,11 @@
      row&&typeof row==='object'&&(row.source?.id?row.source.id===source.id:assumeSource));
     return fromPlan(targets,source.id===lesson.id).concat(fromPlan(sourceTargets,true));
    };
-   const providerWords=supplied(options.getVocabulary,source,'vocabulary');
+   const review=rows=>typeof corrections?.vocabularyForLesson==='function'?corrections.vocabularyForLesson(source,rows):rows;
+   const providerWords=review(supplied(options.getVocabulary,source,'vocabulary'));
    const quarantined=new Set(providerWords.filter(row=>row?.contextMeaningStale===true||row?.needsContextReview===true||row?.meaningSource==='unavailable')
     .map(row=>normalize(row.word)).filter(Boolean));
-   const targetWords=referenced('words').filter(row=>safe(row,source,'word')&&!quarantined.has(normalize(row.word)));
+   const targetWords=review(referenced('words').filter(row=>safe(row,source,'word')&&!quarantined.has(normalize(row.word))));
    const aliases=new Set();
    for(const row of targetWords){
     // An alias is evidence for this source only when the canonical target

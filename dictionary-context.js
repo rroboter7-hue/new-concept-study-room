@@ -1,9 +1,10 @@
 (function (root, factory) {
   'use strict';
-  const api = factory(typeof module === 'object' && module.exports ? require('./context-meanings.js') : root.StudyContextMeanings);
+  const api = factory(typeof module === 'object' && module.exports ? require('./context-meanings.js') : root.StudyContextMeanings,
+    typeof module === 'object' && module.exports ? require('./sentence-wordbank-data.js') : root.StudySentenceWordbankData);
   if (typeof module === 'object' && module.exports) module.exports = api;
   else root.StudyDictionaryContext = api;
-})(typeof window !== 'undefined' ? window : globalThis, function (contextMeanings) {
+})(typeof window !== 'undefined' ? window : globalThis, function (contextMeanings, wordbankData) {
   'use strict';
   const normalize = value => typeof value === 'string' ? value.normalize('NFKC').replace(/[‘’]/g, "'").trim().toLowerCase() : '';
   const wordOf = value => { const word = normalize(value); return word.length <= 64 && /^[a-z]+(?:[-'][a-z]+)*['-]?$/i.test(word) ? word : ''; };
@@ -155,7 +156,7 @@ function hash(text){
   function resolve(input, {lesson,bank,glossary,saved,preferNotes=false} = {}) {
     const query = wordOf(input), empty = {word:query,meaning:'',meaningKind:'unresolved',sourceLabel:'',example:'',meaningProvenance:{version:1,kind:'unresolved'}};
     if (!query) return empty;
-    const contextCorrection = contextMeanings?.forLesson?.(lesson,query);
+    const contextCorrection = contextMeanings?.forLesson?.(lesson,query) || wordbankData?.contextForLesson?.(lesson,query);
     if (contextCorrection) return contextCorrection;
     const rows = list(lesson?.vocabulary), notes = list(lesson?.notesVocabularyExtensions);
     const bankHasLesson = !!bank?.hasLesson?.(lesson?.id);

@@ -53,7 +53,7 @@ async function harness({pilot=true,loaded={},realFormalShell=false,realCoach=fal
  real.add('book2-reviewed-context-vocabulary.js');
  ['book2-source-spelling-fixes.js','book2-complete-word-audio.js','book2-reviewed-usage.js'].forEach(file=>real.add(file));
  ['lexical-word-tokens.js','book2-pack-supplements.js','lesson-word-targets.js'].forEach(file=>real.add(file));
- real.add('dictionary-context.js');
+ real.add('dictionary-context.js');real.add('sentence-wordbank-data.js');
  ['book2-reviewed-example-corrections.js','book2-reviewed-usage-21-25.js','book2-lexical-source-corrections-26-27.js','ordinal-audio-alias-correction.js'].forEach(file=>real.add(file));
  real.add('source-files.js');['study-storage.js','mistake-history.js','context-meanings.js','main-entry-directory.js'].forEach(file=>real.add(file));
  ['book2-reviewed-usage-26-30.js','reviewed-usage-registry.js','book2-lexical-source-corrections-32-34.js'].forEach(file=>real.add(file));
