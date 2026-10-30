@@ -1,6 +1,7 @@
 {
   "$schema": "../node_modules/wrangler/config-schema.json",
   "name": "zhixin-account-sync",
+  "account_id": "d2b1d7433214014b4a839883aaf5d147",
   "main": "worker.mjs",
   "compatibility_date": "2026-10-30",
   "workers_dev": true,
