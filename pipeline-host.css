@@ -266,3 +266,67 @@ body.learning-tools-active .view-heading{gap:20px;flex-wrap:wrap;}
  .free-writing-navigation>span{font-size:11px;color:#667d98;}
 }
 @media(hover:hover) and (pointer:fine){.learning-pipeline .pipeline-shelf:hover{background:#eaf3ff;border-color:#bad3f1;}}
+
+/* Reading/writing priority: references remain available without occupying the first screen. */
+.pipeline-reading-layout{display:grid;gap:12px;min-width:0;}
+.pipeline-reading-layout>.pipeline-reading-intro{margin-bottom:0;min-width:0;}
+.pipeline-reading-layout>[data-pipeline-reading]{min-width:0;}
+.pipeline-reading-layout>.pipeline-lesson-focus{margin:0;padding:0;align-self:start;}
+.pipeline-focus-details>summary{cursor:pointer;list-style-position:inside;padding:12px 14px;min-height:44px;box-sizing:border-box;color:#274f7b;font-size:13px;line-height:1.5;}
+.pipeline-focus-details>summary strong{margin-right:8px;}
+.pipeline-focus-details>summary span{font-weight:400;}
+.pipeline-focus-details>summary small{display:block;margin-top:3px;color:#62758d;font-size:12px;}
+.pipeline-focus-details>summary:focus-visible{outline:2px solid #0873ff;outline-offset:2px;border-radius:12px;}
+.pipeline-focus-body{padding:0 14px 12px;}
+body.learning-pipeline-active .free-writing-actions{bottom:max(8px,env(safe-area-inset-bottom));}
+@media(min-width:1100px){
+ .pipeline-reading-layout{grid-template-columns:minmax(0,1fr) minmax(230px,290px);column-gap:24px;row-gap:14px;align-items:start;}
+ .pipeline-reading-layout>.pipeline-reading-intro{grid-column:1;grid-row:1;}
+ .pipeline-reading-layout>.pipeline-lesson-focus{grid-column:2;grid-row:1/3;position:sticky;top:16px;}
+ .pipeline-reading-layout>[data-pipeline-reading]{grid-column:1;grid-row:2;}
+ .pipeline-reading-layout .pipeline-audio-player{max-width:none;}
+ .pipeline-reading-layout [data-pipeline-reading] :where(p){max-width:72ch;}
+ .free-writing-practice{max-width:none;}
+ .free-writing-editor-pane .free-writing-line textarea{min-height:80px;}
+}
+@media(max-width:760px){
+ body.learning-pipeline-active:not(.bookshelf-visible) .learning-pipeline{padding:10px 12px max(24px,env(safe-area-inset-bottom));}
+ body.learning-pipeline-active .pipeline-current-task{padding:0;}
+ body.learning-pipeline-active .pipeline-topbar{padding-bottom:10px;}
+ .learning-pipeline .pipeline-coursebar{margin-bottom:7px;}
+ body.learning-pipeline-active .pipeline-topbar h1{font-size:21px;line-height:1.3;}
+ .learning-pipeline .pipeline-steps{margin-bottom:12px;padding:3px;}
+ .learning-pipeline .pipeline-reading-intro>p{margin:4px 0 10px;}
+ .learning-pipeline .pipeline-audio-player{margin:8px 0 0;padding:10px;}
+ .learning-pipeline .pipeline-reading-tools{gap:8px;margin-bottom:10px;}
+ .pipeline-focus-details>summary{padding:9px 11px;}
+ .pipeline-focus-details>summary small{display:none;}
+ .free-writing-header{margin-bottom:3px;}
+ .free-writing-intro{font-size:12px;}
+ .free-writing-cumulative{margin:6px 0;padding:6px 10px;}
+ .free-writing-cumulative>summary{min-height:32px;align-content:center;}
+ .free-writing-navigation{margin:6px 0;}
+ .free-writing-reference-pane .free-writing-target{gap:3px;margin:6px 0;padding:8px 10px;}
+ .free-writing-target .free-writing-target-heading{gap:6px;}
+ .free-writing-target strong{font-size:18px;}
+ .free-writing-target span{font-size:13px;}
+ .free-writing-target .free-writing-target-pos{font-size:11px;padding:1px 5px;}
+ .free-writing-target .free-writing-target-progress{font-size:13px;margin:0;}
+ .free-writing-target>small{font-size:11px;}
+ .free-writing-target .frequency-stars{font-size:10px;}
+ .free-writing-reference-pane .writing-library-entry{margin:6px 0;}
+ .free-writing-reference-pane .writing-library-open{padding:8px 10px;min-height:44px;}
+ .free-writing-line{padding-bottom:12px;}
+ .free-writing-line textarea{min-height:82px;scroll-margin-block:100px;}
+ .free-writing-actions{margin-top:8px;padding:7px;}
+}
+@media(max-height:540px){body.learning-pipeline-active .free-writing-actions{position:static;box-shadow:none;}}
+@media(max-width:760px){
+ .free-writing-reference-pane .free-writing-target{grid-template-columns:minmax(0,1fr) auto;column-gap:8px;}
+ .free-writing-target>.free-writing-target-heading{grid-column:1;grid-row:1;min-width:0;}
+ .free-writing-target>.frequency-badge{grid-column:2;grid-row:1;align-self:center;font-size:10px;}
+ .free-writing-target>span:not(.frequency-badge){grid-column:1/-1;grid-row:2;}
+ .free-writing-target>.free-writing-target-progress{grid-column:1;grid-row:3;}
+ .free-writing-target>small{grid-column:2;grid-row:3;align-self:center;text-align:right;}
+ .free-writing-reference-pane .writing-library{margin:6px 0 8px;}
+}

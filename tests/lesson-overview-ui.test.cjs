@@ -20,3 +20,11 @@ test('curated overview shows its English evidence and per-point caution without 
  const html=ui({grammar:[{sourceLessonId:'current',curated:true,title:'一般过去时',summary:'went 在讲上周看戏。',example:'I went to the theatre.',pitfall:'不要把 went 写成 go。'}],pitfalls:[{sourceLessonId:'current',text:'不要把 went 写成 go。'}]}).readingHTML();
  assert.match(html,/I went to the theatre\./);assert.match(html,/易错/);assert.equal((html.match(/不要把 went 写成 go/g)||[]).length,1);
 });
+
+test('reading keeps detailed grammar collapsed behind a compact accessible summary and separates the passage layout',()=>{
+ const html=ui({grammar:[{sourceLessonId:'current',curated:true,title:'一般现在时',summary:'表示习惯。',example:'I get up early.',pitfall:'不要漏掉动词。'}]}).readingHTML();
+ assert.match(html,/<details class="pipeline-focus-details"><summary>/);
+ assert.doesNotMatch(html,/<details class="pipeline-focus-details"[^>]*\bopen\b/);
+ assert.match(html,/展开语法与易错点/);assert.match(html,/pipeline-reading-layout/);
+ assert.match(html,/data-pipeline-reading/);assert.match(html,/I get up early\./);assert.match(html,/不要漏掉动词/);
+});

@@ -73,3 +73,7 @@ body.main-entries-ready.learning-tools-active .mls-header{display:none!important
 .entry-library-controls>.entry-filter-row{grid-column:1/-1;}
 
 .lesson-grammar-note{margin:14px 0;padding:0 0 13px;border-bottom:1px solid #dfE9f6;}.lesson-grammar-note:last-child{border-bottom:0;padding-bottom:0;}.lesson-grammar-example{margin:8px 0;padding:8px 12px;border-left:3px solid #b1d2ff;background:#fff;border-radius:0 8px 8px 0;font-size:14px;line-height:1.65;color:#294c75;overflow-wrap:anywhere;}.entry-focus .lesson-grammar-pitfall,.pipeline-lesson-focus .lesson-grammar-pitfall{font-size:13px;color:#62758d;line-height:1.65;margin:7px 0 0;}.lesson-grammar-pitfall strong{font-weight:600;}
+
+/* An active lesson has one action bar. Shelf and standalone tools retain navigation. */
+body.main-entries-ready.learning-pipeline-active:not(.bookshelf-visible):not(.learning-tools-active) .main-entry-nav{display:none!important;}
+body.main-entries-ready.learning-pipeline-active:not(.bookshelf-visible):not(.learning-tools-active)>.app-main{padding-bottom:0!important;}
