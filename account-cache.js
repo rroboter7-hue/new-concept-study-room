@@ -106,8 +106,8 @@
    // seed from IndexedDB. A full localStorage origin cannot undo a saved seed.
    invalidate(stamp);
   }
-  async function putSnapshot(name,value){
-   assertOpen();if(name!==key+':pre-import')throw Error('Only this account pre-import recovery snapshot may be written asynchronously.');
+  async function persistSlot(name,value){
+   assertOpen();
    const op={name,value:String(value),stamp:nextStamp()};let won=false;
    await transact(db,'readwrite',store=>{const request=store.get(name);request.onsuccess=()=>{
     if(request.result&&compare(request.result.stamp,op.stamp)>=0)return;
@@ -118,6 +118,11 @@
    if(!won){await refresh();return;}
    apply(op);broadcast(op);invalidate(op.stamp);
   }
+  async function putSnapshot(name,value){
+   if(name!==key+':pre-import')throw Error('Only this account pre-import recovery snapshot may be written asynchronously.');
+   return persistSlot(name,value);
+  }
+  async function putSyncMeta(value){return persistSlot(key+':cloud-sync-v1',value);}
   // Import only field increments inside one durable IDB transaction. The
   // callback sees the latest persisted fields plus recovery journals; its
   // materialized base is deliberately not written over concurrent fields.
@@ -170,7 +175,7 @@
   db.onversionchange=()=>{close();report(Error('Account IndexedDB version changed. Reopen the account.'));};
   function close(){if(closed)return;closed=true;if(timer!==null)clearTimeout(timer);peers.delete(peer);root.removeEventListener?.('storage',eventHandler);db.close();}
   peers.add(peer);root.addEventListener?.('storage',eventHandler);if(journal().length)schedule();
-  return {get length(){assertOpen();recover();return values.size;},key(i){assertOpen();recover();return [...values.keys()][Number(i)]??null;},getItem(name){assertOpen();recover();return values.get(String(name))??null;},readEntries(){assertOpen();recover();return [...values];},setItem,removeItem,flush,seed,putSnapshot,writeBatch,close};
+  return {get length(){assertOpen();recover();return values.size;},key(i){assertOpen();recover();return [...values.keys()][Number(i)]??null;},getItem(name){assertOpen();recover();return values.get(String(name))??null;},readEntries(){assertOpen();recover();return [...values];},setItem,removeItem,flush,seed,putSnapshot,putSyncMeta,writeBatch,close};
  }
  return {open};
 });

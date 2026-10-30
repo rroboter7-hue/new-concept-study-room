@@ -40,3 +40,10 @@ test('snapshot reader takes exactly one immutable field view and never mixes lat
  let calls=0;const storage={readEntries(){calls++;return [[key,JSON.stringify({words:[],records:{one:1}})],[key+':field:["records","one"]',JSON.stringify({value:2,stamp:[1,'writer']})]]},getItem(){throw Error('mixed snapshot')},get length(){throw Error('mixed snapshot')},key(){throw Error('mixed snapshot')}};
  const result=Storage.read({storage,key});assert(result.ok);assert.equal(result.data.records.one,2);assert.equal(calls,1);
 });
+test('large synchronization checkpoints persist without consuming a full guest localStorage WAL',async()=>{
+ const storage=disk(),indexedDB=fixture(),c=await Cache.open({key,storage,indexedDB});await c.seed({words:[]});await c.putSnapshot(key+':pre-import','keep snapshot');storage.setItem('guest','keep guest');
+ const metadata=JSON.stringify({version:1,entries:Object.fromEntries(Array.from({length:1000},(_,i)=>['["records","lesson-'+i+'"]',{version:1,at:1700000000000,id:'synthetic-'+i}]))});
+ const set=storage.setItem;storage.setItem=()=>{throw Error('QuotaExceededError')};assert.equal(typeof c.putSyncMeta,'function');await c.putSyncMeta(metadata);assert.equal(c.getItem(key+':cloud-sync-v1'),metadata);assert.equal(c.getItem(key+':pre-import'),'keep snapshot');
+ storage.setItem=set;c.close();const reopened=await Cache.open({key,storage,indexedDB});assert.equal(reopened.getItem(key+':cloud-sync-v1'),metadata);assert.equal(storage.getItem('guest'),'keep guest');
+ indexedDB.failNext=true;await assert.rejects(reopened.putSyncMeta('replacement'),/disk full/);assert.equal(reopened.getItem(key+':cloud-sync-v1'),metadata);reopened.close();
+});
