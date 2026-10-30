@@ -18,6 +18,12 @@ function setup(options = {}) {
   const ui = new FreeWritingPractice({getLesson:()=>current,getLessons:()=>[old,lesson,future],getTargets:fixture,getDrafts:()=>drafts,saveDraft:(key,draft)=>{writes.push([key,structuredClone(draft)]);drafts[key]=structuredClone(draft);return true;},onStatus:s=>notices.push(s),...options});
   return {ui,writes,drafts,notices,setLesson:value=>{current=value;}};
 }
+test('reentering a clean detached lesson reloads cloud drafts and their merge baseline without refreshing the page',async()=>{
+ const h=setup(),target=h.ui.targets()[0];h.ui.editAnswer(target.key,0,'Old book.');await h.ui.flush();h.ui.unmount();const key=h.ui.ensure().key;h.drafts[key].targets[target.key].answers[0]='New cloud book.';h.ui.setLesson(lesson);const entry=h.ui.ensure();assert.equal(entry.draft.targets[target.key].answers[0],'New cloud book.');assert.equal(entry.baseDraft.targets[target.key].answers[0],'New cloud book.');h.ui.editAnswer(target.key,1,'Another book.');await h.ui.flush();assert.equal(h.drafts[key].targets[target.key].answers[0],'New cloud book.');assert.equal(h.drafts[key].targets[target.key].answers[1],'Another book.');
+});
+test('reentry preserves unsaved or failed drafts and entries held by an in-flight check',async()=>{
+ for(const mode of ['dirty','error','checking','mounted']){const h=setup(),target=h.ui.targets()[0];h.ui.editAnswer(target.key,0,'My saved book.');await h.ui.flush();const original=h.ui.ensure(),key=original.key;h.drafts[key].targets[target.key].answers[0]='Cloud book.';if(mode==='dirty')h.ui.editAnswer(target.key,1,'Unsaved book.');if(mode==='error')original.status='error';if(mode==='checking')original.checking.add('line');if(mode==='mounted')h.ui.container={};h.ui.refresh=()=>{};h.ui.setLesson(lesson);assert.equal(h.ui.ensure(),original,mode);assert.equal(original.draft.targets[target.key].answers[0],'My saved book.');if(mode==='dirty'){assert.equal(original.draft.targets[target.key].answers[1],'Unsaved book.');await h.ui.flush();}h.ui.container=null;}
+});
 
 test('gives every current word and usage five free rows and earlier learned targets one or two',()=>{
   const {ui}=setup(), targets=ui.targets();

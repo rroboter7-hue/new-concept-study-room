@@ -308,6 +308,11 @@
     targets() { return this.ensure()?.targets || []; }
     setLesson(lesson) {
       this.lessonOverride = lesson || null;
+      const cached=this.cache.get(this.lesson()?.id);
+      // Re-entry may follow a cloud pull. Refresh saved drafts and their merge
+      // baseline only after the editor has detached; retain live/failed work.
+      if(!this.container&&!this.saving&&cached&&cached.revision===cached.savedRevision&&
+        !['error','saving'].includes(cached.status)&&cached.checking.size===0)this.cache.delete(cached.lesson.id);
       const entry = this.ensure();
       if (entry) {
         entry.lesson = this.lesson();
