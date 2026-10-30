@@ -1,6 +1,8 @@
 .superpowers/
 outputs/
 node_modules/
+.wrangler-dry-run/
+.wrangler/
 
 _site/
 .cache/

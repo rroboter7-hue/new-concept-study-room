@@ -1,0 +1,32 @@
+'use strict';
+const test=require('node:test'),assert=require('node:assert/strict');
+let D;try{D=require('../account-data.js');}catch{D={};}
+const k=(...path)=>JSON.stringify(path);
+test('cloud projection includes independent learned entities but excludes courses, caches, secrets and device settings',()=>{
+ const original={records:{l1:{score:50}},review:{version:1,cards:{c1:{revision:1,stage:0,assistance:{revision:1}}}},freeWriting:{a:{lines:['Hello.']}},words:[{word:'Book',meaning:'书'}],lastLesson:'l1',settings:{rate:1.5},imported:[{id:'private',text:'private course'}],token:'secret',audio:'blob:private'};
+ const p=D.project(original);assert.deepEqual(Object.keys(p).sort(),[k('records','l1'),k('review','cards','c1'),k('freeWriting','a'),k('words','book'),k('lastLesson')].sort());assert.equal(p[k('review','cards','c1')].assistance.revision,1);assert.equal(original.words[0].word,'Book');
+});
+test('apply updates/deletes only whitelisted entities and retains local imports and preferences',()=>{
+ const original={records:{a:{score:20}},words:[{word:'book',note:'mine'},{word:'cat'}],settings:{rate:1.5},imported:[{id:'mine'}]};
+ const next=D.apply(original,{[k('records','a')]:{deleted:true},[k('records','b')]:{value:{score:100}},[k('words','book')]:{value:{word:'Book',note:'remote'}},[k('words','cat')]:{deleted:true}});
+ assert.equal(next.records.a,undefined);assert.equal(next.records.b.score,100);assert.deepEqual(next.words,[{word:'Book',note:'remote'}]);assert.deepEqual(next.settings,original.settings);assert.equal(next.imported[0].id,'mine');assert.equal(original.records.a.score,20);
+});
+test('same entity keeps the last edit automatically, including deletion, without manual conflict selection',()=>{
+ assert.deepEqual(D.merge({x:0},{x:1},{x:0}),{value:{x:1},conflict:false});assert.deepEqual(D.merge({x:0},{x:0},{x:2}),{value:{x:2},conflict:false});assert.equal(D.merge({x:0},{x:1},{x:2},{local:{at:1,id:'a'},remote:{at:2,id:'b'}}).value.x,2);assert.equal(D.merge({x:0},undefined,{x:0}).value,undefined);assert.equal(D.merge({x:0},undefined,{x:2},{local:{at:3,id:'a'},remote:{at:2,id:'b'}}).value,undefined);assert.equal(D.merge(undefined,{x:1},{x:1}).conflict,false);
+});
+test('older offline uploads cannot win solely because they arrive later, timestamps use a deterministic tie breaker',()=>{
+ assert.deepEqual(D.merge({}, {score:100},{score:20},{local:{at:50,id:'a'},remote:{at:100,id:'b'}}),{value:{score:20},conflict:false});assert.deepEqual(D.merge({}, {score:100},{score:20},{local:{at:100,id:'c'},remote:{at:100,id:'b'}}),{value:{score:100},conflict:false});assert.equal(D.entityKeyForPath('["review","cards","r1","stage"]'),k('review','cards','r1'));assert.equal(D.entityKeyForPath('["settings","rate"]'),null);
+});
+test('equal-time edit IDs use the same ASCII ordering as SQLite BINARY, independent of locale',()=>{const ids=['-','A','Z','_','a','z'];for(let i=0;i<ids.length-1;i++)assert(D.compare({at:1,id:ids[i]},{at:1,id:ids[i+1]})<0,ids[i]+' before '+ids[i+1]);});
+test('remote application checks current edit stamps again just before commit and never replaces newer in-flight input',()=>{const k='["records","l1"]',old={at:10,id:'old'},data={records:{l1:{score:100}},_accountEdits:{[k]:{at:30,id:'typing'}}};const received=D.receive(data,{[k]:{value:{score:20},modifiedAt:50,writeId:'remote'}},{expectedEdits:{[k]:old}});assert.equal(received.data.records.l1.score,100);assert.equal(received.data._accountEdits[k].id,'typing');});
+test('bad future clocks recover conservatively from the last trusted server time and do not starve sync',()=>{const k='["records","l1"]',trusted=1800000000000,data={records:{l1:{score:20}},_accountClock:{serverAt:trusted,offset:0},_accountEdits:{[k]:{at:trusted+1000000000,id:'bad-clock'}}};const result=D.receive(data,{[k]:{value:{score:100},modifiedAt:trusted+5000,writeId:'newer-remote'}},{clock:{serverAt:trusted+10000,offset:-1000000000},expectedEdits:data._accountEdits});assert.equal(result.correctedClock,true);assert.equal(result.data.records.l1.score,100);assert.equal(result.data._accountEdits[k].at,trusted+5000);assert.equal(data.records.l1.score,20);});
+test('formal scores, individual lesson pipelines and mixed groups remain indivisible entities',()=>{
+ const p=D.project({records:{a:{attempts:[{score:10}]}},learningPipeline:{version:2,lessons:{a:{stage:3,mistakes:{q:{wrongCount:1}}}}},mixedReview:{version:1,session:{id:'g',items:[1]},drafts:{d:{input:'x'}}}});
+ assert.equal(Object.keys(p).length,4);assert(D.validKey(k('mixedReview','session')));assert(!D.validKey(k('records','a','attempts','0','score')));
+});
+test('unsafe paths, prototypes, non JSON values and oversized entities fail closed without truncation',()=>{
+ for(const path of [k('__proto__','x'),k('settings'),k('records','constructor'),k('review','cards','x','stage'),'invalid'])assert.equal(D.validKey(path),false);
+ assert.throws(()=>D.apply({}, {[k('settings')]:{value:{rate:2}}}));assert.throws(()=>D.project({freeWriting:{x:{input:'x'.repeat(300000)}}}));assert.throws(()=>D.project({records:{x:{score:NaN}}}));assert.throws(()=>D.project({records:{x:JSON.parse('{"__proto__":{"polluted":true}}')}}));assert.equal({}.polluted,undefined);
+});
+test('ordinary English words matching object names remain valid keyed vocabulary identities',()=>{const p=D.project({words:[{word:'constructor',meaning:'建造者'},{word:'prototype',meaning:'原型'}]});assert.equal(Object.keys(p).length,2);assert.equal(D.apply({words:[]},Object.fromEntries(Object.entries(p).map(([k,value])=>[k,{value}]))).words.length,2);assert.equal({}.polluted,undefined);});
+test('different word/usage drafts in the same lesson sync independently while their five sentences stay atomic',()=>{const p=D.project({freeWriting:{lesson:{version:1,lessonId:'l1',targets:{wordA:{answers:['A']},phraseB:{answers:['B']}}}}});assert.equal(Object.keys(p).length,3);assert.equal(D.entityKeyForPath('["freeWriting","lesson","targets","wordA","answers","0"]'),'["freeWriting","lesson","targets","wordA"]');const base={freeWriting:{lesson:{lessonId:'l1',targets:{wordA:{answers:['A']},phraseB:{answers:['B']}}}}},next=D.apply(base,{'["freeWriting","lesson","targets","wordA"]':{value:{answers:['new A']}},'["freeWriting","lesson"]':{value:{lessonId:'l1',updatedAt:10}}});assert.equal(next.freeWriting.lesson.targets.wordA.answers[0],'new A');assert.equal(next.freeWriting.lesson.targets.phraseB.answers[0],'B');});

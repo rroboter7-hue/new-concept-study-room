@@ -1,0 +1,6 @@
+'use strict';const fs=require('node:fs'),path=require('node:path');const {database}=require('./account-d1.cjs');
+async function service(t){const W=await import('../../cloud-account/worker.mjs'),DB=database(fs.readFileSync(path.join(__dirname,'../../cloud-account/schema.sql'),'utf8')),env={DB,PASSWORD_PEPPER:'synthetic-test-pepper-for-sync-tests-only',ALLOWED_ORIGINS:'https://rroboter7-hue.github.io'};t.after(()=>DB.raw.close());for(const n of ['alice','bravo'])DB.raw.prepare('INSERT INTO accounts(id,username,verifier) VALUES(?,?,?)').run('u_'+n,n,await W.verifier(env.PASSWORD_PEPPER,'u_'+n,n[0].repeat(43)));
+ async function call(identity,route,{method='GET',body}={}){const headers={Origin:env.ALLOWED_ORIGINS};if(identity?.token)headers.Authorization='Bearer '+identity.token;if(body!==undefined)headers['Content-Type']='application/json';const r=await W.default.fetch(new Request('https://sync.example'+route,{method,headers,...(body!==undefined?{body:JSON.stringify(body)}:{})}),env,{}),data=await r.json();if(!r.ok){const e=Error(data.error);e.status=r.status;throw e;}return data;}
+ async function login(n='alice'){const data=await call(null,'/v1/login',{method:'POST',body:{username:n,password:n[0].repeat(43)}});return {endpoint:'https://sync.example',token:data.token,user:data.user};}
+ return {DB,call,login};
+}module.exports={service};

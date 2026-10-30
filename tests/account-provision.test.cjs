@@ -1,0 +1,6 @@
+'use strict';
+const test=require('node:test'),assert=require('node:assert/strict'),fs=require('node:fs/promises'),os=require('node:os'),path=require('node:path');
+test('offline provisioning creates five unique strong credentials outside the site and never overwrites a credential set',async()=>{
+ const {generate}=await import('../cloud-account/generate-accounts.mjs'),{verifier}=await import('../cloud-account/worker.mjs'),dir=await fs.mkdtemp(path.join(os.tmpdir(),'zhixin-accounts-'));
+ try{assert.equal((await generate(dir)).count,5);const {accounts}=JSON.parse(await fs.readFile(path.join(dir,'accounts.json'),'utf8')),pepper=(await fs.readFile(path.join(dir,'pepper.txt'),'utf8')).trim(),sql=await fs.readFile(path.join(dir,'seed.sql'),'utf8');assert.equal(new Set(accounts.map(a=>a.password)).size,5);for(const a of accounts){assert.match(a.password,/^[\w-]{43}$/);assert.match(sql,new RegExp(await verifier(pepper,a.id,a.password)));assert(!sql.includes(a.password));assert(!sql.includes(pepper));}await assert.rejects(()=>generate(dir),e=>e.code==='EEXIST');await assert.rejects(()=>generate(path.resolve(__dirname,'../outputs/account-invalid')),/outside/);}finally{await fs.rm(dir,{recursive:true,force:true});}
+});

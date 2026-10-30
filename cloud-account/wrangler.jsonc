@@ -1,0 +1,10 @@
+{
+  "$schema": "../node_modules/wrangler/config-schema.json",
+  "name": "zhixin-account-sync",
+  "main": "worker.mjs",
+  "compatibility_date": "2026-10-30",
+  "workers_dev": true,
+  "vars": { "ALLOWED_ORIGINS": "https://rroboter7-hue.github.io" },
+  "observability": { "enabled": false },
+  "d1_databases": []
+}

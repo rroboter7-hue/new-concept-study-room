@@ -1,0 +1,12 @@
+# Account sync execution ledger
+
+- Base 08bbc3f; design commit 124d8fb. Root owns account implementation and Cloudflare setup. Publishing peer is the sole main/Pages publisher.
+- Approved scope: five fixed accounts with generated passwords, Cloudflare Workers+D1, automatic sync, My button “立即同步进度”, last edit wins without a conflict picker.
+- Implemented: authenticated owner-scoped API, atomic D1 last-edit ordering/quotas, separate local IndexedDB account caches with recovery journals, edit stamps in the learner transaction, retryable serialized sync, explicit guest migration, logout preservation, stale-response guards, and actual app/My integration.
+- Peer My layout CSS beb1613 was copied as profile-layout.css; source index loads it after account-ui.css. All account UI/controller dependencies are static defer scripts, included in content-addressed runtime/course cache packages. No new first-paint cloud request.
+- Account checks: 70 passing tests, plus 1 private provisioning test. Affected storage/bookshelf/review/runtime/cache delivery regressions: 73 passing tests (includes account delivery). Worker dry-run builds: 22.78KiB / 7.25KiB gzip.
+- Independent browser QA in progress on 4213/4214: guest five-sentence draft migration explicitly names its target; A/B each showed the same two synthetic sentences in five inputs. Fresh-device default-navigation migration prompt and stale bookshelf no-sync copy fixed with regression coverage.
+- Five production credential sets generated only in the private sibling output directory; not provisioned, not enabled, no secrets in this checkout. The generator refuses output inside the website or overwriting files.
+- Official Cloudflare login opened in Chrome. User must complete login and confirm limited account/user read, Workers write, D1 write, offline access. Initial OAuth callback wait expired; after user login, restart the authorization link. No real Worker, D1 database, cloud users, or production endpoint yet.
+- Remaining: browser review; real Cloudflare provisioning and two-device remote verification; enable public config only after successful tests; submit exact reviewed commit to publishing peer, full source CI, Pages publish and live confirmation.
+- Full local source suite is not an all-pass claim: sparse checkout lacks source media, and local audio optimization hit sandbox EPERM earlier. The full source gate runs in the publishing/CI environment.
