@@ -108,13 +108,16 @@
   function sanitize(raw){
     const state=object(raw)?clone(raw):{};
     const legacy=state.version!==2;
+    const hasVersion=Object.hasOwn(state,'version');
     state.version=2;
     state.activeLessonId=safeId(state.activeLessonId)?state.activeLessonId:null;
     const lessons={};
     for(const [id,value] of Object.entries(object(state.lessons)?state.lessons:{})){
       if(!safeId(id))continue;
       const record=object(value)?value:{},quiz=object(record.quiz)?record.quiz:{};
-      if(legacy){
+      // Cloud synchronization carries independent lesson rows, without this
+      // global header. Current six-step rows already contain retellText.
+      if(legacy&&(hasVersion||typeof record.retellText!=='string')){
         if(record.stage===4)record.stage=5;
         if(object(record.scrollPositions)&&Object.hasOwn(record.scrollPositions,'4')){
           record.scrollPositions={...record.scrollPositions,5:record.scrollPositions[4]};
