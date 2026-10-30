@@ -3,13 +3,13 @@
  'use strict';
  const stamp=e=>({at:e?.modifiedAt||e?.at||0,id:e?.writeId||e?.id||''}),clone=D.copy;
  function create(options){
-  const initial=clone(options.identity?.()),metaKey=options.key+':cloud-sync-v1';let stopped=false,running=null,timer=null,wantPull=false,wantPush=false,phase='idle',lastClock=null,contacts=0;
+  const initial=clone(options.identity?.()),metaKey=options.key+':cloud-sync-v1';let stopped=false,running=null,timer=null,wantPull=false,wantPush=false,phase='idle',lastClock=null,contacts=0,progress=null;
   const abort=new AbortController(),now=options.now||Date.now;let meta={version:1,knownVersion:null,entries:{},lastSyncedAt:0};
   try{const saved=JSON.parse(options.storage.getItem(metaKey));if(saved?.version===1&&saved.entries&&typeof saved.entries==='object'&&!Array.isArray(saved.entries)){const entries={};for(const [key,row]of Object.entries(saved.entries).slice(0,10000))if(D.validKey(key)&&Number.isSafeInteger(row?.version)&&row.version>0&&Number.isSafeInteger(row.at)&&typeof row.id==='string')entries[key]={version:row.version,at:row.at,id:row.id,deleted:row.deleted===true};meta={version:1,knownVersion:Number.isSafeInteger(saved.knownVersion)?saved.knownVersion:null,entries,lastSyncedAt:Number(saved.lastSyncedAt)||0};}}catch{}
   function valid(){const current=options.identity?.();return !stopped&&initial?.user?.id&&current?.user?.id===initial.user.id&&current.endpoint===initial.endpoint&&current.token===initial.token;}
   function guard(){if(!valid()){const error=Error('账号已切换');error.identityChanged=true;throw error;}}
   function pending(){try{return Object.entries(options.snapshot()._accountEdits||{}).filter(([key,row])=>D.validKey(key)&&D.compare(row,meta.entries[key])>0).length;}catch{return 0;}}
-  function state(){return {phase,pending:pending(),lastSyncedAt:meta.lastSyncedAt};}
+  function state(){return {phase,pending:pending(),lastSyncedAt:meta.lastSyncedAt,...(progress||{})};}
   function notify(next,message=''){phase=next;try{options.onStatus?.({...state(),message});}catch{}}
   function checkpoint(next){guard();options.storage.setItem(metaKey,JSON.stringify(next));meta=next;}
   async function request(path,args={}){guard();const started=now(),result=await options.transport(path,{...args,signal:abort.signal});guard();if(result?.user?.id!==initial.user.id){const e=Error('账号身份不一致，请重新登录');e.status=401;throw e;}contacts++;if(Number.isSafeInteger(result.serverTime))lastClock={offset:Math.round(result.serverTime-(started+now())/2),serverAt:result.serverTime};return result;}
@@ -20,8 +20,29 @@
    for(let i=0;i<wanted.length;i+=16){let keys=wanted.slice(i,i+16).map(row=>row.key),rounds=0;while(keys.length){const response=await request('/v1/read',{method:'POST',body:{keys}});if(!Array.isArray(response.entries)||!Array.isArray(response.remaining)||++rounds>16)throw Error('云端记录分页异常');if(response.entries.some(row=>!keys.includes(row.key))||response.remaining.some(key=>!keys.includes(key))||response.remaining.length===keys.length)throw Error('云端记录身份异常');await apply(response.entries);const entries={...meta.entries};for(const row of response.entries)entries[row.key]=remoteMeta(row);checkpoint({...meta,entries});keys=response.remaining;}}
    if(lastClock)await apply([]);checkpoint({...meta,knownVersion:version});
   }
-  async function push(){const first=options.snapshot(),keys=Object.keys(first._accountEdits||{}).filter(D.validKey);for(const key of keys){guard();const current=options.snapshot(),touch=current._accountEdits?.[key];if(!touch||D.compare(touch,meta.entries[key])<=0)continue;const values=D.project(current),response=await request('/v1/entry',{method:'PUT',body:{key,modifiedAt:touch.at,writeId:touch.id,deleted:!Object.hasOwn(values,key),...(Object.hasOwn(values,key)?{value:values[key]}:{})}});if(response.entry?.key!==key)throw Error('云端记录身份异常');await apply([response.entry]);checkpoint({...meta,entries:{...meta.entries,[key]:remoteMeta(response.entry)}});}}
-  async function run(){const beforeContacts=contacts,beforePhase=phase;try{for(let pass=0;pass<3&&(wantPull||wantPush);pass++){const doPull=wantPull||meta.knownVersion===null;wantPull=false;wantPush=false;notify('syncing');if(doPull)await pull();await push();}guard();const count=pending();if(!count){if(contacts>beforeContacts){checkpoint({...meta,lastSyncedAt:now()});notify('synced');}else if(phase==='syncing')notify(beforePhase);}else notify('pending');return count===0;}catch(error){if(valid())notify(error.status===401?'login-required':error.status===413?'limit':'offline',error.status===401?'请重新登录，学习记录仍保存在本机。':error.status===413?'同步记录超出限制，本机记录保留，请先导出备份。':'暂未同步，已保存的本机记录会保留。');return false;}finally{running=null;if(valid()&&(wantPull||wantPush))changed();}}
+  async function push(){
+   const first=options.snapshot(),keys=Object.keys(first._accountEdits||{}).filter(key=>D.validKey(key)&&D.compare(first._accountEdits[key],meta.entries[key])>0);
+   progress={completed:0,total:keys.length};
+   // Freeze at most sixteen values at a time. Newer edits made while requests
+   // are in flight keep their own stamps; apply() rereads before accepting ACKs.
+   for(let i=0;i<keys.length;i+=16){
+    guard();const current=options.snapshot(),values=D.project(current),ack=[];let skipped=0,failure;
+    try{for(const key of keys.slice(i,i+16)){
+     guard();const touch=current._accountEdits?.[key];if(!touch||D.compare(touch,meta.entries[key])<=0){skipped++;continue;}
+     const response=await request('/v1/entry',{method:'PUT',body:{key,modifiedAt:touch.at,writeId:touch.id,deleted:!Object.hasOwn(values,key),...(Object.hasOwn(values,key)?{value:values[key]}:{})}});
+     if(response.entry?.key!==key)throw Error('云端记录身份异常');ack.push(response.entry);
+    }}catch(error){failure=error;}
+    // A failed later request must not discard earlier verified ACKs. Local
+    // apply and metadata still fail together: retrying an uncheckpointed ACK
+    // reuses its write ID and cannot invent another server version.
+    guard();if(ack.length){await apply(ack);const entries={...meta.entries};for(const row of ack)entries[row.key]=remoteMeta(row);checkpoint({...meta,entries});}
+    progress={completed:progress.completed+ack.length+skipped,total:keys.length};notify('syncing');if(failure)throw failure;
+    // A task boundary, rather than a resolved promise, lets mobile browsers
+    // paint progress and service input even when requests resolve immediately.
+    if(i+16<keys.length){await new Promise(resolve=>setTimeout(resolve,0));guard();}
+   }
+  }
+  async function run(){const beforeContacts=contacts,beforePhase=phase;progress=null;try{for(let pass=0;pass<3&&(wantPull||wantPush);pass++){const doPull=wantPull||meta.knownVersion===null;wantPull=false;wantPush=false;notify('syncing');if(doPull)await pull();await push();}guard();const count=pending();if(!count){if(contacts>beforeContacts){checkpoint({...meta,lastSyncedAt:now()});notify('synced');}else if(phase==='syncing')notify(beforePhase);}else notify('pending');return count===0;}catch(error){if(valid())notify(error.status===401?'login-required':error.status===413?'limit':'offline',error.status===401?'请重新登录，学习记录仍保存在本机。':error.status===413?'同步记录超出限制，本机记录保留，请先导出备份。':'暂未同步，已保存的本机记录会保留。');return false;}finally{running=null;if(valid()&&(wantPull||wantPush))changed();}}
   function sync({pull:doPull=true}={}){if(!valid())return Promise.resolve(false);clearTimeout(timer);timer=null;wantPull=wantPull||doPull;wantPush=true;if(!running)running=run();return running;}
   function changed(){if(!valid()||!pending())return;wantPush=true;notify('pending');clearTimeout(timer);timer=setTimeout(()=>sync({pull:false}),2500);timer.unref?.();}
   function stop(){stopped=true;clearTimeout(timer);abort.abort();phase='stopped';}
