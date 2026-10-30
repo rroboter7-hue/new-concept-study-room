@@ -440,10 +440,28 @@
  function queueAccountSync(){if(!accountEnabled||!accountContext.identity||accountIdentityLocked)return;if(accountSaveFailed){void flushForAccount().then(ok=>{if(ok)queueAccountSync();});return;}void ensureAccountPanel().then(panel=>{if(!panel)return;void panel.start();panel.changed();}).catch(()=>{});}
  async function applyAccountRemote(changes,args={}){
   if(!accountContext.identity||accountIdentityLocked||accountSaveFailed)return false;
-  const I=window.StudyAccountIdentity,D=window.StudyAccountData,identity=I.current(accountBrowser,accountConfig);if(identity?.user.id!==accountContext.identity.user.id||identity?.token!==accountContext.identity.token)return false;
-  let source=storageSession.read();if(!source.ok)return false;let received=D.receive(source.data,changes,args);
-  if(received.correctedClock){await storageDevice.putSnapshot(KEY+':pre-import',JSON.stringify({format:'zhixin-backup-v1',exportedAt:new Date().toISOString(),reason:'clock-recovery',data:source.data}));const active=I.current(accountBrowser,accountConfig);if(active?.user.id!==accountContext.identity.user.id||active?.token!==accountContext.identity.token||accountIdentityLocked)return false;source=storageSession.read();if(!source.ok)return false;received=D.receive(source.data,changes,args);}
-  const normalized=prepareBackup({format:'zhixin-backup-v1',data:received.data},'replace').data,result=storageSession.commit(normalized,{replace:true,source:'cloud'});if(!result.ok)return false;adoptStore(result.data);storageSession.adopt(data);updateReviewCount();return true;
+  const I=window.StudyAccountIdentity,D=window.StudyAccountData,valid=()=>{const active=I.current(accountBrowser,accountConfig);return !accountIdentityLocked&&!accountSaveFailed&&active?.user.id===accountContext.identity.user.id&&active?.token===accountContext.identity.token;};
+  if(!valid())return false;let approvedEdits=null;
+  for(let attempt=0;attempt<3;attempt++){
+   let recovery=null;
+   try{
+    const result=await storageDevice.writeBatch(store=>{
+     const session=StudyStorage.createSession({storage:store,key:KEY}),source=session.read();if(!source.ok)throw source.error||Error('本机记录无法读取');
+     const received=D.receive(source.data,changes,args);
+     if(received.correctedClock&&!D.equal(approvedEdits,source.data._accountEdits||{})){recovery=source.data;throw Error('clock-recovery-required');}
+     const normalized=prepareBackup({format:'zhixin-backup-v1',data:received.data},'replace').data,result=session.commit(normalized,{replace:true,source:'cloud'});if(!result.ok)throw result.error||Error('本机保存未完成');return result;
+    },{guard:valid});
+    if(!result.ok||!valid())return false;
+    // Read once more after IDB completes so a concurrently saved local field
+    // remains visible. Keep the live editor DOM and its unsubmitted input.
+    const latest=storageSession.read();if(!latest.ok)return false;adoptStore(latest.data);storageSession.adopt(data);updateReviewCount();return true;
+   }catch(error){
+    if(!recovery||!valid())throw error;
+    await storageDevice.putSnapshot(KEY+':pre-import',JSON.stringify({format:'zhixin-backup-v1',exportedAt:new Date().toISOString(),reason:'clock-recovery',data:recovery}));
+    approvedEdits=D.copy(recovery._accountEdits||{});if(!valid())return false;
+   }
+  }
+  return false;
  }
  function ensureAccountPanel(){
   if(!accountEnabled||!window.StudyAccountLoader)return Promise.resolve(null);if(accountPanel)return Promise.resolve(accountPanel);if(!accountPanelTask)accountPanelTask=window.StudyAccountLoader.load().then(Panel=>{accountPanel=new Panel({config:accountConfig,browserStorage:accountBrowser,accountStore:accountContext.cache,flushLocal:flushForAccount,getGuestData:()=>{const r=StudyStorage.read({storage:accountBrowser,key:'zhixin-study-v1'});if(!r.ok)throw Error('本机旧记录无法读取');return r.data;},getSnapshot:()=>{if(accountSaveFailed)throw Error('本机输入尚未保存');const r=storageSession.read();if(!r.ok)throw Error('本机记录无法读取');return r.data;},applyRemote:applyAccountRemote,reload:()=>window.location.reload(),toast});return accountPanel;}).catch(error=>{accountPanelTask=null;throw error;});return accountPanelTask;
