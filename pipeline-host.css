@@ -330,3 +330,14 @@ body.learning-pipeline-active .free-writing-actions{bottom:max(8px,env(safe-area
  .free-writing-target>small{grid-column:2;grid-row:3;align-self:center;text-align:right;}
  .free-writing-reference-pane .writing-library{margin:6px 0 8px;}
 }
+/* Provenance stays visible but compact; it must not delay access to the passage. */
+.pipeline-reading-layout .pipeline-reading-tools{margin-bottom:8px;gap:10px;}
+.pipeline-reading-layout .text-source-note{padding:6px 8px;margin:0 0 6px;line-height:1.5;font-size:11px;}
+.pipeline-reading-layout .translation-attribution{margin:4px 0 6px;text-align:left;}
+.pipeline-reading-layout .focus-listening{margin:8px 0 10px;}
+.pipeline-reading-layout .reading-layout{margin:10px 0;}
+@media(min-width:1100px){
+ .learning-pipeline .pipeline-topbar{padding-bottom:12px;}
+ .learning-pipeline .pipeline-coursebar{margin-bottom:12px;}
+ .learning-pipeline .pipeline-steps{margin-bottom:18px;padding-bottom:12px;}
+}

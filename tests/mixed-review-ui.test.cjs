@@ -57,3 +57,10 @@ test('a lesson title used as a word source is hidden before an answer and only r
  const f=await setup({pipeline:{lessons:{}},lessons:[{...lesson,title:'Where is Sally?'}],initialize:h=>{const cards=[{id:'review:sally',kind:'word',target:'Sally',prompt:'萨莉',sourceLesson:{...lesson,title:'Where is Sally?'},exampleSourceType:'lesson-title',conceptId:'word:sally'}];return {cards,review:h.c.StudyReview.enroll({},cards,{now:h.now})};}});
  await f.click('start');assert.doesNotMatch(f.host.querySelector('.mix-source').innerHTML,/Where is Sally/);await f.input('Sally');await f.click('check');assert.match(f.host.querySelector('.mix-source').innerHTML,/Where is Sally/);await f.click('next');assert.equal(f.state.session.results['card:review:sally'].status,'correct');
 });
+
+test('changed accepted phrase forms defer an existing draft and cannot enter immediate retry under new rules',async()=>{
+ let cards;const f=await setup({pipeline:{lessons:{}},initialize:h=>{cards=h.c.StudyReview.cardsForLessons([{...lesson,usage:[{phrase:'get angry',meaning:'生气',example:'Please do not get angry.'}]}]);cards[0].variants=['become angry'];return {cards,review:h.c.StudyReview.enroll({},cards,{now:h.now})};}});
+ await f.click('start');await f.click('help');await f.input('become angry');await f.click('check');assert.equal(f.ui.evaluation(f.ui.active(),C.draft(f.state,f.ui.active())).correct,true);
+ const original=cards[0].variants;cards[0].variants=[];assert.equal(f.ui.active().stale,true);cards[0].variants=original;
+ await f.click('next');assert.equal(f.ui.retryRows().length,1);cards[0].variants=[];assert.equal(f.ui.retryRows().length,0);
+});

@@ -65,6 +65,7 @@
    return this.catalog(true).filter(row=>{const ref=session.items.find(ref=>ref.key===row.key),result=ref&&session.results[ref.key];if(!ref||!['retry','corrected','self-checked'].includes(result?.status))return false;if(row.revision===ref.revision)return true;
     // A scheduling revision written by this group may change. A changed
     // question, meaning or confirmed correction must not be substituted.
+    // Card slot3 binds every accepted form and prompt mode; only slot4 schedules change.
     try{const old=JSON.parse(ref.revision),current=JSON.parse(row.revision);if(!Array.isArray(old)||!Array.isArray(current)||JSON.stringify(old.slice(0,4))!==JSON.stringify(current.slice(0,4)))return false;
      if(row.card)return row.card.progress.lastReviewedAt===result.at&&current[4]===old[4]+1;
      if(row.entry)return row.entry.lastRatedAt===result.at;
