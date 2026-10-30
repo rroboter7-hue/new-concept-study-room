@@ -69,3 +69,4 @@
 .free-writing-correction textarea{min-height:76px;font-size:.9rem}
 .free-writing-correction .button{min-height:44px}
 .free-writing-target [data-free-target-count]{white-space:normal}
+.free-writing-pronounce{display:inline-flex;align-items:center;gap:7px;min-height:44px;max-width:100%;padding:3px 6px;margin:-3px -6px;border:0;border-radius:8px;color:#0962c3;background:transparent;font:inherit;text-align:left;cursor:pointer;overflow-wrap:anywhere}.free-writing-pronounce:hover{background:#e8f2ff}.free-writing-pronounce:focus-visible{outline:2px solid #0873ff;outline-offset:3px}.free-writing-pronounce>span{font-size:.85rem;color:#597ea8}

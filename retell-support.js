@@ -8,6 +8,35 @@
   'use strict';
   const list=value=>Array.isArray(value)?value:[];
   const text=value=>typeof value==='string'?value.trim():'';
+  // This is a source-spelling aid, not a guess at who a person is.
+  function nounHints(lesson,characters,targets){
+    const source=list(lesson.paragraphs).map(row=>text(row?.en)).filter(Boolean);
+    const knownPeople=new Set(characters.map(row=>row.name.toLocaleLowerCase('en')));
+    const common=new Set('I We You He She It They The A An My Our Your His Her Their This That These Those There Here Then When While After Before If But And Or So As At In On With For From To By Of One Two Three Some Many Most All Last Next Soon Suddenly However Yes No What Why How Where Who Which Please Hello Well'.toLowerCase().split(' '));
+    const properNames=[],seen=new Set();
+    const pattern=/(?:St\.|[\p{Lu}][\p{L}\p{M}\d]*(?:[’'\-][\p{L}\p{M}\d]+)*)(?:[ \t]+(?:(?:of|the|de|van)[ \t]+)?(?:St\.|[\p{Lu}][\p{L}\p{M}\d]*(?:[’'\-][\p{L}\p{M}\d]+)*))*/gu;
+    for(const paragraph of source)for(const match of paragraph.matchAll(pattern)){
+      let name=match[0].replace(/^(?:The|A|An)\s+/,''),key=name.toLocaleLowerCase('en');
+      if(!name||common.has(key)||knownPeople.has(key)||seen.has(key))continue;
+      const before=paragraph.slice(0,match.index).trimEnd(),single=!/\s/.test(name);
+      if(single&&(!before||/[.!?][”’"']*$/.test(before)))continue;
+      if(characters.some(row=>{const parts=row.name.toLowerCase().replace(/[.]/g,'').split(/\s+/);return key.replace(/[.]/g,'').split(/\s+/).every(part=>parts.includes(part.replace(/[’']s$/,'')));}))continue;
+      seen.add(key);properNames.push({name,sourceText:paragraph});
+    }
+    const nouns=[],seenNouns=new Set();
+    for(const row of [...list(targets?.words),...list(lesson.vocabulary)]){
+      const word=text(row?.word),key=word.toLowerCase();
+      if(!word||seenNouns.has(key)||!/(?:^|[\s;/])(?:n\.|noun)(?:$|[\s;/])/.test(text(row.pos))||row.isPersonName===true)continue;
+      const form=key.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+      if(!source.some(line=>new RegExp('(?<![\\p{L}])'+form+'(?:s|es)?(?![\\p{L}])','iu').test(line)))continue;
+      const meaning=text(row.meaning),ambiguous=/\b(?:v|vi|vt|adj|adv)\./.test(meaning);
+      if(ambiguous&&!source.some(line=>new RegExp('\\b(?:a|an|the|his|her|my|our|their|this|that|its)\\s+(?:(?:own|little|small|large|famous|old|new|important|big|young|quiet)\\s+){0,3}'+form+'(?:s|es)?\\b','iu').test(line)))continue;
+      if(properNames.some(row=>row.name.toLowerCase()===key)||characters.some(row=>row.name.toLowerCase()===key))continue;
+      const brief=meaning.replace(/^\s*n\.\s*/,'').split(/\s+\b(?:v|vi|vt|adj|adv|a)\./)[0].split(/[,，;；\n]/)[0].trim();
+      seenNouns.add(key);nouns.push({word,meaning:brief,sourceText:source.find(line=>new RegExp(form,'iu').test(line))});
+    }
+    return {properNames,nouns};
+  }
   function forLesson(lesson,options={}){
     lesson=lesson&&typeof lesson==='object'?lesson:{};
     const paragraphs=list(lesson.paragraphs);
@@ -44,10 +73,10 @@
       const sourceKind=passage?'passage':prior?'prior-revision':notes?'lesson-extension':'lesson-material';
       return {sourceKind,sourceKindLabel:passage?'本课正文表达':prior?'本课笔记 · 旧知复习线索':notes?'本课笔记扩展（非正文）':'本课已有资料（来源未细分）'};
     }
-    const words=list(options.writingTargets?.words).filter(row=>row?.prior!==true&&row?.isLessonNew!==false&&text(row.word)&&text(row.meaning)).slice(0,8).map(row=>({word:text(row.word),meaning:text(row.meaning)}));
-    const usages=list(options.writingTargets?.phrases).filter(row=>row?.prior!==true&&row?.isLessonNew!==false&&text(row.phrase)&&text(row.meaning||row.note)).slice(0,6).map(row=>({phrase:text(row.phrase),meaning:text(row.meaning||row.note),...provenance(row)}));
+    const words=list(options.writingTargets?.words).filter(row=>row?.prior!==true&&row?.isLessonNew!==false&&text(row.word)&&text(row.meaning)).map(row=>({word:text(row.word),meaning:text(row.meaning)}));
+    const usages=list(options.writingTargets?.phrases).filter(row=>row?.prior!==true&&row?.isLessonNew!==false&&text(row.phrase)&&text(row.meaning||row.note)).map(row=>({phrase:text(row.phrase),meaning:text(row.meaning||row.note),...provenance(row)}));
     const missing=sections.some(row=>!row.meaning);
-    return {sections,scenes,characters,participants,words,usages,notice:missing?'部分段落暂无已核对的中文译文；请对照课文原文复述。':'以上提示均来自本课已有资料，请用自己的英文复述。'};
+    return {sections,scenes,characters,participants,words,usages,...nounHints(lesson,characters,options.writingTargets),notice:missing?'部分段落暂无已核对的中文译文；请对照课文原文复述。':'以上提示均来自本课已有资料，请用自己的英文复述。'};
   }
   return Object.freeze({forLesson});
 });

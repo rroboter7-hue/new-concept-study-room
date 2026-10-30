@@ -25,7 +25,7 @@
   }
   const inQuote=(index,ranges)=>ranges.some(range=>index>range.start&&index<range.end-1);
   function category(rule){
-    if(/^(?:i-be|singular-be|plural-be|plural-past-be|singular-dont|plural-doesnt|did-base|modal-|progressive-|third-person-)/.test(rule))return 'tense';
+    if(/^(?:i-be|singular-be|singular-past-be|plural-be|plural-past-be|singular-dont|plural-doesnt|did-base|modal-|progressive-|third-person-)/.test(rule))return 'tense';
     if(/(?:look-forward|interested-in|discuss-direct|married-to|enjoy-gerund|really-like)/.test(rule))return 'collocation';
     return 'grammar';
   }

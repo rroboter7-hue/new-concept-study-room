@@ -539,6 +539,15 @@
       const slot = this.container?.querySelector?.('[data-free-copy-feedback]');
       if (slot) slot.innerHTML = this.copyFeedbackHTML();
     }
+    async pronounceCurrentTarget() {
+      const target=this.currentTarget(),lesson=this.active?.lesson;
+      if(!target)return false;
+      try {
+        if(typeof this.options.speak!=='function')throw Error('Speech unavailable');
+        if(await this.options.speak(target.label,{lessonId:lesson?.id})===false)throw Error('Speech unavailable');
+        return true;
+      }catch(_){this.options.toast?.('当前发音暂不可用，请检查网络或设备朗读功能后重试。');return false;}
+    }
     async check(key) {
       const entry = this.ensure(), target = entry?.targets.find(item => item.key === (key || entry.draft.activeTargetKey));
       if (!target || entry.checking.has(target.key)) return false;
@@ -597,7 +606,7 @@
         '<div class="free-writing-daily"><span data-free-daily-complete' + (progress.done ? '' : ' hidden') + '>今日计划已完成，可回看修改或继续。</span><button type="button" class="button subtle" data-free-action="another"' + (progress.done && remaining ? '' : ' hidden') + '>再来一组</button></div>' +
         '<details class="free-writing-cumulative"><summary>进度与全部目标</summary><p class="free-writing-progress-details"><span data-free-today-progress>' + this.todayLabel(progress) + '</span><span data-free-cumulative>' + this.cumulativeLabel(entry) + '</span></p><p>每个本课新词、习惯用法累计各写5句；已学旧词、旧用法各写1–2句。今日小组不会减少总目标，额外已写句子也会保留。</p><label class="free-writing-target-label">全部目标<select data-free-select="target" aria-label="选择自由造句目标"><optgroup label="本课目标">' + group(false) + '</optgroup>' + (entry.targets.some(item => item.prior) ? '<optgroup label="已学前课复习">' + group(true) + '</optgroup>' : '') + '</select></label></details>' +
         '<nav class="free-writing-navigation" aria-label="今日目标切换"><button type="button" class="button subtle" data-free-action="previous"' + (position <= 0 ? ' disabled' : '') + '>上一个目标</button><span>' + (position < 0 ? '全部目标中的其他草稿' : '第' + this.today(entry).groups.length + '组 · ' + (position+1) + '/' + groupTargets.length) + '</span><button type="button" class="button subtle" data-free-action="next"' + (position >= groupTargets.length-1 ? ' disabled' : '') + '>下一个目标</button></nav>' +
-        '<div class="free-writing-workspace"><div class="free-writing-reference-pane"><div class="free-writing-target"><div class="free-writing-target-heading"><strong lang="en">' + escapeHTML(target.label) + '</strong><span class="free-writing-target-pos" data-free-target-pos>' + escapeHTML(targetType) + '</span></div>' + (global.StudyFrequencyReference?.badge?.(target.label,target.kind)||'') + '<span>' + escapeHTML(target.meaning) + '</span><p class="free-writing-target-progress" data-free-target-count>' + this.targetCountLabel(target,row) + '</p><small>' + (target.prior ? '前课复习 · 第' + target.source.book + '册第' + target.source.number + '课' : '本课' + (target.kind === 'phrase' ? '习惯用法' : '新单词')) + '</small></div>' + help + '</div>' +
+        '<div class="free-writing-workspace"><div class="free-writing-reference-pane"><div class="free-writing-target"><div class="free-writing-target-heading"><button type="button" class="free-writing-pronounce" data-free-action="speak" aria-label="听 ' + escapeHTML(target.label) + ' 的发音"><strong lang="en">' + escapeHTML(target.label) + '</strong><span aria-hidden="true"> ♪</span></button><span class="free-writing-target-pos" data-free-target-pos>' + escapeHTML(targetType) + '</span></div>' + (global.StudyFrequencyReference?.badge?.(target.label,target.kind)||'') + '<span>' + escapeHTML(target.meaning) + '</span><p class="free-writing-target-progress" data-free-target-count>' + this.targetCountLabel(target,row) + '</p><small>' + (target.prior ? '前课复习 · 第' + target.source.book + '册第' + target.source.number + '课' : '本课' + (target.kind === 'phrase' ? '习惯用法' : '新单词')) + '</small></div>' + help + '</div>' +
         '<div class="free-writing-editor-pane"><div class="free-writing-lines">' + lines + '</div>' + actions + '<div class="free-writing-copy-feedback" data-free-copy-feedback>' + this.copyFeedbackHTML(entry) + '</div>' + (entry.checkError ? '<p role="alert" class="free-writing-error">' + escapeHTML(entry.checkError) + '</p>' : '') + '<p class="free-writing-limit">检查提供拼写、时态、搭配、大小写与标点的修改参考；规则覆盖不足会标为需复核；本地检查与自行订正不代表整句正确或掌握，不计学习成绩。</p></div></div></section>';
     }
     refresh() {
@@ -625,7 +634,8 @@
         const button = event.target?.closest?.('[data-free-action]');
         if (!button || container.contains && !container.contains(button)) return;
         event.preventDefault();
-        if(button.dataset.freeAction === 'record-correction') this.recordCorrection(this.currentTarget()?.key,Number(button.dataset.freeLine));
+        if(button.dataset.freeAction === 'speak') void this.pronounceCurrentTarget();
+        else if(button.dataset.freeAction === 'record-correction') this.recordCorrection(this.currentTarget()?.key,Number(button.dataset.freeLine));
         else if (button.dataset.freeAction === 'check') void this.check();
         else if (button.dataset.freeAction === 'copy-review') void this.copyForReview();
         else if (button.dataset.freeAction === 'select-copy') { const field = container.querySelector?.('[data-free-copy-text]'); field?.focus?.(); field?.select?.(); }

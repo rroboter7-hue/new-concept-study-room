@@ -49,6 +49,7 @@
 
   add('i-be',/\bI[ \t]+(?:is|are)\b/gi,()=> 'I am','主语 I 通常与 am 搭配。','high',(m,text,quotations)=>!isQuotation(m,quotations));
   add('singular-be',/\b(he|she|it)[ \t]+(?:am|are)\b/gi,m=>m[1]+' is','he / she / it 通常与 is 搭配。','high',(m,text,quotations)=>!isQuotation(m,quotations));
+  add('singular-past-be',/(^|[.!?\n][ \t]*)(I|he|she|it)[ \t]+were(n['’]t)?\b/gi,m=>m[1]+m[2]+' was'+(m[3]||''),'若是一般过去时的普通陈述，I / he / she / it 通常用 was；虚拟语气等表达仍需结合原意复核。','medium',(m,text,quotations)=>!isQuotation(m,quotations));
   add('plural-be',/\b(they|we|you)[ \t]+(?:is|am)\b/gi,m=>m[1]+' are','they / we / you 通常与 are 搭配。','high',(m,text,quotations)=>!isQuotation(m,quotations));
   add('progressive-missing-be',/(^|[.!?\n][ \t]*)(I|he|she|it|we|you|they)[ \t]+(reading|watching|writing|learning|studying|cooking|swimming|running|playing|working|going|coming)[ \t]+(?=[A-Za-z])/gi,m=>m[1]+m[2]+' '+(/^i$/i.test(m[2])?'am':/^(he|she|it)$/i.test(m[2])?'is':'are')+' '+m[3]+' ','句首主语后直接接 -ing 形式，可能漏了 be；若表达现在进行时，可补 am / is / are。','medium',(m,text,quotations)=>!isQuotation(m,quotations)&&!text.slice(m.index+m[0].length).split(/[.!\n]/)[0].includes('?'));
   add('plural-past-be',/\b(they|we|you)[ \t]+was(n['’]t)?\b/gi,m=>m[1]+' were'+(m[2]||''),'一般过去时中，they / we / you 通常与 were 搭配；否定式用 weren’t。','high',(m,text,quotations)=>!isQuotation(m,quotations));
