@@ -48,7 +48,7 @@ body.bookshelf-visible>.app-main,body.bookshelf-visible>.app-sidebar,body.booksh
 .shelf-bottom-nav [aria-current="page"] svg{fill:var(--shelf-blue);stroke:#fff;stroke-width:1}
 body.shelf-drawer-open{overflow:hidden;overscroll-behavior:none}
 .shelf-overlay{--shelf-blue:#0873ff;--shelf-ink:#080f27;position:fixed;inset:0;z-index:200;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft YaHei",sans-serif;color:var(--shelf-ink);display:flex;align-items:flex-end;justify-content:center}
-.shelf-backdrop{position:absolute;inset:0;background:#0d1d3870;backdrop-filter:blur(4px)}
+.shelf-backdrop{position:absolute;inset:0;background:#0d1d3870}
 .shelf-drawer{position:relative;display:flex;flex-direction:column;max-height:calc(100dvh - max(24px,env(safe-area-inset-top)));width:100%;max-width:650px;border-radius:24px 24px 0 0;background:#fff;padding:22px 18px max(18px,env(safe-area-inset-bottom));box-shadow:0 -12px 60px #0f295136;overflow:hidden;isolation:isolate}
 .shelf-drawer-head{display:flex;align-items:center;gap:16px;margin-bottom:18px;flex-shrink:0}
 .shelf-drawer-cover-slot{flex-shrink:0;width:76px;height:73px;border-radius:8px;overflow:hidden}
@@ -88,7 +88,7 @@ body.shelf-drawer-open{overflow:hidden;overscroll-behavior:none}
 .shelf-empty{padding:28px 14px;text-align:center}
 .shelf-empty h3{font-size:17px;margin:0 0 10px}
 .shelf-empty p{font-size:14px;color:#718097;line-height:1.7;margin:0}
-.shelf-zoom-cover{position:fixed;z-index:201;pointer-events:none;object-fit:cover;border-radius:12px;will-change:left,top,width,height,opacity}
+.shelf-zoom-cover{position:fixed;z-index:201;pointer-events:none;object-fit:cover;border-radius:12px;will-change:transform,opacity}
 @media(min-width:761px){
 .shelf-page{max-width:1120px;padding:35px 44px 40px;display:grid;grid-template-columns:minmax(0,2fr) minmax(280px,1fr);gap:0 32px;align-items:start}
 .shelf-header{grid-column:1/-1;margin-bottom:38px}

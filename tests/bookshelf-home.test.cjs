@@ -54,3 +54,49 @@ test('reduced-motion close disables stale drawer actions and a normal reopen acc
  const target=control({shelfFilter:'favorites'});e.ui.overlay.contains=node=>node===target;e.ui.click({target:{closest:()=>target}});assert.equal(e.ui.favoritesOnly,false);
  e.ui.openBook(2,e.book);assert.equal(e.ui.overlay.inert,false);e.ui.click({target:{closest:()=>target}});assert.equal(e.ui.favoritesOnly,true);
 });
+
+function motionFixture(){
+ const e=fixture(),tracks=[],clones=[];e.scope.matchMedia=()=>({matches:false});
+ const animate=(target,frames,options)=>{let done;const animation={finished:new Promise(resolve=>done=resolve),cancel(){this.cancelled=true;done();},finish:()=>done()};tracks.push({target,frames,options,animation});return animation;};
+ e.scope.document.createElement=()=>{const clone=control();clone.style={};clone.animate=(frames,options)=>animate('cover',frames,options);clones.push(clone);return clone;};
+ e.scope.document.body.appendChild=()=>{};
+ e.ui.dialog.getBoundingClientRect=()=>({left:500,top:24,width:560,height:700});
+ e.ui.dialog.animate=(frames,options)=>animate('drawer',frames,options);
+ const backdrop=control();backdrop.animate=(frames,options)=>animate('backdrop',frames,options);e.nodes.set('.shelf-backdrop',backdrop);
+ const slot=control();slot.getBoundingClientRect=()=>({left:528,top:52,width:92,height:88});e.nodes.set('.shelf-drawer-cover-slot',slot);
+ return Object.assign(e,{tracks,clones});
+}
+
+test('cover and drawer motion start together and animate only transform and opacity',async()=>{
+ const e=motionFixture();e.ui.openBook(2,e.book);
+ assert(e.tracks.some(t=>t.target==='backdrop'),'backdrop fades with the drawer instead of appearing abruptly');
+ assert(e.tracks.some(t=>t.target==='cover'),'keep the selected cover transition');
+ for(const track of e.tracks){
+  assert.equal(track.options.delay||0,0,'the drawer must respond immediately');
+  assert(track.options.duration<=300,'one short transition, without staged waiting');
+  for(const frame of track.frames)for(const key of Object.keys(frame))assert(['transform','opacity','offset','easing'].includes(key),'layout property animated: '+key);
+ }
+ for(const track of e.tracks)track.animation.finish();await Promise.resolve();await Promise.resolve();
+});
+
+test('cover lands at the drawer thumbnail instead of stretching across the course panel',()=>{
+ const e=motionFixture();e.ui.openBook(2,e.book);const cover=e.tracks.find(t=>t.target==='cover');
+ assert.equal(e.clones[0].style.width,'170px');assert.equal(e.clones[0].style.height,'164px');
+ assert.match(cover.frames.at(-1).transform,/translate/);assert.match(cover.frames.at(-1).transform,/scale/);
+ assert.equal(e.clones[0].style.transformOrigin,'top left');
+});
+
+test('interrupting an open with close removes old layers and completes focus restoration',async()=>{
+ const e=motionFixture();e.ui.openBook(2,e.book);const old=e.tracks.slice(),closing=e.ui.closeDrawer();
+ assert(old.every(t=>t.animation.cancelled));assert.equal(e.clones[0].removed,true);assert.equal(e.ui.overlay.inert,true);
+ e.tracks.slice(old.length).forEach(t=>t.animation.finish());await closing;
+ assert.equal(e.ui.overlay.hidden,true);assert.equal(e.ui.root.inert,false);assert.equal(e.book.focused,true);assert.equal(e.ui.zoomCover,null);
+ assert(e.tracks.every(t=>t.animation.cancelled),'completed animation effects must release their compositor layers');
+});
+
+test('closing during opening starts from the visible drawer pose instead of jumping fully open',()=>{
+ const e=motionFixture();e.scope.getComputedStyle=node=>node===e.ui.dialog?{transform:'matrix(1, 0, 0, 1, 0, 12)',opacity:'.45'}:{opacity:'.6'};
+ e.ui.openBook(2,e.book);const count=e.tracks.length;e.ui.closeDrawer();
+ const drawer=e.tracks.slice(count).find(t=>t.target==='drawer'),backdrop=e.tracks.slice(count).find(t=>t.target==='backdrop');
+ assert.equal(drawer.frames[0].opacity,'.45');assert.equal(drawer.frames[0].transform,'matrix(1, 0, 0, 1, 0, 12)');assert.equal(backdrop.frames[0].opacity,'.6');
+});
