@@ -14,7 +14,7 @@
   render(){if(!this.container)return;const a=this.identity();if(!this.config.enabled){this.container.innerHTML='';return;}let html='<div class="account-panel-heading"><span class="account-symbol" aria-hidden="true">☁</span><div><h2>账号与进度</h2><p>'+(a?e(a.user.username):'登录后，在不同设备继续学习')+'</p></div></div>';
    if(this.pending)html+='<div class="account-migration"><strong>迁入账号：'+e(this.pending.candidate.user.username)+'</strong><p>这台设备有本机旧记录。</p><p>可以补入账号中尚未有的记录；已有账号内容保留，本机原记录也会保留。</p><button type="button" class="button primary" data-account-action="guest">迁入本机记录</button><button type="button" class="button" data-account-action="cloud">使用账号进度</button></div>';
    else if(!a||this.reauth)html+='<form data-account-form class="account-login"><strong>登录以同步</strong><label>账号<input data-account-username name="username" autocomplete="username" autocapitalize="none" spellcheck="false" maxlength="32" value="'+e(a?.user.username||'')+'"></label><label>密码<input data-account-password name="password" type="password" autocomplete="current-password" maxlength="128"></label><button type="submit" class="button primary">'+(this.busy?'正在连接…':'登录')+'</button><p class="account-note">使用分配给你的固定账号。</p></form>';
-   else html+='<div class="account-sync-state"><p data-account-status role="status"></p><p class="account-note">最近同步：<span data-account-time>尚未同步</span></p><button type="button" class="button primary account-sync-button" data-account-action="sync">立即同步进度</button><details class="account-settings"><summary>账号设置</summary><button type="button" class="account-text-button" data-account-action="reauth">重新登录</button><button type="button" class="account-text-button" data-account-action="logout">退出账号</button><p class="account-note">退出后本机记录仍保留；账号间独立保存。</p></details></div>';
+   else html+='<div class="account-sync-state"><p data-account-status role="status"></p><p class="account-note">最近同步：<span data-account-time>尚未同步</span></p>'+(this.o.showManualSync===false?'':'<button type="button" class="button primary account-sync-button" data-account-action="sync">立即同步进度</button>')+'<details class="account-settings"><summary>账号设置</summary><button type="button" class="account-text-button" data-account-action="reauth">重新登录</button><button type="button" class="account-text-button" data-account-action="logout">退出账号</button><p class="account-note">退出后本机记录仍保留；账号间独立保存。</p></details></div>';
    html+='<p class="account-note" data-account-operation role="status" aria-live="polite"></p><p class="account-error" data-account-error role="alert"></p>';this.container.innerHTML=html;this.updateStatus();this.setBusy(this.busy);
   }
   updateStatus(){const s=this.status,node=this.container?.querySelector('[data-account-status]'),time=this.container?.querySelector('[data-account-time]'),error=this.container?.querySelector('[data-account-error]'),operation=this.container?.querySelector('[data-account-operation]'),upload=s.phase==='syncing'&&Number.isSafeInteger(s.total)&&s.total>0&&Number.isSafeInteger(s.completed)?'正在上传 '+Math.min(s.total,Math.max(0,s.completed))+'/'+s.total+' 项…':'';if(node)node.textContent=this.localFailure?'本机保存未完成':({idle:'本机记录已保存',syncing:upload||'正在同步进度…',synced:'进度已同步',pending:'有 '+s.pending+' 项待同步',offline:'离线保存在本机，联网后继续同步',limit:'同步记录超出限制，本机记录保留，请先备份', 'login-required':'登录已失效，本机记录保留'}[s.phase]||'本机记录已保存');if(time)time.textContent=s.lastSyncedAt?new Date(s.lastSyncedAt).toLocaleString('zh-CN',{month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'}):'尚未同步';if(error)error.textContent=this.localFailure||this.error;if(operation)operation.textContent=this.operation+(this.operation&&upload?' '+upload:'');const button=this.container?.querySelector('[data-account-action="sync"]');if(button)button.disabled=this.busy||s.phase==='syncing';}
@@ -23,9 +23,27 @@
   localSaved(){this.localFailure='';this.updateStatus();}
   setBusy(value){this.busy=value;for(const button of this.container?.querySelectorAll('button')||[])button.disabled=value;this.updateStatus();}
   makeEngine(options){return this.S.create({...options,onStatus:s=>{this.status=s;this.updateStatus();}});}
-  async start(){if(this.engine||!this.identity()||this.disposed)return;this.engine=this.makeEngine({identity:()=>this.identity(),storage:this.o.accountStore,key:this.I.GUEST+':account:'+this.identity().user.id,snapshot:this.o.getSnapshot,applyRemote:this.o.applyRemote,transport:this.S.transport(()=>this.identity(),this.fetcher)});const result=await this.engine.sync();if(root.document&&!this.interval){this.interval=setInterval(()=>{if(root.document.visibilityState==='visible')this.engine?.sync();},60000);this.interval.unref?.();root.addEventListener?.('online',this.foreground);root.document.addEventListener('visibilitychange',this.foreground);}return result;}
-  changed(){this.engine?.changed();}
-  async syncNow(showMessage=true){if(this.busy||this.disposed)return false;if(showMessage&&await this.o.flushLocal?.()===false){this.error='当前输入尚未保存，请先保存或备份。';this.updateStatus();return false;}const result=this.engine?await this.engine.sync():await this.start();if(showMessage)this.o.toast?.(result?'进度已更新':'本机记录保留，稍后继续同步');return result===true;}
+  async start(options){const before=this.identity();if(this.engine||!before||this.disposed||this.busy&&options===undefined)return;this.engineIdentity=before;this.engine=this.makeEngine({identity:()=>this.identity(),storage:this.o.accountStore,key:this.I.GUEST+':account:'+before.user.id,snapshot:this.o.getSnapshot,applyRemote:this.o.applyRemote,transport:this.S.transport(()=>this.identity(),this.fetcher)});const result=await this.engine.sync(options);if(root.document&&!this.interval){this.interval=setInterval(()=>{if(!this.busy&&root.document.visibilityState==='visible')this.engine?.sync();},60000);this.interval.unref?.();root.addEventListener?.('online',this.foreground);root.document.addEventListener('visibilitychange',this.foreground);}return result;}
+  changed(){if(this.manualDirection!=='pull')this.engine?.changed();}
+  upload(){return this.syncDirection('upload');}
+  pull(){return this.syncDirection('pull');}
+  syncNow(showMessage=true){return this.syncDirection('both',showMessage);}
+  async syncDirection(direction,showMessage=true){
+   if(this.busy||this.disposed)return false;const before=this.identity();
+   if(!before){this.error='请先登录账号，再同步进度';this.updateStatus();if(showMessage)this.o.toast?.(this.error);return false;}
+   this.error='';this.manualDirection=direction;this.setBusy(true);if(showMessage)this.progress(direction==='upload'?'正在上传本机进度…':direction==='pull'?'正在读取云端进度…':'正在同步进度…');
+   try{
+    if(showMessage&&await this.o.flushLocal?.()===false){this.error='当前输入尚未保存，请先保存或备份。';return false;}
+    if(this.disposed||!this.actorMatches(before)||this.engineIdentity&&!this.actorMatches(this.engineIdentity))throw Error('identity-change');
+    const options=direction==='upload'?{pull:false,push:true}:direction==='pull'?{pull:true,push:false}:{pull:true,push:true};
+    const result=this.engine?await this.engine.sync(options):await this.start(options);
+    if(this.disposed||!this.actorMatches(before))throw Error('identity-change');
+    const state=this.engine?.state?.()||this.status,pullComplete=direction==='pull'&&state.phase==='pending'&&state.pending>0,success=result===true||pullComplete;
+    if(showMessage)this.o.toast?.(success?(direction==='pull'?(state.pending>0?'云端进度已更新到本机，待上传记录保留':'云端进度已更新到本机'):direction==='upload'?'本机进度已上传':'进度已更新'):'本机记录保留，稍后继续同步');
+    return success;
+   }catch(error){this.error=error.message==='identity-change'?'账号已切换，本机记录保留，请重新打开页面':'同步暂未完成，本机记录保留，请稍后重试';return false;}
+   finally{this.manualDirection=null;this.progress('');this.setBusy(false);}
+  }
   async applyStore(session,cache,key,changes,args,guard=()=>true){
    const valid=()=>!this.disposed&&!!guard();let backedUp;
    // A clock correction needs a durable recovery image first. If another tab
