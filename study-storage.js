@@ -38,13 +38,16 @@
  function validOp(path,op){let parts;try{parts=JSON.parse(path);}catch{return false;}return Array.isArray(parts)&&parts.length>0&&parts.every(key=>typeof key==='string'&&!BAD.has(key)&&key!==META)&&object(op)&&Array.isArray(op.stamp)&&Number.isFinite(op.stamp[0])&&typeof op.stamp[1]==='string'&&(op.deleted===true||Object.hasOwn(op,'value'));}
  function read({storage,key='zhixin-study-v1'}){
   try{
-   const source=storage.getItem(key),raw=source===null?{}:JSON.parse(source);if(!object(raw))throw Error('存储资料格式异常');
+   const entries=typeof storage.readEntries==='function'?storage.readEntries():null,snapshot=entries===null?null:new Map(entries);
+   const item=name=>snapshot?snapshot.get(name)??null:storage.getItem(name);
+   const source=item(key),raw=source===null?{}:JSON.parse(source);if(!object(raw))throw Error('存储资料格式异常');
    const leaves=flatten(project(raw)),versions={};for(const [path,stamp]of Object.entries(object(raw[META]?.fields)?raw[META].fields:{}))if(validOp(path,{stamp,deleted:true}))versions[path]=stamp;
-   const operations=[];for(let i=0;i<storage.length;i++){
-    const name=storage.key(i);if(name?.startsWith(key+':field:')){
-     const op=JSON.parse(storage.getItem(name)),suffix=name.slice((key+':field:').length),path=op.path||(suffix.startsWith('[')?suffix:decodeURIComponent(suffix));if(!validOp(path,op))throw Error('保存字段格式异常');operations.push([path,op]);
+   const names=snapshot?[...snapshot.keys()]:Array.from({length:storage.length},(_,i)=>storage.key(i));
+   const operations=[];for(const name of names){
+    if(name?.startsWith(key+':field:')){
+     const op=JSON.parse(item(name)),suffix=name.slice((key+':field:').length),path=op.path||(suffix.startsWith('[')?suffix:decodeURIComponent(suffix));if(!validOp(path,op))throw Error('保存字段格式异常');operations.push([path,op]);
     }else if(name?.startsWith(key+':pending:')){
-     const transaction=JSON.parse(storage.getItem(name));if(!object(transaction?.operations))throw Error('待保存资料格式异常');for(const [path,op]of Object.entries(transaction.operations)){if(!validOp(path,op))throw Error('待保存字段格式异常');operations.push([path,op]);}
+     const transaction=JSON.parse(item(name));if(!object(transaction?.operations))throw Error('待保存资料格式异常');for(const [path,op]of Object.entries(transaction.operations)){if(!validOp(path,op))throw Error('待保存字段格式异常');operations.push([path,op]);}
     }
    }
    // Read earlier scalar-card journals too. Once a complete card is saved,

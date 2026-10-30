@@ -118,11 +118,59 @@
    if(!won){await refresh();return;}
    apply(op);broadcast(op);invalidate(op.stamp);
   }
+  // Import only field increments inside one durable IDB transaction. The
+  // callback sees the latest persisted fields plus recovery journals; its
+  // materialized base is deliberately not written over concurrent fields.
+  async function writeBatch(work,{guard=()=>true}={}){
+   assertOpen();if(!guard())throw Error('账号身份已切换');
+   await flush();assertOpen();if(!guard())throw Error('账号身份已切换');
+   let result,committed=[],acknowledged=[];
+   await new Promise((resolve,reject)=>{
+    let tx,failure;
+    try{
+     tx=db.transaction(STORE,'readwrite');
+     tx.oncomplete=resolve;tx.onerror=()=>{};
+     tx.onabort=()=>reject(failure||tx.error||Error('IndexedDB transaction aborted.'));
+     const store=tx.objectStore(STORE),request=store.getAll();
+     request.onsuccess=()=>{try{
+      assertOpen();if(!guard())throw Error('账号身份已切换');
+      const prior=new Map(request.result.map(op=>[op.name,op]));
+      acknowledged=journal();
+      for(const {op}of acknowledged){const old=prior.get(op.name);if(!old||compare(old.stamp,op.stamp)<0)prior.set(op.name,op);}
+      const stage=new Map([...prior].filter(([,op])=>op.value!==null).map(([name,op])=>[name,op.value])),writes=new Map();
+      const view={get length(){return stage.size;},key:i=>[...stage.keys()][i]??null,getItem:name=>stage.get(String(name))??null,
+       readEntries:()=>[...stage],setItem(name,value){name=String(name);if(!owns(name))throw Error('Account batch cannot write another profile.');stage.set(name,String(value));writes.set(name,String(value));},
+       removeItem(name){name=String(name);if(!owns(name))throw Error('Account batch cannot remove another profile.');stage.delete(name);writes.set(name,null);}};
+      result=work(view);
+      if(result?.then||result?.ok===false)throw result?.error||Error('本机批量保存未完成');
+      if(!guard())throw Error('账号身份已切换');
+      for(const op of prior.values())clock=Math.max(clock,op.stamp[0]);
+      const batchStamp=[clock=Math.max(clock+1,Date.now()),writer];
+      // A StudyStorage transaction leaves all changed fields in compact slots.
+      // Its redundant base image and removed temporary transaction are omitted.
+      for(const [name,value]of writes){
+       if(name===key||name.startsWith(key+':pending:'))continue;
+       if(!name.startsWith(key+':field:'))throw Error('Account batch may only save study fields.');
+       const old=prior.get(name);if((old?.value??null)===value)continue;
+       prior.set(name,{name,value,stamp:batchStamp});
+      }
+      const persisted=new Map(request.result.map(op=>[op.name,op]));
+      for(const op of prior.values()){const old=persisted.get(op.name);if(!old||compare(old.stamp,op.stamp)<0)store.put(op);}
+      committed=[...prior.values()];
+     }catch(error){failure=error;tx.abort();}};
+    }catch(error){failure=error;try{tx?.abort();}catch{}reject(error);}
+   });
+   // Memory and recovery acknowledgement follow the durable transaction.
+   for(const op of committed)apply(op);
+   for(const entry of acknowledged)if(storage.getItem(entry.name)===entry.raw)storage.removeItem(entry.name);
+   recover();invalidate([clock,writer]);
+   return result;
+  }
   try{for(const op of await readRows())apply(op);recover();}catch(error){db.close();throw error;}
   db.onversionchange=()=>{close();report(Error('Account IndexedDB version changed. Reopen the account.'));};
   function close(){if(closed)return;closed=true;if(timer!==null)clearTimeout(timer);peers.delete(peer);root.removeEventListener?.('storage',eventHandler);db.close();}
   peers.add(peer);root.addEventListener?.('storage',eventHandler);if(journal().length)schedule();
-  return {get length(){assertOpen();recover();return values.size;},key(i){assertOpen();recover();return [...values.keys()][Number(i)]??null;},getItem(name){assertOpen();recover();return values.get(String(name))??null;},setItem,removeItem,flush,seed,putSnapshot,close};
+  return {get length(){assertOpen();recover();return values.size;},key(i){assertOpen();recover();return [...values.keys()][Number(i)]??null;},getItem(name){assertOpen();recover();return values.get(String(name))??null;},readEntries(){assertOpen();recover();return [...values];},setItem,removeItem,flush,seed,putSnapshot,writeBatch,close};
  }
  return {open};
 });
