@@ -97,7 +97,7 @@
    try{const expanded=global.StudyLessonWordTargets?.vocabularyForLesson(lesson,baseVocabulary);if(Array.isArray(expanded))reviewVocabulary=expanded;}catch{/* A missing expansion must not hide existing review cards. */}
    for(const original of reviewVocabulary.slice(0,1000)){
     let v=original;
-    const corrected=global.StudyContextMeanings?.forLesson(lesson,original?.word);
+    const corrected=global.StudyContextMeanings?.forLesson(lesson,original?.word)||global.StudySentenceWordbankData?.contextForLesson?.(lesson,original?.word);
     if(original?.meaningProvenance?.kind==='self-authored-context'&&!corrected)continue;
     if(corrected)v={...original,...corrected,word:original.word};
     if(v?.meaningMissing===true||v?.needsContextReview===true)continue;
