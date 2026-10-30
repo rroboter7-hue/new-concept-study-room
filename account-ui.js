@@ -26,7 +26,27 @@
   async start(){if(this.engine||!this.identity()||this.disposed)return;this.engine=this.makeEngine({identity:()=>this.identity(),storage:this.o.accountStore,key:this.I.GUEST+':account:'+this.identity().user.id,snapshot:this.o.getSnapshot,applyRemote:this.o.applyRemote,transport:this.S.transport(()=>this.identity(),this.fetcher)});const result=await this.engine.sync();if(root.document&&!this.interval){this.interval=setInterval(()=>{if(root.document.visibilityState==='visible')this.engine?.sync();},60000);this.interval.unref?.();root.addEventListener?.('online',this.foreground);root.document.addEventListener('visibilitychange',this.foreground);}return result;}
   changed(){this.engine?.changed();}
   async syncNow(showMessage=true){if(this.busy||this.disposed)return false;if(showMessage&&await this.o.flushLocal?.()===false){this.error='当前输入尚未保存，请先保存或备份。';this.updateStatus();return false;}const result=this.engine?await this.engine.sync():await this.start();if(showMessage)this.o.toast?.(result?'进度已更新':'本机记录保留，稍后继续同步');return result===true;}
-  async applyStore(session,cache,key,changes,args){let source=session.read();if(!source.ok)return false;let received=this.D.receive(source.data,changes,args);if(received.correctedClock){await cache.putSnapshot(key+':pre-import',JSON.stringify({format:'zhixin-backup-v1',exportedAt:new Date().toISOString(),reason:'clock-recovery',data:source.data}));source=session.read();if(!source.ok)return false;received=this.D.receive(source.data,changes,args);}return session.commit(received.data,{replace:true,source:'cloud'}).ok;}
+  async applyStore(session,cache,key,changes,args,guard=()=>true){
+   const valid=()=>!this.disposed&&!!guard();let backedUp;
+   // A clock correction needs a durable recovery image first. If another tab
+   // edits during that await, inspect the transaction's latest view again.
+   for(let attempt=0;attempt<3;attempt++){
+    if(!valid())return false;let recovery;
+    try{
+     const saved=await cache.writeBatch(store=>{
+      if(!valid())throw Error('identity-change');const local=this.Storage.createSession({storage:store,key}),source=local.read();if(!source.ok)throw source.error||Error('local-save');
+      const received=this.D.receive(source.data,changes,args);
+      if(received.correctedClock&&(!backedUp||!this.D.equal(backedUp,source.data))){recovery=source.data;throw Error('clock-backup-required');}
+      const result=local.commit(received.data,{replace:true,source:'cloud'});if(!result.ok)throw result.error||Error('local-save');return result;
+     },{guard:valid});
+     if(!valid()||!saved?.ok)return false;session.adopt(saved.data);return true;
+    }catch(error){
+     if(!valid())return false;if(!recovery)throw error;
+     await cache.putSnapshot(key+':pre-import',JSON.stringify({format:'zhixin-backup-v1',exportedAt:new Date().toISOString(),reason:'clock-recovery',data:recovery}));backedUp=recovery;
+    }
+   }
+   return false;
+  }
   async login(){
    if(this.busy||this.disposed)return false;
    const username=(this.container?.querySelector('[data-account-username]')?.value||'').trim().toLowerCase(),password=this.container?.querySelector('[data-account-password]')?.value||'',before=this.identity(),generation=++this.generation;
@@ -47,7 +67,7 @@
     const session=this.Storage.createSession({storage:cache,key}),alive=()=>generation===this.generation&&!this.disposed&&this.actorMatches(before)?candidate:null;
     if(!alive())throw Error('identity-change');
     stage='initial-sync';this.progress('账号验证已通过，正在读取账号进度…');
-    temporary=this.makeEngine({identity:alive,storage:cache,key,snapshot:()=>{const r=session.read();if(!r.ok)throw Error('local-save');return r.data;},applyRemote:(changes,args)=>this.applyStore(session,cache,key,changes,args),transport:this.S.transport(alive,this.fetcher)});
+    temporary=this.makeEngine({identity:alive,storage:cache,key,snapshot:()=>{const r=session.read();if(!r.ok)throw Error('local-save');return r.data;},applyRemote:(changes,args)=>this.applyStore(session,cache,key,changes,args,()=>!!alive()),transport:this.S.transport(alive,this.fetcher)});
     if(!await temporary.sync()){const error=Error('initial-sync');error.phase=temporary.state?.().phase||this.status.phase;throw error;}
     temporary.stop();temporary=null;if(!alive())throw Error('identity-change');
     this.pending={candidate,key,cache,session,before,generation};handedOff=true;
