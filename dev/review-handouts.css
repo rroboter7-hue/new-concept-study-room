@@ -1,0 +1,33 @@
+.rh-section {
+  margin-top: 20px;
+  background: #1e1e24;
+  border-radius: 12px;
+  padding: 16px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+.rh-section h3 { color: #fff; margin-bottom: 16px; font-size: 18px; }
+.rh-book { margin-bottom: 16px; }
+.rh-book h4 { color: #5cc9c9; margin-bottom: 8px; font-size: 15px; }
+.rh-lesson { margin-bottom: 12px; }
+.rh-lesson strong { color: #a0a0b0; font-size: 13px; }
+.rh-lesson ul { list-style: none; padding: 0; margin-top: 8px; }
+.rh-lesson li {
+  background: #2a2a35; padding: 12px; border-radius: 8px;
+  margin-bottom: 8px; display: flex; flex-direction: column; gap: 6px;
+}
+.rh-en { color: #fff; font-weight: 500; line-height: 1.4; font-size: 15px; }
+.rh-zh { color: #8c8c9e; font-size: 14px; }
+.rh-add-review {
+  align-self: flex-start; margin-top: 6px; background: transparent;
+  border: 1px solid #5cc9c9; color: #5cc9c9; padding: 4px 12px;
+  border-radius: 6px; font-size: 12px; cursor: pointer; transition: 0.2s;
+}
+.rh-add-review:active { background: rgba(92, 201, 201, 0.1); }
+.rh-add-review:disabled { border-color: #444; color: #666; cursor: default; }
+.rh-drill { margin-bottom: 16px; }
+.rh-drill strong { color: #5cc9c9; font-size: 15px; }
+.rh-drill ul { list-style: none; padding: 0; }
+.rh-drill li { background: #2a2a35; padding: 12px; border-radius: 8px; margin-top: 8px; }
+.rh-q { color: #fff; margin-bottom: 8px; font-size: 14px; line-height: 1.4; }
+.rh-drill details summary { color: #5cc9c9; cursor: pointer; font-size: 13px; outline: none; }
+.rh-a { margin-top: 8px; color: #5cc9c9; font-weight: 500; font-size: 13px; border-top: 1px solid #333; padding-top: 8px;}
