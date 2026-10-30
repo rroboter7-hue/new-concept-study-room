@@ -19,6 +19,12 @@ test('noun aids keep compact context-relevant meanings rather than dictionary ve
  const lesson={id:'nouns',paragraphs:[{en:'He will set out in his little boat and take part in a race.'}],vocabulary:[{word:'boat',pos:'n.',meaning:'n. 船 vi. 乘船 vt. 以船运'},{word:'set',pos:'n.',meaning:'n. 日落, 同伙 vt. 放置 vi. 凝固'},{word:'part',pos:'n.',meaning:'n. 部分, 局部 vt. 分开'}]};
  const hints=Support.forLesson(lesson);assert.deepEqual(hints.nouns.map(row=>[row.word,row.meaning]),[['boat','船']]);
 });
+test('source names retain sentence-initial places, quoted titles and full initials without dialogue starters',()=>{
+ const lesson={id:'complete-names',paragraphs:[{en:'London was cold. Paris was warm. Last Sunday I visited “The Globe” with R.E. Byrd. “May I come?” “Can I go?” “Certainly.” “It’s late.” “Dear me,” I said.'}]};
+ const names=Support.forLesson(lesson).properNames.map(row=>row.name);
+ for(const name of ['London','Paris','Sunday','The Globe','R.E. Byrd'])assert(names.includes(name),name);
+ for(const name of ['Last Sunday I','May I','Can I','Certainly','It’s','Dear','R','I'])assert(!names.includes(name),name);
+});
 
 test('current target pronunciation uses the speech service without changing the five saved sentences',async()=>{
  const spoken=[],lesson={id:'listen',book:2,number:2,title:'Listening'},ui=new Writing({getLesson:()=>lesson,getTargets:()=>({words:[{word:'outside',meaning:'外面'}]}),speak:async(...args)=>spoken.push(args),saveDraft:()=>true});
@@ -29,4 +35,6 @@ test('current target pronunciation uses the speech service without changing the 
  assert.equal(ui.active.draft.targets[target.key].answers.length,5);
  const notices=[];ui.options.speak=async()=>{throw Error('unavailable');};ui.options.toast=m=>notices.push(m);
  assert.equal(await ui.pronounceCurrentTarget(),false);assert(notices.some(m=>/发音.*不可用/.test(m)));
+ notices.length=0;ui.options.speak=async()=>{throw Object.assign(Error('paused'),{name:'AbortError'});};
+ assert.equal(await ui.pronounceCurrentTarget(),false);assert.equal(notices.length,0,'normal audio cancellation must not look like a failure');
 });

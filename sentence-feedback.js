@@ -147,7 +147,9 @@
     for(const match of checked.matchAll(/[，。？！；：]/g))add({type:'punctuation',start:match.index,end:match.index+1,original:match[0],replacement:{'，':',','。':'.','？':'?','！':'!','；':';','：':':'}[match[0]],message:'英文句中出现中文标点，请核对是否需要改为对应英文标点。',confidence:'medium'});
     if(!tooLong&&source.trim()){
       const trimmed=source.trimEnd(),end=trimmed.length;
-      const clearQuestion=/^[\s"'“‘]*(?:(?:am)\s+I\b|(?:is|was)\s+(?:he|she|it|this|that|there|the|a|an|my|your)\b|(?:are|were)\s+(?:you|we|they|these|those|there|the|my|your)\b|(?:do|does|did|have|has|had|can|could|will|would|should|must|may|might)\s+(?:I|you|he|she|it|we|they)\b|(?:where|when|why|how|what|which)\s+(?:am|is|are|was|were|do|does|did|can|could|will|would|should|have|has|had)\b)/i.test(source);
+      // The quoted question does not determine the reporting clause's punctuation.
+      const attributedQuestion=quotes.some(range=>range.start===source.search(/\S/)&&/[?!]$/.test(source.slice(range.start+1,range.end-1).trimEnd())&&source.slice(range.end).trim());
+      const clearQuestion=!attributedQuestion&&/^[\s"'“‘]*(?:(?:am)\s+I\b|(?:is|was)\s+(?:he|she|it|this|that|there|the|a|an|my|your)\b|(?:are|were)\s+(?:you|we|they|these|those|there|the|my|your)\b|(?:do|does|did|have|has|had|can|could|will|would|should|must|may|might)\s+(?:I|you|he|she|it|we|they)\b|(?:where|when|why|how|what|which)\s+(?:am|is|are|was|were|do|does|did|can|could|will|would|should|have|has|had)\b)/i.test(source);
       if(!/[.!?。？！]["'’”)]*$/.test(trimmed)){
         add({type:'punctuation',start:end,end,original:'',replacement:clearQuestion?'?':'.',message:clearQuestion?'这段表达采用明显的疑问语序，若是在提问，请补问号。':'当前末尾没有明确句末标点；若是陈述句可补句号，其他语气请按原意选择。',confidence:clearQuestion?'medium':'high'});
       }else if(clearQuestion&&/\.["'’”)]*$/.test(trimmed)){

@@ -17,7 +17,7 @@
         let end=i+1;while(end<paragraph.length&&/[.!?。！？”’"')\]]/.test(paragraph[end]))end++;
         if(end<paragraph.length&&!/\s/.test(paragraph[end]))continue;
         const rest=paragraph.slice(end).trimStart();
-        if(end>i+1&&/^(?:(?:he|she|they|I|we)|[\p{Lu}][\p{L}]+)\s+(?:said|asked|replied|answered|cried|shouted|whispered)\b/u.test(rest))continue;
+        if(end>i+1&&/^(?:(?:(?:he|she|they|I|we|you)|[\p{Lu}][\p{L}.]*(?:\s+[\p{Lu}][\p{L}.]*){0,5})(?:\s+[a-z]+ly)?\s+)?(?:said|asked|replied|answered|cried|shouted|whispered)\b/u.test(rest))continue;
         const part=paragraph.slice(start,end).trim();if(part)result.push(part);start=end;i=end-1;
       }
       const remaining=paragraph.slice(start).trim();if(remaining)result.push(remaining);

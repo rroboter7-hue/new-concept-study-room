@@ -27,3 +27,21 @@ test('actual app target-name click calls the existing audio boundary and keeps i
  await h.input(before,'A retained draft.');await h.click('[data-free-action="speak"]');
  assert.equal(h.audio.spoken.at(-1),target.label);assert.equal(h.document.querySelector('[data-free-answer="0"]'),before);assert.equal(before.value,'A retained draft.');assert.equal(h.document.querySelectorAll('[data-free-answer]').length,5);
 });
+test('every available four-book lesson builds source-bound noun aids and retains all valid current writing hints',async()=>{
+ const h=await harness(options),ui=h.api.learningPipeline,books=new Set();
+ for(const lesson of h.c.LESSONS){
+  books.add(lesson.book);const targets=ui.options.getWritingTargets(lesson),support=h.c.StudyRetellSupport.forLesson(lesson,{writingTargets:targets});
+  const expected=(targets.words||[]).filter(row=>row?.prior!==true&&row?.isLessonNew!==false&&typeof row.word==='string'&&row.word.trim()&&typeof row.meaning==='string'&&row.meaning.trim());
+  assert.equal(support.words.length,expected.length,lesson.id);
+  for(const row of [...support.properNames,...support.nouns])assert(lesson.paragraphs.some(p=>p.en===row.sourceText),lesson.id+' source hint');
+  if(lesson.book===2){
+   const names=support.properNames.map(row=>row.name);
+   if(lesson.number===2)for(const wrong of ['Last Sunday I','It’s','I’ve',"I'm","But I'm",'Dear','Do'])assert(!names.includes(wrong),wrong);
+   if(lesson.number===19){assert(names.includes('Susan'));assert(names.includes('Wednesday'));for(const wrong of ['May I','Can I','Could I','Certainly'])assert(!names.includes(wrong),wrong);}
+   if(lesson.number===40)assert(names.includes('The Globe'));
+   if(lesson.number===43){assert(names.includes('R.E. Byrd'));assert(!names.includes('R'));}
+  }
+ }
+ assert.deepEqual([...books].sort(),[1,2,3,4]);assert(h.c.LESSONS.length>=270);
+ assert.equal(Object.keys(h.api.data.records).length,0);
+});

@@ -18,3 +18,11 @@ test('an unavailable or incomplete checker cannot produce a successful full-lang
  assert.equal(result.incomplete,true);assert.equal(result.rows[0].issues.length,0);assert.match(result.rows[0].notice,/未完成/);
  const unknown=await Review.check('Another wording.',{checkSentence:async()=>({issues:[],incomplete:true})});assert.equal(unknown.incomplete,true);
 });
+test('correct quoted questions with a reporting clause do not turn the final full stop into a question mark',async()=>{
+ const Feedback=require('../sentence-feedback.js');
+ for(const source of ['“Can you help?” he asked.','“Are you hungry?” Lucy asked.','“Are you hungry?” Captain Charles Alison quietly asked.','“Can you help?” he quietly asked.','“Can you help?” asked Lucy.']){
+  const report=await Review.check(source,{checkSentence:sentence=>Feedback.check(sentence,{grammarCheck:()=>[]})});
+  assert.equal(report.rows.flatMap(row=>row.issues).filter(issue=>issue.type==='punctuation').length,0,source);
+  assert.equal(report.rows.flatMap(row=>row.issues).filter(issue=>issue.type==='capitalization').length,0,source);
+ }
+});

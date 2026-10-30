@@ -540,13 +540,13 @@
       if (slot) slot.innerHTML = this.copyFeedbackHTML();
     }
     async pronounceCurrentTarget() {
-      const target=this.currentTarget(),lesson=this.active?.lesson;
+      const target=this.currentTarget(),entry=this.active,lesson=entry?.lesson,mounted=!!this.container;
       if(!target)return false;
       try {
         if(typeof this.options.speak!=='function')throw Error('Speech unavailable');
         if(await this.options.speak(target.label,{lessonId:lesson?.id})===false)throw Error('Speech unavailable');
         return true;
-      }catch(_){this.options.toast?.('当前发音暂不可用，请检查网络或设备朗读功能后重试。');return false;}
+      }catch(error){if(error?.name!=='AbortError'&&this.active===entry&&this.currentTarget()?.key===target.key&&(!mounted||this.container))this.options.toast?.('当前发音暂不可用，请检查网络或设备朗读功能后重试。');return false;}
     }
     async check(key) {
       const entry = this.ensure(), target = entry?.targets.find(item => item.key === (key || entry.draft.activeTargetKey));

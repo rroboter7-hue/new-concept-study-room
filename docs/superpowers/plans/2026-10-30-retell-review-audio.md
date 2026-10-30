@@ -21,10 +21,19 @@
 
 ## Tasks
 
-- [ ] Pin source-name/noun completeness and pronunciation callback behavior with failing tests.
-- [ ] Implement complete source-bound hints and accessible target pronunciation; rerun existing hint/writing tests.
-- [ ] Pin paraphrase-safe local checks, issue summary, staleness, correction history and async navigation guards with failing tests.
-- [ ] Implement focused review module, retell UI actions/storage and manual Doubao copy guidance.
-- [ ] Verify backup/account projection round trip, existing pipeline lifecycle and draft protection.
-- [ ] Browser-check phone and desktop retelling, long names, pronunciation interaction and correction save/reopen.
+- [x] Pin source-name/noun completeness and pronunciation callback behavior with failing tests.
+- [x] Implement source-bound hints and accessible target pronunciation; rerun existing hint/writing tests.
+- [x] Pin paraphrase-safe local checks, issue summary, staleness, correction history and async navigation guards with failing tests.
+- [x] Implement focused review module, retell UI actions/storage and manual Doubao copy guidance.
+- [x] Verify backup/account projection round trip, existing pipeline lifecycle and draft protection.
+- [x] Browser-check phone and desktop retelling, long names, pronunciation interaction and correction save/reopen.
 - [ ] Commit independently; integrate only after stable account release and feature acceptance checks.
+
+## Verification ledger
+
+- Initial focused regression: 188 passed. Expanded four-book hint/source and review checks: 193 passed before final attribution refinements.
+- Independent review found ordinary dialogue openers in name hints, missing initial/quoted names, a quoted-question punctuation false positive, and focus loss on late rechecks. Each was reproduced RED then fixed GREEN; final focused attribution/persistence/feedback checks passed 22 tests.
+- Final expanded regression after fixes: 193 passed, 0 failed. Source-hint construction and retention of current targets checked across available four-book lessons; this is not a claim of complete human semantic proofreading.
+- Browser QA on a synthetic-only localhost origin: 390x844 and 1280x900 layouts have no horizontal overflow, saved correction survives a safe reload, original draft stays unchanged, pronunciation click produces no console errors. No iPhone hardware or audible-output verification claimed.
+- Native worktree creation could not target the nested repository; used a separate local Git checkout under the authorized workspace. Primary account release merge is untouched.
+- Release is held because the separate account service is not yet reachable on the user's phone without VPN. No frontend main push, no production learner-data migration or automatic upload.

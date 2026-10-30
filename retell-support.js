@@ -13,15 +13,27 @@
     const source=list(lesson.paragraphs).map(row=>text(row?.en)).filter(Boolean);
     const knownPeople=new Set(characters.map(row=>row.name.toLocaleLowerCase('en')));
     const common=new Set('I We You He She It They The A An My Our Your His Her Their This That These Those There Here Then When While After Before If But And Or So As At In On With For From To By Of One Two Three Some Many Most All Last Next Soon Suddenly However Yes No What Why How Where Who Which Please Hello Well'.toLowerCase().split(' '));
+    'do does did can could would should shall will must might am is are was were have has had dear certainly oh though because until unless once just very quite perhaps apparently instead despite even now yesterday today tomorrow naturally fortunately unfortunately during something someone everything everybody everyone nothing nobody both each neither either much little never always almost whenever whatever wherever indeed good thank thanks excuse sorry look listen wait stop come go young'.split(' ').forEach(word=>common.add(word));
     const properNames=[],seen=new Set();
-    const pattern=/(?:St\.|[\p{Lu}][\p{L}\p{M}\d]*(?:[’'\-][\p{L}\p{M}\d]+)*)(?:[ \t]+(?:(?:of|the|de|van)[ \t]+)?(?:St\.|[\p{Lu}][\p{L}\p{M}\d]*(?:[’'\-][\p{L}\p{M}\d]+)*))*/gu;
-    for(const paragraph of source)for(const match of paragraph.matchAll(pattern)){
-      let name=match[0].replace(/^(?:The|A|An)\s+/,''),key=name.toLocaleLowerCase('en');
-      if(!name||common.has(key)||knownPeople.has(key)||seen.has(key))continue;
-      const before=paragraph.slice(0,match.index).trimEnd(),single=!/\s/.test(name);
-      if(single&&(!before||/[.!?][”’"']*$/.test(before)))continue;
-      if(characters.some(row=>{const parts=row.name.toLowerCase().replace(/[.]/g,'').split(/\s+/);return key.replace(/[.]/g,'').split(/\s+/).every(part=>parts.includes(part.replace(/[’']s$/,'')));}))continue;
+    const atom='(?:(?:[A-Z]\\.){1,}|(?:Mr|Mrs|Ms|Dr|St|Prof|Capt)\\.|[\\p{Lu}][\\p{L}\\p{M}\\d]*(?:[’\'\\-][\\p{L}\\p{M}\\d]+)*)';
+    const pattern=new RegExp(atom+'(?:[ \\t]+(?:(?:of|the|de|van)[ \\t]+)?'+atom+')*','gu');
+    function addName(name,paragraph){
+      name=name.trim().replace(/[’']s$/,'');const key=name.toLocaleLowerCase('en');
+      if(!name||name.length===1||common.has(key)||knownPeople.has(key)||seen.has(key))return;
+      if(characters.some(row=>{const parts=row.name.toLowerCase().replace(/[.]/g,'').split(/\s+/);return key.replace(/[.]/g,'').split(/\s+/).every(part=>parts.includes(part));}))return;
       seen.add(key);properNames.push({name,sourceText:paragraph});
+    }
+    for(const paragraph of source)for(const match of paragraph.matchAll(pattern)){
+      const name=match[0],tokens=Array.from(name.matchAll(/\S+/g)),quotedTitle=/^The\s/.test(name)&&/[“‘"']$/.test(paragraph.slice(0,match.index).trimEnd());
+      if(quotedTitle||/^(?:Mr|Mrs|Ms|Dr|St|Prof|Capt)\.\s+\S/.test(name)){addName(name,paragraph);continue;}
+      let start=null,end=0;
+      const finish=()=>{if(start!==null)addName(name.slice(start,end),paragraph);start=null;};
+      tokens.forEach((token,index)=>{
+        const value=token[0],key=value.toLowerCase(),base=key.split(/[’']/)[0],connector=/^(?:of|the|de|van)$/.test(value)&&start!==null;
+        const modalMay=key==='may'&&tokens[index+1]&&/^(?:I|You|He|She|It|We|They)$/.test(tokens[index+1][0]);
+        const stop=!connector&&(common.has(key)||common.has(base)||modalMay||/^(?:mr|mrs|ms|dr|prof|capt)$/.test(key));
+        if(stop)finish();else{if(start===null)start=token.index;end=token.index+value.length;}
+      });finish();
     }
     const nouns=[],seenNouns=new Set();
     for(const row of [...list(targets?.words),...list(lesson.vocabulary)]){
