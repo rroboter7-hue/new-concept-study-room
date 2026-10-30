@@ -15,11 +15,25 @@
     const common=new Set('I We You He She It They The A An My Our Your His Her Their This That These Those There Here Then When While After Before If But And Or So As At In On With For From To By Of One Two Three Some Many Most All Last Next Soon Suddenly However Yes No What Why How Where Who Which Please Hello Well'.toLowerCase().split(' '));
     'do does did can could would should shall will must might am is are was were have has had dear certainly oh though because until unless once just very quite perhaps apparently instead despite even now yesterday today tomorrow naturally fortunately unfortunately during something someone everything everybody everyone nothing nobody both each neither either much little never always almost whenever whatever wherever indeed good thank thanks excuse sorry look listen wait stop come go young'.split(' ').forEach(word=>common.add(word));
     const properNames=[],seen=new Set();
+    // Positive lexical/context evidence is required for isolated capitals.
+    // Capitalization alone would turn "Sit", "Give" and "Women" into names.
+    const namedForms=new Set(('London Paris England Britain France Germany Italy Greece Spain Portugal Europe America Australia China Japan Korea Russia Canada Africa Asia India Switzerland Austria Sweden Norway Denmark Finland Iceland Turkey Egypt California Portsmouth Rome Beijing Tokyo Berlin Moscow Sydney Melbourne Shanghai Atlantic Pacific Mediterranean Nile Thames Earth Mars Venus Jupiter Saturn Sunday Monday Tuesday Wednesday Thursday Friday Saturday January February March April May June July August September October November December English French German Italian Spanish Greek Dutch American British Chinese Japanese Korean Russian Austrian Danish Swedish Norwegian Icelandic Turkish').toLowerCase().split(' '));
+    const vocabulary=[...list(targets?.words),...list(lesson.vocabulary)];
+    function singleNameEvidence(name,paragraph){
+      const key=name.toLowerCase();
+      if(namedForms.has(key)||/s$/.test(key)&&namedForms.has(key.slice(0,-1))||/^(?:[A-Z]\.){2,}$/.test(name)||/^[A-Z]{2,}$/.test(name))return true;
+      const rows=vocabulary.filter(row=>text(row?.word).toLowerCase()===key);
+      if(rows.some(row=>row.isProperName===true||/proper/i.test(text(row.pos))||/^[\p{Lu}]/u.test(text(row.word))&&/人名|姓氏|地名|国名|州名|市|城市|本课船名|名称/.test(text(row.meaning))))return true;
+      if(rows.some(row=>/^[a-z]/.test(text(row.word))))return false;
+      const escaped=name.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+      return new RegExp('(?:\\b(?:called|named|aunt|uncle|cousin|river|lake|Mount|in|at|from|to)\\s+'+escaped+'(?![\\p{L}\\p{M}])|(?<![\\p{L}\\p{M}])'+escaped+'\\s+(?:said|asked|replied|answered|exclaimed|cried|shouted|whispered)\\b)','u').test(paragraph);
+    }
     const atom='(?:(?:[A-Z]\\.){1,}|(?:Mr|Mrs|Ms|Dr|St|Prof|Capt)\\.|[\\p{Lu}][\\p{L}\\p{M}\\d]*(?:[’\'\\-][\\p{L}\\p{M}\\d]+)*)';
     const pattern=new RegExp(atom+'(?:[ \\t]+(?:(?:of|the|de|van)[ \\t]+)?'+atom+')*','gu');
     function addName(name,paragraph){
       name=name.trim().replace(/[’']s$/,'');const key=name.toLocaleLowerCase('en');
       if(!name||name.length===1||common.has(key)||knownPeople.has(key)||seen.has(key))return;
+      if(!/\s/.test(name)&&!singleNameEvidence(name,paragraph))return;
       if(characters.some(row=>{const parts=row.name.toLowerCase().replace(/[.]/g,'').split(/\s+/);return key.replace(/[.]/g,'').split(/\s+/).every(part=>parts.includes(part));}))return;
       seen.add(key);properNames.push({name,sourceText:paragraph});
     }

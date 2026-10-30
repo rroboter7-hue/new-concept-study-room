@@ -25,6 +25,14 @@ test('source names retain sentence-initial places, quoted titles and full initia
  for(const name of ['London','Paris','Sunday','The Globe','R.E. Byrd'])assert(names.includes(name),name);
  for(const name of ['Last Sunday I','May I','Can I','Certainly','It’s','Dear','R','I'])assert(!names.includes(name),name);
 });
+test('a lone capitalized word needs name evidence rather than only appearing at a sentence boundary',()=>{
+ const lesson={id:'ordinary-openers',paragraphs:[{en:'Sit down here. Give me a book. Don’t drop it. Women always have the last word. Shut the door. Be careful. Hurry up. Ask him. Beef is ready. Let’s go. London was cold. Paris was warm.'}]};
+ assert.deepEqual(Support.forLesson(lesson).properNames.map(row=>row.name),['London','Paris']);
+});
+test('explicit source name and place contexts retain unfamiliar accented names and small towns',()=>{
+ const lesson={id:'context-names',paragraphs:[{en:'He was in Pinhurst with his aunt Aimé. Her painting was named Cézanne.'}]};
+ assert.deepEqual(Support.forLesson(lesson).properNames.map(row=>row.name),['Pinhurst','Aimé','Cézanne']);
+});
 
 test('current target pronunciation uses the speech service without changing the five saved sentences',async()=>{
  const spoken=[],lesson={id:'listen',book:2,number:2,title:'Listening'},ui=new Writing({getLesson:()=>lesson,getTargets:()=>({words:[{word:'outside',meaning:'外面'}]}),speak:async(...args)=>spoken.push(args),saveDraft:()=>true});
