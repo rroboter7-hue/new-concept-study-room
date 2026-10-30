@@ -10,7 +10,17 @@ Run `node cloud-account/generate-accounts.mjs ABSOLUTE_PRIVATE_DIRECTORY` once. 
 
 Apply the generated `seed.sql` to D1; send `pepper.txt` through stdin to `wrangler secret put PASSWORD_PEPPER`. Keep `ALLOWED_ORIGINS` restricted to the existing GitHub Pages origin. Deploy the Worker and test authentication, account isolation, last-edit ordering, logout, and real device access before enabling the public endpoint in `account-config.js`.
 
-These verifiers support the generated high-entropy passwords only. Do not replace them with short human-chosen passwords without switching to an appropriate slow password-hashing scheme.
+The original HMAC-only verifiers accept only the original 43-character random secrets. They never accept short passwords.
+
+## Short assigned credentials and rotation
+
+The five assigned usernames can be shortened to `a01`–`a05`, with distinct uniformly generated eight-character alphanumeric secrets. These use a strictly versioned, account-bound, domain-separated HMAC-SHA256 verifier with an independent 16-byte random salt and the server-only pepper. Login attempts remain limited by account and IP before verification. Session tokens remain independent 256-bit random values; an eight-character password is never a bearer token.
+
+This is the assigned-random-secret scheme for five fixed accounts, not a general password-hashing service for arbitrary user-chosen passwords. It relies on keeping the pepper secret and enforcing the online rate limits; the salt does not make HMAC a slow KDF. A database-and-pepper compromise would allow offline guesses against the eight-character secret space. Native PBKDF2 candidates were tested on Workers Free but exceeded the nominal 10 ms CPU budget (including a cold 20,000-iteration sample at 23 ms); the bounded keyed-verifier design avoids adding a new browser protocol or paid service. Do not accept user-chosen passwords without revisiting the scheme. Keep the shared legacy HMAC helper fast, as it also protects rate-limit bucket identifiers.
+
+Run `node cloud-account/rotate-accounts.mjs ABSOLUTE_SNAPSHOT_JSON ABSOLUTE_CURRENT_ACCOUNTS_JSON ABSOLUTE_PEPPER_TXT ABSOLUTE_UNUSED_PRIVATE_DIRECTORY`. The snapshot contains the seven account rows, including two disabled QA accounts. The command writes a pending private handout and SQL without changing production. Keep every input and output outside the website checkout. Back up the existing private handout before replacing it.
+
+Deploy the backwards-compatible Worker first. The generated `rotation.sql` contains one atomic `UPDATE`, with a materialized guard checking all seven original identities, verifiers, counters and revisions before modifying the five formal accounts. It does not rely on whole-file import transaction semantics. A stale snapshot or a failing row aborts the statement, including session-trigger effects. IDs and learning entries remain untouched; the existing credential trigger revokes old sessions, and conditional session creation rejects a login verified against a concurrently replaced credential. Confirm all new logins, old-credential and old-session rejection, disabled QA status and identical entry/counter snapshots before delivering the replacement handout.
 
 ## Data and behavior
 

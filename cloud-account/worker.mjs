@@ -3,6 +3,26 @@ const encoder=new TextEncoder(),DAY=86400000,MAX_BODY=280*1024;
 const hex=bytes=>Array.from(new Uint8Array(bytes),x=>x.toString(16).padStart(2,'0')).join('');
 const random=()=>btoa(String.fromCharCode(...crypto.getRandomValues(new Uint8Array(32)))).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
 export async function verifier(pepper,id,password){const k=await crypto.subtle.importKey('raw',encoder.encode(pepper),{name:'HMAC',hash:'SHA-256'},false,['sign']);return hex(await crypto.subtle.sign('HMAC',k,encoder.encode('zhixin-credential-v1\0'+id+'\0'+password)));}
+const SHORT_PASSWORD=/^[A-Za-z0-9]{8}$/;
+const LEGACY_PASSWORD=/^[A-Za-z0-9_-]{43}$/;
+const V2_CREDENTIAL=/^v2\$hmac-sha256\$([0-9a-f]{32})\$([0-9a-f]{64})$/;
+const DUMMY_CREDENTIAL='v2$hmac-sha256$'+'0'.repeat(32)+'$'+'0'.repeat(64);
+async function shortTag(pepper,id,password,salt){
+ const pepperKey=await crypto.subtle.importKey('raw',encoder.encode(pepper),{name:'HMAC',hash:'SHA-256'},false,['sign']);
+ return hex(await crypto.subtle.sign('HMAC',pepperKey,encoder.encode('zhixin-assigned-credential-v2\0'+id+'\0'+salt+'\0'+password)));
+}
+export async function makeCredential(pepper,id,password){
+ if(!SHORT_PASSWORD.test(password))throw new Error('Fixed credentials require an 8-character alphanumeric secret');
+ const salt=hex(crypto.getRandomValues(new Uint8Array(16)));
+ return 'v2$hmac-sha256$'+salt+'$'+await shortTag(pepper,id,password,salt);
+}
+export async function verifyCredential(pepper,id,password,stored){
+ if(typeof password!=='string'||typeof stored!=='string')return false;
+ const v2=V2_CREDENTIAL.exec(stored);
+ if(v2)return SHORT_PASSWORD.test(password)&&same(await shortTag(pepper,id,password,v2[1]),v2[2]);
+ if(/^[0-9a-f]{64}$/.test(stored)&&LEGACY_PASSWORD.test(password))return same(await verifier(pepper,id,password),stored);
+ return false;
+}
 async function hash(token){return hex(await crypto.subtle.digest('SHA-256',encoder.encode('zhixin-session-v1\0'+token)));}
 function same(a,b){if(typeof a!=='string'||typeof b!=='string'||a.length!==64||b.length!==64)return false;let n=0;for(let i=0;i<64;i++)n|=a.charCodeAt(i)^b.charCodeAt(i);return n===0;}
 function fault(status,message){const e=new Error(message);e.status=status;throw e;}
@@ -12,7 +32,20 @@ const entry=row=>({key:row.key,version:row.version,deleted:row.deleted===1,modif
 async function throttle(db,pepper,ip,username,now){const window=Math.floor(now/(15*60000));for(const [scope,limit]of [['ip:'+ip,60],['account:'+username,8]]){const bucket=await verifier(pepper,'rate',scope),r=await db.prepare('INSERT INTO login_attempts(bucket,window,count) VALUES(?,?,1) ON CONFLICT(bucket) DO UPDATE SET count=CASE WHEN window=excluded.window THEN count+1 ELSE 1 END,window=excluded.window RETURNING count').bind(bucket,window).first();if(r.count>limit)fault(429,'尝试次数较多，请稍后再试');}await db.prepare('DELETE FROM login_attempts WHERE bucket IN(SELECT bucket FROM login_attempts WHERE window<? LIMIT 100)').bind(window-96).run();}
 async function owner(request,db,now){const auth=request.headers.get('authorization')||'';if(!/^Bearer [A-Za-z0-9_-]{43}$/.test(auth))fault(401,'请重新登录以继续同步');const tokenHash=await hash(auth.slice(7)),u=await db.prepare('SELECT a.id,a.username,a.used_bytes,a.entity_count,a.revision FROM sessions s JOIN accounts a ON a.id=s.user_id WHERE s.token_hash=? AND s.expires_at>? AND a.enabled=1').bind(tokenHash,now).first();if(!u)fault(401,'登录已失效，请重新登录');return {...u,tokenHash};}
 async function route(request,env,url){const db=env.DB,now=Date.now();if(url.pathname==='/health'&&request.method==='GET')return {service:'zhixin-account-sync',version:1,serverTime:now};if(!db||typeof env.PASSWORD_PEPPER!=='string'||env.PASSWORD_PEPPER.length<32)fault(503,'云端账号尚未配置');
- if(url.pathname==='/v1/login'&&request.method==='POST'){const b=await jsonBody(request),name=typeof b.username==='string'?b.username.trim().toLowerCase():'';await throttle(db,env.PASSWORD_PEPPER,request.headers.get('CF-Connecting-IP')||'local',name.slice(0,40),now);if(!/^[a-z][a-z0-9_-]{2,31}$/.test(name)||typeof b.password!=='string'||!/^[A-Za-z0-9_-]{43}$/.test(b.password))fault(401,'账号或密码不正确');const u=await db.prepare('SELECT id,username,verifier FROM accounts WHERE username=? AND enabled=1').bind(name).first(),calculated=await verifier(env.PASSWORD_PEPPER,u?.id||'unknown',b.password);if(!same(calculated,u?.verifier||'0'.repeat(64)))fault(401,'账号或密码不正确');const token=random(),expiresAt=now+30*DAY;await db.prepare('DELETE FROM sessions WHERE token_hash IN(SELECT token_hash FROM sessions WHERE user_id=? AND (expires_at<=? OR token_hash NOT IN(SELECT token_hash FROM sessions WHERE user_id=? ORDER BY created_at DESC LIMIT 9)))').bind(u.id,now,u.id).run();await db.prepare('INSERT INTO sessions(token_hash,user_id,created_at,expires_at) VALUES(?,?,?,?)').bind(await hash(token),u.id,now,expiresAt).run();return {user:publicUser(u),token,expiresAt,serverTime:now};}
+ if(url.pathname==='/v1/login'&&request.method==='POST'){
+  const b=await jsonBody(request),name=typeof b.username==='string'?b.username.trim().toLowerCase():'';
+  await throttle(db,env.PASSWORD_PEPPER,request.headers.get('CF-Connecting-IP')||'local',name.slice(0,40),now);
+  if(!/^[a-z][a-z0-9_-]{2,31}$/.test(name)||typeof b.password!=='string'||!(SHORT_PASSWORD.test(b.password)||LEGACY_PASSWORD.test(b.password)))fault(401,'账号或密码不正确');
+  const u=await db.prepare('SELECT id,username,verifier FROM accounts WHERE username=? AND enabled=1').bind(name).first();
+  const valid=await verifyCredential(env.PASSWORD_PEPPER,u?.id||'unknown',b.password,u?.verifier||(SHORT_PASSWORD.test(b.password)?DUMMY_CREDENTIAL:'0'.repeat(64)));
+  if(!u||!valid)fault(401,'账号或密码不正确');
+  const token=random(),expiresAt=now+30*DAY;
+  await db.prepare('DELETE FROM sessions WHERE token_hash IN(SELECT token_hash FROM sessions WHERE user_id=? AND (expires_at<=? OR token_hash NOT IN(SELECT token_hash FROM sessions WHERE user_id=? ORDER BY created_at DESC LIMIT 9)))').bind(u.id,now,u.id).run();
+  // The credential may rotate while hashing. Insert only if the verified row is still current.
+  const inserted=await db.prepare('INSERT INTO sessions(token_hash,user_id,created_at,expires_at) SELECT ?,id,?,? FROM accounts WHERE id=? AND username=? AND enabled=1 AND verifier=?').bind(await hash(token),now,expiresAt,u.id,u.username,u.verifier).run();
+  if(inserted.meta?.changes!==1)fault(401,'账号或密码不正确');
+  return {user:publicUser(u),token,expiresAt,serverTime:now};
+ }
  const u=await owner(request,db,now),result={user:publicUser(u),serverTime:now};
  if(url.pathname==='/v1/me'&&request.method==='GET')return {...result,usedBytes:u.used_bytes,entityCount:u.entity_count};
  if(url.pathname==='/v1/logout'&&request.method==='POST'){await db.prepare('DELETE FROM sessions WHERE token_hash=?').bind(u.tokenHash).run();return {...result,ok:true};}
