@@ -3,7 +3,7 @@ const test=require('node:test'),assert=require('node:assert/strict'),fs=require(
 const D=require('../account-data.js');
 const entity=i=>JSON.stringify(['records','lesson-'+i]);
 function fixture({asyncMeta=false}={}){
- const stats={projects:0,snapshots:0,applies:0,checkpoints:0,asyncCheckpoints:0,puts:0},events=[],remote=new Map(),meta=new Map(),statuses=[];
+ const stats={projects:0,snapshots:0,applies:0,checkpoints:0,asyncCheckpoints:0,puts:0,manifests:0,reads:0},events=[],remote=new Map(),meta=new Map(),statuses=[];
  const measured={...D,project(value){stats.projects++;return D.project(value);}},module={exports:{}};
  vm.runInNewContext(fs.readFileSync(path.join(__dirname,'../account-sync-client.js'),'utf8'),{module,exports:module.exports,require:()=>measured,AbortController,setTimeout,clearTimeout,Date,fetch}, {filename:'account-sync-client.js'});
  let data={words:[]},active={endpoint:'https://synthetic.invalid',user:{id:'synthetic',username:'a01'},token:'x'.repeat(43)},hook=null,applyHook=null,metaHook=null,canApply=true,revision=0;
@@ -11,14 +11,15 @@ function fixture({asyncMeta=false}={}){
  const storage={getItem:key=>meta.get(key)||null,setItem(key,value){if(asyncMeta)throw Error('synchronous sync metadata would exceed the local quota');stats.checkpoints++;meta.set(key,value);}};
  if(asyncMeta)storage.putSyncMeta=async value=>{stats.checkpoints++;stats.asyncCheckpoints++;if(metaHook)await metaHook(value,stats.asyncCheckpoints);meta.set('profile:cloud-sync-v1',value);};
  const engine=module.exports.create({identity:()=>active,key:'profile',storage,snapshot(){stats.snapshots++;return D.copy(data);},
-  async transport(route,args){if(route==='/v1/entry'){stats.puts++;events.push({kind:'put',body:D.copy(args.body)});}if(hook)await hook(route,args,stats.puts);
+  async transport(route,args){if(route==='/v1/entry'){stats.puts++;events.push({kind:'put',body:D.copy(args.body)});}if(route==='/v1/manifest')stats.manifests++;if(route==='/v1/read')stats.reads++;if(hook)await hook(route,args,stats.puts);
    if(route==='/v1/manifest')return response({entries:[...remote.values()].map(({value,...row})=>row),next:'',version:revision,unchanged:args.body.knownVersion===revision});
    if(route==='/v1/read')return response({entries:args.body.keys.filter(key=>remote.has(key)).map(key=>D.copy(remote.get(key))),remaining:[]});
    assert.equal(route,'/v1/entry');const body=args.body,old=remote.get(body.key);if(!old||D.compare({at:body.modifiedAt,id:body.writeId},{at:old.modifiedAt,id:old.writeId})>0){remote.set(body.key,{key:body.key,version:(old?.version||0)+1,modifiedAt:body.modifiedAt,writeId:body.writeId,deleted:body.deleted,...(!body.deleted?{value:D.copy(body.value)}:{})});revision++;}return response({entry:D.copy(remote.get(body.key))});
   },async applyRemote(changes,args){stats.applies++;if(!canApply)return false;if(applyHook)await applyHook(changes,args);data=D.receive(data,changes,args).data;return true;},onStatus:status=>statuses.push(status)});
  function edit(i,score=100,at=Date.now(),id='edit-'+i){data=D.apply(data,{[entity(i)]:{value:{score}}});data._accountEdits||={};data._accountEdits[entity(i)]={at,id};}
  function seed(count,payload=0){const at=Date.now()-1000;data={words:[],records:{},_accountEdits:{}};for(let i=0;i<count;i++){data.records['lesson-'+i]={score:i,...(payload?{note:'x'.repeat(payload)}:{})};data._accountEdits[entity(i)]={at,id:'seed-'+i};}}
- return {engine,storage,stats,remote,meta,statuses,events,seed,edit,setHook:fn=>hook=fn,setApplyHook:fn=>applyHook=fn,setMetaHook:fn=>metaHook=fn,setActive:value=>active=value,setApply:value=>canApply=value,get data(){return data;},reset(){for(const key of Object.keys(stats))stats[key]=0;events.length=0;statuses.length=0;}};
+ function cloudEdit(i,score=100,at=Date.now(),id='cloud-'+i){const key=entity(i),old=remote.get(key);remote.set(key,{key,version:(old?.version||0)+1,modifiedAt:at,writeId:id,deleted:false,value:{score}});revision++;}
+ return {engine,storage,stats,remote,meta,statuses,events,seed,edit,cloudEdit,setHook:fn=>hook=fn,setApplyHook:fn=>applyHook=fn,setMetaHook:fn=>metaHook=fn,setActive:value=>active=value,setApply:value=>canApply=value,get data(){return data;},reset(){for(const key of Object.keys(stats))stats[key]=0;events.length=0;statuses.length=0;}};
 }
 test('a hundred pending entities project and persist once per bounded batch, with numeric progress',async()=>{
  const f=fixture();await f.engine.sync();f.reset();f.seed(100);assert.equal(await f.engine.sync({pull:false}),true);
@@ -103,4 +104,35 @@ test('imported records upload with a nearly full guest origin while ACKs and syn
   const engine=Sync.create({identity:()=>identity,storage:cache,key,snapshot:()=>Storage.read({storage:cache,key}).data,applyRemote:(changes,args)=>cache.writeBatch(view=>{const s=Storage.createSession({storage:view,key});return s.commit(D.receive(s.read().data,changes,args).data,{replace:true,source:'cloud'});}).then(result=>result.ok),transport:async(route,{body})=>({user:identity.user,serverTime:Date.now(),...(route==='/v1/manifest'?{version:0,entries:[],next:''}:(assert.equal(route,'/v1/entry'),remote.set(body.key,{...body,version:1}),{entry:remote.get(body.key)}))})});
   try{assert.equal(await engine.sync(),true);assert.equal(engine.state().pending,0);assert.equal(remote.size,48);assert.equal(disk.getItem('guest'),guestRaw);assert.equal(disk.getItem(fillerKey),filler);assert.equal(used(),before);assert.equal(Object.keys(JSON.parse(cache.getItem(key+':cloud-sync-v1')).entries).length,48);}finally{engine.stop();}
  }finally{cache.close();}
+});
+test('explicit pull-only reads cloud records without issuing a PUT and keeps latest-version ordering',async()=>{
+ const f=fixture(),now=Date.now();f.cloudEdit(0,90,now-50,'newer-cloud');f.edit(0,20,now-100,'older-local');
+ assert.equal(await f.engine.sync({pull:true,push:false}),true);assert.equal(f.stats.puts,0);assert.equal(f.stats.manifests,1);assert.equal(f.stats.reads,1);assert.equal(f.data.records['lesson-0'].score,90);assert.equal(f.engine.state().pending,0);
+});
+test('warm push-only uploads pending entries without reading the manifest',async()=>{
+ const f=fixture();await f.engine.sync();f.reset();f.edit(0,20);
+ assert.equal(await f.engine.sync({pull:false,push:true}),true);assert.equal(f.stats.puts,1);assert.equal(f.stats.manifests,0);assert.equal(f.stats.reads,0);assert.equal(f.remote.get(entity(0)).value.score,20);
+});
+test('cold push-only verifies existing cloud records first instead of replacing their newer value',async()=>{
+ const f=fixture(),now=Date.now();f.cloudEdit(0,90,now-50,'newer-cloud');f.edit(0,20,now-100,'older-local');f.edit(1,30,now-20,'other-local');
+ assert.equal(await f.engine.sync({pull:false,push:true}),true);assert.equal(f.stats.manifests,1);assert.equal(f.stats.reads,1);assert.equal(f.stats.puts,1);assert.equal(f.remote.get(entity(0)).value.score,90);assert.equal(f.remote.get(entity(0)).version,1);assert.equal(f.remote.get(entity(1)).value.score,30);
+});
+test('pull-only retains newer local and unrelated drafts, returns success and continues to report pending',async()=>{
+ const f=fixture(),now=Date.now();f.cloudEdit(0,20,now-100,'older-cloud');f.edit(0,90,now-20,'newer-local');f.edit('draft',50,now-10,'unrelated-draft');
+ assert.equal(await f.engine.sync({pull:true,push:false}),true);assert.equal(f.stats.puts,0);assert.equal(f.data.records['lesson-0'].score,90);assert.equal(f.data.records['lesson-draft'].score,50);assert.equal(f.engine.state().pending,2);assert.equal(f.engine.state().phase,'pending');assert.equal(f.engine.state().lastSyncedAt,0);assert.match(f.statuses.at(-1).message,/本机|待上传/);
+});
+test('a failed pull-only keeps the original local drafts and sync metadata',async()=>{
+ const f=fixture();await f.engine.sync();f.edit(0,20);const before=D.copy(f.data),meta=[...f.meta];f.reset();f.setHook(route=>{if(route==='/v1/manifest')throw Error('synthetic pull failure');});
+ assert.equal(await f.engine.sync({pull:true,push:false}),false);assert.equal(f.stats.puts,0);assert.deepEqual(f.data,before);assert.deepEqual([...f.meta],meta);assert.equal(f.engine.state().pending,1);
+});
+test('explicit idle pull-only cancels a queued auto upload without clearing its pending edits',async()=>{
+ const f=fixture();await f.engine.sync();f.edit(0,20);f.engine.changed();f.reset();
+ try{assert.equal(await f.engine.sync({pull:true,push:false}),true);assert.equal(f.stats.puts,0);assert.equal(f.engine.state().pending,1);assert.equal(f.engine.state().phase,'pending');assert.equal(f.data.records['lesson-0'].score,20);assert.equal(await f.engine.sync(),true);assert.equal(f.stats.puts,1);assert.equal(f.engine.state().pending,0);}finally{f.engine.stop();}
+});
+test('pull requested during an active upload joins its serial queue instead of starting a parallel transfer',async t=>{
+ const f=fixture();await f.engine.sync();f.seed(20);f.reset();let release,entered;
+ const gate=new Promise(resolve=>release=resolve),hit=new Promise(resolve=>entered=resolve);t.after(release);
+ f.setHook(async(route,args,count)=>{if(route==='/v1/entry'&&count===1){entered();await gate;}});
+ const upload=f.engine.sync({pull:false,push:true});await hit;const pull=f.engine.sync({pull:true,push:false});assert.equal(pull,upload);assert.equal(f.stats.puts,1);assert.equal(f.stats.manifests,0);release();
+ assert.equal(await upload,true);assert.equal(f.stats.puts,20);assert.equal(f.stats.manifests,1);assert.equal(f.engine.state().pending,0);
 });

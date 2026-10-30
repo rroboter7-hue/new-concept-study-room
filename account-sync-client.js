@@ -42,8 +42,21 @@
     if(i+16<keys.length){await new Promise(resolve=>setTimeout(resolve,0));guard();}
    }
   }
-  async function run(){const beforeContacts=contacts,beforePhase=phase;progress=null;try{for(let pass=0;pass<3&&(wantPull||wantPush);pass++){const doPull=wantPull||meta.knownVersion===null;wantPull=false;wantPush=false;notify('syncing');if(doPull)await pull();await push();}guard();const count=pending();if(!count){if(contacts>beforeContacts){await checkpoint({...meta,lastSyncedAt:now()});notify('synced');}else if(phase==='syncing')notify(beforePhase);}else notify('pending');return count===0;}catch(error){if(valid())notify(error.status===401?'login-required':error.status===413?'limit':'offline',error.status===401?'请重新登录，学习记录仍保存在本机。':error.status===413?'同步记录超出限制，本机记录保留，请先导出备份。':'暂未同步，已保存的本机记录会保留。');return false;}finally{running=null;if(valid()&&(wantPull||wantPush))changed();}}
-  function sync({pull:doPull=true}={}){if(!valid())return Promise.resolve(false);clearTimeout(timer);timer=null;wantPull=wantPull||doPull;wantPush=true;if(!running)running=run();return running;}
+  async function run(){const beforeContacts=contacts,beforePhase=phase;let didPull=false,didPush=false;progress=null;
+   try{for(let pass=0;pass<3&&(wantPull||wantPush);pass++){
+    const doPush=wantPush,doPull=wantPull||doPush&&meta.knownVersion===null;wantPull=false;wantPush=false;notify('syncing');
+    if(doPull){await pull();didPull=true;}if(doPush){didPush=true;await push();}
+   }guard();const count=pending();if(!count){if(contacts>beforeContacts){await checkpoint({...meta,lastSyncedAt:now()});notify('synced');}else if(phase==='syncing')notify(beforePhase);}else notify('pending',didPull&&!didPush?'云端读取已完成，较新的本机记录仍保留并待上传。':'');
+    // Pull completion does not claim that unsent local edits reached the cloud.
+    return count===0||didPull&&!didPush;
+   }catch(error){if(valid())notify(error.status===401?'login-required':error.status===413?'limit':'offline',error.status===401?'请重新登录，学习记录仍保存在本机。':error.status===413?'同步记录超出限制，本机记录保留，请先导出备份。':'暂未同步，已保存的本机记录会保留。');return false;}finally{running=null;if(valid()&&(wantPull||wantPush))changed();}
+  }
+  function sync({pull:doPull=true,push:doPush=true}={}){if(!valid())return Promise.resolve(false);clearTimeout(timer);timer=null;
+   // An explicit idle pull takes precedence over a not-yet-started automatic
+   // upload. Dirty stamps remain pending for the next automatic/manual push.
+   if(!running&&doPull&&!doPush)wantPush=false;
+   wantPull=wantPull||doPull;wantPush=wantPush||doPush;if(!running)running=run();return running;
+  }
   function changed(){if(!valid()||!pending())return;wantPush=true;notify('pending');clearTimeout(timer);timer=setTimeout(()=>sync({pull:false}),2500);timer.unref?.();}
   function stop(){stopped=true;clearTimeout(timer);abort.abort();phase='stopped';}
   return {sync,changed,stop,state};
