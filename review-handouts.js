@@ -1,141 +1,245 @@
 (function () {
   'use strict';
-  var BOOKS = [{"id":"1","name":"第一册","subtitle":"英语初阶","stage":"基础阶段（be 动词、时态、比较、被动与定语从句）","intro":"本讲义用于复习第一册已学的基础语法、单词与习惯用法，共五部分：句型替换操练、汉译英造句、语法专项训练、参考答案、复习卡。建议先独立完成，再对照答案自评，并出声朗读，打好基础。","patterns":[{"title":"be 动词的一般疑问句","lesson":"第1–2课","model":"Excuse me! Is this your handbag?","examples":["Yes, it is.","No, it isn't.","Is this your book?"]},{"title":"be 动词的否定句","lesson":"第3–4课","model":"This is not my umbrella.","examples":["That is my coat.","This is my ticket.","That isn't your watch."]},{"title":"特殊疑问句：国籍与品牌","lesson":"第5–8课","model":"What make is it? It's a Volvo.","examples":["What nationality is she? She's Chinese.","What make is your car? It's a Toyota."]},{"title":"疑问词 What colour","lesson":"第13–14课","model":"What colour is your new dress? It's green.","examples":["What colour is the case? It's brown.","Come upstairs and see it."]},{"title":"名词复数与 Are these","lesson":"第15–16课","model":"Are these your books? Yes, they are.","examples":["Are those your passports? No, they aren't.","These are our cases."]},{"title":"所有格形容词","lesson":"第11–12课","model":"Here is my ticket and here is yours.","examples":["His tie is blue.","Her dress is white.","Their passports are here."]},{"title":"There is / There are 存在句","lesson":"第25–28课","model":"There is a book on the table.","examples":["There are some pictures on the wall.","Is there a chair in the room?","There aren't any cups on the shelf."]},{"title":"现在进行时","lesson":"第31–34课","model":"He is reading a book now.","examples":["They are playing in the garden.","She is cooking in the kitchen.","What are you doing? I'm washing the dishes."]},{"title":"祈使句","lesson":"第29–30课","model":"Come in and shut the door.","examples":["Open the window, please.","Don't run in the classroom.","Sit down and take off your coat."]},{"title":"情态动词 can","lesson":"第43–46课","model":"Can you swim? Yes, I can.","examples":["Can she make a cake? No, she can't.","I can see the bird in the tree."]},{"title":"be going to 计划与预测","lesson":"第61–64课","model":"I'm going to see a film tomorrow.","examples":["It is going to rain.","They are going to have a party.","What are you going to do?"]},{"title":"一般过去时","lesson":"第67–70课","model":"He was at the butcher's yesterday.","examples":["We were at school on Monday.","She went to the market last night.","I didn't see him this morning."]}],"translation":[{"zh":"这是你的手提包吗？","en":"Is this your handbag?"},{"zh":"这不是我的雨伞。","en":"This is not my umbrella."},{"zh":"对不起，先生。","en":"Excuse me, sir."},{"zh":"很高兴见到你。","en":"Nice to meet you."},{"zh":"桌子上有一本书。","en":"There is a book on the table."},{"zh":"墙上有一些画。","en":"There are some pictures on the wall."},{"zh":"房间里没有椅子。","en":"There isn't a chair in the room."},{"zh":"他正在看书。","en":"He is reading a book."},{"zh":"她正在厨房里做饭。","en":"She is cooking in the kitchen."},{"zh":"你在做什么？","en":"What are you doing?"},{"zh":"请进。","en":"Come in, please."},{"zh":"不要在教室里跑。","en":"Don't run in the classroom."},{"zh":"你会游泳吗？","en":"Can you swim?"},{"zh":"我打算明天去看电影。","en":"I'm going to see a film tomorrow."},{"zh":"天要下雨了。","en":"It is going to rain."},{"zh":"我昨天没见到他。","en":"I didn't see him yesterday."}],"drills":[{"title":"练习一  be 动词（am / is / are）","items":[{"q":"My name ___ Robert. I ___ a student.","a":"is；am。be 随主语变化：第三人称单数用 is，I 用 am。"},{"q":"These ___ my books.","a":"are。主语 these 是复数，be 用 are。"},{"q":"There ___ a cup on the desk.","a":"is。There be 中 be 与就近的 a cup 一致，用 is。"}]},{"title":"练习二  名词的单复数","items":[{"q":"one ___, two ___ (book)","a":"book；books。一般名词复数加 -s。"},{"q":"This is a ___. These are ___. (box)","a":"box；boxes。以 x 结尾的名词复数加 -es。"},{"q":"There is a ___ on the shelf. (knife)","a":"knife。冠词 a 后接单数名词。"}]},{"title":"练习三  代词与所有格","items":[{"q":"This is my sister. ___ name is Ann.","a":"Her。指女性，修饰名词 name 用形容词性物主代词 her。"},{"q":"The boys are here. ___ coats are on the chair.","a":"Their。the boys 是复数，所有格用 their。"},{"q":"Give me that tie. It is ___. (my / mine)","a":"mine。空格后没有名词，用名词性物主代词 mine。"}]},{"title":"练习四  There be 存在句","items":[{"q":"___ there any water in the bottle?","a":"Is。water 是不可数名词，be 用 is。"},{"q":"There ___ some apples on the tree.","a":"are。some apples 是复数，be 用 are。"},{"q":"There ___ not any milk in the fridge.","a":"is。milk 不可数，be 用 is。"}]},{"title":"练习五  现在进行时","items":[{"q":"Look! The children ___ (play) in the garden.","a":"are playing。Look 提示动作正在进行，结构 be + doing。"},{"q":"She ___ (cook) dinner now.","a":"is cooking。now 提示现在进行时，主语 she 用 is。"},{"q":"What ___ you ___ (do)?","a":"are；doing。现在进行时疑问句把 be 提前。"}]},{"title":"练习六  一般现在时、情态与将来","items":[{"q":"He ___ (go) to school by bike every day.","a":"goes。every day 表习惯，用一般现在时；he 后动词加 -es。"},{"q":"___ you speak English? Yes, I can.","a":"Can。回答用 can，提问也用情态动词 can。"},{"q":"We ___ (have) a test tomorrow.","a":"are going to have。tomorrow 表计划，用 be going to + 动词原形。"}]}],"cards":{"grammar":[{"point":"be 动词","rule":"am / is / are 随主语变化","example":"I am a student."},{"point":"指示代词","rule":"this/that 单数，these/those 复数","example":"This is my pen."},{"point":"名词复数","rule":"一般加 -s；以 s/x/ch/sh 结尾加 -es","example":"two boxes"},{"point":"所有格形容词","rule":"my/your/his/her/its/our/their，修饰名词","example":"Her bag is red."},{"point":"名词性物主代词","rule":"mine/yours/his/hers/ours/theirs，独立使用","example":"This book is mine."},{"point":"There be","rule":"表示存在，be 与就近主语一致","example":"There is a cat under the chair."},{"point":"现在进行时","rule":"be + doing，表示正在进行","example":"They are watching TV."},{"point":"祈使句","rule":"动词原形开头，否定用 Don't","example":"Don't be late."},{"point":"情态动词 can","rule":"表能力，后接动词原形","example":"She can dance."},{"point":"be going to","rule":"表计划或有迹象的预测","example":"We are going to leave soon."},{"point":"一般过去时","rule":"动词用过去式，否定用 didn't","example":"He didn't come last night."}],"idioms":[{"idiom":"excuse me","meaning":"打扰一下；对不起","example":"Excuse me, is this your bag?"},{"idiom":"thank you","meaning":"谢谢你","example":"Thank you very much."},{"idiom":"very much","meaning":"非常（修饰动词）","example":"I like it very much."},{"idiom":"nice to meet you","meaning":"很高兴认识你","example":"Hello, nice to meet you."},{"idiom":"come on","meaning":"快点；加油","example":"Come on, or we'll be late."},{"idiom":"here is / here are","meaning":"给你；这里有","example":"Here is your coffee."},{"idiom":"of course","meaning":"当然","example":"Of course I can help you."},{"idiom":"all right","meaning":"好的；没关系","example":"That's all right."},{"idiom":"at home","meaning":"在家","example":"She is at home now."},{"idiom":"at work","meaning":"在上班；在工作","example":"My father is at work."},{"idiom":"look at","meaning":"看……","example":"Look at the blackboard."},{"idiom":"listen to","meaning":"听……","example":"Listen to me, please."}]}},{"id":"2","name":"第二册","subtitle":"实践与进步","stage":"进阶阶段（时态体系、被动语态、定语从句、间接引语与状语从句）","intro":"本讲义用于复习第二册已学的核心语法、单词与习惯用法，共五部分：句型替换操练、汉译英造句、语法专项训练、参考答案、复习卡。建议先独立完成，再对照答案自评，并出声朗读，把规则用熟。","patterns":[{"title":"一般现在时：习惯与事实","lesson":"第1–2课","model":"I never get up early on Sundays.","examples":["She works in a bank.","The earth moves round the sun.","We do not watch television every evening."]},{"title":"现在进行时","lesson":"第2课","model":"Aunt Lucy is visiting us this week.","examples":["They are playing in the park now.","He is always changing his mind.","What are you doing at the moment?"]},{"title":"一般过去时","lesson":"第3课","model":"He visited Italy last summer.","examples":["I sent him a card yesterday.","They did not come to the party.","Where did you stay in London?"]},{"title":"现在完成时：just / already / yet","lesson":"第4–5课","model":"I have just received a letter from my brother.","examples":["She has already left.","Have you finished yet?","They have not arrived yet."]},{"title":"现在完成时：since / for","lesson":"第5课","model":"He has been in Australia for six months.","examples":["I have lived here since 2019.","We have known each other for years.","How long has she worked here?"]},{"title":"过去进行时","lesson":"第7课","model":"The detectives were waiting at the airport all morning.","examples":["I was reading when he called.","They were not sleeping at midnight.","What were you doing at eight?"]},{"title":"被动语态","lesson":"第10课","model":"The clavichord was made many years ago.","examples":["English is spoken here.","The window was broken yesterday.","These cars are made in Japan."]},{"title":"一般将来时","lesson":"第12课","model":"We will meet him at the harbour tomorrow.","examples":["I shall help you later.","It is going to snow.","They will not arrive before noon."]},{"title":"定语从句","lesson":"第28课","model":"The man who is standing there is a pilot.","examples":["The book which is on the desk is mine.","She is the girl that helped me.","The house where he lives is old."]},{"title":"间接引语","lesson":"第15课","model":"He said that he was nervous.","examples":["She told me she was ill.","They asked if I could come.","He said he would call me."]}],"translation":[{"zh":"我上星期去了戏院。","en":"I went to the theatre last week."},{"zh":"我坐在一个很吵的年轻男人和女人后面。","en":"I sat behind a very noisy young man and woman."},{"zh":"他们大声说话，我听不见演员。","en":"They talked loudly, so I could not hear the actors."},{"zh":"我转过身，生气地看着他们。","en":"I turned round and looked at them angrily."},{"zh":"这不关你的事。","en":"It is none of your business."},{"zh":"星期天我从不早起。","en":"I never get up early on Sundays."},{"zh":"我有时在床上待到午饭时间。","en":"I sometimes stay in bed until lunchtime."},{"zh":"他去年夏天去了意大利。","en":"He went to Italy last summer."},{"zh":"他在那里学了一点意大利语。","en":"He learned a little Italian there."},{"zh":"我刚收到我弟弟的来信。","en":"I have just received a letter from my brother."},{"zh":"他在澳大利亚已经待了六个月。","en":"He has been in Australia for six months."},{"zh":"乔的花园是镇上最漂亮的。","en":"Joe's garden is the most beautiful in the town."},{"zh":"飞机晚到了，侦探们在机场等了一上午。","en":"The plane was late and the detectives were waiting at the airport all morning."},{"zh":"我们家的钢琴是我祖父很多年前做的。","en":"Our piano was made by my grandfather many years ago."},{"zh":"我们明天将在港口和他见面。","en":"We will meet him at the harbour tomorrow."},{"zh":"他说他当时很紧张。","en":"He said (that) he was nervous."},{"zh":"如果你把车停在这里，警察会把它拖走。","en":"If you park your car here, the police will tow it away."},{"zh":"我已经把这出戏看了很多遍。","en":"I have seen the play many times."},{"zh":"她姐姐去年住在一套漂亮的新房子里。","en":"Her sister lived in a beautiful new house last year."},{"zh":"我每天通过电子邮件和笔友保持联系。","en":"I keep in touch with my pen friend by email every day."}],"drills":[{"title":"练习一  时态综合","items":[{"q":"Look! It ___ (rain) outside. Take an umbrella.","a":"is raining。Look 提示现在进行时。"},{"q":"I usually ___ (walk) to school, but today I took the bus.","a":"walk。usually 表习惯，用一般现在时。"},{"q":"They ___ (finish) the work two hours ago.","a":"finished。two hours ago 是明确过去时间，用一般过去时。"}]},{"title":"练习二  现在完成时","items":[{"q":"I ___ already ___ (read) this book.","a":"have；read。already 常与现在完成时连用。"},{"q":"She has lived here ___ 2019.","a":"since。后接时间点用 since（for 后接时间段）。"},{"q":"___ you ever ___ (be) to Japan?","a":"Have；been。ever 与现在完成时连用，have been to 表去过。"}]},{"title":"练习三  被动语态","items":[{"q":"English ___ (speak) all over the world.","a":"is spoken。一般现在时被动：am/is/are + 过去分词。"},{"q":"The old bridge ___ (build) in 1950.","a":"was built。一般过去时被动：was/were + 过去分词。"},{"q":"The letters ___ (not send) yet.","a":"have not been sent。现在完成时被动的否定式。"}]},{"title":"练习四  定语从句","items":[{"q":"The man ___ is standing there is my uncle.","a":"who/that。先行词是人，关系代词用 who 或 that。"},{"q":"This is the book ___ I bought yesterday.","a":"which/that。先行词是物，关系代词用 which 或 that。"},{"q":"The town ___ I was born has changed a lot.","a":"where。先行词是地点且从句不缺主宾语，用关系副词 where。"}]},{"title":"练习五  间接引语","items":[{"q":"He said, \"I am busy.\" → He said that he ___ busy.","a":"was。主句为过去时，间接引语时态后移为一般过去时。"},{"q":"She asked me, \"Do you like music?\" → She asked me if I ___ music.","a":"liked。一般疑问句变间接引语用 if/whether，时态后移。"},{"q":"Tom said, \"I will call you.\" → Tom said that he ___ call me.","a":"would。will 在间接引语中变为 would。"}]},{"title":"练习六  条件与时间状语从句","items":[{"q":"If it ___ (rain) tomorrow, we will stay at home.","a":"rains。主将从现：时间/条件从句用一般现在时表将来。"},{"q":"I will tell him when he ___ (come) back.","a":"comes。when 引导时间从句，用一般现在时。"},{"q":"You won't pass the exam unless you ___ (study) hard.","a":"study。unless 相当于 if...not，从句用一般现在时。"}]}],"cards":{"grammar":[{"point":"现在完成时","rule":"have/has + 过去分词，表已完成或持续","example":"I have just finished my homework."},{"point":"过去进行时","rule":"was/were + doing，表过去某时正在进行","example":"They were waiting at the airport."},{"point":"过去完成时","rule":"had + 过去分词，表过去的过去","example":"The train had left before we arrived."},{"point":"被动语态","rule":"be + 过去分词，时态由 be 体现","example":"The bridge was built in 1950."},{"point":"定语从句","rule":"who/that 指人，which/that 指物，where 指地点","example":"The man who lives next door is a doctor."},{"point":"间接引语","rule":"宾语从句时态随主句后移，疑问用 if/whether","example":"He said that he was tired."},{"point":"条件状语从句","rule":"主将从现，if/unless 从句用现在时","example":"If you hurry, you will catch the bus."},{"point":"情态动词表推测","rule":"must 一定，may 可能，can't 不可能","example":"He must be at home now."},{"point":"动词不定式","rule":"to + 动词原形，可作目的状语或宾语","example":"I went there to see her."}],"idioms":[{"idiom":"get up","meaning":"起床","example":"I get up at seven every day."},{"idiom":"turn round","meaning":"转身；回过头","example":"He turned round and smiled."},{"idiom":"none of your business","meaning":"与你无关；别管闲事","example":"It is none of your business."},{"idiom":"a little","meaning":"一点儿（修饰不可数名词）","example":"He knows a little French."},{"idiom":"hear from","meaning":"收到……的来信","example":"I look forward to hearing from you."},{"idiom":"so far","meaning":"迄今为止","example":"So far we have learned ten lessons."},{"idiom":"at the moment","meaning":"此刻；现在","example":"She is busy at the moment."},{"idiom":"on time","meaning":"准时","example":"The train arrived on time."},{"idiom":"take care of","meaning":"照顾；照料","example":"She takes care of her old mother."},{"idiom":"be made of","meaning":"由……制成（看得出原料）","example":"The desk is made of wood."},{"idiom":"look forward to","meaning":"盼望（to 为介词，后接 doing）","example":"I look forward to seeing you."},{"idiom":"pay back","meaning":"偿还；报答","example":"He paid back the money yesterday."}]}},{"id":"3","name":"第三册","subtitle":"培养技能","stage":"提高阶段（复合句、非谓语动词、虚拟语气、倒装、强调与独立主格）","intro":"本讲义用于复习第三册已学的高级语法、单词与习惯用法，共五部分：句型替换操练、汉译英造句、语法专项训练、参考答案、复习卡。建议先独立完成，再对照答案自评，并出声朗读，提升句子组织能力。","patterns":[{"title":"并列句与连接词","lesson":"第1课","model":"The play was boring, but the actors were excellent.","examples":["He was tired, so he went to bed early.","She works hard, and her results are good.","I wanted to stay, yet I had to leave."]},{"title":"非限制性定语从句","lesson":"第4课","model":"The old castle, which was built in 1200, attracts many visitors.","examples":["My brother, who lives in Paris, is a doctor.","He passed the exam, which made us happy.","London, where I was born, is a large city."]},{"title":"名词性从句","lesson":"第5课","model":"What he said surprised everyone.","examples":["That she won the prize is true.","I don't know where he went.","The question is whether we can finish it."]},{"title":"动词不定式","lesson":"第6课","model":"She got up early to catch the first train.","examples":["I have a lot of work to do.","He is said to be rich.","It is important to learn a foreign language."]},{"title":"动名词","lesson":"第8课","model":"Reading in bed is bad for your eyes.","examples":["She enjoys listening to music.","He is good at solving problems.","The job needs repairing carefully."]},{"title":"现在分词作状语","lesson":"第9课","model":"Walking down the street, he met an old friend.","examples":["Hearing the news, she began to cry.","Not knowing the way, I asked a policeman.","The boy sat there, reading a novel."]},{"title":"过去分词作状语","lesson":"第10课","model":"Built in 1850, the house is still in good condition.","examples":["Given more time, we could do it better.","Seen from the hill, the town looks beautiful.","The teacher entered, followed by the students."]},{"title":"虚拟语气","lesson":"第12课","model":"If I were you, I would accept the offer.","examples":["If he had studied hard, he would have passed.","I wish I could fly.","If it should rain tomorrow, we would stay home."]},{"title":"倒装句","lesson":"第15课","model":"Never have I seen such a wonderful film.","examples":["Only then did he understand.","Hardly had I left when the phone rang.","Not only is she clever, but she is also kind."]},{"title":"强调句","lesson":"第16课","model":"It was John who broke the window yesterday.","examples":["It was in 2010 that I first came here.","It is health that matters most.","It was because he was ill that he was absent."]},{"title":"情态动词完成式","lesson":"第18课","model":"He must have forgotten the meeting.","examples":["She may have missed the bus.","You should have told me earlier.","They can't have finished so soon."]},{"title":"让步状语从句","lesson":"第20课","model":"Although it was raining, we went out.","examples":["Even though he is young, he is very brave.","However hard he tried, he failed.","Whatever you do, do it well."]}],"translation":[{"zh":"老师走进教室时，学生们正在大声朗读。","en":"When the teacher entered the classroom, the students were reading aloud."},{"zh":"就是在那间旧图书馆里，他第一次遇见了他的妻子。","en":"It was in that old library that he first met his wife."},{"zh":"如果昨天没有下雨，我们就去爬山了。","en":"If it had not rained yesterday, we would have climbed the mountain."},{"zh":"他不仅会说英语，还会说流利的日语。","en":"Not only can he speak English, but he can also speak fluent Japanese."},{"zh":"这本小说是我读过的最有趣的一本。","en":"This novel is the most interesting one I have ever read."},{"zh":"由于不知道该怎么办，她只好向警察求助。","en":"Not knowing what to do, she had to turn to the police for help."},{"zh":"直到他失去了健康，他才意识到它的重要性。","en":"Not until he lost his health did he realize its importance."},{"zh":"我记得小时候被带到乡下的情景。","en":"I remember being taken to the countryside when I was a child."},{"zh":"他一定是错过了早班车，因为他迟到了。","en":"He must have missed the early bus, for he was late."},{"zh":"无论任务多么困难，我们都必须按时完成。","en":"However difficult the task is, we must finish it on time."},{"zh":"站在山顶上，我们可以看到整个村庄。","en":"Standing on the top of the hill, we could see the whole village."},{"zh":"他建议会议推迟到下周。","en":"He suggested that the meeting (should) be put off until next week."},{"zh":"这本书值得一读，里面充满了实用的建议。","en":"The book is worth reading, as it is full of practical advice."},{"zh":"我更希望你当时没有把那个秘密告诉她。","en":"I would rather you had not told her the secret then."}],"drills":[{"title":"练习一  非谓语动词","items":[{"q":"I really enjoy ___ (work) in the garden.","a":"working。enjoy 后接动名词作宾语。"},{"q":"He stopped ___ (buy) a newspaper on his way home.","a":"to buy。stop to do 表示停下来去做另一件事。"},{"q":"___ (see) from the tower, the lake looks like a mirror.","a":"Seen。the lake 与 see 是被动关系，用过去分词。"}]},{"title":"练习二  虚拟语气","items":[{"q":"If I ___ (be) taller, I could join the team.","a":"were。与现在事实相反，be 动词一律用 were。"},{"q":"If she had taken the medicine, she ___ (feel) better.","a":"would have felt。与过去事实相反，主句用 would have done。"},{"q":"I wish I ___ (know) the answer now.","a":"knew。wish 后接与现在相反的愿望，用过去式。"}]},{"title":"练习三  从句综合","items":[{"q":"The reason ___ he was late is still unknown.","a":"why。先行词是 reason，关系副词用 why。"},{"q":"___ is certain is that practice makes perfect.","a":"What。引导主语从句并在从句中作主语，用 what。"},{"q":"The man to ___ I spoke is the manager.","a":"whom。介词 to 后指代人，用宾格 whom。"}]},{"title":"练习四  倒装与强调","items":[{"q":"Not a single word ___ he say at the meeting.","a":"did。否定词置于句首，部分倒装，借助 did。"},{"q":"It was last summer ___ we visited the museum.","a":"that。强调时间状语，用 It is/was...that 结构。"},{"q":"Only by working hard ___ you succeed.","a":"will。Only + 状语置于句首，主句部分倒装。"}]},{"title":"练习五  情态动词完成式","items":[{"q":"The ground is wet. It ___ have rained last night.","a":"must。对过去的肯定推测用 must have done。"},{"q":"You ___ have told her the bad news; she is crying now.","a":"shouldn't。本不该做却做了，用 shouldn't have done。"},{"q":"They ___ have arrived yet; the door is still locked.","a":"can't。对过去的否定推测用 can't have done。"}]},{"title":"练习六  独立主格与 with 结构","items":[{"q":"Weather ___ (permit), we will have a picnic tomorrow.","a":"permitting。独立主格：名词 + 现在分词，自带逻辑主语。"},{"q":"All the work ___ (finish), they went home happily.","a":"having been finished。独立主格，被动且先于主句动作，用 having been done。"},{"q":"She sat there with her eyes ___ (fix) on the screen.","a":"fixed。with + 宾语 + 过去分词，表被动状态。"}]}],"cards":{"grammar":[{"point":"非限制性定语从句","rule":"用逗号隔开，which 可指代整句","example":"He passed, which surprised us."},{"point":"名词性从句","rule":"what/that/whether 引导，作主/宾/表语","example":"What he needs is more time."},{"point":"动词不定式","rule":"to do，可作主语、宾语、状语","example":"To learn English well needs practice."},{"point":"动名词","rule":"doing 起名词作用，可作主语/宾语","example":"Swimming is good exercise."},{"point":"分词作状语","rule":"主动用现在分词，被动用过去分词","example":"Tired and hungry, he stopped."},{"point":"虚拟语气","rule":"与现在相反用过去式，与过去相反用 had done","example":"If I had known, I would have helped."},{"point":"倒装句","rule":"否定词或 only 前置时部分倒装","example":"Never will I forget it."},{"point":"强调句","rule":"It is/was + 被强调部分 + that","example":"It was here that we met."},{"point":"情态动词完成式","rule":"must/may/should + have done 表对过去判断","example":"She must have left."},{"point":"独立主格","rule":"名词 + 分词，自带逻辑主语","example":"The work done, we rested."},{"point":"让步状语从句","rule":"although/though/however/whatever 引导","example":"Rich as he is, he is not happy."}],"idioms":[{"idiom":"be worth doing","meaning":"值得做","example":"The film is worth seeing twice."},{"idiom":"can't help doing","meaning":"情不自禁做某事","example":"I couldn't help laughing."},{"idiom":"turn to","meaning":"求助于；转向","example":"Turn to page ten, please."},{"idiom":"be used to doing","meaning":"习惯于做某事","example":"He is used to getting up early."},{"idiom":"in spite of","meaning":"尽管；不管","example":"In spite of the rain, we went out."},{"idiom":"owing to","meaning":"由于；因为","example":"Owing to the fog, the flight was delayed."},{"idiom":"take pride in","meaning":"为……感到自豪","example":"She takes pride in her work."},{"idiom":"be aware of","meaning":"意识到；知道","example":"Are you aware of the danger?"},{"idiom":"get rid of","meaning":"摆脱；除掉","example":"You should get rid of bad habits."},{"idiom":"on behalf of","meaning":"代表","example":"I speak on behalf of the whole class."},{"idiom":"be bound to","meaning":"一定会；注定","example":"He is bound to succeed."}]}},{"id":"4","name":"第四册","subtitle":"流利英语","stage":"流利阶段（复杂从句、非谓语、虚拟、倒装、形式主语与长难句）","intro":"本讲义用于复习第四册已学的高级句法、单词与习惯用法，共五部分：句型替换操练、汉译英造句、语法专项训练、参考答案、复习卡。建议先独立完成，再对照答案自评，并出声朗读，提升长难句理解与表达。","patterns":[{"title":"长难句主干提取","lesson":"第1课","model":"The evidence that scientists have gathered suggests that the climate is changing.","examples":["Find the main subject and verb first.","Ignore the long relative clause when reading the trunk.","Then add the modifiers back."]},{"title":"被动报道句式","lesson":"第2课","model":"It is said that he is honest.","examples":["It is reported that the road is closed.","It is estimated that 200 people attended.","The man is said to be over ninety."]},{"title":"形式主语 it","lesson":"第3课","model":"It is likely that he will come.","examples":["It is important that we arrive early.","It is no use crying over spilt milk.","It is well known that practice helps."]},{"title":"主语从句","lesson":"第4课","model":"What he said is true.","examples":["That he refused the offer surprised us.","Whether she will come is uncertain.","Whoever breaks the rule must leave."]},{"title":"宾语从句","lesson":"第5课","model":"I know where he went.","examples":["She asked when the meeting would begin.","I believe that he is innocent.","No one knows why he resigned."]},{"title":"定语从句：介词 + which","lesson":"第6课","model":"The house in which he lives is very old.","examples":["The topic about which we talked is complex.","The tool with which he cut it is sharp.","The year in which he was born was 1990."]},{"title":"让步状语从句","lesson":"第8课","model":"However hard it is, try your best.","examples":["No matter how difficult it seems, keep going.","Even though he was tired, he finished.","Whatever happens, stay calm."]},{"title":"非谓语动词","lesson":"第10课","model":"Weather permitting, we will go on a trip.","examples":["Given the chance, she would succeed.","To solve the problem, we need data.","He left the room, leaving the door open."]},{"title":"虚拟语气","lesson":"第12课","model":"But for you, I would fail.","examples":["If it were not for the sun, life would stop.","If I had known, I would have acted.","I wish I had more free time."]},{"title":"倒装句","lesson":"第14课","model":"Never have I seen such a sight.","examples":["Only then did the truth come out.","Rarely does he complain.","Had I known, I would have warned you."]},{"title":"越……越……","lesson":"第16课","model":"The more, the better.","examples":["The sooner, the better.","The more you read, the more you learn.","The higher we climbed, the colder it felt."]},{"title":"独立主格结构","lesson":"第18课","model":"The work done, they went home.","examples":["All things considered, the plan is good.","The bell ringing, the students stood up.","His homework finished, he watched television."]}],"translation":[{"zh":"据报道，那座新桥将于下月通车。","en":"It is reported that the new bridge will open next month."},{"zh":"我们越努力，取得的进步就越大。","en":"The harder we work, the greater progress we will make."},{"zh":"要不是你的及时帮助，我不可能按时完成。","en":"But for your timely help, I could not have finished it on time."},{"zh":"他究竟是如何解决这个难题的，至今仍是个谜。","en":"How on earth he solved the problem remains a mystery."},{"zh":"众所周知，成功来自勤奋。","en":"It is well known that success comes from hard work."},{"zh":"他在演讲中提到的那本书非常畅销。","en":"The book to which he referred in his speech sells well."},{"zh":"无论生活多么艰难，他从不抱怨。","en":"However hard life was, he never complained."},{"zh":"任务完成后，团队成员都松了一口气。","en":"The task having been finished, the team members all felt relieved."},{"zh":"科学家推测这种动物可能已经灭绝了。","en":"Scientists assume that this animal may have died out."},{"zh":"只有当你失去自由时，你才会懂得它的可贵。","en":"Only when you lose freedom will you realize its value."},{"zh":"他昨天没来开会，这让经理很生气。","en":"He did not attend the meeting yesterday, which made the manager angry."},{"zh":"值得注意的是，这个数据仍在变化。","en":"It is worth noting that the figure is still changing."},{"zh":"我宁可现在自己做，也不愿一直等他。","en":"I would rather do it myself now than wait for him all the time."},{"zh":"随着时间的推移，他逐渐适应了新环境。","en":"As time went by, he gradually adapted to the new environment."}],"drills":[{"title":"练习一  从句与语序","items":[{"q":"No one knows exactly ___ the universe began.","a":"how。宾语从句用陈述语序，根据含义用 how。"},{"q":"___ the plan will work is still uncertain.","a":"Whether。引导主语从句，表“是否”，句首用 whether。"},{"q":"The reason is ___ the data were not updated.","a":"that。表语从句语义完整，用 that 引导。"}]},{"title":"练习二  非谓语动词","items":[{"q":"The scientist devoted his life to ___ (study) the ocean.","a":"studying。devote...to 中 to 是介词，后接动名词。"},{"q":"___ (compare) with last year, the price has fallen.","a":"Compared。the price 与 compare 是被动关系，用过去分词。"},{"q":"He is said ___ (write) three books already.","a":"to have written。不定式动作先于谓语，用完成式。"}]},{"title":"练习三  被动报道与形式主语","items":[{"q":"It ___ believed that the disease is curable.","a":"is。被动报道句式 It is believed that...。"},{"q":"The temple is said ___ (build) 800 years ago.","a":"to have been built。不定式被动且先于谓语，用完成被动式。"},{"q":"It is essential that every sample ___ (be) labelled.","a":"be。essential 后的主语从句用 (should) + 动词原形。"}]},{"title":"练习四  虚拟语气","items":[{"q":"If the earth ___ (have) no atmosphere, there would be no life.","a":"had。与现在事实相反，从句用过去式。"},{"q":"Had the warning been given earlier, lives ___ (save).","a":"would have been saved。省略 if 的倒装虚拟，主句用 would have done。"},{"q":"I would rather you ___ (make) the decision yourself.","a":"made。would rather 后接从句用过去式表现在或将来。"}]},{"title":"练习五  倒装与连接","items":[{"q":"Not only ___ the report short, but it was also inaccurate.","a":"was。Not only 前置，该分句部分倒装。"},{"q":"Rarely ___ such a dramatic change been recorded.","a":"has。Rarely 前置，部分倒装，主语是 change。"},{"q":"It was through careful research ___ the truth appeared.","a":"that。强调方式状语，用 It was...that。"}]},{"title":"练习六  长难句与独立主格","items":[{"q":"The evidence on ___ the argument rests is weak.","a":"which。介词 on 后指代物，用 which。"},{"q":"All the guests ___ (arrive), the host began his speech.","a":"having arrived。独立主格，动作先于主句，用 having done。"},{"q":"The ___ the risk, the higher the possible return.","a":"greater。the + 比较级，the + 比较级结构。"}]}],"cards":{"grammar":[{"point":"对过去的推测","rule":"may/must have done 表对过去的推测","example":"They may have used wood."},{"point":"被动报道","rule":"It is said/estimated that 表“据说/据估计”","example":"It is said that he is honest."},{"point":"越……越……","rule":"the + 比较级，the + 比较级","example":"The more, the better."},{"point":"虚拟（与现在相反）","rule":"if it were not for，主句 would do","example":"But for you, I would fail."},{"point":"宾语从句","rule":"疑问词后用陈述语序","example":"I know where he went."},{"point":"主语从句","rule":"what/that 引导，整个从句作主语","example":"What he said is true."},{"point":"形式主语","rule":"it 代替后面 that 从句","example":"It is likely that he will come."},{"point":"倒装","rule":"only/never 置句首，助动词提前","example":"Never have I seen it."},{"point":"让步从句","rule":"however/no matter how + 形容词","example":"However hard it is, try."},{"point":"独立主格","rule":"名词 + doing/done，自带逻辑主语","example":"Weather permitting, we will go."},{"point":"介词 + which","rule":"定语从句中关系代词作介词宾语","example":"The house in which he lives."}],"idioms":[{"idiom":"be likely to","meaning":"很可能","example":"It is likely to rain."},{"idiom":"be subject to","meaning":"受……支配；易遭受","example":"Prices are subject to change."},{"idiom":"in terms of","meaning":"就……而言；根据","example":"In terms of cost, this is better."},{"idiom":"be relevant to","meaning":"与……相关","example":"These facts are relevant to the case."},{"idiom":"be capable of","meaning":"能够；有能力","example":"The machine is capable of more."},{"idiom":"be engaged in","meaning":"从事；忙于","example":"She is engaged in research."},{"idiom":"be exposed to","meaning":"暴露于；接触","example":"Children are exposed to new ideas."},{"idiom":"be consistent with","meaning":"与……一致","example":"His story is consistent with the facts."},{"idiom":"in contrast to","meaning":"与……形成对比","example":"In contrast to last year, sales rose."},{"idiom":"be equivalent to","meaning":"等同于；相当于","example":"This is equivalent to a refusal."},{"idiom":"account for","meaning":"解释；占（比例）","example":"How do you account for the error?"}]}}];
-  var SECTIONS = [
+  var BANK = [{"id":"1","name":"第一册","subtitle":"英语初阶","stage":"基础阶段（be 动词、时态、比较、被动与定语从句）","intro":"本讲义用于复习第一册已学的基础语法、单词与习惯用法，共五部分：句型替换操练、汉译英造句、语法专项训练、参考答案、复习卡。建议先独立完成，再对照答案自评，并出声朗读，打好基础。","patterns":[{"title":"be 动词的一般疑问句","lesson":"第1–2课","model":"Excuse me! Is this your handbag?","examples":["Yes, it is.","No, it isn't.","Is this your book?"]},{"title":"be 动词的否定句","lesson":"第3–4课","model":"This is not my umbrella.","examples":["That is my coat.","This is my ticket.","That isn't your watch."]},{"title":"特殊疑问句：国籍与品牌","lesson":"第5–8课","model":"What make is it? It's a Volvo.","examples":["What nationality is she? She's Chinese.","What make is your car? It's a Toyota."]},{"title":"疑问词 What colour","lesson":"第13–14课","model":"What colour is your new dress? It's green.","examples":["What colour is the case? It's brown.","Come upstairs and see it."]},{"title":"名词复数与 Are these","lesson":"第15–16课","model":"Are these your books? Yes, they are.","examples":["Are those your passports? No, they aren't.","These are our cases."]},{"title":"所有格形容词","lesson":"第11–12课","model":"Here is my ticket and here is yours.","examples":["His tie is blue.","Her dress is white.","Their passports are here."]},{"title":"There is / There are 存在句","lesson":"第25–28课","model":"There is a book on the table.","examples":["There are some pictures on the wall.","Is there a chair in the room?","There aren't any cups on the shelf."]},{"title":"现在进行时","lesson":"第31–34课","model":"He is reading a book now.","examples":["They are playing in the garden.","She is cooking in the kitchen.","What are you doing? I'm washing the dishes."]},{"title":"祈使句","lesson":"第29–30课","model":"Come in and shut the door.","examples":["Open the window, please.","Don't run in the classroom.","Sit down and take off your coat."]},{"title":"情态动词 can","lesson":"第43–46课","model":"Can you swim? Yes, I can.","examples":["Can she make a cake? No, she can't.","I can see the bird in the tree."]},{"title":"be going to 计划与预测","lesson":"第61–64课","model":"I'm going to see a film tomorrow.","examples":["It is going to rain.","They are going to have a party.","What are you going to do?"]},{"title":"一般过去时","lesson":"第67–70课","model":"He was at the butcher's yesterday.","examples":["We were at school on Monday.","She went to the market last night.","I didn't see him this morning."]}],"translation":[{"zh":"这是你的手提包吗？","en":"Is this your handbag?"},{"zh":"这不是我的雨伞。","en":"This is not my umbrella."},{"zh":"对不起，先生。","en":"Excuse me, sir."},{"zh":"很高兴见到你。","en":"Nice to meet you."},{"zh":"桌子上有一本书。","en":"There is a book on the table."},{"zh":"墙上有一些画。","en":"There are some pictures on the wall."},{"zh":"房间里没有椅子。","en":"There isn't a chair in the room."},{"zh":"他正在看书。","en":"He is reading a book."},{"zh":"她正在厨房里做饭。","en":"She is cooking in the kitchen."},{"zh":"你在做什么？","en":"What are you doing?"},{"zh":"请进。","en":"Come in, please."},{"zh":"不要在教室里跑。","en":"Don't run in the classroom."},{"zh":"你会游泳吗？","en":"Can you swim?"},{"zh":"我打算明天去看电影。","en":"I'm going to see a film tomorrow."},{"zh":"天要下雨了。","en":"It is going to rain."},{"zh":"我昨天没见到他。","en":"I didn't see him yesterday."}],"drills":[{"title":"练习一  be 动词（am / is / are）","items":[{"q":"My name ___ Robert. I ___ a student.","a":"is；am。be 随主语变化：第三人称单数用 is，I 用 am。"},{"q":"These ___ my books.","a":"are。主语 these 是复数，be 用 are。"},{"q":"There ___ a cup on the desk.","a":"is。There be 中 be 与就近的 a cup 一致，用 is。"}]},{"title":"练习二  名词的单复数","items":[{"q":"one ___, two ___ (book)","a":"book；books。一般名词复数加 -s。"},{"q":"This is a ___. These are ___. (box)","a":"box；boxes。以 x 结尾的名词复数加 -es。"},{"q":"There is a ___ on the shelf. (knife)","a":"knife。冠词 a 后接单数名词。"}]},{"title":"练习三  代词与所有格","items":[{"q":"This is my sister. ___ name is Ann.","a":"Her。指女性，修饰名词 name 用形容词性物主代词 her。"},{"q":"The boys are here. ___ coats are on the chair.","a":"Their。the boys 是复数，所有格用 their。"},{"q":"Give me that tie. It is ___. (my / mine)","a":"mine。空格后没有名词，用名词性物主代词 mine。"}]},{"title":"练习四  There be 存在句","items":[{"q":"___ there any water in the bottle?","a":"Is。water 是不可数名词，be 用 is。"},{"q":"There ___ some apples on the tree.","a":"are。some apples 是复数，be 用 are。"},{"q":"There ___ not any milk in the fridge.","a":"is。milk 不可数，be 用 is。"}]},{"title":"练习五  现在进行时","items":[{"q":"Look! The children ___ (play) in the garden.","a":"are playing。Look 提示动作正在进行，结构 be + doing。"},{"q":"She ___ (cook) dinner now.","a":"is cooking。now 提示现在进行时，主语 she 用 is。"},{"q":"What ___ you ___ (do)?","a":"are；doing。现在进行时疑问句把 be 提前。"}]},{"title":"练习六  一般现在时、情态与将来","items":[{"q":"He ___ (go) to school by bike every day.","a":"goes。every day 表习惯，用一般现在时；he 后动词加 -es。"},{"q":"___ you speak English? Yes, I can.","a":"Can。回答用 can，提问也用情态动词 can。"},{"q":"We ___ (have) a test tomorrow.","a":"are going to have。tomorrow 表计划，用 be going to + 动词原形。"}]}],"cards":{"grammar":[{"point":"be 动词","rule":"am / is / are 随主语变化","example":"I am a student."},{"point":"指示代词","rule":"this/that 单数，these/those 复数","example":"This is my pen."},{"point":"名词复数","rule":"一般加 -s；以 s/x/ch/sh 结尾加 -es","example":"two boxes"},{"point":"所有格形容词","rule":"my/your/his/her/its/our/their，修饰名词","example":"Her bag is red."},{"point":"名词性物主代词","rule":"mine/yours/his/hers/ours/theirs，独立使用","example":"This book is mine."},{"point":"There be","rule":"表示存在，be 与就近主语一致","example":"There is a cat under the chair."},{"point":"现在进行时","rule":"be + doing，表示正在进行","example":"They are watching TV."},{"point":"祈使句","rule":"动词原形开头，否定用 Don't","example":"Don't be late."},{"point":"情态动词 can","rule":"表能力，后接动词原形","example":"She can dance."},{"point":"be going to","rule":"表计划或有迹象的预测","example":"We are going to leave soon."},{"point":"一般过去时","rule":"动词用过去式，否定用 didn't","example":"He didn't come last night."}],"idioms":[{"idiom":"excuse me","meaning":"打扰一下；对不起","example":"Excuse me, is this your bag?"},{"idiom":"thank you","meaning":"谢谢你","example":"Thank you very much."},{"idiom":"very much","meaning":"非常（修饰动词）","example":"I like it very much."},{"idiom":"nice to meet you","meaning":"很高兴认识你","example":"Hello, nice to meet you."},{"idiom":"come on","meaning":"快点；加油","example":"Come on, or we'll be late."},{"idiom":"here is / here are","meaning":"给你；这里有","example":"Here is your coffee."},{"idiom":"of course","meaning":"当然","example":"Of course I can help you."},{"idiom":"all right","meaning":"好的；没关系","example":"That's all right."},{"idiom":"at home","meaning":"在家","example":"She is at home now."},{"idiom":"at work","meaning":"在上班；在工作","example":"My father is at work."},{"idiom":"look at","meaning":"看……","example":"Look at the blackboard."},{"idiom":"listen to","meaning":"听……","example":"Listen to me, please."}]}},{"id":"2","name":"第二册","subtitle":"实践与进步","stage":"进阶阶段（时态体系、被动语态、定语从句、间接引语与状语从句）","intro":"本讲义用于复习第二册已学的核心语法、单词与习惯用法，共五部分：句型替换操练、汉译英造句、语法专项训练、参考答案、复习卡。建议先独立完成，再对照答案自评，并出声朗读，把规则用熟。","patterns":[{"title":"一般现在时：习惯与事实","lesson":"第1–2课","model":"I never get up early on Sundays.","examples":["She works in a bank.","The earth moves round the sun.","We do not watch television every evening."]},{"title":"现在进行时","lesson":"第2课","model":"Aunt Lucy is visiting us this week.","examples":["They are playing in the park now.","He is always changing his mind.","What are you doing at the moment?"]},{"title":"一般过去时","lesson":"第3课","model":"He visited Italy last summer.","examples":["I sent him a card yesterday.","They did not come to the party.","Where did you stay in London?"]},{"title":"现在完成时：just / already / yet","lesson":"第4–5课","model":"I have just received a letter from my brother.","examples":["She has already left.","Have you finished yet?","They have not arrived yet."]},{"title":"现在完成时：since / for","lesson":"第5课","model":"He has been in Australia for six months.","examples":["I have lived here since 2019.","We have known each other for years.","How long has she worked here?"]},{"title":"过去进行时","lesson":"第7课","model":"The detectives were waiting at the airport all morning.","examples":["I was reading when he called.","They were not sleeping at midnight.","What were you doing at eight?"]},{"title":"被动语态","lesson":"第10课","model":"The clavichord was made many years ago.","examples":["English is spoken here.","The window was broken yesterday.","These cars are made in Japan."]},{"title":"一般将来时","lesson":"第12课","model":"We will meet him at the harbour tomorrow.","examples":["I shall help you later.","It is going to snow.","They will not arrive before noon."]},{"title":"定语从句","lesson":"第28课","model":"The man who is standing there is a pilot.","examples":["The book which is on the desk is mine.","She is the girl that helped me.","The house where he lives is old."]},{"title":"间接引语","lesson":"第15课","model":"He said that he was nervous.","examples":["She told me she was ill.","They asked if I could come.","He said he would call me."]}],"translation":[{"zh":"我上星期去了戏院。","en":"I went to the theatre last week."},{"zh":"我坐在一个很吵的年轻男人和女人后面。","en":"I sat behind a very noisy young man and woman."},{"zh":"他们大声说话，我听不见演员。","en":"They talked loudly, so I could not hear the actors."},{"zh":"我转过身，生气地看着他们。","en":"I turned round and looked at them angrily."},{"zh":"这不关你的事。","en":"It is none of your business."},{"zh":"星期天我从不早起。","en":"I never get up early on Sundays."},{"zh":"我有时在床上待到午饭时间。","en":"I sometimes stay in bed until lunchtime."},{"zh":"他去年夏天去了意大利。","en":"He went to Italy last summer."},{"zh":"他在那里学了一点意大利语。","en":"He learned a little Italian there."},{"zh":"我刚收到我弟弟的来信。","en":"I have just received a letter from my brother."},{"zh":"他在澳大利亚已经待了六个月。","en":"He has been in Australia for six months."},{"zh":"乔的花园是镇上最漂亮的。","en":"Joe's garden is the most beautiful in the town."},{"zh":"飞机晚到了，侦探们在机场等了一上午。","en":"The plane was late and the detectives were waiting at the airport all morning."},{"zh":"我们家的钢琴是我祖父很多年前做的。","en":"Our piano was made by my grandfather many years ago."},{"zh":"我们明天将在港口和他见面。","en":"We will meet him at the harbour tomorrow."},{"zh":"他说他当时很紧张。","en":"He said (that) he was nervous."},{"zh":"如果你把车停在这里，警察会把它拖走。","en":"If you park your car here, the police will tow it away."},{"zh":"我已经把这出戏看了很多遍。","en":"I have seen the play many times."},{"zh":"她姐姐去年住在一套漂亮的新房子里。","en":"Her sister lived in a beautiful new house last year."},{"zh":"我每天通过电子邮件和笔友保持联系。","en":"I keep in touch with my pen friend by email every day."}],"drills":[{"title":"练习一  时态综合","items":[{"q":"Look! It ___ (rain) outside. Take an umbrella.","a":"is raining。Look 提示现在进行时。"},{"q":"I usually ___ (walk) to school, but today I took the bus.","a":"walk。usually 表习惯，用一般现在时。"},{"q":"They ___ (finish) the work two hours ago.","a":"finished。two hours ago 是明确过去时间，用一般过去时。"}]},{"title":"练习二  现在完成时","items":[{"q":"I ___ already ___ (read) this book.","a":"have；read。already 常与现在完成时连用。"},{"q":"She has lived here ___ 2019.","a":"since。后接时间点用 since（for 后接时间段）。"},{"q":"___ you ever ___ (be) to Japan?","a":"Have；been。ever 与现在完成时连用，have been to 表去过。"}]},{"title":"练习三  被动语态","items":[{"q":"English ___ (speak) all over the world.","a":"is spoken。一般现在时被动：am/is/are + 过去分词。"},{"q":"The old bridge ___ (build) in 1950.","a":"was built。一般过去时被动：was/were + 过去分词。"},{"q":"The letters ___ (not send) yet.","a":"have not been sent。现在完成时被动的否定式。"}]},{"title":"练习四  定语从句","items":[{"q":"The man ___ is standing there is my uncle.","a":"who/that。先行词是人，关系代词用 who 或 that。"},{"q":"This is the book ___ I bought yesterday.","a":"which/that。先行词是物，关系代词用 which 或 that。"},{"q":"The town ___ I was born has changed a lot.","a":"where。先行词是地点且从句不缺主宾语，用关系副词 where。"}]},{"title":"练习五  间接引语","items":[{"q":"He said, \"I am busy.\" → He said that he ___ busy.","a":"was。主句为过去时，间接引语时态后移为一般过去时。"},{"q":"She asked me, \"Do you like music?\" → She asked me if I ___ music.","a":"liked。一般疑问句变间接引语用 if/whether，时态后移。"},{"q":"Tom said, \"I will call you.\" → Tom said that he ___ call me.","a":"would。will 在间接引语中变为 would。"}]},{"title":"练习六  条件与时间状语从句","items":[{"q":"If it ___ (rain) tomorrow, we will stay at home.","a":"rains。主将从现：时间/条件从句用一般现在时表将来。"},{"q":"I will tell him when he ___ (come) back.","a":"comes。when 引导时间从句，用一般现在时。"},{"q":"You won't pass the exam unless you ___ (study) hard.","a":"study。unless 相当于 if...not，从句用一般现在时。"}]}],"cards":{"grammar":[{"point":"现在完成时","rule":"have/has + 过去分词，表已完成或持续","example":"I have just finished my homework."},{"point":"过去进行时","rule":"was/were + doing，表过去某时正在进行","example":"They were waiting at the airport."},{"point":"过去完成时","rule":"had + 过去分词，表过去的过去","example":"The train had left before we arrived."},{"point":"被动语态","rule":"be + 过去分词，时态由 be 体现","example":"The bridge was built in 1950."},{"point":"定语从句","rule":"who/that 指人，which/that 指物，where 指地点","example":"The man who lives next door is a doctor."},{"point":"间接引语","rule":"宾语从句时态随主句后移，疑问用 if/whether","example":"He said that he was tired."},{"point":"条件状语从句","rule":"主将从现，if/unless 从句用现在时","example":"If you hurry, you will catch the bus."},{"point":"情态动词表推测","rule":"must 一定，may 可能，can't 不可能","example":"He must be at home now."},{"point":"动词不定式","rule":"to + 动词原形，可作目的状语或宾语","example":"I went there to see her."}],"idioms":[{"idiom":"get up","meaning":"起床","example":"I get up at seven every day."},{"idiom":"turn round","meaning":"转身；回过头","example":"He turned round and smiled."},{"idiom":"none of your business","meaning":"与你无关；别管闲事","example":"It is none of your business."},{"idiom":"a little","meaning":"一点儿（修饰不可数名词）","example":"He knows a little French."},{"idiom":"hear from","meaning":"收到……的来信","example":"I look forward to hearing from you."},{"idiom":"so far","meaning":"迄今为止","example":"So far we have learned ten lessons."},{"idiom":"at the moment","meaning":"此刻；现在","example":"She is busy at the moment."},{"idiom":"on time","meaning":"准时","example":"The train arrived on time."},{"idiom":"take care of","meaning":"照顾；照料","example":"She takes care of her old mother."},{"idiom":"be made of","meaning":"由……制成（看得出原料）","example":"The desk is made of wood."},{"idiom":"look forward to","meaning":"盼望（to 为介词，后接 doing）","example":"I look forward to seeing you."},{"idiom":"pay back","meaning":"偿还；报答","example":"He paid back the money yesterday."}]}},{"id":"3","name":"第三册","subtitle":"培养技能","stage":"提高阶段（复合句、非谓语动词、虚拟语气、倒装、强调与独立主格）","intro":"本讲义用于复习第三册已学的高级语法、单词与习惯用法，共五部分：句型替换操练、汉译英造句、语法专项训练、参考答案、复习卡。建议先独立完成，再对照答案自评，并出声朗读，提升句子组织能力。","patterns":[{"title":"并列句与连接词","lesson":"第1课","model":"The play was boring, but the actors were excellent.","examples":["He was tired, so he went to bed early.","She works hard, and her results are good.","I wanted to stay, yet I had to leave."]},{"title":"非限制性定语从句","lesson":"第4课","model":"The old castle, which was built in 1200, attracts many visitors.","examples":["My brother, who lives in Paris, is a doctor.","He passed the exam, which made us happy.","London, where I was born, is a large city."]},{"title":"名词性从句","lesson":"第5课","model":"What he said surprised everyone.","examples":["That she won the prize is true.","I don't know where he went.","The question is whether we can finish it."]},{"title":"动词不定式","lesson":"第6课","model":"She got up early to catch the first train.","examples":["I have a lot of work to do.","He is said to be rich.","It is important to learn a foreign language."]},{"title":"动名词","lesson":"第8课","model":"Reading in bed is bad for your eyes.","examples":["She enjoys listening to music.","He is good at solving problems.","The job needs repairing carefully."]},{"title":"现在分词作状语","lesson":"第9课","model":"Walking down the street, he met an old friend.","examples":["Hearing the news, she began to cry.","Not knowing the way, I asked a policeman.","The boy sat there, reading a novel."]},{"title":"过去分词作状语","lesson":"第10课","model":"Built in 1850, the house is still in good condition.","examples":["Given more time, we could do it better.","Seen from the hill, the town looks beautiful.","The teacher entered, followed by the students."]},{"title":"虚拟语气","lesson":"第12课","model":"If I were you, I would accept the offer.","examples":["If he had studied hard, he would have passed.","I wish I could fly.","If it should rain tomorrow, we would stay home."]},{"title":"倒装句","lesson":"第15课","model":"Never have I seen such a wonderful film.","examples":["Only then did he understand.","Hardly had I left when the phone rang.","Not only is she clever, but she is also kind."]},{"title":"强调句","lesson":"第16课","model":"It was John who broke the window yesterday.","examples":["It was in 2010 that I first came here.","It is health that matters most.","It was because he was ill that he was absent."]},{"title":"情态动词完成式","lesson":"第18课","model":"He must have forgotten the meeting.","examples":["She may have missed the bus.","You should have told me earlier.","They can't have finished so soon."]},{"title":"让步状语从句","lesson":"第20课","model":"Although it was raining, we went out.","examples":["Even though he is young, he is very brave.","However hard he tried, he failed.","Whatever you do, do it well."]}],"translation":[{"zh":"老师走进教室时，学生们正在大声朗读。","en":"When the teacher entered the classroom, the students were reading aloud."},{"zh":"就是在那间旧图书馆里，他第一次遇见了他的妻子。","en":"It was in that old library that he first met his wife."},{"zh":"如果昨天没有下雨，我们就去爬山了。","en":"If it had not rained yesterday, we would have climbed the mountain."},{"zh":"他不仅会说英语，还会说流利的日语。","en":"Not only can he speak English, but he can also speak fluent Japanese."},{"zh":"这本小说是我读过的最有趣的一本。","en":"This novel is the most interesting one I have ever read."},{"zh":"由于不知道该怎么办，她只好向警察求助。","en":"Not knowing what to do, she had to turn to the police for help."},{"zh":"直到他失去了健康，他才意识到它的重要性。","en":"Not until he lost his health did he realize its importance."},{"zh":"我记得小时候被带到乡下的情景。","en":"I remember being taken to the countryside when I was a child."},{"zh":"他一定是错过了早班车，因为他迟到了。","en":"He must have missed the early bus, for he was late."},{"zh":"无论任务多么困难，我们都必须按时完成。","en":"However difficult the task is, we must finish it on time."},{"zh":"站在山顶上，我们可以看到整个村庄。","en":"Standing on the top of the hill, we could see the whole village."},{"zh":"他建议会议推迟到下周。","en":"He suggested that the meeting (should) be put off until next week."},{"zh":"这本书值得一读，里面充满了实用的建议。","en":"The book is worth reading, as it is full of practical advice."},{"zh":"我更希望你当时没有把那个秘密告诉她。","en":"I would rather you had not told her the secret then."}],"drills":[{"title":"练习一  非谓语动词","items":[{"q":"I really enjoy ___ (work) in the garden.","a":"working。enjoy 后接动名词作宾语。"},{"q":"He stopped ___ (buy) a newspaper on his way home.","a":"to buy。stop to do 表示停下来去做另一件事。"},{"q":"___ (see) from the tower, the lake looks like a mirror.","a":"Seen。the lake 与 see 是被动关系，用过去分词。"}]},{"title":"练习二  虚拟语气","items":[{"q":"If I ___ (be) taller, I could join the team.","a":"were。与现在事实相反，be 动词一律用 were。"},{"q":"If she had taken the medicine, she ___ (feel) better.","a":"would have felt。与过去事实相反，主句用 would have done。"},{"q":"I wish I ___ (know) the answer now.","a":"knew。wish 后接与现在相反的愿望，用过去式。"}]},{"title":"练习三  从句综合","items":[{"q":"The reason ___ he was late is still unknown.","a":"why。先行词是 reason，关系副词用 why。"},{"q":"___ is certain is that practice makes perfect.","a":"What。引导主语从句并在从句中作主语，用 what。"},{"q":"The man to ___ I spoke is the manager.","a":"whom。介词 to 后指代人，用宾格 whom。"}]},{"title":"练习四  倒装与强调","items":[{"q":"Not a single word ___ he say at the meeting.","a":"did。否定词置于句首，部分倒装，借助 did。"},{"q":"It was last summer ___ we visited the museum.","a":"that。强调时间状语，用 It is/was...that 结构。"},{"q":"Only by working hard ___ you succeed.","a":"will。Only + 状语置于句首，主句部分倒装。"}]},{"title":"练习五  情态动词完成式","items":[{"q":"The ground is wet. It ___ have rained last night.","a":"must。对过去的肯定推测用 must have done。"},{"q":"You ___ have told her the bad news; she is crying now.","a":"shouldn't。本不该做却做了，用 shouldn't have done。"},{"q":"They ___ have arrived yet; the door is still locked.","a":"can't。对过去的否定推测用 can't have done。"}]},{"title":"练习六  独立主格与 with 结构","items":[{"q":"Weather ___ (permit), we will have a picnic tomorrow.","a":"permitting。独立主格：名词 + 现在分词，自带逻辑主语。"},{"q":"All the work ___ (finish), they went home happily.","a":"having been finished。独立主格，被动且先于主句动作，用 having been done。"},{"q":"She sat there with her eyes ___ (fix) on the screen.","a":"fixed。with + 宾语 + 过去分词，表被动状态。"}]}],"cards":{"grammar":[{"point":"非限制性定语从句","rule":"用逗号隔开，which 可指代整句","example":"He passed, which surprised us."},{"point":"名词性从句","rule":"what/that/whether 引导，作主/宾/表语","example":"What he needs is more time."},{"point":"动词不定式","rule":"to do，可作主语、宾语、状语","example":"To learn English well needs practice."},{"point":"动名词","rule":"doing 起名词作用，可作主语/宾语","example":"Swimming is good exercise."},{"point":"分词作状语","rule":"主动用现在分词，被动用过去分词","example":"Tired and hungry, he stopped."},{"point":"虚拟语气","rule":"与现在相反用过去式，与过去相反用 had done","example":"If I had known, I would have helped."},{"point":"倒装句","rule":"否定词或 only 前置时部分倒装","example":"Never will I forget it."},{"point":"强调句","rule":"It is/was + 被强调部分 + that","example":"It was here that we met."},{"point":"情态动词完成式","rule":"must/may/should + have done 表对过去判断","example":"She must have left."},{"point":"独立主格","rule":"名词 + 分词，自带逻辑主语","example":"The work done, we rested."},{"point":"让步状语从句","rule":"although/though/however/whatever 引导","example":"Rich as he is, he is not happy."}],"idioms":[{"idiom":"be worth doing","meaning":"值得做","example":"The film is worth seeing twice."},{"idiom":"can't help doing","meaning":"情不自禁做某事","example":"I couldn't help laughing."},{"idiom":"turn to","meaning":"求助于；转向","example":"Turn to page ten, please."},{"idiom":"be used to doing","meaning":"习惯于做某事","example":"He is used to getting up early."},{"idiom":"in spite of","meaning":"尽管；不管","example":"In spite of the rain, we went out."},{"idiom":"owing to","meaning":"由于；因为","example":"Owing to the fog, the flight was delayed."},{"idiom":"take pride in","meaning":"为……感到自豪","example":"She takes pride in her work."},{"idiom":"be aware of","meaning":"意识到；知道","example":"Are you aware of the danger?"},{"idiom":"get rid of","meaning":"摆脱；除掉","example":"You should get rid of bad habits."},{"idiom":"on behalf of","meaning":"代表","example":"I speak on behalf of the whole class."},{"idiom":"be bound to","meaning":"一定会；注定","example":"He is bound to succeed."}]}},{"id":"4","name":"第四册","subtitle":"流利英语","stage":"流利阶段（复杂从句、非谓语、虚拟、倒装、形式主语与长难句）","intro":"本讲义用于复习第四册已学的高级句法、单词与习惯用法，共五部分：句型替换操练、汉译英造句、语法专项训练、参考答案、复习卡。建议先独立完成，再对照答案自评，并出声朗读，提升长难句理解与表达。","patterns":[{"title":"长难句主干提取","lesson":"第1课","model":"The evidence that scientists have gathered suggests that the climate is changing.","examples":["Find the main subject and verb first.","Ignore the long relative clause when reading the trunk.","Then add the modifiers back."]},{"title":"被动报道句式","lesson":"第2课","model":"It is said that he is honest.","examples":["It is reported that the road is closed.","It is estimated that 200 people attended.","The man is said to be over ninety."]},{"title":"形式主语 it","lesson":"第3课","model":"It is likely that he will come.","examples":["It is important that we arrive early.","It is no use crying over spilt milk.","It is well known that practice helps."]},{"title":"主语从句","lesson":"第4课","model":"What he said is true.","examples":["That he refused the offer surprised us.","Whether she will come is uncertain.","Whoever breaks the rule must leave."]},{"title":"宾语从句","lesson":"第5课","model":"I know where he went.","examples":["She asked when the meeting would begin.","I believe that he is innocent.","No one knows why he resigned."]},{"title":"定语从句：介词 + which","lesson":"第6课","model":"The house in which he lives is very old.","examples":["The topic about which we talked is complex.","The tool with which he cut it is sharp.","The year in which he was born was 1990."]},{"title":"让步状语从句","lesson":"第8课","model":"However hard it is, try your best.","examples":["No matter how difficult it seems, keep going.","Even though he was tired, he finished.","Whatever happens, stay calm."]},{"title":"非谓语动词","lesson":"第10课","model":"Weather permitting, we will go on a trip.","examples":["Given the chance, she would succeed.","To solve the problem, we need data.","He left the room, leaving the door open."]},{"title":"虚拟语气","lesson":"第12课","model":"But for you, I would fail.","examples":["If it were not for the sun, life would stop.","If I had known, I would have acted.","I wish I had more free time."]},{"title":"倒装句","lesson":"第14课","model":"Never have I seen such a sight.","examples":["Only then did the truth come out.","Rarely does he complain.","Had I known, I would have warned you."]},{"title":"越……越……","lesson":"第16课","model":"The more, the better.","examples":["The sooner, the better.","The more you read, the more you learn.","The higher we climbed, the colder it felt."]},{"title":"独立主格结构","lesson":"第18课","model":"The work done, they went home.","examples":["All things considered, the plan is good.","The bell ringing, the students stood up.","His homework finished, he watched television."]}],"translation":[{"zh":"据报道，那座新桥将于下月通车。","en":"It is reported that the new bridge will open next month."},{"zh":"我们越努力，取得的进步就越大。","en":"The harder we work, the greater progress we will make."},{"zh":"要不是你的及时帮助，我不可能按时完成。","en":"But for your timely help, I could not have finished it on time."},{"zh":"他究竟是如何解决这个难题的，至今仍是个谜。","en":"How on earth he solved the problem remains a mystery."},{"zh":"众所周知，成功来自勤奋。","en":"It is well known that success comes from hard work."},{"zh":"他在演讲中提到的那本书非常畅销。","en":"The book to which he referred in his speech sells well."},{"zh":"无论生活多么艰难，他从不抱怨。","en":"However hard life was, he never complained."},{"zh":"任务完成后，团队成员都松了一口气。","en":"The task having been finished, the team members all felt relieved."},{"zh":"科学家推测这种动物可能已经灭绝了。","en":"Scientists assume that this animal may have died out."},{"zh":"只有当你失去自由时，你才会懂得它的可贵。","en":"Only when you lose freedom will you realize its value."},{"zh":"他昨天没来开会，这让经理很生气。","en":"He did not attend the meeting yesterday, which made the manager angry."},{"zh":"值得注意的是，这个数据仍在变化。","en":"It is worth noting that the figure is still changing."},{"zh":"我宁可现在自己做，也不愿一直等他。","en":"I would rather do it myself now than wait for him all the time."},{"zh":"随着时间的推移，他逐渐适应了新环境。","en":"As time went by, he gradually adapted to the new environment."}],"drills":[{"title":"练习一  从句与语序","items":[{"q":"No one knows exactly ___ the universe began.","a":"how。宾语从句用陈述语序，根据含义用 how。"},{"q":"___ the plan will work is still uncertain.","a":"Whether。引导主语从句，表“是否”，句首用 whether。"},{"q":"The reason is ___ the data were not updated.","a":"that。表语从句语义完整，用 that 引导。"}]},{"title":"练习二  非谓语动词","items":[{"q":"The scientist devoted his life to ___ (study) the ocean.","a":"studying。devote...to 中 to 是介词，后接动名词。"},{"q":"___ (compare) with last year, the price has fallen.","a":"Compared。the price 与 compare 是被动关系，用过去分词。"},{"q":"He is said ___ (write) three books already.","a":"to have written。不定式动作先于谓语，用完成式。"}]},{"title":"练习三  被动报道与形式主语","items":[{"q":"It ___ believed that the disease is curable.","a":"is。被动报道句式 It is believed that...。"},{"q":"The temple is said ___ (build) 800 years ago.","a":"to have been built。不定式被动且先于谓语，用完成被动式。"},{"q":"It is essential that every sample ___ (be) labelled.","a":"be。essential 后的主语从句用 (should) + 动词原形。"}]},{"title":"练习四  虚拟语气","items":[{"q":"If the earth ___ (have) no atmosphere, there would be no life.","a":"had。与现在事实相反，从句用过去式。"},{"q":"Had the warning been given earlier, lives ___ (save).","a":"would have been saved。省略 if 的倒装虚拟，主句用 would have done。"},{"q":"I would rather you ___ (make) the decision yourself.","a":"made。would rather 后接从句用过去式表现在或将来。"}]},{"title":"练习五  倒装与连接","items":[{"q":"Not only ___ the report short, but it was also inaccurate.","a":"was。Not only 前置，该分句部分倒装。"},{"q":"Rarely ___ such a dramatic change been recorded.","a":"has。Rarely 前置，部分倒装，主语是 change。"},{"q":"It was through careful research ___ the truth appeared.","a":"that。强调方式状语，用 It was...that。"}]},{"title":"练习六  长难句与独立主格","items":[{"q":"The evidence on ___ the argument rests is weak.","a":"which。介词 on 后指代物，用 which。"},{"q":"All the guests ___ (arrive), the host began his speech.","a":"having arrived。独立主格，动作先于主句，用 having done。"},{"q":"The ___ the risk, the higher the possible return.","a":"greater。the + 比较级，the + 比较级结构。"}]}],"cards":{"grammar":[{"point":"对过去的推测","rule":"may/must have done 表对过去的推测","example":"They may have used wood."},{"point":"被动报道","rule":"It is said/estimated that 表“据说/据估计”","example":"It is said that he is honest."},{"point":"越……越……","rule":"the + 比较级，the + 比较级","example":"The more, the better."},{"point":"虚拟（与现在相反）","rule":"if it were not for，主句 would do","example":"But for you, I would fail."},{"point":"宾语从句","rule":"疑问词后用陈述语序","example":"I know where he went."},{"point":"主语从句","rule":"what/that 引导，整个从句作主语","example":"What he said is true."},{"point":"形式主语","rule":"it 代替后面 that 从句","example":"It is likely that he will come."},{"point":"倒装","rule":"only/never 置句首，助动词提前","example":"Never have I seen it."},{"point":"让步从句","rule":"however/no matter how + 形容词","example":"However hard it is, try."},{"point":"独立主格","rule":"名词 + doing/done，自带逻辑主语","example":"Weather permitting, we will go."},{"point":"介词 + which","rule":"定语从句中关系代词作介词宾语","example":"The house in which he lives."}],"idioms":[{"idiom":"be likely to","meaning":"很可能","example":"It is likely to rain."},{"idiom":"be subject to","meaning":"受……支配；易遭受","example":"Prices are subject to change."},{"idiom":"in terms of","meaning":"就……而言；根据","example":"In terms of cost, this is better."},{"idiom":"be relevant to","meaning":"与……相关","example":"These facts are relevant to the case."},{"idiom":"be capable of","meaning":"能够；有能力","example":"The machine is capable of more."},{"idiom":"be engaged in","meaning":"从事；忙于","example":"She is engaged in research."},{"idiom":"be exposed to","meaning":"暴露于；接触","example":"Children are exposed to new ideas."},{"idiom":"be consistent with","meaning":"与……一致","example":"His story is consistent with the facts."},{"idiom":"in contrast to","meaning":"与……形成对比","example":"In contrast to last year, sales rose."},{"idiom":"be equivalent to","meaning":"等同于；相当于","example":"This is equivalent to a refusal."},{"idiom":"account for","meaning":"解释；占（比例）","example":"How do you account for the error?"}]}}];
+  var STORE_KEY = 'rh-workbook-v1';
+  var TABS = [
     { id: 'intro', label: '使用说明' },
-    { id: 'patterns', label: '句型替换' },
-    { id: 'translation', label: '汉译英造句' },
-    { id: 'drills', label: '语法专项' },
-    { id: 'cards', label: '复习卡' }
+    { id: 'lessons', label: '逐课要点' },
+    { id: 'translation', label: '汉译英做题' },
+    { id: 'drills', label: '语法专项做题' },
+    { id: 'mistakes', label: '错题与订正' }
   ];
   var state = { book: '1', section: 'intro' };
   var container = null;
+  var workbook = loadStore();
 
-  function esc(value) {
-    return String(value == null ? '' : value)
+  function loadStore() {
+    try { var raw = localStorage.getItem(STORE_KEY); return raw ? JSON.parse(raw) : {}; }
+    catch (e) { return {}; }
+  }
+  function saveStore() {
+    try { localStorage.setItem(STORE_KEY, JSON.stringify(workbook)); } catch (e) {}
+  }
+  function rec(qid) {
+    if (!workbook[qid]) workbook[qid] = { answer: '', revealed: false, mark: null, correction: '', corrected: false };
+    return workbook[qid];
+  }
+  function esc(v) {
+    return String(v == null ? '' : v)
       .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
       .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
   }
-  function currentBook() {
-    for (var i = 0; i < BOOKS.length; i++) if (BOOKS[i].id === state.book) return BOOKS[i];
-    return BOOKS[0];
+  function bankBook() {
+    for (var i = 0; i < BANK.length; i++) if (BANK[i].id === state.book) return BANK[i];
+    return BANK[0];
   }
+  function tId(book, i) { return 't' + book + '-' + i; }
+  function dId(book, g, i) { return 'd' + book + '-' + g + '-' + i; }
 
-  function renderIntro(book) {
-    var tips = [
-      '先独立完成，再展开参考答案自评。',
-      '汉译英与句型替换后出声朗读，训练语感。',
-      '复习卡可在考前快速回顾语法点与习惯用法。'
-    ];
-    return '<div class="rh-card rh-intro-card">' +
-      '<h2>' + esc(book.name) + ' · 句型替换与语法专项训练</h2>' +
-      '<p class="rh-stage">' + esc(book.stage) + '</p>' +
-      '<p>' + esc(book.intro) + '</p>' +
-      '<ul class="rh-tips">' + tips.map(function (t) { return '<li>' + esc(t) + '</li>'; }).join('') + '</ul>' +
-      '</div>';
+  function runtimeLessons(book) {
+    var all = window.LESSONS || [];
+    return all.filter(function (l) { return String(l.book) === String(book); });
   }
-
-  function renderPatterns(book) {
-    return '<h2 class="rh-block-title">句型替换</h2>' +
-      '<p class="rh-block-desc">先看示范句，再用替换例句体会同一结构的不同表达，并出声朗读。</p>' +
-      '<div class="rh-pattern-grid">' +
-      book.patterns.map(function (p, i) {
-        return '<div class="rh-card">' +
-          '<h3>' + (i + 1) + '. ' + esc(p.title) + '<span class="rh-lesson">' + esc(p.lesson) + '</span></h3>' +
-          '<p class="rh-model">' + esc(p.model) + '</p>' +
-          '<ul class="rh-examples">' +
-          p.examples.map(function (e) { return '<li>' + esc(e) + '</li>'; }).join('') +
-          '</ul></div>';
-      }).join('') +
-      '</div>';
-  }
-
-  function renderTranslation(book) {
-    return '<h2 class="rh-block-title">汉译英造句</h2>' +
-      '<p class="rh-block-desc">把下面的中文句子译成英文，尽量用学过的单词、句型和习惯用法。答案见“参考答案”。</p>' +
-      '<div class="rh-list">' +
-      book.translation.map(function (t, i) {
-        return '<div class="rh-card rh-question">' +
-          '<div class="rh-question-head"><span class="rh-index">' + (i + 1) + '</span>' +
-          '<span class="rh-zh">' + esc(t.zh) + '</span></div>' +
-          '<details class="rh-answer-details"><summary>查看参考答案</summary>' +
-          '<p class="rh-answer">' + esc(t.en) + '</p></details></div>';
-      }).join('') +
-      '</div>';
-  }
-
-  function renderDrills(book) {
-    return '<h2 class="rh-block-title">语法专项训练</h2>' +
-      '<p class="rh-block-desc">针对本册核心语法点做集中操练，先独立作答，再展开解析核对。</p>' +
-      book.drills.map(function (group, gi) {
-        return '<div class="rh-card rh-drill-group">' +
-          '<h3>' + esc(group.title) + '</h3>' +
-          group.items.map(function (it, ii) {
-            var number = gi * group.items.length + ii + 1;
-            return '<div class="rh-question"><div class="rh-question-head"><span class="rh-index">' +
-              number + '</span><span class="rh-zh">' + esc(it.q) + '</span></div>' +
-              '<details class="rh-answer-details"><summary>查看解析</summary>' +
-              '<p class="rh-answer">' + esc(it.a) + '</p></details></div>';
-          }).join('') +
-          '</div>';
-      }).join('');
-  }
-
-  function table(headers, rows) {
-    return '<div class="rh-table-wrap"><table class="rh-table"><thead><tr>' +
-      headers.map(function (h) { return '<th>' + esc(h) + '</th>'; }).join('') +
-      '</tr></thead><tbody>' +
-      rows.map(function (r) {
-        return '<tr>' + r.map(function (c) { return '<td>' + esc(c) + '</td>'; }).join('') + '</tr>';
-      }).join('') + '</tbody></table></div>';
-  }
-
-  function renderCards(book) {
-    var grammar = book.cards.grammar.map(function (g) {
-      return [g.point, g.rule, g.example];
+  function progress(book) {
+    var p = { total: 0, answered: 0, correct: 0, wrong: 0, corrected: 0 };
+    var b = BANK.filter(function (x) { return x.id === String(book); })[0];
+    if (!b) return p;
+    b.translation.forEach(function (t, i) {
+      var r = workbook[tId(b.id, i)]; p.total++;
+      if (r && r.answer.trim()) p.answered++;
+      if (r && r.mark === 'correct') p.correct++;
+      if (r && r.mark === 'wrong') { p.wrong++; if (r.corrected) p.corrected++; }
     });
-    var idioms = book.cards.idioms.map(function (v) {
-      return [v.idiom, v.meaning, v.example];
+    b.drills.forEach(function (g, gi) {
+      g.items.forEach(function (it, ii) {
+        var r = workbook[dId(b.id, gi, ii)]; p.total++;
+        if (r && r.answer.trim()) p.answered++;
+        if (r && r.mark === 'correct') p.correct++;
+        if (r && r.mark === 'wrong') { p.wrong++; if (r.corrected) p.corrected++; }
+      });
     });
-    return '<h2 class="rh-block-title">复习卡</h2>' +
-      '<p class="rh-block-desc">考前快速回顾，先回忆再看规则与例句。</p>' +
-      '<h3 class="rh-subtitle">语法点速查</h3>' +
-      table(['语法点', '一句话规则', '例句'], grammar) +
-      '<h3 class="rh-subtitle">习惯用法速查</h3>' +
-      table(['习惯用法', '含义', '例句'], idioms);
+    return p;
+  }
+  function allWrong() {
+    var rows = [];
+    BANK.forEach(function (b) {
+      b.translation.forEach(function (t, i) {
+        var r = workbook[tId(b.id, i)];
+        if (r && r.mark === 'wrong') rows.push({ qid: tId(b.id, i), prompt: t.zh, reference: t.en, book: b.id });
+      });
+      b.drills.forEach(function (g, gi) {
+        g.items.forEach(function (it, ii) {
+          var r = workbook[dId(b.id, gi, ii)];
+          if (r && r.mark === 'wrong') rows.push({ qid: dId(b.id, gi, ii), prompt: it.q, reference: it.a, book: b.id });
+        });
+      });
+    });
+    return rows;
+  }
+
+  function workItem(qid, prompt, reference, multiline, number) {
+    var r = rec(qid);
+    var field = multiline
+      ? '<textarea class="rh-input" rows="2" data-rh-input="' + esc(qid) + '" placeholder="在此输入你的英文句子">' + esc(r.answer) + '</textarea>'
+      : '<input class="rh-input" type="text" data-rh-input="' + esc(qid) + '" value="' + esc(r.answer) + '" placeholder="在此作答">';
+    var html = '<div class="rh-question"><div class="rh-question-head"><span class="rh-index">' + number +
+      '</span><span class="rh-zh">' + prompt + '</span></div>' + field;
+    if (!r.revealed) {
+      html += '<button type="button" class="rh-btn" data-rh-action="reveal" data-rh-qid="' + esc(qid) + '">对照参考答案</button>';
+    } else {
+      html += '<div class="rh-reference"><span class="rh-ref-label">参考答案：</span>' + esc(reference) + '</div>';
+      if (r.mark === 'correct') {
+        html += '<div class="rh-mark-row"><span class="rh-status correct">已标记答对</span>' +
+          '<button type="button" class="rh-btn subtle" data-rh-action="mark-wrong" data-rh-qid="' + esc(qid) + '">改判为错</button></div>';
+      } else if (r.mark === 'wrong') {
+        html += '<div class="rh-mark-row"><span class="rh-status wrong">已标记答错，请订正</span></div>';
+        html += '<div class="rh-correct-box"><label>订正（重写正确答案）：</label>' +
+          '<textarea rows="2" data-rh-correction="' + esc(qid) + '" placeholder="在此重写正确答案">' + esc(r.correction) + '</textarea>' +
+          '<div class="rh-mark-row"><button type="button" class="rh-btn" data-rh-action="save-correction" data-rh-qid="' + esc(qid) + '">保存订正</button>' +
+          (r.corrected ? '<span class="rh-status corrected">已订正</span>' : '') + '</div></div>';
+      } else {
+        html += '<div class="rh-mark-row">' +
+          '<button type="button" class="rh-btn good" data-rh-action="mark-correct" data-rh-qid="' + esc(qid) + '">我答对了</button>' +
+          '<button type="button" class="rh-btn bad" data-rh-action="mark-wrong" data-rh-qid="' + esc(qid) + '">我答错了</button></div>';
+      }
+    }
+    return html + '</div>';
+  }
+
+  function progressBar(book) {
+    var p = progress(book), pct = p.total ? Math.round(p.answered / p.total * 100) : 0;
+    return '<div class="rh-progress"><div class="rh-progress-bar" style="width:' + pct + '%"></div></div>' +
+      '<p class="rh-progress-text" data-rh-progress>已作答 ' + p.answered + '/' + p.total +
+      ' · 答对 ' + p.correct + ' · 答错 ' + p.wrong + ' · 已订正 ' + p.corrected + '</p>';
+  }
+
+  function renderIntro() {
+    var b = bankBook();
+    return '<div class="rh-card rh-intro-card"><h2>' + esc(b.name) + ' · 复习与做题说明</h2>' +
+      '<p class="rh-stage">' + esc(b.stage) + '</p>' +
+      '<p>本模块按“逐课要点 → 汉译英做题 → 语法专项做题 → 错题订正”的顺序使用，所有作答与订正自动保存在当前浏览器。</p>' +
+      '<ul class="rh-tips">' +
+      '<li>“逐课要点”：查看每课讲什么、例句与易错点，明确复习重点。</li>' +
+      '<li>“做题”：在输入框直接打字，点“对照参考答案”后自行判定对/错。</li>' +
+      '<li>答错后在“订正”框重写正确答案并保存，错题汇总到“错题与订正”。</li></ul></div>';
+  }
+
+  function renderLessons() {
+    var b = bankBook();
+    var lessons = runtimeLessons(b.id);
+    var focus = window.StudyLessonGrammarFocus;
+    var html = '<h2 class="rh-block-title">逐课要点（' + esc(b.name) + '，共 ' + lessons.length + ' 课）</h2>' +
+      '<p class="rh-block-desc">每课列出本课语法重点、例句与易错提示；展开一课查看，先回忆再看解析。</p>';
+    html += lessons.map(function (l) {
+      var res = focus ? focus.forLesson(l) : null;
+      var body;
+      if (res && res.status === 'ready') {
+        body = res.points.map(function (p) {
+          return '<div class="rh-point"><h4>' + esc(p.title) + '</h4><p>' + esc(p.summary) + '</p>' +
+            '<p class="rh-point-example">' + esc(p.example) + '</p>' +
+            '<p class="rh-pitfall">易错：' + esc(p.pitfall) + '</p></div>';
+        }).join('');
+      } else {
+        body = '<p class="rh-muted">本课逐课要点暂缺。</p>';
+      }
+      return '<details class="rh-lesson-details"><summary><span class="rh-lesson-num">第 ' + esc(l.number) + ' 课</span>' +
+        esc(l.title) + '</summary><div class="rh-lesson-body">' + body + '</div></details>';
+    }).join('');
+    return html;
+  }
+
+  function renderTranslation() {
+    var b = bankBook();
+    var html = progressBar(b.id) + '<h2 class="rh-block-title">汉译英做题（' + esc(b.name) + '）</h2>' +
+      '<p class="rh-block-desc">把中文译成英文，直接在框内输入；再点“对照参考答案”自行判定并订正。</p>';
+    html += b.translation.map(function (t, i) {
+      return workItem(tId(b.id, i), t.zh, t.en, true, i + 1);
+    }).join('');
+    return html;
+  }
+
+  function renderDrills() {
+    var b = bankBook();
+    var html = progressBar(b.id) + '<h2 class="rh-block-title">语法专项做题（' + esc(b.name) + '）</h2>' +
+      '<p class="rh-block-desc">直接在输入框作答，再对照解析自行判定并订正。</p>';
+    var counter = 0;
+    b.drills.forEach(function (g, gi) {
+      html += '<div class="rh-card rh-drill-group"><h3>' + esc(g.title) + '</h3>';
+      g.items.forEach(function (it, ii) {
+        counter++;
+        html += workItem(dId(b.id, gi, ii), it.q, it.a, false, counter);
+      });
+      html += '</div>';
+    });
+    return html;
+  }
+
+  function stat(n, label) {
+    return '<div class="rh-stat"><strong>' + n + '</strong><span>' + esc(label) + '</span></div>';
+  }
+  function renderMistakes() {
+    var wrong = allWrong();
+    var total = 0, answered = 0, correct = 0, corrected = 0;
+    BANK.forEach(function (b) {
+      var p = progress(b.id);
+      total += p.total; answered += p.answered; correct += p.correct; corrected += p.corrected;
+    });
+    var html = '<h2 class="rh-block-title">错题与订正</h2>' +
+      '<div class="rh-summary-grid">' +
+      stat(total, '题目总数') + stat(answered, '已作答') + stat(correct, '答对') +
+      stat(wrong.length, '答错') + stat(corrected, '已订正') + '</div>';
+    if (!wrong.length) {
+      return html + '<div class="rh-empty"><h3>还没有错题</h3><p>做题时把答错的题标记出来，会汇总到这里统一订正。</p></div>';
+    }
+    html += '<p class="rh-block-desc">共 ' + wrong.length + ' 道错题，逐题对照并在下方订正。</p>';
+    html += wrong.map(function (w) {
+      var r = rec(w.qid);
+      return '<div class="rh-card rh-wrong-card"><div class="rh-question-head"><span class="rh-badge">' + esc(w.book) +
+        ' 册</span><span class="rh-zh">' + esc(w.prompt) + '</span></div>' +
+        '<p class="rh-myanswer">你的答案：' + (r.answer ? esc(r.answer) : '<em>（空）</em>') + '</p>' +
+        '<p class="rh-reference">参考答案：' + esc(w.reference) + '</p>' +
+        '<textarea class="rh-input" rows="2" data-rh-correction="' + esc(w.qid) +
+        '" placeholder="在此重写正确答案">' + esc(r.correction) + '</textarea>' +
+        '<div class="rh-mark-row"><button type="button" class="rh-btn" data-rh-action="save-correction" data-rh-qid="' +
+        esc(w.qid) + '">保存订正</button>' + (r.corrected ? '<span class="rh-status corrected">已订正</span>' : '') + '</div></div>';
+    }).join('');
+    return html;
   }
 
   function render() {
     if (!container) return;
-    var book = currentBook();
     var content;
-    if (state.section === 'intro') content = renderIntro(book);
-    else if (state.section === 'patterns') content = renderPatterns(book);
-    else if (state.section === 'translation') content = renderTranslation(book);
-    else if (state.section === 'drills') content = renderDrills(book);
-    else content = renderCards(book);
+    if (state.section === 'intro') content = renderIntro();
+    else if (state.section === 'lessons') content = renderLessons();
+    else if (state.section === 'translation') content = renderTranslation();
+    else if (state.section === 'drills') content = renderDrills();
+    else content = renderMistakes();
 
-    var html = '<div class="rh-shell">' +
-      '<header class="rh-header"><h1>复习讲义</h1>' +
-      '<p>句型替换 · 汉译英造句 · 语法专项 · 复习卡（四册全覆盖）</p></header>' +
+    var html = '<div class="rh-shell"><header class="rh-header"><h1>复习讲义</h1>' +
+      '<p>逐课要点 · 汉译英做题 · 语法专项做题 · 错题订正（四册全覆盖）</p></header>' +
       '<div class="rh-book-tabs">' +
-      BOOKS.map(function (b) {
+      BANK.map(function (b) {
         var active = b.id === state.book ? ' active' : '';
-        return '<button type="button" class="rh-book-tab' + active + '" data-rh-book="' +
-          esc(b.id) + '"><strong>' + esc(b.name) + '</strong><span>' + esc(b.subtitle) +
-          '</span></button>';
-      }).join('') +
-      '</div>' +
+        return '<button type="button" class="rh-book-tab' + active + '" data-rh-book="' + esc(b.id) +
+          '"><strong>' + esc(b.name) + '</strong><span>' + esc(b.subtitle) + '</span></button>';
+      }).join('') + '</div>' +
       '<div class="rh-section-tabs">' +
-      SECTIONS.map(function (s) {
-        var active = s.id === state.section ? ' active' : '';
-        return '<button type="button" class="rh-section-tab' + active +
-          '" data-rh-section="' + esc(s.id) + '">' + esc(s.label) + '</button>';
-      }).join('') +
-      '</div>' +
-      '<div class="rh-content">' + content + '</div>' +
-      '</div>';
+      TABS.map(function (t) {
+        var active = t.id === state.section ? ' active' : '';
+        return '<button type="button" class="rh-section-tab' + active + '" data-rh-section="' + esc(t.id) + '">' +
+          esc(t.label) + '</button>';
+      }).join('') + '</div>' +
+      '<div class="rh-content">' + content + '</div></div>';
     container.innerHTML = html;
+  }
+
+  function refreshLiveProgress() {
+    var node = container.querySelector('[data-rh-progress]');
+    if (node) {
+      var p = progress(state.book);
+      node.textContent = '已作答 ' + p.answered + '/' + p.total + ' · 答对 ' + p.correct +
+        ' · 答错 ' + p.wrong + ' · 已订正 ' + p.corrected;
+    }
   }
 
   function mount(el) {
@@ -144,22 +248,40 @@
     if (!el.__rhBound) {
       el.__rhBound = true;
       el.addEventListener('click', function (event) {
-        var target = event.target;
-        while (target && target !== el && !(target.getAttribute && target.getAttribute('data-rh-book')) &&
-               !(target.getAttribute && target.getAttribute('data-rh-section'))) {
-          target = target.parentNode;
+        var node = event.target, book = null, section = null, action = null, qid = null;
+        while (node && node !== el) {
+          if (node.getAttribute) {
+            if (!book && node.getAttribute('data-rh-book')) book = node.getAttribute('data-rh-book');
+            if (!section && node.getAttribute('data-rh-section')) section = node.getAttribute('data-rh-section');
+            if (!action && node.getAttribute('data-rh-action')) {
+              action = node.getAttribute('data-rh-action');
+              qid = node.getAttribute('data-rh-qid');
+            }
+          }
+          node = node.parentNode;
         }
-        if (!target || target === el) return;
-        var book = target.getAttribute('data-rh-book');
-        var section = target.getAttribute('data-rh-section');
-        if (book) {
-          state.book = book;
-          state.section = 'intro';
-          render();
-        } else if (section) {
-          state.section = section;
+        if (book) { state.book = book; state.section = 'intro'; render(); return; }
+        if (section) { state.section = section; render(); return; }
+        if (action) {
+          var r = rec(qid);
+          if (action === 'reveal') r.revealed = true;
+          else if (action === 'mark-correct') r.mark = 'correct';
+          else if (action === 'mark-wrong') r.mark = 'wrong';
+          else if (action === 'save-correction') {
+            var ta = el.querySelector('[data-rh-correction="' + qid + '"]');
+            if (ta) { r.correction = ta.value; r.corrected = ta.value.trim().length > 0; }
+          }
+          saveStore();
           render();
         }
+      });
+      el.addEventListener('input', function (event) {
+        var t = event.target;
+        if (!t || !t.getAttribute) return;
+        var inputQid = t.getAttribute('data-rh-input');
+        var correctionQid = t.getAttribute('data-rh-correction');
+        if (inputQid) { rec(inputQid).answer = t.value; saveStore(); refreshLiveProgress(); }
+        else if (correctionQid) { rec(correctionQid).correction = t.value; saveStore(); }
       });
     }
     render();
